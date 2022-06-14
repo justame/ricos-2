@@ -21494,6 +21494,11 @@ rgba-regex@^1.0.0:
   resolved "https://registry.npmjs.org/rgba-regex/-/rgba-regex-1.0.0.tgz#43374e2e2ca0968b0ef1523460b7d730ff22eeb3"
   integrity sha1-QzdOLiyglosO8VI0YLfXMP8i7rM=
 
+ricos-driver@8.71.23:
+  version "8.71.23"
+  resolved "https://registry.yarnpkg.com/ricos-driver/-/ricos-driver-8.71.23.tgz#e2920b34023f811375e6833b490314c72397e2e7"
+  integrity sha512-YWC9DJ0dM7H3ZICUeubH+R4/lLFHIsfexeH6pbrc1mgRxFxPdrr9A+m33Yfapxrt/kyCKxF4EGFctxH+SLRf8g==
+
 rimraf@2, rimraf@^2.2.8, rimraf@^2.5.4, rimraf@^2.6.2, rimraf@^2.6.3:
   version "2.7.1"
   resolved "https://registry.npmjs.org/rimraf/-/rimraf-2.7.1.tgz#35797f13a7fdadc566142c29d4f07ccad483e3ec"

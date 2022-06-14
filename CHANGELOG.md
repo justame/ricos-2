@@ -17,12 +17,11 @@
     Click to see more.
   </summary>
 
-
 </details>
 
 <hr/>
 
-## 8.71.24 (Jun 14, 2022)
+## 8.71.25 (Jun 14, 2022)
 
 ## :bug: Bug Fix
 
