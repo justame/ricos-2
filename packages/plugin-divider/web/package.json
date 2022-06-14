@@ -1,6 +1,6 @@
 {
   "name": "wix-rich-content-plugin-divider",
-  "version": "8.71.25",
+  "version": "8.71.26",
   "author": {
     "name": "Jonathan Bachman",
     "email": "jonathanb@wix.com"
@@ -36,12 +36,12 @@
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx,d.ts}'"
   },
   "dependencies": {
-    "ricos-content": "8.71.25",
-    "ricos-context": "8.71.25",
-    "ricos-tiptap-types": "8.71.25",
-    "wix-rich-content-common": "8.71.25",
-    "wix-rich-content-editor-common": "8.71.25",
-    "wix-rich-content-plugin-commons": "8.71.25"
+    "ricos-content": "8.71.26",
+    "ricos-context": "8.71.26",
+    "ricos-tiptap-types": "8.71.26",
+    "wix-rich-content-common": "8.71.26",
+    "wix-rich-content-editor-common": "8.71.26",
+    "wix-rich-content-plugin-commons": "8.71.26"
   },
   "unpkg": true,
   "publishConfig": {
