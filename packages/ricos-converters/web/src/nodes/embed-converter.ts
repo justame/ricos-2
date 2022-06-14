@@ -23,7 +23,7 @@ export const embedConverter: TiptapNodeConverter = {
         id,
         nodes: [],
         embedData: {
-          ...data,
+          ...(data as EmbedData),
         },
       };
     },

@@ -23,7 +23,7 @@ export const fileUploadConverter: TiptapNodeConverter = {
         id,
         nodes: [],
         fileData: {
-          ...data,
+          ...(data as FileData),
         },
       };
     },
