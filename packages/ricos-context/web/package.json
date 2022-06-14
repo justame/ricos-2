@@ -38,6 +38,9 @@
     "ricos-types": "8.71.25",
     "wix-rich-content-editor-common": "8.71.25"
   },
+  "devDependencies": {
+    "ricos-common": "8.71.25"
+  },
   "unpkg": true,
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
