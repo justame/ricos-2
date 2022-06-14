@@ -1,6 +1,6 @@
 {
   "name": "wix-rich-content-toolbars-new",
-  "version": "8.71.23",
+  "version": "8.71.24",
   "author": {
     "name": "Noam Tayri",
     "email": "noamt@wix.com"
@@ -44,11 +44,11 @@
   },
   "dependencies": {
     "react-click-outsider": "1.1.1",
-    "ricos-common": "8.71.23",
-    "wix-rich-content-common": "8.71.23",
-    "wix-rich-content-editor-common": "8.71.23",
-    "wix-rich-content-plugin-commons": "8.71.23",
-    "wix-rich-content-ui-components": "8.71.23"
+    "ricos-common": "8.71.24",
+    "wix-rich-content-common": "8.71.24",
+    "wix-rich-content-editor-common": "8.71.24",
+    "wix-rich-content-plugin-commons": "8.71.24",
+    "wix-rich-content-ui-components": "8.71.24"
   },
   "unpkg": true,
   "publishConfig": {

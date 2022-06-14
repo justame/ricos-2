@@ -1,6 +1,6 @@
 {
   "name": "ricos-context",
-  "version": "8.71.23",
+  "version": "8.71.24",
   "author": {
     "name": "Alex Greenstein",
     "email": "alexgr@wix.com"
@@ -34,9 +34,9 @@
     "test:watchAll": "jest --verbose --watchAll"
   },
   "dependencies": {
-    "ricos-tiptap-types": "8.71.23",
-    "ricos-types": "8.71.23",
-    "wix-rich-content-editor-common": "8.71.23"
+    "ricos-tiptap-types": "8.71.24",
+    "ricos-types": "8.71.24",
+    "wix-rich-content-editor-common": "8.71.24"
   },
   "unpkg": true,
   "publishConfig": {
