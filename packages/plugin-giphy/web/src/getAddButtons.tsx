@@ -16,7 +16,7 @@ export const getAddButtons = (config): AddButton[] => {
       modal: {
         id: gifModals.insert,
         Component: decorateComponentWithProps(InsertModal, {
-          giphySdkApiKey: config.giphySdkApiKey,
+          giphySdkApiKey: config?.giphySdkApiKey,
           componentData: DEFAULTS,
         }),
         layout: 'popover',

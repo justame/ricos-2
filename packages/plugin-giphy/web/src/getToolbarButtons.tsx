@@ -25,7 +25,7 @@ export const getToolbarButtons = (config): PluginToolbarButtons => {
           command: ({ modalService, isMobile, node, referenceElement }) => {
             modalService?.openModal({
               Component: decorateComponentWithProps(InsertModal, {
-                giphySdkApiKey: config.giphySdkApiKey,
+                giphySdkApiKey: config?.giphySdkApiKey,
                 componentData: node.attrs, //TODO: convert to draft
                 nodeId: node.attrs.id,
               }),
