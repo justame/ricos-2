@@ -21,6 +21,13 @@
 
 <hr/>
 
+## 8.71.28 (Jun 15, 2022)
+
+## :bug: Bug Fix
+
+- `gif`
+  - [#4045](https:// github.com/wix/ricos/pull/4045) Fix editor crash because gif config API
+
 ## 8.71.27 (Jun 15, 2022)
 
 ## :bug: Bug Fix
