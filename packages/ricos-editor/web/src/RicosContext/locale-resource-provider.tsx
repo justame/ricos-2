@@ -28,7 +28,9 @@ export const LocaleResourceProvider = ({
   useEffect(() => {
     const hanldeLocaleResource = async () => {
       const localeResource = await fetchLocaleResource(locale);
-      setLocaleResource(localeResource);
+      if (localeResource) {
+        setLocaleResource(localeResource);
+      }
     };
 
     hanldeLocaleResource();

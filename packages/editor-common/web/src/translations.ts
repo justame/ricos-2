@@ -11,6 +11,7 @@ export const fetchLocaleResource = async (locale = 'en') => {
     ).then(res => res.default);
     return { locale, localeResource };
   } catch (err) {
-    throw new Error(`error while loading locale ${locale}:\n${err}`);
+    console.warn(`can't find ${locale} locale`);
+    return false;
   }
 };

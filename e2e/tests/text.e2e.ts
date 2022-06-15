@@ -59,7 +59,7 @@ const changeTextColor = (title: string, useTiptap, isMobile = false) => {
         //TIPTAP TODO -      AssertionError: Timed out retrying after 4000ms: Expected to find element: `[data-hook="floating-formatting-toolbar"] [data-hook=LineSpacingButton]`, but never found it.
         return;
       }
-      cy.loadRicosEditorAndViewer('plain')
+      cy.loadRicosEditor('plain')
         .setTextStyle(INLINE_TOOLBAR_BUTTONS.BOLD, [40, 10])
         .setTextStyle(INLINE_TOOLBAR_BUTTONS.UNDERLINE, [10, 5])
         .setTextStyle(INLINE_TOOLBAR_BUTTONS.ITALIC, [20, 5])

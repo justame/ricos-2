@@ -9,6 +9,9 @@ export default async function localeStrategy(locale = 'en') {
     ).then(res => res.default);
     return { locale, localeResource };
   } catch (err) {
-    throw new Error(`error while loading locale ${locale}:\n${err}`);
+    console.warn(`can't find ${locale} locale`);
+    return {
+      locale: 'en',
+    };
   }
 }
