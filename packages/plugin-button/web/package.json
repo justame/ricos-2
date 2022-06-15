@@ -1,6 +1,6 @@
 {
   "name": "wix-rich-content-plugin-button",
-  "version": "8.71.26",
+  "version": "8.71.27",
   "author": {
     "name": "Bashar Qaddumi",
     "email": "bqaddumi@asaltech.com"
@@ -37,10 +37,10 @@
   },
   "dependencies": {
     "react-custom-scrollbars": "^4.2.1",
-    "wix-rich-content-common": "8.71.26",
-    "wix-rich-content-editor-common": "8.71.26",
-    "wix-rich-content-plugin-commons": "8.71.26",
-    "wix-rich-content-ui-components": "8.71.26"
+    "wix-rich-content-common": "8.71.27",
+    "wix-rich-content-editor-common": "8.71.27",
+    "wix-rich-content-plugin-commons": "8.71.27",
+    "wix-rich-content-ui-components": "8.71.27"
   },
   "unpkg": true,
   "publishConfig": {

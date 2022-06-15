@@ -21,6 +21,13 @@
 
 <hr/>
 
+## 8.71.27 (Jun 15, 2022)
+
+## :bug: Bug Fix
+
+- `translations`
+  - [#4042](https:// github.com/wix/ricos/pull/4042) English fallback for non-supported languages
+
 ## 8.71.26 (Jun 14, 2022)
 
 ## :bug: Bug Fix

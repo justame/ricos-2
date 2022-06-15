@@ -1,6 +1,6 @@
 {
   "name": "ricos-content-query",
-  "version": "8.71.26",
+  "version": "8.71.27",
   "author": {
     "name": "Noam Tayri",
     "email": "noamt@wix.com"
@@ -34,11 +34,11 @@
     "test:watchAll": "jest --verbose --watchAll"
   },
   "dependencies": {
-    "ricos-common": "8.71.26",
-    "ricos-content": "8.71.26",
-    "ricos-converters": "8.71.26",
-    "ricos-schema": "8.71.26",
-    "wix-rich-content-editor-common": "8.71.26"
+    "ricos-common": "8.71.27",
+    "ricos-content": "8.71.27",
+    "ricos-converters": "8.71.27",
+    "ricos-schema": "8.71.27",
+    "wix-rich-content-editor-common": "8.71.27"
   },
   "unpkg": true,
   "publishConfig": {
