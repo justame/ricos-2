@@ -6,7 +6,6 @@ import { RichContentModal } from 'wix-rich-content-ui-components';
 import MobileAddPluginModal from './Toolbars/SideToolbar/AddPluginMenu';
 import BlockLinkModal from './Toolbars/BlockLinkModal';
 import TextLinkModal from './Toolbars/TextLinkModal';
-import { withModalBaseActions } from './ModalBaseActions';
 
 const Modals = {
   [EditorModals.MOBILE_ADD_PLUGIN]: MobileAddPluginModal,
@@ -35,7 +34,6 @@ const RichContentEditorModal: FunctionComponent<Props> = ({
   modalElement,
   modalsMap,
   editorCommands,
-  pluginId,
   ...modalProps
 }) => {
   const ModalsMap = { ...Modals, ...modalsMap };
@@ -46,30 +44,19 @@ const RichContentEditorModal: FunctionComponent<Props> = ({
     return null;
   }
 
-  if (modalProps.experiments?.modalBaseActionHoc?.enabled) {
-    const props = {
-      editorCommands,
-      componentData: modalProps.componentData,
-      pluginType: pluginId,
-      closeModal: modalProps.helpers?.closeModal,
-      pubsub: modalProps.pubsub,
-    };
-    return withModalBaseActions(<RichContentModal modalElement={element} {...modalProps} />, props);
-  } else {
-    return (
-      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-      <div
-        onMouseDown={e => e.nativeEvent.stopImmediatePropagation()}
-        data-id="rich-content-editor-modal"
-      >
-        <RichContentModal
-          modalElement={element}
-          {...modalProps}
-          getComponentData={() => getComponentData(editorCommands)}
-        />
-      </div>
-    );
-  }
+  return (
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+    <div
+      onMouseDown={e => e.nativeEvent.stopImmediatePropagation()}
+      data-id="rich-content-editor-modal"
+    >
+      <RichContentModal
+        modalElement={element}
+        {...modalProps}
+        getComponentData={() => getComponentData(editorCommands)}
+      />
+    </div>
+  );
 };
 
 export default RichContentEditorModal;

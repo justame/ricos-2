@@ -31,7 +31,7 @@ class ImageSettings extends Component {
     this.altLabel = t('ImageSettings_Alt_Label');
     this.altTooltip = 'ImageSettings_Alt_Label_Tooltip';
     this.altInputPlaceholder = t('ImageSettings_Alt_Input_Placeholder');
-    this.modalsWithEditorCommands = experiments?.modalBaseActionHoc?.enabled;
+    this.modalsWithEditorCommands = experiments?.tiptapEditor?.enabled;
   }
 
   propsToState(props) {

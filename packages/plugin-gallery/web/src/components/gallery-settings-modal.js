@@ -32,7 +32,7 @@ const isValidIndex = index => typeof index === 'number' && index >= 0;
 class ManageMediaSection extends Component {
   constructor(props) {
     super(props);
-    this.modalsWithEditorCommands = props.experiments?.modalBaseActionHoc?.enabled;
+    this.modalsWithEditorCommands = props.experiments?.tiptapEditor?.enabled;
     this.uploader = new Uploader(this.props.helpers?.handleFileUpload);
     this.mediaPluginService = new GalleryPluginService();
   }
@@ -175,7 +175,7 @@ ManageMediaSection.propTypes = {
 class AdvancedSettingsSection extends Component {
   constructor(props) {
     super(props);
-    this.modalsWithEditorCommands = props.experiments?.modalBaseActionHoc?.enabled;
+    this.modalsWithEditorCommands = props.experiments?.tiptapEditor?.enabled;
   }
 
   useNewSettingsUi = !!this.props.experiments?.newSettingsModals?.enabled;
@@ -278,7 +278,7 @@ export class GallerySettingsModal extends Component {
     };
     this.styles = mergeStyles({ styles, theme: props.theme });
     this.switchTab = this.switchTab.bind(this);
-    this.modalsWithEditorCommands = experiments.modalBaseActionHoc?.enabled;
+    this.modalsWithEditorCommands = experiments.tiptapEditor?.enabled;
   }
 
   useNewSettingsUi = !!this.props.experiments?.newSettingsModals?.enabled;

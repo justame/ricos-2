@@ -49,7 +49,7 @@ export class SettingsModal extends Component {
     activeTab: TABS.LAYOUT,
   };
 
-  modalsWithEditorCommands = this.props.experiments?.modalBaseActionHoc?.enabled;
+  modalsWithEditorCommands = this.props.experiments?.tiptapEditor?.enabled;
 
   state = {
     activeTab: this.props.activeTab,

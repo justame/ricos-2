@@ -3,7 +3,6 @@ export const EXPERIMENTS = [
   { name: 'tiptapEditor', scope: 'ricos' },
   { name: 'TiptapMockToolbar', scope: 'ricos' },
   { name: 'newFormattingToolbar', scope: 'ricos' },
-  { name: 'modalBaseActionHoc', scope: 'ricos' },
   { name: 'newSettingsModals', scope: 'ricos' },
   { name: 'newVideoVerticalAndSocialModals', scope: 'ricos' },
   { name: 'fixedTabSize', scope: 'ricos' },

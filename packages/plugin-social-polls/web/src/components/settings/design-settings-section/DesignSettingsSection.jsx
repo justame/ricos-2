@@ -24,7 +24,7 @@ export class DesignSettingsSection extends Component {
     [BACKGROUND_TYPE.GRADIENT]: 'Poll_PollSettings_Tab_Design_Section_Background_Gradient_Pick',
   };
 
-  modalsWithEditorCommands = this.props.experiments.modalBaseActionHoc?.enabled;
+  modalsWithEditorCommands = this.props.experiments.tiptapEditor?.enabled;
 
   styles = mergeStyles({ styles, theme: this.props.theme });
 

@@ -46,7 +46,7 @@ export default class ButtonInputModal extends Component {
     this.setScrollbarRef = element => {
       this.scrollbarRef = element;
     };
-    this.modalsWithEditorCommands = experiments.modalBaseActionHoc?.enabled;
+    this.modalsWithEditorCommands = experiments.tiptapEditor?.enabled;
   }
 
   useNewSettingsUi = !!this.props.experiments?.newSettingsModals?.enabled;

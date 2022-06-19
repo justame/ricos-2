@@ -16,7 +16,7 @@ import styles from './poll-settings-section.scss';
 export class PollSettingsSection extends Component {
   styles = mergeStyles({ styles, theme: this.props.theme });
 
-  modalsWithEditorCommands = this.props.experiments.modalBaseActionHoc?.enabled;
+  modalsWithEditorCommands = this.props.experiments.tiptapEditor?.enabled;
 
   useNewSettingsUi = !!this.props.experiments?.newSettingsModals?.enabled;
 

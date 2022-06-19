@@ -17,7 +17,7 @@ import { debounce } from 'lodash';
 class EditPollSectionComponent extends Component {
   styles = mergeStyles({ styles, theme: this.props.rce.theme });
 
-  modalsWithEditorCommands = this.props.experiments.modalBaseActionHoc?.enabled;
+  modalsWithEditorCommands = this.props.experiments.tiptapEditor?.enabled;
 
   static propTypes = {
     ...PollContextPropTypes,

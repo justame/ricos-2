@@ -19,7 +19,7 @@ import styles from './layout-settings-section.scss';
 export class LayoutSettingsSection extends Component {
   styles = mergeStyles({ styles, theme: this.props.theme });
 
-  modalsWithEditorCommands = this.props.experiments.modalBaseActionHoc?.enabled;
+  modalsWithEditorCommands = this.props.experiments.tiptapEditor?.enabled;
 
   useNewSettingsUi = !!this.props.experiments?.newSettingsModals?.enabled;
 

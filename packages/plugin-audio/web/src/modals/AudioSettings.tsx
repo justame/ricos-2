@@ -49,7 +49,7 @@ const AudioSettings = ({
   const [name, setName] = useState(initialState.name || '');
   const [authorName, setAuthorName] = useState(initialState.authorName || '');
   const [isLoadingImage, setIsLoadingImage] = useState(false);
-  const useModalBaseActionHoc = experiments?.modalBaseActionHoc?.enabled;
+  const modalsWithEditorCommands = experiments?.tiptapEditor?.enabled;
 
   const onDownlandToggle = () => {
     setIsDownloadEnabled(!isDownloadEnabled);
@@ -111,7 +111,7 @@ const AudioSettings = ({
       });
       helpers.closeModal();
     };
-    return useModalBaseActionHoc ? onCancel() : onClose();
+    return modalsWithEditorCommands ? onCancel() : onClose();
   };
 
   const handleCoverImageDelete = () => {
@@ -168,7 +168,7 @@ const AudioSettings = ({
     });
 
   useEffect(() => {
-    useModalBaseActionHoc
+    modalsWithEditorCommands
       ? updateData({
           ...componentData,
           name,

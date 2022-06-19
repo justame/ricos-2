@@ -30,7 +30,7 @@ class Separator extends Component {
   constructor(props) {
     super(props);
     this.styles = mergeStyles({ styles, theme: props.theme });
-    this.modalsWithEditorCommands = props.experiments.modalBaseActionHoc?.enabled;
+    this.modalsWithEditorCommands = props.experiments.tiptapEditor?.enabled;
   }
 
   render = () => {
@@ -52,7 +52,7 @@ class Separator extends Component {
 }
 
 class LayoutControlsSection extends Component {
-  modalsWithEditorCommands = this.props.experiments.modalBaseActionHoc?.enabled;
+  modalsWithEditorCommands = this.props.experiments.tiptapEditor?.enabled;
 
   controlsByLayout = [
     ['|', 'scrollDirection', '|', 'imageOrientation', '|', 'thumbnailSize', '|', 'spacing'], // collage
