@@ -47,6 +47,7 @@ export default class ReactPlayerWrapper extends Component {
       isLoaded,
       controls,
       className,
+      onContextMenu,
     } = this.props;
 
     return (
@@ -68,6 +69,7 @@ export default class ReactPlayerWrapper extends Component {
         muted={muted}
         data-loaded={isLoaded}
         className={className}
+        onContextMenu={onContextMenu}
       />
     );
   }
@@ -89,6 +91,7 @@ ReactPlayerWrapper.propTypes = {
   isLoaded: PropTypes.bool,
   controls: PropTypes.bool,
   className: PropTypes.string,
+  onContextMenu: PropTypes.func,
 };
 
 ReactPlayerWrapper.defaultProps = {

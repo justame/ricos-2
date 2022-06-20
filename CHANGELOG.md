@@ -26,6 +26,13 @@
 
 <hr/>
 
+## 8.71.29 (Jun 20, 2022)
+
+## :bug: Bug Fix
+
+- `video`
+  - [#4048](https:// github.com/wix/ricos/pull/4048) Fix right click while video download is disabled
+
 ## 8.71.28 (Jun 15, 2022)
 
 ## :bug: Bug Fix
