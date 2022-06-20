@@ -8,7 +8,6 @@ const AudioModal = props => {
     helpers: { closeModal },
     pubsub,
     experiments,
-    componentData,
   } = props;
 
   const { uploadService, updateService }: UploadContextType = experiments?.useUploadContext?.enabled
@@ -16,8 +15,7 @@ const AudioModal = props => {
     : {};
 
   const onReplace = audio => {
-    const newComponentData = { ...componentData, ...audio };
-    pubsub.set('componentData', newComponentData);
+    pubsub.set('componentData', audio);
   };
 
   return (

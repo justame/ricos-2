@@ -21,6 +21,7 @@
 
 - `audio`
   - [#4040](https://github.com/wix/ricos/pull/4040) fix audio replace on tiptap editor
+  - [#4049](https://github.com/wix/ricos/pull/4049) fix audio data on replace
 
 </details>
 
