@@ -26,7 +26,7 @@ const AudioUploadModal = props => {
   } = props;
 
   const id = `AudioUploadModal_FileInput_${Math.floor(Math.random() * 9999)}`;
-  let blockKey;
+  let blockKey = componentData?.id;
 
   const onUpload = obj => {
     if (onConfirm) {

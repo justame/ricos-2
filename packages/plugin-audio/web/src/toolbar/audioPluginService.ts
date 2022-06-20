@@ -6,9 +6,11 @@ export class AudioPluginService implements IMediaPluginService {
   createLoadingData(file: File, url: unknown, componentData: ComponentData) {
     const isCoverImageData = file.type.includes('image');
     if (isCoverImageData) return { componentData };
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { html, ...rest } = componentData;
     return {
       componentData: {
-        ...componentData,
+        ...rest,
         audio: { src: { id: url } },
         name: file.name.split('.')[0],
       },

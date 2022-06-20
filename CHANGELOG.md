@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `audio`
+  - [#4040](https://github.com/wix/ricos/pull/4040) fix audio replace on tiptap editor
+
 </details>
 
 <hr/>

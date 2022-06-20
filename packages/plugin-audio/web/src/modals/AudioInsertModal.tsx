@@ -56,6 +56,7 @@ const AudioInsertModal: React.FC<Props> = props => {
     pubsub,
     languageDir,
     experiments,
+    onReplace,
     helpers = {},
   } = props;
   const src = componentData?.audio?.src;
@@ -92,6 +93,9 @@ const AudioInsertModal: React.FC<Props> = props => {
       const { onConfirm } = props;
       if (onConfirm) {
         onConfirm({ ...rest, audio: { src: { url } } });
+      }
+      if (onReplace) {
+        onReplace({ ...rest, audio: { src: { url } } });
       } else {
         modalsWithEditorCommands
           ? setData?.({ ...rest, audio: { src: { url } } })
@@ -114,6 +118,9 @@ const AudioInsertModal: React.FC<Props> = props => {
         } else {
           if (onConfirm) {
             onConfirm({ ...rest, audio: { src: { url } }, html });
+          }
+          if (onReplace) {
+            onReplace({ ...rest, audio: { src: { url } }, html });
           } else {
             modalsWithEditorCommands
               ? setData?.({ ...rest, audio: { src: { url } }, html })
