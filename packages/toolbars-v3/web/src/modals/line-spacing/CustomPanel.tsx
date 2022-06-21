@@ -24,7 +24,7 @@ const LabeledInput = ({
         onChange={e => {
           onChange({ [name]: Number(e.target.value) + unit });
         }}
-        onMouseDown={event => event.stopPropagation()}
+        onClick={event => event.stopPropagation()}
       />
     </label>
   );
