@@ -21,7 +21,11 @@ export function autolink(options: AutolinkOptions): Plugin {
       const docChanges =
         transactions.some(transaction => transaction.docChanged) && !oldState.doc.eq(newState.doc);
 
-      if (!docChanges) {
+      const preventAutolink = transactions.some(transaction =>
+        transaction.getMeta('preventAutolink')
+      );
+
+      if (!docChanges || preventAutolink) {
         return;
       }
 

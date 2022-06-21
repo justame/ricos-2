@@ -22,7 +22,7 @@ const getSelectedMarkByType = (selection: Selection, type: MarkType) => {
   return mark;
 };
 
-const getSelectedMarkRangeByTypeNames = (
+export const getSelectedMarkRangeByTypeNames = (
   typeNames: string[],
   schema: Schema,
   selection: Selection
@@ -49,15 +49,14 @@ const isMarkInSelection = (mark: string, selection: Selection, doc: Node): boole
   return marks.includes(mark);
 };
 
-export const setCommand = (
+export const cleanAndSetSelection = (
   extensionName: string,
   extensionNameToRemove: string,
   unsetCommand: () => void,
   schema: Schema,
   selection: Selection,
   doc: Node,
-  commands: SingleCommands,
-  data
+  commands: SingleCommands
 ) => {
   const { from, to } = getSelectedMarkRangeByTypeNames(
     [extensionName, extensionNameToRemove],
@@ -68,6 +67,4 @@ export const setCommand = (
   isMarkInSelection(extensionNameToRemove, selection, doc) && unsetCommand();
 
   commands.setTextSelection({ from, to });
-
-  return commands.setMark(extensionName, data);
 };

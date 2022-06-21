@@ -3,7 +3,8 @@ import { convertRelObjectToString, convertRelStringToObject } from 'wix-rich-con
 import { EditIcon, TrashIcon } from '../icons';
 import {
   alwaysVisibleResolver,
-  getLinkData,
+  getUrlLinkData,
+  getAnchorLinkData,
   isTextContainsLinkResolver,
   isTextContainsAnchorResolver,
 } from '../resolvers/tiptapResolvers';
@@ -19,7 +20,7 @@ export const linkToolbarItemConfig: IToolbarItemConfigTiptap[] = [
     },
     attributes: {
       visible: isTextContainsAnchorResolver,
-      selectedLinkData: getLinkData,
+      selectedAnchorLinkData: getAnchorLinkData,
     },
     commands: {
       scrollToAnchor:
@@ -38,7 +39,16 @@ export const linkToolbarItemConfig: IToolbarItemConfigTiptap[] = [
     },
     attributes: {
       visible: isTextContainsLinkResolver,
-      selectedLinkData: getLinkData,
+      selectedUrlLinkData: getUrlLinkData,
+    },
+    commands: {},
+  },
+  {
+    id: 'separator',
+    type: 'separator',
+    presentation: {},
+    attributes: {
+      visible: alwaysVisibleResolver,
     },
     commands: {},
   },
@@ -78,6 +88,15 @@ export const linkToolbarItemConfig: IToolbarItemConfigTiptap[] = [
           editorCommands.chain().focus().unsetAnchor().run();
         },
     },
+  },
+  {
+    id: 'separator',
+    type: 'separator',
+    presentation: {},
+    attributes: {
+      visible: alwaysVisibleResolver,
+    },
+    commands: {},
   },
   {
     id: 'removeLink',

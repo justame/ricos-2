@@ -64,7 +64,7 @@ These are versions of extensions our extensions are based on
 
 - `editor.isEmpty` returns false for draft-originated content
 
-### @tiptap/extension-link@2.0.0-beta.33
+### @tiptap/extension-link@2.0.0-beta.38
 
 - LinkData
 

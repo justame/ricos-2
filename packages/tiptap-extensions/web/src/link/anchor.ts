@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import type { RicosExtension } from 'ricos-tiptap-types';
 import { findChildren } from '@tiptap/core';
 import styles from '../statics/styles.scss';
-import { setCommand } from './utils';
+import { cleanAndSetSelection, getSelectedMarkRangeByTypeNames } from './utils';
 import { Decoration_Type } from 'ricos-schema';
 
 declare module '@tiptap/core' {
@@ -31,10 +31,18 @@ export const anchor: RicosExtension = {
   createExtensionConfig() {
     return {
       name: this.name,
+      keepOnSplit: false,
+
+      priority: 1000,
 
       addOptions: () => ({
+        inclusive: false,
         HTMLAttributes: {},
       }),
+
+      inclusive() {
+        return this.options.inclusive;
+      },
 
       addAttributes() {
         return {
@@ -61,27 +69,32 @@ export const anchor: RicosExtension = {
         return {
           setAnchor:
             anchor =>
-            ({ commands, state, tr }) => {
-              return setCommand(
+            ({ commands, state, tr, chain }) => {
+              cleanAndSetSelection(
                 this.name,
                 Decoration_Type.LINK,
                 commands.unsetLink,
                 state.schema,
                 tr.selection,
                 state.doc,
-                commands,
-                {
-                  anchor,
-                }
+                commands
               );
+              return chain().setMark(this.name, { anchor }).setUnderline().run();
             },
 
           unsetAnchor:
             () =>
-            ({ commands, tr }) => {
-              const from = tr.selection.from;
-              commands.setTextSelection(from);
-              return commands.unsetMark(this.name, { extendEmptyMarkRange: true });
+            ({ tr, state, chain }) => {
+              const { from, to } = getSelectedMarkRangeByTypeNames(
+                [this.name],
+                state.schema,
+                tr.selection
+              );
+              return chain()
+                .setTextSelection({ from, to })
+                .unsetMark(this.name)
+                .unsetUnderline()
+                .run();
             },
           scrollToAnchor:
             anchor =>

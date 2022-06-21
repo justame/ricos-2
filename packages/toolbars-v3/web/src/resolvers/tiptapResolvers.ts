@@ -425,14 +425,32 @@ export const isPluginSelectedResolver = TiptapContentResolver.create(
   content => pluginSelectedResolvers.some(isPluginSelected => isPluginSelected.resolve(content))
 );
 
-export const getLinkData = TiptapContentResolver.create(RESOLVERS_IDS.GET_LINK_DATA, content => {
-  if (Array.isArray(content)) {
-    const node = content.find(node => {
-      return node.type.name === 'text';
-    });
-    if (node?.marks.some(mark => mark.type.name === Decoration_Type.LINK)) {
-      return node.marks[0].attrs.link;
+export const getUrlLinkData = TiptapContentResolver.create(
+  RESOLVERS_IDS.GET_URL_LINK_DATA,
+  content => {
+    if (Array.isArray(content)) {
+      const node = content.find(node => {
+        return node.type.name === 'text';
+      });
+      if (node?.marks.some(mark => mark.type.name === Decoration_Type.LINK)) {
+        return node.marks[0].attrs.link;
+      }
     }
+    return false;
   }
-  return false;
-});
+);
+
+export const getAnchorLinkData = TiptapContentResolver.create(
+  RESOLVERS_IDS.GET_ANCHOR_LINK_DATA,
+  content => {
+    if (Array.isArray(content)) {
+      const node = content.find(node => {
+        return node.type.name === 'text';
+      });
+      if (node?.marks.some(mark => mark.type.name === Decoration_Type.ANCHOR)) {
+        return node.marks[0].attrs.anchor;
+      }
+    }
+    return false;
+  }
+);

@@ -4,8 +4,8 @@ import styles from './UrlLinkButton.scss';
 import { normalizeUrl } from 'wix-rich-content-common';
 
 const UrlLinkButton = ({ toolbarItem, dataHook }: { toolbarItem; dataHook?: string }) => {
-  const selectedLinkData = toolbarItem.attributes.selectedLinkData;
-  const { url = '', rel = '', target = '_self' } = parseLink(selectedLinkData);
+  const selectedUrlLinkData = toolbarItem.attributes.selectedUrlLinkData;
+  const { url = '', rel = '', target = '_self' } = parseLink(selectedUrlLinkData);
   const href = normalizeUrl(url);
   return (
     <div className={styles.toolbarUrlContainer}>

@@ -11,7 +11,7 @@ import { autolink } from './helpers/autolink';
 import { clickHandler } from './helpers/clickHandler';
 import { pasteHandler } from './helpers/pasteHandler';
 import { RicosLink } from './models';
-import { setCommand } from './utils';
+import { cleanAndSetSelection, getSelectedMarkRangeByTypeNames } from './utils';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -41,6 +41,7 @@ export const link: RicosExtension = {
     return {
       ...config,
       addOptions: () => ({
+        inclusive: false,
         openOnClick: false,
         linkOnPaste: true,
         autolink: true,
@@ -57,7 +58,7 @@ export const link: RicosExtension = {
       priority: 1000,
 
       inclusive() {
-        return this.options.autolink;
+        return this.options.inclusive;
       },
 
       addAttributes() {
@@ -85,29 +86,44 @@ export const link: RicosExtension = {
         return {
           setLink:
             (link: LinkData) =>
-            ({ commands, tr, state }) => {
-              return setCommand(
+            ({ commands, tr, state, chain }) => {
+              cleanAndSetSelection(
                 this.name,
                 Decoration_Type.ANCHOR,
                 commands.unsetAnchor,
                 state.schema,
                 tr.selection,
                 state.doc,
-                commands,
-                link
+                commands
               );
+              return chain()
+                .setMark(this.name, link)
+                .setUnderline()
+                .setMeta('preventAutolink', true)
+                .run();
             },
           toggleLink:
             (link: LinkData) =>
-            ({ commands }) => {
-              return commands.toggleMark(this.name, link, { extendEmptyMarkRange: true });
+            ({ chain }) => {
+              return chain()
+                .toggleMark(this.name, link, { extendEmptyMarkRange: true })
+                .setMeta('preventAutolink', true)
+                .run();
             },
           unsetLink:
             () =>
-            ({ commands, tr }) => {
-              const from = tr.selection.from;
-              commands.setTextSelection(from);
-              return commands.unsetMark(this.name, { extendEmptyMarkRange: true });
+            ({ tr, chain, state }) => {
+              const { from, to } = getSelectedMarkRangeByTypeNames(
+                [this.name],
+                state.schema,
+                tr.selection
+              );
+              return chain()
+                .setTextSelection({ from, to })
+                .unsetMark(this.name)
+                .unsetUnderline()
+                .setMeta('preventAutolink', true)
+                .run();
             },
         };
       },
