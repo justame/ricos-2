@@ -65,4 +65,45 @@ describe('Document Style', () => {
     };
     expect(documentStyleContent).toStrictEqual(expected);
   });
+
+  it('Should setStyle match expected', () => {
+    const documentStyleContent = new DocumentStyle(documentStyle)
+      .setStyle('headerOne', {
+        decorations,
+        lineHeight: '5',
+      })
+      .toContent();
+    const expected = {
+      headerOne: {
+        decorations,
+        lineHeight: '5',
+      },
+      paragraph: {
+        decorations,
+      },
+    };
+    expect(documentStyleContent).toStrictEqual(expected);
+  });
+
+  it('Should overrideWith match expected', () => {
+    const documentStyleContent = new DocumentStyle(documentStyle)
+      .overrideWith({
+        headerOne: {
+          decorations,
+          lineHeight: '5',
+        },
+      })
+      .toContent();
+
+    const expected = {
+      headerOne: {
+        decorations,
+        lineHeight: '5',
+      },
+      paragraph: {
+        decorations,
+      },
+    };
+    expect(documentStyleContent).toStrictEqual(expected);
+  });
 });

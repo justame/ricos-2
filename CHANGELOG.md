@@ -23,6 +23,12 @@
   - [#4040](https://github.com/wix/ricos/pull/4040) fix audio replace on tiptap editor
   - [#4049](https://github.com/wix/ricos/pull/4049) fix audio data on replace
 
+## :house: Internal
+
+- `tiptap-extensions`
+  - [#4053](https://github.com/wix/ricos/pull/4053) bold/italic toggles with styles (theme,documentStyle) support
+  - [#4055](https://github.com/wix/ricos/pull/4055) update document style command
+
 </details>
 
 <hr/>

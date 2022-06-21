@@ -6,6 +6,7 @@ import type {
   Decoration_Type,
   TextStyle,
   NodeStyle,
+  TextNodeStyle,
 } from 'ricos-schema';
 import type { RicosTheme } from 'ricos-types';
 import type { TextDecoration } from './decoration';
@@ -71,11 +72,19 @@ export interface DocumentStyle {
    * DocumentStyle modification
    *
    * @param {TextNodeType} type
-   * @param {Decoration[]} decorations
+   * @param {TextNodeStyle} textNodeStyle
    * @returns  {DocumentStyle}
    * @memberof DocumentStyle
    */
-  setStyle(type: TextNodeType, decorations: Decoration[]): DocumentStyle;
+  setStyle(type: TextNodeType, textNodeStyle: TextNodeStyle): DocumentStyle;
+  /**
+   * DocumentStyle modification
+   *
+   * @param {RichContentDocumentStyle} documentStyle
+   * @returns  {DocumentStyle}
+   * @memberof DocumentStyle
+   */
+  overrideWith(documentStyle: RichContentDocumentStyle): DocumentStyle;
 }
 
 /**

@@ -1,21 +1,26 @@
-import type { Node, Decoration_Type, Decoration } from 'ricos-schema';
+import type { Node, Decoration_Type, Decoration, DocumentStyle } from 'ricos-schema';
 import { Node_Type } from 'ricos-schema';
 import type { RicosExtension } from 'ricos-tiptap-types';
 import type { Styles } from 'ricos-styles';
+import { DocumentStyle as RicosDocumentStyle } from 'ricos-styles';
 import { fromTiptapNode } from 'ricos-converters';
 import type { ParagraphNode, HeadingNode } from 'ricos-content';
-import type { CommandProps } from '@tiptap/core';
+import type { Command, CommandProps } from '@tiptap/core';
 
 declare module '@tiptap/core' {
   interface Commands {
     styles: {
       /**
-       *
+       * returns decoration object from selected node according to ricos-styles
        */
       getStylesDecorationBySelectedNode: (
         styles: Styles,
         decorationType: Decoration_Type
       ) => (props: CommandProps) => Decoration;
+      /**
+       * updates the document style
+       */
+      updateDocumentStyle: (documentStyle: DocumentStyle) => Command;
     };
   }
 }
@@ -23,7 +28,7 @@ declare module '@tiptap/core' {
 export const ricosStyles: RicosExtension = {
   type: 'extension' as const,
   groups: [],
-  name: 'ricos-styles',
+  name: 'ricos-styles-commands',
   createExtensionConfig() {
     return {
       name: this.name,
@@ -41,6 +46,15 @@ export const ricosStyles: RicosExtension = {
                 }
               });
               return styles.getDecoration(node as ParagraphNode | HeadingNode, decorationType);
+            },
+          updateDocumentStyle:
+            (documentStyle: DocumentStyle) =>
+            ({ state }) => {
+              const updatedDocumentStyle = new RicosDocumentStyle(state.doc.attrs.documentStyle)
+                .overrideWith(documentStyle)
+                .toContent();
+              state.doc.attrs.documentStyle = updatedDocumentStyle;
+              return true;
             },
         };
       },

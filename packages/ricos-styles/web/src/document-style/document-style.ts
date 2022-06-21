@@ -1,7 +1,7 @@
 import type {
-  Decoration,
   Decoration_Type,
   DocumentStyle as RichContentDocumentStyle,
+  TextNodeStyle,
 } from 'ricos-schema';
 import { Decorations } from '../decorations';
 import type { TextDecoration } from '../models/decoration';
@@ -47,7 +47,16 @@ export default class RicosDocumentStyle implements DocumentStyle {
     return this.documentStyle;
   }
 
-  setStyle(nodeType: TextNodeType, decorations: Decoration[]) {
-    return new RicosDocumentStyle({ ...this.documentStyle, [nodeType]: { decorations } });
+  setStyle(nodeType: TextNodeType, textNodeStyle: TextNodeStyle) {
+    return new RicosDocumentStyle({ ...this.documentStyle, [nodeType]: { ...textNodeStyle } });
+  }
+
+  overrideWith(documentStyle: RichContentDocumentStyle) {
+    return (
+      Object.entries(documentStyle) as [keyof RichContentDocumentStyle, TextNodeStyle][]
+    ).reduce(
+      (acc, [key, style]) => acc.setStyle(key, style),
+      new RicosDocumentStyle(this.documentStyle)
+    );
   }
 }
