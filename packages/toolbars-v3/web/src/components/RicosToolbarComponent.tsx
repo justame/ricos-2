@@ -6,6 +6,7 @@ import { RicosToolbar } from '../RicosToolbar';
 import { ToolbarItemCreator } from '../ToolbarItemCreator';
 import type { Node } from 'prosemirror-model';
 import type { IToolbarItemConfigTiptap } from '../types';
+import type { Styles } from 'ricos-styles';
 
 interface RicosToolbarProps {
   content: Content<Node[]>;
@@ -17,6 +18,7 @@ interface RicosToolbarProps {
   maxWidth?: number;
   // eslint-disable-next-line @typescript-eslint/ban-types
   toolbarItemsRenders: Record<string, Function>;
+  styles?: Styles;
 }
 interface RicosToolbarState {}
 
@@ -24,13 +26,14 @@ class RicosToolbarComponent extends Component<RicosToolbarProps, RicosToolbarSta
   toolbar: RicosToolbar | null = null;
 
   componentDidMount() {
-    const { content, editorCommands, toolbarItemsConfig, onLoad } = this.props;
+    const { content, editorCommands, toolbarItemsConfig, onLoad, styles } = this.props;
 
     this.toolbar = RicosToolbar.create({
       toolbarItemCreators: toolbarItemsConfig.map(config => ToolbarItemCreator.create(config)),
       content,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       editorCommands,
+      styles,
     });
 
     this.forceUpdate();

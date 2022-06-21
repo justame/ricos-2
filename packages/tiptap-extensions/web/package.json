@@ -50,6 +50,9 @@
     "wix-rich-content-editor-common": "8.71.30",
     "wix-rich-content-plugin-unsupported-blocks": "8.71.30"
   },
+  "devDependencies": {
+    "ricos-styles": "8.71.30"
+  },
   "jest": {
     "globals": {
       "NODE_ENV": "test"

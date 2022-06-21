@@ -1,6 +1,7 @@
 import { markInputRule, markPasteRule, mergeAttributes } from '@tiptap/core';
 import { Decoration_Type } from 'ricos-schema';
 import type { DOMOutputSpec, RicosExtension } from 'ricos-tiptap-types';
+import type { Styles } from 'ricos-styles';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -12,7 +13,7 @@ declare module '@tiptap/core' {
       /**
        * Toggle a bold mark
        */
-      toggleBold: () => ReturnType;
+      toggleBold: (styles: Styles) => ReturnType;
       /**
        * Unset a bold mark
        */
@@ -39,6 +40,12 @@ export const bold: RicosExtension = {
         };
       },
 
+      addAttributes() {
+        return {
+          fontWeightValue: { default: 700 },
+        };
+      },
+
       parseHTML() {
         return [
           {
@@ -56,11 +63,12 @@ export const bold: RicosExtension = {
       },
 
       renderHTML({ HTMLAttributes }) {
-        return [
-          'strong',
-          mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
-          0,
-        ] as DOMOutputSpec;
+        const { fontWeightValue, ..._ } = mergeAttributes(
+          this.options.HTMLAttributes,
+          HTMLAttributes
+        );
+
+        return ['strong', { style: `font-weight: ${fontWeightValue}` }, 0] as DOMOutputSpec;
       },
 
       addCommands() {
@@ -71,9 +79,15 @@ export const bold: RicosExtension = {
               return commands.setMark(this.name);
             },
           toggleBold:
-            () =>
+            (styles: Styles) =>
             ({ commands }) => {
-              return commands.toggleMark(this.name);
+              const fontWeightValue = commands.getStylesDecorationBySelectedNode(styles, this.name)
+                .fontWeightValue
+                ? 400
+                : 700;
+              return commands.toggleMark(this.name, {
+                fontWeightValue,
+              });
             },
           unsetBold:
             () =>

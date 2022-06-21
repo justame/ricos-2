@@ -25,3 +25,4 @@ export { commonNodeCommands } from './common-node-commands';
 export { lineSpacing } from './line-spacing';
 export { indent } from './indent';
 export { anchor } from './link/anchor';
+export { ricosStyles } from './ricos-styles';

@@ -102,7 +102,7 @@ describe('to Tiptap', () => {
               marks: [
                 {
                   type: Decoration_Type.BOLD,
-                  fontWeightValue: 700,
+                  attrs: { fontWeightValue: 700 },
                 },
               ],
               attrs: {

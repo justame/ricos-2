@@ -5,10 +5,10 @@ export const italicConverter: TiptapMarkConverter = {
   fromTiptap: {
     type: Decoration_Type.ITALIC,
     convert: mark => {
-      const { type: _, ...data } = mark;
+      const { type: _, attrs } = mark;
       return {
         type: Decoration_Type.ITALIC,
-        ...data,
+        ...attrs,
       };
     },
   },
@@ -18,7 +18,7 @@ export const italicConverter: TiptapMarkConverter = {
       const { type: _, ...data } = decoration;
       return {
         type: Decoration_Type.ITALIC,
-        ...data,
+        attrs: { ...data },
       };
     },
   },

@@ -1,4 +1,5 @@
 import type { ReactElement } from 'react';
+import type { HeadingNode, ParagraphNode } from 'ricos-content';
 import type {
   DocumentStyle as RichContentDocumentStyle,
   Decoration,
@@ -97,7 +98,7 @@ export interface Styles {
    * @returns  {Decoration}
    * @memberof Styles
    */
-  getDecoration(type: TextNodeType, decoration: Decoration_Type): Decoration;
+  getDecoration(type: ParagraphNode | HeadingNode, decoration: Decoration_Type): Decoration;
   /**
    * Extracts given text style (line height) settings for specific node type from the current Document Style and Theme conjunction
    *
@@ -106,7 +107,7 @@ export interface Styles {
    * @returns  {Omit<TextStyle, 'textAlignment'>}
    * @memberof Styles
    */
-  getTextStyle(type: TextNodeType): Omit<TextStyle, 'textAlignment'>;
+  getTextStyle(type: ParagraphNode | HeadingNode): Omit<TextStyle, 'textAlignment'>;
   /**
    * Extracts given node style (margins) settings for specific node type from the current Document Style and Theme conjunction
    *
@@ -115,7 +116,7 @@ export interface Styles {
    * @returns  {NodeStyle}
    * @memberof Styles
    */
-  getNodeStyle(type: TextNodeType): NodeStyle;
+  getNodeStyle(type: ParagraphNode | HeadingNode): NodeStyle;
   /**
    * Exposes TextualTheme
    *

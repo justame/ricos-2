@@ -12,7 +12,7 @@ import toCamelCase from 'to-camel-case';
 import { fromTiptap, fromTiptapNode, toTiptap, toTiptapNodeAttrs } from './tiptap-converters';
 import type { TiptapNode } from './types';
 export * from './types';
-export { fromTiptap, toTiptap };
+export { fromTiptap, toTiptap, fromTiptapNode };
 
 const normalizeRichContent = flow(RichContent.fromJSON, RichContent.toJSON);
 

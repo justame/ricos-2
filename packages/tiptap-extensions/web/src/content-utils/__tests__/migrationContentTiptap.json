@@ -21,7 +21,9 @@
           "marks": [
             {
               "type": "BOLD",
-              "fontWeightValue": 700
+              "attrs": {
+                "fontWeightValue": 700
+              }
             },
             {
               "type": "FONT_SIZE",
@@ -49,7 +51,9 @@
           "marks": [
             {
               "type": "UNDERLINE",
-              "underlineData": true
+              "attrs": {
+                "underlineData": true
+              }
             }
           ],
           "attrs": {
@@ -70,7 +74,9 @@
           "marks": [
             {
               "type": "ITALIC",
-              "italicData": true
+              "attrs": {
+                "italicData": true
+              }
             }
           ],
           "attrs": {
@@ -91,7 +97,9 @@
           "marks": [
             {
               "type": "BOLD",
-              "fontWeightValue": 700
+              "attrs": {
+                "fontWeightValue": 700
+              }
             }
           ],
           "attrs": {
@@ -104,11 +112,15 @@
           "marks": [
             {
               "type": "BOLD",
-              "fontWeightValue": 700
+              "attrs": {
+                "fontWeightValue": 700
+              }
             },
             {
               "type": "UNDERLINE",
-              "underlineData": true
+              "attrs": {
+                "underlineData": true
+              }
             }
           ],
           "attrs": {
@@ -121,7 +133,9 @@
           "marks": [
             {
               "type": "UNDERLINE",
-              "underlineData": true
+              "attrs": {
+                "underlineData": true
+              }
             }
           ],
           "attrs": {
@@ -156,7 +170,9 @@
             },
             {
               "type": "UNDERLINE",
-              "underlineData": true
+              "attrs": {
+                "underlineData": true
+              }
             }
           ],
           "attrs": {
@@ -284,7 +300,9 @@
             },
             {
               "type": "UNDERLINE",
-              "underlineData": true
+              "attrs": {
+                "underlineData": true
+              }
             }
           ],
           "attrs": {
@@ -311,7 +329,9 @@
             },
             {
               "type": "UNDERLINE",
-              "underlineData": true
+              "attrs": {
+                "underlineData": true
+              }
             }
           ],
           "attrs": {
@@ -1066,7 +1086,7 @@
     {
       "type": "BLOCKQUOTE",
       "attrs": {
-        "paragraphId": "p664q20",
+        "paragraphId": "074my20",
         "textStyle": {
           "textAlignment": "AUTO"
         },
@@ -1088,7 +1108,9 @@
           "marks": [
             {
               "type": "BOLD",
-              "fontWeightValue": 700
+              "attrs": {
+                "fontWeightValue": 700
+              }
             }
           ],
           "attrs": {
@@ -1109,7 +1131,9 @@
           "marks": [
             {
               "type": "UNDERLINE",
-              "underlineData": true
+              "attrs": {
+                "underlineData": true
+              }
             }
           ],
           "attrs": {
@@ -1999,7 +2023,7 @@
                 {
                   "type": "BLOCKQUOTE",
                   "attrs": {
-                    "paragraphId": "77nqc63",
+                    "paragraphId": "ki61363",
                     "textStyle": {
                       "textAlignment": "AUTO"
                     },
@@ -2041,7 +2065,9 @@
                       "marks": [
                         {
                           "type": "BOLD",
-                          "fontWeightValue": 700
+                          "attrs": {
+                            "fontWeightValue": 700
+                          }
                         }
                       ],
                       "attrs": {
@@ -2162,7 +2188,9 @@
                       "marks": [
                         {
                           "type": "BOLD",
-                          "fontWeightValue": 700
+                          "attrs": {
+                            "fontWeightValue": 700
+                          }
                         }
                       ],
                       "attrs": {

@@ -16,6 +16,7 @@ import {
   lineSpacing,
   indent,
   anchor,
+  ricosStyles,
 } from 'wix-tiptap-extensions';
 
 export const commonExtensions: RicosExtension[] = [
@@ -35,4 +36,5 @@ export const commonExtensions: RicosExtension[] = [
   indent,
   commonNodeCommands,
   anchor,
+  ricosStyles,
 ];

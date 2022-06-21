@@ -4,10 +4,12 @@ import type { EditorCommands } from 'wix-rich-content-common';
 import EventEmitter from './lib/EventEmitter';
 import type { Content } from './Content';
 import { ToolbarItem } from './ToolbarItemCreator';
+import type { Styles } from 'ricos-styles';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ToolbarItemCreator = (
   content: Content<unknown>,
-  editorCommands: EditorCommands
+  editorCommands: EditorCommands,
+  styles?: Styles
 ) => ToolbarItem;
 
 type RicosToolbarProps = {
@@ -15,6 +17,7 @@ type RicosToolbarProps = {
   content: Content<unknown>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   editorCommands: any;
+  styles?: Styles;
 };
 
 export class RicosToolbar extends EventEmitter {
@@ -24,22 +27,25 @@ export class RicosToolbar extends EventEmitter {
 
   private editorCommands;
 
+  private styles?: Styles;
+
   private toolbarItems: ToolbarItem[] = [];
 
   private toolbarItemCreators: ToolbarItemCreator[];
 
   private content: Content<unknown>;
 
-  static create({ toolbarItemCreators, content, editorCommands }: RicosToolbarProps) {
-    return new RicosToolbar({ toolbarItemCreators, content, editorCommands });
+  static create({ toolbarItemCreators, content, editorCommands, styles }: RicosToolbarProps) {
+    return new RicosToolbar({ toolbarItemCreators, content, editorCommands, styles });
   }
 
-  private constructor({ toolbarItemCreators, content, editorCommands }: RicosToolbarProps) {
+  private constructor({ toolbarItemCreators, content, editorCommands, styles }: RicosToolbarProps) {
     super();
     this.toolbarItems = [];
     this.toolbarItemCreators = toolbarItemCreators;
     this.content = content;
     this.editorCommands = editorCommands;
+    this.styles = styles;
 
     this.createToolbarItems();
   }
@@ -50,7 +56,7 @@ export class RicosToolbar extends EventEmitter {
 
   private createToolbarItems() {
     this.toolbarItems = this.toolbarItemCreators.map(toolbarItemCreator => {
-      const toolbarItem = toolbarItemCreator(this.content, this.editorCommands);
+      const toolbarItem = toolbarItemCreator(this.content, this.editorCommands, this.styles);
       toolbarItem.on(ToolbarItem.EVENTS.ATTRIBUTES_CHANGED, this.handleToolbarItemChanged);
       return toolbarItem;
     });

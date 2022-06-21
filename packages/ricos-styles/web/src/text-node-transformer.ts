@@ -42,9 +42,13 @@ export class TextNodeTransformer {
     return this.node[dataKey].textStyle || {};
   }
 
-  toDocumentStyle(): DocumentStyle {
+  getDocumentStyleKey = () => {
     const level = this.node.type === Node_Type.HEADING ? this.node.headingData.level : undefined;
-    const type = nodeTypeToDocumentKeyMap[level ? (this.node.type, level) : this.node.type];
+    return nodeTypeToDocumentKeyMap[level ? (this.node.type, level) : this.node.type];
+  };
+
+  toDocumentStyle(): DocumentStyle {
+    const type = this.getDocumentStyleKey();
     return {
       [type]: {
         decorations: this.getDecorations(),

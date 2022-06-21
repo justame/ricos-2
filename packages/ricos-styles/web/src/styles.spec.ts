@@ -1,7 +1,9 @@
 import type { RicosTheme } from 'ricos-types';
+import { Node_Type } from 'ricos-schema';
 import { Decoration_Type } from 'ricos-types';
 import { decorations, customStyle } from './tests/test-cases';
 import Styles from './styles';
+import type { HeadingNode, ParagraphNode } from 'ricos-content';
 
 describe('Styles', () => {
   it('Should getDecoration match document style decoration ', () => {
@@ -16,7 +18,13 @@ describe('Styles', () => {
       },
     };
     const styles = new Styles().setTheme(theme).setDocumentStyle(documentStyle);
-    const decoration = styles.getDecoration('headerOne', Decoration_Type.COLOR);
+    const headingNode = {
+      type: Node_Type.HEADING,
+      headingData: { level: 1 },
+      id: '',
+      nodes: [],
+    } as HeadingNode;
+    const decoration = styles.getDecoration(headingNode, Decoration_Type.COLOR);
     expect(decoration).toEqual({
       colorData: {
         foreground: '#414141',
@@ -38,7 +46,13 @@ describe('Styles', () => {
       },
     };
     const styles = new Styles().setTheme(theme).setDocumentStyle(documentStyle);
-    const decoration = styles.getDecoration('paragraph', Decoration_Type.COLOR);
+    const paragraphNode = {
+      type: Node_Type.PARAGRAPH,
+      id: '',
+      nodes: [],
+      paragraphData: {},
+    } as ParagraphNode;
+    const decoration = styles.getDecoration(paragraphNode, Decoration_Type.COLOR);
     expect(decoration).toEqual({
       colorData: {
         foreground: '#888888',

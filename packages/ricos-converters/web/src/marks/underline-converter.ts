@@ -5,10 +5,10 @@ export const underlineConverter: TiptapMarkConverter = {
   fromTiptap: {
     type: Decoration_Type.UNDERLINE,
     convert: mark => {
-      const { type: _, ...data } = mark;
+      const { type: _, attrs } = mark;
       return {
         type: Decoration_Type.UNDERLINE,
-        ...data,
+        ...attrs,
       };
     },
   },
@@ -18,7 +18,7 @@ export const underlineConverter: TiptapMarkConverter = {
       const { type: _, ...data } = decoration;
       return {
         type: Decoration_Type.UNDERLINE,
-        ...data,
+        attrs: { ...data },
       };
     },
   },

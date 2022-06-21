@@ -5,6 +5,7 @@ import type { ToolbarContextType } from 'ricos-context';
 import type { TranslationFunction } from 'ricos-types';
 import type { TiptapContentResolver } from './ContentResolver';
 import type { PLUGIN_TOOLBAR_BUTTON_ID } from 'wix-rich-content-editor-common';
+import type { Styles } from 'ricos-styles';
 
 export type IToolbarItem = {
   id: string;
@@ -42,6 +43,7 @@ type Command = ({
 type TiptapCommand = ({
   attributes,
   editorCommands,
+  styles,
 }: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   attributes: any;
@@ -49,6 +51,7 @@ type TiptapCommand = ({
   // editorCommands: Editor;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   editorCommands: any;
+  styles?: Styles;
 }) => (args) => void;
 
 export type IToolbarItemConfig = Modify<

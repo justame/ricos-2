@@ -5,10 +5,10 @@ export const boldConverter: TiptapMarkConverter = {
   fromTiptap: {
     type: Decoration_Type.BOLD,
     convert: mark => {
-      const { type: _, ...data } = mark;
+      const { type: _, attrs } = mark;
       return {
         type: Decoration_Type.BOLD,
-        ...data,
+        ...attrs,
       };
     },
   },
@@ -18,7 +18,7 @@ export const boldConverter: TiptapMarkConverter = {
       const { type: _, ...data } = decoration;
       return {
         type: Decoration_Type.BOLD,
-        ...data,
+        attrs: { ...data },
       };
     },
   },

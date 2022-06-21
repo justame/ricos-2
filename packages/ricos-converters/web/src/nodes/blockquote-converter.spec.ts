@@ -16,7 +16,9 @@ describe('Blockquote converter', () => {
         marks: [
           {
             type: Decoration_Type.UNDERLINE,
-            underlineData: true,
+            attrs: {
+              underlineData: true,
+            },
           },
         ],
       },
