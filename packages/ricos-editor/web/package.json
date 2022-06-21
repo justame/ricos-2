@@ -1,6 +1,6 @@
 {
   "name": "ricos-editor",
-  "version": "8.71.29",
+  "version": "8.71.30",
   "author": {
     "name": "Matan Harsat",
     "email": "matanha@wix.com"
@@ -46,24 +46,24 @@
   "dependencies": {
     "fp-ts": "^2.11.0",
     "react-modal": "~3.4.1",
-    "ricos-common": "8.71.29",
-    "ricos-content": "8.71.29",
-    "ricos-content-query": "8.71.29",
-    "ricos-context": "8.71.29",
-    "ricos-converters": "8.71.29",
-    "ricos-modals": "8.71.29",
-    "ricos-plugins": "8.71.29",
-    "ricos-schema": "8.71.29",
-    "ricos-shortcuts": "8.71.29",
-    "ricos-styles": "8.71.29",
-    "ricos-tiptap-types": "8.71.29",
+    "ricos-common": "8.71.30",
+    "ricos-content": "8.71.30",
+    "ricos-content-query": "8.71.30",
+    "ricos-context": "8.71.30",
+    "ricos-converters": "8.71.30",
+    "ricos-modals": "8.71.30",
+    "ricos-plugins": "8.71.30",
+    "ricos-schema": "8.71.30",
+    "ricos-shortcuts": "8.71.30",
+    "ricos-styles": "8.71.30",
+    "ricos-tiptap-types": "8.71.30",
     "uuid": "^3.4.0",
-    "wix-rich-content-common": "8.71.29",
-    "wix-rich-content-editor": "8.71.29",
-    "wix-rich-content-editor-common": "8.71.29",
-    "wix-rich-content-toolbars-new": "8.71.29",
-    "wix-rich-content-toolbars-v3": "8.71.29",
-    "wix-tiptap-editor": "8.71.29"
+    "wix-rich-content-common": "8.71.30",
+    "wix-rich-content-editor": "8.71.30",
+    "wix-rich-content-editor-common": "8.71.30",
+    "wix-rich-content-toolbars-new": "8.71.30",
+    "wix-rich-content-toolbars-v3": "8.71.30",
+    "wix-tiptap-editor": "8.71.30"
   },
   "jest": {
     "globals": {
