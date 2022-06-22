@@ -18,8 +18,8 @@ class ButtonComponent extends Component {
       config,
       helpers,
       anchorTarget,
+      theme,
     } = this.props;
-    const { theme } = this.props;
     const { colors: { actionColor, bgColor } = {} } = themeData || config?.themeData || {};
     const buttonText = button.settings.buttonText;
     const url = button.settings?.url;
@@ -57,11 +57,8 @@ ButtonComponent.propTypes = {
   componentData: PropTypes.object,
   style: PropTypes.object,
   anchorTarget: PropTypes.string,
-  buttonObj: PropTypes.object,
   settings: PropTypes.object.isRequired,
-  blockProps: PropTypes.object,
   theme: PropTypes.object.isRequired,
-  themeData: PropTypes.object.isRequired,
   helpers: PropTypes.object,
   config: PropTypes.object,
 };
