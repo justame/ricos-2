@@ -142,7 +142,7 @@ const createInsertButtons: CreateInsertButtons = ({
             ...styles,
             ...DesktopOverlayModalStyles,
           },
-          fullScreen: false,
+          fullScreen: isMobile,
           isMobile,
         }),
         toolbars: [TOOLBARS.INSERT_PLUGIN],

@@ -122,7 +122,7 @@ const createInsertButtons: CreateInsertButtons = ({
           ...customStyles,
           ...DesktopOverlayModalStyles,
         },
-        fullScreen: false,
+        fullScreen: isMobile,
         isMobile,
       }),
     }));
