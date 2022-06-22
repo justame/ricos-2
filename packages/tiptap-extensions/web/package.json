@@ -51,6 +51,9 @@
     "wix-rich-content-editor-common": "8.71.30",
     "wix-rich-content-plugin-unsupported-blocks": "8.71.30"
   },
+  "peerDependencies": {
+    "lodash": "^4.0.0"
+  },
   "jest": {
     "globals": {
       "NODE_ENV": "test"
