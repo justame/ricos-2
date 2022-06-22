@@ -104,6 +104,13 @@ export const tiptapExtensions = [
     }),
     Component: CollapsibleListItemTitle,
     name: TIPTAP_COLLAPSIBLE_ITEM_TITLE_TYPE,
+    placeholder: {
+      predicate: ({ doc, pos }) => {
+        const parentNode = doc.resolve(pos).parent;
+        return parentNode.type.name === TIPTAP_COLLAPSIBLE_ITEM_TITLE_TYPE;
+      },
+      content: 'CollapsibleList_ShownText_Placeholder',
+    },
     createExtensionConfig() {
       return {
         name: this.name,
@@ -127,6 +134,13 @@ export const tiptapExtensions = [
     }),
     Component: CollapsibleListItemBody,
     name: TIPTAP_COLLAPSIBLE_ITEM_BODY_TYPE,
+    placeholder: {
+      predicate: ({ doc, pos }) => {
+        const parentNode = doc.resolve(pos).parent;
+        return parentNode.type.name === TIPTAP_COLLAPSIBLE_ITEM_BODY_TYPE;
+      },
+      content: 'CollapsibleList_CollapsedText_Placeholder',
+    },
     createExtensionConfig() {
       return {
         name: this.name,

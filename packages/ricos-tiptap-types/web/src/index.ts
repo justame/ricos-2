@@ -10,6 +10,7 @@ import type {
 import { MarkConfig, NodeConfig } from '@tiptap/core';
 import type { Editor, NodeViewContent } from '@tiptap/react';
 import type { Plugin as IPlugin, PluginKey as IPluginKey } from 'prosemirror-state';
+import type { Node as ProsemirrorNode } from 'prosemirror-model';
 import type { ComponentType } from 'react';
 import type {
   Decoration_Type,
@@ -72,6 +73,14 @@ export type RicosNodeExtension = {
   type: 'node';
   groups: Group[];
   settings?: Record<string, unknown>;
+  placeholder?: {
+    predicate: (PlaceholderProps: {
+      editor: Editor;
+      node: ProsemirrorNode;
+      pos: number;
+    }) => boolean;
+    content: string;
+  };
   reconfigure?: (
     config: NodeConfig,
     extensions: RicosExtension[],

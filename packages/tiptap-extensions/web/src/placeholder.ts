@@ -1,6 +1,12 @@
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
-import type { ExtensionProps, RicosExtension, RicosExtensionConfig } from 'ricos-tiptap-types';
+import type {
+  ExtensionProps,
+  RicosExtension,
+  RicosExtensionConfig,
+  RicosNodeExtension,
+} from 'ricos-tiptap-types';
+import { compact } from 'lodash';
 
 export const placeholder: RicosExtension = {
   type: 'extension' as const,
@@ -15,11 +21,16 @@ export const placeholder: RicosExtension = {
     addOptions() {
       return {
         emptyEditorClass: 'is-editor-empty',
-        emptyNodeClass: 'is-empty',
+        emptyNodeClass: 'is-node-empty',
         placeholder: ricosProps.placeholder || '',
         showOnlyWhenEditable: true,
         showOnlyCurrent: true,
         includeChildren: false,
+        extensionsPlaceholders: compact(
+          _extensions
+            .filter(ext => ext.type === 'node')
+            .map((ext: RicosNodeExtension) => ext.placeholder)
+        ),
       };
     },
   }),
@@ -29,7 +40,7 @@ export const placeholder: RicosExtension = {
       addProseMirrorPlugins() {
         return [
           new Plugin({
-            key: new PluginKey('placeholder'),
+            key: new PluginKey('editor-placeholder'),
             props: {
               decorations: ({ doc, selection }) => {
                 const active = this.editor.isEditable || !this.options.showOnlyWhenEditable;
@@ -39,38 +50,63 @@ export const placeholder: RicosExtension = {
                 if (!active) {
                   return;
                 }
+                // TODO: this.editor.isEmpty returns false for our empty content (checks nodes === 0)
+                const isEditorEmpty =
+                  this.editor.getText() === '' && this.editor.getJSON().content.length === 1;
+
+                isEditorEmpty &&
+                  doc.descendants((node, pos) => {
+                    const hasAnchor = anchor >= pos && anchor <= pos + node.nodeSize;
+                    const isEmpty = !node.isLeaf && !node.childCount;
+                    if (isEmpty && (hasAnchor || !this.options.showOnlyCurrent)) {
+                      const classes: string[] = [];
+                      classes.push(this.options.emptyEditorClass);
+                      const decoration = Decoration.node(pos, pos + node.nodeSize, {
+                        class: classes.join(' '),
+                        'data-placeholder':
+                          typeof this.options.placeholder === 'function'
+                            ? this.options.placeholder({
+                                editor: this.editor,
+                                node,
+                                pos,
+                              })
+                            : this.options.placeholder,
+                      });
+
+                      decorations.push(decoration);
+                      return this.options.includeChildren;
+                    }
+                  });
+
+                return DecorationSet.create(doc, decorations);
+              },
+            },
+          }),
+          new Plugin({
+            key: new PluginKey('extension-placeholder'),
+            props: {
+              decorations: ({ doc }) => {
+                const decorations: Decoration[] = [];
 
                 doc.descendants((node, pos) => {
-                  const hasAnchor = anchor >= pos && anchor <= pos + node.nodeSize;
                   const isEmpty = !node.isLeaf && !node.childCount;
+                  if (isEmpty) {
+                    if (this.options.extensionsPlaceholders.length) {
+                      this.options.extensionsPlaceholders.forEach(({ predicate, content }) => {
+                        if (predicate({ doc, pos, node })) {
+                          const classes = [this.options.emptyNodeClass];
+                          const decoration = Decoration.node(pos, pos + node.nodeSize, {
+                            class: classes.join(' '),
+                            'data-placeholder': content,
+                          });
 
-                  if ((hasAnchor || !this.options.showOnlyCurrent) && isEmpty) {
-                    const classes = [this.options.emptyNodeClass];
+                          decorations.push(decoration);
+                        }
+                      });
 
-                    // TODO: this.editor.isEmpty returns false for our empty content (checks nodes === 0)
-                    if (
-                      this.editor.getText() === '' &&
-                      this.editor.getJSON().content.length === 1
-                    ) {
-                      classes.push(this.options.emptyEditorClass);
+                      return true;
                     }
-
-                    const decoration = Decoration.node(pos, pos + node.nodeSize, {
-                      class: classes.join(' '),
-                      'data-placeholder':
-                        typeof this.options.placeholder === 'function'
-                          ? this.options.placeholder({
-                              editor: this.editor,
-                              node,
-                              pos,
-                            })
-                          : this.options.placeholder,
-                    });
-
-                    decorations.push(decoration);
                   }
-
-                  return this.options.includeChildren;
                 });
 
                 return DecorationSet.create(doc, decorations);
