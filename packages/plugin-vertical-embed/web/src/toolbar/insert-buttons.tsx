@@ -64,6 +64,7 @@ const createInsertButtons: CreateInsertButtons = ({
     fullScreen: !!useNewModal,
     isMobile,
   });
+
   const newModalStyles = isMobile ? defaultModalStyles : undefined;
   const modalStyles = useNewModal ? newModalStyles : defaultModalStyles;
 
@@ -108,7 +109,7 @@ const createInsertButtons: CreateInsertButtons = ({
           ...customStyles,
           ...DesktopOverlayModalStyles,
         },
-        fullScreen: false,
+        fullScreen: isMobile,
         isMobile,
       }),
     }));
