@@ -54,7 +54,7 @@ const containerData = { spoiler: {}, height: {}, width: {} };
 const defaultContent = {
   nodes: [
     { type: 'APP_EMBED', appEmbedData: { eventData: {}, bookingData: {} } },
-    { type: 'BUTTON', buttonData: { containerData, link: {}, styles: {} } },
+    { type: 'BUTTON', buttonData: { containerData, link: {}, styles: {}, text: 'Click Me' } },
     { type: 'CODE_BLOCK', codeBlockData: { textStyle: {} } },
     { type: 'DIVIDER', dividerData: { containerData } },
     { type: 'EMBED', embedData: { containerData, oembed: {} } },

@@ -1,7 +1,7 @@
 import type { Node, Node_Type } from 'ricos-schema';
 import toCamelCase from 'to-camel-case';
+import { linkButtonConverter, actionButtonConverter } from './nodes/button-converters';
 import { blockquoteConverter } from './nodes/blockquote-converter';
-import { linkButtonConverter } from './nodes/button-converters';
 import {
   collapsibleItemBodyConverter,
   collapsibleItemConverter,
@@ -68,6 +68,7 @@ export const nodeConverters = [
   blockquoteConverter,
   headingConverter,
   linkButtonConverter,
+  actionButtonConverter,
   listItemConverter,
   collapsibleItemConverter,
   collapsibleItemTitleConverter,

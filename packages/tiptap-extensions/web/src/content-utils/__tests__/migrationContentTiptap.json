@@ -620,7 +620,7 @@
       "content": []
     },
     {
-      "type": "BUTTON",
+      "type": "LINK_BUTTON",
       "attrs": {
         "type": "LINK",
         "containerData": {
@@ -664,7 +664,7 @@
       "content": []
     },
     {
-      "type": "BUTTON",
+      "type": "ACTION_BUTTON",
       "attrs": {
         "type": "ACTION",
         "containerData": {

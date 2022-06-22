@@ -5,7 +5,10 @@ import { LINK_BUTTON_TYPE, ACTION_BUTTON_TYPE } from './types';
 import { ModalsMap } from './modals';
 import type { EditorPluginCreator } from 'wix-rich-content-common';
 import { createButtonData } from './createButtonData';
+import { tiptapExtensionsMap } from './tiptap/tiptap';
+import type { TiptapEditorPlugin } from 'ricos-tiptap-types';
 import { getToolbarButtons } from './getToolbarButtons';
+import { getAddButtons } from './getAddButtons';
 
 const pluginButton = (createPlugin, type, config) => {
   return {
@@ -15,7 +18,9 @@ const pluginButton = (createPlugin, type, config) => {
     ModalsMap,
     createPluginData: createButtonData,
     toolbarButtons: getToolbarButtons(config),
-  };
+    addButtons: getAddButtons(config, type),
+    tiptapExtensions: tiptapExtensionsMap[type],
+  } as TiptapEditorPlugin;
 };
 
 export const pluginLinkButton: EditorPluginCreator<LinkButtonPluginEditorConfig> = config => {
