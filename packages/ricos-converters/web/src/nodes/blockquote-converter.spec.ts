@@ -1,5 +1,5 @@
 import type { BlockquoteNode } from 'ricos-content';
-import { Decoration_Type, Node_Type, TextStyle_TextAlignment } from 'ricos-schema';
+import { Node_Type, TextStyle_TextAlignment, Decoration_Type } from 'ricos-schema';
 import { ricosNodeVisitor, tiptapNodeVisitor } from '../tiptap-converters';
 import { blockquoteConverter } from './blockquote-converter';
 
@@ -49,22 +49,7 @@ describe('Blockquote converter', () => {
             textAlignment: TextStyle_TextAlignment.LEFT,
           },
         },
-        nodes: [
-          {
-            type: Node_Type.TEXT,
-            nodes: [],
-            id: '',
-            textData: {
-              text: 'Hello world',
-              decorations: [
-                {
-                  type: Decoration_Type.UNDERLINE,
-                  underlineData: true,
-                },
-              ],
-            },
-          },
-        ],
+        nodes: [],
       },
     ],
   };

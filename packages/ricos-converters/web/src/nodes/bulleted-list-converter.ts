@@ -12,6 +12,7 @@ export const bulletedListConverter: TiptapNodeConverter = {
         ...node.bulletedListData,
         id: node.id,
       },
+      content: [] as [],
     }),
   },
   fromTiptap: {

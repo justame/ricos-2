@@ -2,10 +2,41 @@ import type {
   CollapsibleItemBodyNode,
   CollapsibleItemNode,
   CollapsibleItemTitleNode,
+  CollapsibleListNode,
 } from 'ricos-content';
-import type { Node } from 'ricos-schema';
+import type { CollapsibleListData, Node } from 'ricos-schema';
 import { Node_Type } from 'ricos-schema';
 import type { TiptapNode, TiptapNodeConverter } from '../types';
+
+export const collapsibleListConverter: TiptapNodeConverter = {
+  toTiptap: {
+    type: Node_Type.COLLAPSIBLE_LIST,
+    convert: (node: CollapsibleListNode, visit: (node: CollapsibleListNode) => TiptapNode[]) => ({
+      type: Node_Type.COLLAPSIBLE_LIST,
+      attrs: {
+        id: node.id,
+        ...node.collapsibleListData,
+      },
+
+      content: visit(node),
+    }),
+  },
+  fromTiptap: {
+    type: Node_Type.COLLAPSIBLE_LIST,
+    convert: (node: TiptapNode, visit: (node: TiptapNode) => Node[]) => {
+      const { attrs = {} } = node;
+      const { id, ...data } = attrs;
+      return {
+        type: Node_Type.COLLAPSIBLE_LIST,
+        id,
+        nodes: visit(node),
+        collapsibleListData: {
+          ...(data as CollapsibleListData),
+        },
+      };
+    },
+  },
+};
 
 export const collapsibleItemConverter: TiptapNodeConverter = {
   toTiptap: {

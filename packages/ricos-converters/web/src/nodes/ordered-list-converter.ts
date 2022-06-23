@@ -12,8 +12,10 @@ export const orderedListConverter: TiptapNodeConverter = {
         ...node.orderedListData,
         id: node.id,
       },
+      content: [] as [],
     }),
   },
+
   fromTiptap: {
     type: Node_Type.ORDERED_LIST,
     convert: (node: TiptapNode) => {
