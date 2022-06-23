@@ -17,6 +17,13 @@
     Click to see more.
   </summary>
 
+
+</details>
+
+<hr/>
+
+## 8.71.31 (Jun 23, 2022)
+
 ## :bug: Bug Fix
 
 - `audio`
@@ -33,10 +40,6 @@
   - [#4055](https://github.com/wix/ricos/pull/4055) update document style command
 - `ricos-plugins` 
   - [#4061](https://github.com/wix/ricos/pull/4061) add tiptap resolvers
-
-</details>
-
-<hr/>
 
 ## 8.71.30 (Jun 20, 2022)
 
