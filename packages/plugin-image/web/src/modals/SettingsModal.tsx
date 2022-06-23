@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import React, { useContext, useEffect, useState } from 'react';
 import type { FC } from 'react';
 import { ModalContext } from 'ricos-modals';
@@ -5,7 +6,7 @@ import ImageSettings from '../toolbar/image-settings';
 import { IMAGE_TYPE } from '../types';
 import { imageModals } from '../consts';
 import { RicosContext, EditorContext } from 'ricos-context';
-import { draftBlockDataToTiptap, tiptapNodeDataToDraft } from '../darft-convertors';
+import { TIPTAP_IMAGE_TYPE } from 'ricos-content';
 
 interface Props {
   nodeId: string;
@@ -15,18 +16,38 @@ const ImageSettingsModal: FC<Props> = ({ nodeId }) => {
   const { theme, t, isMobile, languageDir, experiments } = useContext(RicosContext);
   const { modalService } = useContext(ModalContext) || {};
   const { getEditorCommands } = useContext(EditorContext);
-  const componentData = tiptapNodeDataToDraft(getEditorCommands().getBlockComponentData(nodeId));
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [initialData, setInitialData] = useState<Record<string, any>>();
+  const [converters, setConverters] = useState<{
+    tiptapNodeDataToDraft?: Function;
+    draftBlockDataToTiptap?: Function;
+  }>({});
 
   useEffect(() => {
-    setInitialData(componentData);
+    import(
+      /* webpackChunkName:"ricos-converters" */
+      'ricos-converters'
+    ).then(convertersModule => {
+      const { draftBlockDataToTiptap, tiptapNodeDataToDraft } = convertersModule;
+      setConverters({ tiptapNodeDataToDraft, draftBlockDataToTiptap });
+      setInitialData(
+        tiptapNodeDataToDraft?.(
+          TIPTAP_IMAGE_TYPE,
+          getEditorCommands().getBlockComponentData(nodeId)
+        )
+      );
+    });
   }, []);
+
+  const componentData = converters.tiptapNodeDataToDraft?.(
+    TIPTAP_IMAGE_TYPE,
+    getEditorCommands().getBlockComponentData(nodeId)
+  );
 
   const updateData = data => {
     getEditorCommands().setBlock(nodeId, IMAGE_TYPE, {
-      ...draftBlockDataToTiptap({ ...componentData, ...data }),
+      ...converters.draftBlockDataToTiptap?.(IMAGE_TYPE, { ...componentData, ...data }),
       id: nodeId,
     });
   };
@@ -40,7 +61,7 @@ const ImageSettingsModal: FC<Props> = ({ nodeId }) => {
     closeModal();
   };
 
-  return (
+  return componentData ? (
     <ImageSettings
       componentData={componentData}
       helpers={{}}
@@ -55,7 +76,7 @@ const ImageSettingsModal: FC<Props> = ({ nodeId }) => {
       onSave={closeModal}
       onCancel={onCancel}
     />
-  );
+  ) : null;
 };
 
 export default ImageSettingsModal;
