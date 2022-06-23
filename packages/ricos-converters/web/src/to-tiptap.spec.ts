@@ -97,7 +97,7 @@ describe('to Tiptap', () => {
           type: Node_Type.PARAGRAPH,
           content: [
             {
-              type: Node_Type.TEXT,
+              type: 'text',
               text: 'test',
               marks: [
                 {
