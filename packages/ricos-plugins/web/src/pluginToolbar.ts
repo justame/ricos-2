@@ -1,4 +1,4 @@
-import { TiptapContentResolver } from 'wix-rich-content-toolbars-v3';
+import { TiptapContentResolver } from './resolvers/ContentResolver';
 import type { IToolbarItemConfigTiptap } from 'wix-rich-content-toolbars-v3';
 import type { ToolbarButton, Resolver } from 'ricos-types';
 import { PluginToolbarButton } from './pluginToolbarButton';

@@ -50,6 +50,7 @@
     "react-popper": "2.2.5",
     "react-sizeme": "^3.0.2",
     "ricos-common": "8.71.30",
+    "ricos-types": "8.71.30",
     "ricos-content-query": "8.71.30",
     "ricos-context": "8.71.30",
     "ricos-modals": "8.71.30",

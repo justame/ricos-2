@@ -30,6 +30,8 @@
 - `tiptap-extensions`
   - [#4053](https://github.com/wix/ricos/pull/4053) bold/italic toggles with styles (theme,documentStyle) support
   - [#4055](https://github.com/wix/ricos/pull/4055) update document style command
+- `ricos-plugins` 
+  - [#4061](https://github.com/wix/ricos/pull/4061) add tiptap resolvers
 
 </details>
 

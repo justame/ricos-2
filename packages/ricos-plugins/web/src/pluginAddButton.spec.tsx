@@ -5,7 +5,7 @@ import {
   PluginAddButtons,
   PluginAddButtonCollisionError,
 } from './pluginAddButton';
-import { alwaysVisibleResolver } from 'wix-rich-content-toolbars-v3';
+import { alwaysVisibleResolver } from './resolvers/resolvers';
 
 const instagram: AddButton = {
   id: 'instagram',
