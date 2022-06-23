@@ -1,9 +1,10 @@
 import {
   pluginToolbarButtonsConfig,
   pluginToolbarItemsRenders,
-  alwaysVisibleResolver,
 } from 'wix-rich-content-toolbars-v3';
-import type { TiptapContentResolver, IToolbarItemConfigTiptap } from 'wix-rich-content-toolbars-v3';
+import { alwaysVisibleResolver } from './resolvers/resolvers';
+import type { IToolbarItemConfigTiptap } from 'wix-rich-content-toolbars-v3';
+import type { TiptapContentResolver } from './resolvers/ContentResolver';
 import type { ToolbarButton } from 'ricos-types';
 import type { ComponentType } from 'react';
 import { getToolbarButtonRenderer } from './utils';
