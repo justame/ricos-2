@@ -12,6 +12,7 @@ export const codeBlockConverter: TiptapNodeConverter = {
         ...node.codeBlockData,
         id: node.id,
       },
+      content: [],
     }),
   },
   fromTiptap: {

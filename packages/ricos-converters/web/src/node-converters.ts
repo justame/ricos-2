@@ -3,6 +3,7 @@ import toCamelCase from 'to-camel-case';
 import { blockquoteConverter } from './nodes/blockquote-converter';
 import { linkButtonConverter } from './nodes/button-converters';
 import {
+  collapsibleListConverter,
   collapsibleItemBodyConverter,
   collapsibleItemConverter,
   collapsibleItemTitleConverter,
@@ -69,6 +70,7 @@ export const nodeConverters = [
   headingConverter,
   linkButtonConverter,
   listItemConverter,
+  collapsibleListConverter,
   collapsibleItemConverter,
   collapsibleItemTitleConverter,
   collapsibleItemBodyConverter,
