@@ -76,7 +76,7 @@ const AudioUploadModal = props => {
         undefined,
         undefined
       );
-      setComponentData({ ...componentData, ...data });
+      setComponentData({ ...getComponentData(), ...data });
     }
   };
 
