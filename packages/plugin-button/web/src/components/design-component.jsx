@@ -24,8 +24,8 @@ class DesignComponent extends PureComponent {
     const { actionColor, bgColor } = this.getUserColors();
     this.state = {
       design: {
-        borderWidth: designObj.borderWidth,
-        borderRadius: designObj.borderRadius,
+        borderWidth: designObj.borderWidth || 0,
+        borderRadius: designObj.borderRadius || 0,
         color: designObj?.color || colors?.color1 || bgColor,
         borderColor: designObj?.borderColor || colors?.color8 || actionColor,
         background: designObj?.background || colors?.color8 || actionColor,

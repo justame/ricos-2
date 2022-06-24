@@ -16,3 +16,7 @@ export const DEFAULT_CONFIG = {
   size: 'small',
   width: 'fit-content',
 };
+
+export const buttonsModals = {
+  settings: 'button-settings',
+};

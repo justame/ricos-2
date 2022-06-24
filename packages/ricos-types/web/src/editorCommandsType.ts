@@ -36,6 +36,8 @@ import type {
   VERTICAL_EMBED_TYPE,
   EMBED_TYPE,
   AUDIO_TYPE,
+  LINK_BUTTON_TYPE,
+  ACTION_BUTTON_TYPE,
 } from 'ricos-content';
 import type {
   DividerData,
@@ -49,6 +51,7 @@ import type {
   ImageData,
   ColorData,
   Link,
+  ButtonData,
 } from 'ricos-schema';
 import type { MentionData } from './pluginTypes';
 import type { TextAlignment, InlineStyle } from './commonTypes';
@@ -112,6 +115,8 @@ export interface PluginsDataMap {
   [VERTICAL_EMBED_TYPE]?: any;
   [EMBED_TYPE]?: any;
   [AUDIO_TYPE]?: any;
+  [LINK_BUTTON_TYPE]?: ButtonData;
+  [ACTION_BUTTON_TYPE]?: ButtonData;
 }
 
 export const CUSTOM_LINK = 'custom-link';
