@@ -72,7 +72,7 @@ export const isSelectedNode =
 export const isEmptyTextNodes = (node: Node): boolean => {
   if (isAnchorableTextNode(node)) {
     const { nodes } = node;
-    return nodes.length > 0;
+    return nodes.length === 0;
   } else {
     return true;
   }
