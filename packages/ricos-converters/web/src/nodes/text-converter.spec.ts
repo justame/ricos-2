@@ -5,7 +5,7 @@ import { textConverter } from './text-converter';
 
 describe('Text converter', () => {
   const tiptapNode = {
-    type: 'text',
+    type: Node_Type.TEXT,
     text: 'Lorem ipsum dolor sit amet',
     marks: [
       {
