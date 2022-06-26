@@ -150,7 +150,7 @@ export type CollapsibleListNode = Identified &
   Styled & {
     type: Node_Type.COLLAPSIBLE_LIST;
     nodes: CollapsibleItemNode[];
-    data: CollapsibleListData;
+    collapsibleListData: CollapsibleListData;
   };
 
 export type CollapsibleItemNode = Identified &
