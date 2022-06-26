@@ -1,4 +1,4 @@
-import { alwaysVisibleResolver } from './resolvers/resolvers';
+import { alwaysVisibleResolver } from 'wix-rich-content-toolbars-v3';
 import type { MenuGroups, AddButton, ModalService } from 'ricos-types';
 
 export class PluginAddButtonCollisionError extends Error {}

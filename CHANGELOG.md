@@ -23,6 +23,8 @@
   - [#4050](https://github.com/wix/ricos/pull/4050) `ricos-events` package added
 - `ricos-modals`
   - [#4050](https://github.com/wix/ricos/pull/4050) ModalContext separated from ModalProvider, and moved to `ricos-context`
+- `ricos-plugins/toolbars-v3`
+  - [#4071](https://github.com/wix/ricos/pull/4071) delete resolvers - revert #4061 &  code cleanup
   
 </details>
 
@@ -44,8 +46,6 @@
 - `tiptap-extensions`
   - [#4053](https://github.com/wix/ricos/pull/4053) bold/italic toggles with styles (theme,documentStyle) support
   - [#4055](https://github.com/wix/ricos/pull/4055) update document style command
-- `ricos-plugins` 
-  - [#4061](https://github.com/wix/ricos/pull/4061) add tiptap resolvers
 
 ## 8.71.30 (Jun 20, 2022)
 

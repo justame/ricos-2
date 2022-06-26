@@ -28,7 +28,6 @@ const AddPluginMenuHorizontal: React.FC<Props> = ({ referenceElement, plugins })
 
   const onPluginMenuButtonClick: IPluginMenuButtonClick = (modal, command) => {
     modalService.closeModal(PLUGIN_MENU_MODAL_ID);
-    modalService.openModal;
     return modal
       ? modalService?.openModal({
           Component: modal.Component,
