@@ -1,6 +1,6 @@
 {
   "name": "wix-rich-content-plugin-mentions",
-  "version": "8.71.31",
+  "version": "8.71.32",
   "author": {
     "name": "Vytenis Butkevicius",
     "email": "vytenisb@wix.com"
@@ -38,12 +38,12 @@
   "dependencies": {
     "@tiptap/suggestion": "2.0.0-beta.85",
     "draft-js-mention-plugin": "~3.1.3",
-    "ricos-context": "8.71.31",
-    "ricos-tiptap-types": "8.71.31",
+    "ricos-context": "8.71.32",
+    "ricos-tiptap-types": "8.71.32",
     "tippy.js": "^6.3.1",
-    "wix-rich-content-common": "8.71.31",
-    "wix-rich-content-editor-common": "8.71.31",
-    "wix-rich-content-plugin-commons": "8.71.31"
+    "wix-rich-content-common": "8.71.32",
+    "wix-rich-content-editor-common": "8.71.32",
+    "wix-rich-content-plugin-commons": "8.71.32"
   },
   "unpkg": true,
   "publishConfig": {
