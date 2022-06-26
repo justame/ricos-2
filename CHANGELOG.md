@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :house: Internal
+
+- `ricos-shortcuts`
+  - [#4078](https://github.com/wix/ricos/pull/4078) Shortcuts context to support events and styles
+
 </details>
 
 <hr/>
