@@ -5,8 +5,9 @@ import type {
   KeyboardShortcut,
   TranslationFunction,
   EventData,
+  ShortcutRegistrar,
 } from 'ricos-types';
-import type { Keys } from '../keyboard-shortcuts/keys';
+import type { Keys } from '../keys';
 
 export type LocalizedDisplayData = {
   name: KeyboardShortcut['name'];
@@ -104,19 +105,7 @@ export interface Shortcut {
  * @export
  * @interface Shortcuts
  */
-export interface Shortcuts {
-  /**
-   * Registers shortcut, validates it has no conflicts.
-   *
-   * @memberof Shortcuts
-   */
-  register: (shortcut: KeyboardShortcut) => void;
-  /**
-   * Removes shortcut
-   *
-   * @memberof Shortcuts
-   */
-  unregister: (shortcut: Shortcut) => void;
+export interface Shortcuts extends ShortcutRegistrar {
   /**
    * Filters shortcuts according to predicate
    *

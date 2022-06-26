@@ -1,2 +1,2 @@
+export { EditorKeyboardShortcuts } from './editor-keyboard-shortcuts';
 export { Shortcuts } from './Shortcuts';
-export { ShortcutsContext } from './ShortcutsContext';

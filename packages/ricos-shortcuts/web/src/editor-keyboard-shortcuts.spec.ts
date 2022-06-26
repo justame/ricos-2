@@ -2,15 +2,22 @@ import { identity } from 'fp-ts/function';
 import type {
   BasicKeyCombination,
   EditorCommands,
-  EventData,
+  EventRegistrar,
   EventPublisher,
-  KeyboardShortcut,
+  EventData,
 } from 'ricos-types';
 import { RICOS_DIVIDER_TYPE } from 'wix-rich-content-common';
-import { EditorKeyboardShortcut } from './editor-keyboard-shortcut';
 import { EditorKeyboardShortcuts } from './editor-keyboard-shortcuts';
 
 describe('Editor Keyboard Shortcuts', () => {
+  const events: EventRegistrar = {
+    register: () => ({
+      publish: () => false,
+      publishSync: () => false,
+      topic: 'ricos.shortcuts.test.EditorKeyboardShortcuts',
+    }),
+  };
+
   const bold = {
     name: 'Bold',
     description: 'Toggles bold style of selected text',
@@ -47,22 +54,22 @@ describe('Editor Keyboard Shortcuts', () => {
   };
 
   it('should register/unregister shortcut', () => {
-    const registered = new EditorKeyboardShortcuts();
+    const registered = new EditorKeyboardShortcuts(events);
     registered.register(bold);
     expect(registered.asArray().length).toEqual(1);
-    registered.unregister(registered.asArray()[0]);
+    registered.unregister(registered.asArray()[0].getKeyboardShortcut());
     expect(registered.asArray().length).toEqual(0);
   });
 
   it('should filter shortcuts', () => {
-    const registered = new EditorKeyboardShortcuts();
+    const registered = new EditorKeyboardShortcuts(events);
     registered.register(bold);
     const filtered = registered.filter(shortcut => shortcut.getGroup() === 'add-plugin');
     expect(filtered.asArray().length).toEqual(0);
   });
 
   it('should produce grouped display data', () => {
-    const registered = new EditorKeyboardShortcuts();
+    const registered = new EditorKeyboardShortcuts(events);
     registered.register(bold);
     registered.register(italic);
     registered.register(addDivider);
@@ -96,25 +103,19 @@ describe('Editor Keyboard Shortcuts', () => {
   });
 
   it('should produce HotKeys props for group', () => {
-    const publisher: EventPublisher<EventData> = {
-      publish: jest.fn(),
-      publishSync: jest.fn(),
-      topic: 'ricos.shortcuts.test.mock',
-    };
     const commands = {
       toggleInlineStyle: identity,
       insertBlock: identity,
     };
 
-    const actual = new EditorKeyboardShortcuts();
+    const actual = new EditorKeyboardShortcuts(events);
     actual.register(bold);
     actual.register(italic);
     actual.register(addDivider);
     const { keyMap, handlers } = actual.getHotKeysProps(
       'formatting',
       commands as EditorCommands,
-      identity,
-      publisher
+      identity
     );
 
     expect(keyMap).toEqual({

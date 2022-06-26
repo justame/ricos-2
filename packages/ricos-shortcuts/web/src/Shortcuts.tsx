@@ -1,9 +1,15 @@
 import type { FC, ReactChild } from 'react';
 import React, { useContext, useEffect, useRef } from 'react';
 import { configure, HotKeys } from 'react-hotkeys';
-import { ModalContext, RicosContext, EditorContext, EventsContext } from 'ricos-context';
+import {
+  ModalContext,
+  RicosContext,
+  EditorContext,
+  EventsContext,
+  ShortcutsContext,
+} from 'ricos-context';
 import type { EventRegistrar, KeyboardShortcut, ModalConfig } from 'ricos-types';
-import { ShortcutsContext } from './ShortcutsContext';
+import type { Shortcuts as ShortcutManager } from './models/shortcuts';
 import { ShortcutsDialog } from './ShortcutsDialog';
 
 export type ShortcutsProps = {
@@ -52,7 +58,7 @@ export const Shortcuts: FC<ShortcutsProps> = (props: ShortcutsProps) => {
 
   const { group, root, children } = { ...defaultProps, ...props };
 
-  const { shortcuts } = useContext(ShortcutsContext);
+  const shortcuts = useContext(ShortcutsContext) as ShortcutManager;
   if (root && shortcuts.filter(s => s.getName() === 'Keyboard Shortcuts').asArray().length === 0) {
     shortcuts.register(helpShortcut);
   }

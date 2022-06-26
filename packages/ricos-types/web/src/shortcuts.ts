@@ -61,3 +61,19 @@ export interface KeyboardShortcut {
    */
   enabled: boolean;
 }
+
+export interface ShortcutRegistrar {
+  /**
+   * Registers shortcut, validates it has no conflicts.
+   *
+   * @memberof ShortcutRegistrar
+   */
+  register: (shortcut: KeyboardShortcut) => void;
+
+  /**
+   * Unregisters shortcut
+   *
+   * @memberof ShortcutRegistrar
+   */
+  unregister: (shortcut: KeyboardShortcut) => void;
+}
