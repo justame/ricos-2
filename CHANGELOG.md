@@ -17,10 +17,18 @@
     Click to see more.
   </summary>
 
+</details>
+
+<hr/>
+
+## 8.71.32 (Jun 26, 2022)
+
 ## :bug: Bug Fix
 
 - `ricos-styles`
   - [#4072](https://github.com/wix/ricos/pull/4072) empty doc style & tests
+- `image-plugin`
+  - [#4075](https://github.com/wix/ricos/pull/4075) images inside table settings modal
 
 ## :house: Internal
 
@@ -30,10 +38,6 @@
   - [#4050](https://github.com/wix/ricos/pull/4050) ModalContext separated from ModalProvider, and moved to `ricos-context`
 - `ricos-plugins/toolbars-v3`
   - [#4071](https://github.com/wix/ricos/pull/4071) delete resolvers - revert #4061 & code cleanup
-
-</details>
-
-<hr/>
 
 ## 8.71.31 (Jun 23, 2022)
 
