@@ -1,5 +1,5 @@
 import React from 'react';
-import type { AddButton } from 'ricos-types';
+import type { AddButton, ToolbarType } from 'ricos-types';
 import {
   PluginAddButton,
   PluginAddButtons,
@@ -12,6 +12,7 @@ const instagram: AddButton = {
   icon: () => <div />,
   label: 'Instagram',
   tooltip: 'insert instagram embed',
+  toolbars: ['SIDE'] as ToolbarType[],
   command: editorCommands => {
     return true;
   },
@@ -31,6 +32,7 @@ const tiktok: AddButton = {
   icon: () => <div />,
   label: 'Tiktok',
   tooltip: 'insert tiktok embed',
+  toolbars: ['SIDE'] as ToolbarType[],
   command: editorCommands => {
     return true;
   },
@@ -50,6 +52,7 @@ const emoji: AddButton = {
   icon: () => <div />,
   label: 'Emoji',
   tooltip: 'insert emoji',
+  toolbars: ['SIDE'] as ToolbarType[],
   command: editorCommands => {
     editorCommands.insertText(`:)`);
     return true;
@@ -69,6 +72,7 @@ const divider: AddButton = {
   icon: () => <div />,
   label: 'Divider',
   tooltip: 'insert divider',
+  toolbars: ['SIDE'] as ToolbarType[],
   command: editorCommands => {
     editorCommands.insertBlock('ricos-divider');
     return true;

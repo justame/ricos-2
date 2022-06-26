@@ -1,4 +1,8 @@
-import { INSERT_PLUGIN_BUTTONS, decorateComponentWithProps } from 'wix-rich-content-editor-common';
+import {
+  INSERT_PLUGIN_BUTTONS,
+  decorateComponentWithProps,
+  TOOLBARS,
+} from 'wix-rich-content-editor-common';
 import type { AddButton } from 'ricos-types';
 import { EventIcon, ProductIcon, BookingIcon } from './icons';
 import { verticalEmbedModals } from './constants';
@@ -12,6 +16,7 @@ export const getAddButtons = (config): AddButton[] => {
       label: INSERT_PLUGIN_BUTTONS.EVENTS,
       icon: EventIcon,
       tooltip: 'EventsPlugin_InsertButton_Tooltip',
+      toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
       command: editorCommands => true,
       modal: {
         id: verticalEmbedModals.insert,
@@ -31,6 +36,7 @@ export const getAddButtons = (config): AddButton[] => {
       label: INSERT_PLUGIN_BUTTONS.BOOKINGS,
       icon: BookingIcon,
       tooltip: 'BookingsPlugin_InsertButton_Tooltip',
+      toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
       command: editorCommands => true,
       modal: {
         id: verticalEmbedModals.insert,
@@ -50,6 +56,7 @@ export const getAddButtons = (config): AddButton[] => {
       label: INSERT_PLUGIN_BUTTONS.STORES,
       icon: ProductIcon,
       tooltip: 'StoresPlugin_InsertButton_Tooltip',
+      toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
       command: editorCommands => true,
       modal: {
         id: verticalEmbedModals.insert,

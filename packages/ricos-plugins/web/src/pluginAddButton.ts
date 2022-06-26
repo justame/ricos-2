@@ -1,5 +1,5 @@
 import { alwaysVisibleResolver } from 'wix-rich-content-toolbars-v3';
-import type { MenuGroups, AddButton, ModalService } from 'ricos-types';
+import type { MenuGroups, AddButton, ModalService, ToolbarType } from 'ricos-types';
 
 export class PluginAddButtonCollisionError extends Error {}
 
@@ -41,6 +41,10 @@ export class PluginAddButton {
 
   getGroup() {
     return this.button.menuConfig?.group;
+  }
+
+  getToolbars(): ToolbarType[] {
+    return this.button.toolbars;
   }
 
   equals(button: PluginAddButton): boolean {
@@ -86,6 +90,12 @@ export class PluginAddButtons {
 
   byGroup(group: MenuGroups) {
     return new PluginAddButtons(this.buttons.filter(button => button.getGroup() === group));
+  }
+
+  byToolbar(toolbar: ToolbarType) {
+    return new PluginAddButtons(
+      this.buttons.filter(button => button.getToolbars().includes(toolbar))
+    );
   }
 
   register(button: AddButton) {

@@ -1,5 +1,5 @@
 import { InsertPluginIcon, AdsenseIcon } from './icons';
-import { INSERT_PLUGIN_BUTTONS } from 'wix-rich-content-editor-common';
+import { INSERT_PLUGIN_BUTTONS, TOOLBARS } from 'wix-rich-content-editor-common';
 import type { AddButton } from 'ricos-types';
 import { htmlButtonsTypes } from './defaults';
 import { HTML_TYPE } from './types';
@@ -18,6 +18,7 @@ export const getAddButtons = (config): AddButton[] => {
       label: INSERT_PLUGIN_BUTTONS.HTML,
       icon: InsertPluginIcon,
       tooltip: 'HtmlPlugin_InsertButton_Tooltip',
+      toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
       command: editorCommands => {
         editorCommands.insertBlock(HTML_TYPE, htmlDataDefaults);
         return true;
@@ -31,6 +32,7 @@ export const getAddButtons = (config): AddButton[] => {
       label: INSERT_PLUGIN_BUTTONS.ADSENSE,
       icon: AdsenseIcon,
       tooltip: 'AdSensePlugin_InsertButton_Tooltip',
+      toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
       command: editorCommands => {
         editorCommands.insertBlock(HTML_TYPE, htmlDataDefaults);
         return true;

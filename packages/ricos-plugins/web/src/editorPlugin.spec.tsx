@@ -1,7 +1,7 @@
 import React from 'react';
 import { EditorPlugin } from './editorPlugin';
 import { PluginAddButton } from './pluginAddButton';
-import type { EditorPlugin as EditorPluginType } from 'ricos-types';
+import type { EditorPlugin as EditorPluginType, ToolbarType } from 'ricos-types';
 
 describe('Editor Plugin', () => {
   const plugin: EditorPluginType = {
@@ -13,6 +13,7 @@ describe('Editor Plugin', () => {
         icon: () => <div />,
         label: 'ricos-plugin',
         tooltip: 'InsertButton_Tooltip',
+        toolbars: ['SIDE'] as ToolbarType[],
         command: editorCommands => {
           return true;
         },

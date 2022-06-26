@@ -1,7 +1,7 @@
 import React from 'react';
 import { EditorPlugins, PluginCollisionError } from './editorPlugins';
 import { PluginAddButton } from './pluginAddButton';
-import type { EditorPlugin as EditorPluginType } from 'ricos-types';
+import type { EditorPlugin as EditorPluginType, ToolbarType } from 'ricos-types';
 
 describe('Editor Plugins', () => {
   const linkPreview: EditorPluginType = {
@@ -13,6 +13,7 @@ describe('Editor Plugins', () => {
         icon: () => <div />,
         label: 'Instagram',
         tooltip: 'insert instagram embed',
+        toolbars: ['SIDE'] as ToolbarType[],
         command: editorCommands => {
           return true;
         },
@@ -31,6 +32,7 @@ describe('Editor Plugins', () => {
         icon: () => <div />,
         label: 'Tiktok',
         tooltip: 'insert tiktok embed',
+        toolbars: ['SIDE'] as ToolbarType[],
         command: editorCommands => {
           return true;
         },
@@ -56,6 +58,7 @@ describe('Editor Plugins', () => {
         icon: () => <div />,
         label: 'Emoji',
         tooltip: 'insert emoji',
+        toolbars: ['SIDE'] as ToolbarType[],
         command: editorCommands => {
           editorCommands.insertText(`:)`);
           return true;
@@ -81,6 +84,7 @@ describe('Editor Plugins', () => {
         icon: () => <div />,
         label: 'Divider',
         tooltip: 'insert divider',
+        toolbars: ['SIDE'] as ToolbarType[],
         command: editorCommands => {
           editorCommands.insertBlock('ricos-divider');
           return true;
