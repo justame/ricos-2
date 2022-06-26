@@ -1,4 +1,4 @@
-import type { BlockquoteNode } from 'ricos-content';
+import type { BlockquoteNode, TextNode } from 'ricos-content';
 import { Node_Type, TextStyle_TextAlignment, Decoration_Type } from 'ricos-schema';
 import { ricosNodeVisitor, tiptapNodeVisitor } from '../tiptap-converters';
 import { blockquoteConverter } from './blockquote-converter';
@@ -6,23 +6,7 @@ import { blockquoteConverter } from './blockquote-converter';
 describe('Blockquote converter', () => {
   const tiptapNode = {
     type: Node_Type.BLOCKQUOTE,
-    content: [
-      {
-        type: 'text',
-        attrs: {
-          id: '',
-        },
-        text: 'Hello world',
-        marks: [
-          {
-            type: Decoration_Type.UNDERLINE,
-            attrs: {
-              underlineData: true,
-            },
-          },
-        ],
-      },
-    ],
+    content: [] as TextNode[],
     attrs: {
       id: 'foo',
       indentation: 2,
@@ -53,7 +37,6 @@ describe('Blockquote converter', () => {
       },
     ],
   };
-
   it('should convert BlockquoteNode to TiptapNode', () => {
     const actual = blockquoteConverter.toTiptap.convert(blockquoteNode, ricosNodeVisitor);
     expect(actual).toEqual(tiptapNode);
