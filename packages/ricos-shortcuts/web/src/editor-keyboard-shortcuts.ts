@@ -1,4 +1,10 @@
-import type { EditorCommands, KeyboardShortcut, TranslationFunction } from 'ricos-types';
+import type {
+  EditorCommands,
+  EventData,
+  EventPublisher,
+  KeyboardShortcut,
+  TranslationFunction,
+} from 'ricos-types';
 import type { HotKeysProps, LocalizedDisplayData, Shortcut, Shortcuts } from './models/shortcuts';
 import { EditorKeyboardShortcut } from './editor-keyboard-shortcut';
 
@@ -15,7 +21,12 @@ export class EditorKeyboardShortcuts implements Shortcuts {
     return this.shortcuts.find(s => s.equals(shortcut));
   }
 
-  getHotKeysProps(group: string, commands: EditorCommands, t: TranslationFunction): HotKeysProps {
+  getHotKeysProps(
+    group: string,
+    commands: EditorCommands,
+    t: TranslationFunction,
+    publisher: EventPublisher<EventData>
+  ): HotKeysProps {
     return this.shortcuts
       .filter(s => s.getGroup() === group || s.getGroup() === 'global')
       .reduce(
@@ -34,6 +45,11 @@ export class EditorKeyboardShortcuts implements Shortcuts {
               [shortcut.getName()]: (e: KeyboardEvent) => {
                 e.preventDefault();
                 shortcut.getCommand()(commands);
+                publisher.publish(
+                  `🎹 keyboard shortcut ${shortcut.getName()} applied (${shortcut
+                    .getKeys()
+                    .toString()})`
+                );
               },
             },
           };

@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import React, { useContext, useEffect, useState } from 'react';
 import type { FC } from 'react';
-import { ModalContext } from 'ricos-modals';
+import { ModalContext, RicosContext, EditorContext } from 'ricos-context';
 import ImageSettings from '../toolbar/image-settings';
 import { IMAGE_TYPE } from '../types';
 import { imageModals } from '../consts';
-import { RicosContext, EditorContext } from 'ricos-context';
 import { TIPTAP_IMAGE_TYPE } from 'ricos-content';
 
 interface Props {
@@ -14,7 +13,7 @@ interface Props {
 
 const ImageSettingsModal: FC<Props> = ({ nodeId }) => {
   const { theme, t, isMobile, languageDir, experiments } = useContext(RicosContext);
-  const { modalService } = useContext(ModalContext) || {};
+  const modalService = useContext(ModalContext) || {};
   const { getEditorCommands } = useContext(EditorContext);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -23,4 +23,5 @@ export * from './modalTypes';
 export * from './shortcuts';
 export * from './key-types';
 export * from './RicosTypes';
+export * from './events';
 export * from './contentResolverTypes';

@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import React, { useContext, useEffect, useState } from 'react';
 import type { FC } from 'react';
-import { ModalContext } from 'ricos-modals';
+import { ModalContext, RicosContext, EditorContext } from 'ricos-context';
 import ButtonSettings from '../toolbar/buttonInputModal';
 import type { LINK_BUTTON_TYPE, ACTION_BUTTON_TYPE, ButtonPluginEditorConfig } from '../types';
 import { buttonsModals } from '../constants';
-import { RicosContext, EditorContext } from 'ricos-context';
 import { Node_Type } from 'wix-rich-content-common';
 
 interface Props {
@@ -16,7 +15,7 @@ interface Props {
 
 const ButtonSettingsModal: FC<Props> = ({ nodeId, settings, type }) => {
   const { theme, t, isMobile, languageDir, experiments } = useContext(RicosContext);
-  const { modalService } = useContext(ModalContext) || {};
+  const modalService = useContext(ModalContext) || {};
   const { getEditorCommands } = useContext(EditorContext);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

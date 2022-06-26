@@ -69,6 +69,6 @@ class PluginsToolbar extends React.Component<
   }
 }
 const PluginsToolbarWithContext = withPluginsContext(
-  withRicosContext<PluginsToolbarProps>()(withEditorContext<PluginsToolbarProps>(PluginsToolbar))
+  withRicosContext<PluginsToolbarProps>(withEditorContext<PluginsToolbarProps>(PluginsToolbar))
 );
 export default PluginsToolbarWithContext;

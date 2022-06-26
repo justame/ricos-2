@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
 import type { FC } from 'react';
 import { tableModals } from '../types';
-import { ModalContext } from 'ricos-modals';
-import { RicosContext } from 'ricos-context';
+import { ModalContext, RicosContext } from 'ricos-context';
 import TableSettingsModal from '../toolbar/tableSettingsModal';
 
 interface Props {
@@ -11,7 +10,7 @@ interface Props {
 
 const TableInsertModal: FC<Props> = ({ componentData }) => {
   const { theme, t, isMobile } = useContext(RicosContext);
-  const { modalService } = useContext(ModalContext) || {};
+  const modalService = useContext(ModalContext) || {};
 
   const closeModal = () => {
     modalService.closeModal(tableModals.insert);

@@ -1,9 +1,5 @@
 import type { ModalConfig } from 'ricos-types';
 
-export interface ModalContextValue {
-  modalService: ModalService;
-}
-
 export interface ModalService {
   openModal: (modalConfig: ModalConfig) => boolean;
   register: (modalConfig: ModalConfig) => void;

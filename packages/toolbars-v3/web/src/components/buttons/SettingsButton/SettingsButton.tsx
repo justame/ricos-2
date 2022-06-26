@@ -3,8 +3,7 @@ import React, { useContext, useRef } from 'react';
 import cx from 'classnames';
 import type { IToolbarItem } from '../../../types';
 import styles from './SettingsButton.scss';
-import { ToolbarContext } from 'ricos-context';
-import { ModalContext } from 'ricos-modals';
+import { ToolbarContext, ModalContext } from 'ricos-context';
 
 interface Props {
   toolbarItem: IToolbarItem;
@@ -12,7 +11,7 @@ interface Props {
 }
 
 const SettingsButton = ({ toolbarItem, onClick }: Props) => {
-  const { modalService } = useContext(ModalContext) || {};
+  const modalService = useContext(ModalContext) || {};
   const { isMobile } = useContext(ToolbarContext) || {};
   const buttonRef = useRef<HTMLDivElement>(null);
 

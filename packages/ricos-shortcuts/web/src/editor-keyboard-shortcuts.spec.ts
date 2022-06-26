@@ -1,5 +1,11 @@
 import { identity } from 'fp-ts/function';
-import type { BasicKeyCombination, EditorCommands, KeyboardShortcut } from 'ricos-types';
+import type {
+  BasicKeyCombination,
+  EditorCommands,
+  EventData,
+  EventPublisher,
+  KeyboardShortcut,
+} from 'ricos-types';
 import { RICOS_DIVIDER_TYPE } from 'wix-rich-content-common';
 import { EditorKeyboardShortcut } from './editor-keyboard-shortcut';
 import { EditorKeyboardShortcuts } from './editor-keyboard-shortcuts';
@@ -90,6 +96,11 @@ describe('Editor Keyboard Shortcuts', () => {
   });
 
   it('should produce HotKeys props for group', () => {
+    const publisher: EventPublisher<EventData> = {
+      publish: jest.fn(),
+      publishSync: jest.fn(),
+      topic: 'ricos.shortcuts.test.mock',
+    };
     const commands = {
       toggleInlineStyle: identity,
       insertBlock: identity,
@@ -102,7 +113,8 @@ describe('Editor Keyboard Shortcuts', () => {
     const { keyMap, handlers } = actual.getHotKeysProps(
       'formatting',
       commands as EditorCommands,
-      identity
+      identity,
+      publisher
     );
 
     expect(keyMap).toEqual({

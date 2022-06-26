@@ -3,8 +3,7 @@ import type { FC } from 'react';
 import { VIDEO_TYPE } from '../types';
 import { videoModals } from '../constants';
 import VideoInsertModal from '../toolbar/NewVideoInsertModal';
-import { ModalContext } from 'ricos-modals';
-import { RicosContext, EditorContext } from 'ricos-context';
+import { ModalContext, RicosContext, EditorContext } from 'ricos-context';
 import { UploadServiceContext } from 'wix-rich-content-common';
 import { convertBlockDataToRicos } from 'ricos-content/libs/convertBlockDataToRicos';
 interface Props {
@@ -25,7 +24,7 @@ const InsertModal: FC<Props> = ({
 }) => {
   const { theme, t, isMobile, languageDir } = useContext(RicosContext);
   const { getEditorCommands } = useContext(EditorContext);
-  const { modalService } = useContext(ModalContext) || {};
+  const modalService = useContext(ModalContext) || {};
   const { uploadService, updateService } = useContext(UploadServiceContext);
   const closeModal = () => {
     modalService.closeModal(videoModals.insert);

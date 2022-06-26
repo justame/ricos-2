@@ -1,12 +1,12 @@
 import React, { useContext, useRef } from 'react';
 import styles from './styles/floating-add-plugin-menu.scss';
-import { ModalContext, PLACEMENTS, LAYOUTS } from 'ricos-modals';
+import { PLACEMENTS, LAYOUTS } from 'ricos-modals';
 import { decorateComponentWithProps } from 'wix-rich-content-editor-common';
 import AddPluginMenuWrapper from './AddPluginMenuWrapper';
 import EditorSelectionToPosition from './EditorSelectionToPosition';
 import PlusButton from './PlusButton';
 import { PLUGIN_MENU_MODAL_ID } from './consts';
-import { RicosContext, EditorContext } from 'ricos-context';
+import { RicosContext, EditorContext, ModalContext } from 'ricos-context';
 import AddPluginMenuHorizontal from './AddPluginMenuHorizontal';
 import type { AddPluginMenuConfig, Helpers } from 'wix-rich-content-common';
 
@@ -20,7 +20,7 @@ interface Props {
 const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig, helpers = {}, plugins }) => {
   const floatingMenuWrapperRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const { modalService } = useContext(ModalContext) || {};
+  const modalService = useContext(ModalContext) || {};
   const { languageDir, isMobile } = useContext(RicosContext) || {};
   const { tiptapEditor } = useContext(EditorContext);
   const isHorizontalMenu = !addPluginMenuConfig || addPluginMenuConfig?.horizontalMenuLayout;

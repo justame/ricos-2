@@ -4,18 +4,25 @@ import type { RefObject } from 'react';
 import React, { createRef, forwardRef, useContext } from 'react';
 import type { RicosEditorProps } from 'ricos-common';
 import { ContentQueryProvider } from 'ricos-content-query';
-import { EditorContextConsumer, EditorContextProvider, ToolbarContext } from 'ricos-context';
-import { ModalProvider } from 'ricos-modals';
+import type { ToolbarContextType } from 'ricos-context';
+import {
+  ModalContextProvider,
+  EditorContextConsumer,
+  EditorContextProvider,
+  ToolbarContext,
+  EventsContextProvider,
+} from 'ricos-context';
+import { RicosEvents } from 'ricos-events';
+import { RicosModalService, ModalRenderer } from 'ricos-modals';
 import type { PluginsContextValue } from 'ricos-plugins';
 import { PluginsContext } from 'ricos-plugins';
 import { Shortcuts } from 'ricos-shortcuts';
 import type { TiptapAdapter } from 'ricos-tiptap-types';
-import type { EditorPlugin, RicosPortal as RicosPortalType } from 'ricos-types';
+import type { RicosPortal as RicosPortalType } from 'ricos-types';
 import type { EditorCommands, EditorContextType, Pubsub } from 'wix-rich-content-common';
 import { getLangDir } from 'wix-rich-content-common';
 import { getEmptyDraftContent, TOOLBARS } from 'wix-rich-content-editor-common';
 import { Content, FloatingAddPluginMenu } from 'wix-rich-content-toolbars-v3';
-import type { ToolbarContextType } from 'ricos-context';
 import type { RichContentAdapter } from 'wix-tiptap-editor';
 import { initializeTiptapAdapter } from 'wix-tiptap-editor';
 import RicosPortal from '../modals/RicosPortal';
@@ -37,6 +44,9 @@ type State = {
 interface Props extends RicosEditorProps {
   pluginsContext: PluginsContextValue;
 }
+
+const eventRegistrar = new RicosEvents();
+const modalService = new RicosModalService(eventRegistrar);
 
 export class FullRicosEditor extends React.Component<Props, State> implements RicosEditorRef {
   content = Content.create<Node[]>([]);
@@ -184,64 +194,72 @@ export class FullRicosEditor extends React.Component<Props, State> implements Ri
 
     const languageDir = getLangDir(locale);
     return (
-      <>
-        <RicosPortal languageDir={languageDir} ref={this.portalRef} className={theme?.parentClass}>
-          <RicosStyles theme={theme || {}} documentStyle={content?.documentStyle || {}} />
-        </RicosPortal>
-        {this.portalRef.current && (
-          <LocaleResourceProvider
-            isMobile={isMobile}
-            experiments={experiments}
-            locale={locale}
-            localeContent={localeContent}
+      <EventsContextProvider events={eventRegistrar}>
+        <>
+          <RicosPortal
             languageDir={languageDir}
-            theme={theme}
-            portal={this.portalRef.current}
+            ref={this.portalRef}
+            className={theme?.parentClass}
           >
-            <EditorContextProvider adapter={this.tiptapAdapter}>
-              <>
-                <Shortcuts group="global" root>
+            <RicosStyles theme={theme || {}} documentStyle={content?.documentStyle || {}} />
+          </RicosPortal>
+          {this.portalRef.current && (
+            <LocaleResourceProvider
+              isMobile={isMobile}
+              experiments={experiments}
+              locale={locale}
+              localeContent={localeContent}
+              languageDir={languageDir}
+              theme={theme}
+              portal={this.portalRef.current}
+            >
+              <EditorContextProvider adapter={this.tiptapAdapter}>
+                <ModalContextProvider modalService={modalService}>
                   <>
-                    <UploadProvider helpers={_rcProps?.helpers}>
-                      <ModalProvider>
-                        <EditorContextConsumer>
-                          {(editor: RichContentAdapter) => (
-                            <ToolbarContext.Provider
-                              value={{
-                                ...this.getToolbarContext(editor.getEditorCommands),
-                                portal: this.portalRef.current as RicosPortalType,
-                              }}
-                            >
-                              <ContentQueryProvider editor={editor.tiptapEditor}>
-                                <RicosToolbars
-                                  content={this.content}
-                                  toolbarSettings={toolbarSettings}
-                                />
-                                <FloatingAddPluginMenu
-                                  addPluginMenuConfig={this.getPluginMenuConfig()}
-                                  helpers={_rcProps?.helpers}
-                                  plugins={this.props.pluginsContext.plugins}
-                                />
+                    <Shortcuts group="global" root>
+                      <>
+                        <UploadProvider helpers={_rcProps?.helpers}>
+                          <>
+                            <EditorContextConsumer>
+                              {(editor: RichContentAdapter) => (
+                                <ToolbarContext.Provider
+                                  value={{
+                                    ...this.getToolbarContext(editor.getEditorCommands),
+                                    portal: this.portalRef.current as RicosPortalType,
+                                  }}
+                                >
+                                  <ContentQueryProvider editor={editor.tiptapEditor}>
+                                    <RicosToolbars
+                                      content={this.content}
+                                      toolbarSettings={toolbarSettings}
+                                    />
+                                    <FloatingAddPluginMenu
+                                      addPluginMenuConfig={this.getPluginMenuConfig()}
+                                      helpers={_rcProps?.helpers}
+                                      plugins={this.props.pluginsContext.plugins}
+                                    />
 
-                                <PluginsToolbar content={this.content} />
-                                <FooterToolbar />
-                              </ContentQueryProvider>
-                            </ToolbarContext.Provider>
-                          )}
-                        </EditorContextConsumer>
-                      </ModalProvider>
-                    </UploadProvider>
-
-                    <Shortcuts group="formatting">
-                      <RicosEditor {...this.props} ref={this.editor} />
+                                    <PluginsToolbar content={this.content} />
+                                    <FooterToolbar />
+                                  </ContentQueryProvider>
+                                </ToolbarContext.Provider>
+                              )}
+                            </EditorContextConsumer>
+                            <ModalRenderer />
+                          </>
+                        </UploadProvider>
+                        <Shortcuts group="formatting">
+                          <RicosEditor {...this.props} ref={this.editor} />
+                        </Shortcuts>
+                      </>
                     </Shortcuts>
                   </>
-                </Shortcuts>
-              </>
-            </EditorContextProvider>
-          </LocaleResourceProvider>
-        )}
-      </>
+                </ModalContextProvider>
+              </EditorContextProvider>
+            </LocaleResourceProvider>
+          )}
+        </>
+      </EventsContextProvider>
     );
   }
 }

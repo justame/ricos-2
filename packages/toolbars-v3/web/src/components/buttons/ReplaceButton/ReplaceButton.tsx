@@ -5,8 +5,7 @@ import cx from 'classnames';
 import styles from './ReplaceButton.scss';
 import Tooltip from 'wix-rich-content-common/libs/Tooltip';
 import { UploadServiceContext } from 'wix-rich-content-common';
-import { withToolbarContext } from 'ricos-context';
-import { ModalContext } from 'ricos-modals';
+import { withToolbarContext, ModalContext } from 'ricos-context';
 
 type Props = {
   toolbarItem;
@@ -17,7 +16,7 @@ type Props = {
 const ReplaceButton: FC<Props> = ({ toolbarItem, onClick, context }) => {
   const { isMobile, t } = context || {};
   const uploadContext = useContext(UploadServiceContext);
-  const { modalService } = useContext(ModalContext) || {};
+  const modalService = useContext(ModalContext) || {};
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
 
   const Icon = toolbarItem.presentation?.icon;

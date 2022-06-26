@@ -4,8 +4,7 @@ import { UploadServiceContext } from 'wix-rich-content-common';
 import type { AddButton, AddPluginMenuConfig } from 'ricos-types';
 import { AddPluginMenu, SECTIONS } from 'wix-rich-content-editor';
 import PluginMenuButton from './PluginMenuButton';
-import { RicosContext, EditorContext } from 'ricos-context';
-import { ModalContext } from 'ricos-modals';
+import { RicosContext, EditorContext, ModalContext } from 'ricos-context';
 import type { IPluginMenuButtonClick } from './types';
 import { PLUGIN_MENU_MODAL_ID } from './consts';
 import { calcPluginModalLayout, calcPluginModalPlacement } from './utils';
@@ -35,7 +34,7 @@ const AddPluginMenuWrapper: React.FC<Props> = ({
   plugins,
 }) => {
   const { t, theme, languageDir, isMobile } = useContext(RicosContext) || {};
-  const { modalService } = useContext(ModalContext) || {};
+  const modalService = useContext(ModalContext) || {};
   const { getEditorCommands } = useContext(EditorContext);
   const uploadContext = useContext(UploadServiceContext);
   const pluginModalLayout = calcPluginModalLayout(isMobile);

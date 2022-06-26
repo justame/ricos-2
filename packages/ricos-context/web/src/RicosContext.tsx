@@ -44,15 +44,13 @@ export const RicosContextProvider = ({
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function withRicosContext<T = any>() {
-  return (Component: ComponentType<T>) => {
-    return (props: T) => {
-      return (
-        <RicosContext.Consumer>
-          {(value: GeneralContext) => <Component {...props} ricosContext={value} />}
-        </RicosContext.Consumer>
-      );
-    };
+export function withRicosContext<T = any>(Component: ComponentType<T>) {
+  return (props: T) => {
+    return (
+      <RicosContext.Consumer>
+        {(value: GeneralContext) => <Component {...props} ricosContext={value} />}
+      </RicosContext.Consumer>
+    );
   };
 }
 

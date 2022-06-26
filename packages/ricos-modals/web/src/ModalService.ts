@@ -1,19 +1,31 @@
-import type { ModalConfig, ModalService } from 'ricos-types';
-
-const EVENTS = {
-  modalOpenEvent: 'modalOpen',
-  modalCloseEvent: 'modalClose',
-};
+import type {
+  EventPublisher,
+  EventRegistrar,
+  EventSubscriptor,
+  ModalConfig,
+  ModalService,
+} from 'ricos-types';
 
 type IModal = ModalConfig;
 
 export class RicosModalService implements ModalService {
   private modals: IModal[] = [];
 
-  private callbacks: { [key: string]: ((id: string) => unknown)[] } = {};
+  private openModalPublisher: EventPublisher<ModalConfig['id']>;
 
-  constructor() {
+  private closeModalPublisher: EventPublisher<ModalConfig['id']>;
+
+  eventSubscriptor: EventSubscriptor;
+
+  constructor(events: EventRegistrar & EventSubscriptor) {
     this.modals = [];
+    this.openModalPublisher = events.register<ModalConfig['id']>(
+      'ricos.modals.functionality.modalOpened'
+    );
+    this.closeModalPublisher = events.register<ModalConfig['id']>(
+      'ricos.modals.functionality.modalClosed'
+    );
+    this.eventSubscriptor = events as EventSubscriptor;
   }
 
   public register(modalConfig: ModalConfig) {}
@@ -27,7 +39,7 @@ export class RicosModalService implements ModalService {
       return false;
     } else {
       this.modals.push(modalConfig);
-      this.emit(EVENTS.modalOpenEvent, this.getModal(modalConfig.id));
+      this.openModalPublisher.publish(modalConfig.id);
       return true;
     }
   }
@@ -36,7 +48,7 @@ export class RicosModalService implements ModalService {
     const modal = this.getModal(id);
     if (modal) {
       this.modals = this.modals.filter(modal => modal.id !== id);
-      this.emit(EVENTS.modalCloseEvent, id);
+      this.closeModalPublisher.publish(id);
       return true;
     } else {
       console.error(`Fail to close modal: ${id} is not open`);
@@ -53,32 +65,18 @@ export class RicosModalService implements ModalService {
   }
 
   public onModalOpened(onOpen: (id: string) => unknown) {
-    this.on(EVENTS.modalOpenEvent, onOpen);
+    this.eventSubscriptor.subscribe(
+      'ricos.modals.functionality.modalOpened',
+      onOpen,
+      'ricos-modal-service'
+    );
   }
 
   public onModalClosed(onClose: (id: string) => unknown) {
-    this.on(EVENTS.modalCloseEvent, onClose);
-  }
-
-  //TODO: reuse EventEmitter rather duplicate code
-
-  public on(event: string, fn: (id: string) => unknown): this {
-    if (!this.callbacks[event]) {
-      this.callbacks[event] = [];
-    }
-
-    this.callbacks[event].push(fn);
-
-    return this;
-  }
-
-  protected emit(event: string, ...args: unknown[]): this {
-    const callbacks = this.callbacks[event];
-
-    if (callbacks) {
-      callbacks.forEach(callback => callback.apply(this, args));
-    }
-
-    return this;
+    this.eventSubscriptor.subscribe(
+      'ricos.modals.functionality.modalClosed',
+      onClose,
+      'ricos-modal-service'
+    );
   }
 }

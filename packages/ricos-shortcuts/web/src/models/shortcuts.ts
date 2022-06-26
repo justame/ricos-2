@@ -1,5 +1,11 @@
 import type { KeyMap } from 'react-hotkeys';
-import type { EditorCommands, KeyboardShortcut, TranslationFunction } from 'ricos-types';
+import type {
+  EditorCommands,
+  EventPublisher,
+  KeyboardShortcut,
+  TranslationFunction,
+  EventData,
+} from 'ricos-types';
 import type { Keys } from '../keyboard-shortcuts/keys';
 
 export type LocalizedDisplayData = {
@@ -137,6 +143,7 @@ export interface Shortcuts {
   getHotKeysProps: (
     group: string,
     commands: EditorCommands,
-    t: TranslationFunction
+    t: TranslationFunction,
+    publisher: EventPublisher<EventData>
   ) => HotKeysProps;
 }

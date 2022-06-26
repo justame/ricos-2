@@ -302,7 +302,7 @@ class RicosToolbars extends React.Component<
     );
   }
 }
-const RicosToolbarsWithContext = withRicosContext<RicosToolbarProps>()(
+const RicosToolbarsWithContext = withRicosContext<RicosToolbarProps>(
   withEditorContext<RicosToolbarProps>(RicosToolbars)
 );
 export default RicosToolbarsWithContext;
