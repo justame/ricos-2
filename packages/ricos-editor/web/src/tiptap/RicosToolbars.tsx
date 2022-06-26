@@ -165,7 +165,7 @@ class RicosToolbars extends React.Component<
 
     if (
       !ricosContext.isMobile &&
-      toolbarConfig?.shouldCreate?.() &&
+      toolbarConfig?.shouldCreate?.().desktop &&
       !toolbarSettings?.useStaticTextToolbar
     ) {
       return (
@@ -226,7 +226,7 @@ class RicosToolbars extends React.Component<
       'mobile'
     );
 
-    if (ricosContext.isMobile && toolbarConfig?.shouldCreate?.()) {
+    if (ricosContext.isMobile && toolbarConfig?.shouldCreate?.().mobile) {
       return <div dir={ricosContext.languageDir}>{this.renderToolbar(toolbarItemsConfig)}</div>;
     } else {
       return null;
@@ -235,6 +235,7 @@ class RicosToolbars extends React.Component<
 
   renderStaticToolbar(finaltoolbarSettings: ToolbarSettingsFunctions[]) {
     const { toolbarSettings, ricosContext } = this.props;
+    const { isMobile } = ricosContext;
     const toolbarType = TOOLBARS.STATIC;
     const toolbarConfig = this.getToolbarConfig(finaltoolbarSettings, toolbarType);
     const htmlContainer = toolbarSettings?.textToolbarContainer;
@@ -244,8 +245,11 @@ class RicosToolbars extends React.Component<
       toolbarType,
       'desktop'
     );
+    const shouldCreate =
+      (isMobile && toolbarConfig?.shouldCreate?.().mobile) ||
+      (!isMobile && toolbarConfig?.shouldCreate?.().desktop);
 
-    if (htmlContainer && toolbarConfig?.shouldCreate?.()) {
+    if (htmlContainer && shouldCreate) {
       return (
         <RicosPortal
           languageDir={ricosContext.languageDir}
@@ -256,7 +260,7 @@ class RicosToolbars extends React.Component<
         </RicosPortal>
       );
     }
-    if (toolbarSettings?.useStaticTextToolbar && toolbarConfig?.shouldCreate?.()) {
+    if (toolbarSettings?.useStaticTextToolbar && shouldCreate) {
       return (
         <div toolbar-type="static" dir={ricosContext.languageDir}>
           {this.renderToolbar(toolbarItemsConfig)}

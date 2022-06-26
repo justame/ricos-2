@@ -24,8 +24,8 @@
 - `ricos-modals`
   - [#4050](https://github.com/wix/ricos/pull/4050) ModalContext separated from ModalProvider, and moved to `ricos-context`
 - `ricos-plugins/toolbars-v3`
-  - [#4071](https://github.com/wix/ricos/pull/4071) delete resolvers - revert #4061 &  code cleanup
-  
+  - [#4071](https://github.com/wix/ricos/pull/4071) delete resolvers - revert #4061 & code cleanup
+
 </details>
 
 <hr/>
@@ -37,9 +37,10 @@
 - `audio`
   - [#4040](https://github.com/wix/ricos/pull/4040) fix audio replace on tiptap editor
   - [#4049](https://github.com/wix/ricos/pull/4049) fix audio data on replace
-  - [#4056](https://github.com/wix/ricos/pull/4056) fix data on tiptap replace
--`video-social/vertical-embed`
+  - [#4056](https://github.com/wix/ricos/pull/4056) fix data on tiptap replace -`video-social/vertical-embed`
   - [#4049](https://github.com/wix/ricos/pull/4049) fix popovers ui on mobile when opened from external toolbar
+- `ricos-editor`
+  - [#4064](https://github.com/wix/ricos/pull/4064) fix toolbars should create
 
 ## :house: Internal
 
