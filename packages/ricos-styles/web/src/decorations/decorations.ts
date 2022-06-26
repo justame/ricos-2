@@ -19,7 +19,7 @@ export class Decorations implements TextDecorations {
   }
 
   static of(decorations: Decoration[]): Decorations {
-    const textDecorations = decorations.map(Decorations.toTextDecoration);
+    const textDecorations = (decorations || []).map(Decorations.toTextDecoration);
     return new Decorations(textDecorations);
   }
 

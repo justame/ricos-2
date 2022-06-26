@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `ricos-styles`
+  - [#4072](https://github.com/wix/ricos/pull/4072) empty doc style & tests
+
 ## :house: Internal
 
 - `ricos-events`

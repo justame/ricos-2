@@ -1,4 +1,5 @@
 import type { RicosTheme } from 'ricos-types';
+import type { DocumentStyle } from 'ricos-schema';
 import { Node_Type } from 'ricos-schema';
 import { Decoration_Type } from 'ricos-types';
 import { decorations, customStyle } from './tests/test-cases';
@@ -59,5 +60,39 @@ describe('Styles', () => {
       },
       type: 'COLOR',
     });
+  });
+
+  it('Should initialize styles with empty documentStyle & theme', () => {
+    const documentStyle = {};
+    const theme: RicosTheme = {};
+    const styles = new Styles().setTheme(theme).setDocumentStyle(documentStyle);
+    const headingNode = {
+      type: Node_Type.HEADING,
+      headingData: { level: 1 },
+      id: '',
+      nodes: [],
+    } as HeadingNode;
+    const decoration = styles.getDecoration(headingNode, Decoration_Type.COLOR);
+    expect(decoration).toEqual({});
+  });
+
+  it('Should initialize styles without decorations in documentStyle', () => {
+    const documentStyle = {
+      headerOne: {},
+    };
+    const theme: RicosTheme = {
+      customStyles: {
+        p: {},
+      },
+    };
+    const styles = new Styles().setTheme(theme).setDocumentStyle(documentStyle as DocumentStyle);
+    const headingNode = {
+      type: Node_Type.HEADING,
+      headingData: { level: 1 },
+      id: '',
+      nodes: [],
+    } as HeadingNode;
+    const decoration = styles.getDecoration(headingNode, Decoration_Type.COLOR);
+    expect(decoration).toEqual({});
   });
 });
