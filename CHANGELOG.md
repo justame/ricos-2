@@ -17,7 +17,13 @@
     Click to see more.
   </summary>
 
+## :house: Internal
 
+- `ricos-events`
+  - [#4050](https://github.com/wix/ricos/pull/4050) `ricos-events` package added
+- `ricos-modals`
+  - [#4050](https://github.com/wix/ricos/pull/4050) ModalContext separated from ModalProvider, and moved to `ricos-context`
+  
 </details>
 
 <hr/>
