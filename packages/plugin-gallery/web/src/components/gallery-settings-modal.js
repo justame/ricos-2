@@ -375,10 +375,10 @@ export class GallerySettingsModal extends Component {
 
   tabsList = () => {
     const mediaSectionProps = {
-      getData: this.modalsWithEditorCommands
-        ? () => this.props.componentData
-        : this.props.getComponentData,
-
+      getData: () =>
+        this.modalsWithEditorCommands
+          ? this.props.componentData
+          : this.props.pubsub.get('componentData'),
       store: this.props.pubsub.store,
       helpers: this.props.helpers,
       theme: this.props.theme,

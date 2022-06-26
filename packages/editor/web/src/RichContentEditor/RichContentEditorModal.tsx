@@ -22,18 +22,10 @@ interface Props {
   [propName: string]: any;
 }
 
-const getBlockKey = editorCommands => editorCommands.getSelection().startKey;
-
-const getComponentData = editorCommands => {
-  const blockKey = getBlockKey(editorCommands);
-  return blockKey ? editorCommands.getBlockComponentData(blockKey) : undefined;
-};
-
 const RichContentEditorModal: FunctionComponent<Props> = ({
   modalName,
   modalElement,
   modalsMap,
-  editorCommands,
   ...modalProps
 }) => {
   const ModalsMap = { ...Modals, ...modalsMap };
@@ -50,11 +42,7 @@ const RichContentEditorModal: FunctionComponent<Props> = ({
       onMouseDown={e => e.nativeEvent.stopImmediatePropagation()}
       data-id="rich-content-editor-modal"
     >
-      <RichContentModal
-        modalElement={element}
-        {...modalProps}
-        getComponentData={() => getComponentData(editorCommands)}
-      />
+      <RichContentModal modalElement={element} {...modalProps} />
     </div>
   );
 };
