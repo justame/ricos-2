@@ -257,7 +257,11 @@ class RicosToolbars extends React.Component<
       );
     }
     if (toolbarSettings?.useStaticTextToolbar && toolbarConfig?.shouldCreate?.()) {
-      return this.renderToolbar(toolbarItemsConfig);
+      return (
+        <div toolbar-type="static" dir={ricosContext.languageDir}>
+          {this.renderToolbar(toolbarItemsConfig)}
+        </div>
+      );
     }
 
     return null;
