@@ -21,6 +21,7 @@
 
 - `tiptap-extensions`
   - [#4081](https://github.com/wix/ricos/pull/4081) unsupported text node styles returns decoration undefined
+  - [#4029](https://github.com/wix/ricos/pull/4029) background color for paragraph\headings nodes theme support
 
 ## :house: Internal
 

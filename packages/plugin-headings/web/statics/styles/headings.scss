@@ -26,5 +26,8 @@
   .header#{$headerName} {
     @include ricosTypography('h#{$i}', false);
     color: var(--ricos-custom-h#{$i}-color, $primary-text-color);
+    @at-root #{'& > span'} {
+      background-color: var(--ricos-custom-h#{$i}-background-color, unset);
+    }
   }
 }

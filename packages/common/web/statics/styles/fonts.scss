@@ -97,6 +97,15 @@ $text-decorations: (
   min-height: var(--ricos-custom-#{$name}-min-height, map-get($min-heights, $name));
   @if $name == 'p' {
     color: $ricos-p-color;
+    @if $isViewer {
+      @at-root #{'& > * > span'} {
+        background-color: $ricos-p-background-color;
+      }
+    } @else {
+      @at-root #{'& > span'} {
+        background-color: $ricos-p-background-color;
+      }
+    }
   }
   @include phone {
     font-size: var(--ricos-custom-#{$name}-font-size, map-get($font-sizes-mobile, $name));

@@ -60,7 +60,7 @@ export const paragraph: RicosExtension = {
         return [
           'div',
           mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, styles),
-          0,
+          ['span', { style: 'display: inline-block;' }, 0],
         ] as DOMOutputSpec;
       },
 
