@@ -82,7 +82,7 @@ export const bold: RicosExtension = {
             (styles: Styles) =>
             ({ commands }) => {
               const fontWeightValue = commands.getStylesDecorationBySelectedNode(styles, this.name)
-                .fontWeightValue
+                ?.fontWeightValue
                 ? 400
                 : 700;
               return commands.toggleMark(this.name, {

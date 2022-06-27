@@ -16,7 +16,7 @@ declare module '@tiptap/core' {
       getStylesDecorationBySelectedNode: (
         styles: Styles,
         decorationType: Decoration_Type
-      ) => (props: CommandProps) => Decoration;
+      ) => (props: CommandProps) => Decoration | undefined;
       /**
        * updates the document style
        */
@@ -45,7 +45,9 @@ export const ricosStyles: RicosExtension = {
                   return false;
                 }
               });
-              return styles.getDecoration(node as ParagraphNode | HeadingNode, decorationType);
+              return (
+                node && styles.getDecoration(node as ParagraphNode | HeadingNode, decorationType)
+              );
             },
           updateDocumentStyle:
             (documentStyle: DocumentStyle) =>

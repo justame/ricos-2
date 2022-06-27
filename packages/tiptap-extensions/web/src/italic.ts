@@ -82,7 +82,7 @@ export const italic: RicosExtension = {
             (styles: Styles) =>
             ({ commands }) => {
               const italicData = !commands.getStylesDecorationBySelectedNode(styles, this.name)
-                .italicData;
+                ?.italicData;
               return commands.toggleMark(this.name, {
                 italicData,
               });

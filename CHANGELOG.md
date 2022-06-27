@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `tiptap-extensions`
+  - [#4081](https://github.com/wix/ricos/pull/4081) unsupported text node styles returns decoration undefined
+
 ## :house: Internal
 
 - `ricos-shortcuts`
