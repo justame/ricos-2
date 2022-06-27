@@ -1,7 +1,7 @@
 @import '~wix-rich-content-common/dist/statics/styles/mixins';
 @import '~wix-rich-content-common/dist/statics/styles/palette';
 
-.settingsButtonWrapper {
+.dropdownModalButtonWrapper {
   background: transparent;
   padding: 4px;
   cursor: pointer;
@@ -18,27 +18,35 @@
     @include svg-fill;
   }
 
-  &.disabled {
-    cursor: default;
-    opacity: 0.4;
-  }
-
-  &.mobileSettingsButtonWrapper:not(.active) {
+  &.mobileDropdownModalButtonWrapper:not(.active) {
     &:hover {
       background-color: unset;
     }
   }
 }
 
-.settingsButton {
+.dropdownModalButton {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
   height: 20px;
+  min-width: 20px;
+  gap: 8px;
 
-  &.mobileSettingsButton {
-    width: 32px;
+  &.mobileDropdownModalButton {
     height: 32px;
+    min-width: 32px;
   }
+}
+
+.modal {
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.06);
+  border: solid 1px rgba(51, 51, 51, 0.1);
+  border-radius: 2px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  width: 162px;
+  @include border-box;
 }

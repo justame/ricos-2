@@ -1,12 +1,9 @@
-import {
-  pluginToolbarButtonsConfig,
-  pluginToolbarItemsRenders,
-  alwaysVisibleResolver,
-} from 'wix-rich-content-toolbars-v3';
-import type { TiptapContentResolver, IToolbarItemConfigTiptap } from 'wix-rich-content-toolbars-v3';
+import { toolbarButtonsConfig } from './toolbarButtonsConfig';
+import { toolbarButtonsRenders } from './toolbarButtonsRenders';
+import { alwaysVisibleResolver } from 'wix-rich-content-toolbars-v3';
+import type { IToolbarItemConfigTiptap, TiptapContentResolver } from 'wix-rich-content-toolbars-v3';
 import type { ToolbarButton } from 'ricos-types';
 import type { ComponentType } from 'react';
-import { getToolbarButtonRenderer } from './utils';
 
 export class PluginToolbarButtonCollisionError extends Error {}
 
@@ -52,7 +49,7 @@ export class PluginToolbarButton {
       buttonResolvers.visible = alwaysVisibleResolver;
     }
 
-    const toolbarItemConfig = pluginToolbarButtonsConfig[id] || {};
+    const toolbarItemConfig = toolbarButtonsConfig[id] || {};
     const { presentation = {}, commands } = toolbarItemConfig;
 
     return {
@@ -78,7 +75,7 @@ export class PluginToolbarButton {
   getRenderer(): Record<string, ComponentType> | undefined {
     const { id, renderer } = this.button;
     return {
-      [id]: renderer ? getToolbarButtonRenderer(renderer) : pluginToolbarItemsRenders[id],
+      [id]: renderer || toolbarButtonsRenders[id],
     };
   }
 }

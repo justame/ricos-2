@@ -24,3 +24,4 @@ export * from './shortcuts';
 export * from './key-types';
 export * from './RicosTypes';
 export * from './events';
+export * from './toolbarTypes';

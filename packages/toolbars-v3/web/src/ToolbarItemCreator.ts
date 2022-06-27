@@ -1,7 +1,8 @@
-import type { IToolbarItem, IToolbarItemConfig } from './types';
+import type { IToolbarItemConfig } from './types';
 import { Content } from './Content';
 import EventEmitter from './lib/EventEmitter';
 import type { Styles } from 'ricos-styles';
+import type { IToolbarItem } from 'ricos-types';
 
 export class ToolbarItemCreator {
   static create(toolbarItemConfig: IToolbarItemConfig) {

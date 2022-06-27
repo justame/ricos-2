@@ -51,13 +51,7 @@ export const getToolbarButtons = (config): PluginToolbarButtons => {
         },
       },
       {
-        id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGN_LEFT,
-      },
-      {
-        id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGN_CENTER,
-      },
-      {
-        id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGN_RIGHT,
+        id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
       },
       {
         id: PLUGIN_TOOLBAR_BUTTON_ID.LINK,

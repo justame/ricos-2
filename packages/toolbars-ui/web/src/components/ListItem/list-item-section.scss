@@ -1,0 +1,16 @@
+@import '~wix-rich-content-common/dist/statics/styles/palette';
+@import '~wix-rich-content-common/dist/statics/styles/mixins';
+@import '~wix-rich-content-common/dist/statics/styles/fonts';
+
+.whitespace {
+  margin: 8px auto 0;
+  .separator {
+    height: 1px;
+    background-color: var(--ricos-settings-dividers-color, rgba(51, 51, 51, 0.2));
+    width: calc(100% - 24px);
+    @include phone {
+      margin: 0;
+      width: 100%;
+    }
+  }
+}

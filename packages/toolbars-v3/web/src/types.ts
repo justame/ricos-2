@@ -1,28 +1,8 @@
 //TODO: understand
 import type { EditorCommands } from 'wix-rich-content-common';
-import type { Editor } from '@tiptap/core';
 import type { ToolbarContextType } from 'ricos-context';
-import type { TranslationFunction } from 'ricos-types';
-import type { TiptapContentResolver } from './ContentResolver';
-import type { PLUGIN_TOOLBAR_BUTTON_ID } from 'wix-rich-content-editor-common';
+import type { TranslationFunction, IToolbarItem } from 'ricos-types';
 import type { Styles } from 'ricos-styles';
-
-export type IToolbarItem = {
-  id: string;
-  type:
-    | 'textColorIndicator'
-    | 'toggle'
-    | 'font'
-    | 'imageSettings'
-    | 'textType'
-    | 'modal'
-    | 'separator';
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  presentation?: Record<string, any>;
-  attributes: Record<string, string | boolean | number>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  commands: Record<string, (...args: any) => void>;
-};
 
 type Modify<T, R> = Omit<T, keyof R> & R;
 
@@ -72,10 +52,6 @@ export type IToolbarItemConfigTiptap = Modify<
     commands: Record<string, TiptapCommand>;
   }
 >;
-
-type PluginButtonId = typeof PLUGIN_TOOLBAR_BUTTON_ID[keyof typeof PLUGIN_TOOLBAR_BUTTON_ID];
-
-export type IPluginToolbarButtonsConfig = Record<PluginButtonId, IToolbarItemConfigTiptap>;
 
 export type ToolbarItemProps = {
   toolbarItem: IToolbarItem;

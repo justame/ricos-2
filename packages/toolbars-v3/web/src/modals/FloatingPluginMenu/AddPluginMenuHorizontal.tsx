@@ -1,7 +1,7 @@
 import type { Node } from 'prosemirror-model';
 import React, { useContext } from 'react';
 import { EditorContext, RicosContext, ModalContext } from 'ricos-context';
-import type { IToolbarItemConfigTiptap, IToolbarItem } from '../../types';
+import type { IToolbarItemConfigTiptap } from '../../types';
 import RicosToolbarComponent from '../../components/RicosToolbarComponent';
 import { Content } from '../../Content';
 import ToggleButton from '../../components/buttons/ToggleButton/ToggleButton';
