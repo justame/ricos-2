@@ -66,7 +66,13 @@ export type NodeHocDescriptor = {
   priority: number;
 };
 
-export type Group = 'react' | 'text-container' | 'text' | 'spoilerable' | 'shortcuts-enabled';
+export type Group =
+  | 'react'
+  | 'text-container'
+  | 'text'
+  | 'spoilerable'
+  | 'shortcuts-enabled'
+  | 'overlay';
 
 export type RicosNodeExtension = {
   name: Node_Type | string;

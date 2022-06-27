@@ -6,7 +6,7 @@ import { Divider as Component } from './component';
 export const tiptapExtensions = [
   {
     type: 'node' as const,
-    groups: ['react'],
+    groups: ['overlay', 'react'],
     reconfigure: (
       config: NodeConfig,
       _extensions: RicosExtension[],
