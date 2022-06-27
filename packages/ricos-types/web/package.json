@@ -1,6 +1,6 @@
 {
   "name": "ricos-types",
-  "version": "8.71.32",
+  "version": "8.71.33",
   "author": {
     "name": "Oded Soffrin",
     "email": "odeds@wix.com"
@@ -42,8 +42,8 @@
     "utility-types": "^3.10.0"
   },
   "dependencies": {
-    "ricos-content": "8.71.32",
-    "ricos-schema": "8.71.32"
+    "ricos-content": "8.71.33",
+    "ricos-schema": "8.71.33"
   },
   "unpkg": true,
   "publishConfig": {

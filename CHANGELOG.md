@@ -17,20 +17,23 @@
     Click to see more.
   </summary>
 
+</details>
+
+<hr/>
+
+## 8.71.33 (Jun 27, 2022)
+
 ## :bug: Bug Fix
 
 - `tiptap-extensions`
   - [#4081](https://github.com/wix/ricos/pull/4081) unsupported text node styles returns decoration undefined
   - [#4029](https://github.com/wix/ricos/pull/4029) background color for paragraph\headings nodes theme support
   - [#4082](https://github.com/wix/ricos/pull/4082) overlay extension added
+
 ## :house: Internal
 
 - `ricos-shortcuts`
   - [#4078](https://github.com/wix/ricos/pull/4078) Shortcuts context to support events and styles
-
-</details>
-
-<hr/>
 
 ## 8.71.32 (Jun 26, 2022)
 
