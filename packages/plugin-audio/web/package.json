@@ -47,6 +47,7 @@
     "wix-rich-content-editor-common": "8.71.32",
     "wix-rich-content-plugin-commons": "8.71.32",
     "wix-rich-content-plugin-html": "8.71.32",
+    "wix-rich-content-toolbars-ui": "8.71.32",
     "wix-tiptap-editor": "8.71.32"
   },
   "jest": {

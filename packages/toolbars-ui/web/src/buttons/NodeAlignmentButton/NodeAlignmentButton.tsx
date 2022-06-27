@@ -32,9 +32,9 @@ const NodeAlignmentButton: FC<Props> = ({ options, toolbarItem }) => {
           dataHook={dataHook}
           prefix={<Icon />}
           title={t(text)}
-          selected={commandKey === selectedAlignment.toLowerCase()}
+          selected={commandKey === selectedAlignment}
           tooltip={t(tooltip)}
-          onClick={() => toolbarItem.commands?.setAlignment(commandKey.toUpperCase())}
+          onClick={() => toolbarItem.commands?.setAlignment(commandKey)}
         />
       ))}
       Icon={SelectedAlignmentIcon}

@@ -4,6 +4,7 @@ const PLUGIN_TOOLBAR_BUTTON_ID = {
   SETTINGS: 'settings',
   REPLACE: 'replace',
   LINK: 'link',
+  SIZE: 'size',
 };
 
 export default PLUGIN_TOOLBAR_BUTTON_ID;

@@ -1,3 +1,4 @@
+import React from 'react';
 import type { PluginToolbarButtons } from 'ricos-types';
 import {
   PLUGIN_TOOLBAR_BUTTON_ID,
@@ -5,6 +6,8 @@ import {
 } from 'wix-rich-content-editor-common';
 import InsertModal from './modals/InsertModal';
 import { gifModals } from './types';
+import { NodeSizeButton } from 'wix-rich-content-toolbars-ui';
+import type { PluginContainerData_Width_Type } from 'ricos-schema';
 
 const RESOLVER_IDS = {
   SELECTED: 'IS_GIF_SELECTED',
@@ -13,6 +16,17 @@ const RESOLVER_IDS = {
 export const getToolbarButtons = (config): PluginToolbarButtons => {
   return {
     buttons: [
+      {
+        id: PLUGIN_TOOLBAR_BUTTON_ID.SIZE,
+        renderer: toolbarItem => (
+          <NodeSizeButton
+            toolbarItem={toolbarItem}
+            options={
+              ['SMALL', 'CONTENT', 'FULL_WIDTH', 'ORIGINAL'] as PluginContainerData_Width_Type[]
+            }
+          />
+        ),
+      },
       {
         id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
       },

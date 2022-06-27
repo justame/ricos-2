@@ -10,6 +10,9 @@ export const getToolbarButtons = (config, type): PluginToolbarButtons => {
   return {
     buttons: [
       {
+        id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
+      },
+      {
         id: PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS,
         config: {
           command: ({ modalService, isMobile, node }) => {

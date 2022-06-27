@@ -58,6 +58,9 @@ export const getToolbarButtons = (config, galleryPluginService): PluginToolbarBu
         },
       },
       {
+        id: PLUGIN_TOOLBAR_BUTTON_ID.SIZE,
+      },
+      {
         id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
       },
       {

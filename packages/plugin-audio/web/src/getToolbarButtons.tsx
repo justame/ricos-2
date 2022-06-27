@@ -1,3 +1,4 @@
+import React from 'react';
 import type { PluginToolbarButtons } from 'ricos-types';
 import {
   PLUGIN_TOOLBAR_BUTTON_ID,
@@ -5,12 +6,23 @@ import {
 } from 'wix-rich-content-editor-common';
 import InsertModal from './modals/InsertModal';
 import { audioModals } from './consts';
+import { NodeSizeButton } from 'wix-rich-content-toolbars-ui';
+import type { PluginContainerData_Width_Type } from 'ricos-schema';
 
 export const getToolbarButtons = (config): PluginToolbarButtons => {
   const { getAudioUrl, handleFileSelection, handleFileUpload, fetchData } = config || {};
 
   return {
     buttons: [
+      {
+        id: PLUGIN_TOOLBAR_BUTTON_ID.SIZE,
+        renderer: toolbarItem => (
+          <NodeSizeButton
+            toolbarItem={toolbarItem}
+            options={['SMALL', 'CONTENT'] as PluginContainerData_Width_Type[]}
+          />
+        ),
+      },
       {
         id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
       },

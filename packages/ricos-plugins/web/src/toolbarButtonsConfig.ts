@@ -2,6 +2,7 @@ import {
   getNodeInSelectionResolver,
   isNodeContainsLinkOrAnchorResolver,
   getNodeAlignmentResolver,
+  getNodeSizeResolver,
 } from 'wix-rich-content-toolbars-v3';
 import { LinkIcon } from 'wix-rich-content-toolbars-ui';
 import type { IToolbarItemConfigTiptap } from 'wix-rich-content-toolbars-v3';
@@ -38,6 +39,20 @@ export const toolbarButtonsConfig: IPluginToolbarButtonsConfig = {
         ({ editorCommands }) =>
         alignment => {
           editorCommands.chain().focus().setNodeAlignment(alignment).setNodeSize('SMALL').run();
+        },
+    },
+  },
+  size: {
+    id: PLUGIN_TOOLBAR_BUTTON_ID.SIZE,
+    type: 'toggle',
+    attributes: {
+      nodeSize: getNodeSizeResolver,
+    },
+    commands: {
+      setSize:
+        ({ editorCommands }) =>
+        size => {
+          editorCommands.chain().focus().setNodeSize(size).setNodeAlignment('CENTER').run();
         },
     },
   },

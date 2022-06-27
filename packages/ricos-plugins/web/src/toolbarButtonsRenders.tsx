@@ -5,6 +5,7 @@ import {
   SettingsButton,
   ReplaceButton,
   NodeAlignmentButton,
+  NodeSizeButton,
   DeleteButton,
 } from 'wix-rich-content-toolbars-ui';
 
@@ -14,6 +15,9 @@ export const toolbarButtonsRenders = {
   },
   [PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT]: toolbarItem => {
     return <NodeAlignmentButton toolbarItem={toolbarItem} />;
+  },
+  [PLUGIN_TOOLBAR_BUTTON_ID.SIZE]: toolbarItem => {
+    return <NodeSizeButton toolbarItem={toolbarItem} />;
   },
   [PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS]: toolbarItem => {
     return <SettingsButton toolbarItem={toolbarItem} />;
