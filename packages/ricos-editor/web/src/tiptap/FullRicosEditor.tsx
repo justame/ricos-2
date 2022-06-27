@@ -30,8 +30,6 @@ import RicosPortal from '../modals/RicosPortal';
 import { LocaleResourceProvider } from '../RicosContext/locale-resource-provider';
 import type { RicosEditorRef } from '../RicosEditorRef';
 import { convertToolbarContext } from '../toolbars/convertToolbarContext';
-import { FooterToolbar } from '../toolbars/FooterToolbar';
-import PluginsToolbar from '../toolbars/PluginToolbar';
 import pluginsConfigMerger from '../utils/pluginsConfigMerger/pluginsConfigMerger';
 import RicosEditor from './RicosEditor';
 import RicosStyles from './RicosStyles';
@@ -163,11 +161,6 @@ export class FullRicosEditor extends React.Component<Props, State> implements Ri
     return toolbarContext as unknown as ToolbarContextType;
   }
 
-  getPluginMenuConfig = () =>
-    this.props?.toolbarSettings
-      ?.getToolbarSettings?.({})
-      ?.find(toolbar => toolbar.name === TOOLBARS.SIDE)?.addPluginMenuConfig || {};
-
   render() {
     try {
       if (this.state.error) {
@@ -236,14 +229,6 @@ export class FullRicosEditor extends React.Component<Props, State> implements Ri
                                         content={this.content}
                                         toolbarSettings={toolbarSettings}
                                       />
-                                      <FloatingAddPluginMenu
-                                        addPluginMenuConfig={this.getPluginMenuConfig()}
-                                        helpers={_rcProps?.helpers}
-                                        plugins={this.props.pluginsContext.plugins}
-                                      />
-
-                                      <PluginsToolbar content={this.content} />
-                                      <FooterToolbar />
                                     </ContentQueryProvider>
                                   </ToolbarContext.Provider>
                                 )}

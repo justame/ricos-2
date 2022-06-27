@@ -325,5 +325,18 @@ export const getDefaultToolbarSettings: GetToolbarSettings = ({
       }),
       getInstance: createInlineTextToolbar,
     },
+    {
+      name: TOOLBARS.PLUGIN,
+      shouldCreate: () => {
+        const shouldCreate = pluginButtons && pluginButtons.length > 0;
+        return {
+          desktop: shouldCreate,
+          mobile: {
+            ios: shouldCreate,
+            android: shouldCreate,
+          },
+        };
+      },
+    },
   ];
 };
