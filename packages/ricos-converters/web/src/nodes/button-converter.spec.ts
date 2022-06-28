@@ -11,13 +11,13 @@ import { linkButtonConverter } from './button-converters';
 
 describe('linkButton converter', () => {
   const tiptapNode = {
-    type: Node_Type.BUTTON,
+    type: 'LINK_BUTTON',
     attrs: {
-      type: ButtonData_Type.LINK,
+      type: 'LINK',
       containerData: {
-        alignment: PluginContainerData_Alignment.CENTER,
+        alignment: 'CENTER',
         width: {
-          size: PluginContainerData_Width_Type.CONTENT,
+          size: 'CONTENT',
           custom: '212',
         },
         textWrap: true,
@@ -35,7 +35,7 @@ describe('linkButton converter', () => {
       },
       text: 'Link Button',
       link: {
-        target: Link_Target.BLANK,
+        target: 'BLANK',
         anchor: '123',
         url: 'www.wix.com',
         rel: {
