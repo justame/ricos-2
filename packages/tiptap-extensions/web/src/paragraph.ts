@@ -16,6 +16,7 @@ declare module '@tiptap/core' {
        * Toggle a paragraph
        */
       setParagraph: () => ReturnType;
+      softNewLine: () => ReturnType;
     };
   }
 }
@@ -30,7 +31,7 @@ const createStyleAttribute = (node: ProsemirrorNode) => {
 
 export const paragraph: RicosExtension = {
   type: 'node' as const,
-  groups: ['text-container'],
+  groups: ['text-container', 'shortcuts-enabled'],
   name: Node_Type.PARAGRAPH,
   createExtensionConfig() {
     return {
@@ -80,12 +81,20 @@ export const paragraph: RicosExtension = {
             ({ commands }) => {
               return commands.setNode(this.name);
             },
+          softNewLine:
+            () =>
+            ({ state, dispatch }) => {
+              const transaction = state.tr.insertText('\n').scrollIntoView();
+              if (dispatch) dispatch(transaction);
+              return true;
+            },
         };
       },
 
       addKeyboardShortcuts() {
         return {
-          'Mod-Alt-0': () => this.editor.commands.setParagraph(),
+          // 'Mod-Alt-0': () => this.editor.commands.setParagraph(),
+          'Shift-Enter': () => this.editor.commands.softNewLine(),
         };
       },
     };

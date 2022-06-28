@@ -44,9 +44,13 @@ export class FunctionalExtension implements IFunctionalExtension {
     if (!isRicosFunctionalExtension(extension)) {
       throw new TypeError('invalid argument');
     }
-    const { addKeyboardShortcuts: _, ...rest } =
+    const { addKeyboardShortcuts, ...rest } =
       config || extension.createExtensionConfig({ mergeAttributes });
-    this.config = { ...rest, type: 'extension' };
+    this.config = {
+      ...rest,
+      ...(extension.groups.includes('shortcuts-enabled') ? { addKeyboardShortcuts } : {}),
+      type: 'extension',
+    };
     this.priority = this.config.priority || DEFAULT_PRIORITY;
     this.name = this.config.name;
     this.groups = extension.groups || [];
