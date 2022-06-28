@@ -88,6 +88,7 @@ export const textDirection: RicosExtension = {
                 ) {
                   const dir = getTextDirectionFromAlignment(node.attrs.textStyle?.textAlignment);
                   dir &&
+                    dir !== node.attrs.dir &&
                     tr.setNodeMarkup(pos, undefined, {
                       ...node.attrs,
                       dir,

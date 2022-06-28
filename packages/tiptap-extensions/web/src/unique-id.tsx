@@ -44,7 +44,8 @@ export const uniqueId: RicosExtension = {
                 const nodeId = node.attrs.id;
                 const id = nodeId && !usedIds[nodeId] ? nodeId : generateId();
                 usedIds[id] = true;
-                if (node.isBlock) {
+                const shouldUpdate = nodeId !== id;
+                if (node.isBlock && shouldUpdate) {
                   tr.setNodeMarkup(pos, undefined, {
                     ...node.attrs,
                     id,
