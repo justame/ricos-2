@@ -16,15 +16,15 @@
     Changes that have landed in master but are not yet released.
     Click to see more.
   </summary>
-
-</details>
-
+  
+  
 ## :house: Internal
 
 - `tiptap-extensions`
   - [#4083](https://github.com/wix/ricos/pull/4083) paragraph & blockquote with alignment/text direction/indent draft behaviour in tiptap
   - [#4085](https://github.com/wix/ricos/pull/4085) soft new line command on shift+enter
-  <hr/>
+
+</details>
 
 ## 8.71.33 (Jun 27, 2022)
 
