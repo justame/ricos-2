@@ -1,4 +1,4 @@
-import type { BulletedListNode, ListItemNode } from 'ricos-content';
+import type { BulletedListNode } from 'ricos-content';
 import { Node_Type } from 'ricos-schema';
 import { ricosNodeVisitor, tiptapNodeVisitor } from '../tiptap-converters';
 import { bulletedListConverter } from './bulleted-list-converter';

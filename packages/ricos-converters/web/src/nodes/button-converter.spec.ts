@@ -7,17 +7,17 @@ import {
   PluginContainerData_Width_Type,
 } from 'ricos-schema';
 import { ricosNodeVisitor, tiptapNodeVisitor } from '../tiptap-converters';
-import { linkButtonConverter } from './button-converters';
+import { actionButtonConverter, linkButtonConverter } from './button-converters';
 
 describe('linkButton converter', () => {
   const tiptapNode = {
     type: 'LINK_BUTTON',
     attrs: {
-      type: 'LINK',
+      type: ButtonData_Type.LINK,
       containerData: {
-        alignment: 'CENTER',
+        alignment: PluginContainerData_Alignment.CENTER,
         width: {
-          size: 'CONTENT',
+          size: PluginContainerData_Width_Type.CONTENT,
           custom: '212',
         },
         textWrap: true,
@@ -35,7 +35,7 @@ describe('linkButton converter', () => {
       },
       text: 'Link Button',
       link: {
-        target: 'BLANK',
+        target: Link_Target.BLANK,
         anchor: '123',
         url: 'www.wix.com',
         rel: {
@@ -46,7 +46,7 @@ describe('linkButton converter', () => {
     },
   };
 
-  const buttonNode: ButtonNode = {
+  const linkButtonNode: ButtonNode = {
     type: Node_Type.BUTTON,
     id: '14',
     nodes: [],
@@ -83,13 +83,80 @@ describe('linkButton converter', () => {
     },
   };
 
-  it('should convert ButtonNode to TiptapNode', () => {
-    const actual = linkButtonConverter.toTiptap.convert(buttonNode, ricosNodeVisitor);
+  it('should convert LinkButtonNode to TiptapNode', () => {
+    const actual = linkButtonConverter.toTiptap.convert(linkButtonNode, ricosNodeVisitor);
     expect(actual).toEqual(tiptapNode);
   });
 
-  it('should convert TiptapNode to ButtonNode', () => {
+  it('should convert TiptapNode to LinkButtonNode', () => {
     const actual = linkButtonConverter.fromTiptap.convert(tiptapNode, tiptapNodeVisitor);
-    expect(actual).toEqual(buttonNode);
+    expect(actual).toEqual(linkButtonNode);
+  });
+});
+
+describe('actionButton converter', () => {
+  const tiptapNode = {
+    type: 'ACTION_BUTTON',
+    attrs: {
+      type: ButtonData_Type.ACTION,
+      containerData: {
+        alignment: PluginContainerData_Alignment.LEFT,
+        width: {
+          size: PluginContainerData_Width_Type.ORIGINAL,
+        },
+        textWrap: true,
+      },
+      styles: {
+        border: {
+          width: 0,
+          radius: 15,
+        },
+        colors: {
+          text: '#FEFDFD',
+          border: '#0261FF',
+          background: '#81B0FF',
+        },
+      },
+      text: 'Action Button',
+      id: '16',
+    },
+  };
+
+  const actionButtonNode: ButtonNode = {
+    type: Node_Type.BUTTON,
+    id: '16',
+    nodes: [],
+    buttonData: {
+      containerData: {
+        width: {
+          size: PluginContainerData_Width_Type.ORIGINAL,
+        },
+        alignment: PluginContainerData_Alignment.LEFT,
+        textWrap: true,
+      },
+      type: ButtonData_Type.ACTION,
+      styles: {
+        border: {
+          width: 0,
+          radius: 15,
+        },
+        colors: {
+          text: '#FEFDFD',
+          border: '#0261FF',
+          background: '#81B0FF',
+        },
+      },
+      text: 'Action Button',
+    },
+  };
+
+  it('should convert ActionButtonNode to TiptapNode', () => {
+    const actual = actionButtonConverter.toTiptap.convert(actionButtonNode, ricosNodeVisitor);
+    expect(actual).toEqual(tiptapNode);
+  });
+
+  it('should convert TiptapNode to ActionButtonNode', () => {
+    const actual = actionButtonConverter.fromTiptap.convert(tiptapNode, tiptapNodeVisitor);
+    expect(actual).toEqual(actionButtonNode);
   });
 });
