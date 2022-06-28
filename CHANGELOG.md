@@ -19,7 +19,11 @@
 
 </details>
 
-<hr/>
+## :house: Internal
+
+- `tiptap-extensions`
+  - [#4083](https://github.com/wix/ricos/pull/4083) paragraph & blockquote with alignment/text direction/indent draft behaviour in tiptap
+  <hr/>
 
 ## 8.71.33 (Jun 27, 2022)
 

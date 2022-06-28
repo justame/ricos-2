@@ -1,6 +1,9 @@
 import type { TextDirection } from 'wix-rich-content-common';
 import { isTextDirection } from 'wix-rich-content-common';
+import { Plugin, PluginKey } from 'prosemirror-state';
 import type { RicosExtension, RicosExtensionConfig } from 'ricos-tiptap-types';
+import { Node_Type } from 'ricos-schema';
+import { getTextDirectionFromAlignment } from 'ricos-converters';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -69,6 +72,33 @@ export const textDirection: RicosExtension = {
         directions: ['ltr', 'rtl', 'auto'],
         defaultDirection: 'auto',
       }),
+      addProseMirrorPlugins() {
+        return [
+          new Plugin({
+            key: new PluginKey('textDirection'),
+            appendTransaction: (_transactions, oldState, newState) => {
+              if (newState.doc === oldState.doc) {
+                return;
+              }
+              const tr = newState.tr;
+              const { from, to } = newState.selection;
+              newState.doc.nodesBetween(from, to, (node, pos) => {
+                if (
+                  [Node_Type.BLOCKQUOTE, Node_Type.PARAGRAPH].includes(node.type.name as Node_Type)
+                ) {
+                  const dir = getTextDirectionFromAlignment(node.attrs.textStyle?.textAlignment);
+                  dir &&
+                    tr.setNodeMarkup(pos, undefined, {
+                      ...node.attrs,
+                      dir,
+                    });
+                }
+              });
+              return tr;
+            },
+          }),
+        ];
+      },
     };
   },
 };

@@ -1,6 +1,7 @@
 import type { BlockquoteNode, ParagraphNode, TextNode } from 'ricos-content';
 import type { Node, ParagraphData } from 'ricos-schema';
 import { Node_Type } from 'ricos-schema';
+import { getTextDirectionFromAlignment } from '../utils/text-direction';
 import type { TiptapNode, TiptapNodeConverter } from '../types';
 
 type ParagraphFields = {
@@ -34,12 +35,14 @@ export const blockquoteConverter: TiptapNodeConverter = {
         blockquoteData: { indentation },
       } = node || {};
       const { paragraphData, paragraphId } = toParagraphFields(node.nodes[0]);
+      const dir = getTextDirectionFromAlignment(paragraphData?.textStyle?.textAlignment);
       return {
         type: Node_Type.BLOCKQUOTE,
         attrs: {
           paragraphId,
           textStyle: paragraphData.textStyle,
           indentation,
+          ...(dir ? { dir } : {}),
           ...(style ? { style } : {}),
           id,
         },
