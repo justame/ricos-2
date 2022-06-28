@@ -10,7 +10,7 @@ export const textConverter: TiptapNodeConverter = {
     convert: (node: TextNode) => {
       const transforms = new TiptapMarkBidiTransfoms(markConverters).toTiptap();
       return {
-        type: Node_Type.TEXT,
+        type: 'text',
         text: node.textData.text || '',
         marks: node.textData.decorations.map(d => transforms.byType(d).convert(d)),
         attrs: {
@@ -20,7 +20,7 @@ export const textConverter: TiptapNodeConverter = {
     },
   },
   fromTiptap: {
-    type: Node_Type.TEXT,
+    type: 'text',
     convert: (node: TiptapNode) => {
       const transforms = new TiptapMarkBidiTransfoms(markConverters).fromTiptap();
       return {

@@ -1,13 +1,25 @@
 import type { TextNode } from 'ricos-content';
-import { Node_Type } from 'ricos-schema';
+import { Decoration_Type, FontSizeData_fontType, Node_Type } from 'ricos-schema';
 import { ricosNodeVisitor, tiptapNodeVisitor } from '../tiptap-converters';
 import { textConverter } from './text-converter';
 
 describe('Text converter', () => {
   const tiptapNode = {
-    type: Node_Type.TEXT,
+    type: 'text',
     text: 'Lorem ipsum dolor sit amet',
-    marks: [],
+    marks: [
+      {
+        type: Decoration_Type.BOLD,
+        attrs: { fontWeightValue: 700 },
+      },
+      {
+        type: Decoration_Type.FONT_SIZE,
+        attrs: {
+          unit: FontSizeData_fontType.PX,
+          value: 20,
+        },
+      },
+    ],
     attrs: {
       id: '',
     },
@@ -19,7 +31,19 @@ describe('Text converter', () => {
     nodes: [],
     textData: {
       text: 'Lorem ipsum dolor sit amet',
-      decorations: [],
+      decorations: [
+        {
+          type: Decoration_Type.BOLD,
+          fontWeightValue: 700,
+        },
+        {
+          type: Decoration_Type.FONT_SIZE,
+          fontSizeData: {
+            unit: FontSizeData_fontType.PX,
+            value: 20,
+          },
+        },
+      ],
     },
   };
 
