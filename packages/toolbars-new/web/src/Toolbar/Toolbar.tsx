@@ -184,6 +184,7 @@ class Toolbar extends Component<ToolbarProps, State> {
 
   renderSeparator = () => (
     <div
+      data-hook="toolbar-separator"
       className={classNames(styles.separator, { [styles.mobileSeparator]: this.props.isMobile })}
     />
   );

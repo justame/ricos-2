@@ -140,7 +140,12 @@ class FloatingToolbarContainer extends PureComponent<ToolbarContainerProps, Stat
     }
   };
 
-  preventDefault = event => event.preventDefault();
+  onMouseDown = event => {
+    const eventTargetDataHook = event.target.getAttribute('data-hook');
+    if (eventTargetDataHook === 'inlineToolbar' || eventTargetDataHook === 'toolbar-separator') {
+      event.preventDefault();
+    }
+  };
 
   render() {
     const { children } = this.props;
@@ -157,7 +162,7 @@ class FloatingToolbarContainer extends PureComponent<ToolbarContainerProps, Stat
         }}
         data-hook="floating-toolbar"
         onKeyDown={this.onKeyDown}
-        onMouseDown={this.preventDefault}
+        onMouseDown={this.onMouseDown}
       >
         {isVisible &&
           React.cloneElement(React.Children.only(children), { setKeepOpen: this.setKeepOpen })}

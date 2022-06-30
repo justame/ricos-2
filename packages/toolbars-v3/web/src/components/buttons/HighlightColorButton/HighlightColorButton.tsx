@@ -95,7 +95,6 @@ const HighlightColorButton = ({ toolbarItem, context, dataHook }) => {
       {isModalOpen &&
         ReactDOM.createPortal(
           <div
-            onMouseDown={e => e.preventDefault()}
             dir={getLangDir(locale)}
             ref={setPopperElement}
             style={isMobile ? {} : { ...popperStyles.popper, zIndex: 9 }}
