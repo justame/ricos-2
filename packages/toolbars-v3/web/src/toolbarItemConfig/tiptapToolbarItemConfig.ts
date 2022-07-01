@@ -217,7 +217,7 @@ export const tiptapStaticToolbarConfig: IToolbarItemConfigTiptap[] = [
     id: 'orderedList',
     type: 'toggle',
     presentation: {
-      dataHook: 'textBlockStyleButton_NumberedList',
+      dataHook: 'textBlockStyleButton_Numberedlist',
       tooltip: 'OrderedListButton_Tooltip',
       icon: OrderedListIcon,
     },
@@ -237,7 +237,7 @@ export const tiptapStaticToolbarConfig: IToolbarItemConfigTiptap[] = [
     id: 'unorderedList',
     type: 'toggle',
     presentation: {
-      dataHook: 'textBlockStyleButton_BulletedList',
+      dataHook: 'textBlockStyleButton_Bulletedlist',
       tooltip: 'UnorderedListButton_Tooltip',
       icon: UnorderedListIcon,
     },

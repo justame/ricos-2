@@ -346,7 +346,7 @@ export const buttonsFullData: Record<string, buttonsFullDataType> = {
   // },
   OrderedList: {
     icon: OrderedListIcon,
-    dataHook: 'textBlockStyleButton_NumberedList',
+    dataHook: 'textBlockStyleButton_Numberedlist',
     tooltip: 'OrderedListButton_Tooltip',
     tooltipShortcut: {
       MacOS: ' (⌘⇧7)',
@@ -356,7 +356,7 @@ export const buttonsFullData: Record<string, buttonsFullDataType> = {
   },
   UnorderedList: {
     icon: UnorderedListIcon,
-    dataHook: 'textBlockStyleButton_BulletedList',
+    dataHook: 'textBlockStyleButton_Bulletedlist',
     tooltip: 'UnorderedListButton_Tooltip',
     tooltipShortcut: {
       MacOS: ' (⌘⇧8)',

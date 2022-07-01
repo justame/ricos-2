@@ -213,7 +213,7 @@ class RicosToolbars extends React.Component<
         >
           {() =>
             this.floatingToolbarChildren(
-              'floating-link-toolbar',
+              'linkPluginToolbar',
               tiptapEditor.view.dom.clientWidth,
               linkToolbarItemConfig
             )
@@ -237,7 +237,11 @@ class RicosToolbars extends React.Component<
     );
 
     if (ricosContext.isMobile && toolbarConfig?.shouldCreate?.().mobile) {
-      return <div dir={ricosContext.languageDir}>{this.renderToolbar(toolbarItemsConfig)}</div>;
+      return (
+        <div data-hook="mobileToolbar" dir={ricosContext.languageDir}>
+          {this.renderToolbar(toolbarItemsConfig)}
+        </div>
+      );
     } else {
       return null;
     }
