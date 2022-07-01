@@ -1,7 +1,11 @@
 import React from 'react';
 import { EditorPlugins, PluginCollisionError } from './editorPlugins';
-import { PluginAddButton } from './pluginAddButton';
-import type { EditorPlugin as EditorPluginType, ToolbarType } from 'ricos-types';
+import type { EditorPlugin as EditorPluginType, ToolbarType, ModalService } from 'ricos-types';
+
+const mockModalService = {
+  register: config => {},
+  unregister: id => {},
+} as ModalService;
 
 describe('Editor Plugins', () => {
   const linkPreview: EditorPluginType = {
@@ -24,7 +28,6 @@ describe('Editor Plugins', () => {
         modal: {
           Component: () => <div />,
           id: 'link-preview-modal',
-          layout: 'popover',
         },
       },
       {
@@ -43,7 +46,6 @@ describe('Editor Plugins', () => {
         modal: {
           Component: () => <div />,
           id: 'link-preview-modal',
-          layout: 'popover',
         },
       },
     ],
@@ -69,7 +71,6 @@ describe('Editor Plugins', () => {
         modal: {
           Component: () => <div />,
           id: 'emoji-modal',
-          layout: 'popover',
         },
       },
     ],
@@ -97,7 +98,7 @@ describe('Editor Plugins', () => {
   };
 
   it('should register/unregister plugin', () => {
-    const registered = new EditorPlugins();
+    const registered = new EditorPlugins(mockModalService);
     registered.register(linkPreview);
     expect(registered.asArray().length).toEqual(1);
     registered.unregister(registered.asArray()[0]);
@@ -105,7 +106,7 @@ describe('Editor Plugins', () => {
   });
 
   it('should validate there is no duplication while register plugin', () => {
-    const registered = new EditorPlugins();
+    const registered = new EditorPlugins(mockModalService);
     registered.register(linkPreview);
     try {
       registered.register(linkPreview);
@@ -115,14 +116,14 @@ describe('Editor Plugins', () => {
   });
 
   it('should filter plugins', () => {
-    const registered = new EditorPlugins();
+    const registered = new EditorPlugins(mockModalService);
     registered.register(linkPreview);
     registered.filter(plugin => !!plugin.getAddButtons());
     expect(registered.asArray().length).toEqual(1);
   });
 
   it('should produce add buttons', () => {
-    const registered = new EditorPlugins();
+    const registered = new EditorPlugins(mockModalService);
     registered.register(linkPreview);
     registered.register(emoji);
     registered.register(divider);

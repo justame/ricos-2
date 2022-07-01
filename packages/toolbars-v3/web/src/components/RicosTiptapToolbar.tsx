@@ -5,7 +5,7 @@ import type { RicosToolbar } from '../RicosToolbar';
 import { toolbarItemsRenders } from '../toolbarItemsRenders';
 import RicosToolbarComponent from './RicosToolbarComponent';
 import type { Node } from 'prosemirror-model';
-import type { IToolbarItemConfigTiptap } from '../types';
+import type { IToolbarItemConfigTiptap } from 'ricos-types';
 import { StylesContext } from 'ricos-styles';
 interface RicosTiptapToolbarProps {
   content: Content<Node[]>;

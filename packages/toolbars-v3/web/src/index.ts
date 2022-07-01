@@ -10,7 +10,6 @@ export const toolbarsV3 = () => {
 export { default as RicosDraftToolbar } from './components/RicosDraftToolbar';
 export { default as RicosTiptapToolbar } from './components/RicosTiptapToolbar';
 export { Content } from './Content';
-export { IToolbarItemConfigTiptap } from './types';
 export { FloatingToolbar } from './components/FloatingToolbar/FloatingToolbar';
 export { TiptapContentResolver } from './ContentResolver';
 export * from './resolvers/tiptapResolvers';

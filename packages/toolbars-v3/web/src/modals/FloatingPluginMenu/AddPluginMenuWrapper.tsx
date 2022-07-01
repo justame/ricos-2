@@ -61,9 +61,7 @@ const AddPluginMenuWrapper: React.FC<Props> = ({
   const onPluginMenuButtonClick: IPluginMenuButtonClick = (modal, command) => {
     modalService.closeModal(PLUGIN_MENU_MODAL_ID);
     return modal
-      ? modalService?.openModal({
-          Component: modal.Component,
-          id: modal.id,
+      ? modalService?.openModal(modal.id, {
           positioning: {
             referenceElement: pluginMenuButtonRef?.current,
             placement: pluginModalPlacement,

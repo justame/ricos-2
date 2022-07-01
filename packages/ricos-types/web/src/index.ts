@@ -25,3 +25,4 @@ export * from './key-types';
 export * from './RicosTypes';
 export * from './events';
 export * from './toolbarTypes';
+export * from './editorPluginTypes';

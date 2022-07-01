@@ -2,12 +2,12 @@ import type { ReactNode } from 'react';
 import React, { useContext, useEffect, useState } from 'react';
 import { usePopper } from 'react-popper';
 import { ModalContext } from 'ricos-context';
-import type { ModalConfig } from 'ricos-types';
+import type { Modal } from 'ricos-types';
 import { ClickOutside } from 'wix-rich-content-editor-common';
 
 interface Props {
   children: ReactNode;
-  modalConfig: ModalConfig;
+  modalConfig: Modal;
   closeModal: () => void;
   className: string;
 }

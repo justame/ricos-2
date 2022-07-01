@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import type { AddButton, ToolbarType } from 'ricos-types';
 import {
@@ -23,7 +24,6 @@ const instagram: AddButton = {
   modal: {
     Component: () => <div />,
     id: 'link-preview-modal',
-    layout: 'popover',
   },
 };
 
@@ -43,7 +43,6 @@ const tiktok: AddButton = {
   modal: {
     Component: () => <div />,
     id: 'link-preview-modal',
-    layout: 'popover',
   },
 };
 
@@ -63,7 +62,6 @@ const emoji: AddButton = {
   modal: {
     Component: () => <div />,
     id: 'emoji-modal',
-    layout: 'popover',
   },
 };
 
@@ -83,7 +81,7 @@ const divider: AddButton = {
 };
 
 describe('Add button', () => {
-  const actual = PluginAddButton.of(emoji);
+  const actual = PluginAddButton.of(emoji, {} as any);
   const { label, tooltip } = actual.getButton();
 
   it('should create valid instance', () => {
@@ -94,13 +92,13 @@ describe('Add button', () => {
   });
 
   it('should compare buttons correctly', () => {
-    const button = PluginAddButton.of(divider);
+    const button = PluginAddButton.of(divider, {} as any);
     expect(button.equals(actual)).toBeFalsy();
     expect(button.equals(button)).toBeTruthy();
   });
 
   it('should create toolbar item config correctly', () => {
-    const button = PluginAddButton.of(divider);
+    const button = PluginAddButton.of(divider, {} as any);
     const { tooltip, icon, id } = button.getButton();
 
     const expected = {
@@ -127,7 +125,7 @@ describe('Add button', () => {
 
 describe('Add buttons', () => {
   it('should register/unregister plugin add button', () => {
-    const registered = new PluginAddButtons();
+    const registered = new PluginAddButtons([], {} as any);
     registered.register(instagram);
     expect(registered.asArray().length).toEqual(1);
     registered.unregister(instagram);
@@ -135,7 +133,7 @@ describe('Add buttons', () => {
   });
 
   it('should validate there is no duplication while register plugin add button', () => {
-    const registered = new PluginAddButtons();
+    const registered = new PluginAddButtons([], {} as any);
     registered.register(instagram);
     try {
       registered.register(instagram);
@@ -145,7 +143,7 @@ describe('Add buttons', () => {
   });
 
   it('should filter buttons by group', () => {
-    const registered = new PluginAddButtons();
+    const registered = new PluginAddButtons([], {} as any);
     registered.register(instagram);
     registered.register(tiktok);
     registered.register(divider);

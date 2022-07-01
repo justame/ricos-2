@@ -1,11 +1,11 @@
 import type { FC } from 'react';
 import React, { useContext, useState } from 'react';
-import type { ModalConfig } from 'ricos-types';
+import type { Modal } from 'ricos-types';
 import { ModalContext } from 'ricos-context';
 import { ModalPopper } from './ModalPopper';
 
 export const ModalRenderer: FC = () => {
-  const [openModals, setOpenModals] = useState<ModalConfig[]>([]);
+  const [openModals, setOpenModals] = useState<Modal[]>([]);
   const modalService = useContext(ModalContext);
   const updateOpenModals = () => setOpenModals([...modalService.getOpenModals()]);
   modalService.onModalOpened(updateOpenModals);

@@ -1,9 +1,6 @@
 import React from 'react';
 import type { PluginToolbarButtons } from 'ricos-types';
-import {
-  PLUGIN_TOOLBAR_BUTTON_ID,
-  decorateComponentWithProps,
-} from 'wix-rich-content-editor-common';
+import { PLUGIN_TOOLBAR_BUTTON_ID } from 'wix-rich-content-editor-common';
 import InsertModal from './modals/InsertModal';
 import { audioModals } from './consts';
 import { NodeSizeButton } from 'wix-rich-content-toolbars-ui';
@@ -28,14 +25,18 @@ export const getToolbarButtons = (config): PluginToolbarButtons => {
       },
       {
         id: PLUGIN_TOOLBAR_BUTTON_ID.REPLACE,
+        modal: {
+          Component: InsertModal,
+          id: audioModals.replace,
+        },
         config: {
           command: ({ modalService, isMobile, node, referenceElement }) => {
             const {
               audio: { src },
               id,
             } = node.attrs;
-            modalService?.openModal({
-              Component: decorateComponentWithProps(InsertModal, {
+            modalService?.openModal(audioModals.insert, {
+              componentProps: {
                 componentData: node.attrs, //TODO: convert to draft
                 nodeId: id,
                 getAudioUrl,
@@ -43,8 +44,7 @@ export const getToolbarButtons = (config): PluginToolbarButtons => {
                 handleFileUpload,
                 fetchData,
                 embedType: src.url,
-              }),
-              id: audioModals.insert,
+              },
               positioning: { placement: 'bottom', referenceElement },
               layout: isMobile ? 'fullscreen' : 'popover',
             });

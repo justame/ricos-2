@@ -19,4 +19,5 @@ export const embedModalContentStyles: React.CSSProperties = {
 
 export const videoModals = {
   insert: 'videoInsertModal',
+  replace: 'videoReplaceModal',
 };

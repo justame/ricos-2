@@ -2,27 +2,29 @@ import type {
   LegacyEditorPluginConfig,
   EditorPlugin as EditorPluginType,
   ModalService,
+  IEditorPlugin,
+  IPluginAddButton,
+  IPluginToolbar,
 } from 'ricos-types';
 import type { RicosExtension, TiptapEditorPlugin } from 'ricos-tiptap-types';
-import type { Plugin } from './models/plugins';
 import { PluginAddButton } from './pluginAddButton';
 import { PluginToolbar } from './pluginToolbar';
 
-export class EditorPlugin implements Plugin {
+export class EditorPlugin implements IEditorPlugin {
   plugin: EditorPluginType;
 
-  addButtons?: PluginAddButton[];
+  addButtons?: IPluginAddButton[];
 
-  toolbar?: PluginToolbar;
+  toolbar?: IPluginToolbar;
 
-  static of(plugin: EditorPluginType) {
-    return new EditorPlugin(plugin);
+  static of(plugin: EditorPluginType, modalService: ModalService) {
+    return new EditorPlugin(plugin, modalService);
   }
 
   private constructor(plugin: EditorPluginType, modalService?: ModalService) {
-    this.initAddButtons(plugin, modalService);
     this.plugin = plugin;
-    this.initToolbarButtons(plugin);
+    this.initAddButtons(plugin, modalService);
+    this.initToolbarButtons(plugin, modalService);
   }
 
   private initAddButtons(plugin, modalService) {
@@ -35,11 +37,20 @@ export class EditorPlugin implements Plugin {
     return (this.plugin as TiptapEditorPlugin).tiptapExtensions?.[0]?.name || this.plugin.type;
   }
 
-  private initToolbarButtons(plugin) {
+  private initToolbarButtons(plugin, modalService) {
     if (plugin.toolbarButtons) {
-      const { buttons, resolvers } = plugin.toolbarButtons;
-      this.toolbar = PluginToolbar.of(buttons, resolvers, this.getExtensionName());
+      this.toolbar = PluginToolbar.of(plugin.toolbarButtons, this.getExtensionName(), modalService);
     }
+  }
+
+  register() {
+    this.addButtons?.map(b => b.register());
+    this.toolbar?.register();
+  }
+
+  unregister() {
+    this.addButtons?.map(b => b.unregister());
+    this.toolbar?.unregister();
   }
 
   configure(config: Partial<LegacyEditorPluginConfig>) {
@@ -61,15 +72,15 @@ export class EditorPlugin implements Plugin {
     return this.plugin.config;
   }
 
-  getAddButtons(): PluginAddButton[] | undefined {
-    return this.addButtons;
+  getAddButtons() {
+    return this.addButtons || [];
   }
 
-  getToolbar(): PluginToolbar | undefined {
+  getToolbar() {
     return this.toolbar;
   }
 
-  equals(plugin: Plugin): boolean {
+  equals(plugin: IEditorPlugin) {
     return this.plugin.type === plugin.getType();
   }
 }

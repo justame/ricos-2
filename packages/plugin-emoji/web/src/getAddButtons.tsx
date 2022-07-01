@@ -16,7 +16,6 @@ export const getAddButtons = (config): AddButton[] => {
       modal: {
         id: emojiModals.insert,
         Component: InsertModal,
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'Emoji_plugin_search_tags',

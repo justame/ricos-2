@@ -2,17 +2,16 @@ import React from 'react';
 import type { Node } from 'prosemirror-model';
 import type { Content } from 'wix-rich-content-toolbars-v3';
 import { RicosToolbarComponent, FloatingToolbar } from 'wix-rich-content-toolbars-v3';
-import { withRicosContext, withEditorContext } from 'ricos-context';
+import { withRicosContext, withEditorContext, withPluginsContext } from 'ricos-context';
 import type { GeneralContext } from 'ricos-context';
 import type { RichContentAdapter } from 'wix-tiptap-editor';
-import { withPluginsContext } from 'ricos-plugins';
-import type { PluginsContextValue } from 'ricos-plugins';
 import { isNodeSelection } from '@tiptap/core';
 import styles from '../../statics/styles/plugin-toolbar.scss';
+import type { IEditorPlugins } from 'ricos-types';
 
 type PluginsToolbarProps = {
   content: Content<Node[]>;
-  pluginsContext: PluginsContextValue;
+  plugins?: IEditorPlugins;
 };
 
 class PluginsToolbar extends React.Component<
@@ -23,10 +22,10 @@ class PluginsToolbar extends React.Component<
       ricosContext,
       editor: { tiptapEditor },
       content,
-      pluginsContext: { plugins },
+      plugins,
     } = this.props;
 
-    const toolbar = plugins.getVisibleToolbar(content.value);
+    const toolbar = plugins?.getVisibleToolbar(content.value);
     if (toolbar && !ricosContext.isMobile) {
       return (
         <RicosToolbarComponent
@@ -34,7 +33,7 @@ class PluginsToolbar extends React.Component<
           content={content}
           editorCommands={tiptapEditor}
           toolbarItemsConfig={toolbar.toToolbarItemsConfig()}
-          toolbarItemsRenders={toolbar.getToolberButtonsRenderers()}
+          toolbarItemsRenders={toolbar.getToolbarButtonsRenderers()}
           maxWidth={tiptapEditor.view.dom.clientWidth}
         />
       );

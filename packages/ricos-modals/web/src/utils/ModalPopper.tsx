@@ -6,10 +6,10 @@ import { Drawer } from '../components/Drawer';
 import { Fullscreen } from '../components/Fullscreen';
 import { Dialog } from '../components/Dialog';
 import { Toolbar } from '../components/Toolbar';
-import type { ModalConfig } from 'ricos-types';
+import type { Modal } from 'ricos-types';
 
 type Props = {
-  modalConfig: ModalConfig;
+  modalConfig: Modal;
 };
 
 const layoutMapper = {
@@ -35,7 +35,7 @@ export const ModalPopper = ({ modalConfig }: Props) => {
   return ReactDOM.createPortal(
     <div dir={languageDir}>
       <ModalLayout closeModal={closeModal} modalConfig={modalConfig}>
-        <ModalComponent />
+        <ModalComponent {...(modalConfig.componentProps || {})} />
       </ModalLayout>
     </div>,
     portal

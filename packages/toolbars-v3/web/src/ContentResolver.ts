@@ -1,10 +1,6 @@
 import type { Node as TiptapNode } from 'prosemirror-model';
 import type { EditorState } from '@wix/draft-js';
-export interface IContentResolver<T> {
-  id: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  resolve: (content: T) => any;
-}
+import type { IContentResolver } from 'ricos-types';
 
 export class TiptapContentResolver implements IContentResolver<TiptapNode[]> {
   // eslint-disable-next-line no-useless-constructor

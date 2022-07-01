@@ -27,7 +27,6 @@ export const getAddButtons = (config): AddButton[] => {
           fetchData,
           socialType: 'Instagram',
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'Instagram_plugin_search_tags',
@@ -48,7 +47,6 @@ export const getAddButtons = (config): AddButton[] => {
           fetchData,
           socialType: 'Twitter',
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'YouTube_plugin_search_tags',
@@ -69,7 +67,6 @@ export const getAddButtons = (config): AddButton[] => {
           fetchData,
           socialType: 'Pinterest',
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'Pinterestsearch_tags',
@@ -90,7 +87,6 @@ export const getAddButtons = (config): AddButton[] => {
           fetchData,
           socialType: 'Facebook',
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'Facebook_plugin_search_tags',
@@ -111,7 +107,6 @@ export const getAddButtons = (config): AddButton[] => {
           fetchData,
           socialType: 'TikTok',
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'YouTube_plugin_search_tags',

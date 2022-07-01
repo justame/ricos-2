@@ -24,7 +24,6 @@ export const getAddButtons = (config): AddButton[] => {
           verticalsApi: config.verticalsApi,
           componentData: { type: 'event' },
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'Events_plugin_search_tags',
@@ -44,7 +43,6 @@ export const getAddButtons = (config): AddButton[] => {
           ...config,
           componentData: { type: 'booking' },
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'Bookings_plugin_search_tags',
@@ -64,7 +62,6 @@ export const getAddButtons = (config): AddButton[] => {
           ...config,
           componentData: { type: 'product' },
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'Stores_plugin_search_tags',

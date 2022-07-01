@@ -5,7 +5,7 @@ import {
   getNodeSizeResolver,
 } from 'wix-rich-content-toolbars-v3';
 import { LinkIcon } from 'wix-rich-content-toolbars-ui';
-import type { IToolbarItemConfigTiptap } from 'wix-rich-content-toolbars-v3';
+import type { IToolbarItemConfigTiptap } from 'ricos-types';
 import { PLUGIN_TOOLBAR_BUTTON_ID } from 'wix-rich-content-editor-common';
 import { createLink } from 'ricos-content/libs/nodeUtils';
 import { convertRelObjectToString, convertRelStringToObject } from 'wix-rich-content-common';

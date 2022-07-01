@@ -1,22 +1,28 @@
 import { EditorPlugin } from './editorPlugin';
 import { PluginAddButtons } from './pluginAddButton';
-import type { PluginToolbar } from './pluginToolbar';
-import type { Plugins, Plugin } from './models/plugins';
-import type { EditorPlugin as EditorPluginType, LegacyEditorPluginConfig } from 'ricos-types';
+import type {
+  EditorPlugin as EditorPluginType,
+  LegacyEditorPluginConfig,
+  ModalService,
+  IEditorPlugins,
+  IEditorPlugin,
+} from 'ricos-types';
 import { compact } from 'lodash';
 import type { RicosExtension } from 'ricos-tiptap-types';
 
 export class PluginCollisionError extends Error {}
 
-export class EditorPlugins implements Plugins {
-  private plugins: Plugin[] = [];
+export class EditorPlugins implements IEditorPlugins {
+  private plugins: IEditorPlugin[] = [];
 
-  private hasDuplicate(plugin: Plugin) {
-    return this.plugins.find(p => p.equals(plugin));
+  private modalService: ModalService;
+
+  constructor(modalService: ModalService) {
+    this.modalService = modalService;
   }
 
   register(plugin: EditorPluginType) {
-    const candidate = EditorPlugin.of(plugin);
+    const candidate = EditorPlugin.of(plugin, this.modalService);
 
     const duplicate = this.hasDuplicate(candidate);
     if (duplicate) {
@@ -25,21 +31,23 @@ export class EditorPlugins implements Plugins {
       );
     }
 
+    candidate.register();
     this.plugins.push(candidate);
   }
 
-  unregister(plugin: Plugin): EditorPlugins {
+  unregister(plugin: IEditorPlugin) {
+    plugin.unregister();
     return this.filter(p => !p.equals(plugin));
   }
 
-  destroy(): EditorPlugins {
+  destroy() {
+    this.plugins.map(p => p.unregister());
     this.plugins = [];
-    return this;
   }
 
-  filter(predicate: (plugin: Plugin) => boolean): EditorPlugins {
+  filter(predicate: (plugin: IEditorPlugin) => boolean) {
     this.plugins = this.plugins.filter(predicate);
-    return this;
+    return this.plugins;
   }
 
   asArray() {
@@ -60,20 +68,21 @@ export class EditorPlugins implements Plugins {
       (prev, curr) => [...prev, ...(curr.getAddButtons() || [])],
       []
     );
-    return new PluginAddButtons(addButtons);
+    return new PluginAddButtons(addButtons, this.modalService);
   }
 
   getVisibleToolbar(content) {
-    const toolbar: PluginToolbar = this.plugins
+    const toolbar = this.plugins
       .map(plugin => plugin.getToolbar())
-      .filter(
-        (toolbar: PluginToolbar | undefined): toolbar is PluginToolbar =>
-          !!toolbar?.isVisible(content)
-      )[0];
+      .filter(toolbar => !!toolbar?.isVisible(content))?.[0];
     return toolbar;
   }
 
   getTiptapExtensions(): RicosExtension[] {
     return compact(this.plugins.flatMap(plugin => plugin.getTiptapExtensions?.() || []));
+  }
+
+  private hasDuplicate(plugin: IEditorPlugin) {
+    return this.plugins.find(p => p.equals(plugin));
   }
 }

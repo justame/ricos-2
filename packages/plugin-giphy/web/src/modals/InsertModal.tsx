@@ -3,7 +3,8 @@ import type { FC } from 'react';
 import { convertBlockDataToRicos } from 'ricos-content/libs/convertBlockDataToRicos';
 import { ModalContext, RicosContext, EditorContext } from 'ricos-context';
 import GiphyApiInputModal from '../toolbar/giphyApiInputModal';
-import { gifModals, GIPHY_TYPE } from '../types';
+import { GIPHY_TYPE } from '../types';
+import { gifModals } from '../constants';
 
 interface Props {
   giphySdkApiKey: string;

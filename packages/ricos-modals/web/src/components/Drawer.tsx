@@ -2,13 +2,13 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 import type { ReactNode } from 'react';
-import type { ModalConfig } from 'ricos-types';
+import type { Modal } from 'ricos-types';
 import styles from '../../statics/styles/drawer.scss';
 import classNames from 'classnames';
 
 interface Props {
   children: ReactNode;
-  modalConfig: ModalConfig;
+  modalConfig: Modal;
   closeModal: () => void;
 }
 

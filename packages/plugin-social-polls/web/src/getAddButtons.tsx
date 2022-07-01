@@ -30,7 +30,6 @@ export const getAddButtons = (config): AddButton[] => {
           componentData,
           pluginId: POLL_TYPE,
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'Poll_plugin_search_tags',

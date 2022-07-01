@@ -1,7 +1,7 @@
 import type { Node } from 'prosemirror-model';
 import React, { useContext } from 'react';
 import { EditorContext, RicosContext, ModalContext } from 'ricos-context';
-import type { IToolbarItemConfigTiptap } from '../../types';
+import type { IToolbarItemConfigTiptap } from 'ricos-types';
 import RicosToolbarComponent from '../../components/RicosToolbarComponent';
 import { Content } from '../../Content';
 import ToggleButton from '../../components/buttons/ToggleButton/ToggleButton';
@@ -29,9 +29,7 @@ const AddPluginMenuHorizontal: React.FC<Props> = ({ referenceElement, plugins })
   const onPluginMenuButtonClick: IPluginMenuButtonClick = (modal, command) => {
     modalService.closeModal(PLUGIN_MENU_MODAL_ID);
     return modal
-      ? modalService?.openModal({
-          Component: modal.Component,
-          id: modal.id,
+      ? modalService?.openModal(modal.id, {
           positioning: {
             referenceElement: referenceElement?.current,
             placement: pluginModalPlacement,

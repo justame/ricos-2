@@ -270,6 +270,7 @@ export type ToolbarButton = {
   id: string;
   type?: 'toggle' | 'modal' | 'separator';
   renderer?: (toolbarItem: IToolbarItem) => ReactElement;
+  modal?: ModalConfig;
   config?: ToolbarButtonConfig;
 };
 

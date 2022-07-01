@@ -7,7 +7,7 @@ import {
   mergeToolbarSettings,
   isiOS,
 } from 'wix-rich-content-editor-common';
-import type { IToolbarItemConfigTiptap } from 'wix-rich-content-toolbars-v3';
+import type { IToolbarItemConfigTiptap } from 'ricos-types';
 
 export class ToolbarConfig {
   static toToolbarSettings(toolbarConfig: ToolbarSettingsFunctions, toolbarType: TOOLBARS) {}

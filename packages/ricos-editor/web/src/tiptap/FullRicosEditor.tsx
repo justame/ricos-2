@@ -12,11 +12,11 @@ import {
   ToolbarContext,
   EventsContextProvider,
   ShortcutsContextProvider,
+  PluginsContextProvider,
 } from 'ricos-context';
 import { RicosEvents } from 'ricos-events';
 import { RicosModalService, ModalRenderer } from 'ricos-modals';
-import type { PluginsContextValue } from 'ricos-plugins';
-import { PluginsContext } from 'ricos-plugins';
+import { EditorPlugins } from 'ricos-plugins';
 import { EditorKeyboardShortcuts, Shortcuts } from 'ricos-shortcuts';
 import type { TiptapAdapter } from 'ricos-tiptap-types';
 import type { RicosPortal as RicosPortalType } from 'ricos-types';
@@ -40,15 +40,15 @@ type State = {
   error: string;
 };
 
-interface Props extends RicosEditorProps {
-  pluginsContext: PluginsContextValue;
-}
-
 const eventRegistrar = new RicosEvents();
 const modalService = new RicosModalService(eventRegistrar);
 const shortcuts = new EditorKeyboardShortcuts(eventRegistrar);
+const editorPlugins = new EditorPlugins(modalService);
 
-export class FullRicosEditor extends React.Component<Props, State> implements RicosEditorRef {
+export class FullRicosEditor
+  extends React.Component<RicosEditorProps, State>
+  implements RicosEditorRef
+{
   content = Content.create<Node[]>([]);
 
   state = { error: '' };
@@ -69,22 +69,23 @@ export class FullRicosEditor extends React.Component<Props, State> implements Ri
   }
 
   initPlugins = () => {
-    const { plugins, _rcProps, pluginsContext } = this.props;
+    const { plugins, _rcProps } = this.props;
     const configuredPlugins = pluginsConfigMerger(plugins, _rcProps) || [];
-    configuredPlugins.forEach(plugin => pluginsContext.plugins.register(plugin));
+    configuredPlugins.forEach(plugin => editorPlugins.register(plugin));
     const { handleFileUpload, handleFileSelection } = _rcProps?.helpers || {};
-    pluginsContext.plugins.configure({ handleFileUpload, handleFileSelection });
+    editorPlugins.configure({ handleFileUpload, handleFileSelection });
   };
 
   componentDidMount() {
     this.initPlugins();
-    this.tiptapAdapter = initializeTiptapAdapter(this.props, this.props.pluginsContext.plugins);
+    this.tiptapAdapter = initializeTiptapAdapter(this.props, editorPlugins);
 
     this.forceUpdate();
   }
 
   componentWillUnmount() {
-    this.props.pluginsContext.plugins.destroy();
+    editorPlugins.destroy();
+    modalService.destroy();
   }
 
   componentDidCatch(error, errorInfo) {
@@ -140,7 +141,6 @@ export class FullRicosEditor extends React.Component<Props, State> implements Ri
       cssOverride,
       isMobile,
       toolbarSettings,
-      pluginsContext: { plugins },
     } = this.props;
     const helpers = this.props._rcProps?.helpers;
 
@@ -149,7 +149,7 @@ export class FullRicosEditor extends React.Component<Props, State> implements Ri
       theme,
       locale,
       helpers,
-      plugins,
+      plugins: editorPlugins,
       linkPanelSettings,
       linkSettings,
       experiments,
@@ -211,37 +211,39 @@ export class FullRicosEditor extends React.Component<Props, State> implements Ri
               <EditorContextProvider adapter={this.tiptapAdapter}>
                 <ModalContextProvider modalService={modalService}>
                   <ShortcutsContextProvider shortcuts={shortcuts}>
-                    <>
-                      <Shortcuts group="global" root>
-                        <>
-                          <UploadProvider helpers={_rcProps?.helpers}>
-                            <>
-                              <EditorContextConsumer>
-                                {(editor: RichContentAdapter) => (
-                                  <ToolbarContext.Provider
-                                    value={{
-                                      ...this.getToolbarContext(editor.getEditorCommands),
-                                      portal: this.portalRef.current as RicosPortalType,
-                                    }}
-                                  >
-                                    <ContentQueryProvider editor={editor.tiptapEditor}>
-                                      <RicosToolbars
-                                        content={this.content}
-                                        toolbarSettings={toolbarSettings}
-                                      />
-                                    </ContentQueryProvider>
-                                  </ToolbarContext.Provider>
-                                )}
-                              </EditorContextConsumer>
-                              <ModalRenderer />
-                            </>
-                          </UploadProvider>
-                          <Shortcuts group="formatting">
-                            <RicosEditor {...this.props} ref={this.editor} />
-                          </Shortcuts>
-                        </>
-                      </Shortcuts>
-                    </>
+                    <PluginsContextProvider plugins={editorPlugins}>
+                      <>
+                        <Shortcuts group="global" root>
+                          <>
+                            <UploadProvider helpers={_rcProps?.helpers}>
+                              <>
+                                <EditorContextConsumer>
+                                  {(editor: RichContentAdapter) => (
+                                    <ToolbarContext.Provider
+                                      value={{
+                                        ...this.getToolbarContext(editor.getEditorCommands),
+                                        portal: this.portalRef.current as RicosPortalType,
+                                      }}
+                                    >
+                                      <ContentQueryProvider editor={editor.tiptapEditor}>
+                                        <RicosToolbars
+                                          content={this.content}
+                                          toolbarSettings={toolbarSettings}
+                                        />
+                                      </ContentQueryProvider>
+                                    </ToolbarContext.Provider>
+                                  )}
+                                </EditorContextConsumer>
+                                <ModalRenderer />
+                              </>
+                            </UploadProvider>
+                            <Shortcuts group="formatting">
+                              <RicosEditor {...this.props} ref={this.editor} />
+                            </Shortcuts>
+                          </>
+                        </Shortcuts>
+                      </>
+                    </PluginsContextProvider>
                   </ShortcutsContextProvider>
                 </ModalContextProvider>
               </EditorContextProvider>
@@ -254,6 +256,5 @@ export class FullRicosEditor extends React.Component<Props, State> implements Ri
 }
 
 export default forwardRef<FullRicosEditor, RicosEditorProps>((props, ref) => {
-  const { plugins } = useContext(PluginsContext);
-  return <FullRicosEditor {...props} ref={ref} pluginsContext={{ plugins }} />;
+  return <FullRicosEditor {...props} ref={ref} />;
 });

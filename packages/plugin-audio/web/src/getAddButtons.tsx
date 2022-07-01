@@ -43,7 +43,6 @@ export const getAddButtons = (config): AddButton[] => {
           componentData: { ...DEFAULTS, disableDownload },
           ...modalBaseProps,
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'Audio_plugin_search_tags',
@@ -64,7 +63,6 @@ export const getAddButtons = (config): AddButton[] => {
           embedType: true,
           ...modalBaseProps,
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'SoundCloud_plugin_search_tags',
@@ -85,7 +83,6 @@ export const getAddButtons = (config): AddButton[] => {
           embedType: true,
           ...modalBaseProps,
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'AudioPlugin_InsertButton',

@@ -8,7 +8,7 @@ import {
   EventsContext,
   ShortcutsContext,
 } from 'ricos-context';
-import type { EventRegistrar, KeyboardShortcut, ModalConfig } from 'ricos-types';
+import type { EventRegistrar, KeyboardShortcut, ModalConfig, ModalService } from 'ricos-types';
 import type { Shortcuts as ShortcutManager } from './models/shortcuts';
 import { ShortcutsDialog } from './ShortcutsDialog';
 
@@ -38,19 +38,24 @@ const useComponentWillMount = (callback: () => void) => {
 const helpModal: ModalConfig = {
   id: 'shortcuts-help',
   Component: ShortcutsDialog,
-  layout: 'drawer',
-  positioning: { placement: 'right' },
 };
 
 export const Shortcuts: FC<ShortcutsProps> = (props: ShortcutsProps) => {
-  const modalService = useContext(ModalContext);
+  const modalService: ModalService = useContext(ModalContext);
+
+  useEffect(() => {
+    modalService.register(helpModal);
+  }, []);
 
   const helpShortcut: KeyboardShortcut = {
     name: 'Keyboard Shortcuts',
     description: 'Displays available shortcuts',
     group: 'global',
     command() {
-      modalService.openModal(helpModal);
+      modalService.openModal('shortcuts-help', {
+        positioning: { placement: 'right' },
+        layout: 'drawer',
+      });
     },
     keys: 'Meta+/',
     enabled: true,

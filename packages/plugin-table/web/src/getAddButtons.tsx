@@ -23,7 +23,6 @@ export const getAddButtons = (): AddButton[] => {
         Component: decorateComponentWithProps(InsertModal, {
           componentData: getDefaultsSettings(),
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'Table_plugin_search_tags',

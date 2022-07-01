@@ -43,7 +43,6 @@ export const getAddButtons = (config): AddButton[] => {
           componentData: { ...RICOS_DEFAULTS, disableDownload },
           ...modalBaseProps,
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'Video_plugin_search_tags',
@@ -64,7 +63,6 @@ export const getAddButtons = (config): AddButton[] => {
           componentData: { ...RICOS_DEFAULTS, type: videoButtonsTypes.youTube },
           ...modalBaseProps,
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'YouTube_plugin_search_tags',

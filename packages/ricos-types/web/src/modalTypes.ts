@@ -22,20 +22,31 @@ type ModalPositioning = {
   placement?: Placement;
 };
 
-export type ModalConfig = {
+export interface ModalConfig {
   Component: ComponentType;
   id: string;
-  layout: Layout;
-  positioning?: ModalPositioning;
   shortcuts?: KeyboardShortcut[];
+}
+
+export type Modal = ModalConfig & {
+  layout: Layout;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  componentProps?: Record<string, any>;
+  positioning?: ModalPositioning;
 };
 
 export interface ModalService {
-  openModal: (modalConfig: ModalConfig) => boolean;
+  openModal: (
+    id: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    config: { layout: Layout; componentProps?: Record<string, any>; positioning?: ModalPositioning }
+  ) => boolean;
+  isModalOpen: (id: string) => boolean;
   register: (modalConfig: ModalConfig) => void;
   unregister: (id: string) => void;
   closeModal: (id: string) => boolean;
-  getOpenModals: () => ModalConfig[];
+  getOpenModals: () => Modal[];
   onModalOpened: (onOpen: (id: string) => unknown) => void;
   onModalClosed: (onClose: (id: string) => unknown) => void;
+  destroy: () => void;
 }

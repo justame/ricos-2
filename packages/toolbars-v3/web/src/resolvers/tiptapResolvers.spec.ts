@@ -28,7 +28,7 @@ import {
 
 import toCamelCase from 'to-camel-case';
 import { Node_Type, Decoration_Type } from 'ricos-schema';
-import type { TiptapContentResolver } from '../ContentResolver';
+import type { IContentResolver } from 'ricos-types';
 
 const pluginSelectedResolvers = {
   [Node_Type.IMAGE]: isImageSelected,
@@ -220,7 +220,7 @@ describe('tiptap resolvers', () => {
 
   describe('Plugin Selected Resolvers', () => {
     Object.entries(pluginSelectedResolvers).forEach(
-      ([type, isPluginSelectedResolver]: [Node_Type, TiptapContentResolver]) => {
+      ([type, isPluginSelectedResolver]: [Node_Type, IContentResolver<TiptapNode[]>]) => {
         it(`should return true if ${type} is selected`, () => {
           const mockContentWithPlugin = [{ type: { name: type } }];
           expect(isPluginSelectedResolver.resolve(mockContentWithPlugin as TiptapNode[])).toBe(

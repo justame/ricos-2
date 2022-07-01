@@ -40,7 +40,7 @@ import {
   getLineSpacingBeforeSelectionResolver,
   getLineSpacingAfterSelectionResolver,
 } from '../resolvers/tiptapResolvers';
-import type { IToolbarItemConfigTiptap } from '../types';
+import type { IToolbarItemConfigTiptap } from 'ricos-types';
 
 const MAX_FONT_SIZE = 900;
 const MIN_FONT_SIZE = 1;

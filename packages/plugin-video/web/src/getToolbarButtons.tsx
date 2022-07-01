@@ -1,8 +1,5 @@
 import type { PluginToolbarButtons } from 'ricos-types';
-import {
-  PLUGIN_TOOLBAR_BUTTON_ID,
-  decorateComponentWithProps,
-} from 'wix-rich-content-editor-common';
+import { PLUGIN_TOOLBAR_BUTTON_ID } from 'wix-rich-content-editor-common';
 import InsertModal from './modals/InsertModal';
 import { videoModals } from './constants';
 
@@ -26,19 +23,22 @@ export const getToolbarButtons = (config): PluginToolbarButtons => {
       },
       {
         id: PLUGIN_TOOLBAR_BUTTON_ID.REPLACE,
+        modal: {
+          Component: InsertModal,
+          id: videoModals.replace,
+        },
         config: {
           command: ({ modalService, isMobile, node, referenceElement }) => {
             const {
               video: { src },
               id,
             } = node.attrs;
-            modalService?.openModal({
-              Component: decorateComponentWithProps(InsertModal, {
+            modalService?.openModal(videoModals.insert, {
+              componentProps: {
                 componentData: { isCustomVideo: src.id, src: src.url || src.id }, //TODO: convert to draft
                 nodeId: id,
                 ...modalBaseProps,
-              }),
-              id: videoModals.insert,
+              },
               positioning: { placement: 'bottom', referenceElement },
               layout: isMobile ? 'fullscreen' : 'popover',
             });
