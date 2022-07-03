@@ -24,6 +24,16 @@
   - [#4083](https://github.com/wix/ricos/pull/4083) paragraph & blockquote with alignment/text direction/indent draft behaviour in tiptap
   - [#4085](https://github.com/wix/ricos/pull/4085) soft new line command on shift+enter
   - [#4093](https://github.com/wix/ricos/pull/4093) overlay group added to file + verticalEmbed
+  - [#4091](https://github.com/wix/ricos/pull/4091) ricos-styles extension gets Styles via options rather command
+
+- `tiptap-editor`
+  - [#4091](https://github.com/wix/ricos/pull/4091) initialized with services (events, styles, plugins)
+
+- `ricos-styles`
+  - [#4091](https://github.com/wix/ricos/pull/4091) context and implementation separated (similar to other services)
+
+- `ricos-shortcuts`
+  - [#4091](https://github.com/wix/ricos/pull/4091) Shortcuts gets Events dependency via constructor
 
 </details>
 
