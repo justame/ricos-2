@@ -30,7 +30,8 @@ export interface IEditorPlugin {
    *
    * @memberof IEditorPlugin
    */
-  getTiptapExtensions(): unknown[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  getTiptapExtensions(): any[];
   /**
    * Plugin config
    *
@@ -139,7 +140,8 @@ export interface IEditorPlugins {
    * @returns  {RicosExtension[]}
    * @memberof IEditorPlugins
    */
-  getTiptapExtensions(): unknown[]; // TODO: fix RicosExtension type
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  getTiptapExtensions(): any[]; // TODO: fix RicosExtension type
   /**
    * Reconfigure Plugin
    *
