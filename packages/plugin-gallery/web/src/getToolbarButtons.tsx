@@ -1,9 +1,12 @@
+import React from 'react';
 import type { PluginToolbarButtons } from 'ricos-types';
 import { PLUGIN_TOOLBAR_BUTTON_ID } from 'wix-rich-content-editor-common';
 import { GALLERY_TYPE } from './types';
 import { Uploader } from 'wix-rich-content-plugin-commons';
 import { AddMediaIcon } from './icons';
 import { GALLERY_LAYOUTS, layoutRicosData } from './layout-data-provider';
+import { GalleryLayoutButton } from './toolbar/GalleryLayoutButton';
+import { TIPTAP_GALLERY_TYPE } from 'ricos-content';
 
 const defaultData = {
   items: [],
@@ -13,6 +16,21 @@ const defaultData = {
 export const getToolbarButtons = (config, galleryPluginService): PluginToolbarButtons => {
   return {
     buttons: [
+      {
+        id: 'galleryLayout',
+        config: {
+          command: ({ layout, editorCommands }) => {
+            editorCommands
+              .chain()
+              .focus()
+              .updateAttributes(TIPTAP_GALLERY_TYPE, {
+                options: layoutRicosData[layout],
+              })
+              .run();
+          },
+        },
+        renderer: toolbarItem => <GalleryLayoutButton toolbarItem={toolbarItem} />,
+      },
       {
         id: PLUGIN_TOOLBAR_BUTTON_ID.REPLACE,
         config: {

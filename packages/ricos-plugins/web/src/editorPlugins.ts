@@ -8,7 +8,6 @@ import type {
   IEditorPlugin,
 } from 'ricos-types';
 import { compact } from 'lodash';
-import type { RicosExtension } from 'ricos-tiptap-types';
 
 export class PluginCollisionError extends Error {}
 

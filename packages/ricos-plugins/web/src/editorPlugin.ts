@@ -6,7 +6,7 @@ import type {
   IPluginAddButton,
   IPluginToolbar,
 } from 'ricos-types';
-import type { RicosExtension, TiptapEditorPlugin } from 'ricos-tiptap-types';
+import type { TiptapEditorPlugin } from 'ricos-tiptap-types';
 import { PluginAddButton } from './pluginAddButton';
 import { PluginToolbar } from './pluginToolbar';
 
