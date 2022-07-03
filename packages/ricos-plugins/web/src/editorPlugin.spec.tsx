@@ -1,7 +1,12 @@
 import React from 'react';
 import { EditorPlugin } from './editorPlugin';
 import { PluginAddButton } from './pluginAddButton';
-import type { EditorPlugin as EditorPluginType } from 'ricos-types';
+import type { EditorPlugin as EditorPluginType, ModalService, ToolbarType } from 'ricos-types';
+
+const mockModalService = {
+  register: config => {},
+  unregister: id => {},
+} as ModalService;
 
 describe('Editor Plugin', () => {
   const plugin: EditorPluginType = {
@@ -13,6 +18,7 @@ describe('Editor Plugin', () => {
         icon: () => <div />,
         label: 'ricos-plugin',
         tooltip: 'InsertButton_Tooltip',
+        toolbars: ['SIDE'] as ToolbarType[],
         command: editorCommands => {
           return true;
         },
@@ -23,13 +29,12 @@ describe('Editor Plugin', () => {
         modal: {
           Component: () => <div />,
           id: 'ricos-plugin-modal',
-          layout: 'popover',
         },
       },
     ],
   };
 
-  const actual = EditorPlugin.of(plugin);
+  const actual = EditorPlugin.of(plugin, mockModalService);
   it('should create valid instance', () => {
     expect(actual).toBeInstanceOf(EditorPlugin);
     expect(actual.getType()).toEqual('ricos-plugin');
@@ -44,10 +49,13 @@ describe('Editor Plugin', () => {
   });
 
   it('should compare plugins correctly', () => {
-    const actual2 = EditorPlugin.of({
-      type: 'ricos-plugin2',
-      config: {},
-    });
+    const actual2 = EditorPlugin.of(
+      {
+        type: 'ricos-plugin2',
+        config: {},
+      },
+      mockModalService
+    );
 
     expect(actual2.equals(actual)).toBeFalsy();
     expect(actual2.equals(actual2)).toBeTruthy();

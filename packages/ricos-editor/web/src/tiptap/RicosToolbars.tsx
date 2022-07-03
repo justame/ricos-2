@@ -1,11 +1,12 @@
 import React from 'react';
 import type { Node } from 'prosemirror-model';
-import type { Content, IToolbarItemConfigTiptap } from 'wix-rich-content-toolbars-v3';
+import type { Content } from 'wix-rich-content-toolbars-v3';
 import {
   FloatingToolbar,
   RicosTiptapToolbar,
   tiptapStaticToolbarConfig,
   linkToolbarItemConfig,
+  FloatingAddPluginMenu,
 } from 'wix-rich-content-toolbars-v3';
 import type { ToolbarSettings } from 'ricos-common';
 import {
@@ -20,15 +21,19 @@ import RicosPortal from '../modals/RicosPortal';
 import type { Selection } from 'prosemirror-state';
 import { ToolbarConfig } from './ricosToolbarConfig';
 import type { GeneralContext } from 'ricos-context';
-import { withEditorContext, withRicosContext } from 'ricos-context';
+import { withEditorContext, withRicosContext, withPluginsContext } from 'ricos-context';
 import { and } from 'ricos-content';
 import { not } from 'fp-ts/Predicate';
+import PluginsToolbar from '../toolbars/PluginToolbar';
+import { FooterToolbar } from '../toolbars/FooterToolbar';
+import type { IEditorPlugins, IToolbarItemConfigTiptap } from 'ricos-types';
 
 import { isTextSelection } from '@tiptap/core';
 
 type RicosToolbarProps = {
   content: Content<Node[]>;
   toolbarSettings?: ToolbarSettings;
+  plugins?: IEditorPlugins;
 };
 
 type RicosToolbarState = {
@@ -69,15 +74,20 @@ class RicosToolbars extends React.Component<
   }
 
   initToolbarSettings() {
-    const { toolbarSettings } = this.props;
+    const { toolbarSettings, plugins } = this.props;
     if (toolbarSettings?.getToolbarSettings) {
       const textButtons: TextButtons = {
         mobile: mobileTextButtonList,
         desktop: desktopTextButtonList,
       };
 
+      const pluginButtons = plugins
+        ?.getAddButtons()
+        .asArray()
+        .map(b => b.toToolbarButtonSettings());
+
       const defaultSettings = getDefaultToolbarSettings({
-        // pluginButtons,
+        pluginButtons,
         // pluginButtonNames,
         textButtons,
         // pluginTextButtons: pluginTextButtonMap,
@@ -165,7 +175,7 @@ class RicosToolbars extends React.Component<
 
     if (
       !ricosContext.isMobile &&
-      toolbarConfig?.shouldCreate?.() &&
+      toolbarConfig?.shouldCreate?.().desktop &&
       !toolbarSettings?.useStaticTextToolbar
     ) {
       return (
@@ -203,7 +213,7 @@ class RicosToolbars extends React.Component<
         >
           {() =>
             this.floatingToolbarChildren(
-              'floating-link-toolbar',
+              'linkPluginToolbar',
               tiptapEditor.view.dom.clientWidth,
               linkToolbarItemConfig
             )
@@ -226,8 +236,12 @@ class RicosToolbars extends React.Component<
       'mobile'
     );
 
-    if (ricosContext.isMobile && toolbarConfig?.shouldCreate?.()) {
-      return <div dir={ricosContext.languageDir}>{this.renderToolbar(toolbarItemsConfig)}</div>;
+    if (ricosContext.isMobile && toolbarConfig?.shouldCreate?.().mobile) {
+      return (
+        <div data-hook="mobileToolbar" dir={ricosContext.languageDir}>
+          {this.renderToolbar(toolbarItemsConfig)}
+        </div>
+      );
     } else {
       return null;
     }
@@ -235,6 +249,7 @@ class RicosToolbars extends React.Component<
 
   renderStaticToolbar(finaltoolbarSettings: ToolbarSettingsFunctions[]) {
     const { toolbarSettings, ricosContext } = this.props;
+    const { isMobile } = ricosContext;
     const toolbarType = TOOLBARS.STATIC;
     const toolbarConfig = this.getToolbarConfig(finaltoolbarSettings, toolbarType);
     const htmlContainer = toolbarSettings?.textToolbarContainer;
@@ -244,8 +259,11 @@ class RicosToolbars extends React.Component<
       toolbarType,
       'desktop'
     );
+    const shouldCreate =
+      (isMobile && toolbarConfig?.shouldCreate?.().mobile) ||
+      (!isMobile && toolbarConfig?.shouldCreate?.().desktop);
 
-    if (htmlContainer && toolbarConfig?.shouldCreate?.()) {
+    if (htmlContainer && shouldCreate) {
       return (
         <RicosPortal
           languageDir={ricosContext.languageDir}
@@ -256,12 +274,57 @@ class RicosToolbars extends React.Component<
         </RicosPortal>
       );
     }
-    if (toolbarSettings?.useStaticTextToolbar && toolbarConfig?.shouldCreate?.()) {
-      return this.renderToolbar(toolbarItemsConfig);
+    if (toolbarSettings?.useStaticTextToolbar && shouldCreate) {
+      return (
+        <div toolbar-type="static" dir={ricosContext.languageDir}>
+          {this.renderToolbar(toolbarItemsConfig)}
+        </div>
+      );
     }
 
     return null;
   }
+
+  renderPluginsToolbar = (finaltoolbarSettings: ToolbarSettingsFunctions[]) => {
+    const { content, ricosContext } = this.props;
+    const toolbarType = TOOLBARS.PLUGIN;
+    const toolbarConfig = this.getToolbarConfig(finaltoolbarSettings, toolbarType);
+    const shouldCreateToolbar = ricosContext.isMobile
+      ? toolbarConfig?.shouldCreate?.().mobile
+      : toolbarConfig?.shouldCreate?.().desktop;
+
+    if (shouldCreateToolbar) {
+      return <PluginsToolbar content={content} />;
+    }
+  };
+
+  renderFooterToolbar = (finaltoolbarSettings: ToolbarSettingsFunctions[]) => {
+    const { ricosContext } = this.props;
+    const toolbarType = TOOLBARS.FOOTER;
+    const toolbarConfig = this.getToolbarConfig(finaltoolbarSettings, toolbarType);
+
+    if (!ricosContext.isMobile && toolbarConfig?.shouldCreate?.().desktop) {
+      return <FooterToolbar />;
+    }
+  };
+
+  renderFloatingPluginMenu = (finaltoolbarSettings: ToolbarSettingsFunctions[]) => {
+    const {
+      ricosContext: { isMobile },
+      plugins,
+    } = this.props;
+    const toolbarType = TOOLBARS.SIDE;
+    const toolbarConfig = this.getToolbarConfig(finaltoolbarSettings, toolbarType);
+
+    if (!isMobile && toolbarConfig?.shouldCreate?.().desktop) {
+      return (
+        <FloatingAddPluginMenu
+          addPluginMenuConfig={toolbarConfig?.addPluginMenuConfig || {}}
+          plugins={plugins}
+        />
+      );
+    }
+  };
 
   renderToolbar(toolbarItemsConfig, options = {} as { maxWidth: number }) {
     const {
@@ -297,12 +360,15 @@ class RicosToolbars extends React.Component<
         {this.renderStaticToolbar(finalToolbarSettings)}
         {this.renderMobileToolbar(finalToolbarSettings)}
         {this.renderFormattingToolbar(finalToolbarSettings)}
+        {this.renderPluginsToolbar(finalToolbarSettings)}
+        {this.renderFooterToolbar(finalToolbarSettings)}
+        {this.renderFloatingPluginMenu(finalToolbarSettings)}
         {this.renderLinkToolbar()}
       </>
     );
   }
 }
-const RicosToolbarsWithContext = withRicosContext<RicosToolbarProps>()(
-  withEditorContext<RicosToolbarProps>(RicosToolbars)
+const RicosToolbarsWithContext = withRicosContext<RicosToolbarProps>(
+  withEditorContext<RicosToolbarProps>(withPluginsContext(RicosToolbars))
 );
 export default RicosToolbarsWithContext;

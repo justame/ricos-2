@@ -7,7 +7,7 @@ import {
   isTextContainsUnderlineResolver,
   isTextContainsSpoilerResolver,
 } from '../resolvers/tiptapResolvers';
-import type { IToolbarItemConfigTiptap } from '../types';
+import type { IToolbarItemConfigTiptap } from 'ricos-types';
 export const tiptapStaticToolbarConfigDetachCommands: IToolbarItemConfigTiptap[] = [
   {
     id: 'bold',

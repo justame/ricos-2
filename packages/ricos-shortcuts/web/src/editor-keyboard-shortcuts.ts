@@ -1,14 +1,24 @@
-import type { EditorCommands, KeyboardShortcut, TranslationFunction } from 'ricos-types';
-import type { HotKeysProps, LocalizedDisplayData, Shortcut, Shortcuts } from './models/shortcuts';
+import type {
+  AmbientStyles,
+  EditorCommands,
+  EventData,
+  EventPublisher,
+  EventRegistrar,
+  KeyboardShortcut,
+  TranslationFunction,
+} from 'ricos-types';
 import { EditorKeyboardShortcut } from './editor-keyboard-shortcut';
+import type { HotKeysProps, LocalizedDisplayData, Shortcut, Shortcuts } from './models/shortcuts';
 
 export class ShortcutCollisionError extends Error {}
 
 export class EditorKeyboardShortcuts implements Shortcuts {
-  private shortcuts: Shortcut[];
+  private shortcuts: Shortcut[] = [];
 
-  constructor(shortcuts: Shortcut[] = []) {
-    this.shortcuts = shortcuts;
+  private readonly publisher: EventPublisher<EventData>;
+
+  constructor(events: EventRegistrar) {
+    this.publisher = events.register('ricos.shortcuts.functionality.shortcutApplied');
   }
 
   private hasDuplicate(shortcut: Shortcut) {
@@ -34,6 +44,11 @@ export class EditorKeyboardShortcuts implements Shortcuts {
               [shortcut.getName()]: (e: KeyboardEvent) => {
                 e.preventDefault();
                 shortcut.getCommand()(commands);
+                this.publisher.publish(
+                  `🎹 keyboard shortcut ${shortcut.getName()} applied (${shortcut
+                    .getKeys()
+                    .toString()})`
+                );
               },
             },
           };
@@ -56,12 +71,13 @@ export class EditorKeyboardShortcuts implements Shortcuts {
     this.shortcuts.push(candidate);
   }
 
-  unregister(shortcut: Shortcut) {
-    this.shortcuts = this.shortcuts.filter(s => !s.equals(shortcut));
+  unregister(shortcut: KeyboardShortcut) {
+    this.shortcuts = this.shortcuts.filter(s => !s.equals(EditorKeyboardShortcut.of(shortcut)));
   }
 
   filter(predicate: (shortcut: Shortcut) => boolean) {
-    return new EditorKeyboardShortcuts(this.shortcuts.filter(predicate));
+    this.shortcuts = this.shortcuts.filter(predicate);
+    return this;
   }
 
   asArray() {

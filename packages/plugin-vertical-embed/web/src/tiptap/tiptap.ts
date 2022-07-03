@@ -6,7 +6,7 @@ import { AppEmbed as Component } from './component';
 export const tiptapExtensions = [
   {
     type: 'node' as const,
-    groups: ['react'],
+    groups: ['react', 'overlay'],
     reconfigure: (
       config: NodeConfig,
       _extensions: RicosExtension[],
@@ -22,7 +22,7 @@ export const tiptapExtensions = [
       return {
         name: this.name,
         group: 'block',
-        selectable: true,
+        selectable: false,
         draggable: true,
         addAttributes: () => appEmbedDataDefaults,
       };

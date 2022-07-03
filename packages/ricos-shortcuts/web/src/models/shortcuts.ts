@@ -1,6 +1,13 @@
 import type { KeyMap } from 'react-hotkeys';
-import type { EditorCommands, KeyboardShortcut, TranslationFunction } from 'ricos-types';
-import type { Keys } from '../keyboard-shortcuts/keys';
+import type {
+  EditorCommands,
+  EventPublisher,
+  KeyboardShortcut,
+  TranslationFunction,
+  EventData,
+  ShortcutRegistrar,
+} from 'ricos-types';
+import type { Keys } from '../keys';
 
 export type LocalizedDisplayData = {
   name: KeyboardShortcut['name'];
@@ -98,19 +105,7 @@ export interface Shortcut {
  * @export
  * @interface Shortcuts
  */
-export interface Shortcuts {
-  /**
-   * Registers shortcut, validates it has no conflicts.
-   *
-   * @memberof Shortcuts
-   */
-  register: (shortcut: KeyboardShortcut) => void;
-  /**
-   * Removes shortcut
-   *
-   * @memberof Shortcuts
-   */
-  unregister: (shortcut: Shortcut) => void;
+export interface Shortcuts extends ShortcutRegistrar {
   /**
    * Filters shortcuts according to predicate
    *
@@ -137,6 +132,7 @@ export interface Shortcuts {
   getHotKeysProps: (
     group: string,
     commands: EditorCommands,
-    t: TranslationFunction
+    t: TranslationFunction,
+    publisher: EventPublisher<EventData>
   ) => HotKeysProps;
 }

@@ -1,0 +1,64 @@
+{
+  "name": "ricos-events",
+  "version": "8.71.35",
+  "author": {
+    "name": "Alex Greenstein",
+    "email": "alexgr@wix.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wix/ricos.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wix/ricos/issues"
+  },
+  "homepage": "https://github.com/wix/ricos/tree/master/packages/ricos-events",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/cjs/index.js",
+  "types": "dist/src/index.d.ts",
+  "module": "dist/es/index.js",
+  "scripts": {
+    "clean": "rm -rf dist/",
+    "prebuild": "npm run clean",
+    "build:rollup": "rollup --environment DYNAMIC_IMPORT,MODULE_NAME:ricos-events,EXTRACT_CSS:false -c ../../../rollup.config.js",
+    "build": "npm run build:rollup",
+    "build:dev": "cross-env NODE_ENV=development npm run build",
+    "build:analyze:editor": "npm run build -- --environment MODULE_ANALYZE_EDITOR  && open stats.html",
+    "build:analyze:viewer": "npm run build -- --environment MODULE_ANALYZE_VIEWER && open stats.html",
+    "watch": "cross-env NODE_ENV=development npm run build:rollup -- --watch",
+    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx,d.ts}'",
+    "test": "jest --verbose",
+    "test:watchAll": "jest --verbose --watchAll"
+  },
+  "dependencies": {
+    "fp-ts": "^2.11.0",
+    "idb": "^7.0.0",
+    "ricos-tiptap-types": "8.71.35",
+    "ricos-types": "8.71.35",
+    "wix-rich-content-editor-common": "8.71.35"
+  },
+  "unpkg": true,
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "jest": {
+    "globals": {
+      "NODE_ENV": "test"
+    },
+    "testMatch": [
+      "**/?(*.)+(spec|test).+(ts|tsx|js)"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)?$": "ts-jest",
+      "^.+\\.(jsx|js)?$": "<rootDir>/../../../babel.jest.monorepo.js",
+      "\\.(svg)$": "<rootDir>/__mocks__/fileTransformer.js"
+    },
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|svg)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|scss)$": "<rootDir>/__mocks__/styleMock.js"
+    }
+  }
+}

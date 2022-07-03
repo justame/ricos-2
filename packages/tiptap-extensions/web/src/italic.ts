@@ -1,6 +1,5 @@
 import { markInputRule, markPasteRule } from '@tiptap/core';
 import { Decoration_Type } from 'ricos-schema';
-import type { Styles } from 'ricos-styles';
 import type { DOMOutputSpec, RicosExtension } from 'ricos-tiptap-types';
 
 declare module '@tiptap/core' {
@@ -13,7 +12,7 @@ declare module '@tiptap/core' {
       /**
        * Toggle an italic mark
        */
-      toggleItalic: (styles: Styles) => ReturnType;
+      toggleItalic: () => ReturnType;
       /**
        * Unset an italic mark
        */
@@ -79,10 +78,9 @@ export const italic: RicosExtension = {
               return commands.setMark(this.name);
             },
           toggleItalic:
-            (styles: Styles) =>
+            () =>
             ({ commands }) => {
-              const italicData = !commands.getStylesDecorationBySelectedNode(styles, this.name)
-                .italicData;
+              const italicData = !commands.getStylesDecorationBySelectedNode(this.name)?.italicData;
               return commands.toggleMark(this.name, {
                 italicData,
               });

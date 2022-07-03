@@ -5,10 +5,10 @@ import { File as Component } from './component';
 
 const name = TIPTAP_FILE_TYPE;
 
-export const tiptapExtensions = [
+export const tiptapExtensions: RicosExtension[] = [
   {
     type: 'node' as const,
-    groups: ['react'],
+    groups: ['react', 'overlay'],
     name,
     reconfigure: (
       config: NodeConfig,
@@ -24,7 +24,7 @@ export const tiptapExtensions = [
       return {
         name: this.name,
         group: 'block',
-        selectable: true,
+        selectable: false,
         draggable: true,
         addAttributes: () => ({
           ...fileDataDefaults,

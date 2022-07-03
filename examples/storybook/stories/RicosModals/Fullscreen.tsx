@@ -11,7 +11,7 @@ const FullscreenWrapper = () => (
 );
 
 const Fullscreen = () => {
-  const { modalService } = useContext(ModalContext) || {};
+  const modalService = useContext(ModalContext) || {};
 
   const openModal = () => {
     modalService.openModal({

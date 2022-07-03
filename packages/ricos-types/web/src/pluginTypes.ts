@@ -1,6 +1,6 @@
 // TODO: refactor this file
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { ComponentType } from 'react';
+import type { ComponentType, ReactElement } from 'react';
 import type {
   ClassNameStrategy,
   ContainerClassNameStrategy,
@@ -93,6 +93,8 @@ import { LinkData, Node_Type, Decoration_Type } from 'ricos-schema';
 import type { EditorCommands } from './editorCommandsType';
 import type { ModalConfig } from './modalTypes';
 import type { UploadContextType } from './uploadServicesTypes';
+import type { IToolbarItem } from './toolbarTypes';
+import type { ToolbarType } from './toolbarEnums';
 
 export { Node_Type, Decoration_Type, LinkData };
 
@@ -248,6 +250,7 @@ export type AddButton = {
   icon: ComponentType;
   command: (editorCommands: EditorCommands, uploadContext?: UploadContextType) => boolean;
   tooltip: string;
+  toolbars: ToolbarType[];
   label?: string;
   modal?: ModalConfig;
   menuConfig?: MenuConfig;
@@ -266,7 +269,8 @@ export type Resolver = Record<string, (content) => boolean | string>;
 export type ToolbarButton = {
   id: string;
   type?: 'toggle' | 'modal' | 'separator';
-  renderer?: ComponentType;
+  renderer?: (toolbarItem: IToolbarItem) => ReactElement;
+  modal?: ModalConfig;
   config?: ToolbarButtonConfig;
 };
 

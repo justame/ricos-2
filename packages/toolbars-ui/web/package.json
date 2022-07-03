@@ -1,0 +1,71 @@
+{
+  "name": "wix-rich-content-toolbars-ui",
+  "version": "8.71.35",
+  "author": {
+    "name": "Dana Rish",
+    "email": "danari@wix.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wix/ricos.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wix/ricos/issues"
+  },
+  "homepage": "https://github.com/wix/ricos/tree/master/rich-content-toolbars-ui",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/cjs/index.js",
+  "types": "dist/src/index.d.ts",
+  "module": "dist/es/index.js",
+  "style": "dist/styles.min.scss",
+  "scripts": {
+    "clean": "rm -rf dist/",
+    "prebuild": "npm run clean",
+    "build:rollup": "rollup --environment DYNAMIC_IMPORT,MODULE_NAME:toolbars-ui,EXTRACT_CSS:false,ALLOW_JS -c ../../../rollup.config.js",
+    "build": "npm run build:rollup && node ../../../scripts/cssFix.js",
+    "build:dev": "cross-env NODE_ENV=development npm run build",
+    "build:analyze:editor": "npm run build -- --environment MODULE_ANALYZE_EDITOR  && open stats.html",
+    "build:analyze:viewer": "npm run build -- --environment MODULE_ANALYZE_VIEWER && open stats.html",
+    "watch": "cross-env NODE_ENV=development npm run build:rollup -- --watch",
+    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx,d.ts}'",
+    "test:watchAll": "jest --verbose --watchAll"
+  },
+  "peerDependencies": {
+    "classnames": "^2.0.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "dependencies": {
+    "react-popper": "2.2.5",
+    "ricos-context": "8.71.35",
+    "ricos-schema": "8.71.35",
+    "ricos-types": "8.71.35",
+    "wix-rich-content-common": "8.71.35"
+  },
+  "unpkg": true,
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "jest": {
+    "globals": {
+      "NODE_ENV": "test"
+    },
+    "testMatch": [
+      "**/?(*.)+(spec|test).+(ts|tsx|js)"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)?$": "ts-jest",
+      "^.+\\.(jsx|js)?$": "<rootDir>/../../../babel.jest.monorepo.js",
+      "\\.(svg)$": "<rootDir>/__mocks__/fileTransformer.js"
+    },
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|svg)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|scss)$": "<rootDir>/__mocks__/styleMock.js",
+      "^draft-js$": "<rootDir>/../../../node_modules/@wix/draft-js",
+      "^draft-js/": "<rootDir>/../../../node_modules/@wix/draft-js/"
+    }
+  }
+}

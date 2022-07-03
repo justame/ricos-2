@@ -3,7 +3,7 @@ import { mergeAttributes } from '@tiptap/core';
 import type { Node as ProsemirrorNode } from 'prosemirror-model';
 import paragraphDataDefaults from 'ricos-schema/dist/statics/paragraph.defaults.json';
 import type { RicosExtension, DOMOutputSpec } from 'ricos-tiptap-types';
-import { Node_Type } from 'ricos-schema';
+import { Node_Type, TextStyle_TextAlignment } from 'ricos-schema';
 
 export interface ParagraphOptions {
   HTMLAttributes: Record<string, unknown>;
@@ -16,6 +16,7 @@ declare module '@tiptap/core' {
        * Toggle a paragraph
        */
       setParagraph: () => ReturnType;
+      softNewLine: () => ReturnType;
     };
   }
 }
@@ -30,7 +31,7 @@ const createStyleAttribute = (node: ProsemirrorNode) => {
 
 export const paragraph: RicosExtension = {
   type: 'node' as const,
-  groups: ['text-container'],
+  groups: ['text-container', 'shortcuts-enabled'],
   name: Node_Type.PARAGRAPH,
   createExtensionConfig() {
     return {
@@ -57,10 +58,19 @@ export const paragraph: RicosExtension = {
 
       renderHTML({ HTMLAttributes, node }) {
         const styles = createStyleAttribute(node);
+        const attrs = mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, styles);
+        const textAlignment = attrs?.textStyle?.textAlignment;
+        const shouldAddDir =
+          textAlignment === TextStyle_TextAlignment.LEFT ||
+          textAlignment === TextStyle_TextAlignment.RIGHT;
         return [
           'div',
-          mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, styles),
-          0,
+          attrs,
+          [
+            'span',
+            { style: 'display: inline-block;', ...(shouldAddDir ? { dir: 'auto' } : {}) },
+            0,
+          ],
         ] as DOMOutputSpec;
       },
 
@@ -71,12 +81,20 @@ export const paragraph: RicosExtension = {
             ({ commands }) => {
               return commands.setNode(this.name);
             },
+          softNewLine:
+            () =>
+            ({ state, dispatch }) => {
+              const transaction = state.tr.insertText('\n').scrollIntoView();
+              if (dispatch) dispatch(transaction);
+              return true;
+            },
         };
       },
 
       addKeyboardShortcuts() {
         return {
-          'Mod-Alt-0': () => this.editor.commands.setParagraph(),
+          // 'Mod-Alt-0': () => this.editor.commands.setParagraph(),
+          'Shift-Enter': () => this.editor.commands.softNewLine(),
         };
       },
     };

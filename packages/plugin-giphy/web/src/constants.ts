@@ -57,3 +57,8 @@ export const DESKTOP_FLY_OUT_MODAL_STYLES: ModalStyles = Object.freeze({
 export const EXTERNAL_POPUP_STYLES: ModalStyles = Object.freeze({
   content: commonDesktopModalStyles,
 });
+
+export const gifModals = {
+  insert: 'gifInsertModal',
+  replace: 'gifReplaceModal',
+};

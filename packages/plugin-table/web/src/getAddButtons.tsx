@@ -1,5 +1,9 @@
 import { InsertPluginIcon } from './icons';
-import { INSERT_PLUGIN_BUTTONS, decorateComponentWithProps } from 'wix-rich-content-editor-common';
+import {
+  INSERT_PLUGIN_BUTTONS,
+  decorateComponentWithProps,
+  TOOLBARS,
+} from 'wix-rich-content-editor-common';
 import InsertModal from './modals/InsertModal';
 import type { AddButton } from 'ricos-types';
 import { getDefaultsSettings } from './tableUtil';
@@ -12,13 +16,13 @@ export const getAddButtons = (): AddButton[] => {
       label: INSERT_PLUGIN_BUTTONS.TABLE,
       icon: InsertPluginIcon,
       tooltip: 'TablePlugin_InsertButton_Tooltip',
+      toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
       command: editorCommands => true,
       modal: {
         id: tableModals.insert,
         Component: decorateComponentWithProps(InsertModal, {
           componentData: getDefaultsSettings(),
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'Table_plugin_search_tags',

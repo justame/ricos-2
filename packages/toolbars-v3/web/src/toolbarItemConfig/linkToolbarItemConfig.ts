@@ -8,7 +8,7 @@ import {
   isTextContainsLinkResolver,
   isTextContainsAnchorResolver,
 } from '../resolvers/tiptapResolvers';
-import type { IToolbarItemConfigTiptap } from '../types';
+import type { IToolbarItemConfigTiptap } from 'ricos-types';
 
 export const linkToolbarItemConfig: IToolbarItemConfigTiptap[] = [
   {

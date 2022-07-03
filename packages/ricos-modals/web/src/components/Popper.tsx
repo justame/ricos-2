@@ -1,20 +1,20 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { ClickOutside } from 'wix-rich-content-editor-common';
-import { usePopper } from 'react-popper';
 import type { ReactNode } from 'react';
-import type { ModalConfig } from 'ricos-types';
-import { ModalContext } from '../utils/ModalContext';
+import React, { useContext, useEffect, useState } from 'react';
+import { usePopper } from 'react-popper';
+import { ModalContext } from 'ricos-context';
+import type { Modal } from 'ricos-types';
+import { ClickOutside } from 'wix-rich-content-editor-common';
 
 interface Props {
   children: ReactNode;
-  modalConfig: ModalConfig;
+  modalConfig: Modal;
   closeModal: () => void;
   className: string;
 }
 
 export const Popper = ({ children, modalConfig, closeModal, className }: Props) => {
   const [modalElement, setModalElement] = useState<HTMLDivElement | null>(null);
-  const { modalService } = useContext(ModalContext) || {};
+  const modalService = useContext(ModalContext) || {};
 
   const { referenceElement, placement } = modalConfig.positioning || {};
   const { styles: popperStyles, attributes } = usePopper(referenceElement, modalElement, {

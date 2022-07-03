@@ -1,5 +1,9 @@
 import { TwitterIcon, InstagramIcon, FacebookIcon, TikTokIcon, PinterestIcon } from './icons';
-import { INSERT_PLUGIN_BUTTONS, decorateComponentWithProps } from 'wix-rich-content-editor-common';
+import {
+  INSERT_PLUGIN_BUTTONS,
+  decorateComponentWithProps,
+  TOOLBARS,
+} from 'wix-rich-content-editor-common';
 import InsertModal from './modals/InsertModal';
 import type { AddButton } from 'ricos-types';
 import { socialModals } from './consts';
@@ -14,6 +18,8 @@ export const getAddButtons = (config): AddButton[] => {
       label: INSERT_PLUGIN_BUTTONS.INSTAGRAM,
       icon: InstagramIcon,
       tooltip: 'InstagramPlugin_InsertButton_Tooltip',
+      toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
+
       command: editorCommands => true,
       modal: {
         id: socialModals.insert,
@@ -21,7 +27,6 @@ export const getAddButtons = (config): AddButton[] => {
           fetchData,
           socialType: 'Instagram',
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'Instagram_plugin_search_tags',
@@ -33,6 +38,8 @@ export const getAddButtons = (config): AddButton[] => {
       label: INSERT_PLUGIN_BUTTONS.TWITTER,
       icon: TwitterIcon,
       tooltip: 'TwitterPlugin_InsertButton_Tooltip',
+      toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
+
       command: editorCommands => true,
       modal: {
         id: socialModals.insert,
@@ -40,7 +47,6 @@ export const getAddButtons = (config): AddButton[] => {
           fetchData,
           socialType: 'Twitter',
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'YouTube_plugin_search_tags',
@@ -52,6 +58,8 @@ export const getAddButtons = (config): AddButton[] => {
       label: INSERT_PLUGIN_BUTTONS.PINTEREST,
       icon: PinterestIcon,
       tooltip: 'PinterestPlugin_InsertButton_Tooltip',
+      toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
+
       command: editorCommands => true,
       modal: {
         id: socialModals.insert,
@@ -59,7 +67,6 @@ export const getAddButtons = (config): AddButton[] => {
           fetchData,
           socialType: 'Pinterest',
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'Pinterestsearch_tags',
@@ -71,6 +78,8 @@ export const getAddButtons = (config): AddButton[] => {
       label: INSERT_PLUGIN_BUTTONS.FACEBOOK,
       icon: FacebookIcon,
       tooltip: 'FacebookPlugin_InsertButton_Tooltip',
+      toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
+
       command: editorCommands => true,
       modal: {
         id: socialModals.insert,
@@ -78,7 +87,6 @@ export const getAddButtons = (config): AddButton[] => {
           fetchData,
           socialType: 'Facebook',
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'Facebook_plugin_search_tags',
@@ -90,6 +98,8 @@ export const getAddButtons = (config): AddButton[] => {
       label: INSERT_PLUGIN_BUTTONS.TIKTOK,
       icon: TikTokIcon,
       tooltip: 'TikTokPlugin_InsertButton_Tooltip',
+      toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
+
       command: editorCommands => true,
       modal: {
         id: socialModals.insert,
@@ -97,7 +107,6 @@ export const getAddButtons = (config): AddButton[] => {
           fetchData,
           socialType: 'TikTok',
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'YouTube_plugin_search_tags',

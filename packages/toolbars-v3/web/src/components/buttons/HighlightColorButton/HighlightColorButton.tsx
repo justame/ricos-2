@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { usePopper } from 'react-popper';
-import { ClickOutside } from 'wix-rich-content-editor-common';
+import { ClickOutside } from '../../Clickoutside/ClickOutside';
 import cx from 'classnames';
 import styles from './HighlightColorButton.scss';
 import { withToolbarContext } from 'ricos-context';
@@ -67,7 +67,7 @@ const HighlightColorButton = ({ toolbarItem, context, dataHook }) => {
 
   const tooltip = t(toolbarItem.presentation?.tooltip);
   return (
-    <ClickOutside onClickOutside={onClickOutside}>
+    <ClickOutside onClickOutside={onClickOutside} wrapper="div">
       <Tooltip key={tooltip} content={tooltip} tooltipOffset={{ x: 0, y: -8 }}>
         <div
           onMouseDown={e => e.preventDefault()}
@@ -95,7 +95,6 @@ const HighlightColorButton = ({ toolbarItem, context, dataHook }) => {
       {isModalOpen &&
         ReactDOM.createPortal(
           <div
-            onMouseDown={e => e.preventDefault()}
             dir={getLangDir(locale)}
             ref={setPopperElement}
             style={isMobile ? {} : { ...popperStyles.popper, zIndex: 9 }}

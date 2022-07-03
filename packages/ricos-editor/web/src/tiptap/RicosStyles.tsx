@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useRef } from 'react';
 import type { RicosTheme } from 'ricos-common';
 import type { DocumentStyle } from 'ricos-content';
 import { parseDocStyle } from 'ricos-content/libs/parse-doc-style';
-import { StylesContext } from 'ricos-styles';
+import { StylesContext } from 'ricos-context';
 
 function usePrevious(value) {
   const ref = useRef();
@@ -14,7 +14,7 @@ function usePrevious(value) {
   return ref.current;
 }
 
-const RicosStyles: FC<{ theme: RicosTheme; documentStyle: DocumentStyle }> = props => {
+const RicosStylesRenderer: FC<{ theme: RicosTheme; documentStyle: DocumentStyle }> = props => {
   const prevTheme = usePrevious(props.theme);
   const prevDocumentStyle = usePrevious(props.documentStyle);
   const styles = useContext(StylesContext);
@@ -35,4 +35,4 @@ const RicosStyles: FC<{ theme: RicosTheme; documentStyle: DocumentStyle }> = pro
   return <>{styles.toStyleTags().map((tag, i) => React.cloneElement(tag, { key: i }))}</>;
 };
 
-export default RicosStyles;
+export default RicosStylesRenderer;

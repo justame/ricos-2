@@ -1,25 +1,36 @@
-import { TiptapContentResolver } from './resolvers/ContentResolver';
-import type { IToolbarItemConfigTiptap } from 'wix-rich-content-toolbars-v3';
-import type { ToolbarButton, Resolver } from 'ricos-types';
+import { TiptapContentResolver } from 'wix-rich-content-toolbars-v3';
+import type {
+  ModalService,
+  Resolver,
+  PluginToolbarButtons,
+  IPluginToolbar,
+  IPluginToolbarButton,
+  TiptapContentResolver as TiptapContentResolverType,
+} from 'ricos-types';
 import { PluginToolbarButton } from './pluginToolbarButton';
 
 export class PluginToolbarButtonCollisionError extends Error {}
 
-export class PluginToolbar {
-  buttons: PluginToolbarButton[];
+export class PluginToolbar implements IPluginToolbar {
+  buttons: IPluginToolbarButton[];
 
-  resolvers: Record<string, TiptapContentResolver>;
+  resolvers: Record<string, TiptapContentResolverType>;
 
   isPluginSelectedResolver: TiptapContentResolver;
 
-  constructor(buttons: ToolbarButton[], resolvers: Resolver, pluginType: string) {
-    this.buttons = buttons.map(button => PluginToolbarButton.of(button));
+  constructor(
+    toolbarButtons: PluginToolbarButtons,
+    pluginType: string,
+    modalService: ModalService
+  ) {
+    this.buttons =
+      toolbarButtons.buttons?.map(button => PluginToolbarButton.of(button, modalService)) || [];
     this.isPluginSelectedResolver = this.createIsPluginSelectedResolver(pluginType);
-    this.resolvers = this.initResolvers(resolvers);
+    this.resolvers = toolbarButtons.resolvers ? this.initResolvers(toolbarButtons.resolvers) : {};
   }
 
-  static of(buttons: ToolbarButton[] = [], resolvers: Resolver, pluginType: string) {
-    return new PluginToolbar(buttons, resolvers, pluginType);
+  static of(toolbarButtons: PluginToolbarButtons, pluginType: string, modalService: ModalService) {
+    return new PluginToolbar(toolbarButtons, pluginType, modalService);
   }
 
   private createIsPluginSelectedResolver(pluginType: string) {
@@ -29,7 +40,7 @@ export class PluginToolbar {
     );
   }
 
-  private initResolvers(resolvers: Resolver) {
+  private initResolvers(resolvers: Resolver): Record<string, TiptapContentResolverType> {
     return Object.entries(resolvers || {}).reduce((prevResolvers, [resolverId, resolver]) => {
       return {
         ...prevResolvers,
@@ -39,15 +50,23 @@ export class PluginToolbar {
     }, {});
   }
 
+  register() {
+    this.buttons.map(b => b.register());
+  }
+
+  unregister() {
+    this.buttons.map(b => b.unregister());
+  }
+
   getButtons() {
     return this.buttons;
   }
 
-  toToolbarItemsConfig(): IToolbarItemConfigTiptap[] {
+  toToolbarItemsConfig() {
     return this.buttons.map(button => button.toToolbarItemConfig(this.resolvers));
   }
 
-  getToolberButtonsRenderers() {
+  getToolbarButtonsRenderers() {
     return this.buttons.reduce((renderers, button) => {
       return {
         ...renderers,
@@ -56,7 +75,7 @@ export class PluginToolbar {
     }, {});
   }
 
-  isVisible(content): boolean {
+  isVisible(content) {
     return !!content && this.isPluginSelectedResolver.resolve(content);
   }
 }

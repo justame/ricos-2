@@ -1,12 +1,11 @@
 import type { Node } from 'prosemirror-model';
 import React, { useContext } from 'react';
-import { EditorContext, RicosContext } from 'ricos-context';
-import type { IToolbarItemConfigTiptap, IToolbarItem } from '../../types';
+import { EditorContext, RicosContext, ModalContext } from 'ricos-context';
+import type { IToolbarItemConfigTiptap } from 'ricos-types';
 import RicosToolbarComponent from '../../components/RicosToolbarComponent';
 import { Content } from '../../Content';
 import ToggleButton from '../../components/buttons/ToggleButton/ToggleButton';
 import styles from './styles/floating-add-plugin-menu.scss';
-import { ModalContext } from 'ricos-modals';
 import { PLUGIN_MENU_MODAL_ID } from './consts';
 import type { IPluginMenuButtonClick } from './types';
 import { calcPluginModalLayout, calcPluginModalPlacement } from './utils';
@@ -20,7 +19,7 @@ interface Props {
 
 const AddPluginMenuHorizontal: React.FC<Props> = ({ referenceElement, plugins }) => {
   const { getEditorCommands } = useContext(EditorContext);
-  const { modalService } = useContext(ModalContext) || {};
+  const modalService = useContext(ModalContext) || {};
   const { languageDir, isMobile } = useContext(RicosContext) || {};
   const uploadContext = useContext(UploadServiceContext);
   const pluginModalLayout = calcPluginModalLayout(isMobile);
@@ -29,11 +28,8 @@ const AddPluginMenuHorizontal: React.FC<Props> = ({ referenceElement, plugins })
 
   const onPluginMenuButtonClick: IPluginMenuButtonClick = (modal, command) => {
     modalService.closeModal(PLUGIN_MENU_MODAL_ID);
-    modalService.openModal;
     return modal
-      ? modalService?.openModal({
-          Component: modal.Component,
-          id: modal.id,
+      ? modalService?.openModal(modal.id, {
           positioning: {
             referenceElement: referenceElement?.current,
             placement: pluginModalPlacement,

@@ -16,7 +16,7 @@ const Popover = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [referenceElement, setReferenceElement] = useState<any>();
 
-  const { modalService } = useContext(ModalContext) || {};
+  const modalService = useContext(ModalContext) || {};
 
   const openPopover = () => {
     modalService.openModal({

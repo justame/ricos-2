@@ -3,11 +3,18 @@ import type { JSONContent } from '@tiptap/core';
 import React, { forwardRef } from 'react';
 import type { RicosEditorProps } from 'ricos-common';
 import type { HtmlAttributes, TiptapAdapter } from 'ricos-tiptap-types';
-import type { EditorContextType, EditorStyleClasses, Pubsub } from 'ricos-types';
+import type {
+  EditorContextType,
+  EditorStyleClasses,
+  EventPublisher,
+  EventRegistrar,
+  EventData,
+  Pubsub,
+} from 'ricos-types';
 import type { GeneralContext } from 'ricos-context';
-import { withRicosContext, withEditorContext } from 'ricos-context';
+import { withEventsContext, withRicosContext, withEditorContext } from 'ricos-context';
 import { getEmptyDraftContent } from 'wix-rich-content-editor-common';
-import { isContentStateEmpty } from 'ricos-content';
+import { isContentStateEmpty, Version } from 'ricos-content';
 import {
   EditorEvents,
   withEditorEvents,
@@ -28,7 +35,11 @@ type RicosEditorState = {
 
 class RicosEditor
   extends React.Component<
-    RicosEditorProps & { ricosContext: GeneralContext; editor: TiptapAdapter },
+    RicosEditorProps & {
+      ricosContext: GeneralContext;
+      editor: TiptapAdapter;
+      events: EventRegistrar;
+    },
     RicosEditorState
   >
   // eslint-disable-next-line prettier/prettier
@@ -41,7 +52,13 @@ class RicosEditor
 
   private readonly editorStyleClasses: EditorStyleClasses;
 
-  isLastChangeEdit: boolean;
+  private isLastChangeEdit = false;
+
+  private readonly editorLoadedPublisher: EventPublisher<EventData>;
+
+  private readonly firstContentEditPublisher: EventPublisher<EventData>;
+
+  private firstEdit = false;
 
   constructor(props) {
     super(props);
@@ -51,7 +68,8 @@ class RicosEditor
       experiments,
       editorCss,
     });
-    this.isLastChangeEdit = false;
+    this.editorLoadedPublisher = props.events.register('ricos.editor.instance.loaded');
+    this.firstContentEditPublisher = props.events.register('ricos.editor.content.firstEdit');
   }
 
   focus: RicosEditorRef['focus'] = () => {
@@ -136,6 +154,10 @@ class RicosEditor
   }
 
   onUpdate = ({ content }) => {
+    if (!this.firstEdit) {
+      this.firstEdit = true;
+      this.firstContentEditPublisher.publish('📝 first content edit');
+    }
     this.isLastChangeEdit = true;
     this.props.onChange?.(content);
   };
@@ -151,6 +173,8 @@ class RicosEditor
     });
 
     this.props.editorEvents?.subscribe(EditorEvents.RICOS_PUBLISH, this.onPublish);
+    this.editorLoadedPublisher.publish('🖖 editor mounted');
+    this.reportDebuggingInfo();
   }
 
   componentWillUnmount() {
@@ -167,6 +191,26 @@ class RicosEditor
       data: await Promise.resolve(draftContent),
     };
   };
+
+  private reportDebuggingInfo() {
+    if (typeof window === 'undefined') {
+      return;
+    }
+    if (/debug/i.test(window.location.search) && !window.__RICOS_INFO__) {
+      import(
+        /* webpackChunkName: "debugging-info" */
+        'wix-rich-content-common/libs/debugging-info'
+      ).then(({ reportDebuggingInfo }) => {
+        reportDebuggingInfo({
+          version: Version.currentVersion,
+          reporter: 'Ricos Editor (Tiptap)',
+          plugins: this.props.plugins?.map(p => p.type) || [],
+          getContent: () => this.props.editor.getDraftContent(),
+          getConfig: () => this.props.plugins?.map(p => p.config) || [],
+        });
+      });
+    }
+  }
 
   render() {
     const { ricosContext, editor } = this.props;
@@ -191,7 +235,9 @@ class RicosEditor
   }
 }
 
-const RicosEditorWithContext = withRicosContext()(withEditorContext(withEditorEvents(RicosEditor)));
+const RicosEditorWithContext = withRicosContext(
+  withEventsContext(withEditorContext(withEditorEvents(RicosEditor)))
+);
 
 const RicosEditorWithForwardRef = forwardRef<RicosEditorRef, RicosEditorProps>((props, ref) => (
   <RicosEditorWithContext {...props} ref={ref} />

@@ -1,6 +1,10 @@
 import { RICOS_DEFAULTS } from './video-component';
 import { VideoInsertPluginIcon, YoutubeIcon } from './icons';
-import { INSERT_PLUGIN_BUTTONS, decorateComponentWithProps } from 'wix-rich-content-editor-common';
+import {
+  INSERT_PLUGIN_BUTTONS,
+  decorateComponentWithProps,
+  TOOLBARS,
+} from 'wix-rich-content-editor-common';
 import InsertModal from './modals/InsertModal';
 import type { AddButton } from 'ricos-types';
 import { videoButtonsTypes } from './types';
@@ -30,6 +34,8 @@ export const getAddButtons = (config): AddButton[] => {
       label: INSERT_PLUGIN_BUTTONS.VIDEO,
       icon: VideoInsertPluginIcon,
       tooltip: 'VideoPlugin_InsertButton_Tooltip',
+      toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
+
       command: editorCommands => true,
       modal: {
         id: videoModals.insert,
@@ -37,7 +43,6 @@ export const getAddButtons = (config): AddButton[] => {
           componentData: { ...RICOS_DEFAULTS, disableDownload },
           ...modalBaseProps,
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'Video_plugin_search_tags',
@@ -49,6 +54,8 @@ export const getAddButtons = (config): AddButton[] => {
       label: INSERT_PLUGIN_BUTTONS.YOUTUBE,
       icon: YoutubeIcon,
       tooltip: 'YouTubePlugin_InsertButton_Tooltip',
+      toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
+
       command: editorCommands => true,
       modal: {
         id: videoModals.insert,
@@ -56,7 +63,6 @@ export const getAddButtons = (config): AddButton[] => {
           componentData: { ...RICOS_DEFAULTS, type: videoButtonsTypes.youTube },
           ...modalBaseProps,
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'YouTube_plugin_search_tags',

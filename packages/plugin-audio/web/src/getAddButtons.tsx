@@ -1,7 +1,11 @@
 import { DEFAULTS } from './audio-component';
 import AudioInsertPluginIcon from './icons/InsertPluginIcon';
 import { SoundCloudIcon, SpotifyIcon } from 'wix-rich-content-ui-components';
-import { INSERT_PLUGIN_BUTTONS, decorateComponentWithProps } from 'wix-rich-content-editor-common';
+import {
+  INSERT_PLUGIN_BUTTONS,
+  decorateComponentWithProps,
+  TOOLBARS,
+} from 'wix-rich-content-editor-common';
 import InsertModal from './modals/InsertModal';
 import type { AddButton } from 'ricos-types';
 import { audioButtonsTypes } from './types';
@@ -31,6 +35,7 @@ export const getAddButtons = (config): AddButton[] => {
       label: INSERT_PLUGIN_BUTTONS.AUDIO,
       icon: AudioInsertPluginIcon,
       tooltip: 'AudioPlugin_InsertButton_Tooltip',
+      toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
       command: editorCommands => true,
       modal: {
         id: audioModals.insert,
@@ -38,7 +43,6 @@ export const getAddButtons = (config): AddButton[] => {
           componentData: { ...DEFAULTS, disableDownload },
           ...modalBaseProps,
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'Audio_plugin_search_tags',
@@ -50,6 +54,7 @@ export const getAddButtons = (config): AddButton[] => {
       label: INSERT_PLUGIN_BUTTONS.SOUND_CLOUD,
       icon: SoundCloudIcon,
       tooltip: 'SoundCloudPlugin_InsertButton_Tooltip',
+      toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
       command: editorCommands => true,
       modal: {
         id: audioModals.insert,
@@ -58,7 +63,6 @@ export const getAddButtons = (config): AddButton[] => {
           embedType: true,
           ...modalBaseProps,
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'SoundCloud_plugin_search_tags',
@@ -70,6 +74,7 @@ export const getAddButtons = (config): AddButton[] => {
       label: INSERT_PLUGIN_BUTTONS.SPOTIFY,
       icon: SpotifyIcon,
       tooltip: 'Spotify_InsertButton_Tooltip',
+      toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
       command: editorCommands => true,
       modal: {
         id: audioModals.insert,
@@ -78,7 +83,6 @@ export const getAddButtons = (config): AddButton[] => {
           embedType: true,
           ...modalBaseProps,
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'AudioPlugin_InsertButton',

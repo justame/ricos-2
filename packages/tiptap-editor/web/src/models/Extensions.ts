@@ -7,6 +7,7 @@ import {
   isRicosMarkExtension,
   isRicosNodeExtension,
 } from 'ricos-tiptap-types';
+import type { RicosServices } from 'ricos-types';
 import type {
   ExtensionAggregate,
   IExtension,
@@ -62,15 +63,18 @@ export class Extensions implements ExtensionAggregate {
 
   private readonly ricosProps: ExtensionProps;
 
-  private constructor(extensions: IExtension[], props: ExtensionProps) {
+  private readonly services: RicosServices;
+
+  private constructor(extensions: IExtension[], props: ExtensionProps, services: RicosServices) {
     this.extensions = new IExtensionAggregate<IExtension>(extensions);
     this.ricosProps = props;
+    this.services = services;
   }
 
-  static of(extensions: RicosExtension[], props: ExtensionProps) {
+  static of(extensions: RicosExtension[], props: ExtensionProps, services: RicosServices) {
     const iExtensions = extensions.map(toIExtension);
     validate(iExtensions);
-    return new Extensions(iExtensions, props);
+    return new Extensions(iExtensions, props, services);
   }
 
   getRicosExtensions() {
@@ -106,15 +110,31 @@ export class Extensions implements ExtensionAggregate {
   }
 
   getDecoratedNodeExtensions() {
-    const hocComposer = this.getFunctionalExtensions().getNodeHocComposer(this, this.ricosProps);
+    const hocComposer = this.getFunctionalExtensions().getNodeHocComposer(
+      this,
+      this.ricosProps,
+      this.services
+    );
     return this.getReactNodeExtensions().getDecoratedNodeExtensions(hocComposer);
   }
 
   getTiptapExtensions() {
-    const reactNodes = this.getDecoratedNodeExtensions().toTiptapExtensions(this, this.ricosProps);
-    const htmlNodes = this.getHtmlNodeExtensions().toTiptapExtensions(this, this.ricosProps);
-    const marks = this.getMarkExtensions().toTiptapExtensions(this, this.ricosProps);
-    const extensions = this.getFunctionalExtensions().toTiptapExtensions(this, this.ricosProps);
+    const reactNodes = this.getDecoratedNodeExtensions().toTiptapExtensions(
+      this,
+      this.ricosProps,
+      this.services
+    );
+    const htmlNodes = this.getHtmlNodeExtensions().toTiptapExtensions(
+      this,
+      this.ricosProps,
+      this.services
+    );
+    const marks = this.getMarkExtensions().toTiptapExtensions(this, this.ricosProps, this.services);
+    const extensions = this.getFunctionalExtensions().toTiptapExtensions(
+      this,
+      this.ricosProps,
+      this.services
+    );
     return [...extensions, ...marks, ...reactNodes, ...htmlNodes];
   }
 
@@ -125,13 +145,18 @@ export class Extensions implements ExtensionAggregate {
   concat(extensions: RicosExtension[]): Extensions {
     const iExtensions = extensions.map(toIExtension);
     validate(iExtensions);
-    return new Extensions(this.extensions.asArray().concat(iExtensions), this.ricosProps);
+    return new Extensions(
+      this.extensions.asArray().concat(iExtensions),
+      this.ricosProps,
+      this.services
+    );
   }
 
   byGroup(group: Group) {
     return new Extensions(
       this.extensions.filter(ext => ext.groups.includes(group)).asArray(),
-      this.ricosProps
+      this.ricosProps,
+      this.services
     );
   }
 }

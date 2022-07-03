@@ -14,9 +14,10 @@ import {
   extractUnsupportedNodes,
   toContentTypes,
 } from '../src/patch-extensions';
+import type { RicosServices } from 'ricos-types';
 
 const createExtensions = (extensions: RicosExtension[]): Extensions =>
-  Extensions.of(extensions, {} as ExtensionProps);
+  Extensions.of(extensions, {} as ExtensionProps, {} as RicosServices);
 
 const toSupportedContentTypes: (plugins: TiptapEditorPlugin[]) => ContentTypes = flow(
   A.chain(p => p.tiptapExtensions || []),

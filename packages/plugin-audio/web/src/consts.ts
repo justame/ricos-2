@@ -116,4 +116,5 @@ export const audioFileTypes = '.mp3,.pcm,.wav,.aiff,.aif,.aac,.ogg,.wma,.m4a,.fl
 
 export const audioModals = {
   insert: 'audioInsertModal',
+  replace: 'audioReplaceModal',
 };

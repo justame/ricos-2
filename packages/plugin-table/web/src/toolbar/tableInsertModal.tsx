@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import type { ModalContextValue } from 'ricos-modals';
+import type { ModalService } from 'ricos-types';
 import type { Helpers, Pubsub } from 'wix-rich-content-common';
 import TableSettingsModal from './tableSettingsModal';
 
 interface Props {
-  context: ModalContextValue;
+  context: ModalService;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   componentData: Record<string, any>;
   helpers: Helpers;

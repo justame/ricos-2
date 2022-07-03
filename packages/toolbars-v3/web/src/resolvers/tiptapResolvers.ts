@@ -402,6 +402,28 @@ export const getNodeInSelectionResolver = TiptapContentResolver.create(
   }
 );
 
+export const getNodeAlignmentResolver = TiptapContentResolver.create(
+  RESOLVERS_IDS.GET_NODE_ALIGNMENT,
+  content => {
+    if (Array.isArray(content) && content.length > 0) {
+      return content[0].attrs?.containerData?.alignment;
+    } else {
+      return undefined;
+    }
+  }
+);
+
+export const getNodeSizeResolver = TiptapContentResolver.create(
+  RESOLVERS_IDS.GET_NODE_SIZE,
+  content => {
+    if (Array.isArray(content) && content.length > 0) {
+      return content[0].attrs?.containerData?.width?.size;
+    } else {
+      return undefined;
+    }
+  }
+);
+
 const pluginSelectedResolvers = [
   isImageSelected,
   isVideoSelected,

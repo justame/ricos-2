@@ -1,16 +1,15 @@
 import React, { useContext } from 'react';
 import ReactDOM from 'react-dom';
-import { ModalContext } from './ModalContext';
-import { RicosContext } from 'ricos-context';
+import { ModalContext, RicosContext } from 'ricos-context';
 import { Popover } from '../components/Popover';
 import { Drawer } from '../components/Drawer';
 import { Fullscreen } from '../components/Fullscreen';
 import { Dialog } from '../components/Dialog';
 import { Toolbar } from '../components/Toolbar';
-import type { ModalConfig } from 'ricos-types';
+import type { Modal } from 'ricos-types';
 
 type Props = {
-  modalConfig: ModalConfig;
+  modalConfig: Modal;
 };
 
 const layoutMapper = {
@@ -22,7 +21,7 @@ const layoutMapper = {
 };
 
 export const ModalPopper = ({ modalConfig }: Props) => {
-  const { modalService } = useContext(ModalContext) || {};
+  const modalService = useContext(ModalContext) || {};
   const { languageDir, portal } = useContext(RicosContext);
 
   const closeModal = () => {
@@ -36,7 +35,7 @@ export const ModalPopper = ({ modalConfig }: Props) => {
   return ReactDOM.createPortal(
     <div dir={languageDir}>
       <ModalLayout closeModal={closeModal} modalConfig={modalConfig}>
-        <ModalComponent />
+        <ModalComponent {...(modalConfig.componentProps || {})} />
       </ModalLayout>
     </div>,
     portal

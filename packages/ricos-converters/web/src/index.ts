@@ -65,3 +65,5 @@ export const tiptapToDraft = (
   proseContent: JSONContent,
   shouldRevealConverterErrors = false
 ): DraftContent => pipe(proseContent, fromTiptap, normalize(!shouldRevealConverterErrors), toDraft);
+
+export * from './utils/text-direction';

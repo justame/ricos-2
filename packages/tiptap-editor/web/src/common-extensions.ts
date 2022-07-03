@@ -17,6 +17,7 @@ import {
   indent,
   anchor,
   ricosStyles,
+  overlay,
 } from 'wix-tiptap-extensions';
 
 export const commonExtensions: RicosExtension[] = [
@@ -37,4 +38,5 @@ export const commonExtensions: RicosExtension[] = [
   commonNodeCommands,
   anchor,
   ricosStyles,
+  overlay,
 ];

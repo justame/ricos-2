@@ -15,6 +15,7 @@ import React from 'react';
 import type { ExtensionProps, RicosExtension, RicosNodeExtension } from 'ricos-tiptap-types';
 import { isRicosNodeExtension } from 'ricos-tiptap-types';
 import { RicosNode } from '../components/RicosNode';
+import type { RicosServices } from 'ricos-types';
 import type {
   DecoratedNodeExtension,
   ExtensionAggregate,
@@ -85,7 +86,8 @@ export class ReactNodeExtension implements IReactNodeExtension {
     config: NodeConfig,
     extensions: RicosExtension[],
     ricosProps: ExtensionProps,
-    settings: Record<string, unknown>
+    settings: Record<string, unknown>,
+    services: RicosServices
   ) => NodeConfig;
 
   constructor(extension: RicosExtension, config?: NodeConfig) {
@@ -123,9 +125,19 @@ class RenderableNodeExtension extends ReactNodeExtension implements DecoratedNod
     };
   }
 
-  toTiptapExtension(extensions: ExtensionAggregate, ricosProps: ExtensionProps) {
+  toTiptapExtension(
+    extensions: ExtensionAggregate,
+    ricosProps: ExtensionProps,
+    services: RicosServices
+  ) {
     const ricosExtensions = extensions.getRicosExtensions();
-    const config = this.reconfigure(this.config, ricosExtensions, ricosProps, this.settings);
+    const config = this.reconfigure(
+      this.config,
+      ricosExtensions,
+      ricosProps,
+      this.settings,
+      services
+    );
     return Node.create(config);
   }
 }
@@ -147,7 +159,8 @@ export class HtmlNodeExtension implements IHtmlNodeExtension {
     config: NodeConfig,
     extensions: RicosExtension[],
     ricosProps: ExtensionProps,
-    settings: Record<string, unknown>
+    settings: Record<string, unknown>,
+    services: RicosServices
   ) => NodeConfig;
 
   groups: RicosExtension['groups'];
@@ -169,9 +182,19 @@ export class HtmlNodeExtension implements IHtmlNodeExtension {
     return this.ricosExtension;
   }
 
-  toTiptapExtension(extensions: ExtensionAggregate, ricosProps: ExtensionProps) {
+  toTiptapExtension(
+    extensions: ExtensionAggregate,
+    ricosProps: ExtensionProps,
+    services: RicosServices
+  ) {
     const ricosExtensions = extensions.getRicosExtensions();
-    const config = this.reconfigure(this.config, ricosExtensions, ricosProps, this.settings);
+    const config = this.reconfigure(
+      this.config,
+      ricosExtensions,
+      ricosProps,
+      this.settings,
+      services
+    );
     return Node.create(config);
   }
 }

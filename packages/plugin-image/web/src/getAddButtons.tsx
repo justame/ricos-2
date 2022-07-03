@@ -1,5 +1,5 @@
 import { InsertPluginIcon } from './icons';
-import { INSERT_PLUGIN_BUTTONS } from 'wix-rich-content-editor-common';
+import { INSERT_PLUGIN_BUTTONS, TOOLBARS } from 'wix-rich-content-editor-common';
 import type { AddButton } from 'ricos-types';
 import { IMAGE_TYPE } from './types';
 import { ImagePluginService } from './toolbar/imagePluginService';
@@ -45,6 +45,8 @@ export const getAddButtons = (config): AddButton[] => {
       label: INSERT_PLUGIN_BUTTONS.IMAGE,
       icon: InsertPluginIcon,
       tooltip: 'ImagePlugin_InsertButton_Tooltip',
+      toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
+
       command: (editorCommands, uploadContext) => {
         if (uploadContext) {
           const { uploadService, updateService } = uploadContext;

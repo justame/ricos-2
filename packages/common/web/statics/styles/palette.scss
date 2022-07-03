@@ -33,6 +33,7 @@ $focus-action-color: var(--ricos-focus-action-color, $action-color); // color 8
 $focus-action-color-tuple: var(--ricos-focus-action-color-tuple, $action-color-tuple);
 
 $ricos-p-color: var(--ricos-custom-p-color, unset);
+$ricos-p-background-color: var(--ricos-custom-p-background-color, unset);
 $ricos-p-color-fallbackToPrimary: var(--ricos-custom-p-color, $primary-text-color);
 $ricos-quote-border-width: var(--ricos-custom-quote-border-width, 3px);
 $ricos-quote-border-color: var(--ricos-custom-quote-border-color, $action-color);
@@ -71,7 +72,10 @@ $oneApp-whitebox-border-radius: var(--ricos-oneapp-whitebox-border-radius, 0px);
 $oneApp-text-color: var(--ricos-oneapp-text-color, $primary-text-color);
 $oneApp-primary-text-weight: var(--ricos-oneapp-primary-text-font-weight, unset);
 $oneApp-bgColor: var(--ricos-oneapp-bg-color-background-color, $background-color-container);
-$oneApp-secondary-bgColor: var(--ricos-oneapp-secondary-bg-color-background-color, $background-color-container);
+$oneApp-secondary-bgColor: var(
+  --ricos-oneapp-secondary-bg-color-background-color,
+  $background-color-container
+);
 $oneApp-coverImage-width: var(--ricos-oneapp-cover-image-width, unset);
 $oneApp-coverImage-height: var(--ricos-oneapp-cover-image-height, unset);
 $oneApp-coverImage-margin: var(--ricos-oneapp-cover-image-margin, unset);

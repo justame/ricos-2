@@ -1086,7 +1086,7 @@
     {
       "type": "BLOCKQUOTE",
       "attrs": {
-        "paragraphId": "074my20",
+        "paragraphId": "8h48n20",
         "textStyle": {
           "textAlignment": "AUTO"
         },
@@ -1714,6 +1714,7 @@
                   "textAlignment": "RIGHT"
                 },
                 "indentation": 0,
+                "dir": "rtl",
                 "id": "81"
               },
               "content": [
@@ -2023,7 +2024,7 @@
                 {
                   "type": "BLOCKQUOTE",
                   "attrs": {
-                    "paragraphId": "ki61363",
+                    "paragraphId": "dfyo663",
                     "textStyle": {
                       "textAlignment": "AUTO"
                     },

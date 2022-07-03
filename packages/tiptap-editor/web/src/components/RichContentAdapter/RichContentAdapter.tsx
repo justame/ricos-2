@@ -21,6 +21,7 @@ import {
   defaultMobileFontSizes,
   DOC_STYLE_TYPES,
   RICOS_LINK_TYPE,
+  RICOS_ANCHOR_TYPE,
   RICOS_MENTION_TYPE,
   RICOS_TEXT_COLOR_TYPE,
   RICOS_TEXT_HIGHLIGHT_TYPE,
@@ -163,6 +164,7 @@ export class RichContentAdapter implements TiptapAdapter {
       insertDecoration: (type, data) => {
         const decorationCommandMap = {
           [RICOS_LINK_TYPE]: data => ({ command: 'setLink', args: { link: data } }),
+          [RICOS_ANCHOR_TYPE]: data => ({ command: 'setAnchor', args: data.anchor }),
           [RICOS_TEXT_COLOR_TYPE]: data => ({ command: 'setColor', args: data.color }),
           [RICOS_TEXT_HIGHLIGHT_TYPE]: data => ({ command: 'setHighlight', args: data.color }),
           [RICOS_MENTION_TYPE]: data => ({ command: 'insertMention', args: data.mention }),

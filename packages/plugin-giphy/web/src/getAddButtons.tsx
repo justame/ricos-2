@@ -1,9 +1,12 @@
 import { InsertPluginIcon } from './icons';
-import { INSERT_PLUGIN_BUTTONS, decorateComponentWithProps } from 'wix-rich-content-editor-common';
+import {
+  INSERT_PLUGIN_BUTTONS,
+  decorateComponentWithProps,
+  TOOLBARS,
+} from 'wix-rich-content-editor-common';
 import type { AddButton } from 'ricos-types';
-import { DEFAULTS } from './constants';
+import { DEFAULTS, gifModals } from './constants';
 import InsertModal from './modals/InsertModal';
-import { gifModals } from './types';
 
 export const getAddButtons = (config): AddButton[] => {
   return [
@@ -12,6 +15,7 @@ export const getAddButtons = (config): AddButton[] => {
       label: INSERT_PLUGIN_BUTTONS.GIF,
       icon: InsertPluginIcon,
       tooltip: 'GiphyPlugin_InsertButton_Tooltip',
+      toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
       command: editorCommands => true,
       modal: {
         id: gifModals.insert,
@@ -19,7 +23,6 @@ export const getAddButtons = (config): AddButton[] => {
           giphySdkApiKey: config?.giphySdkApiKey,
           componentData: DEFAULTS,
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'Gif_plugin_search_tags',

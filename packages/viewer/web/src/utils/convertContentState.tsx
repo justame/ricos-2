@@ -118,13 +118,16 @@ const getBlocks = (
 
         const nodeStyle = documentStyle?.[style === 'text' ? DOC_STYLE_TYPES.P : style];
         const parsedNodeStyle = kebabToCamelObjectKeys(nodeStyle);
-        const content = isEmpty(nodeStyle) ? (
-          _child
-        ) : (
-          <span className={nodeStyle.color && styles.overrideLinkColor} style={parsedNodeStyle}>
-            {_child}
-          </span>
-        );
+        let content = _child;
+        if (style === 'text' || Object.values(DOC_STYLE_TYPES).includes(style)) {
+          content = isEmpty(nodeStyle) ? (
+            <span>{content}</span>
+          ) : (
+            <span className={nodeStyle.color && styles.overrideLinkColor} style={parsedNodeStyle}>
+              {content}
+            </span>
+          );
+        }
 
         const inner = (
           <React.Fragment key={blockProps.keys[i]}>

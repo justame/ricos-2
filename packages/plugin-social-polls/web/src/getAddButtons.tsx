@@ -1,5 +1,9 @@
 import { InsertPluginIcon } from './assets/icons';
-import { INSERT_PLUGIN_BUTTONS, decorateComponentWithProps } from 'wix-rich-content-editor-common';
+import {
+  INSERT_PLUGIN_BUTTONS,
+  decorateComponentWithProps,
+  TOOLBARS,
+} from 'wix-rich-content-editor-common';
 import type { AddButton } from 'ricos-types';
 import { DEFAULT_COMPONENT_DATA, MEMBER_ROLES } from './defaults';
 import InsertModal from './components/modals/InsertModal';
@@ -16,6 +20,7 @@ export const getAddButtons = (config): AddButton[] => {
       label: INSERT_PLUGIN_BUTTONS.POLLS,
       icon: InsertPluginIcon,
       tooltip: 'Poll_InsertPoll_Tooltip',
+      toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
       command: editorCommands => {
         return true;
       },
@@ -25,7 +30,6 @@ export const getAddButtons = (config): AddButton[] => {
           componentData,
           pluginId: POLL_TYPE,
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'Poll_plugin_search_tags',

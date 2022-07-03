@@ -71,10 +71,15 @@ export const blockquote: RicosExtension = {
       },
 
       renderHTML({ HTMLAttributes }) {
+        const attrs = mergeAttributes(this.options.HTMLAttributes, HTMLAttributes);
+        const textAlignment = attrs?.textStyle?.textAlignment;
+        const shouldAddDir =
+          textAlignment === TextStyle_TextAlignment.LEFT ||
+          textAlignment === TextStyle_TextAlignment.RIGHT;
         return [
           'blockquote',
-          mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
-          0,
+          attrs,
+          ['span', { ...(shouldAddDir ? { dir: 'auto' } : {}) }, 0],
         ] as DOMOutputSpec;
       },
 

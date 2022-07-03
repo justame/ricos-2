@@ -1,4 +1,8 @@
-import { INSERT_PLUGIN_BUTTONS, decorateComponentWithProps } from 'wix-rich-content-editor-common';
+import {
+  INSERT_PLUGIN_BUTTONS,
+  decorateComponentWithProps,
+  TOOLBARS,
+} from 'wix-rich-content-editor-common';
 import type { AddButton } from 'ricos-types';
 import { EventIcon, ProductIcon, BookingIcon } from './icons';
 import { verticalEmbedModals } from './constants';
@@ -12,14 +16,14 @@ export const getAddButtons = (config): AddButton[] => {
       label: INSERT_PLUGIN_BUTTONS.EVENTS,
       icon: EventIcon,
       tooltip: 'EventsPlugin_InsertButton_Tooltip',
+      toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
       command: editorCommands => true,
       modal: {
         id: verticalEmbedModals.insert,
         Component: decorateComponentWithProps(InsertModal, {
-          verticalsApi: config.verticalsApi,
+          verticalsApi: config?.verticalsApi,
           componentData: { type: 'event' },
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'Events_plugin_search_tags',
@@ -31,6 +35,7 @@ export const getAddButtons = (config): AddButton[] => {
       label: INSERT_PLUGIN_BUTTONS.BOOKINGS,
       icon: BookingIcon,
       tooltip: 'BookingsPlugin_InsertButton_Tooltip',
+      toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
       command: editorCommands => true,
       modal: {
         id: verticalEmbedModals.insert,
@@ -38,7 +43,6 @@ export const getAddButtons = (config): AddButton[] => {
           ...config,
           componentData: { type: 'booking' },
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'Bookings_plugin_search_tags',
@@ -50,6 +54,7 @@ export const getAddButtons = (config): AddButton[] => {
       label: INSERT_PLUGIN_BUTTONS.STORES,
       icon: ProductIcon,
       tooltip: 'StoresPlugin_InsertButton_Tooltip',
+      toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
       command: editorCommands => true,
       modal: {
         id: verticalEmbedModals.insert,
@@ -57,7 +62,6 @@ export const getAddButtons = (config): AddButton[] => {
           ...config,
           componentData: { type: 'product' },
         }),
-        layout: 'popover',
       },
       menuConfig: {
         tags: 'Stores_plugin_search_tags',

@@ -13,7 +13,7 @@
 	"UploadAudio_Error_Unsupported_Bit_Rate": "この音楽ファイルは対応するビットレートではないため、アップロードできませんでした。別のファイルをアップロードしてください。",
 	"SoundCloudUploadModal_Input_Placeholder": "例：https://soundcloud.com/example",
 	"VideoPlugin_Settings_Header": "動画",
-	"ButtonModal_Nofollow_Tags": "Google にこのリンクを無視するよう指示（ nofollow タグ）",
+	"ButtonModal_Nofollow_Tags": "Google にリンクを無視するよう指示（nofollow タグ）",
 	"Embed_Vertical_Bookings_Title": "サービスを追加",
 	"AlignObject_Left_Tooltip": "左揃え",
 	"GalleryPlugin_Layout_Select_Tooltip": "レンガ型レイアウト",

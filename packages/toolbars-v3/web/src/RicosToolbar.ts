@@ -4,12 +4,12 @@ import type { EditorCommands } from 'wix-rich-content-common';
 import EventEmitter from './lib/EventEmitter';
 import type { Content } from './Content';
 import { ToolbarItem } from './ToolbarItemCreator';
-import type { Styles } from 'ricos-styles';
+import type { AmbientStyles } from 'ricos-types';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ToolbarItemCreator = (
   content: Content<unknown>,
   editorCommands: EditorCommands,
-  styles?: Styles
+  styles?: AmbientStyles
 ) => ToolbarItem;
 
 type RicosToolbarProps = {
@@ -17,7 +17,7 @@ type RicosToolbarProps = {
   content: Content<unknown>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   editorCommands: any;
-  styles?: Styles;
+  styles?: AmbientStyles;
 };
 
 export class RicosToolbar extends EventEmitter {
@@ -27,7 +27,7 @@ export class RicosToolbar extends EventEmitter {
 
   private editorCommands;
 
-  private styles?: Styles;
+  private styles?: AmbientStyles;
 
   private toolbarItems: ToolbarItem[] = [];
 

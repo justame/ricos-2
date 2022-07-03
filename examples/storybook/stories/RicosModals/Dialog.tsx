@@ -11,7 +11,7 @@ const DialogWrapper = () => (
 );
 
 const Dialog = () => {
-  const { modalService } = useContext(ModalContext) || {};
+  const modalService = useContext(ModalContext) || {};
 
   const openModal = () => {
     modalService.openModal({

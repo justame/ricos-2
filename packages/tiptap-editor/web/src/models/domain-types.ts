@@ -1,11 +1,16 @@
 import type { AnyExtension, Extension, Mark, Node } from '@tiptap/core';
 import type { ComponentType } from 'react';
 import type { ExtensionProps, Group, NodeHocDescriptor, RicosExtension } from 'ricos-tiptap-types';
+import type { RicosServices } from 'ricos-types';
 
 export const DEFAULT_PRIORITY = 100;
 
 export interface ConvertableExtension {
-  toTiptapExtension(extensions: ExtensionAggregate, ricosProps: ExtensionProps): AnyExtension;
+  toTiptapExtension(
+    extensions: ExtensionAggregate,
+    ricosProps: ExtensionProps,
+    services: RicosServices
+  ): AnyExtension;
 }
 
 export interface SortableExtension {
@@ -55,7 +60,8 @@ export interface IFunctionalExtension
   type: 'extension';
   getNodeHocDescriptor(
     extensions: ExtensionAggregate,
-    ricosProps: ExtensionProps
+    ricosProps: ExtensionProps,
+    services: RicosServices
   ): NodeHocDescriptor;
   getRicosExtension: () => RicosExtension;
 }
@@ -77,19 +83,32 @@ export type ReactNodeExtensionAggregate = {
 };
 
 export type ConvertableNodeExtensionAggregate = {
-  toTiptapExtensions: (extensions: ExtensionAggregate, ricosProps: ExtensionProps) => Node[];
+  toTiptapExtensions: (
+    extensions: ExtensionAggregate,
+    ricosProps: ExtensionProps,
+    services: RicosServices
+  ) => Node[];
 };
 
 export type FunctionalExtensionAggregate = {
-  toTiptapExtensions: (extensions: ExtensionAggregate, ricosProps: ExtensionProps) => Extension[];
+  toTiptapExtensions: (
+    extensions: ExtensionAggregate,
+    ricosProps: ExtensionProps,
+    services: RicosServices
+  ) => Extension[];
   getNodeHocComposer: (
     extensions: ExtensionAggregate,
-    ricosProps: ExtensionProps
+    ricosProps: ExtensionProps,
+    services: RicosServices
   ) => NodeHocComposer;
 };
 
 export type MarkExtensionAggregate = {
-  toTiptapExtensions: (extensions: ExtensionAggregate, ricosProps: ExtensionProps) => Mark[];
+  toTiptapExtensions: (
+    extensions: ExtensionAggregate,
+    ricosProps: ExtensionProps,
+    services: RicosServices
+  ) => Mark[];
 };
 
 export type ExtensionAggregate = {

@@ -5,8 +5,7 @@ import type { Content } from '../Content';
 import { RicosToolbar } from '../RicosToolbar';
 import { ToolbarItemCreator } from '../ToolbarItemCreator';
 import type { Node } from 'prosemirror-model';
-import type { IToolbarItemConfigTiptap } from '../types';
-import type { Styles } from 'ricos-styles';
+import type { AmbientStyles, IToolbarItemConfigTiptap } from 'ricos-types';
 
 interface RicosToolbarProps {
   content: Content<Node[]>;
@@ -18,7 +17,7 @@ interface RicosToolbarProps {
   maxWidth?: number;
   // eslint-disable-next-line @typescript-eslint/ban-types
   toolbarItemsRenders: Record<string, Function>;
-  styles?: Styles;
+  styles?: AmbientStyles;
 }
 interface RicosToolbarState {}
 

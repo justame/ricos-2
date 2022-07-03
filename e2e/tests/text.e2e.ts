@@ -5,13 +5,9 @@ import { DEFAULT_MOBILE_WIDTHS } from './settings';
 const getTestPerfix = useTiptap => `[${useTiptap ? 'tiptap' : 'draft'}]`;
 
 const changeTextColor = (title: string, useTiptap, isMobile = false) => {
-  if (useTiptap) {
-    //TIPTAP TODO - AssertionError: Timed out retrying after 4000ms: Expected to find element: `[data-hook="floating-formatting-toolbar"] [data-hook=TextColorButton]`, but never found it.
-    return;
-  }
   const prefix = `${getTestPerfix(useTiptap)} ${title}`;
   const percyParam = isMobile ? DEFAULT_MOBILE_WIDTHS : {};
-  cy.loadRicosEditorAndViewer('plain')
+  cy.loadRicosEditor('plain')
     .setTextStyle(INLINE_TOOLBAR_BUTTONS.COLOR, [20, 15])
     .openCustomColorModal();
   cy.percySnapshot(prefix + ' - custom color modal', percyParam);
@@ -24,8 +20,7 @@ const changeTextColor = (title: string, useTiptap, isMobile = false) => {
   }
 };
 
-// [true, false].forEach(useTiptap => {
-[false].forEach(useTiptap => {
+[true, false].forEach(useTiptap => {
   describe(`${getTestPerfix(useTiptap)} text`, () => {
     beforeEach(() => {
       cy.switchToDesktop();
@@ -38,7 +33,7 @@ const changeTextColor = (title: string, useTiptap, isMobile = false) => {
     });
 
     it('allow to enter text', () => {
-      cy.loadRicosEditorAndViewer()
+      cy.loadRicosEditor()
         .enterParagraphs([
           'Leverage agile frameworks',
           'to provide a robust synopsis for high level overviews.',
@@ -49,14 +44,12 @@ const changeTextColor = (title: string, useTiptap, isMobile = false) => {
     });
 
     it('allow to change text color', function () {
-      if (!useTiptap) {
-        changeTextColor(this.test.title, useTiptap);
-      }
+      changeTextColor(this.test.title, useTiptap);
     });
 
     it('allow to apply inline styles and links', () => {
       if (useTiptap) {
-        //TIPTAP TODO -      AssertionError: Timed out retrying after 4000ms: Expected to find element: `[data-hook="floating-formatting-toolbar"] [data-hook=LineSpacingButton]`, but never found it.
+        //TIPTAP TODO - Expected to find element: `.ReactModalPortal`, but never found it.
         return;
       }
       cy.loadRicosEditor('plain')
@@ -119,11 +112,7 @@ const changeTextColor = (title: string, useTiptap, isMobile = false) => {
     // });
 
     it('allow to enter hashtag with link', () => {
-      if (useTiptap) {
-        //TIPTAP TODO -      AssertionError: Timed out retrying after 4000ms: Expected to find element: `[data-hook="floating-formatting-toolbar"] [data-hook=LinkButton]`, but never found it.
-        return;
-      }
-      cy.loadRicosEditorAndViewer()
+      cy.loadRicosEditor()
         .enterParagraphs([
           '#wix.com wix.com #this_is_not_a_link #will_be_a_link thisislink#youknow.com ',
         ])
@@ -140,7 +129,7 @@ const changeTextColor = (title: string, useTiptap, isMobile = false) => {
 
     it('allow to create lists', () => {
       if (useTiptap) {
-        //TIPTAP TODO -      AssertionError: Timed out retrying after 4000ms: Expected to find element: `[data-hook="floating-formatting-toolbar"] [data-hook=textBlockStyleButton_Numberedlist]`, but never found it.
+        //TIPTAP TODO - Expected to find element: `[data-hook="floating-formatting-toolbar"] [data-hook=textBlockStyleButton_Bulletedlist]`, but never found it.
         return;
       }
       cy.loadRicosEditorAndViewer('plain')
@@ -151,12 +140,8 @@ const changeTextColor = (title: string, useTiptap, isMobile = false) => {
     });
 
     it('open link toolbar (InlinePluginToolbar)', () => {
-      if (useTiptap) {
-        //TIPTAP TODO -     AssertionError: Timed out retrying after 4000ms: Expected to find element: `[data-hook="floating-formatting-toolbar"] [data-hook=LinkButton]`, but never found it.
-        return;
-      }
       // set link
-      cy.loadRicosEditorAndViewer('plain')
+      cy.loadRicosEditor('plain')
         .setLink([0, 10], 'https://www.wix.com/')
         // set cursor on link
         .setEditorSelection(5, 0)
@@ -180,10 +165,6 @@ const changeTextColor = (title: string, useTiptap, isMobile = false) => {
     });
 
     it('should insert custom link', () => {
-      if (useTiptap) {
-        //TIPTAP TODO - AssertionError: Timed out retrying after 4000ms: Expected to find element: `[data-hook="floating-formatting-toolbar"] [data-hook=LinkButton]`, but never found it.
-        return;
-      }
       const testAppConfig = {
         ...usePluginsConfig({
           link: {
@@ -192,7 +173,7 @@ const changeTextColor = (title: string, useTiptap, isMobile = false) => {
         }),
       };
       const selection: [number, number] = [0, 11];
-      cy.loadRicosEditorAndViewer('empty', testAppConfig)
+      cy.loadRicosEditor('empty', testAppConfig)
         .enterParagraphs(['Custom link.'])
         .setTextStyle(INLINE_TOOLBAR_BUTTONS.LINK, selection);
       cy.percySnapshot();
@@ -206,24 +187,22 @@ const changeTextColor = (title: string, useTiptap, isMobile = false) => {
           },
         }),
       };
-      cy.loadRicosEditorAndViewer('empty', testAppConfig).enterParagraphs([
-        'www.wix.com\nwww.wix.com ',
-      ]);
+      cy.loadRicosEditor('empty', testAppConfig).enterParagraphs(['www.wix.com\nwww.wix.com ']);
       cy.percySnapshot();
     });
 
     it('should break the link when enter new soft line', () => {
-      cy.loadRicosEditorAndViewer('empty').enterParagraphs(['www.thisIs\nseperateLink.com ']);
+      cy.loadRicosEditor('empty').enterParagraphs(['www.thisIs\nseperateLink.com ']);
       cy.percySnapshot();
     });
 
     it('should paste plain text', () => {
-      cy.loadRicosEditorAndViewer().focusEditor().paste('This is pasted text');
+      cy.loadRicosEditor().focusEditor().paste('This is pasted text');
       cy.percySnapshot();
     });
 
     it('should paste html correctly', () => {
-      cy.loadRicosEditorAndViewer().focusEditor().paste(
+      cy.loadRicosEditor().focusEditor().paste(
         // eslint-disable-next-line max-len
         `<meta charset='utf-8'><span style="color: rgb(32, 33, 34); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">called<span> </span></span><a href="https://en.wikipedia.org/wiki/Anchor_text" title="Anchor text" style="text-decoration: none; color: rgb(11, 0, 128); background: none rgb(255, 255, 255); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px;">anchor text</a><span style="color: rgb(32, 33, 34); font-family: sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">.<span> </span></span>`,
         true
@@ -232,7 +211,7 @@ const changeTextColor = (title: string, useTiptap, isMobile = false) => {
     });
 
     it('allow to enter tab character', () => {
-      cy.loadRicosEditorAndViewer()
+      cy.loadRicosEditor()
         .focusEditor()
         .tab()
         .enterParagraphs(['How to eat healthy is a good question.'])
@@ -241,7 +220,7 @@ const changeTextColor = (title: string, useTiptap, isMobile = false) => {
     });
 
     it('allow to enter tab character and delete it using shift+tab', () => {
-      cy.loadRicosEditorAndViewer()
+      cy.loadRicosEditor()
         .focusEditor()
         .tab()
         .moveCursorToStart()
@@ -254,10 +233,10 @@ const changeTextColor = (title: string, useTiptap, isMobile = false) => {
 
     it('Enter click should create new block with the same alignment', () => {
       if (useTiptap) {
-        //TIPTAP TODO - AssertionError: Timed out retrying after 4000ms: Expected to find element: `[data-hook="floating-formatting-toolbar"] [data-hook=textDropDownButton_Alignment]`, but never found it.
+        //TIPTAP TODO - Expected to find element: `[data-hook="floating-formatting-toolbar"] [data-hook=textAlignmentButton_center]`, but never found it.
         return;
       }
-      cy.loadRicosEditorAndViewer()
+      cy.loadRicosEditor()
         .enterParagraphs(['Hey, next line should be centered!'])
         .setTextStyle(INLINE_TOOLBAR_BUTTONS.BOLD, [0, 33])
         .setAlignment(INLINE_TOOLBAR_BUTTONS.TEXT_ALIGN_CENTER)
@@ -270,12 +249,12 @@ const changeTextColor = (title: string, useTiptap, isMobile = false) => {
     });
 
     it('esc key event should make editor blurred', () => {
-      cy.loadRicosEditorAndViewer().enterParagraphs(['Magic! I am blurred.']).type('{esc}');
+      cy.loadRicosEditor().enterParagraphs(['Magic! I am blurred.']).type('{esc}');
       cy.percySnapshot();
     });
 
     it('should enter link and further text in current block has no inline style', () => {
-      cy.loadRicosEditorAndViewer()
+      cy.loadRicosEditor()
         .enterParagraphs(['wix.com '])
         .enterParagraphs(['no inline style'])
         .blurEditor();
@@ -283,7 +262,7 @@ const changeTextColor = (title: string, useTiptap, isMobile = false) => {
     });
 
     it('should enter link and further text in next block has no inline style', () => {
-      cy.loadRicosEditorAndViewer()
+      cy.loadRicosEditor()
         .enterParagraphs(['wix.com'])
         .type('{enter}')
         .enterParagraphs(['no inline style'])
@@ -296,8 +275,8 @@ const changeTextColor = (title: string, useTiptap, isMobile = false) => {
         //TIPTAP TODO - load content in example app, see that video never loads
         return;
       }
-      cy.loadRicosEditorAndViewer('content-with-video');
-      cy.waitForMediaToLoad();
+      cy.loadRicosEditor('content-with-video');
+      cy.waitForMediaToLoad(1); //editor only
       cy.setEditorSelection(0, 5);
       cy.getInlineButton(INLINE_TOOLBAR_BUTTONS.LINK).should('not.be.disabled');
       cy.percySnapshot();
@@ -309,7 +288,7 @@ const changeTextColor = (title: string, useTiptap, isMobile = false) => {
 
     context('indentation', () => {
       it('allow to apply indent on a single block with inline styling', () => {
-        cy.loadRicosEditorAndViewer('plain', usePlugins(plugins.textPlugins))
+        cy.loadRicosEditor('plain', usePlugins(plugins.textPlugins))
           .setTextStyle(INLINE_TOOLBAR_BUTTONS.BOLD, [40, 10])
           .setTextStyle(INLINE_TOOLBAR_BUTTONS.UNDERLINE, [10, 5])
           .setTextStyle(INLINE_TOOLBAR_BUTTONS.ITALIC, [20, 5])
@@ -327,7 +306,7 @@ const changeTextColor = (title: string, useTiptap, isMobile = false) => {
       });
 
       it('allow to apply indent on multiple text blocks', () => {
-        cy.loadRicosEditorAndViewer('text-blocks', usePlugins(plugins.textPlugins))
+        cy.loadRicosEditor('text-blocks', usePlugins(plugins.textPlugins))
           .increaseIndent([0, 550])
           .increaseIndent([0, 550])
           .increaseIndent([0, 550])
@@ -338,7 +317,7 @@ const changeTextColor = (title: string, useTiptap, isMobile = false) => {
       });
 
       it('allow to apply indent only on text blocks', () => {
-        cy.loadRicosEditorAndViewer('non-text-only-blocks', usePlugins(plugins.textPlugins))
+        cy.loadRicosEditor('non-text-only-blocks', usePlugins(plugins.textPlugins))
           .increaseIndent([0, 550])
           .increaseIndent([0, 550])
           .increaseIndent([0, 550])
@@ -348,7 +327,7 @@ const changeTextColor = (title: string, useTiptap, isMobile = false) => {
       });
 
       it('allow to apply indent and delete it when clicking backspace where cursor is at start of block', () => {
-        cy.loadRicosEditorAndViewer('', usePlugins(plugins.textPlugins))
+        cy.loadRicosEditor('', usePlugins(plugins.textPlugins))
           .enterParagraphs(['Text should have depth 1.'])
           .increaseIndent([0, 20])
           .increaseIndent([0, 20])
@@ -380,7 +359,7 @@ const changeTextColor = (title: string, useTiptap, isMobile = false) => {
       cy.toggleTiptap(useTiptap);
     });
 
-    after(() => {
+    afterEach(() => {
       cy.switchToDraft();
     });
 

@@ -11,7 +11,7 @@ const DrawerWrapper = () => (
 );
 
 const Drawer = () => {
-  const { modalService } = useContext(ModalContext) || {};
+  const modalService = useContext(ModalContext) || {};
 
   const openDrawer = placement => {
     modalService.openModal({

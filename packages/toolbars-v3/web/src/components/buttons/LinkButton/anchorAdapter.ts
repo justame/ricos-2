@@ -24,7 +24,7 @@ export const getAnchorableNodesQuery = (
   const selectedNodeId = editorCommands.getSelection().startKey;
 
   const anchorableNodes: Node[] = contentExtractor
-    .filter(and([isAnchorableNode, isEmptyTextNodes, not(isSelectedNode(selectedNodeId))]))
+    .filter(and([isAnchorableNode, not(isEmptyTextNodes), not(isSelectedNode(selectedNodeId))]))
     .get();
 
   return anchorableNodes;

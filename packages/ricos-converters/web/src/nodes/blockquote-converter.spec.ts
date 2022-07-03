@@ -29,6 +29,7 @@ describe('Blockquote converter', () => {
       textStyle: {
         textAlignment: TextStyle_TextAlignment.LEFT,
       },
+      dir: 'ltr',
       paragraphId: 'bar',
     },
   };
