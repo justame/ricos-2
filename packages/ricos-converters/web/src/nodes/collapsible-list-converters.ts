@@ -17,7 +17,6 @@ export const collapsibleListConverter: TiptapNodeConverter = {
         id: node.id,
         ...node.collapsibleListData,
       },
-
       content: visit(node),
     }),
   },

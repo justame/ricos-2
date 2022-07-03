@@ -10,7 +10,7 @@ describe('bulletedListNode converter', () => {
       indentation: 2,
       id: '1',
     },
-    content: [] as [],
+    content: [],
   };
 
   const bulletedListNode: BulletedListNode = {
