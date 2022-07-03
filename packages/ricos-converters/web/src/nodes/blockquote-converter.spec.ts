@@ -1,5 +1,5 @@
-import type { BlockquoteNode, TextNode } from 'ricos-content';
-import { Node_Type, TextStyle_TextAlignment, Decoration_Type } from 'ricos-schema';
+import type { BlockquoteNode } from 'ricos-content';
+import { Decoration_Type, Node_Type, TextStyle_TextAlignment } from 'ricos-schema';
 import { ricosNodeVisitor, tiptapNodeVisitor } from '../tiptap-converters';
 import { blockquoteConverter } from './blockquote-converter';
 
@@ -32,6 +32,7 @@ describe('Blockquote converter', () => {
       paragraphId: 'bar',
     },
   };
+
   const blockquoteNode: BlockquoteNode = {
     type: Node_Type.BLOCKQUOTE,
     id: 'foo',
@@ -72,6 +73,7 @@ describe('Blockquote converter', () => {
     const actual = blockquoteConverter.toTiptap.convert(blockquoteNode, ricosNodeVisitor);
     expect(actual).toEqual(tiptapNode);
   });
+
   it('should convert TiptapNode to BlockquoteNode', () => {
     const actual = blockquoteConverter.fromTiptap.convert(tiptapNode, tiptapNodeVisitor);
     expect(actual).toEqual(blockquoteNode);
