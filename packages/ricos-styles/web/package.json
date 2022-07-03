@@ -1,6 +1,6 @@
 {
   "name": "ricos-styles",
-  "version": "8.71.35",
+  "version": "8.71.36",
   "author": {
     "name": "Aviv Maimon",
     "email": "avivm@wix.com"
@@ -35,13 +35,13 @@
   },
   "dependencies": {
     "fp-ts": "^2.11.0",
-    "ricos-common": "8.71.35",
-    "ricos-schema": "8.71.35",
-    "ricos-types": "8.71.35",
+    "ricos-common": "8.71.36",
+    "ricos-schema": "8.71.36",
+    "ricos-types": "8.71.36",
     "to-camel-case": "1.0.0"
   },
   "devDependencies": {
-    "ricos-content": "8.71.35"
+    "ricos-content": "8.71.36"
   },
   "unpkg": true,
   "publishConfig": {
