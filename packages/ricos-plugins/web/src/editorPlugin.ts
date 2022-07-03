@@ -61,7 +61,7 @@ export class EditorPlugin implements IEditorPlugin {
     return this.plugin.type;
   }
 
-  getTiptapExtensions(): RicosExtension[] {
+  getTiptapExtensions() {
     return (this.plugin as TiptapEditorPlugin).tiptapExtensions?.map(extension => ({
       ...extension,
       settings: this.getConfig(),

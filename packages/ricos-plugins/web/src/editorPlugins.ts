@@ -78,7 +78,7 @@ export class EditorPlugins implements IEditorPlugins {
     return toolbar;
   }
 
-  getTiptapExtensions(): RicosExtension[] {
+  getTiptapExtensions() {
     return compact(this.plugins.flatMap(plugin => plugin.getTiptapExtensions?.() || []));
   }
 
