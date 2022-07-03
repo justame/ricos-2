@@ -1,11 +1,11 @@
 import type { Node, Decoration_Type, Decoration, DocumentStyle } from 'ricos-schema';
 import { Node_Type } from 'ricos-schema';
-import type { RicosExtension } from 'ricos-tiptap-types';
-import type { Styles } from 'ricos-styles';
+import type { ExtensionProps, RicosExtension } from 'ricos-tiptap-types';
+import type { AmbientStyles, RicosServices } from 'ricos-types';
 import { DocumentStyle as RicosDocumentStyle } from 'ricos-styles';
 import { fromTiptapNode } from 'ricos-converters';
 import type { ParagraphNode, HeadingNode } from 'ricos-content';
-import type { Command, CommandProps } from '@tiptap/core';
+import type { Command, CommandProps, ExtensionConfig } from '@tiptap/core';
 
 declare module '@tiptap/core' {
   interface Commands {
@@ -14,7 +14,6 @@ declare module '@tiptap/core' {
        * returns decoration object from selected node according to ricos-styles
        */
       getStylesDecorationBySelectedNode: (
-        styles: Styles,
         decorationType: Decoration_Type
       ) => (props: CommandProps) => Decoration | undefined;
       /**
@@ -29,13 +28,29 @@ export const ricosStyles: RicosExtension = {
   type: 'extension' as const,
   groups: [],
   name: 'ricos-styles-commands',
+  reconfigure: (
+    config: ExtensionConfig,
+    _extensions: RicosExtension[],
+    _ricosProps: ExtensionProps,
+    _settings: Record<string, unknown>,
+    services: RicosServices
+  ) => {
+    return {
+      ...config,
+      addOptions() {
+        return {
+          styles: services.styles,
+        };
+      },
+    };
+  },
   createExtensionConfig() {
     return {
       name: this.name,
       addCommands() {
         return {
           getStylesDecorationBySelectedNode:
-            (styles: Styles, decorationType: Decoration_Type) =>
+            (decorationType: Decoration_Type) =>
             ({ state }) => {
               const { from, to } = state.selection;
               let node: Node | undefined;
@@ -46,7 +61,11 @@ export const ricosStyles: RicosExtension = {
                 }
               });
               return (
-                node && styles.getDecoration(node as ParagraphNode | HeadingNode, decorationType)
+                node &&
+                this.options.styles.getDecoration(
+                  node as ParagraphNode | HeadingNode,
+                  decorationType
+                )
               );
             },
           updateDocumentStyle:

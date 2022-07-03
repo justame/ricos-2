@@ -1,6 +1,6 @@
 //TODO: understand
 import type { ToolbarContextType } from 'ricos-context';
-import type { TranslationFunction, IToolbarItem, TiptapCommand } from 'ricos-types';
+import type { TranslationFunction, IToolbarItem, AmbientStyles, TiptapCommand } from 'ricos-types';
 
 type Modify<T, R> = Omit<T, keyof R> & R;
 

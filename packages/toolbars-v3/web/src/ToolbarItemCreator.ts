@@ -1,13 +1,12 @@
 import type { IToolbarItemConfig } from './types';
 import { Content } from './Content';
 import EventEmitter from './lib/EventEmitter';
-import type { Styles } from 'ricos-styles';
-import type { IToolbarItem } from 'ricos-types';
+import type { AmbientStyles, IToolbarItem } from 'ricos-types';
 
 export class ToolbarItemCreator {
   static create(toolbarItemConfig: IToolbarItemConfig) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (content: Content<unknown>, editorCommands: any, styles?: Styles) => {
+    return (content: Content<unknown>, editorCommands: any, styles?: AmbientStyles) => {
       return new ToolbarItem(toolbarItemConfig, content, editorCommands, styles);
     };
   }
@@ -32,7 +31,7 @@ export class ToolbarItem extends EventEmitter {
     private content: Content<unknown>,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private editorCommands: any,
-    private styles?: Styles
+    private styles?: AmbientStyles
   ) {
     super();
     this.toolbarItemConfig = toolbarItemConfig;

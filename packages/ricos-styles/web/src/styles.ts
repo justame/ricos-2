@@ -7,7 +7,7 @@ import TextualTheme from './textual-theme/textual-theme';
 import { TextNodeTransformer } from './text-node-transformer';
 import type { ParagraphNode, HeadingNode } from 'ricos-content';
 
-export default class RicosStyles implements Styles {
+export class RicosStyles implements Styles {
   private theme!: TextualTheme;
 
   private documentStyle!: DocumentStyle;

@@ -1,3 +1,7 @@
+import type { IEditorPlugins } from './editorPluginTypes';
+import type { EventRegistrar, EventSubscriptor } from './events';
+import type { AmbientStyles } from './styles';
+
 export type {
   ComponentData,
   RicosContentBlock,
@@ -25,4 +29,11 @@ export * from './key-types';
 export * from './RicosTypes';
 export * from './events';
 export * from './toolbarTypes';
+export * from './styles';
 export * from './editorPluginTypes';
+
+export type RicosServices = {
+  events: EventRegistrar & EventSubscriptor;
+  styles: AmbientStyles;
+  plugins: IEditorPlugins;
+};

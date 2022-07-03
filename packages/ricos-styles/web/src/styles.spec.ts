@@ -3,7 +3,7 @@ import type { DocumentStyle } from 'ricos-schema';
 import { Node_Type } from 'ricos-schema';
 import { Decoration_Type } from 'ricos-types';
 import { decorations, customStyle } from './tests/test-cases';
-import Styles from './styles';
+import { RicosStyles } from './styles';
 import type { HeadingNode, ParagraphNode } from 'ricos-content';
 
 describe('Styles', () => {
@@ -18,7 +18,7 @@ describe('Styles', () => {
         h1: { ...customStyle, color: '#888888' },
       },
     };
-    const styles = new Styles().setTheme(theme).setDocumentStyle(documentStyle);
+    const styles = new RicosStyles().setTheme(theme).setDocumentStyle(documentStyle);
     const headingNode = {
       type: Node_Type.HEADING,
       headingData: { level: 1 },
@@ -46,7 +46,7 @@ describe('Styles', () => {
         p: { ...customStyle, color: '#888888' },
       },
     };
-    const styles = new Styles().setTheme(theme).setDocumentStyle(documentStyle);
+    const styles = new RicosStyles().setTheme(theme).setDocumentStyle(documentStyle);
     const paragraphNode = {
       type: Node_Type.PARAGRAPH,
       id: '',
@@ -65,7 +65,7 @@ describe('Styles', () => {
   it('Should initialize styles with empty documentStyle & theme', () => {
     const documentStyle = {};
     const theme: RicosTheme = {};
-    const styles = new Styles().setTheme(theme).setDocumentStyle(documentStyle);
+    const styles = new RicosStyles().setTheme(theme).setDocumentStyle(documentStyle);
     const headingNode = {
       type: Node_Type.HEADING,
       headingData: { level: 1 },
@@ -85,7 +85,9 @@ describe('Styles', () => {
         p: {},
       },
     };
-    const styles = new Styles().setTheme(theme).setDocumentStyle(documentStyle as DocumentStyle);
+    const styles = new RicosStyles()
+      .setTheme(theme)
+      .setDocumentStyle(documentStyle as DocumentStyle);
     const headingNode = {
       type: Node_Type.HEADING,
       headingData: { level: 1 },

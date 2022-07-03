@@ -9,6 +9,7 @@ import type {
   RicosExtensionConfig,
 } from 'ricos-tiptap-types';
 import { isRicosFunctionalExtension } from 'ricos-tiptap-types';
+import type { RicosServices } from 'ricos-types';
 import type { ExtensionAggregate, IFunctionalExtension } from './domain-types';
 import { DEFAULT_PRIORITY } from './domain-types';
 
@@ -37,7 +38,8 @@ export class FunctionalExtension implements IFunctionalExtension {
     config: RicosExtensionConfig,
     extensions: RicosExtension[],
     props: ExtensionProps,
-    settings: Record<string, unknown>
+    settings: Record<string, unknown>,
+    services: RicosServices
   ) => RicosExtensionConfig;
 
   constructor(extension: RicosExtension, config?: RicosExtensionConfig) {
@@ -63,22 +65,32 @@ export class FunctionalExtension implements IFunctionalExtension {
     return this.ricosExtension;
   }
 
-  toTiptapExtension(extensions: ExtensionAggregate, ricosProps: ExtensionProps) {
+  toTiptapExtension(
+    extensions: ExtensionAggregate,
+    ricosProps: ExtensionProps,
+    services: RicosServices
+  ) {
     const config = this.reconfigure(
       this.config,
       extensions.getRicosExtensions(),
       ricosProps,
-      this.settings
+      this.settings,
+      services
     );
     return Extension.create(config);
   }
 
-  getNodeHocDescriptor(extensions: ExtensionAggregate, ricosProps: ExtensionProps) {
+  getNodeHocDescriptor(
+    extensions: ExtensionAggregate,
+    ricosProps: ExtensionProps,
+    services: RicosServices
+  ) {
     const config = this.reconfigure(
       this.config,
       extensions.getRicosExtensions(),
       ricosProps,
-      this.settings
+      this.settings,
+      services
     );
     return config.addNodeHoc?.() || DEFAULT_HOC_DESCRTIPTOR;
   }

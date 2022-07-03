@@ -1,11 +1,5 @@
 import { identity } from 'fp-ts/function';
-import type {
-  BasicKeyCombination,
-  EditorCommands,
-  EventRegistrar,
-  EventPublisher,
-  EventData,
-} from 'ricos-types';
+import type { BasicKeyCombination, EditorCommands, EventRegistrar } from 'ricos-types';
 import { RICOS_DIVIDER_TYPE } from 'wix-rich-content-common';
 import { EditorKeyboardShortcuts } from './editor-keyboard-shortcuts';
 

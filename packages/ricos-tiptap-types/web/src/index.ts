@@ -22,6 +22,7 @@ import type {
   RicosEditorAPI,
   TextAlignment,
   TranslationFunction,
+  RicosServices,
 } from 'ricos-types';
 import type { ComponentData } from 'wix-rich-content-common';
 
@@ -91,7 +92,8 @@ export type RicosNodeExtension = {
     config: NodeConfig,
     extensions: RicosExtension[],
     ricosProps: ExtensionProps,
-    settings: Record<string, unknown>
+    settings: Record<string, unknown>,
+    services: RicosServices
   ) => NodeConfig;
   createExtensionConfig: ({
     textblockTypeInputRule,
@@ -120,7 +122,8 @@ export type RicosMarkExtension = {
     config: MarkConfig,
     extensions: RicosExtension[],
     ricosProps: ExtensionProps,
-    settings: Record<string, unknown>
+    settings: Record<string, unknown>,
+    services: RicosServices
   ) => MarkConfig;
   createExtensionConfig: ({
     textblockTypeInputRule,
@@ -148,7 +151,8 @@ export type RicosFunctionalExtension = {
     config: RicosExtensionConfig,
     extensions: RicosExtension[],
     ricosProps: ExtensionProps,
-    settings: Record<string, unknown>
+    settings: Record<string, unknown>,
+    services: RicosServices
   ) => RicosExtensionConfig;
   createExtensionConfig: ({
     mergeAttributes,

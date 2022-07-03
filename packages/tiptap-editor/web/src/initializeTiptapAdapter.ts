@@ -3,6 +3,7 @@ import type { RicosEditorProps } from 'ricos-common';
 import { draftToTiptap } from 'ricos-converters';
 import type { EditorPlugins } from 'ricos-plugins';
 import type { ExtensionProps } from 'ricos-tiptap-types';
+import type { AmbientStyles, EventRegistrar, RicosServices } from 'ricos-types';
 import { getEmptyDraftContent } from 'wix-rich-content-editor-common';
 import { commonExtensions } from './common-extensions';
 import { RichContentAdapter } from './components/RichContentAdapter/RichContentAdapter';
@@ -29,19 +30,23 @@ const extractExtensionProps = (props: RicosEditorProps): ExtensionProps => {
   };
 };
 
-const extractExtensions = (plugins: EditorPlugins, props: RicosEditorProps): Extensions => {
-  const extensions = plugins.getTiptapExtensions();
-  return Extensions.of([...extensions, ...commonExtensions], extractExtensionProps(props));
+const extractExtensions = (services: RicosServices, props: RicosEditorProps): Extensions => {
+  const extensions = services.plugins.getTiptapExtensions();
+  return Extensions.of(
+    [...extensions, ...commonExtensions],
+    extractExtensionProps(props),
+    services
+  );
 };
 
 export const initializeTiptapAdapter = (
   ricosEditorProps: RicosEditorProps,
-  plugins: EditorPlugins
+  services: RicosServices
 ) => {
   const content =
     ricosEditorProps.injectedContent || ricosEditorProps.content || getEmptyDraftContent();
   const tiptapContent = draftToTiptap(content);
-  const extensions = extractExtensions(plugins, ricosEditorProps);
+  const extensions = extractExtensions(services, ricosEditorProps);
   const allExtensions = extensions.concat(coreConfigs);
   const patchedExtensions = patchExtensions(tiptapContent, allExtensions);
   const tiptapExtensions = patchedExtensions.getTiptapExtensions();

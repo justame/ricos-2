@@ -9,6 +9,7 @@ import type { ComponentType } from 'react';
 import type { IToolbarItemConfigTiptap, TiptapContentResolver } from './toolbarTypes';
 import type { ToolbarType } from './toolbarEnums';
 import type { PluginButton } from './toolbarSettingsTypes';
+import type { RicosExtension } from 'ricos-tiptap-types';
 
 /**
  * Represents a plugin in Ricos Editor.
@@ -134,12 +135,12 @@ export interface IEditorPlugins {
    */
   getVisibleToolbar(content): IPluginToolbar | undefined;
   /**
-   * Plugins tiptap extensions
+   * Get RicosExtensions for Tiptap based editor
    *
-   * @returns  {IPluginAddButtons}
+   * @returns  {RicosExtension[]}
    * @memberof IEditorPlugins
    */
-  getTiptapExtensions?;
+  getTiptapExtensions(): RicosExtension[];
   /**
    * Reconfigure Plugin
    *

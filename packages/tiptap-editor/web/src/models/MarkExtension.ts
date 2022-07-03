@@ -4,6 +4,7 @@ import { mergeAttributes } from '@tiptap/react';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import type { ExtensionProps, RicosExtension } from 'ricos-tiptap-types';
 import { isRicosMarkExtension } from 'ricos-tiptap-types';
+import type { RicosServices } from 'ricos-types';
 import type { ExtensionAggregate, IMarkExtension } from './domain-types';
 import { DEFAULT_PRIORITY } from './domain-types';
 
@@ -24,7 +25,8 @@ export class MarkExtension implements IMarkExtension {
     config: MarkConfig,
     extensions: RicosExtension[],
     ricosProps: ExtensionProps,
-    settings: Record<string, unknown>
+    settings: Record<string, unknown>,
+    services: RicosServices
   ) => MarkConfig;
 
   private readonly ricosExtension: RicosExtension;
@@ -60,12 +62,17 @@ export class MarkExtension implements IMarkExtension {
     return this.ricosExtension;
   }
 
-  toTiptapExtension(extensions: ExtensionAggregate, ricosProps: ExtensionProps) {
+  toTiptapExtension(
+    extensions: ExtensionAggregate,
+    ricosProps: ExtensionProps,
+    services: RicosServices
+  ) {
     const config = this.reconfigure(
       this.config,
       extensions.getRicosExtensions(),
       ricosProps,
-      this.settings
+      this.settings,
+      services
     );
     return Mark.create(config);
   }

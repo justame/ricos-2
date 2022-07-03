@@ -1,5 +1,6 @@
 import type { Extension } from '@tiptap/core';
 import type { RicosEditorProps } from 'ricos-common';
+import type { RicosServices } from 'ricos-types';
 import type {
   ExtensionAggregate,
   FunctionalExtensionAggregate,
@@ -15,16 +16,24 @@ export class FunctionalExtensions implements FunctionalExtensionAggregate {
     this.extensions = new IExtensionAggregate(extensions);
   }
 
-  getNodeHocComposer(extensions: ExtensionAggregate, ricosProps: RicosEditorProps) {
+  getNodeHocComposer(
+    extensions: ExtensionAggregate,
+    ricosProps: RicosEditorProps,
+    services: RicosServices
+  ) {
     return new NodeHocDecorator(
-      this.extensions.asArray().map(ex => ex.getNodeHocDescriptor(extensions, ricosProps))
+      this.extensions.asArray().map(ex => ex.getNodeHocDescriptor(extensions, ricosProps, services))
     );
   }
 
-  toTiptapExtensions(extensions: ExtensionAggregate, ricosProps: RicosEditorProps) {
+  toTiptapExtensions(
+    extensions: ExtensionAggregate,
+    ricosProps: RicosEditorProps,
+    services: RicosServices
+  ) {
     return this.extensions
       .asArray()
-      .map(e => e.toTiptapExtension(extensions, ricosProps)) as Extension[];
+      .map(e => e.toTiptapExtension(extensions, ricosProps, services)) as Extension[];
   }
 
   asArray() {
