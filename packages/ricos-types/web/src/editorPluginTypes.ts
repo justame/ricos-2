@@ -140,7 +140,7 @@ export interface IEditorPlugins {
    * @returns  {RicosExtension[]}
    * @memberof IEditorPlugins
    */
-  getTiptapExtensions(): RicosExtension[];
+  getTiptapExtensions(): unknown[]; // TODO: fix RicosExtension type
   /**
    * Reconfigure Plugin
    *
