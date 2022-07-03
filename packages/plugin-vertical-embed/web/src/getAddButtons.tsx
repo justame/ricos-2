@@ -21,7 +21,7 @@ export const getAddButtons = (config): AddButton[] => {
       modal: {
         id: verticalEmbedModals.insert,
         Component: decorateComponentWithProps(InsertModal, {
-          verticalsApi: config.verticalsApi,
+          verticalsApi: config?.verticalsApi,
           componentData: { type: 'event' },
         }),
       },

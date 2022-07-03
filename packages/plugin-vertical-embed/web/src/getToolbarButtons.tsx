@@ -16,7 +16,7 @@ export const getToolbarButtons = (config): PluginToolbarButtons => {
           command: ({ modalService, isMobile, node, referenceElement }) => {
             modalService?.openModal(verticalEmbedModals.insert, {
               componentProps: {
-                verticalsApi: config.verticalsApi,
+                verticalsApi: config?.verticalsApi,
                 componentData: { type: node.attrs.type.toLowerCase() }, //TODO: convert to draft
                 nodeId: node.attrs.id,
               },
