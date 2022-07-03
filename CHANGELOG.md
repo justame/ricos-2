@@ -16,10 +16,16 @@
     Changes that have landed in master but are not yet released.
     Click to see more.
   </summary>
-  
 
 
 </details>
+
+## 8.71.35 (Jul 3, 2022)
+
+## :bug: Bug Fix
+
+- `tiptap-extensions`
+  - [#4105](https://github.com/wix/ricos/pull/4105) fix break on no-config plugins
 
 ## 8.71.34 (Jul 3, 2022)
 

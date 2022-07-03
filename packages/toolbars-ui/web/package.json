@@ -1,6 +1,6 @@
 {
   "name": "wix-rich-content-toolbars-ui",
-  "version": "8.71.34",
+  "version": "8.71.35",
   "author": {
     "name": "Dana Rish",
     "email": "danari@wix.com"
@@ -40,10 +40,10 @@
   },
   "dependencies": {
     "react-popper": "2.2.5",
-    "ricos-context": "8.71.34",
-    "ricos-schema": "8.71.34",
-    "ricos-types": "8.71.34",
-    "wix-rich-content-common": "8.71.34"
+    "ricos-context": "8.71.35",
+    "ricos-schema": "8.71.35",
+    "ricos-types": "8.71.35",
+    "wix-rich-content-common": "8.71.35"
   },
   "unpkg": true,
   "publishConfig": {
