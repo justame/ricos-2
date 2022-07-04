@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import type { TextDirection, TranslationFunction } from 'ricos-types';
 import { ToolbarButton } from 'wix-rich-content-editor-common';
-import styles from './styles/floating-add-plugin-menu.scss';
+import styles from './plugin-menu-button.scss';
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -27,11 +27,7 @@ const PluginMenuButton: React.FC<Props> = ({
     onButtonVisible?.();
   }, []);
   const pluginButton = (
-    <button
-      dir={languageDir}
-      className={styles.floatingAddPluginMenu_addPlugin_button}
-      onClick={onClick}
-    >
+    <button dir={languageDir} className={styles.addPluginButton} onClick={onClick}>
       <Icon />
       {label && <div>{t(label)}</div>}
     </button>

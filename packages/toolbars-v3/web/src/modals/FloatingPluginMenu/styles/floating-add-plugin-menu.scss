@@ -6,7 +6,9 @@
 }
 
 .floatingAddPluginMenu_plus_button {
-  @extend %button;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
   position: absolute;
   padding: 0;
   left: -40px;
@@ -18,21 +20,7 @@
   }
 }
 
-.floatingAddPluginMenu_addPlugin_button {
-  @extend %button;
+.floating_add_plugin_menu_hor {
   width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  &:hover {
-    background-color: rgba(var(--ricos-settings-action-color-tuple, $fallbackColorTuple), 0.06);
-  }
-}
-
-%button {
-  cursor: pointer;
-  border: none;
-  background-color: transparent;
+  min-width: 500px;
 }

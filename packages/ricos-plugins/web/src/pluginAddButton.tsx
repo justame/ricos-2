@@ -1,3 +1,4 @@
+import React from 'react';
 import { alwaysVisibleResolver } from 'wix-rich-content-toolbars-v3';
 import type {
   MenuGroups,
@@ -8,7 +9,9 @@ import type {
   IPluginAddButton,
   IPluginAddButtons,
   IToolbarItemConfigTiptap,
+  AddPluginMenuConfig,
 } from 'ricos-types';
+import { AddPluginMenu, PLUGIN_MENU_MODAL_ID } from 'wix-rich-content-toolbars-ui';
 
 export class PluginAddButtonCollisionError extends Error {}
 
@@ -155,5 +158,14 @@ export class PluginAddButtons implements IPluginAddButtons {
 
   toToolbarButtonsConfig() {
     return this.buttons.map(b => b.toToolbarItemConfig());
+  }
+
+  registerPluginMenuModal(config?: AddPluginMenuConfig) {
+    this.modalService?.register({
+      id: PLUGIN_MENU_MODAL_ID,
+      Component: props => (
+        <AddPluginMenu addButtons={this} addPluginMenuConfig={config} {...props} />
+      ),
+    });
   }
 }

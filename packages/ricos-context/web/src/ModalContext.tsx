@@ -21,7 +21,7 @@ export function withModalContext<Props>(Component: ComponentType<Props>) {
   return function (props: Props) {
     return (
       <ModalContext.Consumer>
-        {contexts => <Component {...props} context={contexts} />}
+        {modalService => <Component {...props} modalService={modalService} />}
       </ModalContext.Consumer>
     );
   };
