@@ -12,11 +12,12 @@ import type { ModalService } from 'ricos-types';
 type Props = {
   Icon: ComponentType;
   tooltip: string;
+  id: string;
   dataHook: string;
   options: ReactElement[];
 };
 
-const DropdownButton = ({ Icon, dataHook, tooltip, options }: Props) => {
+const DropdownButton = ({ Icon, dataHook, tooltip, options, id }: Props) => {
   const { isMobile, t } = useContext(RicosContext) || {};
   const modalService: ModalService = useContext(ModalContext) || {};
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
@@ -30,12 +31,12 @@ const DropdownButton = ({ Icon, dataHook, tooltip, options }: Props) => {
   useEffect(() => {
     modalService.register({
       Component: ModalComponent,
-      id: dataHook,
+      id,
     });
   }, []);
 
   const onClick = () => {
-    modalService?.openModal(dataHook, {
+    modalService?.openModal(id, {
       layout: isMobile ? 'drawer' : 'toolbar',
       positioning: { referenceElement, placement: 'bottom' },
     });

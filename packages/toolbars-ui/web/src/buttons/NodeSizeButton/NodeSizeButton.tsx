@@ -23,6 +23,7 @@ const NodeSizeButton: FC<Props> = ({ options, toolbarItem }) => {
   return (
     <DropdownButton
       dataHook={'NodeSizeButton'}
+      id={'NodeSizeButton'}
       options={dropDownOptions.map(({ dataHook, icon: Icon, text, commandKey, tooltip }) => (
         <ListItemSelect
           key={commandKey}

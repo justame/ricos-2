@@ -22,6 +22,7 @@ export const GalleryLayoutButton: FC<Props> = ({ toolbarItem }) => {
   return (
     <DropdownButton
       dataHook={'baseToolbarButton_layout'}
+      id={'gallery_layout'}
       options={galleryLayoutsData.map(({ dataHook, icon: Icon, text, commandKey, tooltip }) => (
         <ListItemSelect
           key={commandKey}

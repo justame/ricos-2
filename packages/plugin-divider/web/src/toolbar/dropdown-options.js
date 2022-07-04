@@ -3,7 +3,7 @@ import React from 'react';
 import { DEFAULTS, LINE_TYPES } from '../defaults';
 import DividerLine from '../components/divider-line';
 
-const createDropdownOptionComponent =
+export const createDropdownOptionComponent =
   ({ type, styles }) =>
   () => {
     return (
@@ -13,7 +13,7 @@ const createDropdownOptionComponent =
           styles={styles}
           width={60}
           fillParent
-          multilineDinstance={4}
+          multilineDistance={4}
           className={styles['divider-dropdown__divider']}
         />
       </div>

@@ -17,6 +17,10 @@
     Click to see more.
   </summary>
 
+## :house: Internal
+
+- `divider/tiptap`
+  - [#4110](https://github.com/wix/ricos/pull/4110) tiptap - add toolbar size & line-style buttons
 
 </details>
 
