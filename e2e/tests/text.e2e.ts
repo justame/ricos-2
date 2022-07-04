@@ -364,7 +364,7 @@ const changeTextColor = (title: string, useTiptap, isMobile = false) => {
     });
 
     it('allow to change text color on mobile', function () {
-      changeTextColor(this.test.title, true, true);
+      changeTextColor(this.test.title, useTiptap, true);
     });
   });
 });
