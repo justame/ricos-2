@@ -1,43 +1,32 @@
 import React, { useContext } from 'react';
 import type { FC } from 'react';
-import { Content, RicosToolbarComponent, ToggleButton } from 'wix-rich-content-toolbars-v3';
-import type { IToolbarItemConfigTiptap } from 'ricos-types';
-import { RicosContext, EditorContext, PluginsContext } from 'ricos-context';
-import type { Node } from 'prosemirror-model';
+import { InsertPluginToolbar } from 'wix-rich-content-toolbars-v3';
+import type { AddButton } from 'ricos-types';
+import { ModalContext, EditorContext, PluginsContext } from 'ricos-context';
+import { UploadServiceContext } from 'wix-rich-content-common';
 import styles from '../../statics/styles/footer-toolbar.scss';
 
-interface Props {}
-
-const content = Content.create<Node[]>([]);
-
-export const FooterToolbar: FC<Props> = () => {
+export const FooterToolbar: FC = () => {
   const plugins = useContext(PluginsContext);
-  const { isMobile } = useContext(RicosContext) || {};
+  const modalService = useContext(ModalContext);
+  const uploadContext = useContext(UploadServiceContext);
   const { getEditorCommands } = useContext(EditorContext);
 
-  const renderers = {};
-  const pluginsAddButtons = plugins?.getAddButtons().asArray();
-  pluginsAddButtons.forEach(button => {
-    renderers[button.getButton().id] = toolbarItem => {
-      return (
-        <ToggleButton toolbarItem={toolbarItem} onClick={e => toolbarItem.commands?.click(e)} />
-      );
-    };
-  });
+  const onButtonClick = ({ modal, command }: AddButton, event: Event) => {
+    return modal
+      ? modalService?.openModal(modal.id, {
+          positioning: {
+            placement: 'bottom',
+            referenceElement: event.target,
+          },
+          layout: 'popover',
+        })
+      : command(getEditorCommands?.(), uploadContext);
+  };
 
   return (
     <div className={styles.footerToolbar} data-hook="footerToolbar">
-      <RicosToolbarComponent
-        toolbarItemsConfig={
-          pluginsAddButtons.map(button =>
-            button.toToolbarItemConfig()
-          ) as IToolbarItemConfigTiptap[]
-        }
-        toolbarItemsRenders={renderers}
-        content={content}
-        editorCommands={getEditorCommands()}
-        isMobile={isMobile}
-      />
+      <InsertPluginToolbar buttons={plugins.getAddButtons()} onButtonClick={onButtonClick} />
     </div>
   );
 };

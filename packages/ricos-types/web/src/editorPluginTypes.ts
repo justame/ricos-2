@@ -180,6 +180,8 @@ export interface IPluginAddButtons {
   register: (button: AddButton) => void;
 
   unregister: (button: AddButton) => void;
+
+  toToolbarButtonsConfig: () => IToolbarItemConfigTiptap[];
 }
 
 export interface IPluginToolbar {

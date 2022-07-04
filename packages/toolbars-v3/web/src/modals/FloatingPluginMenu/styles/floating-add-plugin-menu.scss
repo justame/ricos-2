@@ -26,14 +26,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-   &:hover {
+  &:hover {
     background-color: rgba(var(--ricos-settings-action-color-tuple, $fallbackColorTuple), 0.06);
   }
-}
-
-.floating_add_plugin_menu_hor {
-  width: 100%;
-  min-width: 500px;
 }
 
 %button {

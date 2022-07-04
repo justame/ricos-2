@@ -152,4 +152,8 @@ export class PluginAddButtons implements IPluginAddButtons {
     const candidate = PluginAddButton.of(button, this.modalService);
     this.buttons = this.buttons.filter(b => !b.equals(candidate));
   }
+
+  toToolbarButtonsConfig() {
+    return this.buttons.map(b => b.toToolbarItemConfig());
+  }
 }
