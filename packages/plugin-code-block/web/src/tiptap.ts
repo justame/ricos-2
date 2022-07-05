@@ -49,7 +49,7 @@ export const tiptapExtensions: RicosExtension[] = [
       return {
         name: this.name,
 
-        content: 'text*',
+        content: 'inline*',
 
         group: 'block',
 
