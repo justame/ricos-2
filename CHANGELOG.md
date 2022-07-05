@@ -28,6 +28,9 @@
   - [#4110](https://github.com/wix/ricos/pull/4110) tiptap - add toolbar size & line-style buttons
 - `ricos-modals`
   - [#4133](https://github.com/wix/ricos/pull/4133) ModalRenderer: event subscription management
+- `teiptap-extensions`
+  - [#4134](https://github.com/wix/ricos/pull/4134) fix text overflow
+
 </details>
 
 ## 8.71.36 (Jul 3, 2022)
