@@ -31,16 +31,18 @@ export class RicosModalService implements ModalService {
     const modal = this.modals.find(modal => modal.id === modalConfig.id);
     if (modal) {
       console.error(`${modalConfig.id} modal is already registered`);
+    } else {
+      this.modals.push({ ...modalConfig, state: { isOpen: false } });
     }
-    this.modals.push({ ...modalConfig, state: { isOpen: false } });
   }
 
   public unregister(id: string) {
     const modal = this.modals.find(modal => modal.id === id);
     if (!modal) {
       console.error(`${id} modal is not registered`);
+    } else {
+      this.modals = this.modals.filter(modal => modal.id !== id);
     }
-    this.modals = this.modals.filter(modal => modal.id !== id);
   }
 
   public openModal(id, config) {
