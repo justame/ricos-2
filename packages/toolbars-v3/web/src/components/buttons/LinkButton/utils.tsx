@@ -5,7 +5,8 @@ import {
 import { parseLink } from 'ricos-content/libs/nodeUtils';
 import type { AddLinkData } from 'ricos-types';
 import type { DeepPartial } from 'utility-types';
-import { getAnchorableBlocksFromAnchorableNodes, getAnchorableNodesQuery } from './anchorAdapter';
+import { getAnchorableBlocksFromAnchorableNodes } from './anchorAdapter';
+import { getAnchorableNodesQuery } from 'ricos-content-query/libs/getAnchorableNodesQuery';
 import type { ContentQueryService } from 'ricos-content-query';
 
 type LinkData = AddLinkData & { customData?: string };
@@ -43,7 +44,8 @@ const getAnchorableBlocks = (
   if (experiments.tiptapEditor.enabled) {
     const contentExtractor = contentQueryService.getContentExtractor();
     if (contentExtractor) {
-      const anchorableNodes = getAnchorableNodesQuery(contentExtractor, editorCommands);
+      const selectedNodeId = editorCommands.getSelection().startKey;
+      const anchorableNodes = getAnchorableNodesQuery(contentExtractor, selectedNodeId);
       return getAnchorableBlocksFromAnchorableNodes(anchorableNodes);
     }
   } else {
