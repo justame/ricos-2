@@ -1,5 +1,5 @@
 import React from 'react';
-import type { PluginToolbarButtons } from 'ricos-types';
+import type { ToolbarButton } from 'ricos-types';
 import { PLUGIN_TOOLBAR_BUTTON_ID } from 'wix-rich-content-editor-common';
 import ImageSettingsModal from './modals/SettingsModal';
 import { imageModals } from './consts';
@@ -11,83 +11,77 @@ import type { PluginContainerData_Width_Type } from 'ricos-schema';
 
 const imagePluginService = new ImagePluginService();
 
-export const getToolbarButtons = (config): PluginToolbarButtons => {
-  return {
-    buttons: [
-      {
-        id: PLUGIN_TOOLBAR_BUTTON_ID.SIZE,
-        renderer: toolbarItem => (
-          <NodeSizeButton
-            toolbarItem={toolbarItem}
-            options={
-              ['SMALL', 'CONTENT', 'FULL_WIDTH', 'ORIGINAL'] as PluginContainerData_Width_Type[]
-            }
-          />
-        ),
+export const getToolbarButtons = (config): ToolbarButton[] => {
+  return [
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SIZE,
+      renderer: toolbarItem => (
+        <NodeSizeButton
+          toolbarItem={toolbarItem}
+          options={
+            ['SMALL', 'CONTENT', 'FULL_WIDTH', 'ORIGINAL'] as PluginContainerData_Width_Type[]
+          }
+        />
+      ),
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.LINK,
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS,
+      modal: {
+        Component: ImageSettingsModal,
+        id: imageModals.settings,
       },
-      {
-        id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
-      },
-      {
-        id: PLUGIN_TOOLBAR_BUTTON_ID.LINK,
-      },
-      {
-        id: PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS,
-        modal: {
-          Component: ImageSettingsModal,
-          id: imageModals.settings,
-        },
-        config: {
-          command: ({ modalService, isMobile, node }) => {
-            modalService?.openModal(imageModals.settings, {
-              componentProps: {
-                nodeId: node.attrs.id,
-              },
-              positioning: { placement: 'right' },
-              layout: isMobile ? 'fullscreen' : 'drawer',
-            });
+      command: ({ modalService, isMobile, node }) => {
+        modalService?.openModal(imageModals.settings, {
+          componentProps: {
+            nodeId: node.attrs.id,
           },
-        },
+          positioning: { placement: 'right' },
+          layout: isMobile ? 'fullscreen' : 'drawer',
+        });
       },
-      {
-        id: PLUGIN_TOOLBAR_BUTTON_ID.REPLACE,
-        config: {
-          tooltip: 'ReplaceImageButton_Tooltip',
-          command: ({ node, uploadContext: { uploadService, updateService } }) => {
-            if (config.handleFileSelection) {
-              config.handleFileSelection(
-                undefined,
-                false,
-                ({ data }) => {
-                  const file = Array.isArray(data) ? data[0] : data;
-                  updateService.updatePluginData(
-                    { data: file },
-                    node.attrs.id,
-                    IMAGE_TYPE,
-                    imagePluginService
-                  );
-                },
-                undefined,
-                {}
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.REPLACE,
+      tooltip: 'ReplaceImageButton_Tooltip',
+      command: ({ node, uploadContext: { uploadService, updateService } }) => {
+        if (config.handleFileSelection) {
+          config.handleFileSelection(
+            undefined,
+            false,
+            ({ data }) => {
+              const file = Array.isArray(data) ? data[0] : data;
+              updateService.updatePluginData(
+                { data: file },
+                node.attrs.id,
+                IMAGE_TYPE,
+                imagePluginService
               );
-            } else {
-              const { accept = 'image/*', handleFileUpload } = config;
-              uploadService.selectFiles(accept, false, (files: File[]) =>
-                uploadService.uploadFile(
-                  files[0],
-                  node.attrs.id,
-                  new Uploader(handleFileUpload),
-                  IMAGE_TYPE,
-                  imagePluginService
-                )
-              );
-            }
-          },
-        },
+            },
+            undefined,
+            {}
+          );
+        } else {
+          const { accept = 'image/*', handleFileUpload } = config;
+          uploadService.selectFiles(accept, false, (files: File[]) =>
+            uploadService.uploadFile(
+              files[0],
+              node.attrs.id,
+              new Uploader(handleFileUpload),
+              IMAGE_TYPE,
+              imagePluginService
+            )
+          );
+        }
       },
-      {
-        id: PLUGIN_TOOLBAR_BUTTON_ID.DELETE,
-      },
-    ],
-  };
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.DELETE,
+    },
+  ];
 };

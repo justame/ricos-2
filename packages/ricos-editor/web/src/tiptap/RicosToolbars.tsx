@@ -27,7 +27,6 @@ import { not } from 'fp-ts/Predicate';
 import PluginsToolbar from '../toolbars/PluginToolbar';
 import { FooterToolbar } from '../toolbars/FooterToolbar';
 import type { IEditorPlugins, IToolbarItemConfigTiptap } from 'ricos-types';
-
 import { isTextSelection } from '@tiptap/core';
 
 type RicosToolbarProps = {
@@ -99,6 +98,11 @@ class RicosToolbars extends React.Component<
       });
 
       const finalToolbarSettings = mergeToolbarSettings({ defaultSettings, customSettings });
+
+      if (plugins) {
+        const toolbarConfig = this.getToolbarConfig(finalToolbarSettings, TOOLBARS.SIDE);
+        plugins.getAddButtons().registerPluginMenuModal(toolbarConfig?.addPluginMenuConfig);
+      }
       this.setState({
         finalToolbarSettings,
       });

@@ -26,6 +26,7 @@ const NodeAlignmentButton: FC<Props> = ({ options, toolbarItem }) => {
   return (
     <DropdownButton
       dataHook={'nodeAlignmentButton'}
+      id={'nodeAlignmentButton'}
       options={dropDownOptions.map(({ dataHook, icon: Icon, text, commandKey, tooltip }) => (
         <ListItemSelect
           key={commandKey}

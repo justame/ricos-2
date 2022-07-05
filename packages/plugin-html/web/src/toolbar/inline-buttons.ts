@@ -15,7 +15,7 @@ import {
   SRC_TYPE_HTML,
   SRC_TYPE_URL,
 } from '../defaults';
-import EditPanel from './HtmlEditPanel';
+import EditPanel from './HtmlEditPanelDraft';
 import type { CreateInlineButtons, GetEditorBounds } from 'wix-rich-content-common';
 import { translate } from 'wix-rich-content-common';
 import type { HtmlPluginEditorConfig } from '../types';

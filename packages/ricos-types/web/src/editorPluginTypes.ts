@@ -8,7 +8,7 @@ import type {
 import type { ComponentType } from 'react';
 import type { IToolbarItemConfigTiptap, TiptapContentResolver } from './toolbarTypes';
 import type { ToolbarType } from './toolbarEnums';
-import type { PluginButton } from './toolbarSettingsTypes';
+import type { PluginButton, AddPluginMenuConfig } from './toolbarSettingsTypes';
 
 /**
  * Represents a plugin in Ricos Editor.
@@ -182,6 +182,8 @@ export interface IPluginAddButtons {
   unregister: (button: AddButton) => void;
 
   toToolbarButtonsConfig: () => IToolbarItemConfigTiptap[];
+
+  registerPluginMenuModal: (config?: AddPluginMenuConfig) => void;
 }
 
 export interface IPluginToolbar {
@@ -204,9 +206,7 @@ export interface IPluginToolbarButton {
 
   equals: (button: IPluginToolbarButton) => boolean;
 
-  toToolbarItemConfig: (
-    resolvers: Record<string, TiptapContentResolver>
-  ) => IToolbarItemConfigTiptap;
+  toToolbarItemConfig: () => IToolbarItemConfigTiptap;
 
   getRenderer: () => Record<string, ComponentType>;
 

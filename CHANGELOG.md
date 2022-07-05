@@ -17,6 +17,15 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `ricos-content`
+  - [#4103](https://github.com/wix/ricos/pull/4103) fix normalizeUrl func to handle "mailto:" url's
+
+## :house: Internal
+
+- `divider/tiptap`
+  - [#4110](https://github.com/wix/ricos/pull/4110) tiptap - add toolbar size & line-style buttons
 
 </details>
 

@@ -1,37 +1,31 @@
 import React, { useContext } from 'react';
 import type { Helpers } from 'wix-rich-content-common';
 import { UploadServiceContext } from 'wix-rich-content-common';
-import type { AddButton, AddPluginMenuConfig } from 'ricos-types';
-import { AddPluginMenu, SECTIONS } from 'wix-rich-content-editor';
+import type { AddButton, AddPluginMenuConfig, IPluginAddButtons } from 'ricos-types';
+import { AddPluginMenu as AddPluginMenuComponent, SECTIONS } from 'wix-rich-content-editor';
 import PluginMenuButton from './PluginMenuButton';
 import { RicosContext, EditorContext, ModalContext } from 'ricos-context';
-import type { IPluginMenuButtonClick } from './types';
 import { PLUGIN_MENU_MODAL_ID } from './consts';
 import { calcPluginModalLayout, calcPluginModalPlacement } from './utils';
 
 interface Props {
-  helpers: Helpers;
-  pluginMenuButtonRef?: React.RefObject<HTMLElement>;
+  addButtons: IPluginAddButtons;
+  helpers?: Helpers;
+  referenceElement?: React.RefObject<HTMLElement>;
   addPluginMenuConfig?: AddPluginMenuConfig;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  plugins: any;
 }
 
-interface IRenderPluginButton {
-  (button: AddButton, onClick?: () => void, onButtonVisible?: () => void): JSX.Element;
-}
 interface IPluginMenuButton {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component: (props: { onButtonVisible?: () => void }) => JSX.Element;
   name?: string;
   section?: string;
 }
 
-const AddPluginMenuWrapper: React.FC<Props> = ({
-  pluginMenuButtonRef,
-  helpers,
+const AddPluginMenu: React.FC<Props> = ({
+  referenceElement,
+  helpers = {},
   addPluginMenuConfig,
-  plugins,
+  addButtons,
 }) => {
   const { t, theme, languageDir, isMobile } = useContext(RicosContext) || {};
   const modalService = useContext(ModalContext) || {};
@@ -40,10 +34,10 @@ const AddPluginMenuWrapper: React.FC<Props> = ({
   const pluginModalLayout = calcPluginModalLayout(isMobile);
   const pluginModalPlacement = calcPluginModalPlacement(isMobile, languageDir);
 
-  const renderPluginButton: IRenderPluginButton = (
-    { icon, label, tooltip },
-    onClick,
-    onButtonVisible
+  const renderPluginButton = (
+    { icon, label, tooltip }: AddButton,
+    onClick: () => void,
+    onButtonVisible: () => void
   ) => {
     return (
       <PluginMenuButton
@@ -58,12 +52,13 @@ const AddPluginMenuWrapper: React.FC<Props> = ({
     );
   };
 
-  const onPluginMenuButtonClick: IPluginMenuButtonClick = (modal, command) => {
+  const onPluginMenuButtonClick = (button: AddButton) => {
+    const { modal, command } = button;
     modalService.closeModal(PLUGIN_MENU_MODAL_ID);
     return modal
       ? modalService?.openModal(modal.id, {
           positioning: {
-            referenceElement: pluginMenuButtonRef?.current,
+            referenceElement: referenceElement?.current,
             placement: pluginModalPlacement,
           },
           layout: pluginModalLayout,
@@ -71,23 +66,20 @@ const AddPluginMenuWrapper: React.FC<Props> = ({
       : command(getEditorCommands?.(), uploadContext);
   };
 
-  const pluginMenuButtons: IPluginMenuButton[] = plugins
-    .getAddButtons()
-    .asArray()
-    .map(addButton => {
-      const button = addButton.getButton();
-      const { command, modal } = button;
-      const onButtonClick = () => onPluginMenuButtonClick(modal, command);
-      return {
-        component: props => renderPluginButton(button, onButtonClick, props.onButtonVisible),
-        name: button.label,
-        section: button.menuConfig?.group && SECTIONS[button.menuConfig?.group],
-      };
-    });
+  const pluginMenuButtons: IPluginMenuButton[] = addButtons.asArray().map(addButton => {
+    const button = addButton.getButton();
+    const onButtonClick = () => onPluginMenuButtonClick(button);
+    return {
+      component: ({ onButtonVisible }: { onButtonVisible: () => void }) =>
+        renderPluginButton(button, onButtonClick, onButtonVisible),
+      name: button.label,
+      section: button.menuConfig?.group && SECTIONS[button.menuConfig?.group],
+    };
+  });
 
   return (
-    <AddPluginMenu
-      pluginMenuButtonRef={pluginMenuButtonRef}
+    <AddPluginMenuComponent
+      pluginMenuButtonRef={referenceElement}
       helpers={helpers}
       theme={theme}
       plugins={pluginMenuButtons}
@@ -99,4 +91,4 @@ const AddPluginMenuWrapper: React.FC<Props> = ({
   );
 };
 
-export default AddPluginMenuWrapper;
+export default AddPluginMenu;
