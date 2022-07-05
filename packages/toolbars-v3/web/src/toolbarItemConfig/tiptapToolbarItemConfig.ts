@@ -529,8 +529,8 @@ export const tiptapStaticToolbarConfig: IToolbarItemConfigTiptap[] = [
         },
       insertAnchor:
         ({ editorCommands }) =>
-        anchor => {
-          editorCommands.chain().focus().setAnchor(anchor).run();
+        data => {
+          editorCommands.chain().focus().setAnchor(data).run();
         },
       removeLink:
         ({ editorCommands }) =>

@@ -17,7 +17,7 @@ const onDone = (data, toolbarItem, setModalOpen) => {
   if (data.url) {
     toolbarItem.commands?.insertLink(data);
   } else if (data.anchor) {
-    toolbarItem.commands?.insertAnchor(data.anchor);
+    toolbarItem.commands?.insertAnchor(data);
   }
   setModalOpen(false);
 };
