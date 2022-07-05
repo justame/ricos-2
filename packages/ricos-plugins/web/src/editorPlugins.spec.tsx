@@ -16,6 +16,7 @@ describe('Editor Plugins', () => {
         id: 'linkPreview',
         icon: () => <div />,
         label: 'Instagram',
+        dataHook: 'Instagram',
         tooltip: 'insert instagram embed',
         toolbars: ['SIDE'] as ToolbarType[],
         command: editorCommands => {
@@ -34,6 +35,7 @@ describe('Editor Plugins', () => {
         id: 'tiktok',
         icon: () => <div />,
         label: 'Tiktok',
+        dataHook: 'Tiktok',
         tooltip: 'insert tiktok embed',
         toolbars: ['SIDE'] as ToolbarType[],
         command: editorCommands => {
@@ -59,6 +61,7 @@ describe('Editor Plugins', () => {
         id: 'emoji',
         icon: () => <div />,
         label: 'Emoji',
+        dataHook: 'Emoji',
         tooltip: 'insert emoji',
         toolbars: ['SIDE'] as ToolbarType[],
         command: editorCommands => {
@@ -84,6 +87,7 @@ describe('Editor Plugins', () => {
         id: 'divider',
         icon: () => <div />,
         label: 'Divider',
+        dataHook: 'Divider',
         tooltip: 'insert divider',
         toolbars: ['SIDE'] as ToolbarType[],
         command: editorCommands => {

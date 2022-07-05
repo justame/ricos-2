@@ -33,6 +33,7 @@ export const getAddButtons = (config): AddButton[] => {
     [audioButtonsTypes.audio]: {
       id: 'audio',
       label: INSERT_PLUGIN_BUTTONS.AUDIO,
+      dataHook: INSERT_PLUGIN_BUTTONS.AUDIO,
       icon: AudioInsertPluginIcon,
       tooltip: 'AudioPlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
@@ -52,6 +53,7 @@ export const getAddButtons = (config): AddButton[] => {
     [audioButtonsTypes.soundCloud]: {
       id: 'soundcloud',
       label: INSERT_PLUGIN_BUTTONS.SOUND_CLOUD,
+      dataHook: INSERT_PLUGIN_BUTTONS.SOUND_CLOUD,
       icon: SoundCloudIcon,
       tooltip: 'SoundCloudPlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
@@ -72,6 +74,7 @@ export const getAddButtons = (config): AddButton[] => {
     [audioButtonsTypes.spotify]: {
       id: 'spotify',
       label: INSERT_PLUGIN_BUTTONS.SPOTIFY,
+      dataHook: INSERT_PLUGIN_BUTTONS.SPOTIFY,
       icon: SpotifyIcon,
       tooltip: 'Spotify_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],

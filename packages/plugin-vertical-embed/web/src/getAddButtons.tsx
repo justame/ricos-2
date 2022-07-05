@@ -14,6 +14,7 @@ export const getAddButtons = (config): AddButton[] => {
     event: {
       id: 'event',
       label: INSERT_PLUGIN_BUTTONS.EVENTS,
+      dataHook: INSERT_PLUGIN_BUTTONS.EVENTS,
       icon: EventIcon,
       tooltip: 'EventsPlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
@@ -33,6 +34,7 @@ export const getAddButtons = (config): AddButton[] => {
     booking: {
       id: 'booking',
       label: INSERT_PLUGIN_BUTTONS.BOOKINGS,
+      dataHook: INSERT_PLUGIN_BUTTONS.BOOKINGS,
       icon: BookingIcon,
       tooltip: 'BookingsPlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
@@ -52,6 +54,7 @@ export const getAddButtons = (config): AddButton[] => {
     product: {
       id: 'product',
       label: INSERT_PLUGIN_BUTTONS.STORES,
+      dataHook: INSERT_PLUGIN_BUTTONS.STORES,
       icon: ProductIcon,
       tooltip: 'StoresPlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],

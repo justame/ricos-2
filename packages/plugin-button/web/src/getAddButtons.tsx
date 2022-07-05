@@ -8,6 +8,7 @@ export const getAddButtons = (config, type): AddButton[] => {
     {
       id: 'button',
       label: INSERT_PLUGIN_BUTTONS.BUTTON,
+      dataHook: INSERT_PLUGIN_BUTTONS.BUTTON,
       icon: InsertPluginIcon,
       tooltip: config?.insertButtonTooltip || 'ButtonPlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],

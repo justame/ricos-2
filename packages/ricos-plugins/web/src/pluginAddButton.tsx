@@ -83,6 +83,7 @@ export class PluginAddButton implements IPluginAddButton {
       presentation: {
         tooltip: this.button.tooltip,
         icon: this.button.icon,
+        dataHook: this.button.dataHook,
       },
       attributes: {
         visible: alwaysVisibleResolver,

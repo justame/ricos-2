@@ -43,6 +43,7 @@ export const getAddButtons = (config): AddButton[] => {
     {
       id: 'image',
       label: INSERT_PLUGIN_BUTTONS.IMAGE,
+      dataHook: INSERT_PLUGIN_BUTTONS.IMAGE,
       icon: InsertPluginIcon,
       tooltip: 'ImagePlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],

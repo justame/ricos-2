@@ -14,6 +14,7 @@ export const getAddButtons = (): AddButton[] => {
     {
       id: 'table',
       label: INSERT_PLUGIN_BUTTONS.TABLE,
+      dataHook: INSERT_PLUGIN_BUTTONS.TABLE,
       icon: InsertPluginIcon,
       tooltip: 'TablePlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],

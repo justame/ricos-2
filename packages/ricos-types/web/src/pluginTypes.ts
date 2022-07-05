@@ -251,6 +251,7 @@ export type AddButton = {
   command: (editorCommands: EditorCommands, uploadContext?: UploadContextType) => boolean;
   tooltip: string;
   toolbars: ToolbarType[];
+  dataHook: string;
   label?: string;
   modal?: ModalConfig;
   menuConfig?: MenuConfig;

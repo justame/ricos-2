@@ -49,6 +49,7 @@ export const getAddButtons = (config, filePluginService): AddButton[] => {
     {
       id: 'file-upload',
       label: INSERT_PLUGIN_BUTTONS.FILE,
+      dataHook: INSERT_PLUGIN_BUTTONS.FILE,
       icon: InsertPluginIcon,
       tooltip: 'FileUploadInsertButton_tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],

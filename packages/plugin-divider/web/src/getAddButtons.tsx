@@ -9,6 +9,7 @@ export const getAddButtons = (): AddButton[] => {
       id: 'divider',
       icon: InsertPluginIcon,
       label: INSERT_PLUGIN_BUTTONS.DIVIDER,
+      dataHook: INSERT_PLUGIN_BUTTONS.DIVIDER,
       tooltip: 'DividerPlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
       command: editorCommands => {

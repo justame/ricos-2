@@ -16,6 +16,7 @@ export const getAddButtons = (config): AddButton[] => {
     Instagram: {
       id: 'instagram',
       label: INSERT_PLUGIN_BUTTONS.INSTAGRAM,
+      dataHook: INSERT_PLUGIN_BUTTONS.INSTAGRAM,
       icon: InstagramIcon,
       tooltip: 'InstagramPlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
@@ -36,6 +37,7 @@ export const getAddButtons = (config): AddButton[] => {
     Twitter: {
       id: 'twitter',
       label: INSERT_PLUGIN_BUTTONS.TWITTER,
+      dataHook: INSERT_PLUGIN_BUTTONS.TWITTER,
       icon: TwitterIcon,
       tooltip: 'TwitterPlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
@@ -56,6 +58,7 @@ export const getAddButtons = (config): AddButton[] => {
     Pinterest: {
       id: 'pinterest',
       label: INSERT_PLUGIN_BUTTONS.PINTEREST,
+      dataHook: INSERT_PLUGIN_BUTTONS.PINTEREST,
       icon: PinterestIcon,
       tooltip: 'PinterestPlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
@@ -76,6 +79,7 @@ export const getAddButtons = (config): AddButton[] => {
     Facebook: {
       id: 'facebook',
       label: INSERT_PLUGIN_BUTTONS.FACEBOOK,
+      dataHook: INSERT_PLUGIN_BUTTONS.FACEBOOK,
       icon: FacebookIcon,
       tooltip: 'FacebookPlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
@@ -96,6 +100,7 @@ export const getAddButtons = (config): AddButton[] => {
     TikTok: {
       id: 'tiktok',
       label: INSERT_PLUGIN_BUTTONS.TIKTOK,
+      dataHook: INSERT_PLUGIN_BUTTONS.TIKTOK,
       icon: TikTokIcon,
       tooltip: 'TikTokPlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],

@@ -9,6 +9,7 @@ export const getAddButtons = (): AddButton[] => {
       id: 'code-block',
       icon: InsertPluginIcon,
       label: INSERT_PLUGIN_BUTTONS.CODE_BLOCK,
+      dataHook: INSERT_PLUGIN_BUTTONS.CODE_BLOCK,
       tooltip: 'TextCodeBlock_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.SIDE, TOOLBARS.FOOTER],
       command: editorCommands => {

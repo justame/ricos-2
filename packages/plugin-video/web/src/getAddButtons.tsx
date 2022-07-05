@@ -32,6 +32,7 @@ export const getAddButtons = (config): AddButton[] => {
     [videoButtonsTypes.video]: {
       id: 'video',
       label: INSERT_PLUGIN_BUTTONS.VIDEO,
+      dataHook: INSERT_PLUGIN_BUTTONS.VIDEO,
       icon: VideoInsertPluginIcon,
       tooltip: 'VideoPlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
@@ -52,6 +53,7 @@ export const getAddButtons = (config): AddButton[] => {
     [videoButtonsTypes.youTube]: {
       id: 'youtube',
       label: INSERT_PLUGIN_BUTTONS.YOUTUBE,
+      dataHook: INSERT_PLUGIN_BUTTONS.YOUTUBE,
       icon: YoutubeIcon,
       tooltip: 'YouTubePlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
