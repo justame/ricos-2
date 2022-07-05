@@ -17,7 +17,7 @@ interface Props {
   plugins: any;
 }
 
-const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig, helpers = {}, plugins }) => {
+const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig, plugins }) => {
   const floatingMenuWrapperRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const modalService: ModalService = useContext(ModalContext) || {};

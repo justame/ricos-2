@@ -8,7 +8,7 @@ import {
   TextColorButton,
   HighlightColorButton,
   TitleButton,
-  OpenAddPluginPanel,
+  AddPluginMenuButton,
   UrlLinkButton,
   AnchorLinkButton,
   HeadingButtonSwitch,
@@ -38,8 +38,8 @@ export const toolbarItemsRenders = {
   urlLink: toolbarItem => {
     return <UrlLinkButton toolbarItem={toolbarItem} />;
   },
-  openAddPluginPanel: toolbarItem => {
-    return <OpenAddPluginPanel toolbarItem={toolbarItem} />;
+  addPlugin: toolbarItem => {
+    return <AddPluginMenuButton toolbarItem={toolbarItem} />;
   },
   separator: () => {
     return <ToolbarButtonSeparator />;
