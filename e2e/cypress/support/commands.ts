@@ -266,10 +266,9 @@ const COMMANDS = {
   setLink: (selection: [number, number], link: string) => {
     cy.setTextStyle(INLINE_TOOLBAR_BUTTONS.LINK, selection)
       .get(`[data-hook=linkPanelContainer] [data-hook=linkPanelInput]`)
-      .fireEvent('change', link)
+      .type(link)
       .get(`[data-hook=${ACTION_BUTTONS.SAVE}]`)
-      .click()
-      .wait(100);
+      .click();
   },
 
   setLinkSettings: () => {

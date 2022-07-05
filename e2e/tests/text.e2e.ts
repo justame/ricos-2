@@ -112,12 +112,6 @@ const changeTextColor = (title: string, useTiptap, isMobile = false) => {
     // });
 
     it('allow to enter hashtag with link', () => {
-      if (useTiptap) {
-        //TIPTAP TODO - cy.click()` failed because this element is `disabled`:
-        // `<button aria-label="Save" data-hook="actionButtonSave" tabindex="0" disabled="" class="q99lf RUv6l">Save</button>`
-
-        return;
-      }
       cy.loadRicosEditor()
         .enterParagraphs([
           '#wix.com wix.com #this_is_not_a_link #will_be_a_link thisislink#youknow.com ',
