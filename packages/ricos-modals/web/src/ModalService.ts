@@ -65,7 +65,7 @@ export class RicosModalService implements ModalService {
       console.error(`Fail to close modal: ${id} is not open`);
       return false;
     } else {
-      modal.state.isOpen = false;
+      this.modals.forEach(modal => modal.id === id && (modal.state.isOpen = false));
       this.closeModalPublisher.publish(id);
       return true;
     }

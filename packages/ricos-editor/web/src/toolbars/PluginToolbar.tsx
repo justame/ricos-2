@@ -26,7 +26,7 @@ class PluginsToolbar extends React.Component<
     } = this.props;
 
     const toolbar = plugins?.getVisibleToolbar(content.value);
-    if (toolbar && !ricosContext.isMobile) {
+    if (toolbar) {
       return (
         <RicosToolbarComponent
           isMobile={ricosContext.isMobile}

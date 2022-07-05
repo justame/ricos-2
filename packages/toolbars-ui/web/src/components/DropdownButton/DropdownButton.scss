@@ -49,4 +49,8 @@
   z-index: 10;
   width: 162px;
   @include border-box;
+
+  @include phone {
+    width: 100%;
+  }
 }
