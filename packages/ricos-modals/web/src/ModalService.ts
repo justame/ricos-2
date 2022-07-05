@@ -89,7 +89,7 @@ export class RicosModalService implements ModalService {
   }
 
   public onModalOpened(onOpen: (id: string) => unknown) {
-    this.eventSubscriptor.subscribe(
+    return this.eventSubscriptor.subscribe(
       'ricos.modals.functionality.modalOpened',
       onOpen,
       'ricos-modal-service'
@@ -97,7 +97,7 @@ export class RicosModalService implements ModalService {
   }
 
   public onModalClosed(onClose: (id: string) => unknown) {
-    this.eventSubscriptor.subscribe(
+    return this.eventSubscriptor.subscribe(
       'ricos.modals.functionality.modalClosed',
       onClose,
       'ricos-modal-service'
