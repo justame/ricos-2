@@ -49,14 +49,14 @@ class HtmlEditPanel extends Component {
   };
 
   handleCancelClick = () => {
-    this.props.store.update('componentData', this.initialData);
+    this.props.updateData(this.initialData);
     this.props.close();
   };
 
   updateComponentData = () => {
     const { srcType } = this.state;
     if (this.isValid()) {
-      this.props.store.update('componentData', {
+      this.props.updateData({
         srcType,
         src: NORMALIZERS[srcType](this.state[srcType]) || '',
       });
@@ -175,11 +175,11 @@ HtmlEditPanel.propTypes = {
     src: PropTypes.any,
     config: PropTypes.object,
   }).isRequired,
-  store: PropTypes.object.isRequired,
   t: PropTypes.func.isRequired,
   theme: PropTypes.object.isRequired,
   close: PropTypes.func.isRequired,
   tabIndex: PropTypes.number,
+  updateData: PropTypes.func,
 };
 
 export default HtmlEditPanel;

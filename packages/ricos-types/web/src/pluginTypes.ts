@@ -257,13 +257,6 @@ export type AddButton = {
   shortcuts?: KeyboardShortcut[];
 };
 
-export type ToolbarButtonConfig = {
-  icon?: ComponentType;
-  tooltip?: string;
-  command?: (args: Record<string, any>) => void;
-  attributes?: Record<string, string>;
-};
-
 export type Resolver = Record<string, (content) => boolean | string>;
 
 export type ToolbarButton = {
@@ -271,12 +264,10 @@ export type ToolbarButton = {
   type?: 'toggle' | 'modal' | 'separator';
   renderer?: (toolbarItem: IToolbarItem) => ReactElement;
   modal?: ModalConfig;
-  config?: ToolbarButtonConfig;
-};
-
-export type PluginToolbarButtons = {
-  buttons: ToolbarButton[];
-  resolvers?: Resolver;
+  icon?: ComponentType;
+  tooltip?: string;
+  command?: (args: Record<string, any>) => void;
+  attributes?: Record<string, { id: string; resolve: (content) => any }>;
 };
 
 export interface EditorPlugin<PluginConfig extends EditorPluginConfig = Record<string, any>>
@@ -286,7 +277,7 @@ export interface EditorPlugin<PluginConfig extends EditorPluginConfig = Record<s
   ModalsMap?: ModalsMap;
   createPluginData?: CreatePluginData<PluginConfig>;
   addButtons?: AddButton[];
-  toolbarButtons?: PluginToolbarButtons;
+  toolbarButtons?: ToolbarButton[];
   reconfigure?: (config: PluginConfig) => void;
 }
 

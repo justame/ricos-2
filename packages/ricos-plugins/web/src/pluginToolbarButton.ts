@@ -58,23 +58,8 @@ export class PluginToolbarButton implements IPluginToolbarButton {
     return this.button.id === button.getButton().id;
   }
 
-  toToolbarItemConfig(resolvers: Record<string, TiptapContentResolver>): IToolbarItemConfigTiptap {
-    const { id, type, config: { icon, tooltip, command, attributes } = {} } = this.button;
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const buttonResolvers: Record<string, any> = Object.entries(attributes || {}).reduce(
-      (attributes, [attributeName, resolverId]) => {
-        return {
-          ...attributes,
-          [attributeName]: resolvers[resolverId as string],
-        };
-      },
-      {}
-    );
-
-    if (!attributes?.visible) {
-      buttonResolvers.visible = alwaysVisibleResolver;
-    }
+  toToolbarItemConfig(): IToolbarItemConfigTiptap {
+    const { id, type, icon, tooltip, command, attributes = {} } = this.button;
 
     const toolbarItemConfig = toolbarButtonsConfig[id] || {};
     const { presentation = {}, commands } = toolbarItemConfig;
@@ -86,7 +71,11 @@ export class PluginToolbarButton implements IPluginToolbarButton {
         tooltip: tooltip || presentation.tooltip,
         icon: icon || presentation.icon,
       },
-      attributes: { ...buttonResolvers, ...toolbarItemConfig.attributes },
+      attributes: {
+        visible: alwaysVisibleResolver,
+        ...attributes,
+        ...toolbarItemConfig.attributes,
+      },
       commands: command
         ? {
             click:

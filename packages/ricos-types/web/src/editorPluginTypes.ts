@@ -206,9 +206,7 @@ export interface IPluginToolbarButton {
 
   equals: (button: IPluginToolbarButton) => boolean;
 
-  toToolbarItemConfig: (
-    resolvers: Record<string, TiptapContentResolver>
-  ) => IToolbarItemConfigTiptap;
+  toToolbarItemConfig: () => IToolbarItemConfigTiptap;
 
   getRenderer: () => Record<string, ComponentType>;
 

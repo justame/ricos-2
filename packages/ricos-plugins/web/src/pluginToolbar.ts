@@ -1,11 +1,9 @@
 import { TiptapContentResolver } from 'wix-rich-content-toolbars-v3';
 import type {
   ModalService,
-  Resolver,
-  PluginToolbarButtons,
+  ToolbarButton,
   IPluginToolbar,
   IPluginToolbarButton,
-  TiptapContentResolver as TiptapContentResolverType,
 } from 'ricos-types';
 import { PluginToolbarButton } from './pluginToolbarButton';
 
@@ -14,22 +12,15 @@ export class PluginToolbarButtonCollisionError extends Error {}
 export class PluginToolbar implements IPluginToolbar {
   buttons: IPluginToolbarButton[];
 
-  resolvers: Record<string, TiptapContentResolverType>;
-
   isPluginSelectedResolver: TiptapContentResolver;
 
-  constructor(
-    toolbarButtons: PluginToolbarButtons,
-    pluginType: string,
-    modalService: ModalService
-  ) {
+  constructor(toolbarButtons: ToolbarButton[], pluginType: string, modalService: ModalService) {
     this.buttons =
-      toolbarButtons.buttons?.map(button => PluginToolbarButton.of(button, modalService)) || [];
+      toolbarButtons?.map(button => PluginToolbarButton.of(button, modalService)) || [];
     this.isPluginSelectedResolver = this.createIsPluginSelectedResolver(pluginType);
-    this.resolvers = toolbarButtons.resolvers ? this.initResolvers(toolbarButtons.resolvers) : {};
   }
 
-  static of(toolbarButtons: PluginToolbarButtons, pluginType: string, modalService: ModalService) {
+  static of(toolbarButtons: ToolbarButton[], pluginType: string, modalService: ModalService) {
     return new PluginToolbar(toolbarButtons, pluginType, modalService);
   }
 
@@ -38,16 +29,6 @@ export class PluginToolbar implements IPluginToolbar {
       `IS_${pluginType.toUpperCase()}_SELECTED`,
       content => content.length === 1 && content[0].type.name === pluginType
     );
-  }
-
-  private initResolvers(resolvers: Resolver): Record<string, TiptapContentResolverType> {
-    return Object.entries(resolvers || {}).reduce((prevResolvers, [resolverId, resolver]) => {
-      return {
-        ...prevResolvers,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        [resolverId]: TiptapContentResolver.create(resolverId, resolver as any),
-      };
-    }, {});
   }
 
   register() {
@@ -63,7 +44,7 @@ export class PluginToolbar implements IPluginToolbar {
   }
 
   toToolbarItemsConfig() {
-    return this.buttons.map(button => button.toToolbarItemConfig(this.resolvers));
+    return this.buttons.map(button => button.toToolbarItemConfig());
   }
 
   getToolbarButtonsRenderers() {
