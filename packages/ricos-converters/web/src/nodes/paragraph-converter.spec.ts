@@ -11,15 +11,34 @@ describe('Paragraph converter', () => {
         textAlignment: TextStyle_TextAlignment.AUTO,
       },
       indentation: 0,
-      id: '1',
+      id: '55',
     },
-    content: [],
+    content: [
+      {
+        type: 'text',
+        text: 'Nunc scelerisque fringilla aliquet.',
+        marks: [],
+        attrs: {
+          id: '',
+        },
+      },
+    ],
   };
 
   const paragraphNode: ParagraphNode = {
     type: Node_Type.PARAGRAPH,
-    id: '1',
-    nodes: [],
+    id: '55',
+    nodes: [
+      {
+        type: Node_Type.TEXT,
+        id: '',
+        nodes: [],
+        textData: {
+          text: 'Nunc scelerisque fringilla aliquet.',
+          decorations: [],
+        },
+      },
+    ],
     paragraphData: {
       textStyle: {
         textAlignment: TextStyle_TextAlignment.AUTO,

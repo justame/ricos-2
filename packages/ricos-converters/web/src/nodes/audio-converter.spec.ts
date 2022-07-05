@@ -1,6 +1,5 @@
 import type { AudioNode } from 'ricos-content';
 import {
-  Media,
   Node_Type,
   PluginContainerData_Alignment,
   PluginContainerData_Width_Type,

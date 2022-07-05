@@ -8,17 +8,36 @@ describe('CodeBlock converter', () => {
     type: Node_Type.CODE_BLOCK,
     attrs: {
       textStyle: {
-        textAlignment: TextStyle_TextAlignment.AUTO,
+        textAlignment: 'AUTO',
       },
       id: '20',
     },
-    content: [],
+    content: [
+      {
+        type: 'text',
+        text: 'songs = pd.read_csv(SONGS_FILE)',
+        marks: [],
+        attrs: {
+          id: '',
+        },
+      },
+    ],
   };
 
   const codeBlockNode: CodeBlockNode = {
     type: Node_Type.CODE_BLOCK,
     id: '20',
-    nodes: [],
+    nodes: [
+      {
+        type: Node_Type.TEXT,
+        id: '',
+        nodes: [],
+        textData: {
+          text: 'songs = pd.read_csv(SONGS_FILE)',
+          decorations: [],
+        },
+      },
+    ],
     codeBlockData: {
       textStyle: {
         textAlignment: TextStyle_TextAlignment.AUTO,
