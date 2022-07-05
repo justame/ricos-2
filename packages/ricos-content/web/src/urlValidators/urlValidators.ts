@@ -19,7 +19,12 @@ export const isValidUrl = (url: string) => url && url[0] !== '#' && linkify.test
 
 export const getUrlMatches = (text: string) => linkify.match(text) || [];
 
-export const normalizeUrl = (url: string) => (linkify.match(url) || [{}])[0].url;
+export const normalizeUrl = url => {
+  const linkifyURL = linkify.match(url) && linkify.match(url)[0].url;
+  if (linkifyURL) {
+    return url.includes('mailto:') ? url : linkifyURL;
+  }
+};
 
 export const startsWithHttps = (url: string) => /^https:/.test(url);
 
