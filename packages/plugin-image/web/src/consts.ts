@@ -23,4 +23,5 @@ export const DIVIDER = 'divider';
 
 export const imageModals = {
   settings: 'imageSettings',
+  imageEditor: 'imageEditor',
 };

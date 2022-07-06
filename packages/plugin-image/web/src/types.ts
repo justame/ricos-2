@@ -81,3 +81,9 @@ export interface TiptapImageData {
     height: number;
   };
 }
+
+export type ExtendedBlob = Blob & {
+  lastModified: number;
+  name: string;
+  webkitRelativePath: string;
+};

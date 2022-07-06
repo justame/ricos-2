@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { setupImageEditor } from './image-editor-logic';
 import type { ComponentData, Helpers, Pubsub } from 'wix-rich-content-common';
-import type { ImageEditorWixSettings } from '../types';
-
-export type ExtendedBlob = Blob & { lastModifiedDate: Date; name: string };
+import type { ImageEditorWixSettings, ExtendedBlob } from '../types';
 
 interface Props {
   imageEditorWixSettings: ImageEditorWixSettings;
@@ -31,7 +29,7 @@ class ImageEditor extends Component<Props> {
       onImageEditorOpen,
     } = this.props;
 
-    const onSave = (file: ExtendedBlob) => {
+    const onSave = (file: File) => {
       pubsub?.getBlockHandler('handleFilesSelected')([file]);
       onClose();
     };
