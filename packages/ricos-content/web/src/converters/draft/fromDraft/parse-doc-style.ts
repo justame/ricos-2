@@ -1,4 +1,4 @@
-import type { DocumentStyle as RicosDocumentStyle } from 'ricos-schema';
+import type { Decoration, DocumentStyle as RicosDocumentStyle } from 'ricos-schema';
 import { Decoration_Type } from 'ricos-schema';
 import type { DocumentStyle } from '../../../types';
 
@@ -41,20 +41,37 @@ const convertCssToNodeStyle = styles => {
     : undefined;
 };
 
+const normalizeColorDecorations = (decorations: Decoration[]) => {
+  const background = decorations.find(decoration => decoration?.colorData?.background)?.colorData
+    ?.background;
+  const foreground = decorations.find(decoration => decoration?.colorData?.foreground)?.colorData
+    ?.foreground;
+
+  if (background && foreground) {
+    const colorDecoration = { type: Decoration_Type.COLOR, colorData: { background, foreground } };
+    return decorations
+      .filter(decoration => decoration.type !== Decoration_Type.COLOR)
+      .concat([colorDecoration]);
+  }
+
+  return decorations;
+};
 export const parseDocStyle = (documentStyle?: DocumentStyle): RicosDocumentStyle | undefined => {
   if (documentStyle) {
-    const ricosDoucmentStyle: RicosDocumentStyle = {};
+    const ricosDocumentStyle: RicosDocumentStyle = {};
     Object.entries(documentStyle).forEach(([header, styles]) => {
       if (header) {
-        const decorations = convertHeaderToRicosDecorations(styles);
+        const decorations = normalizeColorDecorations(
+          convertHeaderToRicosDecorations(styles) as Decoration[]
+        );
         const nodeStyle = convertCssToNodeStyle(styles);
         const lineHeight = styles['line-height'];
-        ricosDoucmentStyle[header] = {};
-        decorations?.length > 0 && (ricosDoucmentStyle[header].decorations = decorations);
-        nodeStyle && (ricosDoucmentStyle[header].nodeStyle = nodeStyle);
-        lineHeight && (ricosDoucmentStyle[header].lineHeight = lineHeight);
+        ricosDocumentStyle[header] = {};
+        decorations?.length > 0 && (ricosDocumentStyle[header].decorations = decorations);
+        nodeStyle && (ricosDocumentStyle[header].nodeStyle = nodeStyle);
+        lineHeight && (ricosDocumentStyle[header].lineHeight = lineHeight);
       }
     });
-    return ricosDoucmentStyle;
+    return ricosDocumentStyle;
   }
 };
