@@ -18,5 +18,9 @@ export const modalContentStyles: React.CSSProperties = {
 };
 
 export const socialModals = {
-  insert: 'socialModalInsertModal',
+  Instagram: 'instagramInsertModal',
+  Facebook: 'facebookInsertModal',
+  Tiktok: 'tiktokInsertModal',
+  Twitter: 'twitterInsertModal',
+  Pinterest: 'pinterestInsertModal',
 };

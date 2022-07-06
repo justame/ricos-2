@@ -9,11 +9,12 @@ import { Node_Type } from 'wix-rich-content-common';
 
 interface Props {
   nodeId: string;
+  modalId: string;
   settings: ButtonPluginEditorConfig;
   type: typeof LINK_BUTTON_TYPE | typeof ACTION_BUTTON_TYPE;
 }
 
-const ButtonSettingsModal: FC<Props> = ({ nodeId, settings, type }) => {
+const ButtonSettingsModal: FC<Props> = ({ nodeId, settings, type, modalId }) => {
   const { theme, t, isMobile, languageDir, experiments } = useContext(RicosContext);
   const modalService = useContext(ModalContext) || {};
   const { getEditorCommands } = useContext(EditorContext);
@@ -51,7 +52,7 @@ const ButtonSettingsModal: FC<Props> = ({ nodeId, settings, type }) => {
   };
 
   const closeModal = () => {
-    modalService.closeModal(buttonsModals.settings);
+    modalService.closeModal(modalId);
   };
 
   const onCancel = () => {

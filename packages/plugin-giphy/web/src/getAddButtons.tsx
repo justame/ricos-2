@@ -23,6 +23,7 @@ export const getAddButtons = (config): AddButton[] => {
         Component: decorateComponentWithProps(InsertModal, {
           giphySdkApiKey: config?.giphySdkApiKey,
           componentData: DEFAULTS,
+          modalId: gifModals.insert,
         }),
       },
       menuConfig: {

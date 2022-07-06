@@ -1,5 +1,8 @@
 import type { ToolbarButton } from 'ricos-types';
-import { PLUGIN_TOOLBAR_BUTTON_ID } from 'wix-rich-content-editor-common';
+import {
+  PLUGIN_TOOLBAR_BUTTON_ID,
+  decorateComponentWithProps,
+} from 'wix-rich-content-editor-common';
 import { verticalEmbedModals } from './constants';
 import InsertModal from './modals/InsertModal';
 
@@ -8,11 +11,13 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.REPLACE,
       modal: {
-        Component: InsertModal,
+        Component: decorateComponentWithProps(InsertModal, {
+          modalId: verticalEmbedModals.replace,
+        }),
         id: verticalEmbedModals.replace,
       },
       command: ({ modalService, isMobile, node, referenceElement }) => {
-        modalService?.openModal(verticalEmbedModals.insert, {
+        modalService?.openModal(verticalEmbedModals.replace, {
           componentProps: {
             verticalsApi: config?.verticalsApi,
             componentData: { type: node.attrs.type.toLowerCase() }, //TODO: convert to draft

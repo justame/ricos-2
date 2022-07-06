@@ -17,6 +17,8 @@ export const modalContentStyles: React.CSSProperties = {
 };
 
 export const verticalEmbedModals = {
-  insert: 'verticalEmbedInsertModal',
+  insertBooking: 'bookingInsertModal',
+  insertProduct: 'productInsertModal',
+  insertEvent: 'eventInsertModal',
   replace: 'verticalEmbedReplaceModal',
 };

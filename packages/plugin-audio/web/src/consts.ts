@@ -115,6 +115,8 @@ export const AUDIO_TYPES: { custom: 'File Upload'; spotify: 'Spotify'; soundClou
 export const audioFileTypes = '.mp3,.pcm,.wav,.aiff,.aif,.aac,.ogg,.wma,.m4a,.flac';
 
 export const audioModals = {
-  insert: 'audioInsertModal',
+  insertAudio: 'audioInsertModal',
+  insertSoundCloud: 'soundCloudInsertModal',
+  insertSpotify: 'spotifyInsertModal',
   replace: 'audioReplaceModal',
 };

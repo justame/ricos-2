@@ -23,7 +23,7 @@ export const getAddButtons = (config): AddButton[] => {
 
       command: editorCommands => true,
       modal: {
-        id: socialModals.insert,
+        id: socialModals.Instagram,
         Component: decorateComponentWithProps(InsertModal, {
           fetchData,
           socialType: 'Instagram',
@@ -44,7 +44,7 @@ export const getAddButtons = (config): AddButton[] => {
 
       command: editorCommands => true,
       modal: {
-        id: socialModals.insert,
+        id: socialModals.Twitter,
         Component: decorateComponentWithProps(InsertModal, {
           fetchData,
           socialType: 'Twitter',
@@ -65,7 +65,7 @@ export const getAddButtons = (config): AddButton[] => {
 
       command: editorCommands => true,
       modal: {
-        id: socialModals.insert,
+        id: socialModals.Pinterest,
         Component: decorateComponentWithProps(InsertModal, {
           fetchData,
           socialType: 'Pinterest',
@@ -86,7 +86,7 @@ export const getAddButtons = (config): AddButton[] => {
 
       command: editorCommands => true,
       modal: {
-        id: socialModals.insert,
+        id: socialModals.Facebook,
         Component: decorateComponentWithProps(InsertModal, {
           fetchData,
           socialType: 'Facebook',
@@ -107,7 +107,7 @@ export const getAddButtons = (config): AddButton[] => {
 
       command: editorCommands => true,
       modal: {
-        id: socialModals.insert,
+        id: socialModals.Tiktok,
         Component: decorateComponentWithProps(InsertModal, {
           fetchData,
           socialType: 'TikTok',

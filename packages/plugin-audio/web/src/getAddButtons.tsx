@@ -39,9 +39,10 @@ export const getAddButtons = (config): AddButton[] => {
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
       command: editorCommands => true,
       modal: {
-        id: audioModals.insert,
+        id: audioModals.insertAudio,
         Component: decorateComponentWithProps(InsertModal, {
           componentData: { ...DEFAULTS, disableDownload },
+          modalId: audioModals.insertAudio,
           ...modalBaseProps,
         }),
       },
@@ -59,9 +60,10 @@ export const getAddButtons = (config): AddButton[] => {
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
       command: editorCommands => true,
       modal: {
-        id: audioModals.insert,
+        id: audioModals.insertSoundCloud,
         Component: decorateComponentWithProps(InsertModal, {
           componentData: { ...DEFAULTS, type: audioButtonsTypes.soundCloud },
+          modalId: audioModals.insertSoundCloud,
           embedType: true,
           ...modalBaseProps,
         }),
@@ -80,9 +82,10 @@ export const getAddButtons = (config): AddButton[] => {
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
       command: editorCommands => true,
       modal: {
-        id: audioModals.insert,
+        id: audioModals.insertSpotify,
         Component: decorateComponentWithProps(InsertModal, {
           componentData: { ...DEFAULTS, type: audioButtonsTypes.spotify },
+          modalId: audioModals.insertSpotify,
           embedType: true,
           ...modalBaseProps,
         }),

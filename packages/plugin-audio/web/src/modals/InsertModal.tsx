@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import type { FC } from 'react';
 import { AUDIO_TYPE } from '../types';
-import { audioModals } from '../consts';
 import AudioInsertModal from './AudioInsertModal';
 import { ModalContext, RicosContext, EditorContext } from 'ricos-context';
 import { UploadServiceContext } from 'wix-rich-content-common';
@@ -15,6 +14,7 @@ interface Props {
   handleFileUpload: (files, updateEntity) => void;
   fetchData: (url: string) => Promise<unknown>;
   embedType: boolean;
+  modalId: string;
 }
 
 const InsertModal: FC<Props> = ({
@@ -24,13 +24,14 @@ const InsertModal: FC<Props> = ({
   handleFileUpload,
   fetchData,
   embedType,
+  modalId,
 }) => {
   const { theme, t, isMobile, languageDir } = useContext(RicosContext);
   const { getEditorCommands } = useContext(EditorContext);
   const modalService = useContext(ModalContext) || {};
   const { uploadService, updateService } = useContext(UploadServiceContext);
   const closeModal = () => {
-    modalService.closeModal(audioModals.insert);
+    modalService.closeModal(modalId);
   };
 
   const onConfirm = audio => {

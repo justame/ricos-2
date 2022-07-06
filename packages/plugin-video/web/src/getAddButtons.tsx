@@ -39,9 +39,10 @@ export const getAddButtons = (config): AddButton[] => {
 
       command: editorCommands => true,
       modal: {
-        id: videoModals.insert,
+        id: videoModals.insertVideo,
         Component: decorateComponentWithProps(InsertModal, {
           componentData: { ...RICOS_DEFAULTS, disableDownload },
+          modalId: videoModals.insertVideo,
           ...modalBaseProps,
         }),
       },
@@ -60,9 +61,10 @@ export const getAddButtons = (config): AddButton[] => {
 
       command: editorCommands => true,
       modal: {
-        id: videoModals.insert,
+        id: videoModals.insertYoutube,
         Component: decorateComponentWithProps(InsertModal, {
           componentData: { ...RICOS_DEFAULTS, type: videoButtonsTypes.youTube },
+          modalId: videoModals.insertYoutube,
           ...modalBaseProps,
         }),
       },

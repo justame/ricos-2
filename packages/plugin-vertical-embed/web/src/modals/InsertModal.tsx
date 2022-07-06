@@ -3,7 +3,6 @@ import type { FC } from 'react';
 import { convertBlockDataToRicos } from 'ricos-content/libs/convertBlockDataToRicos';
 import { ModalContext, RicosContext, EditorContext } from 'ricos-context';
 import VerticalEmbedInsertModal from '../toolbar/VerticalEmbedInsertModal';
-import { verticalEmbedModals } from '../constants';
 import { VERTICAL_EMBED_TYPE } from '../types';
 
 interface Props {
@@ -11,15 +10,16 @@ interface Props {
   verticalsApi: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   componentData: Record<string, any>;
+  modalId: string;
   nodeId?: string;
 }
 
-const InsertModal: FC<Props> = ({ componentData, verticalsApi, nodeId }) => {
+const InsertModal: FC<Props> = ({ componentData, verticalsApi, nodeId, modalId }) => {
   const { locale, t, isMobile, experiments } = useContext(RicosContext);
   const { getEditorCommands } = useContext(EditorContext);
   const modalService = useContext(ModalContext) || {};
   const closeModal = () => {
-    modalService.closeModal(verticalEmbedModals.insert);
+    modalService.closeModal(modalId);
   };
 
   const onConfirm = verticalEmbed => {

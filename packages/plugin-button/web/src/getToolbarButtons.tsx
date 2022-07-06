@@ -1,5 +1,8 @@
 import type { ToolbarButton } from 'ricos-types';
-import { PLUGIN_TOOLBAR_BUTTON_ID } from 'wix-rich-content-editor-common';
+import {
+  PLUGIN_TOOLBAR_BUTTON_ID,
+  decorateComponentWithProps,
+} from 'wix-rich-content-editor-common';
 import { buttonsModals } from './constants';
 import ButtonSettingsModal from './modals/SettingsModal';
 
@@ -11,11 +14,13 @@ export const getToolbarButtons = (config, type): ToolbarButton[] => {
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS,
       modal: {
-        Component: ButtonSettingsModal,
-        id: buttonsModals.settings,
+        Component: decorateComponentWithProps(ButtonSettingsModal, {
+          modalId: buttonsModals[type],
+        }),
+        id: buttonsModals[type],
       },
       command: ({ modalService, isMobile, node }) => {
-        modalService?.openModal(buttonsModals.settings, {
+        modalService?.openModal(buttonsModals[type], {
           componentProps: {
             nodeId: node.attrs.id,
             settings: config,

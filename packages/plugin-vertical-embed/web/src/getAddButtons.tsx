@@ -20,10 +20,11 @@ export const getAddButtons = (config): AddButton[] => {
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
       command: editorCommands => true,
       modal: {
-        id: verticalEmbedModals.insert,
+        id: verticalEmbedModals.insertEvent,
         Component: decorateComponentWithProps(InsertModal, {
           verticalsApi: config?.verticalsApi,
           componentData: { type: 'event' },
+          modalId: verticalEmbedModals.insertEvent,
         }),
       },
       menuConfig: {
@@ -40,10 +41,11 @@ export const getAddButtons = (config): AddButton[] => {
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
       command: editorCommands => true,
       modal: {
-        id: verticalEmbedModals.insert,
+        id: verticalEmbedModals.insertBooking,
         Component: decorateComponentWithProps(InsertModal, {
           ...config,
           componentData: { type: 'booking' },
+          modalId: verticalEmbedModals.insertBooking,
         }),
       },
       menuConfig: {
@@ -60,10 +62,11 @@ export const getAddButtons = (config): AddButton[] => {
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
       command: editorCommands => true,
       modal: {
-        id: verticalEmbedModals.insert,
+        id: verticalEmbedModals.insertProduct,
         Component: decorateComponentWithProps(InsertModal, {
           ...config,
           componentData: { type: 'product' },
+          modalId: verticalEmbedModals.insertProduct,
         }),
       },
       menuConfig: {
