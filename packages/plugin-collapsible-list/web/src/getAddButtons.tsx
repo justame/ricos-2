@@ -10,6 +10,7 @@ export const getAddButtons = (): AddButton[] => {
       id: 'collapsibleList',
       icon: InsertPluginIcon,
       label: INSERT_PLUGIN_BUTTONS.COLLAPSIBLE_LIST,
+      dataHook: INSERT_PLUGIN_BUTTONS.COLLAPSIBLE_LIST,
       tooltip: 'CollapsibleListPlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
       command: editorCommands => {

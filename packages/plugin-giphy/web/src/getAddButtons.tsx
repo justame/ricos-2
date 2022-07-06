@@ -13,6 +13,7 @@ export const getAddButtons = (config): AddButton[] => {
     {
       id: 'gif',
       label: INSERT_PLUGIN_BUTTONS.GIF,
+      dataHook: INSERT_PLUGIN_BUTTONS.GIF,
       icon: InsertPluginIcon,
       tooltip: 'GiphyPlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
@@ -22,6 +23,7 @@ export const getAddButtons = (config): AddButton[] => {
         Component: decorateComponentWithProps(InsertModal, {
           giphySdkApiKey: config?.giphySdkApiKey,
           componentData: DEFAULTS,
+          modalId: gifModals.insert,
         }),
       },
       menuConfig: {

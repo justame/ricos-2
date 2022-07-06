@@ -45,7 +45,6 @@
   "dependencies": {
     "@floating-ui/react-dom": "^0.7.0",
     "@popperjs/core": "2.11.2",
-    "fp-ts": "^2.11.0",
     "react-click-outsider": "1.1.1",
     "react-popper": "2.2.5",
     "react-sizeme": "^3.0.2",

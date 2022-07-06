@@ -24,6 +24,7 @@ import { DEFAULTS, SEO_IMAGE_WIDTH } from './consts';
 import styles from '../statics/styles/image-viewer.rtlignore.scss';
 import ExpandIcon from './icons/expand';
 import InPluginInput from './InPluginInput';
+import type { AvailableExperiments } from 'ricos-types';
 
 const isSafari = () => /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
@@ -50,6 +51,7 @@ interface ImageViewerProps {
   blockKey: string;
   isLoading: boolean;
   customAnchorScroll?: CustomAnchorScroll;
+  experiments?: AvailableExperiments;
 }
 
 interface ImageSrc {
@@ -122,6 +124,9 @@ class ImageViewer extends React.Component<ImageViewerProps, ImageViewerState> {
       : null;
   }
 
+  getExperiments = () => this.props.experiments || this.context.experiments;
+
+  // eslint-disable-next-line complexity
   getImageUrl(src): ImageSrc | null {
     const { helpers, seoMode, isMobile } = this.props || {};
 
@@ -129,7 +134,7 @@ class ImageViewer extends React.Component<ImageViewerProps, ImageViewerState> {
       return null;
     }
 
-    const { experiments } = this.context;
+    const experiments = this.getExperiments();
     const removeUsm = experiments?.removeUsmFromImageUrls?.enabled;
     const encAutoImageUrls = experiments?.encAutoImageUrls?.enabled;
     const qualityPreloadPngs = experiments?.qualityPreloadPngs?.enabled;
@@ -166,7 +171,7 @@ class ImageViewer extends React.Component<ImageViewerProps, ImageViewerState> {
       const usePredefinedWidth = (alignment === 'left' || alignment === 'right') && !width;
       webAndNonPngPreloadOpts = {
         imageType: 'quailtyPreload',
-        size: this.context.experiments.imagePreloadWidthByConfig?.enabled && size,
+        size: this.getExperiments().imagePreloadWidthByConfig?.enabled && size,
         ...(usePredefinedWidth && { requiredWidth: 300 }),
       };
     }
@@ -262,7 +267,7 @@ class ImageViewer extends React.Component<ImageViewerProps, ImageViewerState> {
     } = {}
   ) {
     const { fadeIn = false } = opts;
-    const loading = this.context.experiments.lazyImagesAndIframes?.enabled ? 'lazy' : undefined;
+    const loading = this.getExperiments().lazyImagesAndIframes?.enabled ? 'lazy' : undefined;
     const { width, height } = this.getImageSize(opts);
     return (
       <img

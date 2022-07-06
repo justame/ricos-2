@@ -38,7 +38,8 @@
     "ricos-content": "8.71.36",
     "ricos-converters": "8.71.36",
     "ricos-schema": "8.71.36",
-    "wix-rich-content-editor-common": "8.71.36"
+    "wix-rich-content-editor-common": "8.71.36",
+    "fp-ts": "^2.11.0"
   },
   "unpkg": true,
   "publishConfig": {

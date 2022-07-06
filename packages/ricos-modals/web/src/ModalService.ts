@@ -31,16 +31,18 @@ export class RicosModalService implements ModalService {
     const modal = this.modals.find(modal => modal.id === modalConfig.id);
     if (modal) {
       console.error(`${modalConfig.id} modal is already registered`);
+    } else {
+      this.modals.push({ ...modalConfig, state: { isOpen: false } });
     }
-    this.modals.push({ ...modalConfig, state: { isOpen: false } });
   }
 
   public unregister(id: string) {
     const modal = this.modals.find(modal => modal.id === id);
     if (!modal) {
       console.error(`${id} modal is not registered`);
+    } else {
+      this.modals = this.modals.filter(modal => modal.id !== id);
     }
-    this.modals = this.modals.filter(modal => modal.id !== id);
   }
 
   public openModal(id, config) {
@@ -65,7 +67,7 @@ export class RicosModalService implements ModalService {
       console.error(`Fail to close modal: ${id} is not open`);
       return false;
     } else {
-      modal.state.isOpen = false;
+      this.modals.forEach(modal => modal.id === id && (modal.state.isOpen = false));
       this.closeModalPublisher.publish(id);
       return true;
     }
@@ -87,7 +89,7 @@ export class RicosModalService implements ModalService {
   }
 
   public onModalOpened(onOpen: (id: string) => unknown) {
-    this.eventSubscriptor.subscribe(
+    return this.eventSubscriptor.subscribe(
       'ricos.modals.functionality.modalOpened',
       onOpen,
       'ricos-modal-service'
@@ -95,7 +97,7 @@ export class RicosModalService implements ModalService {
   }
 
   public onModalClosed(onClose: (id: string) => unknown) {
-    this.eventSubscriptor.subscribe(
+    return this.eventSubscriptor.subscribe(
       'ricos.modals.functionality.modalClosed',
       onClose,
       'ricos-modal-service'

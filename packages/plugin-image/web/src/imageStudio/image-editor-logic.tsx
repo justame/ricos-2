@@ -1,12 +1,11 @@
 import { getImageStudioPackage } from './image-studio-opener-loader';
-import type { ExtendedBlob } from './image-editor';
-import type { ImageEditorWixSettings } from '../types';
+import type { ImageEditorWixSettings, ExtendedBlob } from '../types';
 
 async function setupImageEditor(
   imageEditorWixSettings: ImageEditorWixSettings,
   rootElementId: string,
   fileName: string,
-  onSave: (file: ExtendedBlob) => void,
+  onSave: (file: File) => void,
   onClose: () => void
 ) {
   const { MediaImageStudio, MediaImageStudioEvents, MediaImageStudioMode } =
@@ -37,8 +36,9 @@ async function setupImageEditor(
 
 function blobToFile(blob: ExtendedBlob, fileName: string) {
   //A Blob() is almost a File() - it's just missing the two properties below which we will add
-  blob.lastModifiedDate = new Date();
+  blob.lastModified = new Date().getTime();
   blob.name = fileName;
+  blob.webkitRelativePath = '';
   return blob;
 }
 

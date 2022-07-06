@@ -16,13 +16,14 @@ export const getAddButtons = (config): AddButton[] => {
     Instagram: {
       id: 'instagram',
       label: INSERT_PLUGIN_BUTTONS.INSTAGRAM,
+      dataHook: INSERT_PLUGIN_BUTTONS.INSTAGRAM,
       icon: InstagramIcon,
       tooltip: 'InstagramPlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
 
       command: editorCommands => true,
       modal: {
-        id: socialModals.insert,
+        id: socialModals.Instagram,
         Component: decorateComponentWithProps(InsertModal, {
           fetchData,
           socialType: 'Instagram',
@@ -36,13 +37,14 @@ export const getAddButtons = (config): AddButton[] => {
     Twitter: {
       id: 'twitter',
       label: INSERT_PLUGIN_BUTTONS.TWITTER,
+      dataHook: INSERT_PLUGIN_BUTTONS.TWITTER,
       icon: TwitterIcon,
       tooltip: 'TwitterPlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
 
       command: editorCommands => true,
       modal: {
-        id: socialModals.insert,
+        id: socialModals.Twitter,
         Component: decorateComponentWithProps(InsertModal, {
           fetchData,
           socialType: 'Twitter',
@@ -56,13 +58,14 @@ export const getAddButtons = (config): AddButton[] => {
     Pinterest: {
       id: 'pinterest',
       label: INSERT_PLUGIN_BUTTONS.PINTEREST,
+      dataHook: INSERT_PLUGIN_BUTTONS.PINTEREST,
       icon: PinterestIcon,
       tooltip: 'PinterestPlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
 
       command: editorCommands => true,
       modal: {
-        id: socialModals.insert,
+        id: socialModals.Pinterest,
         Component: decorateComponentWithProps(InsertModal, {
           fetchData,
           socialType: 'Pinterest',
@@ -76,13 +79,14 @@ export const getAddButtons = (config): AddButton[] => {
     Facebook: {
       id: 'facebook',
       label: INSERT_PLUGIN_BUTTONS.FACEBOOK,
+      dataHook: INSERT_PLUGIN_BUTTONS.FACEBOOK,
       icon: FacebookIcon,
       tooltip: 'FacebookPlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
 
       command: editorCommands => true,
       modal: {
-        id: socialModals.insert,
+        id: socialModals.Facebook,
         Component: decorateComponentWithProps(InsertModal, {
           fetchData,
           socialType: 'Facebook',
@@ -96,13 +100,14 @@ export const getAddButtons = (config): AddButton[] => {
     TikTok: {
       id: 'tiktok',
       label: INSERT_PLUGIN_BUTTONS.TIKTOK,
+      dataHook: INSERT_PLUGIN_BUTTONS.TIKTOK,
       icon: TikTokIcon,
       tooltip: 'TikTokPlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
 
       command: editorCommands => true,
       modal: {
-        id: socialModals.insert,
+        id: socialModals.Tiktok,
         Component: decorateComponentWithProps(InsertModal, {
           fetchData,
           socialType: 'TikTok',

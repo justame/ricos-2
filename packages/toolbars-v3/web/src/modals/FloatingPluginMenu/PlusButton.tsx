@@ -14,6 +14,7 @@ const PlusButton = React.forwardRef(
       onClick={onClick}
       className={styles.floatingAddPluginMenu_plus_button}
       style={position}
+      data-hook="addPluginFloatingToolbar"
     >
       <PlusIcon />
     </button>

@@ -20,8 +20,6 @@ class HeadingsPanel extends Component {
     this.styles = mergeStyles({ styles, theme: props.theme });
   }
 
-  static contextType = GlobalContext;
-
   onSaveHeading = (type, clickFromKeyboard) => {
     this.props?.onToolbarButtonClick?.(type);
     this.setState({ openOption: '' });

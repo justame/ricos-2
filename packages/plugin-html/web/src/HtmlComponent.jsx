@@ -110,6 +110,8 @@ class HtmlComponent extends Component {
       maxWidth: '100%',
     };
 
+    const experiments = this.props.experiments || this.context.experiments;
+
     return (
       <div
         className={this.styles.htmlComponent}
@@ -121,8 +123,7 @@ class HtmlComponent extends Component {
           <IframeHtml
             iframeSandboxDomain={
               iframeSandboxDomain ||
-              (this.context.experiments.forceIframeSandboxDomain?.enabled &&
-                'https://www.filesusr.com')
+              (experiments.forceIframeSandboxDomain?.enabled && 'https://www.filesusr.com')
             }
             key={SRC_TYPE_HTML}
             tabIndex={0}
@@ -159,6 +160,7 @@ HtmlComponent.propTypes = {
   theme: PropTypes.object.isRequired,
   isMobile: PropTypes.bool.isRequired,
   iframeSandboxDomain: PropTypes.string,
+  experiments: PropTypes.object,
 };
 
 export { HtmlComponent as Component, defaults };

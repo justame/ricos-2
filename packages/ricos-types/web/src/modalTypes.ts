@@ -1,4 +1,5 @@
 import type { ComponentType } from 'react';
+import type { Subscription } from './events';
 import type { KeyboardShortcut } from './shortcuts';
 
 export type Layout = 'popover' | 'drawer' | 'dialog' | 'fullscreen' | 'toolbar';
@@ -46,7 +47,7 @@ export interface ModalService {
   unregister: (id: string) => void;
   closeModal: (id: string) => boolean;
   getOpenModals: () => Modal[];
-  onModalOpened: (onOpen: (id: string) => unknown) => void;
-  onModalClosed: (onClose: (id: string) => unknown) => void;
+  onModalOpened: (onOpen: (id: string) => unknown) => Subscription;
+  onModalClosed: (onClose: (id: string) => unknown) => Subscription;
   destroy: () => void;
 }

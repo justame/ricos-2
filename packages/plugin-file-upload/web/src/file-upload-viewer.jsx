@@ -222,6 +222,8 @@ class FileUploadViewer extends PureComponent {
     );
   }
 
+  getExperiments = () => this.props.experiments || this.context.experiments;
+
   renderFileUrlResolver() {
     const {
       componentData,
@@ -241,7 +243,7 @@ class FileUploadViewer extends PureComponent {
           this.setState({ resolvedFileUrl, resolvingUrl: false }, this.switchReadyIcon);
 
           if (this.downloaderRef.current) {
-            if (this.context.experiments.useFilePluginAutoDownloadLinkRef?.enabled) {
+            if (this.getExperiments().useFilePluginAutoDownloadLinkRef?.enabled) {
               this.downloaderRef.current.href = resolvedFileUrl;
               this.downloaderRef.current.download = name;
               this.downloaderRef.current.click();
@@ -285,8 +287,10 @@ class FileUploadViewer extends PureComponent {
     }
 
     const target = downloadTarget || '_blank';
-    const loading = this.context.experiments.lazyImagesAndIframes?.enabled ? 'lazy' : undefined;
-    return this.context.experiments.useFilePluginAutoDownloadLinkRef?.enabled ? (
+    const experiments = this.getExperiments();
+
+    const loading = experiments.lazyImagesAndIframes?.enabled ? 'lazy' : undefined;
+    return experiments.useFilePluginAutoDownloadLinkRef?.enabled ? (
       <a href="#0" ref={this.downloaderRef} style={{ display: 'none' }} target={target}>
         <></>
       </a>
@@ -319,7 +323,7 @@ class FileUploadViewer extends PureComponent {
     const dataHook = 'fileUploadViewer';
 
     const shouldRenderPDFViewer =
-      this.context.experiments.enableFilePluginPDFViewer?.enabled &&
+      this.getExperiments().enableFilePluginPDFViewer?.enabled &&
       typeof window !== 'undefined' &&
       fileUrl &&
       ![PDF_STATUS.ERROR].includes(pdfStatus);
@@ -371,6 +375,7 @@ FileUploadViewer.propTypes = {
   helpers: PropTypes.object,
   locale: PropTypes.string,
   iframeSandboxDomain: PropTypes.string,
+  experiments: PropTypes.object,
 };
 
 FileUploadViewer.defaultProps = {

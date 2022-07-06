@@ -4,21 +4,21 @@ import { convertBlockDataToRicos } from 'ricos-content/libs/convertBlockDataToRi
 import { ModalContext, RicosContext, EditorContext } from 'ricos-context';
 import GiphyApiInputModal from '../toolbar/giphyApiInputModal';
 import { GIPHY_TYPE } from '../types';
-import { gifModals } from '../constants';
 
 interface Props {
   giphySdkApiKey: string;
+  modalId: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   componentData: Record<string, any>;
   nodeId?: string;
 }
 
-const GiphyInsertModal: FC<Props> = ({ componentData, giphySdkApiKey, nodeId }) => {
+const GiphyInsertModal: FC<Props> = ({ componentData, giphySdkApiKey, nodeId, modalId }) => {
   const { theme, t, isMobile, languageDir } = useContext(RicosContext);
   const { getEditorCommands } = useContext(EditorContext);
   const modalService = useContext(ModalContext) || {};
   const closeModal = () => {
-    modalService.closeModal(gifModals.insert);
+    modalService.closeModal(modalId);
   };
 
   const onGifAdd = gif => {

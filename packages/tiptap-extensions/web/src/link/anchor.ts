@@ -68,7 +68,7 @@ export const anchor: RicosExtension = {
       addCommands() {
         return {
           setAnchor:
-            anchor =>
+            data =>
             ({ commands, state, tr, chain }) => {
               cleanAndSetSelection(
                 this.name,
@@ -77,9 +77,10 @@ export const anchor: RicosExtension = {
                 state.schema,
                 tr.selection,
                 state.doc,
-                commands
+                commands,
+                data.defaultName
               );
-              return chain().setMark(this.name, { anchor }).setUnderline().run();
+              return chain().setMark(this.name, { anchor: data.anchor }).setUnderline().run();
             },
 
           unsetAnchor:

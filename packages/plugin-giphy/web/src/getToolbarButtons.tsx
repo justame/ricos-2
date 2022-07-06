@@ -1,6 +1,9 @@
 import React from 'react';
 import type { ToolbarButton } from 'ricos-types';
-import { PLUGIN_TOOLBAR_BUTTON_ID } from 'wix-rich-content-editor-common';
+import {
+  PLUGIN_TOOLBAR_BUTTON_ID,
+  decorateComponentWithProps,
+} from 'wix-rich-content-editor-common';
 import InsertModal from './modals/InsertModal';
 import { gifModals } from './constants';
 import { NodeSizeButton } from 'wix-rich-content-toolbars-ui';
@@ -29,7 +32,7 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.REPLACE,
       modal: {
-        Component: InsertModal,
+        Component: decorateComponentWithProps(InsertModal, { modalId: gifModals.replace }),
         id: gifModals.replace,
       },
       command: ({ modalService, isMobile, node, referenceElement }) => {

@@ -16,6 +16,7 @@ export const getAddButtons = (config): AddButton[] => {
     [htmlButtonsTypes.html]: {
       id: 'html',
       label: INSERT_PLUGIN_BUTTONS.HTML,
+      dataHook: INSERT_PLUGIN_BUTTONS.HTML,
       icon: InsertPluginIcon,
       tooltip: 'HtmlPlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
@@ -30,6 +31,7 @@ export const getAddButtons = (config): AddButton[] => {
     [htmlButtonsTypes.adsense]: {
       id: 'adsense',
       label: INSERT_PLUGIN_BUTTONS.ADSENSE,
+      dataHook: INSERT_PLUGIN_BUTTONS.ADSENSE,
       icon: AdsenseIcon,
       tooltip: 'AdSensePlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],

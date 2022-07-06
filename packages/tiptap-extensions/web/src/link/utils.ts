@@ -56,7 +56,8 @@ export const cleanAndSetSelection = (
   schema: Schema,
   selection: Selection,
   doc: Node,
-  commands: SingleCommands
+  commands: SingleCommands,
+  collapsedSelectionPlaceholder: string
 ) => {
   const { from, to } = getSelectedMarkRangeByTypeNames(
     [extensionName, extensionNameToRemove],
@@ -64,7 +65,13 @@ export const cleanAndSetSelection = (
     selection
   );
 
-  isMarkInSelection(extensionNameToRemove, selection, doc) && unsetCommand();
+  if (from === to) {
+    commands.insertContent(collapsedSelectionPlaceholder);
 
-  commands.setTextSelection({ from, to });
+    commands.setTextSelection({ from, to: from + collapsedSelectionPlaceholder.length });
+  } else {
+    isMarkInSelection(extensionNameToRemove, selection, doc) && unsetCommand();
+
+    commands.setTextSelection({ from, to });
+  }
 };

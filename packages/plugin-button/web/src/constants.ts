@@ -1,3 +1,5 @@
+import { LINK_BUTTON_TYPE, ACTION_BUTTON_TYPE } from './types';
+
 /* eslint-disable camelcase */
 export const ALIGN_CENTER = 'center';
 export const settingsTabValue = 'settings';
@@ -18,5 +20,6 @@ export const DEFAULT_CONFIG = {
 };
 
 export const buttonsModals = {
-  settings: 'button-settings',
+  [ACTION_BUTTON_TYPE]: 'actionButtonSettingsModal',
+  [LINK_BUTTON_TYPE]: 'linkButtonSettingsModal',
 };

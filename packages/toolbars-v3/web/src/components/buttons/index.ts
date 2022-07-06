@@ -8,6 +8,6 @@ export { default as HighlightColorButton } from './HighlightColorButton/Highligh
 export { default as HeadingButtonSwitch } from './HeadingButtonSwitch/HeadingButtonSwitch';
 export { ToggleButton } from './ToggleButton';
 export { default as MoreButton } from './MoreButton/MoreButton';
-export { OpenAddPluginPanel } from './OpenAddPluginPanel';
+export { AddPluginMenuButton } from './AddPluginMenuButton';
 export { default as UrlLinkButton } from './UrlLinkButton/UrlLinkButton';
 export { default as AnchorLinkButton } from './AnchorLinkButton/AnchorLinkButton';

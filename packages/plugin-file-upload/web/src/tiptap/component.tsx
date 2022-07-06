@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
-import { Component as FileUploadComponent } from '../file-upload-component';
+import FileUploadViewer from '../file-upload-viewer';
 import type { PluginProps } from 'ricos-tiptap-types';
 import { RicosContext } from 'ricos-context';
 
-export const File: React.FC<PluginProps> = ({ settings, componentData, node }) => {
-  const { theme, t, isMobile } = useContext(RicosContext);
+export const File: React.FC<PluginProps> = ({ settings = {}, componentData, node }) => {
+  const { theme, t, isMobile, experiments } = useContext(RicosContext);
   const setComponentUrl = () => null;
   const isLoading = node.attrs.loading;
   const error = node.attrs.error;
@@ -12,8 +12,10 @@ export const File: React.FC<PluginProps> = ({ settings, componentData, node }) =
     componentData.error = error;
   }
 
+  const tempDataPlaceHolder = node.attrs.tempData;
+
   return (
-    <FileUploadComponent
+    <FileUploadViewer
       componentData={componentData}
       isMobile={isMobile}
       theme={theme}
@@ -21,6 +23,8 @@ export const File: React.FC<PluginProps> = ({ settings, componentData, node }) =
       t={t}
       settings={settings}
       isLoading={isLoading}
+      tempDataPlaceHolder={tempDataPlaceHolder}
+      experiments={experiments}
     />
   );
 };

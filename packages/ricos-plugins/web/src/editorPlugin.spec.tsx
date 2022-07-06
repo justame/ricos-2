@@ -17,6 +17,7 @@ describe('Editor Plugin', () => {
         id: 'ricos-plugin',
         icon: () => <div />,
         label: 'ricos-plugin',
+        dataHook: 'ricos-plugin',
         tooltip: 'InsertButton_Tooltip',
         toolbars: ['SIDE'] as ToolbarType[],
         command: editorCommands => {

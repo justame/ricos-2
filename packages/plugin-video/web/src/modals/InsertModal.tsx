@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import type { FC } from 'react';
 import { VIDEO_TYPE } from '../types';
-import { videoModals } from '../constants';
 import VideoInsertModal from '../toolbar/NewVideoInsertModal';
 import { ModalContext, RicosContext, EditorContext } from 'ricos-context';
 import { UploadServiceContext } from 'wix-rich-content-common';
@@ -9,6 +8,7 @@ import { convertBlockDataToRicos } from 'ricos-content/libs/convertBlockDataToRi
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   componentData: Record<string, any>;
+  modalId: string;
   nodeId?: string;
   enableCustomUploadOnMobile?: boolean;
   getVideoUrl: (src) => string;
@@ -18,6 +18,7 @@ interface Props {
 
 const InsertModal: FC<Props> = ({
   nodeId,
+  modalId,
   componentData,
   handleFileSelection,
   handleFileUpload,
@@ -27,7 +28,7 @@ const InsertModal: FC<Props> = ({
   const modalService = useContext(ModalContext) || {};
   const { uploadService, updateService } = useContext(UploadServiceContext);
   const closeModal = () => {
-    modalService.closeModal(videoModals.insert);
+    modalService.closeModal(modalId);
   };
 
   const onReplace = video => {

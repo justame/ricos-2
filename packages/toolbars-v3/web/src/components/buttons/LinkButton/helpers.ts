@@ -58,26 +58,6 @@ export const isThumbnailNode = (node: Node): boolean => {
   );
 };
 
-export const isAnchorableNode = (node: Node): boolean => {
-  return isAnchorableAtomicPluginNode(node) || isAnchorableTextNode(node);
-};
-
-export const isSelectedNode =
-  (selectedNodeId: string) =>
-  (node: Node): boolean => {
-    const { id } = node;
-    return selectedNodeId === id;
-  };
-
-export const isEmptyTextNodes = (node: Node): boolean => {
-  if (isAnchorableTextNode(node)) {
-    const { nodes } = node;
-    return nodes.length === 0;
-  } else {
-    return true;
-  }
-};
-
 export const textNodesMapper = {
   [Node_Type.PARAGRAPH]: Anchorable_Blocks_Types.UNSTYLED,
   [Node_Type.BLOCKQUOTE]: Anchorable_Blocks_Types.BLOCKQUOTE,

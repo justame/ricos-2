@@ -43,6 +43,7 @@ export const getAddButtons = (config, galleryPluginService): AddButton[] => {
     {
       id: 'gallery',
       label: INSERT_PLUGIN_BUTTONS.GALLERY,
+      dataHook: INSERT_PLUGIN_BUTTONS.GALLERY,
       icon: InsertPluginIcon,
       tooltip: 'GalleryPlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],

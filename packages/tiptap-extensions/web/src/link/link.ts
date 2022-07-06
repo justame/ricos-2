@@ -94,7 +94,8 @@ export const link: RicosExtension = {
                 state.schema,
                 tr.selection,
                 state.doc,
-                commands
+                commands,
+                link.link?.url || ''
               );
               return chain()
                 .setMark(this.name, link)

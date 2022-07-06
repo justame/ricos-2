@@ -11,6 +11,7 @@ import { alwaysVisibleResolver } from 'wix-rich-content-toolbars-v3';
 const instagram: AddButton = {
   id: 'instagram',
   icon: () => <div />,
+  dataHook: 'Instagram',
   label: 'Instagram',
   tooltip: 'insert instagram embed',
   toolbars: ['SIDE'] as ToolbarType[],
@@ -31,6 +32,7 @@ const tiktok: AddButton = {
   id: 'tiktok',
   icon: () => <div />,
   label: 'Tiktok',
+  dataHook: 'Tiktok',
   tooltip: 'insert tiktok embed',
   toolbars: ['SIDE'] as ToolbarType[],
   command: editorCommands => {
@@ -50,6 +52,7 @@ const emoji: AddButton = {
   id: 'emoji',
   icon: () => <div />,
   label: 'Emoji',
+  dataHook: 'Emoji',
   tooltip: 'insert emoji',
   toolbars: ['SIDE'] as ToolbarType[],
   command: editorCommands => {
@@ -69,6 +72,7 @@ const divider: AddButton = {
   id: 'divider',
   icon: () => <div />,
   label: 'Divider',
+  dataHook: 'Divider',
   tooltip: 'insert divider',
   toolbars: ['SIDE'] as ToolbarType[],
   command: editorCommands => {

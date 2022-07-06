@@ -17,6 +17,10 @@
     color: var(--ricos-settings-text-color, #000);
     width: 100%;
     z-index: 20001;
+
+    @media only screen and (max-width: 640px) {
+      padding: 0px;
+    }
   }
 
   .drawerT,

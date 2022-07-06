@@ -14,15 +14,16 @@ const ReplaceButton: FC<Props> = ({ toolbarItem }) => {
   const modalService = useContext(ModalContext) || {};
   const uploadContext = useContext(UploadServiceContext);
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
-  const { t } = useContext(RicosContext) || {};
+  const { t, isMobile } = useContext(RicosContext) || {};
 
-  const onClick = args => toolbarItem.commands.click(args);
+  const onClick = () =>
+    toolbarItem.commands.click({ node, referenceElement, uploadContext, modalService, isMobile });
   const node = toolbarItem.attributes.selectedNode;
 
   return (
     <ToggleButton
       Icon={ReplaceIcon}
-      onClick={() => onClick({ node, referenceElement, uploadContext, modalService })}
+      onClick={onClick}
       dataHook="baseToolbarButton_replace"
       tooltip={t('ReplaceButton_Tooltip')}
       setRef={setReferenceElement}

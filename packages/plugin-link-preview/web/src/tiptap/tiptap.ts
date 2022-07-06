@@ -69,10 +69,12 @@ const addLinkPreview =
       const url = pos.nodeBefore?.text;
       fetchLinkPreview(fetchData, url)
         .then(linkPreviewData => {
-          if (
-            shouldAddEmbed(linkPreviewData.html, enableEmbed, linkPreviewData.fixedUrl) ||
-            shouldAddLinkPreview(linkPreviewData.title, enableLinkPreview)
-          ) {
+          const shouldEmbed = shouldAddEmbed(
+            linkPreviewData.html,
+            enableEmbed,
+            linkPreviewData.fixedUrl
+          );
+          if (shouldEmbed || shouldAddLinkPreview(linkPreviewData.title, enableLinkPreview)) {
             return createLinkPreviewData({ url, target, rel }, linkPreviewData, config).then(
               linkPreviewComponentData => {
                 const convertedLinkPreviewData = convertBlockDataToRicos(
@@ -83,7 +85,7 @@ const addLinkPreview =
                   .chain()
                   .deleteRange({ from: pos.pos - (pos.nodeBefore?.nodeSize || 0), to: pos.pos })
                   .insertContent({
-                    type: TIPTAP_LINK_PREVIEW_TYPE,
+                    type: shouldEmbed ? TIPTAP_EMBED_TYPE : TIPTAP_LINK_PREVIEW_TYPE,
                     attrs: convertedLinkPreviewData,
                   })
                   .run();

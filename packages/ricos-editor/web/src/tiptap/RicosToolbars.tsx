@@ -202,13 +202,19 @@ class RicosToolbars extends React.Component<
     }
   }
 
-  renderLinkToolbar() {
+  renderLinkToolbar(finaltoolbarSettings: ToolbarSettingsFunctions[]) {
     const {
       ricosContext,
       editor: { tiptapEditor },
     } = this.props;
 
-    if (!ricosContext.isMobile) {
+    const toolbarType = TOOLBARS.INLINE;
+    const toolbarConfig = this.getToolbarConfig(finaltoolbarSettings, toolbarType);
+    const shouldCreate = ricosContext.isMobile
+      ? toolbarConfig?.shouldCreate?.().mobile
+      : toolbarConfig?.shouldCreate?.().desktop;
+
+    if (shouldCreate) {
       return (
         <FloatingToolbar
           editor={tiptapEditor}
@@ -367,7 +373,7 @@ class RicosToolbars extends React.Component<
         {this.renderPluginsToolbar(finalToolbarSettings)}
         {this.renderFooterToolbar(finalToolbarSettings)}
         {this.renderFloatingPluginMenu(finalToolbarSettings)}
-        {this.renderLinkToolbar()}
+        {this.renderLinkToolbar(finalToolbarSettings)}
       </>
     );
   }

@@ -1,14 +1,8 @@
 import { Node_Type } from 'ricos-schema';
 import type { Node } from 'ricos-schema';
 import type { AnchorableBlock, TypesWithIndices, AnchorableBlockWithThumbnail } from './types';
-import type { extract } from 'ricos-content/libs/extract';
-import { and } from 'ricos-content';
-import { not } from 'fp-ts/Predicate';
 import {
   Anchorable_Blocks_Types,
-  isAnchorableNode,
-  isEmptyTextNodes,
-  isSelectedNode,
   headersMapper,
   textNodesMapper,
   atomicNodesMapper,
@@ -16,19 +10,6 @@ import {
   isAnchorableTextNode,
   isThumbnailNode,
 } from './helpers';
-
-export const getAnchorableNodesQuery = (
-  contentExtractor: ReturnType<typeof extract>,
-  editorCommands
-): Node[] => {
-  const selectedNodeId = editorCommands.getSelection().startKey;
-
-  const anchorableNodes: Node[] = contentExtractor
-    .filter(and([isAnchorableNode, not(isEmptyTextNodes), not(isSelectedNode(selectedNodeId))]))
-    .get();
-
-  return anchorableNodes;
-};
 
 const mapTextNodeType = (node: Node): AnchorableBlock['type'] => {
   const { type } = node;

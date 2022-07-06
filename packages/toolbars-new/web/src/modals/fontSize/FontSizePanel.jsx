@@ -29,8 +29,6 @@ class FontSizePanel extends Component {
     this.styles = mergeStyles({ styles, theme: props.theme });
   }
 
-  static contextType = GlobalContext;
-
   onSaveFontSize = (value, clickFromKeyBoard) => {
     this.props?.onToolbarButtonClick?.(value);
     this.props.onSave({ data: value, clickFromKeyBoard });

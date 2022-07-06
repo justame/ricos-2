@@ -18,6 +18,7 @@ export const getAddButtons = (config): AddButton[] => {
     {
       id: 'polls',
       label: INSERT_PLUGIN_BUTTONS.POLLS,
+      dataHook: INSERT_PLUGIN_BUTTONS.POLLS,
       icon: InsertPluginIcon,
       tooltip: 'Poll_InsertPoll_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],

@@ -1,6 +1,9 @@
 import React from 'react';
 import type { ToolbarButton } from 'ricos-types';
-import { PLUGIN_TOOLBAR_BUTTON_ID } from 'wix-rich-content-editor-common';
+import {
+  PLUGIN_TOOLBAR_BUTTON_ID,
+  decorateComponentWithProps,
+} from 'wix-rich-content-editor-common';
 import InsertModal from './modals/InsertModal';
 import { audioModals } from './consts';
 import { NodeSizeButton } from 'wix-rich-content-toolbars-ui';
@@ -25,7 +28,7 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.REPLACE,
       modal: {
-        Component: InsertModal,
+        Component: decorateComponentWithProps(InsertModal, { modalId: audioModals.replace }),
         id: audioModals.replace,
       },
 
@@ -34,7 +37,7 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
           audio: { src },
           id,
         } = node.attrs;
-        modalService?.openModal(audioModals.insert, {
+        modalService?.openModal(audioModals.replace, {
           componentProps: {
             componentData: node.attrs, //TODO: convert to draft
             nodeId: id,

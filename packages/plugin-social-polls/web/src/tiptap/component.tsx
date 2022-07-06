@@ -15,7 +15,7 @@ export const Poll: React.FC<PluginProps> = ({
   editor,
   getPos,
 }) => {
-  const { theme, t, isMobile } = useContext(RicosContext);
+  const { theme, t, isMobile, experiments } = useContext(RicosContext);
   const block = { getKey: () => node.attrs.id };
   const helpers = { handleFileUpload: () => {} };
   //mocks
@@ -49,6 +49,7 @@ export const Poll: React.FC<PluginProps> = ({
         helpers={helpers}
         store={store}
         setInPluginEditingMode={setInPluginEditingMode}
+        experiments={experiments}
       />
     </div>
   );

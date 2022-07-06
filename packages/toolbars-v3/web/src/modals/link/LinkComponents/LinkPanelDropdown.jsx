@@ -115,16 +115,10 @@ export class LinkPanelDropdown extends Component {
             highlightedIndex,
             inputValue,
           }) => {
-            const textInputProps = getInputProps({
-              ...textInputProps,
-            });
+            const inputProps = getInputProps(textInputProps);
             return (
               <div>
-                <Input
-                  {...getInputProps({ ...textInputProps })}
-                  selectText={!fallbackChanged}
-                  placeholder={t('LinkPanel_InputPlaceholder')}
-                />
+                <Input {...inputProps} selectText={!fallbackChanged} />
                 {(isOpen || this.props.isOpen) && List && (
                   <Suspense fallback={<div>Loading...</div>}>
                     <List

@@ -48,7 +48,7 @@ class PollEditorComponent extends PureComponent {
   static contextType = GlobalContext;
 
   shouldNormalizePoll() {
-    const { experiments } = this.context;
+    const experiments = this.props.experiments || this.context.experiments;
     return experiments?.normalizePoll?.enabled;
   }
 

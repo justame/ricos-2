@@ -32,15 +32,17 @@ export const getAddButtons = (config): AddButton[] => {
     [videoButtonsTypes.video]: {
       id: 'video',
       label: INSERT_PLUGIN_BUTTONS.VIDEO,
+      dataHook: INSERT_PLUGIN_BUTTONS.VIDEO,
       icon: VideoInsertPluginIcon,
       tooltip: 'VideoPlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
 
       command: editorCommands => true,
       modal: {
-        id: videoModals.insert,
+        id: videoModals.insertVideo,
         Component: decorateComponentWithProps(InsertModal, {
           componentData: { ...RICOS_DEFAULTS, disableDownload },
+          modalId: videoModals.insertVideo,
           ...modalBaseProps,
         }),
       },
@@ -52,15 +54,17 @@ export const getAddButtons = (config): AddButton[] => {
     [videoButtonsTypes.youTube]: {
       id: 'youtube',
       label: INSERT_PLUGIN_BUTTONS.YOUTUBE,
+      dataHook: INSERT_PLUGIN_BUTTONS.YOUTUBE,
       icon: YoutubeIcon,
       tooltip: 'YouTubePlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
 
       command: editorCommands => true,
       modal: {
-        id: videoModals.insert,
+        id: videoModals.insertYoutube,
         Component: decorateComponentWithProps(InsertModal, {
           componentData: { ...RICOS_DEFAULTS, type: videoButtonsTypes.youTube },
+          modalId: videoModals.insertYoutube,
           ...modalBaseProps,
         }),
       },

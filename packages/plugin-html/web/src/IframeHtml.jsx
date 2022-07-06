@@ -16,16 +16,6 @@ class IframeHtml extends Component {
     !isSSR && window.addEventListener('message', this.handleIframeMessage);
   }
 
-  writeToIframe = iframeElement => {
-    this.iframe = iframeElement;
-    const iframeDocument = iframeElement?.contentWindow?.document;
-    if (iframeDocument) {
-      iframeDocument.open('text/html', 'replace');
-      iframeDocument.write(htmlIframeSrc);
-      iframeDocument.close();
-    }
-  };
-
   componentWillUnmount() {
     !isSSR && window.removeEventListener('message', this.handleIframeMessage);
   }
@@ -55,23 +45,19 @@ class IframeHtml extends Component {
     !this.shouldIgnoreLoad && this.updateIframeContent(this.props.html);
   };
 
-  setIframe = iframe => {
-    this.iframe = iframe;
-  };
-
   render() {
     const { iframeSandboxDomain } = this.props;
 
     const iframeProps = {
       style: { backgroundColor: 'transparent' },
       onLoad: this.handleIframeLoad,
+      iframeRef: iframe => (this.iframe = iframe),
     };
     if (iframeSandboxDomain) {
       const strippedUrl = iframeSandboxDomain.replace(/\/$/, '');
       iframeProps.src = strippedUrl + HtmlSrcPath;
-      iframeProps.iframeRef = this.setIframe;
     } else {
-      iframeProps.iframeRef = this.writeToIframe;
+      iframeProps.srcdoc = htmlIframeSrc;
     }
 
     return this.state.shouldRender ? <Iframe {...iframeProps} /> : null;

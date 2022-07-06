@@ -19,7 +19,7 @@ const InsertModal: FC<Props> = ({ componentData, fetchData, nodeId, socialType }
   const { getEditorCommands } = useContext(EditorContext);
   const modalService = useContext(ModalContext) || {};
   const closeModal = () => {
-    modalService.closeModal(socialModals.insert);
+    modalService.closeModal(socialModals[socialType]);
   };
 
   const onConfirm = embedData => {

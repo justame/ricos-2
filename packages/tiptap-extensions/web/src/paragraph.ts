@@ -66,11 +66,7 @@ export const paragraph: RicosExtension = {
         return [
           'div',
           attrs,
-          [
-            'span',
-            { style: 'display: inline-block;', ...(shouldAddDir ? { dir: 'auto' } : {}) },
-            0,
-          ],
+          ['span', { ...(shouldAddDir ? { dir: 'auto' } : {}) }, 0],
         ] as DOMOutputSpec;
       },
 

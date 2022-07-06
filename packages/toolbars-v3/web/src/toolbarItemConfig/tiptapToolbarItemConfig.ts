@@ -18,6 +18,7 @@ import {
   TextHighlightIcon,
   UndoIcon,
   RedoIcon,
+  PlusIcon,
 } from '../icons';
 import {
   alwaysVisibleResolver,
@@ -46,6 +47,17 @@ const MAX_FONT_SIZE = 900;
 const MIN_FONT_SIZE = 1;
 
 export const tiptapStaticToolbarConfig: IToolbarItemConfigTiptap[] = [
+  {
+    id: 'addPlugin',
+    type: 'modal',
+    presentation: {
+      icon: PlusIcon,
+    },
+    attributes: {
+      visible: alwaysVisibleResolver,
+    },
+    commands: {},
+  },
   {
     id: 'undo',
     type: 'toggle',
@@ -517,8 +529,8 @@ export const tiptapStaticToolbarConfig: IToolbarItemConfigTiptap[] = [
         },
       insertAnchor:
         ({ editorCommands }) =>
-        anchor => {
-          editorCommands.chain().focus().setAnchor(anchor).run();
+        data => {
+          editorCommands.chain().focus().setAnchor(data).run();
         },
       removeLink:
         ({ editorCommands }) =>

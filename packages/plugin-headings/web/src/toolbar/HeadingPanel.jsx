@@ -43,8 +43,6 @@ export default class HeadingsDropDownPanel extends Component {
     this.styles = mergeStyles({ styles, theme: props.theme });
   }
 
-  static contextType = GlobalContext;
-
   onSaveHeading = (type, headingName) => {
     return this.props.onSave(type, headingName);
   };

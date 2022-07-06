@@ -35,12 +35,13 @@ const AddPluginMenu: React.FC<Props> = ({
   const pluginModalPlacement = calcPluginModalPlacement(isMobile, languageDir);
 
   const renderPluginButton = (
-    { icon, label, tooltip }: AddButton,
+    { icon, label, tooltip, dataHook }: AddButton,
     onClick: () => void,
     onButtonVisible: () => void
   ) => {
     return (
       <PluginMenuButton
+        dataHook={dataHook}
         Icon={icon}
         label={label}
         onClick={onClick}
