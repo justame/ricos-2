@@ -79,9 +79,9 @@ export const tiptapExtensions = [
           return [
             'span',
             {
-              style: `display: inline-block; color: ${getColor(
-                HTMLAttributes.foreground
-              )}; background-color: ${getColor(HTMLAttributes.background)}`,
+              style: `color: ${getColor(HTMLAttributes.foreground)}; background-color: ${getColor(
+                HTMLAttributes.background
+              )}`,
             },
             0,
           ];

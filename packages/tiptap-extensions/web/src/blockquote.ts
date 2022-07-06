@@ -50,7 +50,7 @@ export const blockquote: RicosExtension = {
     return {
       name: this.name,
 
-      content: 'inline*',
+      content: 'text*',
 
       group: 'block',
 
@@ -79,7 +79,7 @@ export const blockquote: RicosExtension = {
         return [
           'blockquote',
           attrs,
-          ['span', { class: styles['text-wrapper'], ...(shouldAddDir ? { dir: 'auto' } : {}) }, 0],
+          ['span', { ...(shouldAddDir ? { dir: 'auto' } : {}) }, 0],
         ] as DOMOutputSpec;
       },
 

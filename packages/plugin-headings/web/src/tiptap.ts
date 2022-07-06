@@ -71,7 +71,7 @@ export const tiptapExtensions = [
             mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
               class: styles[`header${HEADER_NAMES[level - 1]}`],
             }),
-            ['span', { class: styles['text-wrapper'] }, 0],
+            ['span', 0],
           ] as DOMOutputSpec;
         },
 

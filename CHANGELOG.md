@@ -22,7 +22,7 @@
 - `ricos-content`
   - [#4103](https://github.com/wix/ricos/pull/4103) fix normalizeUrl func to handle "mailto:" url's
 - `ricos-editor`
-  - [#4137](https://github.com/wix/ricos/pull/4137) use RicosPortal in TextFormattingToolbars.tsx 
+  - [#4137](https://github.com/wix/ricos/pull/4137) use RicosPortal in TextFormattingToolbars.tsx
 
 ## :house: Internal
 
@@ -30,8 +30,8 @@
   - [#4110](https://github.com/wix/ricos/pull/4110) tiptap - add toolbar size & line-style buttons
 - `ricos-modals`
   - [#4133](https://github.com/wix/ricos/pull/4133) ModalRenderer: event subscription management
-- `teiptap-extensions`
-  - [#4134](https://github.com/wix/ricos/pull/4134) fix text overflow
+- `tiptap-extensions`
+  - [#4138](https://github.com/wix/ricos/pull/4138) fix text overflow
 
 </details>
 
