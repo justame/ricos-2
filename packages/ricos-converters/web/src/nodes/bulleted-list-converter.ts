@@ -9,8 +9,8 @@ export const bulletedListConverter: TiptapNodeConverter = {
     convert: (node: BulletedListNode, visit: (node: BulletedListNode) => TiptapNode[]) => ({
       type: Node_Type.BULLETED_LIST,
       attrs: {
-        id: node.id,
         ...node.bulletedListData,
+        id: node.id,
       },
       content: visit(node),
     }),

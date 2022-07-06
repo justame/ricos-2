@@ -14,8 +14,8 @@ export const collapsibleListConverter: TiptapNodeConverter = {
     convert: (node: CollapsibleListNode, visit: (node: CollapsibleListNode) => TiptapNode[]) => ({
       type: Node_Type.COLLAPSIBLE_LIST,
       attrs: {
-        id: node.id,
         ...node.collapsibleListData,
+        id: node.id,
       },
       content: visit(node),
     }),
