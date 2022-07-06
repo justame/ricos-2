@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :house: added missing converters
+
+- `ricos-converters`
+  - [#4065](https://github.com/wix/ricos/pull/4065) add missing node converters
+
 ## :bug: Bug Fix
 
 - `ricos-content`
