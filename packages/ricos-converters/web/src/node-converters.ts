@@ -3,6 +3,7 @@ import toCamelCase from 'to-camel-case';
 import { linkButtonConverter, actionButtonConverter } from './nodes/button-converters';
 import { blockquoteConverter } from './nodes/blockquote-converter';
 import {
+  collapsibleListConverter,
   collapsibleItemBodyConverter,
   collapsibleItemConverter,
   collapsibleItemTitleConverter,
@@ -14,6 +15,19 @@ import { listItemConverter } from './nodes/list-converters';
 import { paragraphConverter } from './nodes/paragraph-converter';
 import { tableRowConverter } from './nodes/table-converters';
 import { textConverter } from './nodes/text-converter';
+import { codeBlockConverter } from './nodes/code-block-converter';
+import { audioConverter } from './nodes/audio-converter';
+import { embedConverter } from './nodes/embed-converter';
+import { fileUploadConverter } from './nodes/file-upload-converter';
+import { galleryConverter } from './nodes/gallery-converter';
+import { gifConverter } from './nodes/gif-converter';
+import { mapConverter } from './nodes/map-converter';
+import { videoConverter } from './nodes/video-converter';
+import { pollConverter } from './nodes/poll-converter';
+import { htmlConverter } from './nodes/html-converter';
+import { linkPreviewConverter } from './nodes/link-preview-converter';
+import { orderedListConverter } from './nodes/ordered-list-converter';
+import { bulletedListConverter } from './nodes/bulleted-list-converter';
 import type { TiptapNode, TiptapNodeConverter } from './types';
 
 export const getUnsupportedToTiptap = (node: Node): TiptapNodeConverter['toTiptap'] => {
@@ -57,8 +71,22 @@ export const nodeConverters = [
   linkButtonConverter,
   actionButtonConverter,
   listItemConverter,
+  collapsibleListConverter,
   collapsibleItemConverter,
   collapsibleItemTitleConverter,
   collapsibleItemBodyConverter,
   tableRowConverter,
+  codeBlockConverter,
+  audioConverter,
+  embedConverter,
+  fileUploadConverter,
+  galleryConverter,
+  gifConverter,
+  mapConverter,
+  videoConverter,
+  pollConverter,
+  htmlConverter,
+  linkPreviewConverter,
+  orderedListConverter,
+  bulletedListConverter,
 ];
