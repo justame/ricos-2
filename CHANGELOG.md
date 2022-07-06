@@ -21,6 +21,8 @@
 
 - `ricos-content`
   - [#4103](https://github.com/wix/ricos/pull/4103) fix normalizeUrl func to handle "mailto:" url's
+- `ricos-editor`
+  - [#4137](https://github.com/wix/ricos/pull/4137) use RicosPortal in TextFormattingToolbars.tsx 
 
 ## :house: Internal
 

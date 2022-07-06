@@ -21,6 +21,7 @@ import {
 import { mobileTextButtonList, desktopTextButtonList } from './utils/defaultTextFormattingButtons';
 import { filterButtons, isLinkToolbarOpen, addConfigButtons } from './utils/toolbarsUtils';
 import { toolbarSettingsFromConfig } from './utils/toolbarsConfig';
+import RicosPortal from '../modals/RicosPortal';
 
 interface TextFormattingToolbarProps {
   activeEditor: RichContentEditor;
@@ -188,6 +189,7 @@ class TextFormattingToolbar extends Component<TextFormattingToolbarProps, State>
     const textToolbarContainer = this.props.toolbarSettings?.textToolbarContainer;
     if (textToolbarContainer) {
       //render static toolbar inside provided container
+
       const staticToolbar = (
         <div
           key={`${this.state.keyForRerender}`}
@@ -197,7 +199,11 @@ class TextFormattingToolbar extends Component<TextFormattingToolbarProps, State>
           {ToolbarWithContainerToRender}
         </div>
       );
-      return ReactDOM.createPortal(staticToolbar, textToolbarContainer);
+      return (
+        <RicosPortal className={theme?.parentClass} container={textToolbarContainer}>
+          {staticToolbar}
+        </RicosPortal>
+      );
     } else {
       return !hideFormattingToolbar ? ToolbarWithContainerToRender : null;
     }
