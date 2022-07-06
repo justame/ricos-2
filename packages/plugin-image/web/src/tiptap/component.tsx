@@ -11,7 +11,7 @@ export const Image: React.FC<PluginProps> = ({
   updateAttributes,
   node,
 }) => {
-  const { theme, t, isMobile } = useContext(RicosContext);
+  const { theme, t, isMobile, experiments } = useContext(RicosContext);
   const helpers = {};
   const blockProps = {
     setFocusToBlock: () => null,
@@ -39,6 +39,7 @@ export const Image: React.FC<PluginProps> = ({
         setFocusToBlock={blockProps.setFocusToBlock}
         setComponentUrl={setComponentUrl}
         blockKey={blockKey}
+        experiments={experiments}
       />
       {loading && <Loader theme={theme} type={'medium'} percent={loadingPercentage} />}
       {error && <MediaItemErrorMsg error={error} t={t} />}

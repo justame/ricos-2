@@ -373,4 +373,5 @@ ButtonInputModal.propTypes = {
   onCancel: PropTypes.func,
   pubsub: PropTypes.object,
   onCloseRequested: PropTypes.func,
+  languageDir: PropTypes.string,
 };

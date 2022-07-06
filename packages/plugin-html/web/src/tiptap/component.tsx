@@ -9,7 +9,7 @@ export const Html: React.FC<PluginProps> = ({
   updateAttributes,
   node,
 }) => {
-  const { theme, isMobile } = useContext(RicosContext);
+  const { theme, isMobile, experiments } = useContext(RicosContext);
 
   const updateHtmlHeight = data => {
     updateAttributes({
@@ -28,6 +28,7 @@ export const Html: React.FC<PluginProps> = ({
       settings={settings}
       isMobile={isMobile}
       theme={theme}
+      experiments={experiments}
     />
   );
 };

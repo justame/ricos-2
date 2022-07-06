@@ -201,7 +201,7 @@ class DesignComponent extends PureComponent {
   render() {
     const styles = this.styles;
     const { theme, t } = this.props;
-    const { languageDir } = this.context;
+    const languageDir = this.props.languageDir || this.context.languageDir;
     const { design } = this.state;
     return (
       <div
