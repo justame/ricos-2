@@ -17,11 +17,6 @@
     Click to see more.
   </summary>
 
-## :house: added missing converters
-
-- `ricos-converters`
-  - [#4065](https://github.com/wix/ricos/pull/4065) add missing node converters
-
 ## :bug: Bug Fix
 
 - `ricos-content`
@@ -158,3 +153,5 @@
   - [#4006](https://github.com/wix/ricos/pull/4006) move FloatingPluginMenu to toolbars-v3 and split to smaller components
 - `ricos-converters`
   - [#4021](https://github.com/wix/ricos/pull/4021) tiptap converters for single node
+- `ricos-converters`
+  - [#4065](https://github.com/wix/ricos/pull/4065) added missing tiptap converters
