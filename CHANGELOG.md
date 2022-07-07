@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `ricos-editor/tiptap`
+  - [#4146](https://github.com/wix/ricos/pull/4146) fix getEditorCommands from editor ref
+
 </details>
 
 ## 8.71.37 (Jul 7, 2022)

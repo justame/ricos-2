@@ -142,7 +142,7 @@ export class FullRicosEditor
   };
 
   getEditorCommands: RicosEditorRef['getEditorCommands'] = () => {
-    return this.editor.current?.getEditorCommands() || ({} as EditorCommands);
+    return this.tiptapAdapter?.getEditorCommands() || ({} as EditorCommands);
   };
 
   getToolbarContext(getEditorCommands: () => EditorCommands): ToolbarContextType {
