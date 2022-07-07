@@ -15,6 +15,7 @@ import {
   StylesContextProvider,
   ToolbarContext,
 } from 'ricos-context';
+import { fromTiptapNode } from 'ricos-converters';
 import { RicosEvents } from 'ricos-events';
 import { ModalRenderer, RicosModalService } from 'ricos-modals';
 import { EditorPlugins } from 'ricos-plugins';
@@ -52,7 +53,13 @@ export class FullRicosEditor
   extends React.Component<RicosEditorProps, State>
   implements RicosEditorRef
 {
-  content = Content.create<Node[]>([]);
+  nodeService = {
+    nodeToRicosNode: node => {
+      return fromTiptapNode(node.toJSON());
+    },
+  };
+
+  content = Content.create<Node[]>([], { styles, nodeService: this.nodeService });
 
   state = { error: '' };
 

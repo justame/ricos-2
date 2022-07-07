@@ -5,7 +5,7 @@ export class Content<T> extends EventEmitter {
     contentChangeEvent: 'contentChange',
   };
 
-  private constructor(private content: T) {
+  private constructor(private content: T, private services = {}) {
     super();
   }
 
@@ -15,7 +15,7 @@ export class Content<T> extends EventEmitter {
     if (this.resolved[contentResolver.id]) {
       return this.resolved[contentResolver.id];
     } else {
-      this.resolved[contentResolver.id] = contentResolver.resolve(this.content);
+      this.resolved[contentResolver.id] = contentResolver.resolve(this.content, this.services);
     }
     return this.resolved[contentResolver.id];
   }
@@ -34,7 +34,7 @@ export class Content<T> extends EventEmitter {
     return !!this.content;
   }
 
-  static create<T>(content: T) {
-    return new Content(content);
+  static create<T>(content: T, services = {}) {
+    return new Content(content, services);
   }
 }

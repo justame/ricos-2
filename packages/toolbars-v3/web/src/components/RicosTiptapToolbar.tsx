@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import '../style.scss';
 import type { Content } from '../Content';
 import type { RicosToolbar } from '../RicosToolbar';

@@ -65,7 +65,9 @@ describe('tiptap resolvers', () => {
           text: 'World',
         },
       ];
-      expect(isTextContainsBoldResolver.resolve(mockContentWithBold as TiptapNode[])).toBe(true);
+      expect(isTextContainsBoldResolver.resolve(mockContentWithBold as TiptapNode[], {})).toBe(
+        true
+      );
     });
 
     it('should return false if selected text is not bold', () => {
@@ -76,7 +78,7 @@ describe('tiptap resolvers', () => {
           text: 'World',
         },
       ];
-      expect(isTextContainsBoldResolver.resolve(mockContentWithoutBold as TiptapNode[])).toBe(
+      expect(isTextContainsBoldResolver.resolve(mockContentWithoutBold as TiptapNode[], {})).toBe(
         false
       );
     });
@@ -91,7 +93,7 @@ describe('tiptap resolvers', () => {
           text: 'World',
         },
       ];
-      expect(isTextContainsItalicResolver.resolve(mockContentWithItalic as TiptapNode[])).toBe(
+      expect(isTextContainsItalicResolver.resolve(mockContentWithItalic as TiptapNode[], {})).toBe(
         true
       );
     });
@@ -104,9 +106,9 @@ describe('tiptap resolvers', () => {
           text: 'World',
         },
       ];
-      expect(isTextContainsItalicResolver.resolve(mockContentWithoutItalic as TiptapNode[])).toBe(
-        false
-      );
+      expect(
+        isTextContainsItalicResolver.resolve(mockContentWithoutItalic as TiptapNode[], {})
+      ).toBe(false);
     });
   });
 

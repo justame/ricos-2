@@ -73,7 +73,7 @@ const HeadingButton = ({ toolbarItem, context, dataHook }) => {
         ReactDOM.createPortal(
           <div
             dir={getLangDir(locale)}
-            ref={setPopperElement}
+            ref={!isMobile ? setPopperElement : () => null}
             style={{ ...popperStyles.popper, zIndex: 9 }}
             {...attributes.popper}
           >

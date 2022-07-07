@@ -26,7 +26,7 @@ const onInputChange = (e, setInputValue, toolbarItem) => {
 };
 
 const FontSizeButton = ({ toolbarItem, context, dataHook }) => {
-  const { t, theme, locale, portal } = context || {};
+  const { t, theme, locale, portal, isMobile } = context || {};
   const [isModalOpen, setModalOpen] = useState(false);
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
@@ -86,7 +86,7 @@ const FontSizeButton = ({ toolbarItem, context, dataHook }) => {
         ReactDOM.createPortal(
           <div
             dir={getLangDir(locale)}
-            ref={setPopperElement}
+            ref={!isMobile ? setPopperElement : () => null}
             style={{ ...popperStyles.popper, zIndex: 9 }}
             {...attributes.popper}
           >

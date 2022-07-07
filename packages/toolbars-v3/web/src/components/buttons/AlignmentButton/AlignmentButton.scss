@@ -5,8 +5,8 @@
     background: transparent;
     padding: 4px;
     cursor: pointer;
-    color: var(--ricos-settings-text-color,#000);
-    
+    color: var(--ricos-settings-text-color, #000);
+
     &:hover {
         background-color: rgba(var(--ricos-settings-action-color-tuple, $fallbackColorTuple), 0.06);
     }
@@ -19,10 +19,10 @@
     }
 
     &.mobileAlignmentModalButtonWrapper:not(.active) {
-      &:hover {
-          background-color: unset;
-      }
-  }
+        &:hover {
+            background-color: unset;
+        }
+    }
 }
 
 .alignmentModalButton {
@@ -34,8 +34,8 @@
     gap: 8px;
 
     &.mobileAlignmentModalButton {
-      height: 32px;
-      min-width: 32px;
+        height: 32px;
+        min-width: 32px;
     }
 }
 
@@ -52,4 +52,8 @@
     width: max-content;
     min-width: 42px;
     @include border-box;
-  }
+
+    @include phone {
+        z-index: 100000;
+    }
+}

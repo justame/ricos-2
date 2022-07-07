@@ -1,6 +1,9 @@
+/* eslint-disable fp/no-loops */
 import { TiptapContentResolver } from '../ContentResolver';
 import { RESOLVERS_IDS } from './resolvers-ids';
-import { Node_Type, Decoration_Type } from 'ricos-schema';
+import { Node_Type } from 'ricos-schema';
+import { Decoration_Type } from 'ricos-types';
+import type { RicosStyles } from 'ricos-styles';
 
 export const alwaysVisibleResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.ALWAYS_VISIBLE,
@@ -18,12 +21,25 @@ export const isTextInSelection = TiptapContentResolver.create(
 
 export const isTextContainsBoldResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.IS_TEXT_CONTAINS_BOLD,
-  content => {
+  (content, { styles, nodeService }: { styles: RicosStyles; nodeService }) => {
     if (Array.isArray(content)) {
       const node = content.find(node => {
         return node.type.name === 'text';
       });
-      return node?.marks.some(mark => mark.type.name === Decoration_Type.BOLD);
+      let hasBoldDecorationInDocumentStyles = false;
+      if (node && styles && nodeService) {
+        hasBoldDecorationInDocumentStyles = !!content.find(node => {
+          const decoration = styles.getDecoration(
+            nodeService.nodeToRicosNode(node),
+            Decoration_Type.BOLD
+          );
+          return decoration.fontWeightValue === 700;
+        });
+      }
+      return (
+        node?.marks.some(mark => mark.type.name === Decoration_Type.BOLD) ||
+        hasBoldDecorationInDocumentStyles
+      );
     }
     return false;
   }
@@ -31,12 +47,25 @@ export const isTextContainsBoldResolver = TiptapContentResolver.create(
 
 export const isTextContainsItalicResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.IS_TEXT_CONTAINS_ITALIC,
-  content => {
+  (content, { styles, nodeService }: { styles: RicosStyles; nodeService }) => {
     if (Array.isArray(content)) {
       const node = content.find(node => {
         return node.type.name === 'text';
       });
-      return node?.marks.some(mark => mark.type.name === Decoration_Type.ITALIC);
+      let hasItalicDecorationInDocumentStyles = false;
+      if (node && styles && nodeService) {
+        hasItalicDecorationInDocumentStyles = !!content.find(node => {
+          const decoration = styles.getDecoration(
+            nodeService.nodeToRicosNode(node),
+            Decoration_Type.ITALIC
+          );
+          return decoration.italicData;
+        });
+      }
+      return (
+        node?.marks.some(mark => mark.type.name === Decoration_Type.ITALIC) ||
+        hasItalicDecorationInDocumentStyles
+      );
     }
     return false;
   }
@@ -257,13 +286,27 @@ export const isTextContainsAnchorResolver = TiptapContentResolver.create(
 
 export const getTextColorInSelectionResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.GET_TEXT_COLOR_IN_SELECTION,
-  content => {
+  (content, { styles, nodeService }: { styles: RicosStyles; nodeService }) => {
     if (Array.isArray(content)) {
       const node = content.find(node => {
         return node.type.name === 'text';
       });
       const colorMark = node?.marks.find(mark => mark.type.name === Decoration_Type.COLOR);
-      return colorMark?.attrs.foreground;
+
+      let textColorInDocumentStyle;
+      if (node && styles && nodeService) {
+        for (const node of content) {
+          const decoration = styles.getDecoration(
+            nodeService.nodeToRicosNode(node),
+            Decoration_Type.COLOR
+          );
+          if (decoration.colorData?.foreground) {
+            textColorInDocumentStyle = decoration.colorData?.foreground;
+            break;
+          }
+        }
+      }
+      return colorMark?.attrs.foreground || textColorInDocumentStyle;
     }
     return false;
   }
@@ -271,13 +314,26 @@ export const getTextColorInSelectionResolver = TiptapContentResolver.create(
 
 export const getHighlightColorInSelectionResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.GET_HIGHLIGHT_COLOR_IN_SELECTION,
-  content => {
+  (content, { styles, nodeService }: { styles: RicosStyles; nodeService }) => {
     if (Array.isArray(content)) {
       const node = content.find(node => {
         return node.type.name === 'text';
       });
+      let highlightColorInDocumentStyle;
+      if (node && styles && nodeService) {
+        for (const node of content) {
+          const decoration = styles.getDecoration(
+            nodeService.nodeToRicosNode(node),
+            Decoration_Type.COLOR
+          );
+          if (decoration.colorData?.background) {
+            highlightColorInDocumentStyle = decoration.colorData?.background;
+            break;
+          }
+        }
+      }
       const colorMark = node?.marks.find(mark => mark.type.name === Decoration_Type.COLOR);
-      return colorMark?.attrs.background;
+      return colorMark?.attrs.background || highlightColorInDocumentStyle;
     }
     return false;
   }
