@@ -19,6 +19,8 @@
 
 ## :bug: Bug Fix
 
+- `ricos-content-query`
+  - [#4147](https://github.com/wix/ricos/pull/4147) remove anchorable nodes query from lib to index
 - `ricos-editor/tiptap`
   - [#4146](https://github.com/wix/ricos/pull/4146) fix getEditorCommands from editor ref
 

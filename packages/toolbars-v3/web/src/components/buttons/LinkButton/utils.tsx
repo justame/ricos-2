@@ -6,7 +6,7 @@ import { parseLink } from 'ricos-content/libs/nodeUtils';
 import type { AddLinkData } from 'ricos-types';
 import type { DeepPartial } from 'utility-types';
 import { getAnchorableBlocksFromAnchorableNodes } from './anchorAdapter';
-import { getAnchorableNodesQuery } from 'ricos-content-query/libs/getAnchorableNodesQuery';
+import { getAnchorableNodesQuery } from 'ricos-content-query';
 import type { ContentQueryService } from 'ricos-content-query';
 
 type LinkData = AddLinkData & { customData?: string };

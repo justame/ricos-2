@@ -1,5 +1,0 @@
-{
-    "main": "../../dist/lib/getAnchorableNodesQuery.cjs.js",
-    "module": "../../dist/lib/getAnchorableNodesQuery.js",
-    "types": "../../dist/lib/getAnchorableNodesQuery.d.ts"
-}
