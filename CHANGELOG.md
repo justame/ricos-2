@@ -17,6 +17,10 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.71.37 (Jul 7, 2022)
+
 ## :bug: Bug Fix
 
 - `ricos-content`
@@ -32,8 +36,8 @@
   - [#4133](https://github.com/wix/ricos/pull/4133) ModalRenderer: event subscription management
 - `tiptap-extensions`
   - [#4138](https://github.com/wix/ricos/pull/4138) fix text overflow
-
-</details>
+- `tiptap-toobar-v3`
+  - [#4142](https://github.com/wix/ricos/pull/4142) resolvers fix and modals z-index in viewer
 
 ## 8.71.36 (Jul 3, 2022)
 
