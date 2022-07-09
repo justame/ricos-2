@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :house: Internal
+
+- `ricos-events`
+  - [#4149](https://github.com/wix/ricos/pull/4149) getAllTopics; publishOnce; duplication errors
+
 </details>
 
 ## 8.71.38 (Jul 9, 2022)
