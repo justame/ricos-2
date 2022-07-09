@@ -31,17 +31,32 @@ export class RicosEvent<T extends RicosEventData> implements Event<RicosEventDat
     this.topic = topic;
   }
 
-  subscribe(handler: (data: T) => void, subscriberId: string): Subscription {
+  subscribe(
+    handler: (topic: TopicDescriptor, data: T) => void,
+    subscriberId: string
+  ): Subscription {
     const subscriber = new EventSubscriber(handler, subscriberId);
+    if (this.isDuplicateSubscriber(subscriber)) {
+      console.warn(
+        `A duplicate subscriber ${subscriberId} for topic ${this.topic} detected.`,
+        `Possible reasons: multiple instances of the same component subscribing, or wrong lifecycle management.`
+      );
+    }
     this.subscribers.push(subscriber);
+    console.debug(`[${this.topic}]: ${subscriberId} subscribed`); // eslint-disable-line no-console
     return {
       topic: this.topic.toString(),
       cancel: () => {
+        console.debug(`[${this.topic}]: ${subscriberId} unsubscribed`); // eslint-disable-line no-console
         this.subscribers = this.subscribers.filter(
           (s: EventSubscriber<T>) => s.id !== subscriber.id
         );
       },
     };
+  }
+
+  private isDuplicateSubscriber(subscriber: EventSubscriber<T>) {
+    return this.subscribers.some(s => s.id === subscriber.id);
   }
 
   publishSync(data: T): boolean {
@@ -51,7 +66,7 @@ export class RicosEvent<T extends RicosEventData> implements Event<RicosEventDat
     const t1 = performance.now();
     const processings = this.subscribers.map(subscriber => {
       const t3 = performance.now();
-      subscriber.invoke(data);
+      subscriber.invoke(this.topic.toString(), data);
       const t4 = performance.now();
       return {
         subscriberId: subscriber.id,
@@ -77,7 +92,9 @@ export class RicosEvent<T extends RicosEventData> implements Event<RicosEventDat
       throw new DisposedEventAccessError(`[${this.topic}] cannot publish disposed event`);
     }
     const t1 = performance.now();
-    this.subscribers.forEach(subscriber => setTimeout(() => subscriber.invoke(data), 0));
+    this.subscribers.forEach(subscriber =>
+      setTimeout(() => subscriber.invoke(this.topic.toString(), data), 0)
+    );
     const t2 = performance.now();
     const metadata: AsyncPublishingMetadata = {
       topic: this.topic.toString(),
@@ -91,6 +108,14 @@ export class RicosEvent<T extends RicosEventData> implements Event<RicosEventDat
     return this.subscribers.length > 0;
   }
 
+  publishOnce(data: T): boolean {
+    const published = this.publish(data);
+    if (published) {
+      this.dispose();
+    }
+    return published;
+  }
+
   getTopic(): Topic {
     return this.topic;
   }
@@ -98,20 +123,21 @@ export class RicosEvent<T extends RicosEventData> implements Event<RicosEventDat
   dispose() {
     this.subscribers = [];
     this.isActive = false;
+    console.debug(`[${this.topic}]: event disposed`); // eslint-disable-line no-console
   }
 }
 
 export class EventSubscriber<T extends RicosEventData> implements Subscriber<RicosEventData> {
-  readonly callback: (data: T) => void;
+  readonly callback: (topic: TopicDescriptor, data: T) => void;
 
   readonly id: string;
 
-  constructor(callback: (data: T) => void, id: string) {
+  constructor(callback: (topic: TopicDescriptor, data: T) => void, id: string) {
     this.id = id;
     this.callback = callback;
   }
 
-  invoke(data: T): void {
-    this.callback(data);
+  invoke(topic: TopicDescriptor, data: T): void {
+    this.callback(topic, data);
   }
 }

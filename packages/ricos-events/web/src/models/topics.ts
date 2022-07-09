@@ -68,6 +68,16 @@ export interface Topic {
    * @memberof Topic
    */
   matches: (glob: SubscribeTopicDescriptor) => boolean;
+
+  /**
+   * Determines whether a topic equals another topic
+   *
+   * @memberof Topic
+   *
+   * @param {Topic} topic
+   * @returns {boolean}
+   */
+  equals: (topic: Topic) => boolean;
 }
 
 /**

@@ -32,6 +32,14 @@ export interface Event<T extends EventData> {
    */
   publish(data: T): boolean;
   /**
+   * Publishes event asynchronously once, then disposes itself (if there was at least one subscriber)
+   *
+   * @param {T} data
+   * @returns  {boolean}
+   * @memberof Event
+   */
+  publishOnce(data: T): boolean;
+  /**
    * Returns event topic
    *
    * @memberof Event
@@ -40,7 +48,7 @@ export interface Event<T extends EventData> {
 }
 
 export interface Subscriber<T extends EventData> {
-  callback: (data: T) => void;
-  invoke(data: T, eventId: number): void;
+  callback: (topic: TopicDescriptor, data: T) => void;
+  invoke(topic: TopicDescriptor, data: T): void;
   id: string;
 }

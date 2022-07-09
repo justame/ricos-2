@@ -5,9 +5,18 @@ import { RicosEvents } from './events';
 describe('RicosEvents', () => {
   it('should register event by topic', () => {
     const events = new RicosEvents();
-    const topic = 'ricos.editor.functionality.loaded';
+    const topic = 'ricos.events.test.register';
     const publisher = events.register(topic);
     expect(publisher.topic).toBe(topic);
+  });
+
+  it('should throw on duplicate topic registration', () => {
+    const events = new RicosEvents();
+    const topic = 'ricos.events.test.duplicate';
+    events.register(topic);
+    expect(() => {
+      events.register(topic);
+    }).toThrowError(/already registered/);
   });
 
   it('should throw on invalid topic registration', () => {
@@ -30,8 +39,10 @@ describe('RicosEvents', () => {
     loadEditorPublisher.publishSync({ type: 'loaded' });
     imageAddedPublisher.publishSync({ type: 'added' });
     expect(handler).toHaveBeenCalledTimes(2);
-    expect(handler.mock.calls[0][0]).toEqual({ type: 'loaded' });
-    expect(handler.mock.calls[1][0]).toEqual({ type: 'added' });
+    expect(handler.mock.calls[0][0]).toEqual('ricos.editor.functionality.loaded');
+    expect(handler.mock.calls[0][1]).toEqual({ type: 'loaded' });
+    expect(handler.mock.calls[1][0]).toEqual('ricos.image.instance.added');
+    expect(handler.mock.calls[1][1]).toEqual({ type: 'added' });
   });
 
   it('should allow to subscribe to specific event', () => {
@@ -51,7 +62,7 @@ describe('RicosEvents', () => {
     loadEditorPublisher.publishSync({ type: 'loaded' });
     imageAddedPublisher.publishSync({ type: 'added' });
     expect(handler).toHaveBeenCalledTimes(1);
-    expect(handler.mock.calls[0][0]).toEqual({ type: 'loaded' });
+    expect(handler.mock.calls[0][1]).toEqual({ type: 'loaded' });
   });
 
   it('should allow to cancel subscription', () => {
@@ -71,7 +82,7 @@ describe('RicosEvents', () => {
     loadEditorPublisher.publishSync({ type: 'loaded' });
     imageAddedPublisher.publishSync({ type: 'added' });
     expect(handler).toHaveBeenCalledTimes(1);
-    expect(handler.mock.calls[0][0]).toEqual({ type: 'loaded' });
+    expect(handler.mock.calls[0][1]).toEqual({ type: 'loaded' });
 
     subscription.cancel();
     loadEditorPublisher.publishSync({ type: 'loaded' });
@@ -92,8 +103,8 @@ describe('RicosEvents', () => {
     loadEditorPublisher.publishSync({ type: 'loaded' });
     imageAddedPublisher.publishSync({ type: 'added' });
     expect(handler).toHaveBeenCalledTimes(2);
-    expect(handler.mock.calls[0][0]).toEqual({ type: 'loaded' });
-    expect(handler.mock.calls[1][0]).toEqual({ type: 'added' });
+    expect(handler.mock.calls[0][1]).toEqual({ type: 'loaded' });
+    expect(handler.mock.calls[1][1]).toEqual({ type: 'added' });
 
     subscription.cancel();
     loadEditorPublisher.publishSync({ type: 'loaded' });
@@ -145,7 +156,7 @@ describe('RicosEvents with custom data', () => {
     imageAddedPublisher.publishSync(imageData);
     dividerAddedPublisher.publishSync(dividerData);
     expect(handler).toHaveBeenCalledTimes(2);
-    expect(handler.mock.calls[0][0]).toEqual(imageData);
-    expect(handler.mock.calls[1][0]).toEqual(dividerData);
+    expect(handler.mock.calls[0][1]).toEqual(imageData);
+    expect(handler.mock.calls[1][1]).toEqual(dividerData);
   });
 });

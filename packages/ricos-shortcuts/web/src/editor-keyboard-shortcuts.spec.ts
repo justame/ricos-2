@@ -5,9 +5,11 @@ import { EditorKeyboardShortcuts } from './editor-keyboard-shortcuts';
 
 describe('Editor Keyboard Shortcuts', () => {
   const events: EventRegistrar = {
+    getAllTopics: () => [],
     register: () => ({
       publish: () => false,
       publishSync: () => false,
+      publishOnce: () => false,
       topic: 'ricos.shortcuts.test.EditorKeyboardShortcuts',
     }),
   };

@@ -74,7 +74,7 @@ export class RicosTopic implements Topic {
     return `${this.domain}.${this.subdomain}.${this.context}.${this.event}`;
   }
 
-  strictEquals(other: Topic): boolean {
+  equals(other: Topic): boolean {
     return this.toString() === other.toString();
   }
 

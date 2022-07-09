@@ -1,5 +1,4 @@
 import type {
-  AmbientStyles,
   EditorCommands,
   EventData,
   EventPublisher,

@@ -156,7 +156,7 @@ class RicosEditor
   onUpdate = ({ content }) => {
     if (!this.firstEdit) {
       this.firstEdit = true;
-      this.firstContentEditPublisher.publish('📝 first content edit');
+      this.firstContentEditPublisher.publishOnce('📝 first content edit');
     }
     this.isLastChangeEdit = true;
     this.props.onChange?.(content);

@@ -45,6 +45,12 @@ export interface EventRegistrar {
    * @memberof EventRegistrar
    */
   register: <T extends EventData>(topic: TopicDescriptor) => EventPublisher<T>;
+  /**
+   * Returns all available topics
+   *
+   * @memberof EventRegistrar
+   */
+  getAllTopics: () => TopicDescriptor[];
 }
 
 /**
@@ -69,7 +75,12 @@ export interface EventPublisher<T extends EventData> {
    * @memberof EventPublisher
    */
   publish: (data: T) => boolean;
-
+  /**
+   * Publishes event asynchronously once, then disposes itself (if there was at least one subscriber)
+   *
+   * @memberof EventPublisher
+   */
+  publishOnce: (data: T) => boolean;
   /**
    * Topic of the publisher
    *

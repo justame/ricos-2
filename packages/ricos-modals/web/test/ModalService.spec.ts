@@ -5,6 +5,7 @@ import { RicosModalService } from '../src/ModalService';
 const events: EventRegistrar & EventSubscriptor = {
   register: jest.fn(),
   subscribe: jest.fn(),
+  getAllTopics: jest.fn(),
 };
 
 // TODO: fully test openModal, closeModal

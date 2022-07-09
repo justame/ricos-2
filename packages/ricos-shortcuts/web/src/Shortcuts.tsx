@@ -1,14 +1,8 @@
 import type { FC, ReactChild } from 'react';
 import React, { useContext, useEffect, useRef } from 'react';
 import { configure, HotKeys } from 'react-hotkeys';
-import {
-  ModalContext,
-  RicosContext,
-  EditorContext,
-  EventsContext,
-  ShortcutsContext,
-} from 'ricos-context';
-import type { EventRegistrar, KeyboardShortcut, ModalConfig, ModalService } from 'ricos-types';
+import { EditorContext, ModalContext, RicosContext, ShortcutsContext } from 'ricos-context';
+import type { KeyboardShortcut, ModalConfig, ModalService } from 'ricos-types';
 import type { Shortcuts as ShortcutManager } from './models/shortcuts';
 import { ShortcutsDialog } from './ShortcutsDialog';
 
@@ -70,12 +64,8 @@ export const Shortcuts: FC<ShortcutsProps> = (props: ShortcutsProps) => {
 
   const { t } = useContext(RicosContext);
   const { getEditorCommands } = useContext(EditorContext);
-  const eventRegistrar: EventRegistrar = useContext(EventsContext);
   const commands = getEditorCommands();
-  const shortutEventPublisher = eventRegistrar.register(
-    'ricos.shortcuts.functionality.shortcutApplied'
-  );
-  const { handlers, keyMap } = shortcuts.getHotKeysProps(group, commands, t, shortutEventPublisher);
+  const { handlers, keyMap } = shortcuts.getHotKeysProps(group, commands, t);
 
   useComponentWillMount(() => {
     if (root) {

@@ -67,6 +67,7 @@ describe('RicosEvent<ImageData>', () => {
       disableDownload: false,
     };
     expect(event.publishSync(imageData)).toBe(true);
-    expect(handler).toHaveBeenCalledWith(imageData);
+    expect(handler.mock.calls[0][0]).toEqual('ricos.event.test.customDataType');
+    expect(handler.mock.calls[0][1]).toEqual(imageData);
   });
 });

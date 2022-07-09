@@ -132,7 +132,6 @@ export interface Shortcuts extends ShortcutRegistrar {
   getHotKeysProps: (
     group: string,
     commands: EditorCommands,
-    t: TranslationFunction,
-    publisher: EventPublisher<EventData>
+    t: TranslationFunction
   ) => HotKeysProps;
 }
