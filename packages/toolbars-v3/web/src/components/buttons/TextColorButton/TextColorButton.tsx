@@ -53,7 +53,7 @@ const TextColorButton = ({ toolbarItem, context, dataHook }) => {
   const palette = extractPalette(colorScheme);
   const paletteColors = isMobile ? palette.slice(0, 5) : palette.slice(0, 6);
 
-  const userColors = colorPickerData.TEXT_COLOR?.getUserColors?.();
+  const userColors = colorPickerData.TEXT_COLOR?.getUserColors?.() || [];
 
   const onColorAdded = ({ color }) => colorPickerData.TEXT_COLOR?.onColorAdded?.(color);
 

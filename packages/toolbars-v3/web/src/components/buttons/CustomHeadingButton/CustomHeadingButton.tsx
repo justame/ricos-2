@@ -84,7 +84,7 @@ const CustomHeadingButton = ({ toolbarItem, context, dataHook }) => {
           <div
             dir={getLangDir(locale)}
             ref={!isMobile ? setPopperElement : () => null}
-            style={{ ...popperStyles.popper, zIndex: 9 }}
+            style={{ ...popperStyles.popper }}
             {...attributes.popper}
           >
             <div data-id="toolbar-modal-button" tabIndex={-1} className={styles.modal}>
