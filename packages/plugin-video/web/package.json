@@ -1,6 +1,6 @@
 {
   "name": "wix-rich-content-plugin-video",
-  "version": "8.71.39",
+  "version": "8.71.40",
   "author": {
     "name": "Jonathan Bachman",
     "email": "jonathanb@wix.com"
@@ -37,15 +37,15 @@
   },
   "dependencies": {
     "react-player": "~1.14.0",
-    "ricos-content": "8.71.39",
-    "ricos-context": "8.71.39",
-    "ricos-modals": "8.71.39",
-    "ricos-tiptap-types": "8.71.39",
-    "wix-rich-content-common": "8.71.39",
-    "wix-rich-content-editor-common": "8.71.39",
-    "wix-rich-content-plugin-commons": "8.71.39",
-    "wix-rich-content-ui-components": "8.71.39",
-    "wix-tiptap-editor": "8.71.39"
+    "ricos-content": "8.71.40",
+    "ricos-context": "8.71.40",
+    "ricos-modals": "8.71.40",
+    "ricos-tiptap-types": "8.71.40",
+    "wix-rich-content-common": "8.71.40",
+    "wix-rich-content-editor-common": "8.71.40",
+    "wix-rich-content-plugin-commons": "8.71.40",
+    "wix-rich-content-ui-components": "8.71.40",
+    "wix-tiptap-editor": "8.71.40"
   },
   "peerDependencies": {
     "lodash": "^4.0.0"
