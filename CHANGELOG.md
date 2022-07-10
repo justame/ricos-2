@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `ricos-editor`
+  - [#4162](https://github.com/wix/ricos/pull/4162) fix FullRicosEditor service lifecycle
+
 </details>
 
 ## 8.71.41 (Jul 10, 2022)
