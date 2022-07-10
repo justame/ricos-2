@@ -1,5 +1,6 @@
 import type { ExtensionProps, RicosExtension, RicosExtensionConfig } from 'ricos-tiptap-types';
-import { TextStyle_TextAlignment } from 'ricos-schema';
+import { Node_Type, TextStyle_TextAlignment } from 'ricos-schema';
+import { Plugin, PluginKey } from 'prosemirror-state';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -32,6 +33,7 @@ export const textAlign: RicosExtension = {
   ) {
     const types = extensions
       .filter(extension => extension.groups.includes('text-container'))
+      .filter(extension => extension.name !== Node_Type.LIST_ITEM)
       .map(({ name }) => name);
 
     return {
@@ -109,7 +111,7 @@ export const textAlign: RicosExtension = {
   createExtensionConfig() {
     return {
       name: this.name,
-
+      priority: 3,
       addKeyboardShortcuts() {
         return {
           'Mod-Shift-l': () => this.editor.commands.setTextAlign(TextStyle_TextAlignment.LEFT),
@@ -118,6 +120,33 @@ export const textAlign: RicosExtension = {
           'Mod-Shift-j': () => this.editor.commands.setTextAlign(TextStyle_TextAlignment.JUSTIFY),
           'Mod-Shift-u': () => this.editor.commands.unsetTextAlign(),
         };
+      },
+      addProseMirrorPlugins() {
+        return [
+          new Plugin({
+            key: new PluginKey('textAlign'),
+            appendTransaction: (_transactions, oldState, newState) => {
+              if (newState.doc === oldState.doc) {
+                return;
+              }
+              const tr = newState.tr;
+              const { from, to } = newState.selection;
+              newState.doc.nodesBetween(from, to, (node, pos) => {
+                let textStyle;
+                if ([Node_Type.LIST_ITEM].includes(node.type.name as Node_Type)) {
+                  textStyle = node.firstChild?.attrs.textStyle;
+                  textStyle &&
+                    textStyle !== node.attrs.textStyle &&
+                    tr.setNodeMarkup(pos, undefined, {
+                      ...node.attrs,
+                      textStyle,
+                    });
+                }
+              });
+              return tr;
+            },
+          }),
+        ];
       },
     };
   },

@@ -3,7 +3,7 @@ import { isTextDirection } from 'wix-rich-content-common';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import type { RicosExtension, RicosExtensionConfig } from 'ricos-tiptap-types';
 import { Node_Type } from 'ricos-schema';
-import { getTextDirectionFromAlignment } from 'ricos-converters';
+import { getListItemDirection, getTextDirectionFromAlignment } from 'ricos-converters';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -68,6 +68,7 @@ export const textDirection: RicosExtension = {
   createExtensionConfig() {
     return {
       name: this.name,
+      priority: 2,
       addOptions: () => ({
         directions: ['ltr', 'rtl', 'auto'],
         defaultDirection: 'auto',
@@ -83,17 +84,23 @@ export const textDirection: RicosExtension = {
               const tr = newState.tr;
               const { from, to } = newState.selection;
               newState.doc.nodesBetween(from, to, (node, pos) => {
+                let dir;
                 if (
-                  [Node_Type.BLOCKQUOTE, Node_Type.PARAGRAPH].includes(node.type.name as Node_Type)
+                  [Node_Type.BLOCKQUOTE, Node_Type.PARAGRAPH, Node_Type.HEADING].includes(
+                    node.type.name as Node_Type
+                  )
                 ) {
-                  const dir = getTextDirectionFromAlignment(node.attrs.textStyle?.textAlignment);
-                  dir &&
-                    dir !== node.attrs.dir &&
-                    tr.setNodeMarkup(pos, undefined, {
-                      ...node.attrs,
-                      dir,
-                    });
+                  dir = getTextDirectionFromAlignment(node.attrs.textStyle?.textAlignment);
+                } else if (node.type.name === Node_Type.LIST_ITEM) {
+                  const text = node?.firstChild?.firstChild?.text || undefined;
+                  dir = getListItemDirection(node.attrs.textStyle?.textAlignment, text);
                 }
+                dir &&
+                  dir !== node.attrs.dir &&
+                  tr.setNodeMarkup(pos, undefined, {
+                    ...node.attrs,
+                    dir,
+                  });
               });
               return tr;
             },

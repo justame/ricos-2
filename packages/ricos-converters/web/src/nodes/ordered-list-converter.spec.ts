@@ -14,6 +14,10 @@ describe('OrderedList converter', () => {
       {
         type: Node_Type.LIST_ITEM,
         attrs: {
+          dir: 'ltr',
+          textStyle: {
+            textAlignment: 'AUTO',
+          },
           id: '52',
         },
         content: [
@@ -42,6 +46,10 @@ describe('OrderedList converter', () => {
       {
         type: Node_Type.LIST_ITEM,
         attrs: {
+          dir: 'ltr',
+          textStyle: {
+            textAlignment: 'AUTO',
+          },
           id: '54',
         },
         content: [

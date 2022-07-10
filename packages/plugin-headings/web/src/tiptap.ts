@@ -1,4 +1,4 @@
-import { Node_Type } from 'ricos-schema';
+import { Node_Type, TextStyle_TextAlignment } from 'ricos-schema';
 import headingDataDefaults from 'ricos-schema/dist/statics/heading.defaults.json';
 import type { DOMOutputSpec, ExtensionProps, NodeConfig, RicosExtension } from 'ricos-tiptap-types';
 import styles from '../statics/styles/headings.scss';
@@ -65,13 +65,18 @@ export const tiptapExtensions = [
         renderHTML({ node, HTMLAttributes }) {
           const hasLevel = this.options.levels.includes(node.attrs.level);
           const level = hasLevel ? node.attrs.level : this.options.levels[0];
+          const attrs = mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
+            class: styles[`header${HEADER_NAMES[level - 1]}`],
+          });
+          const textAlignment = attrs?.textStyle?.textAlignment;
+          const shouldAddDir =
+            textAlignment === TextStyle_TextAlignment.LEFT ||
+            textAlignment === TextStyle_TextAlignment.RIGHT;
 
           return [
             `h${level}`,
-            mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
-              class: styles[`header${HEADER_NAMES[level - 1]}`],
-            }),
-            ['span', 0],
+            attrs,
+            ['span', { ...(shouldAddDir ? { dir: 'auto' } : {}) }, 0],
           ] as DOMOutputSpec;
         },
 

@@ -14,6 +14,10 @@ describe('bulletedListNode converter', () => {
       {
         type: Node_Type.LIST_ITEM,
         attrs: {
+          dir: 'ltr',
+          textStyle: {
+            textAlignment: 'AUTO',
+          },
           id: '58',
         },
         content: [

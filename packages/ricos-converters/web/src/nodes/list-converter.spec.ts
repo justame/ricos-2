@@ -7,6 +7,10 @@ describe('ListItem converter', () => {
   const tiptapNode = {
     type: Node_Type.LIST_ITEM,
     attrs: {
+      dir: 'ltr',
+      textStyle: {
+        textAlignment: 'AUTO',
+      },
       id: '53',
     },
     content: [

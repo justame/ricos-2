@@ -2,6 +2,7 @@ import { mergeAttributes } from '@tiptap/core';
 import type { DOMOutputSpec, RicosExtension } from 'ricos-tiptap-types';
 import type { Node } from 'prosemirror-model';
 import { Node_Type } from 'ricos-schema';
+import styles from './statics/styles.scss';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -20,14 +21,16 @@ declare module '@tiptap/core' {
 
 export const listItem: RicosExtension = {
   type: 'node' as const,
-  groups: ['shortcuts-enabled'],
+  groups: ['shortcuts-enabled', 'text-container'],
   name: Node_Type.LIST_ITEM,
   createExtensionConfig() {
     return {
       name: this.name,
       addOptions() {
         return {
-          HTMLAttributes: {},
+          HTMLAttributes: {
+            class: styles.listItem,
+          },
         };
       },
 
@@ -106,7 +109,7 @@ export const listItem: RicosExtension = {
                     node.type.name === Node_Type.BULLETED_LIST) &&
                   (indentation = node.attrs.indentation - 1);
               });
-              if (indentation >= 0) {
+              if (indentation > 0) {
                 return commands.liftListItem(this.name);
               }
               return false;

@@ -67,13 +67,17 @@
 .orderedList,
 .bulletedList {
   margin: 0;
-  padding-inline-start: 3em;
+  padding-inline-start: 40px;
   @include ricosTypography('p', false);
 }
 
 .orderedList .orderedList,
 .bulletedList .bulletedList {
   padding-inline-start: 1.5em;
+}
+
+.listItem {
+  padding-inline-start: 0.5em;
 }
 
 .orderedList,
