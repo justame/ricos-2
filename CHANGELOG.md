@@ -17,6 +17,10 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.71.40 (Jul 10, 2022)
+
 ## :bug: Bug Fix
 
 - `tiptap-extensions`
@@ -26,8 +30,6 @@
 
 - `ricos-events`
   - [#4149](https://github.com/wix/ricos/pull/4149) getAllTopics; publishOnce; duplication errors
-
-</details>
 
 ## 8.71.38 (Jul 9, 2022)
 
