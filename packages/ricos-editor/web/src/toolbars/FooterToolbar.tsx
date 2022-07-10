@@ -26,7 +26,11 @@ export const FooterToolbar: FC = () => {
 
   return (
     <div className={styles.footerToolbar} data-hook="footerToolbar">
-      <InsertPluginToolbar buttons={plugins.getAddButtons()} onButtonClick={onButtonClick} />
+      <InsertPluginToolbar
+        buttons={plugins.getAddButtons()}
+        onButtonClick={onButtonClick}
+        overflowedItemsPosition="top"
+      />
     </div>
   );
 };

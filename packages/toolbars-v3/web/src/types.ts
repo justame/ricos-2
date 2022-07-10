@@ -23,3 +23,5 @@ export type ToolbarItemProps = {
   context?: ToolbarContextType & { t: TranslationFunction };
   dataHook?: string;
 };
+
+export type OverflowedItemsPosition = 'top' | 'bottom';

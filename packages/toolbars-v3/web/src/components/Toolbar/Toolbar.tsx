@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { SizeMe } from 'react-sizeme';
 import cx from 'classnames';
-import type { ToolbarSpec } from '../../types';
+import type { ToolbarSpec, OverflowedItemsPosition } from '../../types';
 import styles from './Toolbar.scss';
 import { RicosToolbar } from '../../RicosToolbar';
 import { SizeCalculator } from '../SizeCalculator';
@@ -15,6 +15,7 @@ type ToolbarProps = {
   toolbarItemsRenders: any;
   isMobile: boolean;
   maxWidth?: number;
+  overflowedItemsPosition?: OverflowedItemsPosition;
 };
 
 const visibleOnlySpec: ToolbarSpec = attributes => attributes.visible === true;
@@ -48,7 +49,8 @@ class ToolbarComponent extends Component<ToolbarProps, Record<string, unknown>> 
 
   render() {
     const { showMore } = this.state;
-    const { toolbarItemsRenders, toolbar, isMobile, maxWidth } = this.props;
+    const { toolbarItemsRenders, toolbar, isMobile, maxWidth, overflowedItemsPosition } =
+      this.props;
     const toolbarItems = toolbar.getToolbarItemsBy(visibleOnlySpec);
 
     const toolbarButtonArray: ToolbarButton[] = toolbarItems.map(toolbarButton => {
@@ -70,13 +72,24 @@ class ToolbarComponent extends Component<ToolbarProps, Record<string, unknown>> 
           }
 
           const width = maxWidth || size.width;
+          const showMoreAbove = overflowedItemsPosition === 'top';
           return (
             <div dir="ltr" data-hook="toolbar-v3" className={styles.toolbar}>
               <ClickOutside onClickOutside={this.onClickOutside} wrapper="div">
                 <SizeCalculator width={width} toolbarButtons={toolbarButtons}>
                   {({ visibleButtons, overflowedButtons }) => {
+                    const overflowedButtonsRenders = showMore && overflowedButtons && (
+                      <div
+                        className={cx(styles.moreItems, { [styles.showMoreAbove]: showMoreAbove })}
+                      >
+                        <div className={styles.overflowedItems}>
+                          {overflowedButtons.getButtonsElementsWithDataHook()}
+                        </div>
+                      </div>
+                    );
                     return (
                       <div>
+                        {showMoreAbove && overflowedButtonsRenders}
                         {!visibleButtons.isEmpty() && (
                           <div className={styles.visibleItems}>
                             {visibleButtons.getButtonsElementsWithDataHook()}
@@ -89,13 +102,7 @@ class ToolbarComponent extends Component<ToolbarProps, Record<string, unknown>> 
                             )}
                           </div>
                         )}
-                        {showMore && overflowedButtons && (
-                          <div className={styles.moreItems}>
-                            <div className={styles.overflowedItems}>
-                              {overflowedButtons.getButtonsElementsWithDataHook()}
-                            </div>
-                          </div>
-                        )}
+                        {!showMoreAbove && overflowedButtonsRenders}
                       </div>
                     );
                   }}

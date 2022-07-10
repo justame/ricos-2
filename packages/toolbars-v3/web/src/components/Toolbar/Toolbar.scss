@@ -52,6 +52,11 @@
   grid-column-gap: 4px;
 }
 
+.showMoreAbove {
+  position: relative !important;
+  width: min-content;
+}
+
 .moreItems {
   font-family: $ricos-settings-font-family;
   box-sizing: border-box;

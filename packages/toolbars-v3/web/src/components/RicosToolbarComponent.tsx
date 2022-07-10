@@ -6,6 +6,7 @@ import { RicosToolbar } from '../RicosToolbar';
 import { ToolbarItemCreator } from '../ToolbarItemCreator';
 import type { Node } from 'prosemirror-model';
 import type { AmbientStyles, IToolbarItemConfigTiptap } from 'ricos-types';
+import type { OverflowedItemsPosition } from '../types';
 
 interface RicosToolbarProps {
   content: Content<Node[]>;
@@ -18,6 +19,7 @@ interface RicosToolbarProps {
   // eslint-disable-next-line @typescript-eslint/ban-types
   toolbarItemsRenders: Record<string, Function>;
   styles?: AmbientStyles;
+  overflowedItemsPosition?: OverflowedItemsPosition;
 }
 interface RicosToolbarState {}
 
@@ -46,7 +48,7 @@ class RicosToolbarComponent extends Component<RicosToolbarProps, RicosToolbarSta
   }
 
   render() {
-    const { isMobile = false, maxWidth, toolbarItemsRenders } = this.props;
+    const { isMobile = false, maxWidth, toolbarItemsRenders, overflowedItemsPosition } = this.props;
     return (
       <div>
         <div>
@@ -56,6 +58,7 @@ class RicosToolbarComponent extends Component<RicosToolbarProps, RicosToolbarSta
               toolbarItemsRenders={toolbarItemsRenders}
               isMobile={isMobile}
               maxWidth={maxWidth}
+              overflowedItemsPosition={overflowedItemsPosition}
             />
           )}
         </div>

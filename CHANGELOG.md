@@ -17,6 +17,13 @@
     Click to see more.
   </summary>
 
+## :house: Internal
+
+- `html-plugin`
+  - [#4153](https://github.com/wix/ricos/pull/4153) tiptap html width and height sliders
+- `tiptap-toobar-v3`
+  - [#4156](https://github.com/wix/ricos/pull/4156) fix footer toolbar overflow behaviour
+
 </details>
 
 ## 8.71.40 (Jul 10, 2022)
@@ -30,8 +37,6 @@
 
 - `ricos-events`
   - [#4149](https://github.com/wix/ricos/pull/4149) getAllTopics; publishOnce; duplication errors
-- `html-plugin`
-  - [#4153](https://github.com/wix/ricos/pull/4153) tiptap html width and height sliders
 
 ## 8.71.38 (Jul 9, 2022)
 

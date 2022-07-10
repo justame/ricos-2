@@ -6,14 +6,20 @@ import { Content } from '../../Content';
 import ToggleButton from '../buttons/ToggleButton/ToggleButton';
 import styles from './insert-plugin-toolbar.scss';
 import type { AddButton, IPluginAddButtons } from 'ricos-types';
+import type { OverflowedItemsPosition } from '../../types';
 
 interface Props {
   buttons: IPluginAddButtons;
   referenceElement?: React.RefObject<HTMLElement>;
   onButtonClick: (button: AddButton, e: Event) => void;
+  overflowedItemsPosition?: OverflowedItemsPosition;
 }
 
-const InsertPluginToolbar: React.FC<Props> = ({ buttons, onButtonClick }) => {
+const InsertPluginToolbar: React.FC<Props> = ({
+  buttons,
+  onButtonClick,
+  overflowedItemsPosition,
+}) => {
   const { getEditorCommands } = useContext(EditorContext);
   const content = Content.create<Node[]>([]);
 
@@ -35,6 +41,7 @@ const InsertPluginToolbar: React.FC<Props> = ({ buttons, onButtonClick }) => {
         content={content}
         editorCommands={getEditorCommands?.()}
         isMobile={false}
+        overflowedItemsPosition={overflowedItemsPosition}
       />
     </div>
   );
