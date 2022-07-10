@@ -18,9 +18,16 @@ export class FontSizeDecoration implements TextDecoration {
       throw new TypeError(`invalid decoration initializer ${decoration}`);
     }
 
-    return new FontSizeDecoration(
-      decoration.fontSizeData?.value ? { fontSize: decoration.fontSizeData?.value } : {}
-    );
+    const value = decoration.fontSizeData?.value;
+    const unit = decoration.fontSizeData?.unit?.toLocaleLowerCase();
+
+    const customStyle = value
+      ? {
+          fontSize: `${value}${unit}`,
+        }
+      : {};
+
+    return new FontSizeDecoration(customStyle);
   }
 
   getDecoration(): Decoration {

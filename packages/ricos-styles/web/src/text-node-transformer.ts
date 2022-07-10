@@ -1,5 +1,5 @@
-import type { ParagraphNode, HeadingNode } from 'ricos-content';
-import type { Decoration, NodeStyle, TextStyle, DocumentStyle } from 'ricos-schema';
+import type { TextNodeContainer } from './styles';
+import type { Decoration, DocumentStyle, NodeStyle, TextStyle } from 'ricos-schema';
 import { Decorations } from './decorations';
 import { Node_Type } from 'ricos-schema';
 
@@ -13,22 +13,29 @@ const nodeTypeToDocumentKeyMap: Record<string, DocumentStyleKey> = {
   [(Node_Type.HEADING, 5)]: 'headerFive',
   [(Node_Type.HEADING, 6)]: 'headerSix',
   [Node_Type.PARAGRAPH]: 'paragraph',
+  [Node_Type.BLOCKQUOTE]: 'blockquote',
+  [Node_Type.CODE_BLOCK]: 'codeBlock',
 };
 
 const nodeTypeToNodeDataKey: Record<string, string> = {
   [Node_Type.HEADING]: 'headingData',
   [Node_Type.PARAGRAPH]: 'paragraphData',
+  [Node_Type.BLOCKQUOTE]: 'blockquoteData',
+  [Node_Type.CODE_BLOCK]: 'codeBlockData',
 };
 
-export class TextNodeTransformer {
-  private node: ParagraphNode | HeadingNode;
+const getTextNodes = (node: TextNodeContainer) =>
+  node.type === Node_Type.BLOCKQUOTE ? node.nodes[0].nodes : node.nodes;
 
-  constructor(node: ParagraphNode | HeadingNode) {
+export class TextNodeTransformer {
+  private node: TextNodeContainer;
+
+  constructor(node: TextNodeContainer) {
     this.node = node;
   }
 
   private getDecorations(): Decoration[] {
-    return this.node.nodes
+    return getTextNodes(this.node)
       .reduce((acc, node) => acc.overrideWith(node.textData.decorations), Decorations.of([]))
       .toDecorationArray();
   }

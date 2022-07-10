@@ -1,6 +1,5 @@
 import type { ReactElement } from 'react';
 import type {
-  Decoration,
   Decoration_Type,
   DocumentStyle as RichContentDocumentStyle,
   TextNodeStyle,

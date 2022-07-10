@@ -5,6 +5,7 @@ import * as T from 'fp-ts/Tuple';
 import { fromEntries } from 'ricos-content/libs/utils';
 import type { DocumentStyle, TextNodeStyle } from 'ricos-schema';
 import type { CustomTextualStyle, RicosCustomStyles, RicosTheme } from 'ricos-types';
+import CustomStyles from './textual-theme/custom-styles';
 import { Decorations } from './decorations';
 import NodeStyle from './document-style/node-style';
 import TextStyle from './document-style/text-style';
@@ -21,6 +22,8 @@ const documentToThemeKeyMap: Record<TextNodeType, CustomStyleKey> = {
   headerFive: 'h5',
   headerSix: 'h6',
   paragraph: 'p',
+  blockquote: 'quote',
+  codeBlock: 'codeBlock',
 };
 
 const themeToDocumentKeyMap: Record<CustomStyleKey, TextNodeType> = pipe(
@@ -63,30 +66,32 @@ const toTextNodeType = (customStyleKey: CustomStyleKey): TextNodeType =>
 const toDocumentStyle: (customStyle: RicosCustomStyles) => DocumentStyle = flow(
   Object.entries,
   A.map(T.bimap(toTextNodeStyle, toTextNodeType)),
-  fromEntries
+  fromEntries,
+  JSON.stringify,
+  JSON.parse
 );
 
 export class TextStyleTransformer {
-  private customStyle: RicosCustomStyles;
+  private theme: RicosTheme;
 
-  private constructor(customStyle: RicosCustomStyles) {
-    this.customStyle = customStyle;
+  private constructor(theme: RicosTheme) {
+    this.theme = theme;
   }
 
   static fromTheme(theme: RicosTheme) {
-    return new TextStyleTransformer(theme.customStyles || {});
+    return new TextStyleTransformer(theme || {});
   }
 
   static fromDocumentStyle(documentStyle: DocumentStyle) {
-    const customStyle = toRicosCustomStyles(documentStyle);
-    return new TextStyleTransformer(customStyle);
+    const customStyles = toRicosCustomStyles(documentStyle);
+    return new TextStyleTransformer({ customStyles });
   }
 
-  toThemeCustomStyles() {
-    return this.customStyle;
+  toTheme() {
+    return this.theme;
   }
 
   toDocumentStyle() {
-    return toDocumentStyle(this.customStyle);
+    return toDocumentStyle(CustomStyles.fromTheme(this.theme).toCustomStyles());
   }
 }

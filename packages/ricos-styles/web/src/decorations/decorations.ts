@@ -27,6 +27,7 @@ export class Decorations implements TextDecorations {
     const { color, backgroundColor, ...rest } = customStyle;
     const colorStyle = { color, backgroundColor };
     // TODO refactor to splitStyles method
+    // TODO: make sure all customStyle fields are converted correctly
     const styles = Object.entries(rest)
       .map(([k, v]) => ({ [k]: v }))
       .concat([colorStyle]);
@@ -53,7 +54,9 @@ export class Decorations implements TextDecorations {
   }
 
   toDecorationArray() {
-    return this.decorations.map(d => d.getDecoration());
+    return this.decorations
+      .filter(d => d.type !== Decoration_Type.UNRECOGNIZED)
+      .map(d => d.getDecoration());
   }
 
   byType(type: Decoration_Type): TextDecoration {

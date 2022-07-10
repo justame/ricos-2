@@ -43,6 +43,9 @@
   "devDependencies": {
     "ricos-content": "8.71.40"
   },
+  "peerDependencies": {
+    "lodash": "^4.0.0"
+  },
   "unpkg": true,
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

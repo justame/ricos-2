@@ -1,11 +1,18 @@
 import type { ReactElement } from 'react';
-import type { Decoration_Type, DocumentStyle as RichContentDocumentStyle } from 'ricos-schema';
+import { Node_Type } from 'ricos-schema';
+import type {
+  Decoration_Type,
+  DocumentStyle as RichContentDocumentStyle,
+  Decoration,
+} from 'ricos-schema';
 import type { RicosTheme } from 'ricos-types';
 import DocumentStyle from './document-style/document-style';
 import type { Styles } from './models/styles';
 import TextualTheme from './textual-theme/textual-theme';
 import { TextNodeTransformer } from './text-node-transformer';
-import type { ParagraphNode, HeadingNode } from 'ricos-content';
+import type { ParagraphNode, HeadingNode, BlockquoteNode, CodeBlockNode } from 'ricos-content';
+
+export type TextNodeContainer = ParagraphNode | HeadingNode | BlockquoteNode | CodeBlockNode;
 
 export class RicosStyles implements Styles {
   private theme!: TextualTheme;
@@ -16,21 +23,33 @@ export class RicosStyles implements Styles {
     return [this.theme.toStyleTag(), this.documentStyle.toStyleTag()];
   }
 
-  getDecoration(node: ParagraphNode | HeadingNode, decorationType: Decoration_Type) {
+  getDecoration(node: TextNodeContainer, decorationType: Decoration_Type) {
+    if (
+      ![
+        Node_Type.PARAGRAPH,
+        Node_Type.HEADING,
+        Node_Type.BLOCKQUOTE,
+        Node_Type.CODE_BLOCK,
+      ].includes(node.type)
+    ) {
+      // Wrong node type
+      return {} as Decoration;
+    }
+
     const nodeType = new TextNodeTransformer(node).getDocumentStyleKey();
     const documentStyleDecoration = this.documentStyle.getDecoration(nodeType, decorationType);
     const themeDecoration = this.theme.getDecoration(nodeType, decorationType);
     return themeDecoration.overrideWith(documentStyleDecoration).getDecoration();
   }
 
-  getTextStyle(node: ParagraphNode | HeadingNode) {
+  getTextStyle(node: TextNodeContainer) {
     const nodeType = new TextNodeTransformer(node).getDocumentStyleKey();
     const documentStyleTextStyle = this.documentStyle.getTextStyle(nodeType);
     const themeTextStyle = this.theme.getTextStyle(nodeType);
     return themeTextStyle.overrideWith(documentStyleTextStyle.getTextStyle()).getTextStyle();
   }
 
-  getNodeStyle(node: ParagraphNode | HeadingNode) {
+  getNodeStyle(node: TextNodeContainer) {
     const nodeType = new TextNodeTransformer(node).getDocumentStyleKey();
     const documentStyleNodeStyle = this.documentStyle.getNodeStyle(nodeType);
     const themeTextStyle = this.theme.getNodeStyle(nodeType);

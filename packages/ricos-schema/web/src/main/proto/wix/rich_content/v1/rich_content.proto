@@ -183,4 +183,6 @@ message DocumentStyle {
     TextNodeStyle header_five = 5;
     TextNodeStyle header_six = 6;
     TextNodeStyle paragraph = 7;
+    TextNodeStyle blockquote = 8;
+    TextNodeStyle code_block = 9;
 } 

@@ -37,10 +37,8 @@ export default class RicosDocumentStyle implements DocumentStyle {
   }
 
   toStyleTag() {
-    const customStyles = TextStyleTransformer.fromDocumentStyle(
-      this.documentStyle
-    ).toThemeCustomStyles();
-    return new RicosTextualTheme({ customStyles }).toStyleTag();
+    const theme = TextStyleTransformer.fromDocumentStyle(this.documentStyle).toTheme();
+    return new RicosTextualTheme(theme).toStyleTag();
   }
 
   toContent() {
