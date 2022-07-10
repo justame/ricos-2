@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `ricos-editor`
+  - [#4161](https://github.com/wix/ricos/pull/4161) fix tiptap/RicosEditor ref API
+
 ## :house: Internal
 
 - `html-plugin`
