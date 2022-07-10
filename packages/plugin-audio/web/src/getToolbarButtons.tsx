@@ -37,19 +37,23 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
           audio: { src },
           id,
         } = node.attrs;
-        modalService?.openModal(audioModals.replace, {
-          componentProps: {
-            componentData: node.attrs, //TODO: convert to draft
-            nodeId: id,
-            getAudioUrl,
-            handleFileSelection,
-            handleFileUpload,
-            fetchData,
-            embedType: src.url,
-          },
-          positioning: { placement: 'bottom', referenceElement },
-          layout: isMobile ? 'fullscreen' : 'popover',
-        });
+        if (modalService?.isModalOpen(audioModals.replace)) {
+          modalService.closeModal(audioModals.replace);
+        } else {
+          modalService?.openModal(audioModals.replace, {
+            componentProps: {
+              componentData: node.attrs, //TODO: convert to draft
+              nodeId: id,
+              getAudioUrl,
+              handleFileSelection,
+              handleFileUpload,
+              fetchData,
+              embedType: src.url,
+            },
+            positioning: { placement: 'bottom', referenceElement },
+            layout: isMobile ? 'fullscreen' : 'popover',
+          });
+        }
       },
     },
     {

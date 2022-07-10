@@ -83,7 +83,9 @@ export const FloatingToolbar = ({
   }, [reference, dummyUpdate]);
 
   const onClickOutside = () => {
-    setModalOpen(false);
+    if (!isVisible(state.selection)) {
+      setModalOpen(false);
+    }
   };
   const domRect = posToDOMRect(view, from, to);
   if (!domRect) {

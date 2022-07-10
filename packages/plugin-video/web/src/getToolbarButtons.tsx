@@ -34,15 +34,19 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
           video: { src },
           id,
         } = node.attrs;
-        modalService?.openModal(videoModals.replace, {
-          componentProps: {
-            componentData: { isCustomVideo: src.id, src: src.url || src.id }, //TODO: convert to draft
-            nodeId: id,
-            ...modalBaseProps,
-          },
-          positioning: { placement: 'bottom', referenceElement },
-          layout: isMobile ? 'fullscreen' : 'popover',
-        });
+        if (modalService?.isModalOpen(videoModals.replace)) {
+          modalService.closeModal(videoModals.replace);
+        } else {
+          modalService?.openModal(videoModals.replace, {
+            componentProps: {
+              componentData: { isCustomVideo: src.id, src: src.url || src.id }, //TODO: convert to draft
+              nodeId: id,
+              ...modalBaseProps,
+            },
+            positioning: { placement: 'bottom', referenceElement },
+            layout: isMobile ? 'fullscreen' : 'popover',
+          });
+        }
       },
     },
     {

@@ -36,15 +36,19 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
         id: gifModals.replace,
       },
       command: ({ modalService, isMobile, node, referenceElement }) => {
-        modalService?.openModal(gifModals.replace, {
-          componentProps: {
-            giphySdkApiKey: config?.giphySdkApiKey,
-            componentData: node.attrs, //TODO: convert to draft
-            nodeId: node.attrs.id,
-          },
-          positioning: { placement: 'bottom', referenceElement },
-          layout: isMobile ? 'fullscreen' : 'popover',
-        });
+        if (modalService?.isModalOpen(gifModals.replace)) {
+          modalService.closeModal(gifModals.replace);
+        } else {
+          modalService?.openModal(gifModals.replace, {
+            componentProps: {
+              giphySdkApiKey: config?.giphySdkApiKey,
+              componentData: node.attrs, //TODO: convert to draft
+              nodeId: node.attrs.id,
+            },
+            positioning: { placement: 'bottom', referenceElement },
+            layout: isMobile ? 'fullscreen' : 'popover',
+          });
+        }
       },
     },
     {

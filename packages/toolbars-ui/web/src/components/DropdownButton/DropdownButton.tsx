@@ -36,10 +36,14 @@ const DropdownButton = ({ Icon, dataHook, tooltip, options, id }: Props) => {
   }, []);
 
   const onClick = () => {
-    modalService?.openModal(id, {
-      layout: isMobile ? 'drawer' : 'toolbar',
-      positioning: { referenceElement, placement: 'bottom' },
-    });
+    if (modalService?.isModalOpen(id)) {
+      modalService.closeModal(id);
+    } else {
+      modalService?.openModal(id, {
+        layout: isMobile ? 'drawer' : 'toolbar',
+        positioning: { referenceElement, placement: 'bottom' },
+      });
+    }
   };
 
   return (

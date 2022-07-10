@@ -17,15 +17,19 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
         id: verticalEmbedModals.replace,
       },
       command: ({ modalService, isMobile, node, referenceElement }) => {
-        modalService?.openModal(verticalEmbedModals.replace, {
-          componentProps: {
-            verticalsApi: config?.verticalsApi,
-            componentData: { type: node.attrs.type.toLowerCase() }, //TODO: convert to draft
-            nodeId: node.attrs.id,
-          },
-          positioning: { placement: 'bottom', referenceElement },
-          layout: isMobile ? 'fullscreen' : 'popover',
-        });
+        if (modalService?.isModalOpen(verticalEmbedModals.replace)) {
+          modalService.closeModal(verticalEmbedModals.replace);
+        } else {
+          modalService?.openModal(verticalEmbedModals.replace, {
+            componentProps: {
+              verticalsApi: config?.verticalsApi,
+              componentData: { type: node.attrs.type.toLowerCase() }, //TODO: convert to draft
+              nodeId: node.attrs.id,
+            },
+            positioning: { placement: 'bottom', referenceElement },
+            layout: isMobile ? 'fullscreen' : 'popover',
+          });
+        }
       },
     },
     {
