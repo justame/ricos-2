@@ -45,12 +45,6 @@ type Props = RicosEditorProps & {
   forwardRef: ForwardedRef<RicosEditorRef>;
 };
 
-const events = new RicosEvents();
-const modalService = new RicosModalService(events);
-const styles = new RicosStyles();
-const shortcuts = new EditorKeyboardShortcuts(events);
-const editorPlugins = new EditorPlugins(modalService);
-
 export class FullRicosEditor extends React.Component<Props, State> {
   nodeService = {
     nodeToRicosNode: node => {
@@ -58,17 +52,38 @@ export class FullRicosEditor extends React.Component<Props, State> {
     },
   };
 
-  content = Content.create<Node[]>([], { styles, nodeService: this.nodeService });
-
   state = { error: '' };
 
   portalRef: RefObject<RicosPortalType>;
 
   private tiptapAdapter!: TiptapAdapter;
 
+  private readonly events: RicosEvents;
+
+  private readonly modalService: RicosModalService;
+
+  private readonly styles: RicosStyles;
+
+  private readonly shortcuts: EditorKeyboardShortcuts;
+
+  private readonly editorPlugins: EditorPlugins;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private readonly content: Content<Node<any>[]>;
+
   constructor(props) {
     super(props);
     this.portalRef = createRef<RicosPortalType>();
+
+    this.events = new RicosEvents();
+    this.modalService = new RicosModalService(this.events);
+    this.styles = new RicosStyles();
+    this.shortcuts = new EditorKeyboardShortcuts(this.events);
+    this.editorPlugins = new EditorPlugins(this.modalService);
+    this.content = Content.create<Node[]>([], {
+      styles: this.styles,
+      nodeService: this.nodeService,
+    });
   }
 
   static getDerivedStateFromError(error: string) {
@@ -78,25 +93,26 @@ export class FullRicosEditor extends React.Component<Props, State> {
   initPlugins = () => {
     const { plugins, _rcProps } = this.props;
     const configuredPlugins = pluginsConfigMerger(plugins, _rcProps) || [];
-    configuredPlugins.forEach(plugin => editorPlugins.register(plugin));
+    configuredPlugins.forEach(plugin => this.editorPlugins.register(plugin));
     const { handleFileUpload, handleFileSelection } = _rcProps?.helpers || {};
-    editorPlugins.configure({ handleFileUpload, handleFileSelection });
+    this.editorPlugins.configure({ handleFileUpload, handleFileSelection });
   };
 
   componentDidMount() {
     this.initPlugins();
     this.tiptapAdapter = initializeTiptapAdapter(this.props, {
-      events,
-      styles,
-      plugins: editorPlugins,
+      events: this.events,
+      styles: this.styles,
+      plugins: this.editorPlugins,
     });
 
     this.forceUpdate();
   }
 
   componentWillUnmount() {
-    editorPlugins.destroy();
-    modalService.destroy();
+    this.editorPlugins.destroy();
+    this.modalService.destroy();
+    this.events.clear();
   }
 
   componentDidCatch(error, errorInfo) {
@@ -121,7 +137,7 @@ export class FullRicosEditor extends React.Component<Props, State> {
       theme,
       locale,
       helpers,
-      plugins: editorPlugins,
+      plugins: this.editorPlugins,
       linkPanelSettings,
       linkSettings,
       experiments,
@@ -161,8 +177,8 @@ export class FullRicosEditor extends React.Component<Props, State> {
 
     const languageDir = getLangDir(locale);
     return (
-      <EventsContextProvider events={events}>
-        <StylesContextProvider styles={styles}>
+      <EventsContextProvider events={this.events}>
+        <StylesContextProvider styles={this.styles}>
           <>
             <RicosPortal
               languageDir={languageDir}
@@ -185,9 +201,9 @@ export class FullRicosEditor extends React.Component<Props, State> {
                 portal={this.portalRef.current}
               >
                 <EditorContextProvider adapter={this.tiptapAdapter}>
-                  <ModalContextProvider modalService={modalService}>
-                    <ShortcutsContextProvider shortcuts={shortcuts}>
-                      <PluginsContextProvider plugins={editorPlugins}>
+                  <ModalContextProvider modalService={this.modalService}>
+                    <ShortcutsContextProvider shortcuts={this.shortcuts}>
+                      <PluginsContextProvider plugins={this.editorPlugins}>
                         <>
                           <Shortcuts group="global" root>
                             <>
