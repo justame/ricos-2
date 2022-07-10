@@ -40,6 +40,9 @@ describe('RicosEditorSwitcher', () => {
       expect(editorRef.current?.getContentPromise).toBeTruthy();
       expect(editorRef.current?.getContentTraits).toBeTruthy();
       expect(editorRef.current?.getToolbarProps).toBeTruthy();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect((editorRef.current as any)?.editor.editor.handlePastedText).toBeTruthy();
+      expect(editorRef.current?.getEditorCommands).toBeTruthy();
     });
   });
 
@@ -53,6 +56,7 @@ describe('RicosEditorSwitcher', () => {
       expect(editorRef.current?.getContentPromise).toBeTruthy();
       expect(editorRef.current?.getContentTraits).toBeTruthy();
       expect(editorRef.current?.getToolbarProps).toBeTruthy();
+      expect(editorRef.current?.getEditorCommands).toBeTruthy();
     });
   });
 });
