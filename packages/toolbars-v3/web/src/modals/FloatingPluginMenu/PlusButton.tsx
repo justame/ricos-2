@@ -10,11 +10,11 @@ type PlusButtonProps = {
 const PlusButton = React.forwardRef(
   ({ position, onClick }: PlusButtonProps, ref: React.RefObject<HTMLButtonElement>) => (
     <button
+      data-hook={'addPluginFloatingToolbar'}
       ref={ref}
       onClick={onClick}
       className={styles.floatingAddPluginMenu_plus_button}
       style={position}
-      data-hook="addPluginFloatingToolbar"
     >
       <PlusIcon />
     </button>

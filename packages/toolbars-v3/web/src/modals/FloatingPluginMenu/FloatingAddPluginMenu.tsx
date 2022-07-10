@@ -66,6 +66,7 @@ const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig, plugins }
       dir={languageDir}
       className={styles.floatingAddPluginMenu_wrapper}
       ref={floatingMenuWrapperRef}
+      data-hook={'floatingAddPluginMenu'}
     >
       <EditorSelectionToPosition editor={tiptapEditor}>
         {position => (

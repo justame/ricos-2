@@ -293,7 +293,6 @@ const COMMANDS = {
 
   openSideToolbar: () => {
     cy.get(RicosDriver.editor.addPanelButton).click();
-    cy.get('[data-hook="floatingAddPluginMenu"]');
   },
 
   openAddPluginModal: () => {
