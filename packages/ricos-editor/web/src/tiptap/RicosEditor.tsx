@@ -1,50 +1,46 @@
-/* eslint-disable brace-style */
 import type { JSONContent } from '@tiptap/core';
+import type { ForwardedRef } from 'react';
 import React, { forwardRef } from 'react';
 import type { RicosEditorProps } from 'ricos-common';
+import { isContentStateEmpty, Version } from 'ricos-content';
+import type { GeneralContext } from 'ricos-context';
+import { EditorContextConsumer, EventsContextConsumer, RicosContextConsumer } from 'ricos-context';
+import { Node_Type } from 'ricos-schema';
 import type { HtmlAttributes, TiptapAdapter } from 'ricos-tiptap-types';
 import type {
   EditorContextType,
   EditorStyleClasses,
+  EventData,
   EventPublisher,
   EventRegistrar,
-  EventData,
+  EventSubscriptor,
   Pubsub,
 } from 'ricos-types';
-import type { GeneralContext } from 'ricos-context';
-import { withEventsContext, withRicosContext, withEditorContext } from 'ricos-context';
 import { getEmptyDraftContent } from 'wix-rich-content-editor-common';
-import { isContentStateEmpty, Version } from 'ricos-content';
 import {
+  EditorEventsContext,
   EditorEvents,
-  withEditorEvents,
 } from 'wix-rich-content-editor-common/libs/EditorEventsContext';
 import { draftToTiptap, RicosTiptapEditor, TIPTAP_TYPE_TO_RICOS_TYPE } from 'wix-tiptap-editor';
+import editorCss from '../../statics/styles/editor-styles.scss';
 import { PUBLISH_DEPRECATION_WARNING_v9 } from '../RicosEditor';
 import type { RicosEditorRef } from '../RicosEditorRef';
 import { publishBI } from '../utils/bi/publish';
-import errorBlocksRemover from '../utils/errorBlocksRemover';
-import editorCss from '../../statics/styles/editor-styles.scss';
 import { createEditorStyleClasses } from '../utils/createEditorStyleClasses';
-import { Node_Type } from 'ricos-schema';
+import errorBlocksRemover from '../utils/errorBlocksRemover';
 
 type RicosEditorState = {
   initialContent: JSONContent;
   htmlAttributes: HtmlAttributes;
 };
 
-class RicosEditor
-  extends React.Component<
-    RicosEditorProps & {
-      ricosContext: GeneralContext;
-      editor: TiptapAdapter;
-      events: EventRegistrar;
-    },
-    RicosEditorState
-  >
-  // eslint-disable-next-line prettier/prettier
-  implements RicosEditorRef
-{
+type Props = RicosEditorProps & {
+  ricosContext: GeneralContext;
+  editor: TiptapAdapter;
+  events: EventRegistrar;
+};
+
+class RicosEditor extends React.Component<Props, RicosEditorState> implements RicosEditorRef {
   state: Readonly<RicosEditorState> = {
     initialContent: null as unknown as JSONContent,
     htmlAttributes: {} as HtmlAttributes,
@@ -235,12 +231,31 @@ class RicosEditor
   }
 }
 
-const RicosEditorWithContext = withRicosContext(
-  withEventsContext(withEditorContext(withEditorEvents(RicosEditor)))
-);
-
 const RicosEditorWithForwardRef = forwardRef<RicosEditorRef, RicosEditorProps>((props, ref) => (
-  <RicosEditorWithContext {...props} ref={ref} />
+  <EventsContextConsumer>
+    {(events: EventRegistrar & EventSubscriptor) => (
+      <RicosContextConsumer>
+        {(ricosContext: GeneralContext) => (
+          <EditorContextConsumer>
+            {(editor: TiptapAdapter) => (
+              <EditorEventsContext.Consumer>
+                {editorEvents => (
+                  <RicosEditor
+                    {...props}
+                    ref={ref as ForwardedRef<RicosEditor>}
+                    ricosContext={ricosContext}
+                    editor={editor}
+                    events={events}
+                    editorEvents={editorEvents}
+                  />
+                )}
+              </EditorEventsContext.Consumer>
+            )}
+          </EditorContextConsumer>
+        )}
+      </RicosContextConsumer>
+    )}
+  </EventsContextConsumer>
 ));
 
 export default RicosEditorWithForwardRef;

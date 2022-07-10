@@ -1,10 +1,9 @@
 import React, { forwardRef, Suspense } from 'react';
 import type { RicosEditorProps } from 'ricos-common';
-import type { RicosEditorRef } from './RicosEditorRef';
-import RicosEditorWithRef from './RicosEditor';
-import type { RicosEditor } from './RicosEditor';
-import type { FullRicosEditor } from './tiptap/FullRicosEditor';
 import { isSSR } from 'wix-rich-content-common';
+import type { RicosEditor } from './RicosEditor';
+import RicosEditorWithRef from './RicosEditor';
+import type { RicosEditorRef } from './RicosEditorRef';
 
 const FullRicosEditorLazy = React.lazy(
   /* webpackChunkName: "FullRicosEditor" */
@@ -18,7 +17,7 @@ const RicosEditorSwitcher = React.forwardRef<RicosEditorRef, RicosEditorProps>((
       <div />
     ) : (
       <Suspense fallback={<div />}>
-        <FullRicosEditorLazy {...props} ref={ref as React.ForwardedRef<FullRicosEditor>} />
+        <FullRicosEditorLazy {...props} ref={ref} />
       </Suspense>
     );
   } else {

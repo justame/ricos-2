@@ -1,6 +1,5 @@
-/* eslint-disable brace-style */
 import type { Node } from 'prosemirror-model';
-import type { RefObject } from 'react';
+import type { ForwardedRef, RefObject } from 'react';
 import React, { createRef, forwardRef } from 'react';
 import type { RicosEditorProps } from 'ricos-common';
 import { ContentQueryProvider } from 'ricos-content-query';
@@ -23,9 +22,8 @@ import { EditorKeyboardShortcuts, Shortcuts } from 'ricos-shortcuts';
 import { RicosStyles } from 'ricos-styles';
 import type { TiptapAdapter } from 'ricos-tiptap-types';
 import type { RicosPortal as RicosPortalType } from 'ricos-types';
-import type { EditorCommands, EditorContextType, Pubsub } from 'wix-rich-content-common';
+import type { EditorCommands } from 'wix-rich-content-common';
 import { getLangDir } from 'wix-rich-content-common';
-import { getEmptyDraftContent } from 'wix-rich-content-editor-common';
 import { Content } from 'wix-rich-content-toolbars-v3';
 import type { RichContentAdapter } from 'wix-tiptap-editor';
 import { initializeTiptapAdapter } from 'wix-tiptap-editor';
@@ -43,16 +41,17 @@ type State = {
   error: string;
 };
 
+type Props = RicosEditorProps & {
+  forwardRef: ForwardedRef<RicosEditorRef>;
+};
+
 const events = new RicosEvents();
 const modalService = new RicosModalService(events);
 const styles = new RicosStyles();
 const shortcuts = new EditorKeyboardShortcuts(events);
 const editorPlugins = new EditorPlugins(modalService);
 
-export class FullRicosEditor
-  extends React.Component<RicosEditorProps, State>
-  implements RicosEditorRef
-{
+export class FullRicosEditor extends React.Component<Props, State> {
   nodeService = {
     nodeToRicosNode: node => {
       return fromTiptapNode(node.toJSON());
@@ -62,8 +61,6 @@ export class FullRicosEditor
   content = Content.create<Node[]>([], { styles, nodeService: this.nodeService });
 
   state = { error: '' };
-
-  editor = React.createRef<RicosEditorRef>();
 
   portalRef: RefObject<RicosPortalType>;
 
@@ -105,45 +102,6 @@ export class FullRicosEditor
   componentDidCatch(error, errorInfo) {
     console.error({ error, errorInfo });
   }
-
-  focus: RicosEditorRef['focus'] = () => {
-    this.editor.current?.focus();
-  };
-
-  blur: RicosEditorRef['blur'] = () => {
-    this.editor.current?.blur();
-  };
-
-  getContent: RicosEditorRef['getContent'] = (postId, forPublish, shouldRemoveErrorBlocks = true) =>
-    this.editor.current?.getContent(postId, forPublish, shouldRemoveErrorBlocks) ||
-    Promise.resolve(getEmptyDraftContent());
-
-  getContentPromise: RicosEditorRef['getContentPromise'] = ({ publishId } = {}) =>
-    this.getContent(publishId, !!publishId);
-
-  getContentTraits: RicosEditorRef['getContentTraits'] = () => {
-    return (
-      this.editor.current?.getContentTraits() || {
-        isEmpty: false,
-        isContentChanged: false,
-        isLastChangeEdit: false,
-      }
-    );
-  };
-
-  getToolbarProps: RicosEditorRef['getToolbarProps'] = type => {
-    return (
-      this.editor.current?.getToolbarProps(type) || {
-        buttons: {},
-        context: {} as EditorContextType,
-        pubsub: {} as Pubsub,
-      }
-    );
-  };
-
-  getEditorCommands: RicosEditorRef['getEditorCommands'] = () => {
-    return this.tiptapAdapter?.getEditorCommands() || ({} as EditorCommands);
-  };
 
   getToolbarContext(getEditorCommands: () => EditorCommands): ToolbarContextType {
     const {
@@ -256,7 +214,7 @@ export class FullRicosEditor
                                 </>
                               </UploadProvider>
                               <Shortcuts group="formatting">
-                                <RicosEditor {...this.props} ref={this.editor} />
+                                <RicosEditor {...this.props} ref={this.props.forwardRef} />
                               </Shortcuts>
                             </>
                           </Shortcuts>
@@ -274,6 +232,6 @@ export class FullRicosEditor
   }
 }
 
-export default forwardRef<FullRicosEditor, RicosEditorProps>((props, ref) => {
-  return <FullRicosEditor {...props} ref={ref} />;
+export default forwardRef<RicosEditorRef, RicosEditorProps>((props, ref) => {
+  return <FullRicosEditor {...props} forwardRef={ref} />;
 });
