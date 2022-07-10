@@ -74,8 +74,9 @@ const AlignmentButton = ({ toolbarItem, context, dataHook }) => {
           <div
             dir={getLangDir(locale)}
             ref={!isMobile ? setPopperElement : () => null}
-            style={isMobile ? {} : { ...popperStyles.popper, zIndex: 9 }}
+            style={isMobile ? {} : { ...popperStyles.popper }}
             {...attributes.popper}
+            className={isMobile ? '' : styles.popperContainer}
           >
             <div data-id="toolbar-modal-button" tabIndex={-1} className={styles.modal}>
               <AlignmentPanel
