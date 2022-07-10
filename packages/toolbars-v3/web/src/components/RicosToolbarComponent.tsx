@@ -26,16 +26,22 @@ interface RicosToolbarState {}
 class RicosToolbarComponent extends Component<RicosToolbarProps, RicosToolbarState> {
   toolbar: RicosToolbar | null = null;
 
-  componentDidMount() {
-    const { content, editorCommands, toolbarItemsConfig, onLoad, styles } = this.props;
+  createToolbar(toolbarItemsConfig) {
+    const { content, editorCommands, styles } = this.props;
 
-    this.toolbar = RicosToolbar.create({
+    return RicosToolbar.create({
       toolbarItemCreators: toolbarItemsConfig.map(config => ToolbarItemCreator.create(config)),
       content,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       editorCommands,
       styles,
     });
+  }
+
+  componentDidMount() {
+    const { toolbarItemsConfig, onLoad } = this.props;
+
+    this.toolbar = this.createToolbar(toolbarItemsConfig);
 
     this.forceUpdate();
     onLoad?.(this.toolbar);
@@ -44,6 +50,9 @@ class RicosToolbarComponent extends Component<RicosToolbarProps, RicosToolbarSta
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.editorCommands !== this.props.editorCommands) {
       this.toolbar?.setEditorCommands(nextProps.editorCommands);
+    }
+    if (nextProps.toolbarItemsConfig.toString() !== this.props.toolbarItemsConfig.toString()) {
+      this.toolbar = this.createToolbar(nextProps.toolbarItemsConfig);
     }
   }
 
