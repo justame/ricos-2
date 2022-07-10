@@ -30,7 +30,6 @@
 
 - `ricos-editor`
   - [#4161](https://github.com/wix/ricos/pull/4161) fix tiptap/RicosEditor ref API
-  - [#4162](https://github.com/wix/ricos/pull/4162) fix FullRicosEditor service lifecycle
 
 ## :house: Internal
 
