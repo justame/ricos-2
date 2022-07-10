@@ -17,6 +17,10 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.71.41 (Jul 10, 2022)
+
 ## :bug: Bug Fix
 
 - `ricos-editor`
@@ -30,8 +34,6 @@
   - [#4156](https://github.com/wix/ricos/pull/4156) fix footer toolbar overflow behaviour
 - `link-preview`
   - [#4158](https://github.com/wix/ricos/pull/4158) fix image display on tiptap
-
-</details>
 
 ## 8.71.40 (Jul 10, 2022)
 

@@ -1,6 +1,6 @@
 {
   "name": "ricos-viewer",
-  "version": "8.71.40",
+  "version": "8.71.41",
   "author": {
     "name": "Matan Harsat",
     "email": "matanha@wix.com"
@@ -45,12 +45,12 @@
   },
   "dependencies": {
     "react-modal": "~3.4.1",
-    "ricos-common": "8.71.40",
-    "wix-rich-content-common": "8.71.40",
-    "wix-rich-content-fullscreen": "8.71.40",
-    "wix-rich-content-link-preview-popover": "8.71.40",
-    "wix-rich-content-text-selection-toolbar": "8.71.40",
-    "wix-rich-content-viewer": "8.71.40"
+    "ricos-common": "8.71.41",
+    "wix-rich-content-common": "8.71.41",
+    "wix-rich-content-fullscreen": "8.71.41",
+    "wix-rich-content-link-preview-popover": "8.71.41",
+    "wix-rich-content-text-selection-toolbar": "8.71.41",
+    "wix-rich-content-viewer": "8.71.41"
   },
   "jest": {
     "globals": {
