@@ -59,9 +59,10 @@ const entityMapInnerRceFixer = (entityMap: RicosEntityMap) => {
 
 const putContentStateStateOnWindowForTests = contentState => {
   if (typeof window !== 'undefined') {
+    const { ID, ...rest } = contentState;
     window.__CONTENT_STATE__ = contentState;
     window.__CONTENT_SNAPSHOT__ = {
-      ...contentState,
+      ...rest,
       // blocks keys are random so for snapshot diffing they are changed to indexes
       blocks: removeKeyFromBlocks(contentState.blocks),
       entityMap: entityMapInnerRceFixer(contentState.entityMap),

@@ -1,11 +1,10 @@
 import { INLINE_TOOLBAR_BUTTONS, ACTION_BUTTONS } from '../cypress/dataHooks';
 import { usePlugins, usePluginsConfig, plugins } from '../cypress/testAppConfig';
+import { getTestPrefix } from '../cypress/utils';
 import { DEFAULT_MOBILE_WIDTHS } from './settings';
 
-const getTestPerfix = useTiptap => `[${useTiptap ? 'tiptap' : 'draft'}]`;
-
 const changeTextColor = (title: string, useTiptap, isMobile = false) => {
-  const prefix = `${getTestPerfix(useTiptap)} ${title}`;
+  const prefix = `${getTestPrefix(useTiptap)} ${title}`;
   const percyParam = isMobile ? DEFAULT_MOBILE_WIDTHS : {};
   cy.loadRicosEditor('plain')
     .setTextStyle(INLINE_TOOLBAR_BUTTONS.COLOR, [20, 15])
@@ -21,7 +20,7 @@ const changeTextColor = (title: string, useTiptap, isMobile = false) => {
 };
 
 [true, false].forEach(useTiptap => {
-  describe(`${getTestPerfix(useTiptap)} text`, () => {
+  describe(`${getTestPrefix(useTiptap)} text`, () => {
     beforeEach(() => {
       cy.switchToDesktop();
       cy.toggleTiptap(useTiptap);

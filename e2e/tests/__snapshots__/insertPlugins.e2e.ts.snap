@@ -1,0 +1,1889 @@
+exports[`insert plugins tests > side toolbar > should insert divider #0`] =
+{
+  "ID": "64125f4f-a2d2-46cb-8d14-c2c18d3689e4",
+  "blocks": [
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 0,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 1,
+      "text": "",
+      "type": "unstyled"
+    }
+  ],
+  "documentStyle": {},
+  "entityMap": {
+    "0": {
+      "data": {
+        "config": {
+          "alignment": "center",
+          "size": "large"
+        },
+        "type": "single"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "wix-draft-plugin-divider"
+    }
+  }
+};
+
+exports[`insert plugins tests > side toolbar > should insert code_block #0`] =
+{
+  "ID": "5b2d8348-4f62-4f5d-9904-eca83e2a7521",
+  "blocks": [
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": "",
+      "type": "code-block"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 1,
+      "text": "",
+      "type": "unstyled"
+    }
+  ],
+  "documentStyle": {},
+  "entityMap": {}
+};
+
+exports[`insert plugins tests > side toolbar > should insert button #0`] =
+{
+  "ID": "e7d0dc84-684e-4ce8-950b-0e489ecffcf4",
+  "blocks": [
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 0,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 1,
+      "text": "",
+      "type": "unstyled"
+    }
+  ],
+  "documentStyle": {},
+  "entityMap": {
+    "0": {
+      "data": {
+        "button": {
+          "design": {},
+          "settings": {
+            "buttonText": "Click Me",
+            "target": "_self"
+          }
+        },
+        "config": {
+          "alignment": "center",
+          "size": "small",
+          "spoiler": {
+            "enabled": false
+          },
+          "textWrap": "wrap",
+          "width": "fit-content"
+        }
+      },
+      "mutability": "IMMUTABLE",
+      "type": "wix-draft-plugin-link-button"
+    }
+  }
+};
+
+exports[`insert plugins tests > side toolbar > should insert html #0`] =
+{
+  "ID": "2e82890a-7639-4fff-b3e6-66f435a9a159",
+  "blocks": [
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 0,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 1,
+      "text": "",
+      "type": "unstyled"
+    }
+  ],
+  "documentStyle": {},
+  "entityMap": {
+    "0": {
+      "data": {
+        "config": {
+          "alignment": "center",
+          "spoiler": {
+            "enabled": false
+          },
+          "textWrap": "wrap"
+        },
+        "srcType": "url"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "wix-draft-plugin-html"
+    }
+  }
+};
+
+exports[`insert plugins tests > side toolbar > should insert audio #0`] =
+{
+  "ID": "7de7b80a-6f4a-488e-98fa-a2771c1a8d4b",
+  "blocks": [
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 0,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 1,
+      "text": "",
+      "type": "unstyled"
+    }
+  ],
+  "documentStyle": {},
+  "entityMap": {
+    "0": {
+      "data": {
+        "audio": {
+          "src": {
+            "id": "mp3/f0f74f_35a1cdce4973490eac49e74c3244364d.mp3"
+          }
+        },
+        "authorName": "KOTA The Friend",
+        "config": {
+          "alignment": "center",
+          "size": "content",
+          "textWrap": "wrap"
+        },
+        "disableDownload": true,
+        "name": "Dear Fear"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "ricos-audio"
+    }
+  }
+};
+
+exports[`insert plugins tests > side toolbar > should insert emoji #0`] =
+{
+  "ID": "749a9034-f063-47e5-8d98-7d431b00c513",
+  "blocks": [
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 0,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": "😄.",
+      "type": "unstyled"
+    }
+  ],
+  "documentStyle": {},
+  "entityMap": {
+    "0": {
+      "data": {
+        "emojiUnicode": "😄"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "EMOJI_TYPE"
+    }
+  }
+};
+
+exports[`insert plugins tests > footer toolbar > should insert divider #0`] =
+{
+  "ID": "9565074b-9847-4b8f-b595-6f6565b11f64",
+  "blocks": [
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 0,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 1,
+      "text": "",
+      "type": "unstyled"
+    }
+  ],
+  "documentStyle": {},
+  "entityMap": {
+    "0": {
+      "data": {
+        "config": {
+          "alignment": "center",
+          "size": "large"
+        },
+        "type": "single"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "wix-draft-plugin-divider"
+    }
+  }
+};
+
+exports[`insert plugins tests > footer toolbar > should insert code_block #0`] =
+{
+  "ID": "b81c7e37-54c2-443f-be4a-9b3de7fa58d9",
+  "blocks": [
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": "",
+      "type": "code-block"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 1,
+      "text": "",
+      "type": "unstyled"
+    }
+  ],
+  "documentStyle": {},
+  "entityMap": {}
+};
+
+exports[`insert plugins tests > footer toolbar > should insert button #0`] =
+{
+  "ID": "15917c91-1358-428e-a84d-3372e2640c81",
+  "blocks": [
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 0,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 1,
+      "text": "",
+      "type": "unstyled"
+    }
+  ],
+  "documentStyle": {},
+  "entityMap": {
+    "0": {
+      "data": {
+        "button": {
+          "design": {},
+          "settings": {
+            "buttonText": "Click Me",
+            "target": "_self"
+          }
+        },
+        "config": {
+          "alignment": "center",
+          "size": "small",
+          "spoiler": {
+            "enabled": false
+          },
+          "textWrap": "wrap",
+          "width": "fit-content"
+        }
+      },
+      "mutability": "IMMUTABLE",
+      "type": "wix-draft-plugin-link-button"
+    }
+  }
+};
+
+exports[`insert plugins tests > footer toolbar > should insert html #0`] =
+{
+  "ID": "571bf361-314b-4802-85bb-9692c0bb0bcc",
+  "blocks": [
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 0,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 1,
+      "text": "",
+      "type": "unstyled"
+    }
+  ],
+  "documentStyle": {},
+  "entityMap": {
+    "0": {
+      "data": {
+        "config": {
+          "alignment": "center",
+          "spoiler": {
+            "enabled": false
+          },
+          "textWrap": "wrap"
+        },
+        "srcType": "url"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "wix-draft-plugin-html"
+    }
+  }
+};
+
+exports[`insert plugins tests > footer toolbar > should insert audio #0`] =
+{
+  "ID": "0d277049-8621-4a45-8072-ccdcdd369a17",
+  "blocks": [
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 0,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 1,
+      "text": "",
+      "type": "unstyled"
+    }
+  ],
+  "documentStyle": {},
+  "entityMap": {
+    "0": {
+      "data": {
+        "audio": {
+          "src": {
+            "id": "mp3/f0f74f_35a1cdce4973490eac49e74c3244364d.mp3"
+          }
+        },
+        "authorName": "KOTA The Friend",
+        "config": {
+          "alignment": "center",
+          "size": "content",
+          "textWrap": "wrap"
+        },
+        "disableDownload": true,
+        "name": "Dear Fear"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "ricos-audio"
+    }
+  }
+};
+
+exports[`insert plugins tests > footer toolbar > should insert emoji #0`] =
+{
+  "ID": "1916798e-1bb9-44fe-883c-d2c691f29972",
+  "blocks": [
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 0,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": "😄.",
+      "type": "unstyled"
+    }
+  ],
+  "documentStyle": {},
+  "entityMap": {
+    "0": {
+      "data": {
+        "emojiUnicode": "😄"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "EMOJI_TYPE"
+    }
+  }
+};
+
+exports[`insert plugins tests > side toolbar > should insert divider #1`] =
+{
+  "ID": "3f1a73fd-934d-49ae-be7b-415fb9be0d82",
+  "blocks": [
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 0,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 1,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 2,
+      "text": "",
+      "type": "unstyled"
+    }
+  ],
+  "documentStyle": {},
+  "entityMap": {
+    "0": {
+      "data": {
+        "config": {
+          "alignment": "center",
+          "size": "large",
+          "textWrap": "nowrap"
+        },
+        "type": "single"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "wix-draft-plugin-divider"
+    }
+  }
+};
+
+exports[`insert plugins tests > side toolbar > should insert code_block #1`] =
+{
+  "ID": "86a4678a-9721-4085-8faa-1fa574188790",
+  "blocks": [
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 1,
+      "text": "",
+      "type": "code-block"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 2,
+      "text": "",
+      "type": "unstyled"
+    }
+  ],
+  "documentStyle": {},
+  "entityMap": {}
+};
+
+exports[`insert plugins tests > side toolbar > should insert button #1`] =
+{
+  "ID": "7c6feb14-e543-407d-b04c-1174b756a3d2",
+  "blocks": [
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 0,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 1,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 2,
+      "text": "",
+      "type": "unstyled"
+    }
+  ],
+  "documentStyle": {},
+  "entityMap": {
+    "0": {
+      "data": {
+        "button": {
+          "design": {
+            "borderRadius": 0,
+            "borderWidth": 0
+          },
+          "settings": {
+            "buttonText": "Click Me"
+          }
+        },
+        "config": {
+          "alignment": "center",
+          "size": "small",
+          "textWrap": "wrap",
+          "width": "fit-content"
+        }
+      },
+      "mutability": "IMMUTABLE",
+      "type": "wix-draft-plugin-link-button"
+    }
+  }
+};
+
+exports[`insert plugins tests > side toolbar > should insert html #1`] =
+{
+  "ID": "35eb4071-b2b1-4f8b-9d7a-15a0c93bf320",
+  "blocks": [
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 0,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 1,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 2,
+      "text": "",
+      "type": "unstyled"
+    }
+  ],
+  "documentStyle": {},
+  "entityMap": {
+    "0": {
+      "data": {
+        "config": {
+          "alignment": "center",
+          "height": 550,
+          "textWrap": "wrap",
+          "width": 350
+        },
+        "src": "",
+        "srcType": "html"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "wix-draft-plugin-html"
+    }
+  }
+};
+
+exports[`insert plugins tests > side toolbar > should insert audio #1`] =
+{
+  "ID": "0ec0d5bc-12a4-416a-9b31-c77536322f2c",
+  "blocks": [
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 0,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 1,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 2,
+      "text": "",
+      "type": "unstyled"
+    }
+  ],
+  "documentStyle": {},
+  "entityMap": {
+    "0": {
+      "data": {
+        "audio": {
+          "duration": 199.632,
+          "src": {
+            "id": "mp3/f0f74f_35a1cdce4973490eac49e74c3244364d.mp3"
+          }
+        },
+        "authorName": "KOTA The Friend",
+        "config": {
+          "alignment": "center",
+          "size": "content"
+        },
+        "disableDownload": true,
+        "name": "Dear Fear"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "ricos-audio"
+    }
+  }
+};
+
+exports[`insert plugins tests > side toolbar > should insert emoji #1`] =
+{
+  "ID": "a8ec6cac-8934-4560-bf1a-033b47939cba",
+  "blocks": [
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 0,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": "😄.",
+      "type": "unstyled"
+    }
+  ],
+  "documentStyle": {},
+  "entityMap": {
+    "0": {
+      "data": {
+        "emojiUnicode": "😄"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "EMOJI_TYPE"
+    }
+  }
+};
+
+exports[`insert plugins tests > footer toolbar > should insert divider #1`] =
+{
+  "ID": "b0f79ed2-f3fd-4fd9-86b3-e3ee706b1ba8",
+  "blocks": [
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 0,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 1,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 2,
+      "text": "",
+      "type": "unstyled"
+    }
+  ],
+  "documentStyle": {},
+  "entityMap": {
+    "0": {
+      "data": {
+        "config": {
+          "alignment": "center",
+          "size": "large",
+          "textWrap": "nowrap"
+        },
+        "type": "single"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "wix-draft-plugin-divider"
+    }
+  }
+};
+
+exports[`insert plugins tests > footer toolbar > should insert code_block #1`] =
+{
+  "ID": "edf959d7-2fb5-426f-bc0e-d706b57d49c7",
+  "blocks": [
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 1,
+      "text": "",
+      "type": "code-block"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 2,
+      "text": "",
+      "type": "unstyled"
+    }
+  ],
+  "documentStyle": {},
+  "entityMap": {}
+};
+
+exports[`insert plugins tests > footer toolbar > should insert button #1`] =
+{
+  "ID": "f67d18d2-48b6-4016-9e0d-e559807f48e1",
+  "blocks": [
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 0,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 1,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 2,
+      "text": "",
+      "type": "unstyled"
+    }
+  ],
+  "documentStyle": {},
+  "entityMap": {
+    "0": {
+      "data": {
+        "button": {
+          "design": {
+            "borderRadius": 0,
+            "borderWidth": 0
+          },
+          "settings": {
+            "buttonText": "Click Me"
+          }
+        },
+        "config": {
+          "alignment": "center",
+          "size": "small",
+          "textWrap": "wrap",
+          "width": "fit-content"
+        }
+      },
+      "mutability": "IMMUTABLE",
+      "type": "wix-draft-plugin-link-button"
+    }
+  }
+};
+
+exports[`insert plugins tests > footer toolbar > should insert html #1`] =
+{
+  "ID": "0fa21c76-0259-4f42-af48-f83b8193f584",
+  "blocks": [
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 0,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 1,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 2,
+      "text": "",
+      "type": "unstyled"
+    }
+  ],
+  "documentStyle": {},
+  "entityMap": {
+    "0": {
+      "data": {
+        "config": {
+          "alignment": "center",
+          "height": 550,
+          "textWrap": "wrap",
+          "width": 350
+        },
+        "src": "",
+        "srcType": "html"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "wix-draft-plugin-html"
+    }
+  }
+};
+
+exports[`insert plugins tests > footer toolbar > should insert audio #1`] =
+{
+  "ID": "988d57f0-5433-418a-ad79-882de6cc75bf",
+  "blocks": [
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 0,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 1,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 2,
+      "text": "",
+      "type": "unstyled"
+    }
+  ],
+  "documentStyle": {},
+  "entityMap": {
+    "0": {
+      "data": {
+        "audio": {
+          "duration": 199.632,
+          "src": {
+            "id": "mp3/f0f74f_35a1cdce4973490eac49e74c3244364d.mp3"
+          }
+        },
+        "authorName": "KOTA The Friend",
+        "config": {
+          "alignment": "center",
+          "size": "content"
+        },
+        "disableDownload": true,
+        "name": "Dear Fear"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "ricos-audio"
+    }
+  }
+};
+
+exports[`insert plugins tests > footer toolbar > should insert emoji #1`] =
+{
+  "ID": "b16aef0c-5171-42d6-885f-89fd5a920fc8",
+  "blocks": [
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 0,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": "😄.",
+      "type": "unstyled"
+    }
+  ],
+  "documentStyle": {},
+  "entityMap": {
+    "0": {
+      "data": {
+        "emojiUnicode": "😄"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "EMOJI_TYPE"
+    }
+  }
+};
+
+exports[`[tiptap] insert plugins tests > [tiptap] side toolbar #0`] =
+{
+  "blocks": [
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 0,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 1,
+      "text": "",
+      "type": "code-block"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 1,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 2,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 2,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 3,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 3,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 4,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 4,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 5,
+      "text": "😄",
+      "type": "unstyled"
+    }
+  ],
+  "documentStyle": {},
+  "entityMap": {
+    "0": {
+      "data": {
+        "config": {
+          "alignment": "center",
+          "size": "large"
+        },
+        "type": "single"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "wix-draft-plugin-divider"
+    },
+    "1": {
+      "data": {
+        "button": {
+          "design": {},
+          "settings": {
+            "buttonText": "Click Me",
+            "target": "_self"
+          }
+        },
+        "config": {
+          "alignment": "center",
+          "size": "small",
+          "spoiler": {
+            "enabled": false
+          },
+          "textWrap": "wrap",
+          "width": "fit-content"
+        }
+      },
+      "mutability": "IMMUTABLE",
+      "type": "wix-draft-plugin-link-button"
+    },
+    "2": {
+      "data": {
+        "config": {
+          "alignment": "center",
+          "spoiler": {
+            "enabled": false
+          },
+          "textWrap": "wrap",
+          "width": 350
+        },
+        "srcType": "url"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "wix-draft-plugin-html"
+    },
+    "3": {
+      "data": {
+        "audio": {
+          "src": {
+            "id": "mp3/f0f74f_35a1cdce4973490eac49e74c3244364d.mp3"
+          }
+        },
+        "authorName": "KOTA The Friend",
+        "config": {
+          "alignment": "center",
+          "size": "content",
+          "textWrap": "wrap"
+        },
+        "disableDownload": true,
+        "name": "Dear Fear"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "ricos-audio"
+    },
+    "4": {
+      "data": {
+        "emojiUnicode": "😄"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "EMOJI_TYPE"
+    }
+  }
+};
+
+exports[`[tiptap] insert plugins tests > [tiptap] footer toolbar #0`] =
+{
+  "blocks": [
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 0,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 1,
+      "text": "",
+      "type": "code-block"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 1,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 2,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 2,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 3,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 3,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 4,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 4,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 5,
+      "text": "😄",
+      "type": "unstyled"
+    }
+  ],
+  "documentStyle": {},
+  "entityMap": {
+    "0": {
+      "data": {
+        "config": {
+          "alignment": "center",
+          "size": "large"
+        },
+        "type": "single"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "wix-draft-plugin-divider"
+    },
+    "1": {
+      "data": {
+        "button": {
+          "design": {},
+          "settings": {
+            "buttonText": "Click Me",
+            "target": "_self"
+          }
+        },
+        "config": {
+          "alignment": "center",
+          "size": "small",
+          "spoiler": {
+            "enabled": false
+          },
+          "textWrap": "wrap",
+          "width": "fit-content"
+        }
+      },
+      "mutability": "IMMUTABLE",
+      "type": "wix-draft-plugin-link-button"
+    },
+    "2": {
+      "data": {
+        "config": {
+          "alignment": "center",
+          "spoiler": {
+            "enabled": false
+          },
+          "textWrap": "wrap",
+          "width": 350
+        },
+        "srcType": "url"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "wix-draft-plugin-html"
+    },
+    "3": {
+      "data": {
+        "audio": {
+          "src": {
+            "id": "mp3/f0f74f_35a1cdce4973490eac49e74c3244364d.mp3"
+          }
+        },
+        "authorName": "KOTA The Friend",
+        "config": {
+          "alignment": "center",
+          "size": "content",
+          "textWrap": "wrap"
+        },
+        "disableDownload": true,
+        "name": "Dear Fear"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "ricos-audio"
+    },
+    "4": {
+      "data": {
+        "emojiUnicode": "😄"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "EMOJI_TYPE"
+    }
+  }
+};
+
+exports[`[draft] insert plugins tests > [draft] side toolbar #0`] =
+{
+  "blocks": [
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 0,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 1,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 2,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 1,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 3,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 4,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 2,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 5,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 6,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 3,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 7,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 4,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 8,
+      "text": "😄",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 9,
+      "text": "",
+      "type": "code-block"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 10,
+      "text": "",
+      "type": "unstyled"
+    }
+  ],
+  "documentStyle": {},
+  "entityMap": {
+    "0": {
+      "data": {
+        "config": {
+          "alignment": "center",
+          "size": "large",
+          "textWrap": "nowrap"
+        },
+        "type": "single"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "wix-draft-plugin-divider"
+    },
+    "1": {
+      "data": {
+        "button": {
+          "design": {
+            "borderRadius": 0,
+            "borderWidth": 0
+          },
+          "settings": {
+            "buttonText": "Click Me"
+          }
+        },
+        "config": {
+          "alignment": "center",
+          "size": "small",
+          "textWrap": "wrap",
+          "width": "fit-content"
+        }
+      },
+      "mutability": "IMMUTABLE",
+      "type": "wix-draft-plugin-link-button"
+    },
+    "2": {
+      "data": {
+        "config": {
+          "alignment": "center",
+          "height": 550,
+          "textWrap": "wrap",
+          "width": 350
+        },
+        "src": "",
+        "srcType": "html"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "wix-draft-plugin-html"
+    },
+    "3": {
+      "data": {
+        "audio": {
+          "duration": 199.632,
+          "src": {
+            "id": "mp3/f0f74f_35a1cdce4973490eac49e74c3244364d.mp3"
+          }
+        },
+        "authorName": "KOTA The Friend",
+        "config": {
+          "alignment": "center",
+          "size": "content"
+        },
+        "disableDownload": true,
+        "name": "Dear Fear"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "ricos-audio"
+    },
+    "4": {
+      "data": {
+        "emojiUnicode": "😄"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "EMOJI_TYPE"
+    }
+  }
+};
+
+exports[`[draft] insert plugins tests > [draft] footer toolbar #0`] =
+{
+  "blocks": [
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 0,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 1,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 2,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 1,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 3,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 4,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 2,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 5,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 6,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 3,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 7,
+      "text": " ",
+      "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [
+        {
+          "key": 4,
+          "length": 1,
+          "offset": 0
+        }
+      ],
+      "inlineStyleRanges": [],
+      "key": 8,
+      "text": "😄",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 9,
+      "text": "",
+      "type": "code-block"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 10,
+      "text": "",
+      "type": "unstyled"
+    }
+  ],
+  "documentStyle": {},
+  "entityMap": {
+    "0": {
+      "data": {
+        "config": {
+          "alignment": "center",
+          "size": "large",
+          "textWrap": "nowrap"
+        },
+        "type": "single"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "wix-draft-plugin-divider"
+    },
+    "1": {
+      "data": {
+        "button": {
+          "design": {
+            "borderRadius": 0,
+            "borderWidth": 0
+          },
+          "settings": {
+            "buttonText": "Click Me"
+          }
+        },
+        "config": {
+          "alignment": "center",
+          "size": "small",
+          "textWrap": "wrap",
+          "width": "fit-content"
+        }
+      },
+      "mutability": "IMMUTABLE",
+      "type": "wix-draft-plugin-link-button"
+    },
+    "2": {
+      "data": {
+        "config": {
+          "alignment": "center",
+          "height": 550,
+          "textWrap": "wrap",
+          "width": 350
+        },
+        "src": "",
+        "srcType": "html"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "wix-draft-plugin-html"
+    },
+    "3": {
+      "data": {
+        "audio": {
+          "duration": 199.632,
+          "src": {
+            "id": "mp3/f0f74f_35a1cdce4973490eac49e74c3244364d.mp3"
+          }
+        },
+        "authorName": "KOTA The Friend",
+        "config": {
+          "alignment": "center",
+          "size": "content"
+        },
+        "disableDownload": true,
+        "name": "Dear Fear"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "ricos-audio"
+    },
+    "4": {
+      "data": {
+        "emojiUnicode": "😄"
+      },
+      "mutability": "IMMUTABLE",
+      "type": "EMOJI_TYPE"
+    }
+  }
+};

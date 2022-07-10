@@ -6,6 +6,7 @@ import {
   SOUND_CLOUD,
   SOCIAL_EMBED,
 } from '../cypress/dataHooks';
+import { getTestPrefix } from '../cypress/utils';
 
 const LINKS = {
   YOUTUBE: 'https://www.youtube.com/watch?v=whbidPR4nVA',
@@ -34,7 +35,7 @@ const additionalCommands = {
     cy.moveCursorToEnd(); //DO NOT REMOVE - fix flakiness
   },
   EMOJI: () => {
-    cy.get(`[data-hook=emoji-5]:first`).click().enterParagraphs(['.']);
+    cy.get(`[data-hook=emoji-5]:first`).click();
   },
   AUDIO: () => {
     cy.wait(500);
@@ -54,12 +55,9 @@ const testInsertPlugin =
   ([plugin = '', pluginButtonName]: [string, string]) => {
     const pluginLowercase = plugin.toLocaleLowerCase();
     if (EXCLUDE_PLUGINS.indexOf(pluginLowercase) === -1) {
-      it(`should insert ${pluginLowercase}`, () => {
-        cy.loadRicosEditor('empty').wait(500).insertPlugin(toolbar, pluginButtonName);
-        additionalCommands[plugin]?.();
-        cy.wait(1500);
-        cy.percySnapshot();
-      });
+      cy.focusEditor().type('{downarrow}').insertPlugin(toolbar, pluginButtonName);
+      additionalCommands[plugin]?.();
+      cy.wait(1500);
     }
   };
 
@@ -88,26 +86,39 @@ const testInsertPlugin =
 //     cy.percySnapshot();
 //   });
 
-describe('insert plugins tests', () => {
-  beforeEach('load editor', () => {
-    cy.switchToDesktop();
-  });
+[true, false].forEach(useTiptap => {
+  describe(`${getTestPrefix(useTiptap)} insert plugins tests`, () => {
+    beforeEach('load editor', () => {
+      cy.switchToDesktop();
+      cy.toggleTiptap(useTiptap);
+      cy.loadRicosEditor('empty');
+    });
 
-  afterEach(() => cy.matchContentSnapshot());
+    afterEach(() => {
+      cy.matchContentSnapshot();
+      cy.switchToDraft();
+    });
 
-  context('side toolbar', () => {
-    Object.entries(STATIC_TOOLBAR_BUTTONS_WITHOUT_EMBED).forEach(testInsertPlugin(TOOLBARS.SIDE));
-    // TODO: fix flaky tests
-    // Object.entries(STATIC_TOOLBAR_BUTTONS_MEDIA).forEach(
-    //   testNativeUploadMediaPlugin(TOOLBARS.SIDE)
-    // );
-  });
+    const testTitlePerfix = getTestPrefix(useTiptap);
 
-  context('footer toolbar', () => {
-    Object.entries(STATIC_TOOLBAR_BUTTONS_WITHOUT_EMBED).forEach(testInsertPlugin(TOOLBARS.FOOTER));
-    // TODO: fix flaky tests
-    // Object.entries(STATIC_TOOLBAR_BUTTONS_MEDIA).forEach(
-    //   testNativeUploadMediaPlugin(TOOLBARS.FOOTER)
-    // );
+    it(`${testTitlePerfix} side toolbar`, () => {
+      Object.entries(STATIC_TOOLBAR_BUTTONS_WITHOUT_EMBED).forEach(testInsertPlugin(TOOLBARS.SIDE));
+      // TODO: fix flaky tests
+      // Object.entries(STATIC_TOOLBAR_BUTTONS_MEDIA).forEach(
+      //   testNativeUploadMediaPlugin(TOOLBARS.SIDE)
+      // );
+      cy.percySnapshot(`${testTitlePerfix} side toolbar`);
+    });
+
+    it(`${testTitlePerfix} footer toolbar`, () => {
+      Object.entries(STATIC_TOOLBAR_BUTTONS_WITHOUT_EMBED).forEach(
+        testInsertPlugin(TOOLBARS.FOOTER)
+      );
+      // TODO: fix flaky tests
+      // Object.entries(STATIC_TOOLBAR_BUTTONS_MEDIA).forEach(
+      //   testNativeUploadMediaPlugin(TOOLBARS.FOOTER)
+      // );
+      cy.percySnapshot(`${testTitlePerfix} footer toolbar`);
+    });
   });
 });

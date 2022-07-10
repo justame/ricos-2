@@ -554,7 +554,6 @@ const COMMANDS = {
   },
 
   insertPlugin: (toolbar: string, pluginInsertButtonName: string) => {
-    cy.focusEditor();
     if (toolbar === TOOLBARS.FOOTER) {
       cy.insertPluginFromFooterToolbar(pluginInsertButtonName);
     }
