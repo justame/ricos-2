@@ -1,6 +1,6 @@
 {
   "name": "ricos-converters",
-  "version": "8.71.38",
+  "version": "8.71.39",
   "author": {
     "name": "Alex Greenstein",
     "email": "alexgr@wix.com"
@@ -35,10 +35,10 @@
   },
   "dependencies": {
     "fp-ts": "^2.11.0",
-    "ricos-common": "8.71.38",
-    "ricos-content": "8.71.38",
-    "ricos-schema": "8.71.38",
-    "ricos-types": "8.71.38",
+    "ricos-common": "8.71.39",
+    "ricos-content": "8.71.39",
+    "ricos-schema": "8.71.39",
+    "ricos-types": "8.71.39",
     "to-camel-case": "1.0.0",
     "to-constant-case": "1.0.0"
   },
