@@ -23,6 +23,8 @@
   - [#4153](https://github.com/wix/ricos/pull/4153) tiptap html width and height sliders
 - `tiptap-toobar-v3`
   - [#4156](https://github.com/wix/ricos/pull/4156) fix footer toolbar overflow behaviour
+- `link-preview`
+  - [#4158](https://github.com/wix/ricos/pull/4158) fix image display on tiptap
 
 </details>
 

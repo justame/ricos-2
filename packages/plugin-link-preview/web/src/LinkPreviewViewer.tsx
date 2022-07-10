@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable camelcase */
 import React, { Component } from 'react';
-import { isEqual } from 'lodash';
+import { isEqual, debounce } from 'lodash';
 import type { ComponentData, Helpers, RichContentTheme } from 'wix-rich-content-common';
 import { mergeStyles, validate, getHost } from 'wix-rich-content-common';
 import pluginLinkPreviewSchema from 'wix-rich-content-common/dist/statics/schemas/plugin-link-preview.schema.json';
@@ -26,9 +26,11 @@ interface LinkPreviewViewerProps {
 }
 
 class LinkPreviewViewer extends Component<LinkPreviewViewerProps, { imageHeight?: number }> {
-  image: HTMLDivElement | null = null;
+  elementRef: HTMLElement | null = null;
 
   styles: Record<string, string>;
+
+  resizer?: ResizeObserver;
 
   constructor(props: LinkPreviewViewerProps) {
     super(props);
@@ -46,7 +48,19 @@ class LinkPreviewViewer extends Component<LinkPreviewViewerProps, { imageHeight?
 
   componentDidMount() {
     validate(this.props.componentData, pluginLinkPreviewSchema);
-    this.setState({ imageHeight: this.image?.offsetHeight });
+    this.setState({ imageHeight: this.elementRef?.offsetHeight });
+    if (window?.ResizeObserver) {
+      this.resizer = new ResizeObserver(
+        debounce(entries => {
+          this.setState({ imageHeight: Math.round(entries[0].contentRect.height) });
+        }, 60)
+      );
+    }
+    this.elementRef && this.resizer?.observe(this.elementRef);
+  }
+
+  componentWillUnmount() {
+    this.elementRef && this.resizer?.unobserve(this.elementRef);
   }
 
   getUrlForDisplay = (url: string) => url.replace(/^https?:\/\//, '');
@@ -57,6 +71,8 @@ class LinkPreviewViewer extends Component<LinkPreviewViewerProps, { imageHeight?
       'Click',
       this.props.componentData.config.link.url || ''
     );
+
+  setRef = (ref: HTMLElement) => (this.elementRef = ref);
 
   render() {
     const { componentData, theme, isMobile, settings, iframeSandboxDomain } = this.props;
@@ -102,6 +118,7 @@ class LinkPreviewViewer extends Component<LinkPreviewViewerProps, { imageHeight?
           className={linkPreview}
           data-hook="linkPreviewViewer"
           onClick={this.onLinkPreviewClick}
+          ref={this.setRef}
         >
           {thumbnailUrl && (
             <div
@@ -114,7 +131,6 @@ class LinkPreviewViewer extends Component<LinkPreviewViewerProps, { imageHeight?
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               // @ts-ignore
               alt={title}
-              ref={ref => (this.image = ref)}
             />
           )}
           <section className={linkPreviewInfo}>
