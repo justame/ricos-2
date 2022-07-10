@@ -31,7 +31,7 @@ export default class AddPluginMenu extends Component {
 
   triggerBi = debounce(() => {
     const { t, helpers, isMoreMenu } = this.props;
-    helpers.onPluginAction('searchForPlugin', {
+    helpers.onPluginAction?.('searchForPlugin', {
       searchTerm: this.state.value,
       pluginsDetails: getPluginsIdForTag(this.state.value.toLowerCase(), t).join(', '),
       entry_point: isMoreMenu ? 'footerToolbar' : 'sideToolbar',
