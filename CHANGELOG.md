@@ -19,6 +19,11 @@
 
 </details>
 
+## 8.71.43 (Jul 11, 2022)
+
+- `link`
+  - [#4123](https://github.com/wix/ricos/pull/4123) detect all mail tlds
+
 ## 8.71.42 (Jul 11, 2022)
 
 ## :bug: Bug Fix
@@ -70,10 +75,6 @@
 ## 8.71.37 (Jul 7, 2022)
 
 ## :bug: Bug Fix
-
-- `link`
-
-  - [#4123](https://github.com/wix/ricos/pull/4123) support all tlds in link detection
 
 - `ricos-content`
 
