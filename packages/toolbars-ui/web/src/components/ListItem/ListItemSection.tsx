@@ -1,6 +1,6 @@
 import React from 'react';
 import type { FC } from 'react';
-import styles from './list-item-select.scss';
+import styles from './list-item-section.scss';
 
 type Props = {
   type?: 'divider' | 'whitespace';

@@ -1,0 +1,39 @@
+@import '~wix-rich-content-common/dist/statics/styles/palette';
+@import '~wix-rich-content-common/dist/statics/styles/mixins';
+@import '~wix-rich-content-common/dist/statics/styles/fonts';
+
+.customize_button {
+  width: 100%;
+  color: var(--ricos-settings-text-color, #000);
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  font-size: 14px;
+
+  &:hover {
+    @extend %hover;
+  }
+
+  &:active {
+    @extend %active;
+  }
+
+  @include phone {
+    height: 47px;
+  }
+}
+
+%active {
+  background-color: rgba($settings-action-color-fallback-tuple, 0.1);
+  color: var(--ricos-settings-action-color, $action-color-fallback);
+  svg {
+    @include fillWithSettingsActionColor;
+  }
+}
+
+%hover {
+  cursor: pointer;
+  background-color: rgba(var(--ricos-settings-action-color-tuple, $fallbackColorTuple), 0.05);
+}

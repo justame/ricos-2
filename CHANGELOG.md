@@ -51,6 +51,8 @@
 
 - `ricos-events`
   - [#4149](https://github.com/wix/ricos/pull/4149) getAllTopics; publishOnce; duplication errors
+- `poll/tiptap`
+  - [#4098](https://github.com/wix/ricos/pull/4098) add Design/Settings/Layout toolbar buttons
 
 ## 8.71.38 (Jul 9, 2022)
 

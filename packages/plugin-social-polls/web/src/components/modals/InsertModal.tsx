@@ -2,7 +2,8 @@ import type { FC } from 'react';
 import React, { useContext } from 'react';
 import { convertBlockDataToRicos } from 'ricos-content/libs/convertBlockDataToRicos';
 import { ModalContext, RicosContext, EditorContext } from 'ricos-context';
-import { pollModals, POLL_TYPE } from '../../types';
+import { POLL_TYPE } from '../../types';
+import { pollModals } from '../../consts';
 import { PollPresetSelector } from '../settings/preset-selector/PollPresetSelector.jsx';
 
 interface Props {

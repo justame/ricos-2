@@ -99,12 +99,12 @@ export class SettingsModal extends Component {
 
   componentDidMount() {
     !this.modalsWithEditorCommands &&
-      this.props.pubsub.subscribe('componentData', this.onComponentUpdate);
+      this.props.pubsub?.subscribe('componentData', this.onComponentUpdate);
   }
 
   componentWillUnmount() {
     !!this.modalsWithEditorCommands &&
-      this.props.pubsub.unsubscribe('componentData', this.onComponentUpdate);
+      this.props.pubsub?.unsubscribe('componentData', this.onComponentUpdate);
   }
 
   onComponentUpdate = () => this.forceUpdate();
@@ -154,7 +154,7 @@ export class SettingsModal extends Component {
           ) : useNewSettingsUi ? (
             <SettingsPanelHeader
               title={t('Poll_PollSettings_Common_Header')}
-              onClose={this.restoreChanges}
+              onClose={this.modalsWithEditorCommands ? onCancel : this.restoreChanges}
             />
           ) : (
             <div className={this.styles.header}>
@@ -181,7 +181,7 @@ export class SettingsModal extends Component {
                 experiments={experiments}
               >
                 <EditPollSection
-                  store={pubsub.store}
+                  store={pubsub?.store}
                   updateData={updateData}
                   layout={componentData.layout}
                   experiments={experiments}
@@ -203,7 +203,7 @@ export class SettingsModal extends Component {
                 <LayoutSettingsSection
                   theme={theme}
                   updateData={updateData}
-                  store={pubsub.store}
+                  store={pubsub?.store}
                   componentData={componentData}
                   t={t}
                   isMobile={isMobile}
@@ -218,7 +218,7 @@ export class SettingsModal extends Component {
                 <DesignSettingsSection
                   theme={theme}
                   updateData={updateData}
-                  store={pubsub.store}
+                  store={pubsub?.store}
                   componentData={componentData}
                   t={t}
                   languageDir={languageDir}
@@ -233,7 +233,7 @@ export class SettingsModal extends Component {
                 <PollSettingsSection
                   theme={theme}
                   updateData={updateData}
-                  store={pubsub.store}
+                  store={pubsub?.store}
                   componentData={componentData}
                   t={t}
                   settings={settings}

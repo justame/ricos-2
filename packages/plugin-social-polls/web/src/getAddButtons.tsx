@@ -7,7 +7,8 @@ import {
 import type { AddButton } from 'ricos-types';
 import { DEFAULT_COMPONENT_DATA, MEMBER_ROLES } from './defaults';
 import InsertModal from './components/modals/InsertModal';
-import { POLL_TYPE, pollModals } from './types';
+import { POLL_TYPE } from './types';
+import { pollModals } from './consts';
 import { merge } from 'lodash';
 
 export const getAddButtons = (config): AddButton[] => {
