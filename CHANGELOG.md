@@ -17,14 +17,16 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.71.42 (Jul 11, 2022)
+
 ## :bug: Bug Fix
 
 - `ricos-editor`
   - [#4162](https://github.com/wix/ricos/pull/4162) fix FullRicosEditor service lifecycle
 - `ricos-schema`
   - [#4163](https://github.com/wix/ricos/pull/4163) remove node style margins
-
-</details>
 
 ## 8.71.41 (Jul 10, 2022)
 
