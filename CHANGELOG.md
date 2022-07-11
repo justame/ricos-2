@@ -21,6 +21,8 @@
 
 - `ricos-editor`
   - [#4162](https://github.com/wix/ricos/pull/4162) fix FullRicosEditor service lifecycle
+- `ricos-schema`
+  - [#4163](https://github.com/wix/ricos/pull/4163) remove node style margins
 
 </details>
 
