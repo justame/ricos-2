@@ -40,6 +40,9 @@ export const uniqueId: RicosExtension = {
               const tr = newState.tr;
               const usedIds = {};
 
+              const { selection } = oldState;
+              const marks = selection.$to.parentOffset && selection.$from.marks();
+
               newState.doc.descendants((node, pos) => {
                 const nodeId = node.attrs.id;
                 const id = nodeId && !usedIds[nodeId] ? nodeId : generateId();
@@ -50,6 +53,7 @@ export const uniqueId: RicosExtension = {
                     ...node.attrs,
                     id,
                   });
+                  marks && tr.ensureMarks(marks);
                 }
               });
 
