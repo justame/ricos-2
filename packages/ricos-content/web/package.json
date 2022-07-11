@@ -47,7 +47,8 @@
     "to-slug-case": "1.0.0",
     "to-snake-case": "1.0.0",
     "utility-types": "^3.10.0",
-    "uuid": "^3.4.0"
+    "uuid": "^3.4.0",
+    "linkify-it": "^4.0.1"
   },
   "peerDependencies": {
     "@babel/runtime": "^7.17.2",

@@ -71,6 +71,10 @@
 
 ## :bug: Bug Fix
 
+- `link`
+
+  - [#4123](https://github.com/wix/ricos/pull/4123) support all tlds in link detection
+
 - `ricos-content`
 
   - [#4103](https://github.com/wix/ricos/pull/4103) fix normalizeUrl func to handle "mailto:" url's

@@ -1,4 +1,5 @@
 import linkifyIt from 'linkify-it';
+
 const linkify = linkifyIt();
 
 const HttpUrlPattern = new RegExp(
@@ -11,15 +12,27 @@ const HttpUrlPattern = new RegExp(
   'i'
 ); // fragment locator
 
+const validateEmail = email => {
+  return String(email)
+    .toLowerCase()
+    .match(
+      // eslint-disable-next-line max-len
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+};
 export const isValidExactUrl = (str: string) => HttpUrlPattern.test(str);
 
 export const isValidTelUrl = (str: string) => /^tel:[0-9-()+#*]+$/.test(str);
 
-export const isValidUrl = (url: string) => url && url[0] !== '#' && linkify.test(url);
+export const isValidUrl = (url: string) =>
+  url && url[0] !== '#' && (linkify.test(url) || !!validateEmail(url));
 
 export const getUrlMatches = (text: string) => linkify.match(text) || [];
 
 export const normalizeUrl = url => {
+  if (validateEmail(url)) {
+    return 'mailto:' + url;
+  }
   const linkifyURL = linkify.match(url) && linkify.match(url)[0].url;
   if (linkifyURL) {
     return url.includes('mailto:') ? url : linkifyURL;
