@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `ricos-editor`
+  - [#4167](https://github.com/wix/ricos/pull/4167) fix toolbars should create (mobile)
+
 ## :house: Internal
 
 - `video`

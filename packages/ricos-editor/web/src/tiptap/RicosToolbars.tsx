@@ -14,7 +14,8 @@ import {
   mobileTextButtonList,
 } from '../toolbars/utils/defaultTextFormattingButtons';
 import type { TextButtons, ToolbarSettingsFunctions } from 'wix-rich-content-common';
-import { TOOLBARS, mergeToolbarSettings } from 'wix-rich-content-editor-common';
+import { firstRight } from 'wix-rich-content-common';
+import { TOOLBARS, mergeToolbarSettings, isiOS } from 'wix-rich-content-editor-common';
 import type { RichContentAdapter } from 'wix-tiptap-editor';
 import { getDefaultToolbarSettings } from 'wix-rich-content-editor';
 import RicosPortal from '../modals/RicosPortal';
@@ -161,6 +162,21 @@ class RicosToolbars extends React.Component<
     );
   };
 
+  getShouldCreate(
+    isMobile: boolean,
+    shouldCreateFn: ToolbarSettingsFunctions['shouldCreate']
+  ): boolean {
+    const config = shouldCreateFn?.() || { desktop: true, mobile: { ios: true, android: true } };
+    const shouldCreate = true;
+    return (
+      firstRight(shouldCreate, true, [
+        [() => !isMobile, () => config.desktop],
+        [() => isMobile && isiOS(), () => config.mobile?.ios],
+        [() => isMobile && !isiOS(), () => config.mobile?.android],
+      ]) ?? true
+    );
+  }
+
   renderFormattingToolbar(finaltoolbarSettings: ToolbarSettingsFunctions[]) {
     const {
       ricosContext,
@@ -177,11 +193,9 @@ class RicosToolbars extends React.Component<
       'desktop'
     );
 
-    if (
-      !ricosContext.isMobile &&
-      toolbarConfig?.shouldCreate?.().desktop &&
-      !toolbarSettings?.useStaticTextToolbar
-    ) {
+    const shouldCreate = this.getShouldCreate(ricosContext.isMobile, toolbarConfig?.shouldCreate);
+
+    if (!ricosContext.isMobile && shouldCreate && !toolbarSettings?.useStaticTextToolbar) {
       return (
         <FloatingToolbar
           editor={tiptapEditor}
@@ -210,9 +224,8 @@ class RicosToolbars extends React.Component<
 
     const toolbarType = TOOLBARS.INLINE;
     const toolbarConfig = this.getToolbarConfig(finaltoolbarSettings, toolbarType);
-    const shouldCreate = ricosContext.isMobile
-      ? toolbarConfig?.shouldCreate?.().mobile
-      : toolbarConfig?.shouldCreate?.().desktop;
+
+    const shouldCreate = this.getShouldCreate(ricosContext.isMobile, toolbarConfig?.shouldCreate);
 
     if (shouldCreate) {
       return (
@@ -245,8 +258,9 @@ class RicosToolbars extends React.Component<
       toolbarType,
       'mobile'
     );
+    const shouldCreate = this.getShouldCreate(ricosContext.isMobile, toolbarConfig?.shouldCreate);
 
-    if (ricosContext.isMobile && toolbarConfig?.shouldCreate?.().mobile) {
+    if (ricosContext.isMobile && shouldCreate) {
       return (
         <div data-hook="mobileToolbar" dir={ricosContext.languageDir}>
           {this.renderToolbar(toolbarItemsConfig)}
@@ -269,9 +283,7 @@ class RicosToolbars extends React.Component<
       toolbarType,
       'desktop'
     );
-    const shouldCreate =
-      (isMobile && toolbarConfig?.shouldCreate?.().mobile) ||
-      (!isMobile && toolbarConfig?.shouldCreate?.().desktop);
+    const shouldCreate = this.getShouldCreate(isMobile, toolbarConfig?.shouldCreate);
 
     if (htmlContainer && shouldCreate) {
       return (
@@ -299,9 +311,10 @@ class RicosToolbars extends React.Component<
     const { content, ricosContext } = this.props;
     const toolbarType = TOOLBARS.PLUGIN;
     const toolbarConfig = this.getToolbarConfig(finaltoolbarSettings, toolbarType);
-    const shouldCreateToolbar = ricosContext.isMobile
-      ? toolbarConfig?.shouldCreate?.().mobile
-      : toolbarConfig?.shouldCreate?.().desktop;
+    const shouldCreateToolbar = this.getShouldCreate(
+      ricosContext.isMobile,
+      toolbarConfig?.shouldCreate
+    );
 
     if (shouldCreateToolbar) {
       return <PluginsToolbar content={content} />;
@@ -313,7 +326,9 @@ class RicosToolbars extends React.Component<
     const toolbarType = TOOLBARS.FOOTER;
     const toolbarConfig = this.getToolbarConfig(finaltoolbarSettings, toolbarType);
 
-    if (!ricosContext.isMobile && toolbarConfig?.shouldCreate?.().desktop) {
+    const shouldCreate = this.getShouldCreate(ricosContext.isMobile, toolbarConfig?.shouldCreate);
+
+    if (!ricosContext.isMobile && shouldCreate) {
       return <FooterToolbar />;
     }
   };
@@ -326,7 +341,9 @@ class RicosToolbars extends React.Component<
     const toolbarType = TOOLBARS.SIDE;
     const toolbarConfig = this.getToolbarConfig(finaltoolbarSettings, toolbarType);
 
-    if (!isMobile && toolbarConfig?.shouldCreate?.().desktop) {
+    const shouldCreate = this.getShouldCreate(isMobile, toolbarConfig?.shouldCreate);
+
+    if (!isMobile && shouldCreate) {
       return (
         <FloatingAddPluginMenu
           addPluginMenuConfig={toolbarConfig?.addPluginMenuConfig || {}}
