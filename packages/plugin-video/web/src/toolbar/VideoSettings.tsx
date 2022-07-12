@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
-import type { VideoSettingsProps } from '../types';
+import type { VideoPluginEditorConfig } from '../types';
 import classNames from 'classnames';
+import type {
+  AvailableExperiments,
+  ComponentData,
+  Helpers,
+  Pubsub,
+  RichContentTheme,
+  TranslationFunction,
+} from 'wix-rich-content-common';
 import { mergeStyles } from 'wix-rich-content-common';
 import Styles from '../../statics/styles/video-settings.scss';
 import {
@@ -11,7 +19,22 @@ import {
   SettingsMobileHeader,
 } from 'wix-rich-content-ui-components';
 
-const VideoSettings: React.FC<VideoSettingsProps> = ({
+export interface Props {
+  componentData: ComponentData;
+  helpers?: Helpers;
+  pubsub?: Pubsub;
+  theme: RichContentTheme;
+  t: TranslationFunction;
+  isMobile: boolean;
+  settings?: VideoPluginEditorConfig;
+  onSave?: () => void;
+  onCancel?: () => void;
+  updateData?: (data) => void;
+  experiments?: AvailableExperiments;
+  shouldShowSpoiler?: boolean;
+}
+
+const VideoSettings: React.FC<Props> = ({
   componentData,
   helpers,
   pubsub,
@@ -23,33 +46,39 @@ const VideoSettings: React.FC<VideoSettingsProps> = ({
   onSave,
   onCancel,
   updateData,
+  shouldShowSpoiler,
 }) => {
   const modalsWithEditorCommands = experiments.tiptapEditor?.enabled;
   const useNewSettingsUi = experiments.newSettingsModals?.enabled;
-
-  const disableDownload =
-    componentData.disableDownload !== undefined
-      ? componentData.disableDownload
-      : !!settings.disableDownload;
+  const hasDisableDownload =
+    componentData.disableDownload !== undefined && componentData.disableDownload !== null;
+  const isCustomVideo = hasDisableDownload || !!componentData.isCustomVideo;
+  const disableDownload = hasDisableDownload
+    ? componentData.disableDownload
+    : !!settings?.disableDownload;
   const isSpoilered = componentData.config?.spoiler?.enabled;
 
   const [isDownloadEnabled, setIsDownloadEnabled] = useState(!disableDownload);
   const [isSpoilerEnabled, setIsSpoilerEnabled] = useState(isSpoilered);
   const styles = mergeStyles({ styles: Styles, theme });
-  const closeModal = () => helpers.closeModal?.();
+  const closeModal = () => helpers?.closeModal?.();
   const getSpoilerConfig = enabled => ({
     config: { ...componentData.config, spoiler: { enabled } },
   });
   const onDoneClick = () => {
+    if (modalsWithEditorCommands) {
+      return onSave?.();
+    }
     const newComponentData = {
       ...componentData,
       disableDownload: !isDownloadEnabled,
       ...getSpoilerConfig(isSpoilerEnabled),
     };
-    pubsub.update('componentData', newComponentData);
+    pubsub?.update('componentData', newComponentData);
     closeModal();
   };
-  const isCustomVideo = !!componentData.isCustomVideo;
+
+  const onCancelClick = () => (modalsWithEditorCommands ? onCancel?.() : closeModal());
 
   const spoilerToggle = {
     toggleKey: 'isSpoilerEnabled',
@@ -59,14 +88,15 @@ const VideoSettings: React.FC<VideoSettingsProps> = ({
     checked: modalsWithEditorCommands ? isSpoilered : isSpoilerEnabled,
     onToggle: () => {
       if (modalsWithEditorCommands) {
-        updateData({ config: { ...componentData.config, spoiler: { enabled: !isSpoilered } } });
+        updateData?.({ config: { ...componentData.config, spoiler: { enabled: !isSpoilered } } });
       } else {
         const value = !isSpoilerEnabled;
         setIsSpoilerEnabled(value);
-        pubsub.update('componentData', { ...componentData, ...getSpoilerConfig(value) });
+        pubsub?.update('componentData', { ...componentData, ...getSpoilerConfig(value) });
       }
     },
   };
+
   const downloadToggle = {
     toggleKey: 'isDownloadEnabled',
     labelKey: 'VideoPlugin_Settings_VideoCanBeDownloaded_Label',
@@ -75,13 +105,13 @@ const VideoSettings: React.FC<VideoSettingsProps> = ({
     checked: modalsWithEditorCommands ? !disableDownload : isDownloadEnabled,
     onToggle: () =>
       modalsWithEditorCommands
-        ? updateData({ disableDownload: !disableDownload })
+        ? updateData?.({ disableDownload: !disableDownload })
         : setIsDownloadEnabled(!isDownloadEnabled),
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const toggleData: Record<string, any>[] = isCustomVideo ? [downloadToggle] : [];
-  settings.spoiler && toggleData.push(spoilerToggle);
+  shouldShowSpoiler && toggleData.push(spoilerToggle);
 
   return (
     <div
@@ -94,13 +124,13 @@ const VideoSettings: React.FC<VideoSettingsProps> = ({
         <SettingsMobileHeader
           t={t}
           theme={theme}
-          onCancel={modalsWithEditorCommands ? onCancel : closeModal}
-          onSave={modalsWithEditorCommands ? onSave : onDoneClick}
+          onCancel={onCancelClick}
+          onSave={onDoneClick}
           title={useNewSettingsUi && t('VideoModal_MobileHeader')}
           useNewSettingsUi={useNewSettingsUi}
         />
       ) : experiments?.newSettingsModals?.enabled ? (
-        <SettingsPanelHeader title={t('VideoPlugin_Settings_Header')} onClose={closeModal} />
+        <SettingsPanelHeader title={t('VideoPlugin_Settings_Header')} onClose={onCancelClick} />
       ) : (
         <>
           <div className={styles.videoSettingsTitle}>{t('VideoPlugin_Settings_Header')}</div>
@@ -126,13 +156,7 @@ const VideoSettings: React.FC<VideoSettingsProps> = ({
         ))}
       </SettingsSection>
       {!isMobile && (
-        <SettingsPanelFooter
-          fixed
-          theme={theme}
-          cancel={modalsWithEditorCommands ? onCancel : closeModal}
-          save={modalsWithEditorCommands ? onSave : onDoneClick}
-          t={t}
-        />
+        <SettingsPanelFooter fixed theme={theme} cancel={onCancelClick} save={onDoneClick} t={t} />
       )}
     </div>
   );

@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :house: Internal
+
+- `video`
+  - [#4077](https://github.com/wix/ricos/pull/4077) add tiptap settings button
+
 </details>
 
 ## 8.71.43 (Jul 11, 2022)

@@ -1,5 +1,5 @@
 import VideoSelectionInputModal from './toolbar/videoSelectionInputModal';
-import VideoSettingsModal from './toolbar/video-settings';
+import VideoSettingsModal from './toolbar/VideoSettings';
 
 const Modals = {
   VIDEO_SELECTION_INPUT: 'video-selection-input',

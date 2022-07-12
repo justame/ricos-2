@@ -2,11 +2,6 @@ import type {
   EditorPluginConfig,
   ViewerPluginConfig,
   ComponentData,
-  Helpers,
-  Pubsub,
-  TranslationFunction,
-  RichContentTheme,
-  AvailableExperiments,
 } from 'wix-rich-content-common';
 
 export const VIDEO_TYPE = 'wix-draft-plugin-video';
@@ -23,16 +18,3 @@ export interface VideoPluginViewerConfig extends ViewerPluginConfig {
 export type VideoData = ComponentData & {
   disableDownload?: boolean;
 };
-export interface VideoSettingsProps {
-  componentData: VideoData;
-  helpers: Helpers;
-  pubsub: Pubsub;
-  theme: RichContentTheme;
-  t: TranslationFunction;
-  isMobile: boolean;
-  settings: VideoPluginEditorConfig;
-  onSave: () => void;
-  onCancel: () => void;
-  updateData: (data) => void;
-  experiments?: AvailableExperiments;
-}
