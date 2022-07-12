@@ -41,6 +41,8 @@ export const Shortcuts: FC<ShortcutsProps> = (props: ShortcutsProps) => {
     modalService.register(helpModal);
   }, []);
 
+  useEffect(() => modalService.unregister(helpModal.id), []);
+
   const helpShortcut: KeyboardShortcut = {
     name: 'Keyboard Shortcuts',
     description: 'Displays available shortcuts',

@@ -26,6 +26,8 @@ export const DimensionSliderButton: FC<Props> = ({ toolbarItem, dimension, ...pr
     modalService.register({ Component: SliderModal, id });
   }, []);
 
+  useEffect(() => modalService.unregister(id), []);
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { icon, tooltip } = toolbarItem.presentation as Record<string, any>;
 
