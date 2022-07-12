@@ -17,6 +17,10 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.71.44 (Jul 12, 2022)
+
 ## :bug: Bug Fix
 
 - `ricos-editor`
@@ -26,8 +30,6 @@
 
 - `video`
   - [#4077](https://github.com/wix/ricos/pull/4077) add tiptap settings button
-
-</details>
 
 ## 8.71.43 (Jul 11, 2022)
 
