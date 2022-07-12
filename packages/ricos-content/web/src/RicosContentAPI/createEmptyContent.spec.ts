@@ -1,4 +1,5 @@
 import type { RichContent } from 'ricos-schema';
+import { Node_Type } from 'ricos-schema';
 import { createEmptyContent } from './createEmptyContent';
 
 describe('createEmptyContent', () => {
@@ -11,7 +12,13 @@ describe('createEmptyContent', () => {
       updatedTimestamp: date,
     });
     expect(newContent).toStrictEqual<RichContent>({
-      nodes: [],
+      nodes: [
+        {
+          type: Node_Type.PARAGRAPH,
+          id: 'foo',
+          nodes: [],
+        },
+      ],
       metadata: {
         version: 1,
         id: '1234',
