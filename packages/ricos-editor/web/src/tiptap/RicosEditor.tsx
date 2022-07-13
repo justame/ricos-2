@@ -209,13 +209,14 @@ class RicosEditor extends React.Component<Props, RicosEditorState> implements Ri
   }
 
   render() {
-    const { ricosContext, editor } = this.props;
+    const { ricosContext, editor, onLoad } = this.props;
     const { initialContent, htmlAttributes } = this.state;
     if (!initialContent) {
       return null;
     }
     return (
       <RicosTiptapEditor
+        onLoad={onLoad}
         editor={editor.tiptapEditor}
         content={initialContent}
         t={ricosContext.t}

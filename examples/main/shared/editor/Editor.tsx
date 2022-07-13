@@ -198,6 +198,7 @@ export default class Editor extends PureComponent<ExampleEditorProps> {
               showSideBlockComponent && createSideBlockComponent(this.editor?.getEditorCommands())
             }
             theme={ricosTheme}
+            onLoad={() => this.forceUpdate()}
           />
         </div>
       </div>

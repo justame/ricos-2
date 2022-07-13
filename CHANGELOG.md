@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `tiptap-editor`
+  - [#4173](https://github.com/wix/ricos/pull/4173) onLoad handler on tiptap editor create
+
 </details>
 
 ## 8.71.46 (Jul 14, 2022)
