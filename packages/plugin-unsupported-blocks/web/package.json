@@ -1,6 +1,6 @@
 {
   "name": "wix-rich-content-plugin-unsupported-blocks",
-  "version": "8.71.45",
+  "version": "8.71.46",
   "author": {
     "name": "Tamrat Bayeh",
     "email": "tamratb@wix.com"
@@ -35,11 +35,11 @@
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx,d.ts}'"
   },
   "dependencies": {
-    "ricos-context": "8.71.45",
-    "ricos-tiptap-types": "8.71.45",
-    "wix-rich-content-common": "8.71.45",
-    "wix-rich-content-editor-common": "8.71.45",
-    "wix-rich-content-plugin-commons": "8.71.45"
+    "ricos-context": "8.71.46",
+    "ricos-tiptap-types": "8.71.46",
+    "wix-rich-content-common": "8.71.46",
+    "wix-rich-content-editor-common": "8.71.46",
+    "wix-rich-content-plugin-commons": "8.71.46"
   },
   "unpkg": true,
   "publishConfig": {

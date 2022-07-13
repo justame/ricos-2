@@ -1,6 +1,6 @@
 {
   "name": "wix-rich-content-plugin-social-polls",
-  "version": "8.71.45",
+  "version": "8.71.46",
   "author": {
     "name": "Maksym Butsykin",
     "email": "maksymb@wix.com"
@@ -40,15 +40,15 @@
     "react-flip-move": "^3.0.4",
     "react-infinite-scroller": "^1.2.4",
     "react-modal": "~3.4.1",
-    "ricos-content": "8.71.45",
-    "ricos-context": "8.71.45",
-    "ricos-modals": "8.71.45",
-    "ricos-tiptap-types": "8.71.45",
-    "wix-rich-content-common": "8.71.45",
-    "wix-rich-content-editor-common": "8.71.45",
-    "wix-rich-content-plugin-commons": "8.71.45",
-    "wix-rich-content-ui-components": "8.71.45",
-    "wix-tiptap-editor": "8.71.45"
+    "ricos-content": "8.71.46",
+    "ricos-context": "8.71.46",
+    "ricos-modals": "8.71.46",
+    "ricos-tiptap-types": "8.71.46",
+    "wix-rich-content-common": "8.71.46",
+    "wix-rich-content-editor-common": "8.71.46",
+    "wix-rich-content-plugin-commons": "8.71.46",
+    "wix-rich-content-ui-components": "8.71.46",
+    "wix-tiptap-editor": "8.71.46"
   },
   "unpkg": true,
   "publishConfig": {
