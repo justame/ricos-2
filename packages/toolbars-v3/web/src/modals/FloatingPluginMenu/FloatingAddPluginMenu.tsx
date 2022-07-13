@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useEffect } from 'react';
+import React, { useContext, useRef, useEffect, useState } from 'react';
 import styles from './styles/floating-add-plugin-menu.scss';
 import { PLACEMENTS, LAYOUTS } from 'ricos-modals';
 import EditorSelectionToPosition from './EditorSelectionToPosition';
@@ -28,6 +28,7 @@ const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig, plugins }
   const layout = LAYOUTS.TOOLBAR;
   const placement = languageDir === 'ltr' ? PLACEMENTS.RIGHT_START : PLACEMENTS.LEFT_START;
   const MODAL_ID = isHorizontalMenu ? PLUGIN_MENU_HORIZONTAL_MODAL_ID : PLUGIN_MENU_MODAL_ID;
+  const [isRotate, setIsRotate] = useState<boolean>();
 
   useEffect(() => {
     isHorizontalMenu &&
@@ -59,6 +60,7 @@ const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig, plugins }
             referenceElement: buttonRef,
           },
         });
+    setIsRotate(modalService?.isModalOpen(MODAL_ID));
   };
 
   return !isMobile ? (
@@ -74,6 +76,7 @@ const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig, plugins }
             onClick={toggleAddPluginMenu}
             position={calcButtonPosition(position)}
             ref={buttonRef}
+            isRotate={isRotate}
           />
         )}
       </EditorSelectionToPosition>

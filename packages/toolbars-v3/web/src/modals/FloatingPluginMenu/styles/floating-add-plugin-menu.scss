@@ -13,7 +13,8 @@
   padding: 0;
   left: -40px;
   z-index: 3;
-
+  height: 25px;
+  transform-origin: 50% 50%;
   svg {
     color: $settings-action-color-fallback;
     fill: $settings-action-color-fallback;
