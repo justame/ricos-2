@@ -52,7 +52,15 @@ export const convertDecorationToDraftData = (decoration: Decoration) => {
 
 export const convertNodeDataToDraft = (nodeType: Node_Type, data, nodes?: Node[]) => {
   if (!data) {
-    console.error(`No data for ${nodeType}`);
+    if (
+      ![
+        Node_Type.COLLAPSIBLE_ITEM,
+        Node_Type.COLLAPSIBLE_ITEM_BODY,
+        Node_Type.COLLAPSIBLE_ITEM_TITLE,
+      ].includes(nodeType)
+    ) {
+      console.error(`No data for ${nodeType}`);
+    }
     return {};
   }
   const newData = cloneDeep(data);
