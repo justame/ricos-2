@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :house: Internal
+  
+- `ricos-types ricos-plugins`
+  - [#4178](https://github.com/wix/ricos/pull/4178) change `addButton` command type to recieve `uploadService` instead of `uploadContext` 
+  
 </details>
 
 ## 8.71.44 (Jul 12, 2022)

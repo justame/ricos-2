@@ -21,7 +21,7 @@ export const FooterToolbar: FC = () => {
           },
           layout: 'popover',
         })
-      : command(getEditorCommands?.(), uploadContext);
+      : command(getEditorCommands?.(), uploadContext.uploadService, uploadContext.updateService);
   };
 
   return (

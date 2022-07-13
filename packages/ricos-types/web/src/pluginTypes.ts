@@ -92,7 +92,7 @@ import type {
 import { LinkData, Node_Type, Decoration_Type } from 'ricos-schema';
 import type { EditorCommands } from './editorCommandsType';
 import type { ModalConfig } from './modalTypes';
-import type { UploadContextType } from './uploadServicesTypes';
+import type { IUpdateService, IUploadService } from './uploadServicesTypes';
 import type { IToolbarItem } from './toolbarTypes';
 import type { ToolbarType } from './toolbarEnums';
 
@@ -248,7 +248,11 @@ type MenuConfig = {
 export type AddButton = {
   id: string;
   icon: ComponentType;
-  command: (editorCommands: EditorCommands, uploadContext?: UploadContextType) => boolean;
+  command: (
+    editorCommands: EditorCommands,
+    uploadService?: IUploadService,
+    updateService?: IUpdateService
+  ) => boolean;
   tooltip: string;
   toolbars: ToolbarType[];
   dataHook: string;

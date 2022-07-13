@@ -27,7 +27,7 @@ const AddPluginMenuHorizontal: React.FC<Props> = ({ referenceElement, plugins })
           },
           layout: LAYOUTS.POPOVER,
         })
-      : command(getEditorCommands?.(), uploadContext);
+      : command(getEditorCommands?.(), uploadContext.uploadService, uploadContext.updateService);
   };
 
   return <InsertPluginToolbar buttons={plugins.getAddButtons()} onButtonClick={onButtonClick} />;
