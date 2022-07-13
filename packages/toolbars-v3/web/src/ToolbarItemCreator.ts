@@ -1,13 +1,13 @@
 import type { IToolbarItemConfig } from './types';
 import { Content } from './Content';
 import EventEmitter from './lib/EventEmitter';
-import type { AmbientStyles, IToolbarItem } from 'ricos-types';
+import type { IToolbarItem } from 'ricos-types';
 
 export class ToolbarItemCreator {
   static create(toolbarItemConfig: IToolbarItemConfig) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (content: Content<unknown>, editorCommands: any, styles?: AmbientStyles) => {
-      return new ToolbarItem(toolbarItemConfig, content, editorCommands, styles);
+    return (content: Content<unknown>, editorCommands: any) => {
+      return new ToolbarItem(toolbarItemConfig, content, editorCommands);
     };
   }
 }
@@ -30,8 +30,7 @@ export class ToolbarItem extends EventEmitter {
     private toolbarItemConfig: IToolbarItemConfig,
     private content: Content<unknown>,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    private editorCommands: any,
-    private styles?: AmbientStyles
+    private editorCommands: any
   ) {
     super();
     this.toolbarItemConfig = toolbarItemConfig;
@@ -60,7 +59,6 @@ export class ToolbarItem extends EventEmitter {
         const command = this.toolbarItemConfig.commands[commandName]({
           attributes: this.toolbarItem.attributes,
           editorCommands: this.editorCommands,
-          styles: this.styles,
         });
         // eslint-disable-next-line prefer-spread
         command.apply(null, args);

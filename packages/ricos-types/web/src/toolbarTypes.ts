@@ -36,7 +36,6 @@ type Modify<T, R> = Omit<T, keyof R> & R;
 export type TiptapCommand = ({
   attributes,
   editorCommands,
-  styles,
 }: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   attributes: any;
@@ -44,7 +43,6 @@ export type TiptapCommand = ({
   // editorCommands: Editor;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   editorCommands: any;
-  styles?;
 }) => (args) => void;
 
 export type IToolbarItemConfigTiptap = Modify<

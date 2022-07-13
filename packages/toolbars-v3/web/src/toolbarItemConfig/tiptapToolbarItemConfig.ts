@@ -118,9 +118,9 @@ export const tiptapStaticToolbarConfig: IToolbarItemConfigTiptap[] = [
     },
     commands: {
       toggleBold:
-        ({ editorCommands, styles }) =>
+        ({ editorCommands }) =>
         () => {
-          editorCommands.chain().focus().toggleBold(styles).run();
+          editorCommands.chain().focus().toggleBold().run();
         },
     },
   },
@@ -142,9 +142,9 @@ export const tiptapStaticToolbarConfig: IToolbarItemConfigTiptap[] = [
     },
     commands: {
       toggleItalic:
-        ({ editorCommands, styles }) =>
+        ({ editorCommands }) =>
         () => {
-          editorCommands.chain().focus().toggleItalic(styles).run();
+          editorCommands.chain().focus().toggleItalic().run();
         },
     },
   },
