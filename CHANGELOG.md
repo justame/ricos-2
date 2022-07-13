@@ -26,6 +26,8 @@
 
 - `tiptap-editor`
   - [#4173](https://github.com/wix/ricos/pull/4173) onLoad handler on tiptap editor create
+- `collapsible-list`
+  - [#4182](https://github.com/wix/ricos/pull/4182) drag and drop of list items on tiptap
 
 </details>
 

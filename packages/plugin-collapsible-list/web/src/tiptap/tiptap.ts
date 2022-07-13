@@ -46,7 +46,6 @@ export const tiptapExtensions = [
         name: this.name,
         group: 'block',
         selectable: true,
-        draggable: true,
         content: `(${TIPTAP_COLLAPSIBLE_ITEM_TYPE})+`,
         addAttributes: () => collapsibleListDataDefaults,
         addKeyboardShortcuts() {
@@ -78,15 +77,18 @@ export const tiptapExtensions = [
     }),
     Component: CollapsibleListItem,
     name: TIPTAP_COLLAPSIBLE_ITEM_TYPE,
-    createExtensionConfig() {
+    createExtensionConfig({ mergeAttributes }) {
       return {
         name: this.name,
-        group: 'block',
+        group: TIPTAP_COLLAPSIBLE_ITEM_TYPE,
         draggable: true,
         content: `${TIPTAP_COLLAPSIBLE_ITEM_TITLE_TYPE} ${TIPTAP_COLLAPSIBLE_ITEM_BODY_TYPE}`,
         addAttributes: () => ({
           isExpanded: { default: true },
         }),
+        renderHTML({ HTMLAttributes }) {
+          return ['div', mergeAttributes(HTMLAttributes, { 'data-type': 'draggable-item' }), 0];
+        },
       };
     },
   },
@@ -114,8 +116,7 @@ export const tiptapExtensions = [
     createExtensionConfig() {
       return {
         name: this.name,
-        group: 'block',
-        draggable: true,
+        group: TIPTAP_COLLAPSIBLE_ITEM_TITLE_TYPE,
         content: 'block+',
       };
     },
@@ -144,8 +145,7 @@ export const tiptapExtensions = [
     createExtensionConfig() {
       return {
         name: this.name,
-        group: 'block',
-        draggable: true,
+        group: TIPTAP_COLLAPSIBLE_ITEM_BODY_TYPE,
         content: 'block+',
       };
     },
