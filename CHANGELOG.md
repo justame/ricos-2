@@ -17,12 +17,20 @@
     Click to see more.
   </summary>
 
-## :house: Internal
-  
-- `ricos-types ricos-plugins`
-  - [#4178](https://github.com/wix/ricos/pull/4178) change `addButton` command type to recieve `uploadService` instead of `uploadContext` 
-  
 </details>
+
+## 8.71.45 (Jul 14, 2022)
+
+## :bug: Bug Fix
+
+- `ricos-editor`
+  - [#4177](https://github.com/wix/ricos/pull/4177) fix ricos-portal zIndex
+-
+
+## :house: Internal
+
+- `ricos-types ricos-plugins`
+  - [#4178](https://github.com/wix/ricos/pull/4178) change `addButton` command type to recieve `uploadService` instead of `uploadContext`
 
 ## 8.71.44 (Jul 12, 2022)
 
