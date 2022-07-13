@@ -19,6 +19,13 @@
 
 </details>
 
+## 8.71.46 (Jul 14, 2022)
+
+## :bug: Bug Fix
+
+- `polls-plugin`
+  - [#4180](https://github.com/wix/ricos/pull/4180) fix polls selection on android
+
 ## 8.71.45 (Jul 14, 2022)
 
 ## :bug: Bug Fix
@@ -36,7 +43,7 @@
 ## :bug: Bug Fix
 
 - `ricos-content`
-  - [#4169](https://github.com/wix/ricos/pull/4169) createEmptyContent adds a paragraph by default  
+  - [#4169](https://github.com/wix/ricos/pull/4169) createEmptyContent adds a paragraph by default
 - `ricos-editor`
   - [#4167](https://github.com/wix/ricos/pull/4167) fix toolbars should create (mobile)
 
