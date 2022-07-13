@@ -4,6 +4,7 @@ import {
   decorateComponentWithProps,
 } from 'wix-rich-content-editor-common';
 import InsertModal from './modals/InsertModal';
+import VideoSettingsModal from './modals/SettingsModal';
 import { videoModals } from './constants';
 
 export const getToolbarButtons = (config): ToolbarButton[] => {
@@ -47,6 +48,22 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
             layout: isMobile ? 'fullscreen' : 'popover',
           });
         }
+      },
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS,
+      modal: {
+        id: videoModals.settings,
+        Component: VideoSettingsModal,
+      },
+      command: ({ modalService, isMobile, node }) => {
+        modalService?.openModal(videoModals.settings, {
+          componentProps: {
+            nodeId: node.attrs.id,
+          },
+          positioning: { placement: 'right' },
+          layout: isMobile ? 'fullscreen' : 'drawer',
+        });
       },
     },
     {

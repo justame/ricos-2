@@ -35,7 +35,7 @@ const mockImageNode: Node = {
 };
 
 describe('Builder', () => {
-  const emptyContent = createEmptyContent();
+  const emptyContent = { nodes: [], metadata: { version: 1 } };
   let builder = createBuilder(emptyContent);
 
   it('should get content', () => {

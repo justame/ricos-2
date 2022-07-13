@@ -361,7 +361,7 @@ class ExampleApp extends PureComponent<ExampleAppProps, ExampleAppState> {
                 experiments={experiments}
                 textWrap={textWrap}
                 showSideBlockComponent={showSideBlockComponent}
-                testAppConfig={this.state.editorSettings}
+                // testAppConfig={this.state.editorSettings}
                 key={this.state.editorKey}
                 ricosTheme={this.getThemeObj(this.state.activeFont, this.state.activePalette)}
               />

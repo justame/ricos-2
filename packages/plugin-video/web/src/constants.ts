@@ -21,4 +21,5 @@ export const videoModals = {
   insertVideo: 'videoInsertModal',
   insertYoutube: 'youtubeInsertModal',
   replace: 'videoReplaceModal',
+  settings: 'videoSettings',
 };

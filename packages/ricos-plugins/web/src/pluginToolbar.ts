@@ -1,4 +1,3 @@
-import { TiptapContentResolver } from 'wix-rich-content-toolbars-v3';
 import type {
   ModalService,
   ToolbarButton,
@@ -12,23 +11,16 @@ export class PluginToolbarButtonCollisionError extends Error {}
 export class PluginToolbar implements IPluginToolbar {
   buttons: IPluginToolbarButton[];
 
-  isPluginSelectedResolver: TiptapContentResolver;
+  pluginType: string;
 
   constructor(toolbarButtons: ToolbarButton[], pluginType: string, modalService: ModalService) {
     this.buttons =
       toolbarButtons?.map(button => PluginToolbarButton.of(button, modalService)) || [];
-    this.isPluginSelectedResolver = this.createIsPluginSelectedResolver(pluginType);
+    this.pluginType = pluginType;
   }
 
   static of(toolbarButtons: ToolbarButton[], pluginType: string, modalService: ModalService) {
     return new PluginToolbar(toolbarButtons, pluginType, modalService);
-  }
-
-  private createIsPluginSelectedResolver(pluginType: string) {
-    return TiptapContentResolver.create(
-      `IS_${pluginType.toUpperCase()}_SELECTED`,
-      content => content.length === 1 && content[0].type.name === pluginType
-    );
   }
 
   register() {
@@ -57,6 +49,6 @@ export class PluginToolbar implements IPluginToolbar {
   }
 
   isVisible(content) {
-    return !!content && this.isPluginSelectedResolver.resolve(content);
+    return content?.length === 1 && content?.[0].type.name === this.pluginType;
   }
 }
