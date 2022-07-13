@@ -102,11 +102,7 @@ class RicosEditor extends React.Component<Props, RicosEditorState> implements Ri
     };
   };
 
-  getToolbarProps: RicosEditorRef['getToolbarProps'] = _type => ({
-    buttons: {},
-    context: {} as EditorContextType,
-    pubsub: {} as Pubsub,
-  });
+  getToolbarProps: RicosEditorRef['getToolbarProps'] = this.props.editor.getToolbarProps;
 
   getEditorCommands: RicosEditorRef['getEditorCommands'] = () => {
     return this.props.editor.getEditorCommands();

@@ -26,6 +26,8 @@
 
 - `tiptap-editor`
   - [#4173](https://github.com/wix/ricos/pull/4173) onLoad handler on tiptap editor create
+- `ricos-editor`
+  - [#4168](https://github.com/wix/ricos/pull/4168) insert plugins external toolbar api for tiptap (wip)
 - `collapsible-list`
   - [#4182](https://github.com/wix/ricos/pull/4182) drag and drop of list items on tiptap
 

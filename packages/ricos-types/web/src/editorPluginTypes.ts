@@ -6,9 +6,12 @@ import type {
   ToolbarButton,
 } from './pluginTypes';
 import type { ComponentType } from 'react';
-import type { IToolbarItemConfigTiptap, TiptapContentResolver } from './toolbarTypes';
+import type { IToolbarItemConfigTiptap } from './toolbarTypes';
 import type { ToolbarType } from './toolbarEnums';
 import type { PluginButton, AddPluginMenuConfig } from './toolbarSettingsTypes';
+import type { ToolbarButtonProps } from './buttonTypes';
+import type { EditorCommands } from './editorCommandsType';
+import type { IUpdateService, IUploadService } from './uploadServicesTypes';
 
 /**
  * Represents a plugin in Ricos Editor.
@@ -162,6 +165,12 @@ export interface IPluginAddButton {
   equals: (button: IPluginAddButton) => boolean;
 
   toToolbarItemConfig: () => IToolbarItemConfigTiptap;
+
+  toExternalToolbarButtonConfig: (
+    editorCommands: EditorCommands,
+    uploadService: IUploadService,
+    updateService: IUpdateService
+  ) => ToolbarButtonProps;
 
   getToolbars: () => ToolbarType[];
 

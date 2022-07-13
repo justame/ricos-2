@@ -199,6 +199,7 @@ export type HtmlAttributes = {
 
 export interface TiptapAdapter {
   getEditorCommands: RicosEditorAPI['getEditorCommands'];
+  getToolbarProps: RicosEditorAPI['getToolbarProps'];
   focus: RicosEditorAPI['focus'];
   blur: RicosEditorAPI['blur'];
   tiptapEditor: Editor;
