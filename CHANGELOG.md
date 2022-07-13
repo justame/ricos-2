@@ -25,7 +25,6 @@
 
 - `ricos-editor`
   - [#4177](https://github.com/wix/ricos/pull/4177) fix ricos-portal zIndex
--
 
 ## :house: Internal
 
@@ -36,6 +35,8 @@
 
 ## :bug: Bug Fix
 
+- `ricos-content`
+  - [#4169](https://github.com/wix/ricos/pull/4169) createEmptyContent adds a paragraph by default  
 - `ricos-editor`
   - [#4167](https://github.com/wix/ricos/pull/4167) fix toolbars should create (mobile)
 
