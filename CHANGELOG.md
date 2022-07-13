@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :house: Internal
+
+- `gallery`
+  - [#4183](https://github.com/wix/ricos/pull/4183) refactor settings button dataHook & settings modal
+
 ## :bug: Bug Fix
 
 - `tiptap-editor`

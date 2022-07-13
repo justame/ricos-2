@@ -112,7 +112,7 @@ const createInlineButtons: CreateInlineButtons = ({
       uiSettings,
     },
     {
-      keyName: 'advanced_settings',
+      keyName: 'settings',
       type: BUTTONS.EXTERNAL_MODAL,
       fullHeight: true,
       icon: icons.advanced_settings || PluginSettingsIcon,

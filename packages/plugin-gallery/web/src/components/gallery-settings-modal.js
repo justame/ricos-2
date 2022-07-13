@@ -263,18 +263,14 @@ export class GallerySettingsModal extends Component {
   constructor(props) {
     super(props);
     const {
-      componentData: {
-        disableExpand,
-        disableDownload,
-        config: { spoiler = {} },
-      },
+      componentData: { disableExpand, disableDownload },
       experiments = {},
     } = this.props;
     this.state = {
       activeTab: this.props.activeTab,
       isExpandEnabled: !disableExpand,
       isDownloadEnabled: !disableDownload,
-      isSpoilerEnabled: spoiler.enabled,
+      isSpoilerEnabled: this.props.componentData?.spoiler?.enabled,
     };
     this.styles = mergeStyles({ styles, theme: props.theme });
     this.switchTab = this.switchTab.bind(this);
@@ -394,6 +390,7 @@ export class GallerySettingsModal extends Component {
     return {
       mangeMedia: (
         <Tab
+          Key="manage_media"
           label={this.tabName('manage_media', this.props.t)}
           value={'manage_media'}
           theme={this.props.theme}
@@ -416,6 +413,7 @@ export class GallerySettingsModal extends Component {
       ),
       advancedSettings: (
         <Tab
+          key="advanced_settings"
           label={this.tabName('advanced_settings', this.props.t)}
           value={'advanced_settings'}
           theme={this.props.theme}
@@ -438,6 +436,7 @@ export class GallerySettingsModal extends Component {
       ),
       settings: (
         <Tab
+          key="settings"
           label={this.tabName('settings', this.props.t)}
           value={'settings'}
           theme={this.props.theme}
