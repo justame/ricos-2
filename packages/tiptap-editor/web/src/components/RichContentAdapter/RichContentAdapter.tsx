@@ -15,7 +15,7 @@ import {
 import { tiptapToDraft } from 'ricos-converters';
 import { Decoration_Type, Node_Type } from 'ricos-schema';
 import type { TiptapAdapter } from 'ricos-tiptap-types';
-import type { EditorContextType, IEditorPlugins, Pubsub } from 'ricos-types';
+import type { EditorContextType, Pubsub, RicosServices } from 'ricos-types';
 import type { RicosCustomStyles, TextAlignment } from 'wix-rich-content-common';
 import {
   defaultFontSizes,
@@ -40,7 +40,7 @@ export class RichContentAdapter implements TiptapAdapter {
   constructor(
     public tiptapEditor: Editor,
     ricosEditorProps: RicosEditorProps,
-    plugins: IEditorPlugins
+    services: RicosServices
   ) {
     this.tiptapEditor = tiptapEditor;
     this.initialContent = this.tiptapEditor.state.doc.content;
@@ -48,7 +48,7 @@ export class RichContentAdapter implements TiptapAdapter {
     this.shouldRevealConverterErrors =
       ricosEditorProps.experiments?.removeRichContentSchemaNormalizer?.enabled;
     this.getToolbarProps = type => ({
-      buttons: plugins
+      buttons: services.plugins
         .getAddButtons()
         .asArray()
         .reduce((acc, b) => {
@@ -56,6 +56,7 @@ export class RichContentAdapter implements TiptapAdapter {
             ...acc,
             [b.getButton().id]: b.toExternalToolbarButtonConfig(
               this.getEditorCommands(),
+              services.t,
               //TODO: pass UploadService
               //@ts-ignore
               {},

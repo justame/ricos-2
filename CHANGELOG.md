@@ -21,6 +21,8 @@
 
 - `gallery`
   - [#4183](https://github.com/wix/ricos/pull/4183) refactor settings button dataHook & settings modal
+- `ricos-editor`
+  - [#4185](https://github.com/wix/ricos/pull/4185) locale resource wraps full ricos editor
 
 ## :bug: Bug Fix
 

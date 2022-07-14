@@ -1,6 +1,7 @@
 import type { IEditorPlugins } from './editorPluginTypes';
 import type { EventRegistrar, EventSubscriptor } from './events';
 import type { AmbientStyles } from './styles';
+import type { TranslationFunction } from './commonTypes';
 
 export type {
   ComponentData,
@@ -36,4 +37,5 @@ export type RicosServices = {
   events: EventRegistrar & EventSubscriptor;
   styles: AmbientStyles;
   plugins: IEditorPlugins;
+  t: TranslationFunction;
 };

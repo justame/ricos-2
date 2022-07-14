@@ -61,5 +61,5 @@ export const initializeTiptapAdapter = (
 
   applyDevTools(editor);
 
-  return new RichContentAdapter(editor, ricosEditorProps, services.plugins);
+  return new RichContentAdapter(editor, ricosEditorProps, services);
 };

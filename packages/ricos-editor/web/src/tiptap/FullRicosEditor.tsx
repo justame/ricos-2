@@ -5,6 +5,7 @@ import type { RicosEditorProps } from 'ricos-common';
 import { ContentQueryProvider } from 'ricos-content-query';
 import type { ToolbarContextType } from 'ricos-context';
 import {
+  RicosContextProvider,
   EditorContextConsumer,
   EditorContextProvider,
   EventsContextProvider,
@@ -21,14 +22,13 @@ import { EditorPlugins } from 'ricos-plugins';
 import { EditorKeyboardShortcuts, Shortcuts } from 'ricos-shortcuts';
 import { RicosStyles } from 'ricos-styles';
 import type { TiptapAdapter } from 'ricos-tiptap-types';
-import type { RicosPortal as RicosPortalType } from 'ricos-types';
+import type { RicosPortal as RicosPortalType, TranslationFunction } from 'ricos-types';
 import type { EditorCommands } from 'wix-rich-content-common';
 import { getLangDir } from 'wix-rich-content-common';
 import { Content } from 'wix-rich-content-toolbars-v3';
 import type { RichContentAdapter } from 'wix-tiptap-editor';
 import { initializeTiptapAdapter } from 'wix-tiptap-editor';
 import RicosPortal from '../modals/RicosPortal';
-import { LocaleResourceProvider } from '../RicosContext/locale-resource-provider';
 import type { RicosEditorRef } from '../RicosEditorRef';
 import { convertToolbarContext } from '../toolbars/convertToolbarContext';
 import pluginsConfigMerger from '../utils/pluginsConfigMerger/pluginsConfigMerger';
@@ -43,6 +43,7 @@ type State = {
 
 type Props = RicosEditorProps & {
   forwardRef: ForwardedRef<RicosEditorRef>;
+  t: TranslationFunction;
 };
 
 export class FullRicosEditor extends React.Component<Props, State> {
@@ -104,6 +105,7 @@ export class FullRicosEditor extends React.Component<Props, State> {
       events: this.events,
       styles: this.styles,
       plugins: this.editorPlugins,
+      t: this.props.t,
     });
 
     this.forceUpdate();
@@ -165,6 +167,7 @@ export class FullRicosEditor extends React.Component<Props, State> {
 
   private renderEditor() {
     const {
+      t,
       isMobile,
       experiments,
       locale,
@@ -191,7 +194,8 @@ export class FullRicosEditor extends React.Component<Props, State> {
               />
             </RicosPortal>
             {this.portalRef.current && (
-              <LocaleResourceProvider
+              <RicosContextProvider
+                t={t}
                 isMobile={isMobile}
                 experiments={experiments}
                 locale={locale}
@@ -239,7 +243,7 @@ export class FullRicosEditor extends React.Component<Props, State> {
                     </ShortcutsContextProvider>
                   </ModalContextProvider>
                 </EditorContextProvider>
-              </LocaleResourceProvider>
+              </RicosContextProvider>
             )}
           </>
         </StylesContextProvider>
@@ -248,6 +252,8 @@ export class FullRicosEditor extends React.Component<Props, State> {
   }
 }
 
-export default forwardRef<RicosEditorRef, RicosEditorProps>((props, ref) => {
-  return <FullRicosEditor {...props} forwardRef={ref} />;
-});
+export default forwardRef<RicosEditorRef, RicosEditorProps & { t: TranslationFunction }>(
+  (props, ref) => {
+    return <FullRicosEditor {...props} forwardRef={ref} />;
+  }
+);

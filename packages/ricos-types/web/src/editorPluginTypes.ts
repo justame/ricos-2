@@ -12,6 +12,7 @@ import type { PluginButton, AddPluginMenuConfig } from './toolbarSettingsTypes';
 import type { ToolbarButtonProps } from './buttonTypes';
 import type { EditorCommands } from './editorCommandsType';
 import type { IUpdateService, IUploadService } from './uploadServicesTypes';
+import type { TranslationFunction } from './commonTypes';
 
 /**
  * Represents a plugin in Ricos Editor.
@@ -168,6 +169,7 @@ export interface IPluginAddButton {
 
   toExternalToolbarButtonConfig: (
     editorCommands: EditorCommands,
+    t: TranslationFunction,
     uploadService: IUploadService,
     updateService: IUpdateService
   ) => ToolbarButtonProps;

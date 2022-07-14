@@ -14,6 +14,7 @@ import type {
   EditorCommands,
   IUploadService,
   IUpdateService,
+  TranslationFunction,
 } from 'ricos-types';
 import { AddPluginMenu, PLUGIN_MENU_MODAL_ID } from 'wix-rich-content-toolbars-ui';
 
@@ -104,12 +105,13 @@ export class PluginAddButton implements IPluginAddButton {
 
   toExternalToolbarButtonConfig(
     editorCommands: EditorCommands,
+    t: TranslationFunction,
     uploadService: IUploadService,
     updateService: IUpdateService
   ): ToolbarButtonProps {
     return {
       type: 'button',
-      tooltip: this.button.tooltip,
+      tooltip: t(this.button.tooltip),
       toolbars: this.button.toolbars,
       getIcon: () => this.button.icon,
       getLabel: () => this.button.label || '',
