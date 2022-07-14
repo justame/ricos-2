@@ -17,6 +17,10 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.71.47 (Jul 14, 2022)
+
 ## :house: Internal
 
 - `gallery`
@@ -34,8 +38,6 @@
   - [#4168](https://github.com/wix/ricos/pull/4168) insert plugins external toolbar api for tiptap (wip)
 - `collapsible-list`
   - [#4182](https://github.com/wix/ricos/pull/4182) drag and drop of list items on tiptap
-
-</details>
 
 ## 8.71.46 (Jul 14, 2022)
 
