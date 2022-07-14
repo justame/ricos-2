@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `toolbars-v2`
+  - [#4189](https://github.com/wix/ricos/pull/4189) cleanup font-weight (firefox bug)
+
 </details>
 
 ## 8.71.47 (Jul 14, 2022)
