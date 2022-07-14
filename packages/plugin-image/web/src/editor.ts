@@ -19,7 +19,7 @@ export const pluginImage: EditorPluginCreator<ImagePluginEditorConfig> = config 
     ModalsMap,
     createPluginData: createImageData,
     tiptapExtensions,
-    toolbarButtons: getToolbarButtons(pluginConfig),
+    toolbar: { buttons: getToolbarButtons(pluginConfig) },
     addButtons: getAddButtons(pluginConfig),
     reconfigure: helpers => {
       pluginConfig.handleFileSelection = helpers.handleFileSelection;

@@ -70,10 +70,10 @@ export class EditorPlugins implements IEditorPlugins {
     return new PluginAddButtons(addButtons, this.modalService);
   }
 
-  getVisibleToolbar(content) {
+  getVisibleToolbar(selection) {
     const toolbar = this.plugins
       .map(plugin => plugin.getToolbar())
-      .filter(toolbar => !!toolbar?.isVisible(content))?.[0];
+      .filter(toolbar => !!toolbar?.isVisible(selection))?.[0];
     return toolbar;
   }
 

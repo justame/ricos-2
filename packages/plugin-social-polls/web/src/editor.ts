@@ -20,6 +20,6 @@ export const pluginPoll: EditorPluginCreator<PollPluginEditorConfig> = config =>
     createPluginData: createPollData,
     tiptapExtensions,
     addButtons: getAddButtons(pluginConfig),
-    toolbarButtons: getToolbarButtons(pluginConfig),
+    toolbar: { buttons: getToolbarButtons(pluginConfig) },
   } as TiptapEditorPlugin;
 };

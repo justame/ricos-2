@@ -17,7 +17,7 @@ export const pluginAudio: EditorPluginCreator<AudioPluginEditorConfig> = config 
     createPlugin: createAudioPlugin,
     createPluginData: createAudioData,
     tiptapExtensions,
-    toolbarButtons: getToolbarButtons(config),
+    toolbar: { buttons: getToolbarButtons(config) },
     addButtons: getAddButtons(config),
   } as TiptapEditorPlugin;
 };

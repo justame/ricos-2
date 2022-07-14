@@ -17,7 +17,7 @@ const pluginButton = (createPlugin, type, config) => {
     createPlugin,
     ModalsMap,
     createPluginData: createButtonData,
-    toolbarButtons: getToolbarButtons(config, type),
+    toolbar: { buttons: getToolbarButtons(config, type) },
     addButtons: getAddButtons(config, type),
     tiptapExtensions: tiptapExtensionsMap[type],
   } as TiptapEditorPlugin;

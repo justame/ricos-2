@@ -8,6 +8,8 @@ import { createCollapsibleListData } from './createCollapsibleListData';
 import { tiptapExtensions } from './tiptap/tiptap';
 import type { TiptapEditorPlugin } from 'ricos-tiptap-types';
 import { getAddButtons } from './getAddButtons';
+import { getToolbarButtons } from './getToolbarButtons';
+import { TIPTAP_COLLAPSIBLE_LIST_TYPE } from 'ricos-content';
 
 export const pluginCollapsibleList: EditorPluginCreator<
   CollapsibleListPluginEditorConfig
@@ -21,5 +23,11 @@ export const pluginCollapsibleList: EditorPluginCreator<
     createPluginData: createCollapsibleListData,
     tiptapExtensions,
     addButtons: getAddButtons(),
+    toolbar: {
+      buttons: getToolbarButtons(config),
+      isVisible: selection =>
+        selection.from === selection.to &&
+        selection.$anchor?.path?.find(node => node?.type?.name === TIPTAP_COLLAPSIBLE_LIST_TYPE),
+    },
   } as TiptapEditorPlugin;
 };

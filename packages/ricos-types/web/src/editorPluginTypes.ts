@@ -136,7 +136,7 @@ export interface IEditorPlugins {
    * @returns  {PluginsToolbar}
    * @memberof IEditorPlugins
    */
-  getVisibleToolbar(content): IPluginToolbar | undefined;
+  getVisibleToolbar(selection): IPluginToolbar | undefined;
   /**
    * Get RicosExtensions for Tiptap based editor
    *
@@ -203,7 +203,7 @@ export interface IPluginToolbar {
   // eslint-disable-next-line @typescript-eslint/ban-types
   getToolbarButtonsRenderers: () => Record<string, Function>;
 
-  isVisible: (content) => boolean;
+  isVisible: (selection) => boolean;
 
   register: () => void;
 

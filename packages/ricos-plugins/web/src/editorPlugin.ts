@@ -24,7 +24,7 @@ export class EditorPlugin implements IEditorPlugin {
   private constructor(plugin: EditorPluginType, modalService?: ModalService) {
     this.plugin = plugin;
     this.initAddButtons(plugin, modalService);
-    this.initToolbarButtons(plugin, modalService);
+    this.initPluginToolbar(plugin, modalService);
   }
 
   private initAddButtons(plugin, modalService) {
@@ -37,9 +37,9 @@ export class EditorPlugin implements IEditorPlugin {
     return (this.plugin as TiptapEditorPlugin).tiptapExtensions?.[0]?.name || this.plugin.type;
   }
 
-  private initToolbarButtons(plugin, modalService) {
-    if (plugin.toolbarButtons) {
-      this.toolbar = PluginToolbar.of(plugin.toolbarButtons, this.getExtensionName(), modalService);
+  private initPluginToolbar(plugin, modalService) {
+    if (plugin.toolbar) {
+      this.toolbar = PluginToolbar.of(plugin.toolbar, this.getExtensionName(), modalService);
     }
   }
 

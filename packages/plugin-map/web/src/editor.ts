@@ -13,6 +13,6 @@ export const pluginMap: EditorPluginCreator<MapPluginEditorConfig> = config => {
     createPlugin: createMapPlugin,
     ModalsMap: {},
     createPluginData: createMapData,
-    toolbarButtons: getToolbarButtons(config),
+    toolbar: { buttons: getToolbarButtons(config) },
   };
 };

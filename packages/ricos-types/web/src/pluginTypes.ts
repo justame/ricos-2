@@ -282,7 +282,10 @@ export interface EditorPlugin<PluginConfig extends EditorPluginConfig = Record<s
   ModalsMap?: ModalsMap;
   createPluginData?: CreatePluginData<PluginConfig>;
   addButtons?: AddButton[];
-  toolbarButtons?: ToolbarButton[];
+  toolbar?: {
+    buttons: ToolbarButton[];
+    isVisible?: (selection) => boolean;
+  };
   reconfigure?: (config: PluginConfig) => void;
 }
 
