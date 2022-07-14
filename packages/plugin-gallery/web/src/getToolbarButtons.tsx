@@ -5,6 +5,8 @@ import { GALLERY_TYPE } from './types';
 import { Uploader } from 'wix-rich-content-plugin-commons';
 import { AddMediaIcon } from './icons';
 import { GALLERY_LAYOUTS, layoutRicosData } from './layout-data-provider';
+import { fileInputAccept, galleryModals } from './consts';
+import GallerySettingsModal from './modals/SettingsModal';
 import { GalleryLayoutButton } from './toolbar/GalleryLayoutButton';
 import { TIPTAP_GALLERY_TYPE } from 'ricos-content';
 
@@ -14,6 +16,41 @@ const defaultData = {
 };
 
 export const getToolbarButtons = (config, galleryPluginService): ToolbarButton[] => {
+  const { accept = fileInputAccept, handleFileUpload } = config;
+
+  const handleFileSelection = (uploadService, updateService, node) => {
+    if (config.handleFileSelection) {
+      config.handleFileSelection(
+        undefined,
+        true,
+        ({ data }) => {
+          const files = Array.isArray(data) ? data : [data];
+          files.forEach(file =>
+            updateService.updatePluginData(
+              { data: file },
+              node.attrs.id,
+              GALLERY_TYPE,
+              galleryPluginService
+            )
+          );
+        },
+        undefined,
+        defaultData
+      );
+    } else {
+      uploadService.selectFiles(fileInputAccept, true, (files: File[]) =>
+        files.forEach(file =>
+          uploadService.uploadFile(
+            file,
+            node.attrs.id,
+            new Uploader(handleFileUpload),
+            GALLERY_TYPE,
+            galleryPluginService
+          )
+        )
+      );
+    }
+  };
   return [
     {
       id: 'galleryLayout',
@@ -75,6 +112,25 @@ export const getToolbarButtons = (config, galleryPluginService): ToolbarButton[]
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS,
+      modal: {
+        id: galleryModals.settings,
+        Component: GallerySettingsModal,
+      },
+      command: ({ modalService, isMobile, node, uploadService, updateService }) => {
+        modalService?.openModal(galleryModals.settings, {
+          componentProps: {
+            nodeId: node.attrs.id,
+            handleFileSelection: () => handleFileSelection(uploadService, updateService, node),
+            handleFileUpload,
+            accept,
+          },
+          positioning: { placement: 'right' },
+          layout: isMobile ? 'fullscreen' : 'drawer',
+        });
+      },
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.DELETE,

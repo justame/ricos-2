@@ -22,6 +22,11 @@
 - `toolbars-v2`
   - [#4189](https://github.com/wix/ricos/pull/4189) cleanup font-weight (firefox bug)
 
+## :house: Internal
+
+- `gallery`
+  - [#4095](https://github.com/wix/ricos/pull/4095) add toolbar settings button
+
 </details>
 
 ## 8.71.47 (Jul 14, 2022)
@@ -30,8 +35,6 @@
 
 - `gallery`
   - [#4183](https://github.com/wix/ricos/pull/4183) refactor settings button dataHook & settings modal
-- `ricos-editor`
-  - [#4185](https://github.com/wix/ricos/pull/4185) locale resource wraps full ricos editor
 
 ## :bug: Bug Fix
 

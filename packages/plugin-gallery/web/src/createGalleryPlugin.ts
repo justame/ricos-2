@@ -4,8 +4,7 @@ import { Component, DEFAULTS } from './gallery-component';
 import type { GalleryPluginEditorConfig } from './types';
 import { GALLERY_TYPE } from './types';
 import type { CreatePluginFunction } from 'wix-rich-content-common';
-
-const fileInputAccept = '.jpg,.png,.gif,.jpeg,.jpe,.jfif,.bmp,.heic,.heif,.tfif,.tif,.webp';
+import { fileInputAccept } from './consts';
 
 const createGalleryPlugin: CreatePluginFunction<GalleryPluginEditorConfig> = config => {
   const type = GALLERY_TYPE;

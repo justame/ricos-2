@@ -54,7 +54,7 @@ class ManageMediaSection extends Component {
 
   handleFileChange = (files, itemPos) => {
     if (files.length > 0) {
-      if (this.props.experiments?.useUploadContext?.enabled) {
+      if (this.props.experiments?.tiptapEditor?.enabled) {
         files.forEach((file, index) => {
           const fileState = isValidIndex(itemPos) ? { itemIndex: itemPos + index } : {};
           this.props.uploadService?.uploadFile(
@@ -77,12 +77,12 @@ class ManageMediaSection extends Component {
 
   handleFileSelection = (index, multiple) => {
     const { helpers, getData, store, experiments = {} } = this.props;
-    const deleteBlock = store.get('deleteBlock');
+    const deleteBlock = store?.get('deleteBlock');
     const data = getData();
-    const handleFilesAdded = experiments.useUploadContext?.enabled
+    const handleFilesAdded = experiments?.tiptapEditor?.enabled
       ? this.handleFilesAddedWithIndex(index)
       : this.handleFilesAdded;
-    helpers.handleFileSelection(index, multiple, handleFilesAdded, deleteBlock, data);
+    helpers?.handleFileSelection?.(index, multiple, handleFilesAdded, deleteBlock, data);
   };
 
   handleFilesAdded = (...args) => {
@@ -121,7 +121,7 @@ class ManageMediaSection extends Component {
       getData,
       theme,
     } = this.props;
-    const { handleFileSelection } = helpers;
+    const handleFileSelection = helpers?.handleFileSelection;
     const { languageDir, isMobile } = this.context;
     const data = getData();
 
@@ -139,7 +139,11 @@ class ManageMediaSection extends Component {
           items={data.items}
           onItemsChange={this.applyItems}
           handleFileChange={this.handleFileChange}
-          handleFileSelection={handleFileSelection && this.handleFileSelection}
+          handleFileSelection={
+            this.props?.handleFileSelection
+              ? this.props?.handleFileSelection
+              : handleFileSelection && this.handleFileSelection
+          }
           t={t}
           relValue={relValue}
           anchorTarget={anchorTarget}
@@ -155,7 +159,7 @@ class ManageMediaSection extends Component {
 
 ManageMediaSection.propTypes = {
   getData: PropTypes.func.isRequired,
-  store: PropTypes.object.isRequired,
+  store: PropTypes.object,
   theme: PropTypes.object.isRequired,
   helpers: PropTypes.object.isRequired,
   isMobile: PropTypes.bool,
@@ -167,6 +171,7 @@ ManageMediaSection.propTypes = {
   languageDir: PropTypes.string,
   accept: PropTypes.string,
   updateData: PropTypes.func,
+  handleFileSelection: PropTypes.func,
   uploadService: PropTypes.func,
   updateService: PropTypes.func,
   blockKey: PropTypes.string,
@@ -360,14 +365,16 @@ export class GallerySettingsModal extends Component {
     this.setState({ [key]: value }, onToggle?.(value));
   };
 
-  getSpoilerConfig = enabled => ({
-    config: {
-      ...(this.modalsWithEditorCommands
-        ? this.props.componentData.config
-        : this.componentData.config),
-      spoiler: { enabled },
-    },
-  });
+  getSpoilerConfig = enabled => {
+    return {
+      config: {
+        ...(this.modalsWithEditorCommands
+          ? this.props.componentData?.config
+          : this.componentData?.config),
+        spoiler: { enabled },
+      },
+    };
+  };
 
   tabsList = () => {
     const mediaSectionProps = {
@@ -375,7 +382,7 @@ export class GallerySettingsModal extends Component {
         this.modalsWithEditorCommands
           ? this.props.componentData
           : this.props.pubsub.get('componentData'),
-      store: this.props.pubsub.store,
+      store: this.props.pubsub?.store,
       helpers: this.props.helpers,
       theme: this.props.theme,
       t: this.props.t,
@@ -395,11 +402,12 @@ export class GallerySettingsModal extends Component {
           value={'manage_media'}
           theme={this.props.theme}
         >
-          {this.props.experiments?.useUploadContext?.enabled ? (
+          {this.props.experiments?.tiptapEditor?.enabled ? (
             <UploadServiceContext.Consumer>
               {({ uploadService, updateService }) => (
                 <ManageMediaSection
                   {...mediaSectionProps}
+                  handleFileSelection={this.props?.handleFileSelection}
                   uploadService={uploadService}
                   updateService={updateService}
                   blockKey={this.props.blockKey}
@@ -425,7 +433,7 @@ export class GallerySettingsModal extends Component {
                 ? this.props.componentData
                 : this.props.pubsub.get('componentData')
             }
-            store={this.props.pubsub.store}
+            store={this.props.pubsub?.store}
             helpers={this.props.helpers}
             t={this.props.t}
             languageDir={this.props.languageDir}
@@ -525,11 +533,11 @@ export class GallerySettingsModal extends Component {
               ...this.componentData,
               ...this.getSpoilerConfig(value),
             }),
-          isChecked: () => this.props.componentData.config?.spoiler?.enabled,
+          isChecked: () => this.props.componentData?.config?.spoiler?.enabled,
           onChange: () => {
             this.props.updateData({
               ...this.props.componentData,
-              ...this.getSpoilerConfig(!this.props.componentData.config?.spoiler?.enabled),
+              ...this.getSpoilerConfig(!this.props.componentData?.config?.spoiler?.enabled),
             });
           },
         },
@@ -549,7 +557,6 @@ export class GallerySettingsModal extends Component {
       experiments = {},
     } = this.props;
     const { activeTab } = this.state;
-    this.componentData = pubsub.get('componentData');
     const useNewSettingsUi = !!experiments.newSettingsModals?.enabled;
 
     return (
@@ -622,6 +629,7 @@ GallerySettingsModal.propTypes = {
   onCancel: PropTypes.func,
   updateData: PropTypes.func,
   updateComponentData: PropTypes.func,
+  handleFileSelection: PropTypes.func,
   blockKey: PropTypes.string,
   getComponentData: PropTypes.func,
 };
