@@ -24,6 +24,8 @@
 
 ## :bug: Bug Fix
 
+- `shortcuts`
+  - [#4186](https://github.com/wix/ricos/pull/4186) modal registration in aggregate rather component
 - `tiptap-editor`
   - [#4173](https://github.com/wix/ricos/pull/4173) onLoad handler on tiptap editor create
 - `ricos-editor`
