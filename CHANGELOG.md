@@ -20,12 +20,18 @@
 ## :house: Internal
 
 - `collapsible-list`
+
   - [#4193](https://github.com/wix/ricos/pull/4193) fix selection on tiptap
 
 - `audio`
   - [#4073](https://github.com/wix/ricos/pull/4073) add toolbar settings button
 
-</details>
+## :nail_care: Polish
+
+- `gallery/polls`
+  - [#4195](https://github.com/wix/ricos/pull/4195) code refactor/cleanup in getToolbarButtons.tsx
+  
+  </details>
 
 ## 8.71.49 (Jul 17, 2022)
 
