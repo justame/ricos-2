@@ -17,12 +17,14 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.71.49 (Jul 17, 2022)
+
 ## :house: Internal
 
 - `ricos-context ricos-common`
   - [#4191](https://github.com/wix/ricos/pull/4191) refactor upload context and migration from `ricos-common` to `ricos-context`
-
-</details>
 
 ## 8.71.48 (Jul 17, 2022)
 
