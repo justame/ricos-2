@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :house: Internal
+
+- `collapsible-list`
+  - [#4193](https://github.com/wix/ricos/pull/4193) fix selection on tiptap
+
 </details>
 
 ## 8.71.49 (Jul 17, 2022)

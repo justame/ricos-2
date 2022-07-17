@@ -46,6 +46,7 @@ export const tiptapExtensions = [
         name: this.name,
         group: 'block',
         selectable: true,
+        draggable: true,
         content: `(${TIPTAP_COLLAPSIBLE_ITEM_TYPE})+`,
         addAttributes: () => collapsibleListDataDefaults,
         addKeyboardShortcuts() {
@@ -77,7 +78,7 @@ export const tiptapExtensions = [
     }),
     Component: CollapsibleListItem,
     name: TIPTAP_COLLAPSIBLE_ITEM_TYPE,
-    createExtensionConfig({ mergeAttributes }) {
+    createExtensionConfig() {
       return {
         name: this.name,
         group: TIPTAP_COLLAPSIBLE_ITEM_TYPE,
@@ -86,9 +87,6 @@ export const tiptapExtensions = [
         addAttributes: () => ({
           isExpanded: { default: true },
         }),
-        renderHTML({ HTMLAttributes }) {
-          return ['div', mergeAttributes(HTMLAttributes, { 'data-type': 'draggable-item' }), 0];
-        },
       };
     },
   },

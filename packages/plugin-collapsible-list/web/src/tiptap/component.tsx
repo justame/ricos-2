@@ -42,7 +42,6 @@ export const CollapsibleList: React.FC<PluginProps> = ({
       // onFocus={this.onFocus}
       // tabIndex="0"
       data-hook="collapsibleListComponent"
-      contentEditable="false"
     >
       <NodeViewContent />
       {inCollapsibleList && (
@@ -72,13 +71,7 @@ export const CollapsibleListItem: React.FC<PluginProps> = ({
   return (
     <div className={styles.itemContainer}>
       {inCollapsibleList && (
-        <div
-          className={styles.dndIcon}
-          draggable="true"
-          contentEditable="false"
-          data-drag-handle
-          data-type="draggable-item"
-        >
+        <div className={styles.dndIcon} draggable="true" contentEditable="false" data-drag-handle>
           <DndIcon />
         </div>
       )}
@@ -102,7 +95,7 @@ export const CollapsibleListItem: React.FC<PluginProps> = ({
 export const CollapsibleListItemTitle: React.FC<PluginProps> = ({ NodeViewContent }) => {
   return (
     <div className={collapsibleListItemStyles.titleContainer}>
-      <NodeViewContent className={collapsibleListItemStyles.nodes} contenteditable="true" />
+      <NodeViewContent contenteditable="true" />
     </div>
   );
 };
@@ -121,7 +114,7 @@ export const CollapsibleListItemBody: React.FC<PluginProps> = ({
   )?.node?.attrs?.isExpanded;
   return isShown ? (
     <div className={collapsibleListItemStyles.titleContainer}>
-      <NodeViewContent className={collapsibleListItemStyles.nodes} contenteditable="true" />
+      <NodeViewContent contenteditable="true" />
     </div>
   ) : null;
 };
