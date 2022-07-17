@@ -57,10 +57,8 @@ export class RichContentAdapter implements TiptapAdapter {
             [b.getButton().id]: b.toExternalToolbarButtonConfig(
               this.getEditorCommands(),
               services.t,
-              //TODO: pass UploadService
-              //@ts-ignore
-              {},
-              {}
+              services.uploadService,
+              services.updateService
             ),
           };
         }, {}),

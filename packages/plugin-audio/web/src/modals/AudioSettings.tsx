@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import classNames from 'classnames';
-import { mergeStyles, UploadServiceContext } from 'wix-rich-content-common';
+import { mergeStyles } from 'wix-rich-content-common';
 import { getImageSrc } from 'wix-rich-content-common/libs/imageUtils';
 import { SETTINGS_IMG_SIZE, AUDIO_BI_VALUES, AUDIO_ACTION_NAMES, AUDIO_TYPES } from '../consts';
 import { AUDIO_TYPE } from '../types';
@@ -19,6 +19,7 @@ import Styles from '../../statics/styles/audio-settings.scss';
 import { Uploader } from 'wix-rich-content-plugin-commons';
 import type { UploadContextType } from 'wix-rich-content-common';
 import { AudioPluginService as audioPluginService } from '../toolbar/audioPluginService';
+import { UploadContext } from 'ricos-context';
 
 const AudioSettings = ({
   onCancel,
@@ -33,10 +34,8 @@ const AudioSettings = ({
   blockKey,
   getComponentData,
 }) => {
-  const useUploadService = !!experiments?.useUploadContext?.enabled;
-  const { uploadService }: UploadContextType = useUploadService
-    ? useContext(UploadServiceContext)
-    : {};
+  const useUploadService = !!experiments?.tiptapEditor?.enabled;
+  const { uploadService }: UploadContextType = useUploadService ? useContext(UploadContext) : {};
   const styles = mergeStyles({ styles: Styles, theme });
   const initialState = {
     name: componentData?.name,

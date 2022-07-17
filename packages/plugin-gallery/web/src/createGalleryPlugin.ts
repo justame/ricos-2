@@ -46,9 +46,7 @@ const createGalleryPlugin: CreatePluginFunction<GalleryPluginEditorConfig> = con
         }
       : pluginData;
   return createBasePlugin({
-    component: experiments?.useUploadContext?.enabled
-      ? Component
-      : createBaseMediaPlugin(Component),
+    component: createBaseMediaPlugin(Component),
     settings,
     theme,
     t,

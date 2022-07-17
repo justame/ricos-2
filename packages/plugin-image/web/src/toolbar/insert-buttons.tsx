@@ -4,21 +4,16 @@ import { InsertPluginIcon } from '../icons';
 import type {
   CreateInsertButtons,
   TranslationFunction,
-  Helpers,
-  EditorPluginConfig,
   AvailableExperiments,
   InsertButton,
 } from 'wix-rich-content-common';
 import type { ImagePluginEditorConfig } from '../types';
-import { Uploader } from 'wix-rich-content-plugin-commons';
-import { ImagePluginService } from './imagePluginService';
 
 const createInsertButtons: CreateInsertButtons = ({
   t,
   settings,
   disableDownload,
   disableExpand,
-  experiments,
 }: {
   t: TranslationFunction;
   settings: ImagePluginEditorConfig;
@@ -40,15 +35,6 @@ const createInsertButtons: CreateInsertButtons = ({
     getIcon: () => icon,
     componentData,
   };
-
-  if (experiments?.useUploadContext?.enabled) {
-    imageInsertButton.mediaPluginService = new ImagePluginService();
-    imageInsertButton.getUploader = (
-      helpers: Helpers,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      _: Record<string, any> & EditorPluginConfig
-    ) => new Uploader(helpers?.handleFileUpload);
-  }
 
   return [imageInsertButton];
 };

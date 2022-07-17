@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  mergeStyles,
-  GlobalContext,
-  GALLERY_TYPE,
-  UploadServiceContext,
-} from 'wix-rich-content-common';
+import { mergeStyles, GlobalContext, GALLERY_TYPE } from 'wix-rich-content-common';
 import {
   Tabs,
   Tab,
@@ -25,6 +20,7 @@ import { layoutData } from '../layout-data-provider';
 import classNames from 'classnames';
 import { Uploader } from 'wix-rich-content-plugin-commons';
 import { GalleryPluginService } from '../toolbar/galleryPluginService';
+import { UploadContextConsumer } from 'ricos-context';
 
 const DIVIDER = 'divider';
 
@@ -403,7 +399,7 @@ export class GallerySettingsModal extends Component {
           theme={this.props.theme}
         >
           {this.props.experiments?.tiptapEditor?.enabled ? (
-            <UploadServiceContext.Consumer>
+            <UploadContextConsumer>
               {({ uploadService, updateService }) => (
                 <ManageMediaSection
                   {...mediaSectionProps}
@@ -413,7 +409,7 @@ export class GallerySettingsModal extends Component {
                   blockKey={this.props.blockKey}
                 />
               )}
-            </UploadServiceContext.Consumer>
+            </UploadContextConsumer>
           ) : (
             <ManageMediaSection {...mediaSectionProps} />
           )}

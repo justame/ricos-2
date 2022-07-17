@@ -198,52 +198,17 @@ export function generateInsertPluginButtonProps({
     return handleFileChange(files, updateEntity);
   }
 
-  function uploadFiles(files: File[]) {
-    const getUploader = button.getUploader;
-    const mediaPluginService = button.mediaPluginService;
-    if (getUploader && mediaPluginService) {
-      const uploader = getUploader(helpers, settings);
-      const updateEntity = (blockKey: string, file: File | File[]) => {
-        const files = file instanceof Array ? file : [file];
-        files.forEach((fileToUpload: File) => {
-          uploadService?.uploadFile(
-            fileToUpload,
-            blockKey,
-            uploader,
-            blockType,
-            mediaPluginService
-          );
+  function handleExternalFileChanged({ data, error }) {
+    if (data) {
+      const handleFilesAdded = shouldCreateGallery(data)
+        ? (blockKey: string) => commonPubsub.getBlockHandler('galleryHandleFilesAdded', blockKey)
+        : (blockKey: string) => pubsub.getBlockHandler('handleFilesAdded', blockKey);
+      const updateEntity = (blockKey: string, file: fileData) => {
+        onPluginAddStep('FileUploadDialog', blockKey);
+        setTimeout(() => {
+          handleFilesAdded(blockKey)({ data: file, error });
         });
       };
-      handleFileChange(files, updateEntity);
-    }
-  }
-
-  function handleExternalFileChanged({ data, error }) {
-    const mediaPluginService = button.mediaPluginService;
-    let updateEntity;
-    if (data) {
-      if (experiments?.useUploadContext?.enabled && mediaPluginService) {
-        updateEntity = (blockKey: string, file: fileData | fileData[]) => {
-          onPluginAddStep('FileUploadDialog', blockKey);
-          setTimeout(() => {
-            const files = file instanceof Array ? file : [file];
-            files.forEach((data: fileData) => {
-              updateService?.updatePluginData({ data }, blockKey, blockType, mediaPluginService);
-            });
-          });
-        };
-      } else {
-        const handleFilesAdded = shouldCreateGallery(data)
-          ? (blockKey: string) => commonPubsub.getBlockHandler('galleryHandleFilesAdded', blockKey)
-          : (blockKey: string) => pubsub.getBlockHandler('handleFilesAdded', blockKey);
-        updateEntity = (blockKey: string, file: fileData) => {
-          onPluginAddStep('FileUploadDialog', blockKey);
-          setTimeout(() => {
-            handleFilesAdded(blockKey)({ data: file, error });
-          });
-        };
-      }
       handleFileChange(data, updateEntity);
     }
   }
@@ -322,11 +287,7 @@ export function generateInsertPluginButtonProps({
 
   function getPropsByButtonType(type) {
     return {
-      [BUTTON_TYPES.FILE]: experiments?.useUploadContext?.enabled
-        ? {
-            onClick: () => uploadService?.selectFiles(settings.accept, !!button.multi, uploadFiles),
-          }
-        : { onChange, accept: settings.accept, multiple: button.multi },
+      [BUTTON_TYPES.FILE]: { onChange, accept: settings.accept, multiple: button.multi },
       [BUTTON_TYPES.BUTTON]: { onClick },
     }[type];
   }

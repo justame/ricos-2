@@ -1,6 +1,7 @@
 import type { IEditorPlugins } from './editorPluginTypes';
 import type { EventRegistrar, EventSubscriptor } from './events';
 import type { AmbientStyles } from './styles';
+import type { IUploadService, IUpdateService } from './uploadServicesTypes';
 import type { TranslationFunction } from './commonTypes';
 
 export type {
@@ -37,5 +38,7 @@ export type RicosServices = {
   events: EventRegistrar & EventSubscriptor;
   styles: AmbientStyles;
   plugins: IEditorPlugins;
+  uploadService: IUploadService;
+  updateService: IUpdateService;
   t: TranslationFunction;
 };

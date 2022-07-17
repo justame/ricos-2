@@ -6,7 +6,7 @@ import { generateInsertPluginButtonProps } from '../Utils/generateInsertPluginBu
 import { FileInput } from 'wix-rich-content-ui-components';
 import { ToolbarButton, BUTTON_TYPES } from 'wix-rich-content-editor-common';
 import styles from '../../statics/styles/toolbar-button.scss';
-import { GlobalContext, UploadServiceContext } from 'wix-rich-content-common';
+import { GlobalContext } from 'wix-rich-content-common';
 
 /**
  * createBaseInsertPluginButton
@@ -66,7 +66,7 @@ export default ({
       }
     }
 
-    getButtonProps = (uploadService, updateService) => {
+    getButtonProps = () => {
       const { setEditorState, getEditorState, closePluginMenu, pluginMenuButtonRef } = this.props;
       const { experiments } = this.context;
       return generateInsertPluginButtonProps({
@@ -86,8 +86,6 @@ export default ({
         closePluginMenu,
         pluginMenuButtonRef,
         experiments,
-        uploadService,
-        updateService,
       });
     };
 
@@ -175,25 +173,9 @@ export default ({
       const buttonWrapperClassNames = classNames(styles.buttonWrapper, {
         [styles.mobile]: isMobile,
       });
-      const hasUploadContext = this.context.experiments?.useUploadContext?.enabled;
       const buttonRenderer =
-        buttonProps.type === BUTTON_TYPES.FILE && !hasUploadContext
-          ? this.renderFileUploadButton
-          : this.renderButton;
-      const Button = hasUploadContext ? (
-        <UploadServiceContext.Consumer>
-          {({ uploadService, updateService }) => {
-            const buttonPropsWithContext = this.getButtonProps(uploadService, updateService);
-            return (
-              <div className={buttonWrapperClassNames}>
-                {buttonRenderer(buttonPropsWithContext)}
-              </div>
-            );
-          }}
-        </UploadServiceContext.Consumer>
-      ) : (
-        <div className={buttonWrapperClassNames}>{buttonRenderer(buttonProps)}</div>
-      );
+        buttonProps.type === BUTTON_TYPES.FILE ? this.renderFileUploadButton : this.renderButton;
+      const Button = <div className={buttonWrapperClassNames}>{buttonRenderer(buttonProps)}</div>;
       return (
         <ToolbarButton
           theme={theme}

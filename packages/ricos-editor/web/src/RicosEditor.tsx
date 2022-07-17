@@ -50,7 +50,6 @@ import { EditorCommandRunner } from './content-modification/command-runner';
 import { TiptapMockToolbar } from './tiptapMockToolbar/TiptapMockToolbar';
 import { convertToolbarContext } from './toolbars/convertToolbarContext';
 import { coreCommands } from './content-modification/commands/core-commands';
-import UploadObserver from './utils/UploadObserver';
 import { Node_Type } from 'ricos-schema';
 // eslint-disable-next-line
 export const PUBLISH_DEPRECATION_WARNING_v9 = `Please provide the postId via RicosEditor biSettings prop and use editorEvents.publish() APIs for publishing.
@@ -107,8 +106,6 @@ export class RicosEditor extends Component<RicosEditorProps, State> implements R
 
   linkToolbarRef!: Record<'updateToolbar', () => void>;
 
-  UploadObserver?: UploadObserver;
-
   static getDerivedStateFromError(error: string) {
     return { error };
   }
@@ -140,7 +137,6 @@ export class RicosEditor extends Component<RicosEditorProps, State> implements R
     this.useTiptap = !!props.experiments?.tiptapEditor?.enabled;
     this.useNewFormattingToolbar = !!props.experiments?.newFormattingToolbar?.enabled;
     this.useToolbarsV3 = !!props.experiments?.toolbarsV3?.enabled;
-    props.experiments?.useUploadContext?.enabled && (this.UploadObserver = new UploadObserver());
   }
 
   static defaultProps = {
@@ -372,10 +368,8 @@ export class RicosEditor extends Component<RicosEditorProps, State> implements R
   };
 
   onBusyChange = (contentState: ContentState) => {
-    const { onBusyChange, onChange, experiments } = this.props;
-    const isBusy = experiments?.useUploadContext?.enabled
-      ? !!this.UploadObserver?.hasActiveUploads()
-      : hasActiveUploads(contentState);
+    const { onBusyChange, onChange } = this.props;
+    const isBusy = hasActiveUploads(contentState);
     if (this.isBusy !== isBusy) {
       this.isBusy = isBusy;
       onBusyChange?.(isBusy);
@@ -432,7 +426,6 @@ export class RicosEditor extends Component<RicosEditorProps, State> implements R
         {...contentProp.content}
         {...props}
         {...this.state.localeData}
-        UploadObserver={this.UploadObserver}
         experiments={experiments}
       >
         {React.cloneElement(child, {

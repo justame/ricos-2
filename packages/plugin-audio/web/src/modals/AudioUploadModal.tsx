@@ -4,8 +4,7 @@ import { AUDIO_TYPE } from '../types';
 import { audioFileTypes } from '../consts';
 import { handleUploadStart, handleUploadFinished, Uploader } from 'wix-rich-content-plugin-commons';
 import { MediaUploadModal } from 'wix-rich-content-ui-components';
-import type { UploadContextType } from 'wix-rich-content-common';
-import { MEDIA_POPOVERS_BUTTONS_NAMES_BI, UploadServiceContext } from 'wix-rich-content-common';
+import { MEDIA_POPOVERS_BUTTONS_NAMES_BI } from 'wix-rich-content-common';
 import * as id3 from 'id3js';
 import { AudioPluginService as audioPluginService } from '../toolbar/audioPluginService';
 

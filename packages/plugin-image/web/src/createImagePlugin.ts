@@ -37,9 +37,7 @@ const createImagePlugin: CreatePluginFunction<ImagePluginEditorConfig> = config 
     ...rest
   } = config;
   return createBasePlugin({
-    component: experiments?.useUploadContext?.enabled
-      ? Component
-      : createBaseMediaPlugin(Component),
+    component: createBaseMediaPlugin(Component),
     type: IMAGE_TYPE,
     legacyType: IMAGE_TYPE_LEGACY,
     pluginDecorationProps: (props, componentData) => {

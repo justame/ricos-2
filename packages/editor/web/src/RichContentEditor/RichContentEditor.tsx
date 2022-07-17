@@ -79,7 +79,6 @@ import {
   simplePubsub,
   IMAGE_TYPE,
   DOC_STYLE_TYPES,
-  UploadServiceContext,
 } from 'wix-rich-content-common';
 import draftStyles from '../../statics/styles/draft.rtlignore.scss';
 import InnerRCE from './InnerRCE';
@@ -693,7 +692,7 @@ class RichContentEditor extends Component<RichContentEditorProps, RichContentEdi
     return customHeadings;
   };
 
-  createPluginFromBlobs = (blobs: Blob[], uploadService): DraftHandleValue => {
+  createPluginFromBlobs = (blobs: Blob[]): DraftHandleValue => {
     if (blobs.length > 0) {
       const blob = blobs[0];
       if (blob.type.startsWith('image/')) {
@@ -701,22 +700,9 @@ class RichContentEditor extends Component<RichContentEditorProps, RichContentEdi
         if (imagePluginSettings) {
           const blockKey = this.EditorCommands.insertBlock(IMAGE_TYPE);
           if (blockKey) {
-            // eslint-disable-next-line max-depth
-            if (this.props.experiments?.useUploadContext?.enabled) {
-              const { mediaPluginService, getUploader } =
-                imagePluginSettings.InsertPluginButtons[0].buttonSettings;
-              uploadService?.uploadFile(
-                blob,
-                blockKey,
-                getUploader(this.props.helpers),
-                IMAGE_TYPE,
-                mediaPluginService
-              );
-            } else {
-              this.commonPubsub.set('initialState_' + blockKey, {
-                userSelectedFiles: { files: [blob] },
-              });
-            }
+            this.commonPubsub.set('initialState_' + blockKey, {
+              userSelectedFiles: { files: [blob] },
+            });
             return 'handled';
           }
         }
@@ -725,17 +711,13 @@ class RichContentEditor extends Component<RichContentEditorProps, RichContentEdi
     return 'not-handled';
   };
 
-  handlePastedFiles =
-    uploadService =>
-    (blobs: Blob[]): DraftHandleValue => {
-      return this.createPluginFromBlobs(blobs, uploadService);
-    };
+  handlePastedFiles = (blobs: Blob[]): DraftHandleValue => {
+    return this.createPluginFromBlobs(blobs);
+  };
 
-  handleDroppedFiles =
-    uploadService =>
-    (_selection: SelectionState, blobs: Blob[]): DraftHandleValue => {
-      return this.createPluginFromBlobs(blobs, uploadService);
-    };
+  handleDroppedFiles = (_selection: SelectionState, blobs: Blob[]): DraftHandleValue => {
+    return this.createPluginFromBlobs(blobs);
+  };
 
   isPluginInstalled = (pluginType: string) =>
     this.plugins.some(plugin => plugin.blockType === pluginType);
@@ -1065,67 +1047,61 @@ class RichContentEditor extends Component<RichContentEditorProps, RichContentEdi
     const { theme } = this.contextualData;
 
     return (
-      <UploadServiceContext.Consumer>
-        {({ uploadService }) => {
-          return (
-            <Editor
-              ref={this.setEditor}
-              handleReturn={
-                handleReturn
-                  ? handleReturn(this.updateEditorState)
-                  : handleReturnCommand(this.updateEditorState, this.commonPubsub)
-              }
-              editorState={editorState}
-              onChange={this.updateEditorState}
-              handleBeforeInput={this.handleBeforeInput}
-              handlePastedText={this.handlePastedText}
-              plugins={this.plugins}
-              blockStyleFn={blockStyleFn(
-                theme,
-                this.styleToClass,
-                this.toDraftTextAlignment(textAlignment),
-                experiments?.fixedTabSize?.enabled
-              )}
-              handleKeyCommand={handleKeyCommand(
-                this.updateEditorState,
-                this.getCustomCommandHandlers().commandHandlers,
-                getBlockType(editorState),
-                this.onKeyboardShortcutClick,
-                onBackspace
-              )}
-              editorKey={editorKey}
-              keyBindingFn={createKeyBindingFn(this.getCustomCommandHandlers().commands || [])}
-              customStyleFn={this.customStyleFn}
-              tabIndex={tabIndex}
-              placeholder={placeholder || ''}
-              spellCheck={spellCheck}
-              stripPastedStyles={stripPastedStyles}
-              autoCapitalize={autoCapitalize}
-              autoComplete={autoComplete}
-              autoCorrect={autoCorrect}
-              ariaActiveDescendantID={ariaActiveDescendantID}
-              ariaAutoComplete={ariaAutoComplete}
-              ariaControls={ariaControls}
-              ariaDescribedBy={ariaDescribedBy}
-              ariaExpanded={ariaExpanded}
-              ariaLabel={ariaLabel}
-              ariaMultiline={ariaMultiline}
-              onBlur={onBlur}
-              onFocus={onFocus}
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
-              onCut={onCut}
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
-              onCopy={onCopy}
-              textAlignment={this.toDraftTextAlignment(textAlignment)}
-              readOnly={readOnly || this.state.readOnly}
-              handlePastedFiles={this.handlePastedFiles(uploadService)}
-              handleDroppedFiles={this.handleDroppedFiles(uploadService)}
-            />
-          );
-        }}
-      </UploadServiceContext.Consumer>
+      <Editor
+        ref={this.setEditor}
+        handleReturn={
+          handleReturn
+            ? handleReturn(this.updateEditorState)
+            : handleReturnCommand(this.updateEditorState, this.commonPubsub)
+        }
+        editorState={editorState}
+        onChange={this.updateEditorState}
+        handleBeforeInput={this.handleBeforeInput}
+        handlePastedText={this.handlePastedText}
+        plugins={this.plugins}
+        blockStyleFn={blockStyleFn(
+          theme,
+          this.styleToClass,
+          this.toDraftTextAlignment(textAlignment),
+          experiments?.fixedTabSize?.enabled
+        )}
+        handleKeyCommand={handleKeyCommand(
+          this.updateEditorState,
+          this.getCustomCommandHandlers().commandHandlers,
+          getBlockType(editorState),
+          this.onKeyboardShortcutClick,
+          onBackspace
+        )}
+        editorKey={editorKey}
+        keyBindingFn={createKeyBindingFn(this.getCustomCommandHandlers().commands || [])}
+        customStyleFn={this.customStyleFn}
+        tabIndex={tabIndex}
+        placeholder={placeholder || ''}
+        spellCheck={spellCheck}
+        stripPastedStyles={stripPastedStyles}
+        autoCapitalize={autoCapitalize}
+        autoComplete={autoComplete}
+        autoCorrect={autoCorrect}
+        ariaActiveDescendantID={ariaActiveDescendantID}
+        ariaAutoComplete={ariaAutoComplete}
+        ariaControls={ariaControls}
+        ariaDescribedBy={ariaDescribedBy}
+        ariaExpanded={ariaExpanded}
+        ariaLabel={ariaLabel}
+        ariaMultiline={ariaMultiline}
+        onBlur={onBlur}
+        onFocus={onFocus}
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        onCut={onCut}
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        onCopy={onCopy}
+        textAlignment={this.toDraftTextAlignment(textAlignment)}
+        readOnly={readOnly || this.state.readOnly}
+        handlePastedFiles={this.handlePastedFiles}
+        handleDroppedFiles={this.handleDroppedFiles}
+      />
     );
   };
 
@@ -1312,7 +1288,7 @@ class RichContentEditor extends Component<RichContentEditorProps, RichContentEdi
                   {this.renderEditor()}
                   {showToolbars && this.renderToolbars()}
                   {this.renderInlineModals()}
-                  {!experiments?.useUploadContext?.enabled && this.renderErrorToast()}
+                  {this.renderErrorToast()}
                   <InnerModal
                     theme={theme}
                     locale={locale}
