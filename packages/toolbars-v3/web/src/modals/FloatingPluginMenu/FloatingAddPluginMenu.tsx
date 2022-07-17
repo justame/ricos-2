@@ -31,21 +31,13 @@ const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig, plugins }
 
   useEffect(() => {
     isHorizontalMenu &&
+      !modalService.getModal(PLUGIN_MENU_HORIZONTAL_MODAL_ID) &&
       modalService.register({
         id: PLUGIN_MENU_HORIZONTAL_MODAL_ID,
         Component: props => (
           <AddPluginMenuHorizontal referenceElement={buttonRef} plugins={plugins} {...props} />
         ),
       });
-    return () => {
-      isHorizontalMenu && modalService.unregister(PLUGIN_MENU_HORIZONTAL_MODAL_ID);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (isHorizontalMenu) {
-      modalService.unregister(PLUGIN_MENU_HORIZONTAL_MODAL_ID);
-    }
   }, []);
 
   const calcButtonPosition = (position: DOMRect): { top: string } => {

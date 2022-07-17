@@ -64,6 +64,7 @@ describe('Editor Keyboard Shortcuts', () => {
     onModalOpened: jest.fn(),
     onModalClosed: jest.fn(),
     destroy(): void {},
+    getModal: () => undefined,
   };
 
   it('should register/unregister shortcut', () => {

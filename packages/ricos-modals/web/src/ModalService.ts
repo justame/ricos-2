@@ -104,6 +104,10 @@ export class RicosModalService implements ModalService {
     );
   }
 
+  public getModal(id: string) {
+    return this.modals.find(modal => modal.id === id);
+  }
+
   destroy() {
     this.modals = [];
   }

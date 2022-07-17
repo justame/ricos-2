@@ -23,10 +23,8 @@ export const DimensionSliderButton: FC<Props> = ({ toolbarItem, dimension, ...pr
   const id = `${HTML_DIMENSION_MODAL_ID}_${dimension.toUpperCase()}`;
 
   useEffect(() => {
-    modalService.register({ Component: SliderModal, id });
+    !modalService.getModal(id) && modalService.register({ Component: SliderModal, id });
   }, []);
-
-  useEffect(() => modalService.unregister(id), []);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { icon, tooltip } = toolbarItem.presentation as Record<string, any>;

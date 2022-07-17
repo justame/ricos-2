@@ -18,10 +18,9 @@ export const EditHtmlButton: FC<Props> = ({ toolbarItem }) => {
   const modalService = useContext(ModalContext);
 
   useEffect(() => {
-    modalService.register({ Component: HtmlEditPanel, id: HTML_EDIT_MODAL_ID });
+    !modalService.getModal(HTML_EDIT_MODAL_ID) &&
+      modalService.register({ Component: HtmlEditPanel, id: HTML_EDIT_MODAL_ID });
   }, []);
-
-  useEffect(() => modalService.unregister(HTML_EDIT_MODAL_ID), []);
 
   const nodeAttrs = toolbarItem.attributes.nodeAttrsInSelection;
 
