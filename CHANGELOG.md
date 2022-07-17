@@ -17,6 +17,10 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.71.48 (Jul 17, 2022)
+
 ## :bug: Bug Fix
 
 - `toolbars-v2`
@@ -26,8 +30,6 @@
 
 - `gallery`
   - [#4095](https://github.com/wix/ricos/pull/4095) add toolbar settings button
-
-</details>
 
 ## 8.71.47 (Jul 14, 2022)
 
