@@ -1,9 +1,12 @@
 import React from 'react';
 import type { ToolbarButton } from 'ricos-types';
-import { PLUGIN_TOOLBAR_BUTTON_ID } from 'wix-rich-content-editor-common';
+import {
+  PLUGIN_TOOLBAR_BUTTON_ID,
+  decorateComponentWithProps,
+} from 'wix-rich-content-editor-common';
 import { GALLERY_TYPE } from './types';
 import { Uploader } from 'wix-rich-content-plugin-commons';
-import { AddMediaIcon } from './icons';
+import { AddMediaIcon, ManageMediaNewIcon } from './icons';
 import { GALLERY_LAYOUTS, layoutRicosData } from './layout-data-provider';
 import { fileInputAccept, galleryModals } from './consts';
 import GallerySettingsModal from './modals/SettingsModal';
@@ -53,19 +56,6 @@ export const getToolbarButtons = (config, galleryPluginService): ToolbarButton[]
   };
   return [
     {
-      id: 'galleryLayout',
-      command: ({ layout, editorCommands }) => {
-        editorCommands
-          .chain()
-          .focus()
-          .updateAttributes(TIPTAP_GALLERY_TYPE, {
-            options: layoutRicosData[layout],
-          })
-          .run();
-      },
-      renderer: toolbarItem => <GalleryLayoutButton toolbarItem={toolbarItem} />,
-    },
-    {
       id: PLUGIN_TOOLBAR_BUTTON_ID.REPLACE,
       icon: AddMediaIcon,
       tooltip: 'UploadMediaButton_Tooltip',
@@ -106,6 +96,39 @@ export const getToolbarButtons = (config, galleryPluginService): ToolbarButton[]
           );
         }
       },
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS,
+      modal: {
+        id: galleryModals.manageMedia,
+        Component: decorateComponentWithProps(GallerySettingsModal, { activeTab: 'manage_media' }),
+      },
+      icon: ManageMediaNewIcon,
+      command: ({ modalService, isMobile, node, uploadService, updateService }) => {
+        modalService?.openModal(galleryModals.manageMedia, {
+          componentProps: {
+            nodeId: node.attrs.id,
+            handleFileSelection: () => handleFileSelection(uploadService, updateService, node),
+            handleFileUpload,
+            accept,
+          },
+          positioning: { placement: 'right' },
+          layout: isMobile ? 'fullscreen' : 'drawer',
+        });
+      },
+    },
+    {
+      id: 'galleryLayout',
+      command: ({ layout, editorCommands }) => {
+        editorCommands
+          .chain()
+          .focus()
+          .updateAttributes(TIPTAP_GALLERY_TYPE, {
+            options: layoutRicosData[layout],
+          })
+          .run();
+      },
+      renderer: toolbarItem => <GalleryLayoutButton toolbarItem={toolbarItem} />,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SIZE,

@@ -15,9 +15,15 @@ interface Props {
   accept: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   node: any;
+  activeTab?: 'manage_media' | 'advanced_settings' | 'settings';
 }
 
-const GallerySettingsModal: FC<Props> = ({ nodeId, handleFileSelection, handleFileUpload }) => {
+const GallerySettingsModal: FC<Props> = ({
+  nodeId,
+  handleFileSelection,
+  handleFileUpload,
+  activeTab = 'settings',
+}) => {
   const { theme, t, isMobile, experiments } = useContext(RicosContext);
   const modalService = useContext(ModalContext) || {};
   const { getEditorCommands } = useContext(EditorContext);
@@ -80,7 +86,7 @@ const GallerySettingsModal: FC<Props> = ({ nodeId, handleFileSelection, handleFi
       handleFileSelection={handleFileSelection}
       handleFileUpload={handleFileUpload}
       shouldShowSpoiler
-      activeTab="settings"
+      activeTab={activeTab}
     />
   ) : null;
 };
