@@ -10,14 +10,18 @@ import { getToolbarButtons } from './getToolbarButtons';
 import { getAddButtons } from './getAddButtons';
 
 export const pluginAudio: EditorPluginCreator<AudioPluginEditorConfig> = config => {
-  const pluginConfig = { ...DEFAULTS.config, ...config };
+  const pluginConfig: AudioPluginEditorConfig = { ...DEFAULTS.config, ...config };
   return {
     config: pluginConfig,
     type: AUDIO_TYPE,
     createPlugin: createAudioPlugin,
     createPluginData: createAudioData,
     tiptapExtensions,
-    toolbar: { buttons: getToolbarButtons(config) },
-    addButtons: getAddButtons(config),
+    toolbar: { buttons: getToolbarButtons(pluginConfig) },
+    addButtons: getAddButtons(pluginConfig),
+    reconfigure: helpers => {
+      pluginConfig.handleFileSelection = helpers.handleFileSelection;
+      pluginConfig.handleFileUpload = helpers.handleFileUpload;
+    },
   } as TiptapEditorPlugin;
 };

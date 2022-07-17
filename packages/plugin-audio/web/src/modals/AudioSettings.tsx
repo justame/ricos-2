@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { mergeStyles } from 'wix-rich-content-common';
 import { getImageSrc } from 'wix-rich-content-common/libs/imageUtils';
 import { SETTINGS_IMG_SIZE, AUDIO_BI_VALUES, AUDIO_ACTION_NAMES, AUDIO_TYPES } from '../consts';
+import type { handleFileUploadType, handleFileSelectionType } from '../types';
 import { AUDIO_TYPE } from '../types';
 import {
   LabeledToggle,
@@ -17,12 +18,38 @@ import {
 } from 'wix-rich-content-ui-components';
 import Styles from '../../statics/styles/audio-settings.scss';
 import { Uploader } from 'wix-rich-content-plugin-commons';
-import type { UploadContextType } from 'wix-rich-content-common';
+import type {
+  UploadContextType,
+  AvailableExperiments,
+  ComponentData,
+  Helpers,
+  Pubsub,
+  RichContentTheme,
+  TranslationFunction,
+} from 'wix-rich-content-common';
 import { AudioPluginService as audioPluginService } from '../toolbar/audioPluginService';
 import { UploadContext } from 'ricos-context';
 
-const AudioSettings = ({
+export interface Props {
+  onCancel?: () => void;
+  onSave?: () => void;
+  updateData?: (data) => void;
+  componentData: ComponentData;
+  helpers: Helpers;
+  pubsub?: Pubsub;
+  theme: RichContentTheme;
+  t: TranslationFunction;
+  isMobile: boolean;
+  experiments: AvailableExperiments;
+  blockKey: string;
+  getComponentData: () => ComponentData;
+  handleFileSelection: handleFileSelectionType;
+  handleFileUpload: handleFileUploadType;
+}
+
+const AudioSettings: React.FC<Props> = ({
   onCancel,
+  onSave,
   updateData,
   componentData,
   helpers,
@@ -31,8 +58,10 @@ const AudioSettings = ({
   t,
   isMobile,
   experiments,
-  blockKey,
+  blockKey = componentData?.id,
   getComponentData,
+  handleFileSelection,
+  handleFileUpload,
 }) => {
   const useUploadService = !!experiments?.tiptapEditor?.enabled;
   const { uploadService }: UploadContextType = useUploadService ? useContext(UploadContext) : {};
@@ -43,7 +72,7 @@ const AudioSettings = ({
     disableDownload: componentData?.disableDownload,
     coverImage: componentData?.coverImage,
   };
-  const [isDownloadEnabled, setIsDownloadEnabled] = useState(!initialState.disableDownload);
+  const [isDownloadEnabled, setIsDownloadEnabled] = useState(!initialState?.disableDownload);
   const [coverImage, setCoverImage] = useState(initialState?.coverImage || null);
   const [name, setName] = useState(initialState.name || '');
   const [authorName, setAuthorName] = useState(initialState.authorName || '');
@@ -53,7 +82,7 @@ const AudioSettings = ({
   const onDownlandToggle = () => {
     setIsDownloadEnabled(!isDownloadEnabled);
     const toggleBIValue = isDownloadEnabled ? AUDIO_BI_VALUES.NO : AUDIO_BI_VALUES.YES;
-    helpers?.onChangePluginSettings({
+    helpers?.onChangePluginSettings?.({
       pluginId: AUDIO_TYPE,
       actionName: AUDIO_ACTION_NAMES.downloadAudio,
       value: toggleBIValue,
@@ -61,7 +90,7 @@ const AudioSettings = ({
   };
 
   const onInputBlur = (actionName, value) => {
-    helpers?.onChangePluginSettings({
+    helpers?.onChangePluginSettings?.({
       pluginId: AUDIO_TYPE,
       actionName,
       value,
@@ -74,48 +103,55 @@ const AudioSettings = ({
     const img = args.data[0] || args.data;
     setCoverImage(img);
     setIsLoadingImage(false);
-    helpers?.onChangePluginSettings({
+    helpers?.onChangePluginSettings?.({
       pluginId: AUDIO_TYPE,
       actionName: AUDIO_ACTION_NAMES.changeCover,
       value: AUDIO_BI_VALUES.YES,
     });
   };
 
-  const handleFileSelection = () => {
-    const deleteBlock = pubsub.get('deleteBlock');
-    helpers.handleFileSelection(undefined, false, handleFilesAdded, deleteBlock, componentData);
+  const closeModal = () => {
+    if (modalsWithEditorCommands) {
+      return onCancel?.();
+    }
+    pubsub?.update('componentData', {
+      ...componentData,
+      name: initialState.name,
+      authorName: initialState.authorName,
+      disableDownload: initialState.disableDownload,
+      coverImage: initialState.coverImage,
+    });
+    helpers.closeModal?.();
+  };
+
+  const onFileSelection = () => {
+    if (handleFileSelection) {
+      handleFileSelection(handleFilesAdded);
+    }
+    if (helpers.handleFileSelection) {
+      const deleteBlock = pubsub?.get('deleteBlock');
+      helpers.handleFileSelection?.(undefined, false, handleFilesAdded, deleteBlock, componentData);
+    }
   };
 
   const handleFileChange = async ([file]) => {
     if (uploadService) {
-      const uploader = new Uploader(helpers?.handleFileUpload);
+      const uploader = new Uploader(helpers?.handleFileUpload || handleFileUpload);
       setIsLoadingImage(true);
       await uploadService.uploadFile(file, blockKey, uploader, AUDIO_TYPE, AudioPluginService);
       setCoverImage(getComponentData().coverImage);
       setIsLoadingImage(false);
     } else {
       setIsLoadingImage(true);
-      helpers.handleFileUpload(file, handleFilesAdded);
+      helpers.handleFileUpload?.(file, handleFilesAdded);
     }
   };
 
-  const handleClose = () => {
-    const onClose = () => {
-      pubsub.update('componentData', {
-        ...componentData,
-        name: initialState.name,
-        authorName: initialState.authorName,
-        disableDownload: initialState.disableDownload,
-        coverImage: initialState.coverImage,
-      });
-      helpers.closeModal();
-    };
-    return modalsWithEditorCommands ? onCancel() : onClose();
-  };
+  const onSaveClick = () => (modalsWithEditorCommands ? onSave?.() : helpers.closeModal?.());
 
   const handleCoverImageDelete = () => {
     setCoverImage(null);
-    helpers?.onChangePluginSettings({
+    helpers?.onChangePluginSettings?.({
       pluginId: AUDIO_TYPE,
       actionName: AUDIO_ACTION_NAMES.changeCover,
       value: AUDIO_BI_VALUES.NO,
@@ -150,12 +186,12 @@ const AudioSettings = ({
         t={t}
         theme={theme}
         title={t('AudioPlugin_Settings_Header')}
-        onCancel={handleClose}
-        onSave={helpers.closeModal}
+        onCancel={closeModal}
+        onSave={onSaveClick}
         useNewSettingsUi
       />
     ) : (
-      <SettingsPanelHeader title={t('AudioPlugin_Settings_Header')} onClose={handleClose} />
+      <SettingsPanelHeader title={t('AudioPlugin_Settings_Header')} onClose={closeModal} />
     );
 
   const imgSrc =
@@ -168,20 +204,21 @@ const AudioSettings = ({
 
   useEffect(() => {
     modalsWithEditorCommands
-      ? updateData({
+      ? updateData?.({
           ...componentData,
           name,
           authorName,
           disableDownload: !isDownloadEnabled,
           coverImage,
         })
-      : pubsub.update('componentData', {
+      : pubsub?.update('componentData', {
           ...componentData,
           name,
           authorName,
           disableDownload: !isDownloadEnabled,
           coverImage,
         });
+
     return () => {
       const { duration, src } = componentData.audio;
       helpers?.mediaPluginsDetails?.({
@@ -216,7 +253,7 @@ const AudioSettings = ({
             <div className={styles.audio_settings_coverImage_wrapper}>
               <SettingsAddItem
                 handleFileChange={handleFileChange}
-                handleFileSelection={helpers.handleFileSelection && handleFileSelection}
+                handleFileSelection={onFileSelection}
                 isMobile={isMobile}
                 uploadMediaLabel={t('AudioPlugin_Settings_CoverImage_Label')}
                 theme={theme}
@@ -257,13 +294,7 @@ const AudioSettings = ({
         {renderHeader()}
       </div>
       {!isMobile && (
-        <SettingsPanelFooter
-          fixed
-          theme={theme}
-          cancel={handleClose}
-          save={helpers.closeModal}
-          t={t}
-        />
+        <SettingsPanelFooter fixed theme={theme} cancel={closeModal} save={onSaveClick} t={t} />
       )}
     </div>
   );
