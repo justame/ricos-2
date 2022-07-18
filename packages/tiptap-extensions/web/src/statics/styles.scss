@@ -33,6 +33,7 @@
   border-right-color: $ricos-quote-border-color;
   color: $ricos-quote-color;
   @include ricosTypography('quote', false);
+
   // this is required since the blockquote wraps paragraph
   div {
     color: $ricos-quote-color;
@@ -53,11 +54,13 @@
   color: $ricos-link-color;
   @include ricosTypography('link', false);
 }
+
 .linkInEditor {
   &:hover {
     cursor: text;
   }
 }
+
 .linkInViewer {
   &:hover {
     cursor: pointer;
@@ -112,6 +115,7 @@
   position: relative;
   top: 0;
   left: 0;
+
   &::before {
     content: '';
     position: absolute;
@@ -120,6 +124,6 @@
     top: 0;
     left: 0;
     cursor: move;
-    z-index: 10;
+    z-index: 5;
   }
 }
