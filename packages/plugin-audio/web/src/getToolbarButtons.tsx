@@ -6,35 +6,17 @@ import {
 } from 'wix-rich-content-editor-common';
 import AudioSettingsModal from './modals/SettingsModal';
 import InsertModal from './modals/InsertModal';
-import { audioModals, fileInputAccept } from './consts';
+import { audioModals } from './consts';
 import { NodeSizeButton } from 'wix-rich-content-toolbars-ui';
 import type { PluginContainerData_Width_Type } from 'ricos-schema';
-import { Uploader } from 'wix-rich-content-plugin-commons';
-import { AUDIO_TYPE } from './types';
 import { DEFAULTS as defaultData } from './defaults';
-import { AudioPluginService } from './toolbar/audioPluginService';
 
 export const getToolbarButtons = (config): ToolbarButton[] => {
-  const audioPluginService = new AudioPluginService();
-  const { getAudioUrl, handleFileUpload, fetchData } = config || {};
-
-  const handleFileSelection = (uploadService, node, updateEntity) => {
-    if (config.handleFileSelection) {
-      config.handleFileSelection(undefined, false, updateEntity, undefined, defaultData);
-    } else {
-      uploadService.selectFiles(fileInputAccept, true, (files: File[]) =>
-        files.forEach(file =>
-          uploadService.uploadFile(
-            file,
-            node.attrs.id,
-            new Uploader(handleFileUpload),
-            AUDIO_TYPE,
-            audioPluginService
-          )
-        )
-      );
-    }
-  };
+  const { getAudioUrl, fetchData } = config || {};
+  const handleFileSelection = config.handleFileSelection
+    ? updateEntity =>
+        config.handleFileSelection(undefined, false, updateEntity, undefined, defaultData)
+    : undefined;
 
   return [
     {
@@ -70,7 +52,7 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
               nodeId: id,
               getAudioUrl,
               handleFileSelection,
-              handleFileUpload,
+              handleFileUpload: config.handleFileUpload,
               fetchData,
               embedType: src.url,
             },
@@ -86,13 +68,12 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
         Component: AudioSettingsModal,
         id: audioModals.settings,
       },
-      command: ({ modalService, isMobile, node, uploadService }) => {
+      command: ({ modalService, isMobile, node }) => {
         modalService?.openModal(audioModals.settings, {
           componentProps: {
             nodeId: node.attrs.id,
-            handleFileSelection: updateEntity =>
-              handleFileSelection(uploadService, node, updateEntity),
-            handleFileUpload,
+            handleFileSelection,
+            handleFileUpload: config.handleFileUpload,
           },
           positioning: { placement: 'right' },
           layout: isMobile ? 'fullscreen' : 'drawer',

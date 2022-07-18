@@ -29,6 +29,9 @@
 - `audio`
   - [#4073](https://github.com/wix/ricos/pull/4073) add toolbar settings button
 
+- `gallery/audio`
+  - [#4206](https://github.com/wix/ricos/pull/4206) refactor getToolbarButtons.tsx
+
 ## :nail_care: Polish
 
 - `gallery/polls`
