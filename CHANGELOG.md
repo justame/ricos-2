@@ -23,6 +23,10 @@
 
   - [#4204](https://github.com/wix/ricos/pull/4204) lists input rule with custom handler
 
+- `ricos-styles`
+
+  - [#4205](https://github.com/wix/ricos/pull/4205) document style set style merger
+
 ## :house: Internal
 
 - `tiptap-extensions`
@@ -34,6 +38,7 @@
   - [#4193](https://github.com/wix/ricos/pull/4193) fix selection on tiptap
 
 - `audio`
+
   - [#4073](https://github.com/wix/ricos/pull/4073) add toolbar settings button
 
 - `gallery/audio`

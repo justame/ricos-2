@@ -7,8 +7,8 @@ import type { DocumentStyle, TextNodeStyle } from 'ricos-schema';
 import type { CustomTextualStyle, RicosCustomStyles, RicosTheme } from 'ricos-types';
 import CustomStyles from './textual-theme/custom-styles';
 import { Decorations } from './decorations';
-import NodeStyle from './document-style/node-style';
-import TextStyle from './document-style/text-style';
+import { RicosNodeStyle } from './document-style/node-style';
+import { RicosTextStyle } from './document-style/text-style';
 import type { TextNodeType } from './models/styles';
 
 type DocumentStyleTuple = [type: TextNodeType, styles: TextNodeStyle];
@@ -35,8 +35,8 @@ const themeToDocumentKeyMap: Record<CustomStyleKey, TextNodeType> = pipe(
 
 const toCustomStyle = (node: TextNodeStyle): CustomTextualStyle => ({
   ...Decorations.of(node.decorations).toCustomStyle(),
-  ...new NodeStyle(node.nodeStyle || {}).toCustomStyle(),
-  ...new TextStyle({ lineHeight: node.lineHeight }).toCustomStyle(),
+  ...RicosNodeStyle.of(node.nodeStyle).toCustomStyle(),
+  ...RicosTextStyle.of({ lineHeight: node.lineHeight }).toCustomStyle(),
 });
 
 const toCustomStyleKey = (nodeType: TextNodeType): CustomStyleKey =>
@@ -56,8 +56,8 @@ const toRicosCustomStyles: (documentStyle: DocumentStyle) => RicosCustomStyles =
 
 const toTextNodeStyle = (customStyle: CustomTextualStyle): TextNodeStyle => ({
   decorations: Decorations.fromCustomStyle(customStyle).toDecorationArray(),
-  nodeStyle: NodeStyle.fromCustomStyle(customStyle).getNodeStyle(),
-  lineHeight: TextStyle.fromCustomStyle(customStyle).getTextStyle().lineHeight,
+  nodeStyle: RicosNodeStyle.fromCustomStyle(customStyle).getNodeStyle(),
+  lineHeight: RicosTextStyle.fromCustomStyle(customStyle).getTextStyle().lineHeight,
 });
 
 const toTextNodeType = (customStyleKey: CustomStyleKey): TextNodeType =>

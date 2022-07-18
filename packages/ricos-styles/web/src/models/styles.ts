@@ -80,7 +80,7 @@ export interface DocumentStyle {
    * @returns  {DocumentStyle}
    * @memberof DocumentStyle
    */
-  overrideWith(documentStyle: RichContentDocumentStyle): DocumentStyle;
+  mergeWith(documentStyle: RichContentDocumentStyle): DocumentStyle;
 }
 
 /**

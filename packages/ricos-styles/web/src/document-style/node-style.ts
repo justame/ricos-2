@@ -2,11 +2,15 @@ import type { NodeStyle as NodeStyleRichContent } from 'ricos-schema';
 import type { CustomTextualStyle } from 'ricos-types';
 import type { NodeStyle } from '../models/node-style';
 
-export default class RicosNodeStyle implements NodeStyle {
+export class RicosNodeStyle implements NodeStyle {
   nodeStyle: NodeStyleRichContent;
 
-  constructor(nodeStyle: NodeStyleRichContent) {
+  private constructor(nodeStyle: NodeStyleRichContent) {
     this.nodeStyle = nodeStyle;
+  }
+
+  static of(nodeStyle?: NodeStyleRichContent): RicosNodeStyle {
+    return new RicosNodeStyle(nodeStyle || {});
   }
 
   getNodeStyle: NodeStyle['getNodeStyle'] = () => this.nodeStyle;
@@ -17,14 +21,14 @@ export default class RicosNodeStyle implements NodeStyle {
       paddingBottom,
       paddingTop,
     };
-    return new RicosNodeStyle(nodeStyle as NodeStyleRichContent);
+    return RicosNodeStyle.of(nodeStyle as NodeStyleRichContent);
   };
 
   toCustomStyle: NodeStyle['toCustomStyle'] = () => {
     return { paddingBottom: this.nodeStyle.paddingBottom, paddingTop: this.nodeStyle.paddingTop };
   };
 
-  overrideWith: NodeStyle['overrideWith'] = NodeStyle => {
-    return new RicosNodeStyle({ ...this.nodeStyle, ...NodeStyle });
+  overrideWith: NodeStyle['overrideWith'] = (NodeStyle = {}) => {
+    return RicosNodeStyle.of({ ...this.nodeStyle, ...NodeStyle });
   };
 }

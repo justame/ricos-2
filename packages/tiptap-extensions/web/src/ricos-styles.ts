@@ -72,7 +72,7 @@ export const ricosStyles: RicosExtension = {
             (documentStyle: DocumentStyle) =>
             ({ state }) => {
               const updatedDocumentStyle = new RicosDocumentStyle(state.doc.attrs.documentStyle)
-                .overrideWith(documentStyle)
+                .mergeWith(documentStyle)
                 .toContent();
               state.doc.attrs.documentStyle = updatedDocumentStyle;
               return true;

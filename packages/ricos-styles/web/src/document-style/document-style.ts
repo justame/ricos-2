@@ -8,9 +8,10 @@ import type { TextDecoration } from '../models/decoration';
 import type { DocumentStyle, TextNodeType } from '../models/styles';
 import { TextStyleTransformer } from '../text-style-transformer';
 import RicosTextualTheme from '../textual-theme/textual-theme';
-import TextStyle from './text-style';
-import NodeStyle from './node-style';
+import { RicosTextStyle } from './text-style';
+import { RicosNodeStyle } from './node-style';
 import { TextNodeTransformer } from '../text-node-transformer';
+import RicosTextNodeStyle from './text-node-style';
 import type { ParagraphNode, HeadingNode } from 'ricos-content';
 
 export default class RicosDocumentStyle implements DocumentStyle {
@@ -29,11 +30,11 @@ export default class RicosDocumentStyle implements DocumentStyle {
   }
 
   getTextStyle(nodeType: TextNodeType) {
-    return new TextStyle({ lineHeight: this.documentStyle[nodeType]?.lineHeight });
+    return RicosTextStyle.of({ lineHeight: this.documentStyle[nodeType]?.lineHeight });
   }
 
   getNodeStyle(nodeType: TextNodeType) {
-    return new NodeStyle(this.documentStyle[nodeType]?.nodeStyle || {});
+    return RicosNodeStyle.of(this.documentStyle[nodeType]?.nodeStyle);
   }
 
   toStyleTag() {
@@ -46,10 +47,13 @@ export default class RicosDocumentStyle implements DocumentStyle {
   }
 
   setStyle(nodeType: TextNodeType, textNodeStyle: TextNodeStyle) {
-    return new RicosDocumentStyle({ ...this.documentStyle, [nodeType]: { ...textNodeStyle } });
+    const style = new RicosTextNodeStyle(this.documentStyle[nodeType] || { decorations: [] })
+      .overrideWith(textNodeStyle)
+      .getTextNodeStyle();
+    return new RicosDocumentStyle({ ...this.documentStyle, [nodeType]: style });
   }
 
-  overrideWith(documentStyle: RichContentDocumentStyle) {
+  mergeWith(documentStyle: RichContentDocumentStyle) {
     return (
       Object.entries(documentStyle) as [keyof RichContentDocumentStyle, TextNodeStyle][]
     ).reduce(

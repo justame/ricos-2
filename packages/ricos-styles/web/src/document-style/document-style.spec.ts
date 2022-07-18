@@ -1,6 +1,7 @@
 import DocumentStyle from './document-style';
 import { decorations, nodeStyle, textStyle, headingNode } from '../tests/test-cases';
 import type { HeadingNode } from 'ricos-content';
+import { Decoration_Type } from 'ricos-schema';
 
 describe('Document Style', () => {
   const documentStyle = {
@@ -76,6 +77,7 @@ describe('Document Style', () => {
     const expected = {
       headerOne: {
         decorations,
+        nodeStyle,
         lineHeight: '5',
       },
       paragraph: {
@@ -85,9 +87,9 @@ describe('Document Style', () => {
     expect(documentStyleContent).toStrictEqual(expected);
   });
 
-  it('Should overrideWith match expected', () => {
+  it('Should mergeWith match expected', () => {
     const documentStyleContent = new DocumentStyle(documentStyle)
-      .overrideWith({
+      .mergeWith({
         headerOne: {
           decorations,
           lineHeight: '5',
@@ -98,10 +100,66 @@ describe('Document Style', () => {
     const expected = {
       headerOne: {
         decorations,
+        nodeStyle,
         lineHeight: '5',
       },
       paragraph: {
         decorations,
+      },
+    };
+    expect(documentStyleContent).toStrictEqual(expected);
+  });
+
+  it('Should mergeWith match expected 2', () => {
+    const documentStyleContent = new DocumentStyle({
+      headerOne: {
+        decorations: [
+          {
+            type: Decoration_Type.COLOR,
+            colorData: {
+              background: '#bf695c',
+            },
+          },
+        ],
+      },
+      paragraph: {
+        decorations: [],
+      },
+    })
+      .mergeWith({
+        headerOne: {
+          decorations: [
+            {
+              type: Decoration_Type.ITALIC,
+              italicData: true,
+            },
+          ],
+        },
+        paragraph: {
+          decorations,
+        },
+      })
+      .toContent();
+
+    const expected = {
+      headerOne: {
+        nodeStyle: {},
+        decorations: [
+          {
+            type: Decoration_Type.COLOR,
+            colorData: {
+              background: '#bf695c',
+            },
+          },
+          {
+            type: Decoration_Type.ITALIC,
+            italicData: true,
+          },
+        ],
+      },
+      paragraph: {
+        decorations,
+        nodeStyle: {},
       },
     };
     expect(documentStyleContent).toStrictEqual(expected);
