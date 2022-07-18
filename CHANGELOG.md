@@ -29,6 +29,9 @@
 
 ## :house: Internal
 
+- `ricos-tiptap-types`
+  - [#4198](https://github.com/wix/ricos/pull/4198) ricos-tiptap-types merged into ricos-types
+
 - `tiptap-extensions`
 
   - [#4203](https://github.com/wix/ricos/pull/4203) overlay click triggers focus
