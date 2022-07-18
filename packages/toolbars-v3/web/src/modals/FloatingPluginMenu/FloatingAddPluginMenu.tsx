@@ -45,8 +45,6 @@ const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig, plugins }
     modalService.onModalClosed(id => {
       setIsModalOpen(modalService.isModalOpen(MODAL_ID));
     });
-
-    console.log(modalService.getOpenModals());
   }, []);
 
   const calcButtonPosition = (position: DOMRect): { top: string } => {
