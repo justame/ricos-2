@@ -592,6 +592,7 @@
   "Poll_PollSettings_Tab_Design_TabName": "Design",
   "ImageSettings_Link_Label": "Lien",
   "Poll_FormatToolbar_Design_Tooltip": "Personnaliser le design du sondage",
+  "GallerySettings_Toolbar_Button_MangeMedia": "Mange Media",
   "HtmlEditPanel_Source": "Adresse du site (URL)",
   "VideoPlugin_Settings_VideoCanBeDownloaded_Tooltip": "Permettez aux lecteurs de télécharger votre vidéo.",
   "CollapsibleList_CollapsibleListSettings_Tab_Design_Background_Title": "Arrière-plan",

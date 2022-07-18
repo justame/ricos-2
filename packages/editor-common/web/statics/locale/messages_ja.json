@@ -592,6 +592,7 @@
   "Poll_PollSettings_Tab_Design_TabName": "デザイン",
   "ImageSettings_Link_Label": "リンク",
   "Poll_FormatToolbar_Design_Tooltip": "投票デザインを編集",
+  "GallerySettings_Toolbar_Button_MangeMedia": "Mange Media",
   "HtmlEditPanel_Source": "サイトアドレス（URL）",
   "VideoPlugin_Settings_VideoCanBeDownloaded_Tooltip": "読者に動画をダウンロードするオプションを提供しましょう。",
   "CollapsibleList_CollapsibleListSettings_Tab_Design_Background_Title": "背景",
