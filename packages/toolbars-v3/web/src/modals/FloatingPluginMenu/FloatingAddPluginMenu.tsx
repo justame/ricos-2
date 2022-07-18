@@ -46,8 +46,8 @@ const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig, plugins }
       setIsModalOpen(modalService.isModalOpen(MODAL_ID));
     });
 
-    console.log();
-  }, [modalService.getOpenModals()]);
+    console.log(modalService.getOpenModals());
+  }, []);
 
   const calcButtonPosition = (position: DOMRect): { top: string } => {
     const offsetTop = floatingMenuWrapperRef?.current?.getBoundingClientRect().top || 0;
@@ -60,7 +60,8 @@ const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig, plugins }
   };
 
   const toggleAddPluginMenu = () => {
-    modalService.isModalOpen(MODAL_ID)
+    const isModalOpen = () => modalService.isModalOpen(MODAL_ID);
+    isModalOpen()
       ? modalService.closeModal(MODAL_ID)
       : modalService.openModal(MODAL_ID, {
           positioning: { referenceElement: buttonRef?.current, placement },
@@ -69,7 +70,7 @@ const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig, plugins }
             referenceElement: buttonRef,
           },
         });
-    setIsModalOpen(modalService.isModalOpen(MODAL_ID));
+    setIsModalOpen(isModalOpen());
   };
 
   return !isMobile ? (
