@@ -266,26 +266,6 @@ export const tiptapStaticToolbarConfig: IToolbarItemConfigTiptap[] = [
     },
   },
   {
-    id: 'spoiler',
-    type: 'toggle',
-    presentation: {
-      dataHook: 'textSpoilerButton',
-      tooltip: 'Spoiler_Insert_Tooltip',
-      icon: SpoilerButtonIcon,
-    },
-    attributes: {
-      visible: alwaysVisibleResolver,
-      active: isTextContainsSpoilerResolver,
-    },
-    commands: {
-      toggleSpoiler:
-        ({ editorCommands }) =>
-        () => {
-          editorCommands.chain().focus().toggleSpoiler().run();
-        },
-    },
-  },
-  {
     id: 'increaseIndent',
     type: 'toggle',
     presentation: {

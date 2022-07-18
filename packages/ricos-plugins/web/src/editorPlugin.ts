@@ -5,15 +5,19 @@ import type {
   IEditorPlugin,
   IPluginAddButton,
   IPluginToolbar,
+  IPluginTextButton,
 } from 'ricos-types';
 import type { TiptapEditorPlugin } from 'ricos-tiptap-types';
 import { PluginAddButton } from './pluginAddButton';
+import { PluginTextButton } from './pluginTextButton';
 import { PluginToolbar } from './pluginToolbar';
 
 export class EditorPlugin implements IEditorPlugin {
   plugin: EditorPluginType;
 
   addButtons?: IPluginAddButton[];
+
+  textButtons?: IPluginTextButton[];
 
   toolbar?: IPluginToolbar;
 
@@ -24,7 +28,14 @@ export class EditorPlugin implements IEditorPlugin {
   private constructor(plugin: EditorPluginType, modalService?: ModalService) {
     this.plugin = plugin;
     this.initAddButtons(plugin, modalService);
+    this.initTextButtons(plugin);
     this.initPluginToolbar(plugin, modalService);
+  }
+
+  private initTextButtons(plugin: EditorPluginType) {
+    if (plugin.textButtons) {
+      this.textButtons = plugin.textButtons.map(button => PluginTextButton.of(button));
+    }
   }
 
   private initAddButtons(plugin, modalService) {
@@ -70,6 +81,10 @@ export class EditorPlugin implements IEditorPlugin {
 
   getConfig(): LegacyEditorPluginConfig {
     return this.plugin.config;
+  }
+
+  getTextButtons() {
+    return this.textButtons || [];
   }
 
   getAddButtons() {

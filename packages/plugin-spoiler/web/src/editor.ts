@@ -8,6 +8,7 @@ import { tiptapExtensions } from './tiptap/tiptap';
 import type { TiptapEditorPlugin } from 'ricos-tiptap-types';
 export { SpoilerEditorWrapper };
 export { default as BlockSpoilerComponent } from './Components/BlockSpoilerComponent';
+import { getTextButtons } from './getTextButtons';
 
 export const pluginSpoiler: EditorPluginCreator<SpoilerPluginEditorConfig> = config => {
   const pluginConfig = { ...DEFAULTS.config, SpoilerEditorWrapper, ...config };
@@ -17,5 +18,6 @@ export const pluginSpoiler: EditorPluginCreator<SpoilerPluginEditorConfig> = con
     createPlugin: createSpoilerPlugin,
     ModalsMap: {},
     tiptapExtensions,
+    textButtons: getTextButtons(),
   } as TiptapEditorPlugin;
 };

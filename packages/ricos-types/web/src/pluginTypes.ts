@@ -15,6 +15,7 @@ import type {
   ThemeGeneratorFunction,
   RichContentTheme,
   ThemeData,
+  IToolbarItemConfigTiptap,
 } from '.';
 import type {
   ContentBlock,
@@ -282,6 +283,7 @@ export interface EditorPlugin<PluginConfig extends EditorPluginConfig = Record<s
   ModalsMap?: ModalsMap;
   createPluginData?: CreatePluginData<PluginConfig>;
   addButtons?: AddButton[];
+  textButtons?: IToolbarItemConfigTiptap[];
   toolbar?: {
     buttons: ToolbarButton[];
     isVisible?: (selection) => boolean;

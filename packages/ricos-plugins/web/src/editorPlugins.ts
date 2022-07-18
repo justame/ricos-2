@@ -1,5 +1,6 @@
 import { EditorPlugin } from './editorPlugin';
 import { PluginAddButtons } from './pluginAddButton';
+import { PluginTextButtons } from './pluginTextButton';
 import type {
   EditorPlugin as EditorPluginType,
   LegacyEditorPluginConfig,
@@ -59,6 +60,15 @@ export class EditorPlugins implements IEditorPlugins {
 
   configure(config: Partial<LegacyEditorPluginConfig>) {
     return this.plugins.forEach(plugin => plugin.configure(config));
+  }
+
+  getTextButtons() {
+    //maybe use filter class func
+    const textButtons = this.plugins.reduce(
+      (prev, curr) => [...prev, ...(curr.getTextButtons() || [])],
+      []
+    );
+    return new PluginTextButtons(textButtons);
   }
 
   getAddButtons() {

@@ -44,6 +44,13 @@ export interface IEditorPlugin {
    */
   getConfig(): LegacyEditorPluginConfig;
   /**
+   * Text Buttons
+   *
+   * @returns  {IPluginTextButton[]}
+   * @memberof IEditorPlugin
+   */
+  getTextButtons(): IPluginTextButton[];
+  /**
    * Add Buttons
    *
    * @returns  {IPluginAddButton[]}
@@ -125,6 +132,13 @@ export interface IEditorPlugins {
    */
   asArray: () => IEditorPlugin[];
   /**
+   * Plugins text Buttons
+   *
+   * @returns  {IPluginTextButtons}
+   * @memberof IEditorPlugins
+   */
+  getTextButtons(): IPluginTextButtons;
+  /**
    * Plugins add Buttons
    *
    * @returns  {IPluginAddButtons}
@@ -154,6 +168,14 @@ export interface IEditorPlugins {
    * @memberof IEditorPlugins
    */
   configure(config: Partial<LegacyEditorPluginConfig>); // runtime configuration
+}
+
+export interface IPluginTextButton {
+  getButton: () => IToolbarItemConfigTiptap;
+}
+
+export interface IPluginTextButtons {
+  asArray: () => IPluginTextButton[];
 }
 
 export interface IPluginAddButton {
