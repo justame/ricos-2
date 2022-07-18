@@ -1,6 +1,6 @@
 import { TIPTAP_GIF_TYPE } from 'ricos-content';
 import gifDataDefaults from 'ricos-schema/dist/statics/gif.defaults.json';
-import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-tiptap-types';
+import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-types';
 import { Gif as Component } from './component';
 
 const name = TIPTAP_GIF_TYPE;

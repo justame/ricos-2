@@ -1,6 +1,6 @@
 import { Decoration_Type } from 'ricos-schema';
 import fontSizeDataDefaults from 'ricos-schema/dist/statics/font_size.defaults.json';
-import type { DOMOutputSpec, RicosExtension } from 'ricos-tiptap-types';
+import type { DOMOutputSpec, RicosExtension } from 'ricos-types';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {

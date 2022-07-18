@@ -1,4 +1,4 @@
-import type { RicosExtension, RicosExtensionConfig } from 'ricos-tiptap-types';
+import type { RicosExtension, RicosExtensionConfig } from 'ricos-types';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { generateId } from 'ricos-content';
 

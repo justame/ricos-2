@@ -7,9 +7,9 @@ import type {
   NodeHocDescriptor,
   RicosExtension,
   RicosExtensionConfig,
-} from 'ricos-tiptap-types';
-import { isRicosFunctionalExtension } from 'ricos-tiptap-types';
-import type { RicosServices } from 'ricos-types';
+  RicosServices,
+} from 'ricos-types';
+import { isRicosFunctionalExtension } from 'ricos-types';
 import type { ExtensionAggregate, IFunctionalExtension } from './domain-types';
 import { DEFAULT_PRIORITY } from './domain-types';
 

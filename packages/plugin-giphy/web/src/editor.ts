@@ -6,7 +6,7 @@ import { GIPHY_TYPE } from './types';
 import type { EditorPluginCreator } from 'wix-rich-content-common';
 import { createGiphyData } from './createGiphyData';
 import { tiptapExtensions } from './tiptap/tiptap';
-import type { TiptapEditorPlugin } from 'ricos-tiptap-types';
+import type { TiptapEditorPlugin } from 'ricos-types';
 import { getAddButtons } from './getAddButtons';
 import { getToolbarButtons } from './getToolbarButtons';
 

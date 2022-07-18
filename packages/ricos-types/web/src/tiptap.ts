@@ -12,19 +12,15 @@ import type { Editor, NodeViewContent } from '@tiptap/react';
 import type { Plugin as IPlugin, PluginKey as IPluginKey } from 'prosemirror-state';
 import type { Node as ProsemirrorNode } from 'prosemirror-model';
 import type { ComponentType } from 'react';
+import type { ComponentData, DraftContent } from 'wix-rich-content-common';
 import type {
   Decoration_Type,
-  DraftContent,
   EditorPlugin,
   LegacyEditorPluginConfig,
-  LinkSettings,
   Node_Type,
-  RicosEditorAPI,
-  TextAlignment,
-  TranslationFunction,
-  RicosServices,
-} from 'ricos-types';
-import type { ComponentData } from 'wix-rich-content-common';
+} from './pluginTypes';
+import type { TranslationFunction } from './commonTypes';
+import type { LinkSettings, RicosEditorAPI, RicosServices, TextAlignment } from '.';
 
 export type PluginProps = NodeViewRendererProps & {
   settings: LegacyEditorPluginConfig;

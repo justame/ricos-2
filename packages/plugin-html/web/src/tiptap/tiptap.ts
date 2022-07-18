@@ -1,6 +1,6 @@
 import { TIPTAP_HTML_TYPE } from 'ricos-content';
 import htmlDataDefaults from 'ricos-schema/dist/statics/html.defaults.json';
-import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-tiptap-types';
+import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-types';
 import { Html as Component } from './component';
 
 export const tiptapExtensions = [

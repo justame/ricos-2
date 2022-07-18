@@ -1,4 +1,4 @@
-import type { TiptapEditorPlugin } from 'ricos-tiptap-types';
+import type { TiptapEditorPlugin } from 'ricos-types';
 import type { EditorPluginCreator } from 'wix-rich-content-common';
 import { createHeadingsPlugin } from './createHeadingsPlugin';
 import { DEFAULTS } from './defaults';

@@ -1,7 +1,7 @@
 import type { TextDirection } from 'wix-rich-content-common';
 import { isTextDirection } from 'wix-rich-content-common';
 import { Plugin, PluginKey } from 'prosemirror-state';
-import type { RicosExtension, RicosExtensionConfig } from 'ricos-tiptap-types';
+import type { RicosExtension, RicosExtensionConfig } from 'ricos-types';
 import { Node_Type } from 'ricos-schema';
 import { getListItemDirection, getTextDirectionFromAlignment } from 'ricos-converters';
 

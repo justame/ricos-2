@@ -1,5 +1,5 @@
 import { UnsupportedBlock as Component } from './component';
-import type { DOMOutputSpec, RicosNodeExtension } from 'ricos-tiptap-types';
+import type { DOMOutputSpec, RicosNodeExtension } from 'ricos-types';
 import { firstRight } from 'wix-rich-content-common';
 import { isObject } from 'lodash';
 

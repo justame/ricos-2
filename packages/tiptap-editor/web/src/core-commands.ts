@@ -5,7 +5,7 @@ import * as replaceNode from './commands/replaceNode';
 import * as replaceNodes from './commands/replaceNodes';
 import * as deleteNode from './commands/deleteNode';
 import * as updateAttributesWithDeepMerge from './commands/updateAttributesWithDeepMerge';
-import type { RicosExtension } from 'ricos-tiptap-types';
+import type { RicosExtension } from 'ricos-types';
 
 export const commands: RicosExtension = {
   type: 'extension' as const,

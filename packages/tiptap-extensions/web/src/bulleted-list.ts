@@ -1,5 +1,5 @@
 import { InputRule } from '@tiptap/core';
-import type { RicosExtension } from 'ricos-tiptap-types';
+import type { RicosExtension } from 'ricos-types';
 import bulletedListDataDefaults from 'ricos-schema/dist/statics/bulleted_list.defaults.json';
 import type { DOMOutputSpec } from 'prosemirror-model';
 import { Node_Type } from 'ricos-schema';

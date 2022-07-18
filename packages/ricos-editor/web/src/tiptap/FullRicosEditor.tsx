@@ -22,8 +22,8 @@ import { ModalRenderer, RicosModalService } from 'ricos-modals';
 import { EditorPlugins } from 'ricos-plugins';
 import { EditorKeyboardShortcuts, Shortcuts } from 'ricos-shortcuts';
 import { RicosStyles } from 'ricos-styles';
-import type { TiptapAdapter } from 'ricos-tiptap-types';
 import type {
+  TiptapAdapter,
   RicosPortal as RicosPortalType,
   IUploadService,
   IUpdateService,

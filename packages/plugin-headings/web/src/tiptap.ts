@@ -1,6 +1,6 @@
 import { Node_Type, TextStyle_TextAlignment } from 'ricos-schema';
 import headingDataDefaults from 'ricos-schema/dist/statics/heading.defaults.json';
-import type { DOMOutputSpec, ExtensionProps, NodeConfig, RicosExtension } from 'ricos-tiptap-types';
+import type { DOMOutputSpec, ExtensionProps, NodeConfig, RicosExtension } from 'ricos-types';
 import styles from '../statics/styles/headings.scss';
 
 type Level = 1 | 2 | 3 | 4 | 5 | 6;

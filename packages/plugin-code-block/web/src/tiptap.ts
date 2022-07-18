@@ -1,6 +1,6 @@
 import { TextSelection } from 'prosemirror-state';
 import codeBlockDataDefaults from 'ricos-schema/dist/statics/code_block.defaults.json';
-import type { DOMOutputSpec, NodeConfig, ExtensionProps, RicosExtension } from 'ricos-tiptap-types';
+import type { DOMOutputSpec, NodeConfig, ExtensionProps, RicosExtension } from 'ricos-types';
 import { Node_Type } from 'ricos-schema';
 import styles from '../statics/styles/code-block.scss';
 

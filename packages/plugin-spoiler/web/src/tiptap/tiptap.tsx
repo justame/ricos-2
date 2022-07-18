@@ -5,7 +5,7 @@ import type {
   ExtensionProps,
   RicosExtension,
   RicosExtensionConfig,
-} from 'ricos-tiptap-types';
+} from 'ricos-types';
 import { Decoration_Type } from 'ricos-schema';
 import { BlockSpoilerComponent } from '..';
 

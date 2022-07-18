@@ -1,7 +1,6 @@
 import type { Node, Decoration_Type, Decoration, DocumentStyle } from 'ricos-schema';
 import { Node_Type } from 'ricos-schema';
-import type { ExtensionProps, RicosExtension } from 'ricos-tiptap-types';
-import type { RicosServices } from 'ricos-types';
+import type { ExtensionProps, RicosExtension, RicosServices } from 'ricos-types';
 import { DocumentStyle as RicosDocumentStyle } from 'ricos-styles';
 import { fromTiptapNode } from 'ricos-converters';
 import type { ParagraphNode, HeadingNode } from 'ricos-content';

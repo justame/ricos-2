@@ -1,6 +1,6 @@
 import { TIPTAP_VIDEO_TYPE } from 'ricos-content';
 import videoDataDefaults from 'ricos-schema/dist/statics/video.defaults.json';
-import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-tiptap-types';
+import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-types';
 import { Video as Component } from './component';
 
 const name = TIPTAP_VIDEO_TYPE;

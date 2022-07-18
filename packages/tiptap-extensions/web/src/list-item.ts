@@ -1,5 +1,5 @@
 import { mergeAttributes } from '@tiptap/core';
-import type { DOMOutputSpec, RicosExtension } from 'ricos-tiptap-types';
+import type { DOMOutputSpec, RicosExtension } from 'ricos-types';
 import type { Node } from 'prosemirror-model';
 import { Node_Type } from 'ricos-schema';
 import styles from './statics/styles.scss';

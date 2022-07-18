@@ -2,7 +2,7 @@ import { Editor } from '@tiptap/react';
 import type { RicosEditorProps } from 'ricos-common';
 import { draftToTiptap } from 'ricos-converters';
 import type { EditorPlugins } from 'ricos-plugins';
-import type { ExtensionProps } from 'ricos-tiptap-types';
+import type { ExtensionProps } from 'ricos-types';
 import type { AmbientStyles, EventRegistrar, RicosServices } from 'ricos-types';
 import { getEmptyDraftContent } from 'wix-rich-content-editor-common';
 import { commonExtensions } from './common-extensions';

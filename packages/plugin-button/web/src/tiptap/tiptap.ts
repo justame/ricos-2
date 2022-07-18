@@ -1,6 +1,6 @@
 import { TIPTAP_LINK_BUTTON_TYPE, TIPTAP_ACTION_BUTTON_TYPE } from 'ricos-content';
 import buttonDataDefaults from 'ricos-schema/dist/statics/button.defaults.json';
-import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-tiptap-types';
+import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-types';
 import { Button as Component } from './component';
 import { LINK_BUTTON_TYPE, ACTION_BUTTON_TYPE } from '../types';
 

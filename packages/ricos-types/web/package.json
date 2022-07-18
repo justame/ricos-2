@@ -32,15 +32,6 @@
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx,d.ts}'",
     "test": "echo 'no tests for types only package'"
   },
-  "devDependencies": {
-    "@wix/draft-js": "0.0.11",
-    "draft-js-plugins-editor": "~3.0.0",
-    "i18next": "^11.6.0",
-    "react": "^16.13.1",
-    "react-measure": "~2.3.0",
-    "react-modal": "~3.4.1",
-    "utility-types": "^3.10.0"
-  },
   "dependencies": {
     "ricos-content": "8.71.49",
     "ricos-schema": "8.71.49"

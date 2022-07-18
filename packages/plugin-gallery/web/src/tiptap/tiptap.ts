@@ -1,6 +1,6 @@
 import { TIPTAP_GALLERY_TYPE } from 'ricos-content';
 import galleryDataDefaults from 'ricos-schema/dist/statics/gallery.defaults.json';
-import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-tiptap-types';
+import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-types';
 import { Gallery as Component } from './component';
 
 const name = TIPTAP_GALLERY_TYPE;

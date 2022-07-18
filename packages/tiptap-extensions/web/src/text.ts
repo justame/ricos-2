@@ -1,4 +1,4 @@
-import type { RicosExtension } from 'ricos-tiptap-types';
+import type { RicosExtension } from 'ricos-types';
 
 export const text: RicosExtension = {
   type: 'node' as const,

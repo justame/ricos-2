@@ -1,7 +1,7 @@
 import * as setNodeSize from './node-commands/setNodeSize';
 import * as setNodeAlignment from './node-commands/setNodeAlignment';
 import * as toggleNodeTextWrap from './node-commands/toggleNodeTextWrap';
-import type { RicosExtension } from 'ricos-tiptap-types';
+import type { RicosExtension } from 'ricos-types';
 
 export const commonNodeCommands: RicosExtension = {
   type: 'extension' as const,

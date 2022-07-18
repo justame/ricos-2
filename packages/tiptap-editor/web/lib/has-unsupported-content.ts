@@ -3,7 +3,12 @@ import * as A from 'fp-ts/Array';
 import { flow, pipe } from 'fp-ts/function';
 import { not } from 'fp-ts/Predicate';
 import type { RichContent } from 'ricos-schema';
-import type { ExtensionProps, RicosExtension, TiptapEditorPlugin } from 'ricos-tiptap-types';
+import type {
+  ExtensionProps,
+  RicosExtension,
+  TiptapEditorPlugin,
+  RicosServices,
+} from 'ricos-types';
 import { toTiptap } from 'ricos-converters';
 import { coreConfigs } from '../src/components/RicosTiptapEditor/core-configs';
 import { commonExtensions } from '../src/common-extensions';
@@ -14,7 +19,6 @@ import {
   extractUnsupportedNodes,
   toContentTypes,
 } from '../src/patch-extensions';
-import type { RicosServices } from 'ricos-types';
 
 const createExtensions = (extensions: RicosExtension[]): Extensions =>
   Extensions.of(extensions, {} as ExtensionProps, {} as RicosServices);

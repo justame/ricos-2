@@ -5,7 +5,7 @@ import type {
   RicosExtension,
   RicosExtensionConfig,
   RicosNodeExtension,
-} from 'ricos-tiptap-types';
+} from 'ricos-types';
 import { compact } from 'lodash';
 
 export const placeholder: RicosExtension = {

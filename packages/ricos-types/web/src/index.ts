@@ -33,6 +33,7 @@ export * from './events';
 export * from './toolbarTypes';
 export * from './styles';
 export * from './editorPluginTypes';
+export * from './tiptap';
 
 export type RicosServices = {
   events: EventRegistrar & EventSubscriptor;

@@ -1,6 +1,6 @@
 import { markInputRule, markPasteRule, mergeAttributes } from '@tiptap/core';
 import { Decoration_Type } from 'ricos-schema';
-import type { DOMOutputSpec, RicosExtension } from 'ricos-tiptap-types';
+import type { DOMOutputSpec, RicosExtension } from 'ricos-types';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {

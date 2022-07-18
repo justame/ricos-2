@@ -5,7 +5,7 @@ import { TEXT_COLOR_TYPE, TEXT_HIGHLIGHT_TYPE } from './types';
 import { DEFAULTS } from './constants';
 import { ModalsMap } from './modals';
 import type { EditorPluginCreator } from 'wix-rich-content-common';
-import type { TiptapEditorPlugin } from 'ricos-tiptap-types';
+import type { TiptapEditorPlugin } from 'ricos-types';
 import { tiptapExtensions } from './tiptap';
 import { getTextColorTextButtons, getTextHighlightTextButtons } from './getTextButtons';
 

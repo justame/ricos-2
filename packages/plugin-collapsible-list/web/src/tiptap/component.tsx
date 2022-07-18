@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import type { PluginProps } from 'ricos-tiptap-types';
+import type { PluginProps } from 'ricos-types';
 import NewPairButton from '../components/NewPairButton';
 import { mergeStyles } from 'wix-rich-content-common';
 import collapsibleListStyles from '../../statics/styles/collapsible-list-component.rtlignore.scss';

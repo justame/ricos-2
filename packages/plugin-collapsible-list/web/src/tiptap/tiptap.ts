@@ -5,7 +5,7 @@ import {
   TIPTAP_COLLAPSIBLE_LIST_TYPE,
 } from 'ricos-content';
 import collapsibleListDataDefaults from 'ricos-schema/dist/statics/collapsible_list.defaults.json';
-import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-tiptap-types';
+import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-types';
 import {
   CollapsibleList,
   CollapsibleListItem,

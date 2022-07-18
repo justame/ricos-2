@@ -1,13 +1,18 @@
 import { Extension } from '@tiptap/core';
 import { not } from 'fp-ts/Predicate';
 import { and, firstRight } from 'ricos-content';
-import type { Group, RicosExtension, RicosNodeExtension, ExtensionProps } from 'ricos-tiptap-types';
+import type {
+  Group,
+  RicosExtension,
+  RicosNodeExtension,
+  ExtensionProps,
+  RicosServices,
+} from 'ricos-types';
 import {
   isRicosFunctionalExtension,
   isRicosMarkExtension,
   isRicosNodeExtension,
-} from 'ricos-tiptap-types';
-import type { RicosServices } from 'ricos-types';
+} from 'ricos-types';
 import type {
   ExtensionAggregate,
   IExtension,

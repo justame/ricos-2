@@ -1,6 +1,6 @@
 import { TIPTAP_IMAGE_TYPE, generateId } from 'ricos-content';
 import imageDataDefaults from 'ricos-schema/dist/statics/image.defaults.json';
-import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-tiptap-types';
+import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-types';
 import { Image as Component } from './component';
 import type { RicosServices } from 'ricos-types';
 import { ImagePluginService } from '../toolbar/imagePluginService';

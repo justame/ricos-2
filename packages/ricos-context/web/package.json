@@ -34,7 +34,6 @@
     "test:watchAll": "jest --verbose --watchAll"
   },
   "dependencies": {
-    "ricos-tiptap-types": "8.71.49",
     "ricos-types": "8.71.49",
     "wix-rich-content-editor-common": "8.71.49"
   },

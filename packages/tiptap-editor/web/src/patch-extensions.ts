@@ -3,7 +3,7 @@ import * as A from 'fp-ts/Array';
 import { flow, identity, pipe } from 'fp-ts/function';
 import * as M from 'fp-ts/Monoid';
 import * as S from 'fp-ts/string';
-import type { RicosMarkExtension, RicosNodeExtension } from 'ricos-tiptap-types';
+import type { RicosMarkExtension, RicosNodeExtension } from 'ricos-types';
 import { getUnsupportedNodeConfig } from 'wix-rich-content-plugin-unsupported-blocks';
 import { extract } from 'wix-tiptap-extensions';
 import { getUnsupportedMarkConfig } from './components/unsupported-mark';

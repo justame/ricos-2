@@ -1,4 +1,4 @@
-import type { RicosExtension, RicosExtensionConfig } from 'ricos-tiptap-types';
+import type { RicosExtension, RicosExtensionConfig } from 'ricos-types';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {

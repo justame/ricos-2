@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { PollEditor } from '../components';
 import { POLL_TYPE } from '../types';
-import type { PluginProps } from 'ricos-tiptap-types';
+import type { PluginProps } from 'ricos-types';
 import { convertBlockDataToRicos } from 'ricos-content/libs/convertBlockDataToRicos';
 import { RicosContext } from 'ricos-context';
 

@@ -1,6 +1,6 @@
 import { OrderedSet } from 'immutable';
 import colorDataDefaults from 'ricos-schema/dist/statics/color.defaults.json';
-import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-tiptap-types';
+import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-types';
 import { Decoration_Type } from 'ricos-schema';
 import type { Color } from './types';
 

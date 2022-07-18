@@ -1,7 +1,12 @@
 import type { AnyExtension, Extension, Mark, Node } from '@tiptap/core';
 import type { ComponentType } from 'react';
-import type { ExtensionProps, Group, NodeHocDescriptor, RicosExtension } from 'ricos-tiptap-types';
-import type { RicosServices } from 'ricos-types';
+import type {
+  ExtensionProps,
+  Group,
+  NodeHocDescriptor,
+  RicosExtension,
+  RicosServices,
+} from 'ricos-types';
 
 export const DEFAULT_PRIORITY = 100;
 

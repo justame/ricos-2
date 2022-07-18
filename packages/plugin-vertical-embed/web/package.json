@@ -39,7 +39,7 @@
   "dependencies": {
     "ricos-context": "8.71.49",
     "ricos-modals": "8.71.49",
-    "ricos-tiptap-types": "8.71.49",
+    "ricos-types": "8.71.49",
     "wix-rich-content-common": "8.71.49",
     "wix-rich-content-editor-common": "8.71.49",
     "wix-rich-content-plugin-commons": "8.71.49",

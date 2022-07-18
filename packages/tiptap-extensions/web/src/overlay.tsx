@@ -1,5 +1,5 @@
 import React from 'react';
-import type { ExtensionProps, RicosExtension, RicosExtensionConfig } from 'ricos-tiptap-types';
+import type { ExtensionProps, RicosExtension, RicosExtensionConfig } from 'ricos-types';
 import styles from './statics/styles.scss';
 import { NodeSelection } from 'prosemirror-state';
 

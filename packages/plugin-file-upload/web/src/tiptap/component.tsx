@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import FileUploadViewer from '../file-upload-viewer';
-import type { PluginProps } from 'ricos-tiptap-types';
+import type { PluginProps } from 'ricos-types';
 import { RicosContext } from 'ricos-context';
 
 export const File: React.FC<PluginProps> = ({ settings = {}, componentData, node }) => {

@@ -2,7 +2,7 @@ import styles from './statics/styles.scss';
 import { mergeAttributes } from '@tiptap/core';
 import type { Node as ProsemirrorNode } from 'prosemirror-model';
 import paragraphDataDefaults from 'ricos-schema/dist/statics/paragraph.defaults.json';
-import type { RicosExtension, DOMOutputSpec } from 'ricos-tiptap-types';
+import type { RicosExtension, DOMOutputSpec } from 'ricos-types';
 import { Node_Type, TextStyle_TextAlignment } from 'ricos-schema';
 
 export interface ParagraphOptions {

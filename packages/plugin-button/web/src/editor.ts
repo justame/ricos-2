@@ -6,7 +6,7 @@ import { ModalsMap } from './modals';
 import type { EditorPluginCreator } from 'wix-rich-content-common';
 import { createButtonData } from './createButtonData';
 import { tiptapExtensionsMap } from './tiptap/tiptap';
-import type { TiptapEditorPlugin } from 'ricos-tiptap-types';
+import type { TiptapEditorPlugin } from 'ricos-types';
 import { getToolbarButtons } from './getToolbarButtons';
 import { getAddButtons } from './getAddButtons';
 
