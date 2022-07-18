@@ -1,5 +1,6 @@
-import { mergeAttributes, wrappingInputRule } from '@tiptap/core';
+import { mergeAttributes, InputRule } from '@tiptap/core';
 import { Node_Type } from 'ricos-schema';
+import { createListInputRuleHandler } from './list-input-rule-handler';
 import orderedListDataDefaults from 'ricos-schema/dist/statics/ordered_list.defaults.json';
 import type { DOMOutputSpec, RicosExtension } from 'ricos-tiptap-types';
 import styles from './statics/styles.scss';
@@ -15,7 +16,7 @@ declare module '@tiptap/core' {
   }
 }
 
-export const inputRegex = /^(\d+)\.\s$/;
+export const inputRegex = /^1.\s$/;
 
 export const orderedList: RicosExtension = {
   type: 'node' as const,
@@ -87,12 +88,14 @@ export const orderedList: RicosExtension = {
       },
 
       addInputRules() {
+        const getAttributes = match => ({ start: Number(match[1]) });
+        const joinPredicate = (match, node) =>
+          node.childCount + node.attrs.start === Number(match[1]);
+
         return [
-          wrappingInputRule({
+          new InputRule({
             find: inputRegex,
-            type: this.type,
-            getAttributes: match => ({ start: Number(match[1]) }),
-            joinPredicate: (match, node) => node.childCount + node.attrs.start === Number(match[1]),
+            handler: createListInputRuleHandler({ type: this.type, getAttributes, joinPredicate }),
           }),
         ];
       },

@@ -17,9 +17,16 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `tiptap-extensions`
+
+  - [#4204](https://github.com/wix/ricos/pull/4204) lists input rule with custom handler
+
 ## :house: Internal
 
 - `tiptap-extensions`
+
   - [#4203](https://github.com/wix/ricos/pull/4203) overlay click triggers focus
 
 - `collapsible-list`
@@ -35,8 +42,9 @@
 ## :nail_care: Polish
 
 - `gallery/polls`
+
   - [#4195](https://github.com/wix/ricos/pull/4195) code refactor/cleanup in getToolbarButtons.tsx
-  
+
   </details>
 
 ## 8.71.49 (Jul 17, 2022)
