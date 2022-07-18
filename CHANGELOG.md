@@ -19,6 +19,9 @@
 
 ## :house: Internal
 
+- `tiptap-extensions`
+  - [#4203](https://github.com/wix/ricos/pull/4203) overlay click triggers focus
+
 - `collapsible-list`
 
   - [#4193](https://github.com/wix/ricos/pull/4193) fix selection on tiptap
