@@ -28,7 +28,7 @@ const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig, plugins }
   const layout = LAYOUTS.TOOLBAR;
   const placement = languageDir === 'ltr' ? PLACEMENTS.RIGHT_START : PLACEMENTS.LEFT_START;
   const MODAL_ID = isHorizontalMenu ? PLUGIN_MENU_HORIZONTAL_MODAL_ID : PLUGIN_MENU_MODAL_ID;
-  const [isRotate, setIsRotate] = useState<boolean>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     isHorizontalMenu &&
@@ -49,6 +49,14 @@ const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig, plugins }
     }
   }, []);
 
+  useEffect(() => {
+    modalService.onModalClosed(id => {
+      setIsModalOpen(modalService.isModalOpen(MODAL_ID));
+    });
+
+    console.log();
+  }, [modalService.getOpenModals()]);
+
   const calcButtonPosition = (position: DOMRect): { top: string } => {
     const offsetTop = floatingMenuWrapperRef?.current?.getBoundingClientRect().top || 0;
     const { top = 0 } = position;
@@ -60,16 +68,16 @@ const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig, plugins }
   };
 
   const toggleAddPluginMenu = () => {
-    modalService?.isModalOpen(MODAL_ID)
-      ? modalService?.closeModal(MODAL_ID)
-      : modalService?.openModal(MODAL_ID, {
+    modalService.isModalOpen(MODAL_ID)
+      ? modalService.closeModal(MODAL_ID)
+      : modalService.openModal(MODAL_ID, {
           positioning: { referenceElement: buttonRef?.current, placement },
           layout,
           componentProps: {
             referenceElement: buttonRef,
           },
         });
-    setIsRotate(modalService?.isModalOpen(MODAL_ID));
+    setIsModalOpen(modalService.isModalOpen(MODAL_ID));
   };
 
   return !isMobile ? (
@@ -85,7 +93,7 @@ const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig, plugins }
             onClick={toggleAddPluginMenu}
             position={calcButtonPosition(position)}
             ref={buttonRef}
-            isRotate={isRotate}
+            rotate={isModalOpen}
           />
         )}
       </EditorSelectionToPosition>
