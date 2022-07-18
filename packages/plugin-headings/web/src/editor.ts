@@ -6,6 +6,7 @@ import { ModalsMap } from './modals';
 import { tiptapExtensions } from './tiptap';
 import type { HeadingsPluginEditorConfig } from './types';
 import { HEADINGS_DROPDOWN_TYPE } from './types';
+import { getTextButtons } from './getTextButtons';
 
 export const pluginHeadings: EditorPluginCreator<HeadingsPluginEditorConfig> = config => {
   return {
@@ -14,5 +15,6 @@ export const pluginHeadings: EditorPluginCreator<HeadingsPluginEditorConfig> = c
     createPlugin: createHeadingsPlugin,
     ModalsMap,
     tiptapExtensions,
+    textButtons: getTextButtons(),
   } as TiptapEditorPlugin;
 };

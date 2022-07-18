@@ -6,6 +6,7 @@ import type { EditorPluginCreator } from 'wix-rich-content-common';
 import { tiptapExtensions } from './tiptap';
 import type { TiptapEditorPlugin } from 'ricos-tiptap-types';
 import { getAddButtons } from './getAddButtons';
+import { getTextButtons } from './getTextButtons';
 
 export const pluginCodeBlock: EditorPluginCreator<CodeBlockPluginEditorConfig> = config => {
   const pluginConfig = { ...DEFAULTS.config, ...config };
@@ -16,5 +17,6 @@ export const pluginCodeBlock: EditorPluginCreator<CodeBlockPluginEditorConfig> =
     ModalsMap: {},
     addButtons: getAddButtons(),
     tiptapExtensions,
+    textButtons: getTextButtons(),
   } as TiptapEditorPlugin;
 };

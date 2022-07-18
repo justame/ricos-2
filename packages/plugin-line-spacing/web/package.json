@@ -37,7 +37,8 @@
     "react-modal": "~3.4.1",
     "wix-rich-content-common": "8.71.49",
     "wix-rich-content-editor-common": "8.71.49",
-    "wix-rich-content-plugin-commons": "8.71.49"
+    "wix-rich-content-plugin-commons": "8.71.49",
+    "wix-rich-content-toolbars-v3": "8.71.49"
   },
   "unpkg": true,
   "publishConfig": {
