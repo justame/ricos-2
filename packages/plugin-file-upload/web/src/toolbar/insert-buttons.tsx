@@ -8,13 +8,10 @@ import type {
   InsertButton,
 } from 'wix-rich-content-common';
 import type { FilePluginEditorConfig } from '../types';
-import { FilePluginService } from './filePluginService';
-import { Uploader } from 'wix-rich-content-plugin-commons';
 
 const createInsertButtons: CreateInsertButtons = ({
   settings,
   t,
-  experiments,
 }: {
   t: TranslationFunction;
   settings: FilePluginEditorConfig;
@@ -32,11 +29,6 @@ const createInsertButtons: CreateInsertButtons = ({
     componentData: DEFAULTS,
     toolbars: [TOOLBARS.INSERT_PLUGIN, TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
   };
-
-  if (experiments?.useUploadContext?.enabled) {
-    fileInsertButton.mediaPluginService = new FilePluginService();
-    fileInsertButton.getUploader = () => new Uploader(settings.onFileSelected);
-  }
 
   return [fileInsertButton];
 };

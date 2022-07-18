@@ -23,7 +23,7 @@ export const pluginGallery: EditorPluginCreator<GalleryPluginEditorConfig> = con
     createPluginData: createGalleryData,
     tiptapExtensions,
     addButtons: getAddButtons(pluginConfig, galleryPluginService),
-    toolbarButtons: getToolbarButtons(pluginConfig, galleryPluginService),
+    toolbar: { buttons: getToolbarButtons(pluginConfig, galleryPluginService) },
     reconfigure: helpers => {
       pluginConfig.handleFileSelection = helpers.handleFileSelection;
       pluginConfig.handleFileUpload = helpers.handleFileUpload;

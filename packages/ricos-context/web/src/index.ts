@@ -7,3 +7,4 @@ export * from './ShortcutsContext';
 export * from './StylesContext';
 export * from './PluginsContext';
 export * from './types';
+export * from './UploadContext';

@@ -182,13 +182,23 @@ class RicosToolbars extends React.Component<
       ricosContext,
       editor: { tiptapEditor },
       toolbarSettings,
+      plugins,
     } = this.props;
+
+    const textButtonsFromPlugins = plugins
+      ?.getTextButtons()
+      .asArray()
+      .map(b => b.getButton());
+
+    const toolbarButtonsConfig = textButtonsFromPlugins
+      ? [...tiptapStaticToolbarConfig, ...textButtonsFromPlugins]
+      : tiptapStaticToolbarConfig;
 
     const toolbarType = TOOLBARS.INLINE;
     const toolbarConfig = this.getToolbarConfig(finaltoolbarSettings, toolbarType);
     const toolbarItemsConfig = ToolbarConfig.toTiptapToolbarItemsConfig(
       toolbarConfig,
-      tiptapStaticToolbarConfig,
+      toolbarButtonsConfig,
       toolbarType,
       'desktop'
     );

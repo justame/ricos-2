@@ -18,7 +18,6 @@ export const EXPERIMENTS = [
   { name: 'useFilePluginAutoDownloadLinkRef', scope: 'ricos' },
   { name: 'enableFilePluginPDFViewer', scope: 'ricos' },
   { name: 'encAutoImageUrls', scope: 'ricos' },
-  { name: 'useUploadContext', scope: 'ricos' },
   { name: 'imageFigureCaption', scope: 'ricos' },
   { name: 'removeRichContentSchemaNormalizer', scope: 'ricos' },
 ];

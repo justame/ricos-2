@@ -15,6 +15,7 @@ import {
 import { tiptapToDraft } from 'ricos-converters';
 import { Decoration_Type, Node_Type } from 'ricos-schema';
 import type { TiptapAdapter } from 'ricos-tiptap-types';
+import type { EditorContextType, Pubsub, RicosServices } from 'ricos-types';
 import type { RicosCustomStyles, TextAlignment } from 'wix-rich-content-common';
 import {
   defaultFontSizes,
@@ -34,12 +35,36 @@ export class RichContentAdapter implements TiptapAdapter {
 
   private readonly shouldRevealConverterErrors: boolean | undefined;
 
-  constructor(public tiptapEditor: Editor, ricosEditorProps: RicosEditorProps) {
+  getToolbarProps: TiptapAdapter['getToolbarProps'];
+
+  constructor(
+    public tiptapEditor: Editor,
+    ricosEditorProps: RicosEditorProps,
+    services: RicosServices
+  ) {
     this.tiptapEditor = tiptapEditor;
     this.initialContent = this.tiptapEditor.state.doc.content;
     this.getEditorCommands = this.getEditorCommands.bind(this);
     this.shouldRevealConverterErrors =
       ricosEditorProps.experiments?.removeRichContentSchemaNormalizer?.enabled;
+    this.getToolbarProps = type => ({
+      buttons: services.plugins
+        .getAddButtons()
+        .asArray()
+        .reduce((acc, b) => {
+          return {
+            ...acc,
+            [b.getButton().id]: b.toExternalToolbarButtonConfig(
+              this.getEditorCommands(),
+              services.t,
+              services.uploadService,
+              services.updateService
+            ),
+          };
+        }, {}),
+      context: {} as EditorContextType,
+      pubsub: {} as Pubsub,
+    });
   }
 
   isContentChanged = (): boolean => !this.initialContent.eq(this.tiptapEditor.state.doc.content);

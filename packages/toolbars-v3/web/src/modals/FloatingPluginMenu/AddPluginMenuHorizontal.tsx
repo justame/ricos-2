@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
-import { EditorContext, RicosContext, ModalContext } from 'ricos-context';
-import { UploadServiceContext } from 'wix-rich-content-common';
+import { EditorContext, RicosContext, ModalContext, UploadContext } from 'ricos-context';
 import InsertPluginToolbar from '../../components/InsertPluginToolbar/InsertPluginToolbar';
 import type { AddButton, IEditorPlugins } from 'ricos-types';
 import { LAYOUTS, PLACEMENTS } from 'ricos-modals';
@@ -15,7 +14,7 @@ const AddPluginMenuHorizontal: React.FC<Props> = ({ referenceElement, plugins })
   const { getEditorCommands } = useContext(EditorContext);
   const modalService = useContext(ModalContext) || {};
   const { languageDir } = useContext(RicosContext) || {};
-  const uploadContext = useContext(UploadServiceContext);
+  const uploadContext = useContext(UploadContext);
 
   const onButtonClick = ({ modal, command }: AddButton) => {
     modalService.closeModal(PLUGIN_MENU_HORIZONTAL_MODAL_ID);
@@ -27,7 +26,7 @@ const AddPluginMenuHorizontal: React.FC<Props> = ({ referenceElement, plugins })
           },
           layout: LAYOUTS.POPOVER,
         })
-      : command(getEditorCommands?.(), uploadContext);
+      : command(getEditorCommands?.(), uploadContext.uploadService, uploadContext.updateService);
   };
 
   return <InsertPluginToolbar buttons={plugins.getAddButtons()} onButtonClick={onButtonClick} />;

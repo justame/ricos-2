@@ -4,21 +4,16 @@ import { InsertPluginIcon } from '../icons';
 import type {
   CreateInsertButtons,
   TranslationFunction,
-  Helpers,
-  EditorPluginConfig,
   AvailableExperiments,
   InsertButton,
 } from 'wix-rich-content-common';
 import type { GalleryPluginEditorConfig } from '../types';
-import { GalleryPluginService } from './galleryPluginService';
-import { Uploader } from 'wix-rich-content-plugin-commons';
 
 const createInsertButtons: CreateInsertButtons = ({
   t,
   settings,
   disableDownload,
   disableExpand,
-  experiments,
 }: {
   t: TranslationFunction;
   settings: GalleryPluginEditorConfig;
@@ -39,15 +34,6 @@ const createInsertButtons: CreateInsertButtons = ({
     componentData,
     toolbars: [TOOLBARS.INSERT_PLUGIN, TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
   };
-
-  if (experiments?.useUploadContext?.enabled) {
-    galleryInsertButton.mediaPluginService = new GalleryPluginService();
-    galleryInsertButton.getUploader = (
-      helpers: Helpers,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      _: Record<string, any> & EditorPluginConfig
-    ) => new Uploader(helpers?.handleFileUpload);
-  }
 
   return [galleryInsertButton];
 };

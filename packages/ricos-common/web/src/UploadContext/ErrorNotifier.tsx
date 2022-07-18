@@ -1,19 +1,15 @@
 import React, { Component, Suspense } from 'react';
 import type { IMessage, INotifier } from 'ricos-types';
-import { RicosTranslate } from 'wix-rich-content-common';
-import { getLangDir } from '../utils';
 const ErrorToast = React.lazy(() => import('wix-rich-content-editor/libs/ErrorToast'));
 
 type ErrorNotifierState = {
   error: IMessage;
   errorCount: number;
-  englishResource?: Record<string, string>;
 };
 
 type ErrorNotifierProps = {
   isMobile?: boolean;
-  locale?: string;
-  localeResource?: Record<string, string>;
+  languageDir?: string;
 };
 
 class ErrorNotifier extends Component<ErrorNotifierProps, ErrorNotifierState> implements INotifier {
@@ -38,34 +34,18 @@ class ErrorNotifier extends Component<ErrorNotifierProps, ErrorNotifierState> im
     this.setState({ errorCount: 0 });
   };
 
-  setEnglishResource = () => {
-    import(
-      /* webpackChunkName: "messages_[request]" */
-      `wix-rich-content-common/dist/statics/locale/messages_en.json`
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ).then((englishResource: any) => this.setState({ englishResource }));
-  };
-
   render() {
-    const { error, errorCount, englishResource } = this.state;
-    const { isMobile, locale, localeResource } = this.props;
+    const { error, errorCount } = this.state;
+    const { isMobile, languageDir } = this.props;
     if (errorCount <= 0) {
       return null;
     }
-    if (!localeResource && !englishResource) {
-      this.setEnglishResource();
-      return null;
-    }
     return (
-      <RicosTranslate locale={locale} localeResource={localeResource || englishResource}>
-        {() => (
-          <div style={{ display: 'contents' }} dir={getLangDir(locale)}>
-            <Suspense fallback={<div />}>
-              <ErrorToast {...{ error, errorCount, onClose: this.close, isMobile }} />;
-            </Suspense>
-          </div>
-        )}
-      </RicosTranslate>
+      <div style={{ display: 'contents' }} dir={languageDir}>
+        <Suspense fallback={<div />}>
+          <ErrorToast {...{ error, errorCount, onClose: this.close, isMobile }} />;
+        </Suspense>
+      </div>
     );
   }
 }

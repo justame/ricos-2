@@ -29,6 +29,7 @@ export const RicosTiptapEditor: FunctionComponent<RicosTiptapEditorProps> = ({
   locale,
   editorStyleClasses,
   htmlAttributes,
+  onLoad,
   ...context
 }) => {
   const forceUpdate = useForceUpdate();
@@ -54,6 +55,7 @@ export const RicosTiptapEditor: FunctionComponent<RicosTiptapEditorProps> = ({
       });
     });
     editor.on('transaction', forceUpdate);
+    onLoad && editor.on('create', onLoad);
   }, []);
 
   const { containerClassName, editorClassName } = editorStyleClasses || {};

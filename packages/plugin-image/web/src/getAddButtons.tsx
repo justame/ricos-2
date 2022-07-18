@@ -48,9 +48,8 @@ export const getAddButtons = (config): AddButton[] => {
       tooltip: 'ImagePlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
 
-      command: (editorCommands, uploadContext) => {
-        if (uploadContext) {
-          const { uploadService, updateService } = uploadContext;
+      command: (editorCommands, uploadService, updateService) => {
+        if (uploadService && updateService) {
           if (config.handleFileSelection) {
             config.handleFileSelection(
               undefined,

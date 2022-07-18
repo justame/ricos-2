@@ -209,7 +209,7 @@ LayoutControlsSection.propTypes = {
   experiments: PropTypes.object,
   languageDir: PropTypes.string.isRequired,
   t: PropTypes.func,
-  updateData: PropTypes.func.isRequired,
+  updateData: PropTypes.func,
 };
 
 // export default translate(null)(LayoutControlsSection);

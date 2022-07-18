@@ -19,8 +19,9 @@ const selectedNodeResolver = {
   },
 };
 
-const getCommandByTab = activeTab => ({
-  command: ({ modalService, isMobile, node }) => {
+const getCommandByTab =
+  activeTab =>
+  ({ modalService, isMobile, node }) => {
     modalService?.openModal(pollModals.settings, {
       componentProps: {
         nodeId: node.attrs.id,
@@ -29,8 +30,7 @@ const getCommandByTab = activeTab => ({
       positioning: { placement: 'right' },
       layout: isMobile ? 'fullscreen' : 'drawer',
     });
-  },
-});
+  };
 
 export const getToolbarButtons = (config): ToolbarButton[] => {
   return [
@@ -58,7 +58,7 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
               },
             })
             .run();
-        modalService && getCommandByTab(TABS.LAYOUT).command({ modalService, isMobile, node });
+        modalService && getCommandByTab(TABS.LAYOUT)({ modalService, isMobile, node });
       },
       renderer: toolbarItem => <PollLayoutButton toolbarItem={toolbarItem} />,
     },
@@ -68,7 +68,7 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
         Component: PollSettingsModal,
         id: pollModals.design,
       },
-      ...getCommandByTab(TABS.DESIGN),
+      command: getCommandByTab(TABS.DESIGN),
       attributes: {
         selectedNode: selectedNodeResolver,
       },
@@ -80,7 +80,7 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
         Component: PollSettingsModal,
         id: pollModals.settings,
       },
-      ...getCommandByTab(TABS.SETTINGS),
+      command: getCommandByTab(TABS.SETTINGS),
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.DELETE,

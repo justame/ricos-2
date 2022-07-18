@@ -2,14 +2,13 @@ import React, { useContext } from 'react';
 import type { FC } from 'react';
 import { InsertPluginToolbar } from 'wix-rich-content-toolbars-v3';
 import type { AddButton } from 'ricos-types';
-import { ModalContext, EditorContext, PluginsContext } from 'ricos-context';
-import { UploadServiceContext } from 'wix-rich-content-common';
+import { ModalContext, EditorContext, PluginsContext, UploadContext } from 'ricos-context';
 import styles from '../../statics/styles/footer-toolbar.scss';
 
 export const FooterToolbar: FC = () => {
   const plugins = useContext(PluginsContext);
   const modalService = useContext(ModalContext);
-  const uploadContext = useContext(UploadServiceContext);
+  const uploadContext = useContext(UploadContext);
   const { getEditorCommands } = useContext(EditorContext);
 
   const onButtonClick = ({ modal, command }: AddButton, event: Event) => {
@@ -21,7 +20,7 @@ export const FooterToolbar: FC = () => {
           },
           layout: 'popover',
         })
-      : command(getEditorCommands?.(), uploadContext);
+      : command(getEditorCommands?.(), uploadContext.uploadService, uploadContext.updateService);
   };
 
   return (

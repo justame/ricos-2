@@ -20,6 +20,6 @@ export const pluginVideo: EditorPluginCreator<VideoPluginEditorConfig> = config 
     createPluginData: createVideoData,
     tiptapExtensions,
     addButtons: getAddButtons(pluginConfig),
-    toolbarButtons: getToolbarButtons(pluginConfig),
+    toolbar: { buttons: getToolbarButtons(pluginConfig) },
   } as TiptapEditorPlugin;
 };

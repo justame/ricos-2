@@ -11,13 +11,13 @@ import type {
 } from 'ricos-types';
 
 export class UploadService implements IUploadService {
-  StreamReader: ILocalFileReader;
+  streamReader: ILocalFileReader;
 
-  ErrorNotifier: INotifier;
+  getErrorNotifier!: () => INotifier;
 
-  UpdateService: IUpdateService;
+  updateService: IUpdateService;
 
-  hiddenInputElement: HTMLInputElement;
+  getHiddenInputElement!: () => HTMLInputElement;
 
   onInputChange: ((this: HTMLInputElement, event: any) => any) | null;
 
@@ -26,39 +26,44 @@ export class UploadService implements IUploadService {
     onMediaUploadEnd?: any;
   };
 
-  UploadObserver?: IUploadObserver;
+  uploadObserver?: IUploadObserver;
 
   constructor(
-    StreamReader: ILocalFileReader,
-    Notifier: INotifier,
-    UpdateService: IUpdateService,
-    hiddenInputElement: HTMLInputElement,
+    streamReader: ILocalFileReader,
+    updateService: IUpdateService,
     BICallbacks?: {
       onMediaUploadStart?: any;
       onMediaUploadEnd?: any;
     },
-    UploadObserver?: IUploadObserver
+    uploadObserver?: IUploadObserver
   ) {
-    this.StreamReader = StreamReader;
-    this.ErrorNotifier = Notifier;
-    this.UpdateService = UpdateService;
-    this.hiddenInputElement = hiddenInputElement;
+    this.streamReader = streamReader;
+    this.updateService = updateService;
     this.onInputChange = null;
     this.BICallbacks = BICallbacks;
-    this.UploadObserver = UploadObserver;
+    this.uploadObserver = uploadObserver;
+  }
+
+  setErrorNotifier(getErrorNotifer: () => INotifier) {
+    this.getErrorNotifier = getErrorNotifer;
+  }
+
+  setHiddenInputElement(getHiddenInputElement: () => HTMLInputElement) {
+    this.getHiddenInputElement = getHiddenInputElement;
   }
 
   selectFiles(accept = 'image/*', multiple: boolean, callback: (files: File[]) => void) {
-    this.onInputChange && this.hiddenInputElement.removeEventListener('change', this.onInputChange);
+    const hiddenInputElement = this.getHiddenInputElement();
+    this.onInputChange && hiddenInputElement.removeEventListener('change', this.onInputChange);
     this.onInputChange = event => {
       const files: File[] = Array.from(event.target.files || []);
       event.target.value = null;
       callback(files);
     };
-    this.hiddenInputElement.addEventListener('change', this.onInputChange, { once: true });
-    this.hiddenInputElement.accept = accept;
-    this.hiddenInputElement.multiple = !!multiple;
-    this.hiddenInputElement.click();
+    hiddenInputElement.addEventListener('change', this.onInputChange, { once: true });
+    hiddenInputElement.accept = accept;
+    hiddenInputElement.multiple = !!multiple;
+    hiddenInputElement.click();
   }
 
   async uploadFile(
@@ -69,10 +74,11 @@ export class UploadService implements IUploadService {
     MediaPluginService: IMediaPluginService,
     fileState?: Record<string, string | number>
   ) {
-    this.UploadObserver?.update({ key: 0 });
+    this.uploadObserver?.update({ key: 0 });
+    const errorNotifier = this.getErrorNotifier();
     try {
-      const url = await this.StreamReader.read(file);
-      const newFileState = this.UpdateService.updateLoadingState(
+      const url = await this.streamReader.read(file);
+      const newFileState = this.updateService.updateLoadingState(
         url,
         file,
         nodeId,
@@ -84,24 +90,24 @@ export class UploadService implements IUploadService {
       let error = null;
       try {
         const uploadedFile = await uploader.upload(file);
-        this.UpdateService.updatePluginData(
+        this.updateService.updatePluginData(
           uploadedFile,
           nodeId,
           type,
           MediaPluginService,
           newFileState
         );
-        this.StreamReader.free(url as string);
+        this.streamReader.free(url as string);
       } catch (e) {
         error = e;
-        this.ErrorNotifier.notify(e);
-        this.UpdateService.updateErrorState(e, nodeId, type, MediaPluginService, newFileState);
+        errorNotifier.notify(e);
+        this.updateService.updateErrorState(e, nodeId, type, MediaPluginService, newFileState);
       } finally {
         this.BICallbacks?.onMediaUploadEnd?.(uploadBIData, error);
       }
     } catch (e) {
-      this.ErrorNotifier.notify({ msg: 'Failed reading file locally' });
+      errorNotifier.notify({ msg: 'Failed reading file locally' });
     }
-    this.UploadObserver?.update({ key: 1 });
+    this.uploadObserver?.update({ key: 1 });
   }
 }

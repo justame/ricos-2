@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react';
 import type { FC } from 'react';
 import { ToggleButton } from '../../components';
-import { UploadServiceContext } from 'wix-rich-content-common';
-import { RicosContext, ModalContext } from 'ricos-context';
+import { RicosContext, ModalContext, UploadContext } from 'ricos-context';
 import { ReplaceIcon } from '../../icons';
 import type { IToolbarItem } from 'ricos-types';
 
@@ -12,7 +11,7 @@ type Props = {
 
 const ReplaceButton: FC<Props> = ({ toolbarItem }) => {
   const modalService = useContext(ModalContext) || {};
-  const uploadContext = useContext(UploadServiceContext);
+  const uploadContext = useContext(UploadContext);
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
   const { t, isMobile } = useContext(RicosContext) || {};
 

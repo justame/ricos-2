@@ -5,7 +5,6 @@ import { RicosToolbarComponent, FloatingToolbar } from 'wix-rich-content-toolbar
 import { withRicosContext, withEditorContext, withPluginsContext } from 'ricos-context';
 import type { GeneralContext } from 'ricos-context';
 import type { RichContentAdapter } from 'wix-tiptap-editor';
-import { isNodeSelection } from '@tiptap/core';
 import styles from '../../statics/styles/plugin-toolbar.scss';
 import type { IEditorPlugins } from 'ricos-types';
 
@@ -17,15 +16,13 @@ type PluginsToolbarProps = {
 class PluginsToolbar extends React.Component<
   PluginsToolbarProps & { ricosContext: GeneralContext; editor: RichContentAdapter }
 > {
-  renderPluginToolbar() {
+  renderPluginToolbar(toolbar) {
     const {
       ricosContext,
       editor: { tiptapEditor },
       content,
-      plugins,
     } = this.props;
 
-    const toolbar = plugins?.getVisibleToolbar(content.value);
     if (toolbar) {
       return (
         <RicosToolbarComponent
@@ -46,21 +43,21 @@ class PluginsToolbar extends React.Component<
     const {
       ricosContext,
       editor: { tiptapEditor },
+      plugins,
     } = this.props;
 
+    const toolbar = plugins?.getVisibleToolbar(tiptapEditor.state.selection);
+    const isVisible = () => !!toolbar;
+
     return (
-      <FloatingToolbar
-        editor={tiptapEditor}
-        portal={ricosContext.portal}
-        isVisible={isNodeSelection}
-      >
+      <FloatingToolbar editor={tiptapEditor} portal={ricosContext.portal} isVisible={isVisible}>
         {() => (
           <div
             dir={ricosContext.languageDir}
             data-hook={'floating-plugin-toolbar'}
             className={styles.floatingToolbar}
           >
-            {this.renderPluginToolbar()}
+            {this.renderPluginToolbar(toolbar)}
           </div>
         )}
       </FloatingToolbar>

@@ -10,6 +10,11 @@ import type {
   IPluginAddButtons,
   IToolbarItemConfigTiptap,
   AddPluginMenuConfig,
+  ToolbarButtonProps,
+  EditorCommands,
+  IUploadService,
+  IUpdateService,
+  TranslationFunction,
 } from 'ricos-types';
 import { AddPluginMenu, PLUGIN_MENU_MODAL_ID } from 'wix-rich-content-toolbars-ui';
 
@@ -95,6 +100,34 @@ export class PluginAddButton implements IPluginAddButton {
             this.getButton().command(editorCommands);
           },
       },
+    };
+  }
+
+  toExternalToolbarButtonConfig(
+    editorCommands: EditorCommands,
+    t: TranslationFunction,
+    uploadService: IUploadService,
+    updateService: IUpdateService
+  ): ToolbarButtonProps {
+    return {
+      type: 'button',
+      tooltip: t(this.button.tooltip),
+      toolbars: this.button.toolbars,
+      getIcon: () => this.button.icon,
+      getLabel: () => this.button.label || '',
+      onClick: () => {
+        this.button.modal
+          ? this.modalService?.isModalOpen(this.button.modal.id)
+            ? this.modalService?.closeModal(this.button.modal.id)
+            : this.modalService?.openModal(this.button.modal.id, {
+                layout: 'dialog',
+              })
+          : this.button.command(editorCommands, uploadService, updateService);
+      },
+      isActive: () => false,
+      isDisabled: () => false,
+      dataHook: this.button.dataHook,
+      name: this.button.id,
     };
   }
 

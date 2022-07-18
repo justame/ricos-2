@@ -1,5 +1,6 @@
 import { EditorPlugin } from './editorPlugin';
 import { PluginAddButtons } from './pluginAddButton';
+import { PluginTextButtons } from './pluginTextButton';
 import type {
   EditorPlugin as EditorPluginType,
   LegacyEditorPluginConfig,
@@ -61,6 +62,15 @@ export class EditorPlugins implements IEditorPlugins {
     return this.plugins.forEach(plugin => plugin.configure(config));
   }
 
+  getTextButtons() {
+    //maybe use filter class func
+    const textButtons = this.plugins.reduce(
+      (prev, curr) => [...prev, ...(curr.getTextButtons() || [])],
+      []
+    );
+    return new PluginTextButtons(textButtons);
+  }
+
   getAddButtons() {
     //maybe use filter class func
     const addButtons = this.plugins.reduce(
@@ -70,10 +80,10 @@ export class EditorPlugins implements IEditorPlugins {
     return new PluginAddButtons(addButtons, this.modalService);
   }
 
-  getVisibleToolbar(content) {
+  getVisibleToolbar(selection) {
     const toolbar = this.plugins
       .map(plugin => plugin.getToolbar())
-      .filter(toolbar => !!toolbar?.isVisible(content))?.[0];
+      .filter(toolbar => !!toolbar?.isVisible(selection))?.[0];
     return toolbar;
   }
 

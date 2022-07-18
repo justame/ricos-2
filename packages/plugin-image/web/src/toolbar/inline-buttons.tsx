@@ -1,5 +1,5 @@
 import { isEmpty, get } from 'lodash';
-import { BUTTONS, PluginSettingsIcon, Uploader } from 'wix-rich-content-plugin-commons';
+import { BUTTONS, PluginSettingsIcon } from 'wix-rich-content-plugin-commons';
 import { getModalStyles } from 'wix-rich-content-editor-common';
 import { Modals } from '../modals';
 import { MediaReplaceIcon, ImageEditorIcon } from '../icons';
@@ -10,12 +10,9 @@ import type {
   RelValue,
   UISettings,
   AvailableExperiments,
-  Helpers,
-  EditorPluginConfig,
 } from 'wix-rich-content-common';
 import type { ImagePluginEditorConfig } from '../types';
 import { IMAGE_TYPE } from '../types';
-import { ImagePluginService } from './imagePluginService';
 
 const createInlineButtons: CreateInlineButtons = ({
   t,
@@ -81,14 +78,6 @@ const createInlineButtons: CreateInlineButtons = ({
     t,
   };
 
-  if (experiments?.useUploadContext?.enabled) {
-    replaceButton.mediaPluginService = new ImagePluginService();
-    replaceButton.getUploader = (
-      helpers: Helpers,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      _: Record<string, any> & EditorPluginConfig
-    ) => new Uploader(helpers?.handleFileUpload);
-  }
   return [
     { keyName: 'sizeOriginal', type: BUTTONS.SIZE_ORIGINAL, mobile: false },
     { keyName: 'sizeSmallCenter', type: BUTTONS.SIZE_SMALL_CENTER, mobile: false },

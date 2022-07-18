@@ -19,6 +19,6 @@ export const pluginHtml: EditorPluginCreator<HtmlPluginEditorConfig> = config =>
     createPluginData: createHtmlData,
     tiptapExtensions,
     addButtons: getAddButtons(config),
-    toolbarButtons: getToolbarButtons(config),
+    toolbar: { buttons: getToolbarButtons(config) },
   } as TiptapEditorPlugin;
 };

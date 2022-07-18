@@ -81,7 +81,7 @@ export const tiptapExtensions = [
     createExtensionConfig() {
       return {
         name: this.name,
-        group: 'block',
+        group: TIPTAP_COLLAPSIBLE_ITEM_TYPE,
         draggable: true,
         content: `${TIPTAP_COLLAPSIBLE_ITEM_TITLE_TYPE} ${TIPTAP_COLLAPSIBLE_ITEM_BODY_TYPE}`,
         addAttributes: () => ({
@@ -114,8 +114,7 @@ export const tiptapExtensions = [
     createExtensionConfig() {
       return {
         name: this.name,
-        group: 'block',
-        draggable: true,
+        group: TIPTAP_COLLAPSIBLE_ITEM_TITLE_TYPE,
         content: 'block+',
       };
     },
@@ -144,8 +143,7 @@ export const tiptapExtensions = [
     createExtensionConfig() {
       return {
         name: this.name,
-        group: 'block',
-        draggable: true,
+        group: TIPTAP_COLLAPSIBLE_ITEM_BODY_TYPE,
         content: 'block+',
       };
     },

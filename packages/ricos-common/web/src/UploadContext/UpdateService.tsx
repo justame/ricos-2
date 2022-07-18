@@ -12,9 +12,9 @@ const doesNodeExist = (nodeId: string, editorCommands?: EditorCommands) =>
 
 // Think of a noun.
 export class UpdateService implements IUpdateService {
-  EditorCommands?: EditorCommands;
+  EditorCommands!: EditorCommands;
 
-  constructor(editorCommands?: EditorCommands) {
+  setEditorCommands(editorCommands: EditorCommands) {
     this.EditorCommands = editorCommands;
   }
 

@@ -70,6 +70,8 @@ export interface IMediaPluginService {
 export interface IUpdateService {
   EditorCommands?: EditorCommands;
 
+  setEditorCommands: (editorCommands: EditorCommands) => void;
+
   updatePluginData: (
     uploadedData: UploadedData,
     nodeId: string,
@@ -97,13 +99,13 @@ export interface IUpdateService {
 }
 
 export interface IUploadService {
-  StreamReader: ILocalFileReader;
+  streamReader: ILocalFileReader;
 
-  ErrorNotifier: INotifier;
+  getErrorNotifier: () => INotifier;
 
-  UpdateService: IUpdateService;
+  updateService: IUpdateService;
 
-  hiddenInputElement: HTMLInputElement;
+  getHiddenInputElement: () => HTMLInputElement;
 
   onInputChange: ((this: HTMLInputElement, event: any) => any) | null;
 
@@ -112,7 +114,11 @@ export interface IUploadService {
     onMediaUploadEnd?: any;
   };
 
-  UploadObserver?: IUploadObserver;
+  uploadObserver?: IUploadObserver;
+
+  setErrorNotifier: (getErrorNotifier: () => INotifier) => void;
+
+  setHiddenInputElement: (getHiddenInputElement: () => HTMLInputElement) => void;
 
   selectFiles: (accept: string, multiple: boolean, callback: (files: File[]) => void) => void;
 

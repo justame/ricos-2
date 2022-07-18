@@ -6,9 +6,13 @@ import type {
   ToolbarButton,
 } from './pluginTypes';
 import type { ComponentType } from 'react';
-import type { IToolbarItemConfigTiptap, TiptapContentResolver } from './toolbarTypes';
+import type { IToolbarItemConfigTiptap } from './toolbarTypes';
 import type { ToolbarType } from './toolbarEnums';
 import type { PluginButton, AddPluginMenuConfig } from './toolbarSettingsTypes';
+import type { ToolbarButtonProps } from './buttonTypes';
+import type { EditorCommands } from './editorCommandsType';
+import type { IUpdateService, IUploadService } from './uploadServicesTypes';
+import type { TranslationFunction } from './commonTypes';
 
 /**
  * Represents a plugin in Ricos Editor.
@@ -39,6 +43,13 @@ export interface IEditorPlugin {
    * @memberof IEditorPlugin
    */
   getConfig(): LegacyEditorPluginConfig;
+  /**
+   * Text Buttons
+   *
+   * @returns  {IPluginTextButton[]}
+   * @memberof IEditorPlugin
+   */
+  getTextButtons(): IPluginTextButton[];
   /**
    * Add Buttons
    *
@@ -121,6 +132,13 @@ export interface IEditorPlugins {
    */
   asArray: () => IEditorPlugin[];
   /**
+   * Plugins text Buttons
+   *
+   * @returns  {IPluginTextButtons}
+   * @memberof IEditorPlugins
+   */
+  getTextButtons(): IPluginTextButtons;
+  /**
    * Plugins add Buttons
    *
    * @returns  {IPluginAddButtons}
@@ -133,7 +151,7 @@ export interface IEditorPlugins {
    * @returns  {PluginsToolbar}
    * @memberof IEditorPlugins
    */
-  getVisibleToolbar(content): IPluginToolbar | undefined;
+  getVisibleToolbar(selection): IPluginToolbar | undefined;
   /**
    * Get RicosExtensions for Tiptap based editor
    *
@@ -152,6 +170,14 @@ export interface IEditorPlugins {
   configure(config: Partial<LegacyEditorPluginConfig>); // runtime configuration
 }
 
+export interface IPluginTextButton {
+  getButton: () => IToolbarItemConfigTiptap;
+}
+
+export interface IPluginTextButtons {
+  asArray: () => IPluginTextButton[];
+}
+
 export interface IPluginAddButton {
   getButton: () => AddButton;
 
@@ -162,6 +188,13 @@ export interface IPluginAddButton {
   equals: (button: IPluginAddButton) => boolean;
 
   toToolbarItemConfig: () => IToolbarItemConfigTiptap;
+
+  toExternalToolbarButtonConfig: (
+    editorCommands: EditorCommands,
+    t: TranslationFunction,
+    uploadService: IUploadService,
+    updateService: IUpdateService
+  ) => ToolbarButtonProps;
 
   getToolbars: () => ToolbarType[];
 
@@ -194,7 +227,7 @@ export interface IPluginToolbar {
   // eslint-disable-next-line @typescript-eslint/ban-types
   getToolbarButtonsRenderers: () => Record<string, Function>;
 
-  isVisible: (content) => boolean;
+  isVisible: (selection) => boolean;
 
   register: () => void;
 

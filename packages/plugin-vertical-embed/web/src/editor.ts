@@ -16,7 +16,7 @@ export const pluginVerticalEmbed: EditorPluginCreator<VerticalEmbedPluginEditorC
     createPlugin: createVerticalEmbedPlugin,
     ModalsMap,
     tiptapExtensions,
-    toolbarButtons: getToolbarButtons(config),
+    toolbar: { buttons: getToolbarButtons(config) },
     addButtons: getAddButtons(config),
   } as TiptapEditorPlugin;
 };

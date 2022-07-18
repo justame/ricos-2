@@ -3,7 +3,6 @@ import { PollEditor } from '../components';
 import { POLL_TYPE } from '../types';
 import type { PluginProps } from 'ricos-tiptap-types';
 import { convertBlockDataToRicos } from 'ricos-content/libs/convertBlockDataToRicos';
-import { NodeSelection } from 'prosemirror-state';
 import { RicosContext } from 'ricos-context';
 
 export const Poll: React.FC<PluginProps> = ({
@@ -12,8 +11,6 @@ export const Poll: React.FC<PluginProps> = ({
   node,
   updateAttributes,
   selected,
-  editor,
-  getPos,
 }) => {
   const { theme, t, isMobile, experiments } = useContext(RicosContext);
   const block = { getKey: () => node.attrs.id };
@@ -26,18 +23,8 @@ export const Poll: React.FC<PluginProps> = ({
   };
   const setInPluginEditingMode = () => {};
 
-  const setSelection = () => {
-    if (!selected) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const selection = NodeSelection.create(editor.view.state.doc, (getPos as any)());
-      const transaction = editor.view.state.tr.setSelection(selection);
-      editor.view.dispatch(transaction);
-    }
-  };
-
   return (
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div onMouseDown={setSelection}>
+    <div>
       <PollEditor
         componentData={componentData}
         settings={settings}

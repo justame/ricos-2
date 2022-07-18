@@ -15,6 +15,6 @@ export const pluginTable: EditorPluginCreator<TablePluginEditorConfig> = config 
     ModalsMap,
     theme,
     addButtons: getAddButtons(),
-    toolbarButtons: getToolbarButtons(config),
+    toolbar: { buttons: getToolbarButtons(config) },
   };
 };

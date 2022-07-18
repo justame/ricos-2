@@ -6,11 +6,8 @@ import classNames from 'classnames';
 import { FileInput, Dropdown } from 'wix-rich-content-ui-components';
 import { ToolbarButton } from 'wix-rich-content-editor-common';
 import BUTTONS from './buttons/keys';
-import { UploadServiceContext } from 'wix-rich-content-common';
 
 class BaseToolbarButton extends React.Component {
-  static contextType = UploadServiceContext;
-
   constructor(props) {
     super(props);
     this.state = { isActive: false };
@@ -84,7 +81,6 @@ class BaseToolbarButton extends React.Component {
       modalStyles,
       modalStylesFn,
       blockKey,
-      mediaPluginService,
       ...otherProps
     } = this.props;
 
@@ -95,19 +91,7 @@ class BaseToolbarButton extends React.Component {
     });
 
     if (this.props.type === BUTTONS.FILES && !this.shouldHandleFileSelection) {
-      const updateEntity = mediaPluginService
-        ? ({ data }) => {
-            const files = data instanceof Array ? data : [data];
-            files.forEach(file => {
-              this.context.updateService.updatePluginData(
-                { data: file },
-                blockKey,
-                pluginType,
-                mediaPluginService
-              );
-            });
-          }
-        : pubsub.getBlockHandler('handleFilesAdded');
+      const updateEntity = pubsub.getBlockHandler('handleFilesAdded');
       if (settings && settings.handleFileSelection) {
         settings.handleFileSelection(updateEntity);
       } else if (helpers && helpers.handleFileSelection) {
@@ -235,53 +219,6 @@ class BaseToolbarButton extends React.Component {
     return <ToolbarButton theme={theme} tooltipText={tooltipText} button={toggleButton} />;
   };
 
-  handleUploadContextFileOnClick = () => {
-    const { helpers, onFilesSelected, settings, multiple } = this.props;
-    const { handleFileSelection } = helpers;
-
-    if (handleFileSelection) {
-      handleFileSelection({ ...this.props });
-    } else if (this.context.uploadService) {
-      const { blockKey, mediaPluginService, getUploader, pluginType } = this.props;
-
-      const uploadFiles = files =>
-        files.forEach(file => {
-          this.context.uploadService.uploadFile(
-            file,
-            blockKey,
-            getUploader(helpers, settings),
-            pluginType,
-            mediaPluginService
-          );
-        });
-      this.context.uploadService.selectFiles(settings.accept, multiple, uploadFiles);
-    }
-  };
-
-  renderUploadButton = (buttonWrapperClassNames, buttonClassNames) => {
-    const { theme, t, tooltipTextKey, tabIndex } = this.props;
-    const tooltipText = t(tooltipTextKey);
-
-    const toggleButton = (
-      /* eslint-disable jsx-a11y/no-static-element-interactions */
-      <div className={buttonWrapperClassNames}>
-        <button
-          className={buttonClassNames}
-          aria-label={tooltipText}
-          tabIndex={tabIndex}
-          aria-pressed={this.state.isActive}
-          data-hook={this.getDataHook()}
-          onClick={this.handleUploadContextFileOnClick}
-        >
-          {this.props.children || this.getIcon()}
-        </button>
-      </div>
-      /* eslint-enable jsx-a11y/no-static-element-interactions */
-    );
-
-    return <ToolbarButton theme={theme} tooltipText={tooltipText} button={toggleButton} />;
-  };
-
   renderFilesButton = (buttonClassNames, styles) => {
     const {
       settings: { accept },
@@ -376,9 +313,7 @@ class BaseToolbarButton extends React.Component {
         if (!this.shouldHandleFileSelection) {
           toolbarButton = this.renderToggleButton(buttonWrapperClassNames, buttonClassNames);
         } else {
-          toolbarButton = this.props.mediaPluginService
-            ? this.renderUploadButton(buttonWrapperClassNames, buttonClassNames)
-            : this.renderFilesButton(buttonClassNames, themedStyles);
+          toolbarButton = this.renderFilesButton(buttonClassNames, themedStyles);
         }
         break;
       case BUTTONS.DROPDOWN:
@@ -424,7 +359,6 @@ BaseToolbarButton.propTypes = {
   uiSettings: PropTypes.object,
   settings: PropTypes.object,
   pluginType: PropTypes.string,
-  mediaPluginService: PropTypes.object,
   getUploader: PropTypes.func,
   blockKey: PropTypes.string,
 };

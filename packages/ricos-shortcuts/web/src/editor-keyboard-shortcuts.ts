@@ -4,10 +4,12 @@ import type {
   EventPublisher,
   EventRegistrar,
   KeyboardShortcut,
+  ModalService,
   TranslationFunction,
 } from 'ricos-types';
 import { EditorKeyboardShortcut } from './editor-keyboard-shortcut';
 import type { HotKeysProps, LocalizedDisplayData, Shortcut, Shortcuts } from './models/shortcuts';
+import { ShortcutsDialog } from './ShortcutsDialog';
 
 export class ShortcutCollisionError extends Error {}
 
@@ -16,8 +18,12 @@ export class EditorKeyboardShortcuts implements Shortcuts {
 
   private readonly publisher: EventPublisher<EventData>;
 
-  constructor(events: EventRegistrar) {
+  constructor(events: EventRegistrar, modalService: ModalService) {
     this.publisher = events.register('ricos.shortcuts.functionality.shortcutApplied');
+    modalService.register({
+      Component: ShortcutsDialog,
+      id: 'shortcuts-help',
+    });
   }
 
   private hasDuplicate(shortcut: Shortcut) {

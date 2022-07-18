@@ -14,8 +14,7 @@ import {
 } from 'wix-rich-content-common/libs/linkConverters';
 import { applyBIGenerics } from './biCallbacks';
 import { pipe } from 'fp-ts/function';
-import type { EditorCommands, IUploadObserver, RichContentTheme, ThemeData } from 'ricos-types';
-import UploadContextWrapper from './withUploadContext';
+import type { EditorCommands, RichContentTheme, ThemeData } from 'ricos-types';
 
 interface EngineProps extends RicosEditorProps, RicosViewerProps {
   children: ReactElement;
@@ -26,8 +25,6 @@ interface EngineProps extends RicosEditorProps, RicosViewerProps {
   onPreviewExpand?: PreviewConfig['onPreviewExpand'];
   getContentId: () => string | undefined;
   editorCommands?: EditorCommands;
-  localeResource?: Record<string, string>;
-  UploadObserver?: IUploadObserver;
 }
 
 export class RicosEngine extends Component<EngineProps> {
@@ -110,10 +107,6 @@ export class RicosEngine extends Component<EngineProps> {
       iframeSandboxDomain,
       textWrap = true,
       editorCommands,
-      isViewer,
-      locale,
-      localeResource,
-      UploadObserver,
     } = this.props;
 
     const { strategyProps, previewContent, htmls } = this.runStrategies();
@@ -196,8 +189,6 @@ export class RicosEngine extends Component<EngineProps> {
       applyBIGenerics(getContentId)
     );
 
-    const useUploadContext = !isViewer && experiments?.useUploadContext?.enabled;
-
     const modal = (
       <RicosModal
         key={'ricosElement'}
@@ -216,24 +207,6 @@ export class RicosEngine extends Component<EngineProps> {
       </RicosModal>
     );
 
-    return [
-      ...htmls,
-      useUploadContext ? (
-        <UploadContextWrapper
-          {...{
-            locale,
-            localeResource,
-            editorCommands,
-            helpers: mergedRCProps.helpers,
-            UploadObserver,
-            isMobile,
-          }}
-        >
-          {modal}
-        </UploadContextWrapper>
-      ) : (
-        modal
-      ),
-    ];
+    return [...htmls, modal];
   }
 }

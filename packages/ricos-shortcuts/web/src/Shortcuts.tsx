@@ -29,19 +29,8 @@ const useComponentWillMount = (callback: () => void) => {
   }, []);
 };
 
-const helpModal: ModalConfig = {
-  id: 'shortcuts-help',
-  Component: ShortcutsDialog,
-};
-
 export const Shortcuts: FC<ShortcutsProps> = (props: ShortcutsProps) => {
   const modalService: ModalService = useContext(ModalContext);
-
-  useEffect(() => {
-    modalService.register(helpModal);
-  }, []);
-
-  useEffect(() => modalService.unregister(helpModal.id), []);
 
   const helpShortcut: KeyboardShortcut = {
     name: 'Keyboard Shortcuts',

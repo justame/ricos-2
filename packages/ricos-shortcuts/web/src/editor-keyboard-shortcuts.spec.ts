@@ -1,5 +1,10 @@
 import { identity } from 'fp-ts/function';
-import type { BasicKeyCombination, EditorCommands, EventRegistrar } from 'ricos-types';
+import type {
+  BasicKeyCombination,
+  EditorCommands,
+  EventRegistrar,
+  ModalService,
+} from 'ricos-types';
 import { RICOS_DIVIDER_TYPE } from 'wix-rich-content-common';
 import { EditorKeyboardShortcuts } from './editor-keyboard-shortcuts';
 
@@ -49,8 +54,21 @@ describe('Editor Keyboard Shortcuts', () => {
     enabled: true,
   };
 
+  const modalService: ModalService = {
+    register: jest.fn(),
+    openModal: jest.fn(),
+    closeModal: jest.fn(),
+    isModalOpen: jest.fn(),
+    unregister: jest.fn(),
+    getOpenModals: jest.fn(),
+    onModalOpened: jest.fn(),
+    onModalClosed: jest.fn(),
+    destroy(): void {},
+    getModal: () => undefined,
+  };
+
   it('should register/unregister shortcut', () => {
-    const registered = new EditorKeyboardShortcuts(events);
+    const registered = new EditorKeyboardShortcuts(events, modalService);
     registered.register(bold);
     expect(registered.asArray().length).toEqual(1);
     registered.unregister(registered.asArray()[0].getKeyboardShortcut());
@@ -58,14 +76,14 @@ describe('Editor Keyboard Shortcuts', () => {
   });
 
   it('should filter shortcuts', () => {
-    const registered = new EditorKeyboardShortcuts(events);
+    const registered = new EditorKeyboardShortcuts(events, modalService);
     registered.register(bold);
     const filtered = registered.filter(shortcut => shortcut.getGroup() === 'add-plugin');
     expect(filtered.asArray().length).toEqual(0);
   });
 
   it('should produce grouped display data', () => {
-    const registered = new EditorKeyboardShortcuts(events);
+    const registered = new EditorKeyboardShortcuts(events, modalService);
     registered.register(bold);
     registered.register(italic);
     registered.register(addDivider);
@@ -104,7 +122,7 @@ describe('Editor Keyboard Shortcuts', () => {
       insertBlock: identity,
     };
 
-    const actual = new EditorKeyboardShortcuts(events);
+    const actual = new EditorKeyboardShortcuts(events, modalService);
     actual.register(bold);
     actual.register(italic);
     actual.register(addDivider);

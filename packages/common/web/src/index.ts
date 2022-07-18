@@ -44,7 +44,6 @@ export { simplePubsub } from './Utils/simplePubsub';
 export { generateKey } from './Utils/generateKey';
 export { getBlocksFromContentState } from './Utils/innerRCEBlocksUtils';
 export { default as getTextDirection } from 'ricos-content/libs/getTextDirection';
-export { UploadServiceContext } from './Utils/uploadServiceContext';
 export * from './consts';
 
 export { default as createJustificationFixDecorator } from './draftDecorators/createJustificationFixDecorator';

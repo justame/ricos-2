@@ -50,4 +50,5 @@ export interface ModalService {
   onModalOpened: (onOpen: (id: string) => unknown) => Subscription;
   onModalClosed: (onClose: (id: string) => unknown) => Subscription;
   destroy: () => void;
+  getModal: (id: string) => ModalConfig | Modal | undefined;
 }

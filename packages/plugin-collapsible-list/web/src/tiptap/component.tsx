@@ -71,7 +71,7 @@ export const CollapsibleListItem: React.FC<PluginProps> = ({
   return (
     <div className={styles.itemContainer}>
       {inCollapsibleList && (
-        <div className={styles.dndIcon}>
+        <div className={styles.dndIcon} draggable="true" contentEditable="false" data-drag-handle>
           <DndIcon />
         </div>
       )}

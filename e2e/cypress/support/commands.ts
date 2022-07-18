@@ -318,7 +318,7 @@ const COMMANDS = {
 
   openGalleryAdvancedSettings: () => {
     cy.get(`[data-hook=${PLUGIN_COMPONENT.GALLERY}]:first`).parent().click();
-    cy.get(`[data-hook=${PLUGIN_TOOLBAR_BUTTONS.ADV_SETTINGS}]:first`)
+    cy.get(`[data-hook=${PLUGIN_TOOLBAR_BUTTONS.SETTINGS}]:first`)
       .scrollIntoView()
       .click({ force: true });
   },

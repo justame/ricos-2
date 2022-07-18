@@ -53,9 +53,8 @@ export const getAddButtons = (config, filePluginService): AddButton[] => {
       icon: InsertPluginIcon,
       tooltip: 'FileUploadInsertButton_tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
-      command: (editorCommands, uploadContext) => {
-        if (uploadContext) {
-          const { uploadService, updateService } = uploadContext;
+      command: (editorCommands, uploadService, updateService) => {
+        if (uploadService && updateService) {
           if (config.handleFileSelection) {
             config.handleFileSelection(
               handleExternalFileChange(editorCommands, updateService, filePluginService)

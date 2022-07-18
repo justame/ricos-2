@@ -118,9 +118,9 @@ export const tiptapStaticToolbarConfig: IToolbarItemConfigTiptap[] = [
     },
     commands: {
       toggleBold:
-        ({ editorCommands, styles }) =>
+        ({ editorCommands }) =>
         () => {
-          editorCommands.chain().focus().toggleBold(styles).run();
+          editorCommands.chain().focus().toggleBold().run();
         },
     },
   },
@@ -142,9 +142,9 @@ export const tiptapStaticToolbarConfig: IToolbarItemConfigTiptap[] = [
     },
     commands: {
       toggleItalic:
-        ({ editorCommands, styles }) =>
+        ({ editorCommands }) =>
         () => {
-          editorCommands.chain().focus().toggleItalic(styles).run();
+          editorCommands.chain().focus().toggleItalic().run();
         },
     },
   },
@@ -262,26 +262,6 @@ export const tiptapStaticToolbarConfig: IToolbarItemConfigTiptap[] = [
         ({ editorCommands }) =>
         () => {
           editorCommands.chain().focus().toggleBulletList().run();
-        },
-    },
-  },
-  {
-    id: 'spoiler',
-    type: 'toggle',
-    presentation: {
-      dataHook: 'textSpoilerButton',
-      tooltip: 'Spoiler_Insert_Tooltip',
-      icon: SpoilerButtonIcon,
-    },
-    attributes: {
-      visible: alwaysVisibleResolver,
-      active: isTextContainsSpoilerResolver,
-    },
-    commands: {
-      toggleSpoiler:
-        ({ editorCommands }) =>
-        () => {
-          editorCommands.chain().focus().toggleSpoiler().run();
         },
     },
   },

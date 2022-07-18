@@ -2,6 +2,7 @@ import type { Editor } from '@tiptap/react';
 import type { Node as ProseMirrorNode } from 'prosemirror-model';
 import type {
   DraftContent,
+  EditorProps,
   EditorStyleClasses,
   RichContentTheme,
   TranslationFunction,
@@ -32,6 +33,7 @@ export interface RicosTiptapEditorProps {
     content: DraftContent;
   }) => void;
   theme?: RichContentTheme;
+  onLoad?: EditorProps['onLoad'];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }

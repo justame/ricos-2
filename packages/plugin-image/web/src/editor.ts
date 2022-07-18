@@ -9,6 +9,7 @@ import { tiptapExtensions } from './tiptap/tiptap';
 import type { TiptapEditorPlugin } from 'ricos-tiptap-types';
 import { getToolbarButtons } from './getToolbarButtons';
 import { getAddButtons } from './getAddButtons';
+import { Uploader } from 'wix-rich-content-plugin-commons';
 
 export const pluginImage: EditorPluginCreator<ImagePluginEditorConfig> = config => {
   const pluginConfig: ImagePluginEditorConfig = { ...DEFAULTS.config, ...config };
@@ -19,11 +20,12 @@ export const pluginImage: EditorPluginCreator<ImagePluginEditorConfig> = config 
     ModalsMap,
     createPluginData: createImageData,
     tiptapExtensions,
-    toolbarButtons: getToolbarButtons(pluginConfig),
+    toolbar: { buttons: getToolbarButtons(pluginConfig) },
     addButtons: getAddButtons(pluginConfig),
     reconfigure: helpers => {
       pluginConfig.handleFileSelection = helpers.handleFileSelection;
       pluginConfig.handleFileUpload = helpers.handleFileUpload;
+      pluginConfig.uploader = new Uploader(helpers.handleFileUpload);
     },
   } as TiptapEditorPlugin;
 };

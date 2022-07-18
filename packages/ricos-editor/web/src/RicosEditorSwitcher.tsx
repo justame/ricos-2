@@ -4,10 +4,16 @@ import { isSSR } from 'wix-rich-content-common';
 import type { RicosEditor } from './RicosEditor';
 import RicosEditorWithRef from './RicosEditor';
 import type { RicosEditorRef } from './RicosEditorRef';
+import type { TranslationFunction } from 'ricos-types';
 
 const FullRicosEditorLazy = React.lazy(
   /* webpackChunkName: "FullRicosEditor" */
   () => import('./tiptap/FullRicosEditor')
+);
+
+const LocaleResourceProviderLazy = React.lazy(
+  /* webpackChunkName: "LocaleResourceProvider" */
+  () => import('./RicosContext/locale-resource-provider')
 );
 
 const RicosEditorSwitcher = React.forwardRef<RicosEditorRef, RicosEditorProps>((props, ref) => {
@@ -17,7 +23,10 @@ const RicosEditorSwitcher = React.forwardRef<RicosEditorRef, RicosEditorProps>((
       <div />
     ) : (
       <Suspense fallback={<div />}>
-        <FullRicosEditorLazy {...props} ref={ref} />
+        <LocaleResourceProviderLazy locale={props.locale}>
+          {(locale: RicosEditorProps['locale']) => (t: TranslationFunction) =>
+            <FullRicosEditorLazy {...props} locale={locale} t={t} ref={ref} />}
+        </LocaleResourceProviderLazy>
       </Suspense>
     );
   } else {

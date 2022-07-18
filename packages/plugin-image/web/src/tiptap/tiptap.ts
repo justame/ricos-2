@@ -1,7 +1,9 @@
-import { TIPTAP_IMAGE_TYPE } from 'ricos-content';
+import { TIPTAP_IMAGE_TYPE, generateId } from 'ricos-content';
 import imageDataDefaults from 'ricos-schema/dist/statics/image.defaults.json';
 import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-tiptap-types';
 import { Image as Component } from './component';
+import type { RicosServices } from 'ricos-types';
+import { ImagePluginService } from '../toolbar/imagePluginService';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -29,13 +31,18 @@ export const tiptapExtensions = [
       config: NodeConfig,
       _extensions: RicosExtension[],
       _props: ExtensionProps,
-      settings: Record<string, unknown>
+      settings: Record<string, unknown>,
+      services: RicosServices
     ) => ({
       ...config,
-      addOptions: () => settings,
+      addOptions: () => ({
+        services,
+        imagePluginService: new ImagePluginService(),
+        ...settings,
+      }),
     }),
     Component,
-    createExtensionConfig() {
+    createExtensionConfig({ Plugin, PluginKey }) {
       return {
         name: this.name,
         atom: false,
@@ -54,6 +61,40 @@ export const tiptapExtensions = [
             default: null,
           },
         }),
+        addProseMirrorPlugins() {
+          return [
+            new Plugin({
+              key: new PluginKey('handlePasteImage'),
+              props: {
+                handlePaste: (view, event) => {
+                  let hasFiles = false;
+                  Array.from(event?.clipboardData?.files || [])
+                    .filter((file: File) => file.type.startsWith('image'))
+                    .forEach(file => {
+                      const nodeId = generateId();
+                      this.editor.commands.insertContent({
+                        type: TIPTAP_IMAGE_TYPE,
+                        attrs: { id: nodeId },
+                      });
+                      this.options.services?.uploadService?.uploadFile(
+                        file,
+                        nodeId,
+                        this.options.uploader,
+                        TIPTAP_IMAGE_TYPE,
+                        this.options.imagePluginService
+                      );
+                      hasFiles = true;
+                    });
+                  if (hasFiles) {
+                    event.preventDefault();
+                    return true;
+                  }
+                  return false;
+                },
+              },
+            }),
+          ];
+        },
         addCommands() {
           return {
             setImageUrl:

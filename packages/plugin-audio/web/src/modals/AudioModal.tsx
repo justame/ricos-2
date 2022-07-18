@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import type { UploadContextType } from 'wix-rich-content-common';
-import { UploadServiceContext } from 'wix-rich-content-common';
 import AudioInsertModal from './AudioInsertModal';
+import { UploadContext } from 'ricos-context';
 
 const AudioModal = props => {
   const {
@@ -10,8 +10,8 @@ const AudioModal = props => {
     experiments,
   } = props;
 
-  const { uploadService, updateService }: UploadContextType = experiments?.useUploadContext?.enabled
-    ? useContext(UploadServiceContext)
+  const { uploadService, updateService }: UploadContextType = experiments?.tiptapEditor?.enabled
+    ? useContext(UploadContext)
     : {};
 
   const onReplace = audio => {

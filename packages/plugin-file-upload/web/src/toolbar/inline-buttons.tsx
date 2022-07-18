@@ -1,4 +1,4 @@
-import { BUTTONS, PluginSettingsIcon, Uploader } from 'wix-rich-content-plugin-commons';
+import { BUTTONS, PluginSettingsIcon } from 'wix-rich-content-plugin-commons';
 import { MediaReplaceIcon } from '../icons';
 import type {
   CreateInlineButtons,
@@ -10,7 +10,6 @@ import { get } from 'lodash';
 import { getModalStyles } from 'wix-rich-content-editor-common';
 import { FILE_UPLOAD_TYPE } from '../types';
 import { Modals } from '../modals';
-import { FilePluginService } from './filePluginService';
 
 const createInlineButtons: CreateInlineButtons = ({
   t,
@@ -52,11 +51,6 @@ const createInlineButtons: CreateInlineButtons = ({
     settings,
     tooltipTextKey: t('FileUploadReplaceButton_tooltip'),
   };
-
-  if (experiments?.useUploadContext?.enabled) {
-    replaceButton.mediaPluginService = new FilePluginService();
-    replaceButton.getUploader = () => new Uploader(settings.onFileSelected);
-  }
 
   return [
     { keyName: 'sizeSmall', type: BUTTONS.SIZE_SMALL_CENTER, mobile: false },

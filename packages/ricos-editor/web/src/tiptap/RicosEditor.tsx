@@ -102,11 +102,7 @@ class RicosEditor extends React.Component<Props, RicosEditorState> implements Ri
     };
   };
 
-  getToolbarProps: RicosEditorRef['getToolbarProps'] = _type => ({
-    buttons: {},
-    context: {} as EditorContextType,
-    pubsub: {} as Pubsub,
-  });
+  getToolbarProps: RicosEditorRef['getToolbarProps'] = this.props.editor.getToolbarProps;
 
   getEditorCommands: RicosEditorRef['getEditorCommands'] = () => {
     return this.props.editor.getEditorCommands();
@@ -209,13 +205,14 @@ class RicosEditor extends React.Component<Props, RicosEditorState> implements Ri
   }
 
   render() {
-    const { ricosContext, editor } = this.props;
+    const { ricosContext, editor, onLoad } = this.props;
     const { initialContent, htmlAttributes } = this.state;
     if (!initialContent) {
       return null;
     }
     return (
       <RicosTiptapEditor
+        onLoad={onLoad}
         editor={editor.tiptapEditor}
         content={initialContent}
         t={ricosContext.t}

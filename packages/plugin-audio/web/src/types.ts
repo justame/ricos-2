@@ -1,4 +1,9 @@
-import type { EditorPluginConfig, ViewerPluginConfig } from 'wix-rich-content-common';
+import type {
+  EditorPluginConfig,
+  ViewerPluginConfig,
+  UpdateEntityFunc,
+  ComponentData,
+} from 'wix-rich-content-common';
 export { AUDIO_TYPE } from 'ricos-content';
 
 export type audioMenuDataType = {
@@ -19,3 +24,14 @@ export interface AudioPluginEditorConfig extends EditorPluginConfig {
 export interface AudioPluginViewerConfig extends ViewerPluginConfig {
   [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
+
+export type handleFileSelectionType = (updateEntity: UpdateEntityFunc<ComponentData[]>) => (
+  updateEntity: UpdateEntityFunc<ComponentData[]>,
+  index?: number,
+  multiple?: boolean,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  removeEntity?: any,
+  componentData?: ComponentData
+) => void;
+
+export type handleFileUploadType = (files, updateEntity) => void;

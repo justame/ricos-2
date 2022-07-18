@@ -27,6 +27,7 @@ export { default as LayoutSlideshowIcon } from './LayoutSlideshowIcon';
 export { default as LayoutSlidesIcon } from './LayoutSlidesIcon';
 export { default as LayoutThumbnailsIcon } from './LayoutThumbnailsIcon';
 export { default as ManageMediaIcon } from './ManageMediaIcon';
+export { default as ManageMediaNewIcon } from './ManageMediaNewIcon';
 export { default as Masonry } from './Masonry';
 export { default as Panorama } from './Panorama';
 export { default as PlusIcon } from './PlusIcon';

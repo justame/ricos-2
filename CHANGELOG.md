@@ -17,12 +17,84 @@
     Click to see more.
   </summary>
 
-</details>
+## :house: Internal
+
+- `collapsible-list`
+
+  - [#4193](https://github.com/wix/ricos/pull/4193) fix selection on tiptap
+
+- `audio`
+  - [#4073](https://github.com/wix/ricos/pull/4073) add toolbar settings button
+
+## :nail_care: Polish
+
+- `gallery/polls`
+  - [#4195](https://github.com/wix/ricos/pull/4195) code refactor/cleanup in getToolbarButtons.tsx
+  
+  </details>
+
+## 8.71.49 (Jul 17, 2022)
+
+## :house: Internal
+
+- `ricos-context ricos-common`
+  - [#4191](https://github.com/wix/ricos/pull/4191) refactor upload context and migration from `ricos-common` to `ricos-context`
+
+## 8.71.48 (Jul 17, 2022)
+
+## :bug: Bug Fix
+
+- `toolbars-v2`
+  - [#4189](https://github.com/wix/ricos/pull/4189) cleanup font-weight (firefox bug)
+
+## :house: Internal
+
+- `gallery`
+  - [#4095](https://github.com/wix/ricos/pull/4095) add toolbar settings button
+
+## 8.71.47 (Jul 14, 2022)
+
+## :house: Internal
+
+- `gallery`
+  - [#4183](https://github.com/wix/ricos/pull/4183) refactor settings button dataHook & settings modal
+
+## :bug: Bug Fix
+
+- `shortcuts`
+  - [#4186](https://github.com/wix/ricos/pull/4186) modal registration in aggregate rather component
+- `tiptap-editor`
+  - [#4173](https://github.com/wix/ricos/pull/4173) onLoad handler on tiptap editor create
+- `ricos-editor`
+  - [#4168](https://github.com/wix/ricos/pull/4168) insert plugins external toolbar api for tiptap (wip)
+- `collapsible-list`
+  - [#4182](https://github.com/wix/ricos/pull/4182) drag and drop of list items on tiptap
+
+## 8.71.46 (Jul 14, 2022)
+
+## :bug: Bug Fix
+
+- `polls-plugin`
+  - [#4180](https://github.com/wix/ricos/pull/4180) fix polls selection on android
+
+## 8.71.45 (Jul 14, 2022)
+
+## :bug: Bug Fix
+
+- `ricos-editor`
+  - [#4177](https://github.com/wix/ricos/pull/4177) fix ricos-portal zIndex
+
+## :house: Internal
+
+- `ricos-types ricos-plugins`
+  - [#4178](https://github.com/wix/ricos/pull/4178) change `addButton` command type to recieve `uploadService` instead of `uploadContext`
 
 ## 8.71.44 (Jul 12, 2022)
 
 ## :bug: Bug Fix
 
+- `ricos-content`
+  - [#4169](https://github.com/wix/ricos/pull/4169) createEmptyContent adds a paragraph by default
 - `ricos-editor`
   - [#4167](https://github.com/wix/ricos/pull/4167) fix toolbars should create (mobile)
 

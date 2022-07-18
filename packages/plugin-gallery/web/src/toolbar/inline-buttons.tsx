@@ -1,4 +1,4 @@
-import { BUTTONS, PluginSettingsIcon, Uploader } from 'wix-rich-content-plugin-commons';
+import { BUTTONS, PluginSettingsIcon } from 'wix-rich-content-plugin-commons';
 import { getModalStyles } from 'wix-rich-content-editor-common';
 import { Modals } from '../modals';
 import { ManageMediaIcon, UploadIcon } from '../icons';
@@ -10,13 +10,10 @@ import type {
   RelValue,
   AvailableExperiments,
   UISettings,
-  Helpers,
-  EditorPluginConfig,
   InlineUploadButton,
 } from 'wix-rich-content-common';
 import type { GalleryPluginEditorConfig } from '../types';
 import { GALLERY_TYPE } from '../types';
-import { GalleryPluginService } from './galleryPluginService';
 
 const createInlineButtons: CreateInlineButtons = ({
   t,
@@ -64,15 +61,6 @@ const createInlineButtons: CreateInlineButtons = ({
     settings,
   };
 
-  if (experiments?.useUploadContext?.enabled) {
-    addFilesButton.mediaPluginService = new GalleryPluginService();
-    addFilesButton.getUploader = (
-      helpers: Helpers,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      _: Record<string, any> & EditorPluginConfig
-    ) => new Uploader(helpers?.handleFileUpload);
-  }
-
   return [
     addFilesButton,
     { type: BUTTONS.SEPARATOR, mobile: false, keyName: 'separator0' },
@@ -112,7 +100,7 @@ const createInlineButtons: CreateInlineButtons = ({
       uiSettings,
     },
     {
-      keyName: 'advanced_settings',
+      keyName: 'settings',
       type: BUTTONS.EXTERNAL_MODAL,
       fullHeight: true,
       icon: icons.advanced_settings || PluginSettingsIcon,

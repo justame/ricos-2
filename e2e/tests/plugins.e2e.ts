@@ -100,7 +100,7 @@ describe('plugins', () => {
       // cy.get(`[data-hook=${PLUGIN_TOOLBAR_BUTTONS.SPOILER}]:visible`).click();
 
       //check spoiler from settings modal
-      cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.ADV_SETTINGS);
+      cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.SETTINGS);
       cy.get(`[data-hook=gallerySpoilerToggle]`).click();
       cy.get(`[data-hook=${ACTION_BUTTONS.SAVE}]`).click();
       // cy.wait(300);

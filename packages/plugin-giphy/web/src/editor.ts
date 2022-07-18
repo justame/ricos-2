@@ -20,6 +20,6 @@ export const pluginGiphy: EditorPluginCreator<GiphyPluginEditorConfig> = config 
     createPluginData: createGiphyData,
     tiptapExtensions,
     addButtons: getAddButtons(config),
-    toolbarButtons: getToolbarButtons(config),
+    toolbar: { buttons: getToolbarButtons(config) },
   } as TiptapEditorPlugin;
 };

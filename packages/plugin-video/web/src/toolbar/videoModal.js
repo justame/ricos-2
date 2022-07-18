@@ -4,7 +4,7 @@ import VideoSelectionInputModal from './videoSelectionInputModal';
 import MediaURLInputModal from './mediaURLInputModal';
 import NewVideoModal from './NewVideoModal';
 import { mediaTypes } from '../types';
-import { UploadServiceContext } from 'wix-rich-content-common';
+import { UploadContext } from 'ricos-context';
 
 const VideoModal = props => {
   const {
@@ -12,8 +12,8 @@ const VideoModal = props => {
     experiments,
   } = props;
 
-  const { uploadService, updateService } = experiments?.useUploadContext?.enabled
-    ? useContext(UploadServiceContext)
+  const { uploadService, updateService } = experiments?.tiptapEditor?.enabled
+    ? useContext(UploadContext)
     : {};
 
   const useNewModal = experiments?.newVideoVerticalAndSocialModals?.enabled;

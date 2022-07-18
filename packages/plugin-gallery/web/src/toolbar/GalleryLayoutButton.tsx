@@ -35,7 +35,7 @@ export const GalleryLayoutButton: FC<Props> = ({ toolbarItem }) => {
         />
       ))}
       Icon={SelectedLayoutIcon}
-      tooltip={t('TextAlignmentButton_Tooltip')}
+      tooltip={t('GalleryPlugin_Layout_Select_Tooltip')}
     />
   );
 };

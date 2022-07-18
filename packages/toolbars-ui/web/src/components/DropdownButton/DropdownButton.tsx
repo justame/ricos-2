@@ -29,13 +29,12 @@ const DropdownButton = ({ Icon, dataHook, tooltip, options, id }: Props) => {
   );
 
   useEffect(() => {
-    modalService.register({
-      Component: ModalComponent,
-      id,
-    });
+    !modalService.getModal(id) &&
+      modalService.register({
+        Component: ModalComponent,
+        id,
+      });
   }, []);
-
-  useEffect(() => modalService.unregister(id), []);
 
   const onClick = () => {
     if (modalService?.isModalOpen(id)) {
