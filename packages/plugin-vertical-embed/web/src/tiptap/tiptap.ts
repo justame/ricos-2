@@ -22,7 +22,7 @@ export const tiptapExtensions = [
       return {
         name: this.name,
         group: 'block',
-        selectable: false,
+        selectable: true,
         draggable: true,
         addAttributes: () => appEmbedDataDefaults,
       };

@@ -24,7 +24,7 @@ export const tiptapExtensions: RicosExtension[] = [
       return {
         name: this.name,
         group: 'block',
-        selectable: false,
+        selectable: true,
         draggable: true,
         addAttributes: () => ({
           ...fileDataDefaults,

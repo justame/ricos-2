@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import type { FC } from 'react';
 import { DropdownButton, ListItemSelect } from '../../components';
-import { RicosContext } from 'ricos-context';
+import { RicosContext, ModalContext } from 'ricos-context';
 import type { PluginContainerData_Width_Type } from 'ricos-schema';
 import type { IToolbarItem } from 'ricos-types';
 import { defaultSize, sizeMap, sizeIconMap } from './consts';
@@ -13,6 +13,7 @@ type Props = {
 
 const NodeSizeButton: FC<Props> = ({ options, toolbarItem }) => {
   const { t } = useContext(RicosContext) || {};
+  const modalService = useContext(ModalContext) || {};
 
   const nodeSize = toolbarItem?.attributes.nodeSize;
   const selectedSize = (nodeSize as string) || 'CONTENT';
@@ -32,7 +33,10 @@ const NodeSizeButton: FC<Props> = ({ options, toolbarItem }) => {
           title={t(text)}
           selected={commandKey === selectedSize}
           tooltip={t(tooltip)}
-          onClick={() => toolbarItem.commands?.setSize(commandKey)}
+          onClick={() => {
+            modalService.closeModal('NodeSizeButton');
+            toolbarItem.commands?.setSize(commandKey);
+          }}
         />
       ))}
       Icon={SelectedSizeIcon}

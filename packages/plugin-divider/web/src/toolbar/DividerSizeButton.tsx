@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import type { FC, ComponentType } from 'react';
-import { RicosContext } from 'ricos-context';
+import { RicosContext, ModalContext } from 'ricos-context';
 import type { IToolbarItem } from 'ricos-types';
 import { DropdownButton, ListItemSelect } from 'wix-rich-content-toolbars-ui';
 import { dividerSizeData } from './dividerButtonsData';
@@ -11,6 +11,7 @@ type Props = {
 
 export const DividerSizeButton: FC<Props> = ({ toolbarItem }) => {
   const { t } = useContext(RicosContext) || {};
+  const modalService = useContext(ModalContext) || {};
 
   const nodeSize = toolbarItem?.attributes.nodeSize;
   const selectedSize = (nodeSize as string) || 'CONTENT';
@@ -29,7 +30,10 @@ export const DividerSizeButton: FC<Props> = ({ toolbarItem }) => {
           title={t(text)}
           selected={commandKey === selectedSize}
           tooltip={t(tooltip)}
-          onClick={() => toolbarItem.commands?.click({ size: commandKey })}
+          onClick={() => {
+            modalService.closeModal('divider_size');
+            toolbarItem.commands?.click({ size: commandKey });
+          }}
         />
       ))}
       Icon={SelectedSizeIcon}
