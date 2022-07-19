@@ -15,8 +15,6 @@ import InPluginInput from './InPluginInput';
 
 import type { ImageViewerProps } from './types';
 
-initCustomElement();
-
 const IMAGE_FALLBACK_WIDTH = 300;
 
 const getImageSrc = (
@@ -51,6 +49,7 @@ class WixImage extends React.Component<ImageViewerProps & { styles: Record<strin
 
   constructor(props) {
     super(props);
+    initCustomElement();
     this._id = uniqueId('new-image');
   }
 
