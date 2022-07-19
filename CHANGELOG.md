@@ -17,43 +17,36 @@
     Click to see more.
   </summary>
 
+
+  </details>
+
+## 8.71.50 (Jul 19, 2022)
+
 ## :bug: Bug Fix
 
 - `tiptap-extensions`
-
   - [#4204](https://github.com/wix/ricos/pull/4204) lists input rule with custom handler
 
 - `ricos-styles`
-
   - [#4205](https://github.com/wix/ricos/pull/4205) document style set style merger
 
 ## :house: Internal
 
 - `ricos-tiptap-types`
   - [#4198](https://github.com/wix/ricos/pull/4198) ricos-tiptap-types merged into ricos-types
-
-- `tiptap-extensions`
-
   - [#4203](https://github.com/wix/ricos/pull/4203) overlay click triggers focus
 
 - `collapsible-list`
-
   - [#4193](https://github.com/wix/ricos/pull/4193) fix selection on tiptap
 
 - `audio`
-
   - [#4073](https://github.com/wix/ricos/pull/4073) add toolbar settings button
 
 - `gallery/audio`
   - [#4206](https://github.com/wix/ricos/pull/4206) refactor getToolbarButtons.tsx
 
-## :nail_care: Polish
-
 - `gallery/polls`
-
   - [#4195](https://github.com/wix/ricos/pull/4195) code refactor/cleanup in getToolbarButtons.tsx
-
-  </details>
 
 ## 8.71.49 (Jul 17, 2022)
 
