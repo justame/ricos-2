@@ -16,6 +16,9 @@
     Changes that have landed in master but are not yet released.
     Click to see more.
   </summary>
+</details>
+
+## 8.72.0 (Jul 19, 2022)
 
 ## :rocket: New Feature
 
@@ -26,9 +29,6 @@
 
 - `tiptap-editor`
   - [#4200](https://github.com/wix/ricos/pull/4200) text node from/to transformer (fixed id's)
-  
-</details>
-
 
 ## 8.71.50 (Jul 19, 2022)
 
