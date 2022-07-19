@@ -12,7 +12,7 @@ import type { Editor, NodeViewContent } from '@tiptap/react';
 import type { Plugin as IPlugin, PluginKey as IPluginKey } from 'prosemirror-state';
 import type { Node as ProsemirrorNode } from 'prosemirror-model';
 import type { ComponentType } from 'react';
-import type { ComponentData, DraftContent } from 'wix-rich-content-common';
+import type { ComponentData, DraftContent } from 'ricos-content';
 import type {
   Decoration_Type,
   EditorPlugin,
