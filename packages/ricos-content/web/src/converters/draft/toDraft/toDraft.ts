@@ -89,7 +89,7 @@ const convert =
         if (paragraph) {
           parseTextNodes(paragraph, {
             type: TO_DRAFT_LIST_TYPE[node.type],
-            key: listItem.id,
+            key: paragraph.id,
             indentation,
           });
         }

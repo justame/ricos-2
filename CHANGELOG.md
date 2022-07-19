@@ -17,7 +17,10 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
 
+- `tiptap-editor`
+  - [#4200](https://github.com/wix/ricos/pull/4200) text node from/to transformer (fixed id's)
   </details>
 
 ## 8.71.50 (Jul 19, 2022)
@@ -25,6 +28,7 @@
 ## :bug: Bug Fix
 
 - `tiptap-extensions`
+
   - [#4204](https://github.com/wix/ricos/pull/4204) lists input rule with custom handler
 
 - `ricos-styles`
@@ -33,16 +37,20 @@
 ## :house: Internal
 
 - `ricos-tiptap-types`
+
   - [#4198](https://github.com/wix/ricos/pull/4198) ricos-tiptap-types merged into ricos-types
   - [#4203](https://github.com/wix/ricos/pull/4203) overlay click triggers focus
 
 - `collapsible-list`
+
   - [#4193](https://github.com/wix/ricos/pull/4193) fix selection on tiptap
 
 - `audio`
+
   - [#4073](https://github.com/wix/ricos/pull/4073) add toolbar settings button
 
 - `gallery/audio`
+
   - [#4206](https://github.com/wix/ricos/pull/4206) refactor getToolbarButtons.tsx
 
 - `gallery/polls`

@@ -142,11 +142,16 @@ export const fromDraft = (draftJSON: DraftContent, opts: FromDraftOptions = {}):
         paragraphNode.id = block.key;
       // falls through
       case BlockType.Blockquote:
+        if (paragraphNode.paragraphData) {
+          paragraphNode.paragraphData.indentation = block.depth;
+        }
+        break;
       case BlockType.OrderedListItem:
       case BlockType.UnorderedListItem:
         if (paragraphNode.paragraphData) {
           paragraphNode.paragraphData.indentation = block.depth;
         }
+        paragraphNode.id = block.key;
         break;
       default:
     }
@@ -161,7 +166,7 @@ export const fromDraft = (draftJSON: DraftContent, opts: FromDraftOptions = {}):
   };
 
   const createListItem = (block: RicosContentBlock): Node => ({
-    id: block.key,
+    id: generateId(contentIdPrefix),
     type: Node_Type.LIST_ITEM,
     nodes: [parseTextBlock(withDepth(block))],
   });

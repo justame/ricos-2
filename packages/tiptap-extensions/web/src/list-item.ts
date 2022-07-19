@@ -1,7 +1,8 @@
+import type { NodeType, Node } from 'prosemirror-model';
 import { mergeAttributes } from '@tiptap/core';
 import type { DOMOutputSpec, RicosExtension } from 'ricos-types';
-import type { Node } from 'prosemirror-model';
 import { Node_Type } from 'ricos-schema';
+import { toggleLists } from './toggleLists';
 import styles from './statics/styles.scss';
 
 declare module '@tiptap/core' {
@@ -15,6 +16,15 @@ declare module '@tiptap/core' {
        * decrease list indentation
        */
       outdentList: () => ReturnType;
+    };
+    toggleLists: {
+      /**
+       * Toggle between different list types.
+       */
+      toggleLists: (
+        listTypeOrName: string | NodeType,
+        itemTypeOrName: string | NodeType
+      ) => ReturnType;
     };
   }
 }
@@ -58,6 +68,7 @@ export const listItem: RicosExtension = {
 
       addCommands() {
         return {
+          toggleLists,
           indentList:
             () =>
             ({ state, chain }) => {

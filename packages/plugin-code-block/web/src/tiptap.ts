@@ -98,12 +98,12 @@ export const tiptapExtensions: RicosExtension[] = [
             setCodeBlock:
               attributes =>
               ({ commands }) => {
-                return commands.setNode(this.name, attributes);
+                return commands.updateTextNode(this.name, attributes);
               },
             toggleCodeBlock:
               attributes =>
               ({ commands }) => {
-                return commands.toggleNode(this.name, Node_Type.PARAGRAPH, attributes);
+                return commands.toggleTextNode(this.name, Node_Type.PARAGRAPH, attributes);
               },
           };
         },
@@ -122,7 +122,7 @@ export const tiptapExtensions: RicosExtension[] = [
               }
 
               if (isAtStart || !$anchor.parent.textContent.length) {
-                return this.editor.commands.clearNodes();
+                return this.editor.commands.normalizeNodes();
               }
 
               return false;

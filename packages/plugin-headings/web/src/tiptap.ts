@@ -89,7 +89,7 @@ export const tiptapExtensions = [
                   return false;
                 }
 
-                return commands.setNode(this.name, attributes);
+                return commands.updateTextNode(this.name, attributes);
               },
             toggleHeading:
               attributes =>
@@ -98,7 +98,7 @@ export const tiptapExtensions = [
                   return false;
                 }
 
-                return commands.toggleNode(this.name, Node_Type.PARAGRAPH, attributes);
+                return commands.toggleTextNode(this.name, Node_Type.PARAGRAPH, attributes);
               },
           };
         },

@@ -75,7 +75,7 @@ export const paragraph: RicosExtension = {
           setParagraph:
             () =>
             ({ commands }) => {
-              return commands.setNode(this.name);
+              return commands.updateTextNode(this.name);
             },
           softNewLine:
             () =>

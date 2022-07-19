@@ -1,4 +1,4 @@
-import { InputRule } from '@tiptap/core';
+import { InputRule, getNodeType, isNodeActive } from '@tiptap/core';
 import type { RicosExtension } from 'ricos-types';
 import bulletedListDataDefaults from 'ricos-schema/dist/statics/bulleted_list.defaults.json';
 import type { DOMOutputSpec } from 'prosemirror-model';
@@ -18,6 +18,10 @@ declare module '@tiptap/core' {
        * Toggle a bullet list
        */
       toggleBulletList: () => ReturnType;
+      /**
+       * Toggle off an bulleted list if exists
+       */
+      toggleOffBulletList: () => ReturnType;
     };
   }
 }
@@ -65,7 +69,16 @@ export const bulletedList: RicosExtension = {
           toggleBulletList:
             () =>
             ({ commands }) => {
-              return commands.toggleList(this.name, Node_Type.LIST_ITEM);
+              return commands.toggleLists(this.name, Node_Type.LIST_ITEM);
+            },
+          toggleOffBulletList:
+            () =>
+            ({ state, commands }) => {
+              const isActive = isNodeActive(state, getNodeType(this.name, state.schema));
+              if (isActive) {
+                return commands.toggleBulletList();
+              }
+              return true;
             },
         };
       },

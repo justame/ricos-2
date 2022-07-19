@@ -88,19 +88,18 @@ export const blockquote: RicosExtension = {
           setBlockquote:
             () =>
             ({ commands }) => {
-              return commands.setNode(this.name, { paragraphId: generateId() });
+              return commands.updateTextNode(this.name, { paragraphId: generateId() });
             },
           toggleBlockquote:
             () =>
             ({ commands }) => {
-              return commands.toggleNode(this.name, Node_Type.PARAGRAPH, {
-                paragraphId: generateId(),
-              });
+              //TODO: fix generating paragraphId every render
+              return commands.toggleTextNode(this.name, Node_Type.PARAGRAPH);
             },
           unsetBlockquote:
             () =>
             ({ commands }) => {
-              return commands.setNode(Node_Type.PARAGRAPH, {});
+              return commands.updateTextNode(Node_Type.PARAGRAPH, {});
             },
         };
       },
@@ -115,7 +114,7 @@ export const blockquote: RicosExtension = {
             }
 
             if (isAtStart || !$anchor.parent.textContent.length) {
-              return this.editor.commands.clearNodes();
+              return this.editor.commands.normalizeNodes();
             }
 
             return false;

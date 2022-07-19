@@ -1,4 +1,7 @@
 import * as insertNode from './commands/insertNode';
+import * as updateTextNode from './commands/updateTextNode';
+import * as toggleTextNode from './commands/toggleTextNode';
+import * as normalizeNodes from './commands/normalizeNodes';
 import * as setNodeAttrsById from './commands/setNodeAttrsById';
 import * as updateNodeAttrsById from './commands/updateNodeAttrsById';
 import * as replaceNode from './commands/replaceNode';
@@ -17,6 +20,9 @@ export const commands: RicosExtension = {
       addCommands() {
         return {
           ...insertNode,
+          ...updateTextNode,
+          ...toggleTextNode,
+          ...normalizeNodes,
           ...setNodeAttrsById,
           ...updateNodeAttrsById,
           ...deleteNode,

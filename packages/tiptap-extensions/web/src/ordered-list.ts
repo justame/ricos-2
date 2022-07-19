@@ -1,4 +1,4 @@
-import { mergeAttributes, InputRule } from '@tiptap/core';
+import { mergeAttributes, InputRule, getNodeType, isNodeActive } from '@tiptap/core';
 import { Node_Type } from 'ricos-schema';
 import { createListInputRuleHandler } from './list-input-rule-handler';
 import orderedListDataDefaults from 'ricos-schema/dist/statics/ordered_list.defaults.json';
@@ -12,6 +12,10 @@ declare module '@tiptap/core' {
        * Toggle an ordered list
        */
       toggleOrderedList: () => ReturnType;
+      /**
+       * Toggle off an ordered list if exists
+       */
+      toggleOffOrderedList: () => ReturnType;
     };
   }
 }
@@ -76,7 +80,16 @@ export const orderedList: RicosExtension = {
           toggleOrderedList:
             () =>
             ({ commands }) => {
-              return commands.toggleList(this.name, this.options.itemTypeName);
+              return commands.toggleLists(this.name, this.options.itemTypeName);
+            },
+          toggleOffOrderedList:
+            () =>
+            ({ state, commands }) => {
+              const isActive = isNodeActive(state, getNodeType(this.name, state.schema));
+              if (isActive) {
+                return commands.toggleOrderedList();
+              }
+              return true;
             },
         };
       },
