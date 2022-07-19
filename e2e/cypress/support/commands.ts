@@ -535,7 +535,6 @@ const COMMANDS = {
     cy.moveCursorToEnd()
       .type(url)
       .type('{enter}')
-      .moveCursorToEnd()
       .get(`a[href*="${url}"]${isPreview ? ' figure' : ''}`);
   },
 
