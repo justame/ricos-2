@@ -8,7 +8,7 @@ const name = TIPTAP_AUDIO_TYPE;
 export const tiptapExtensions = [
   {
     type: 'node' as const,
-    groups: ['react'],
+    groups: ['react', 'overlay'],
     name,
     reconfigure: (
       config: NodeConfig,

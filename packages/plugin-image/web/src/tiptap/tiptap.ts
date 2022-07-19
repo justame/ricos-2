@@ -26,7 +26,7 @@ export const tiptapExtensions = [
   {
     type: 'node' as const,
     name,
-    groups: ['react', 'spoilerable'],
+    groups: ['react', 'spoilerable', 'overlay'],
     reconfigure: (
       config: NodeConfig,
       _extensions: RicosExtension[],

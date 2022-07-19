@@ -98,7 +98,7 @@ export const tiptapExtensions = [
   {
     type: 'node' as const,
     name: TIPTAP_LINK_PREVIEW_TYPE,
-    groups: ['react'],
+    groups: ['react', 'overlay'],
     reconfigure: (
       config: NodeConfig,
       _extensions: RicosExtension[],
@@ -131,7 +131,7 @@ export const tiptapExtensions = [
   {
     type: 'node' as const,
     name: TIPTAP_EMBED_TYPE,
-    groups: ['react'],
+    groups: ['react', 'overlay'],
     reconfigure: (
       config: NodeConfig,
       _extensions: RicosExtension[],

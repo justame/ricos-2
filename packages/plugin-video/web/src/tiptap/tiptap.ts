@@ -8,7 +8,7 @@ const name = TIPTAP_VIDEO_TYPE;
 export const tiptapExtensions = [
   {
     type: 'node' as const,
-    groups: ['react', 'spoilerable'],
+    groups: ['react', 'spoilerable', 'overlay'],
     name,
     reconfigure: (
       config: NodeConfig,
