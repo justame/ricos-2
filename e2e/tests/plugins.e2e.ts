@@ -9,7 +9,6 @@ import {
 } from '../cypress/dataHooks';
 import { usePlugins, plugins, usePluginsConfig, useTheming } from '../cypress/testAppConfig';
 import { DEFAULT_MOBILE_WIDTHS } from './settings';
-import { getTestPrefix } from '../cypress/utils';
 
 describe('plugins', () => {
   afterEach(() => cy.matchContentSnapshot());
@@ -251,37 +250,30 @@ describe('plugins', () => {
     });
   });
 
-  [true, false].forEach(useTiptap => {
-    context('convert link to preview', () => {
-      context('with default config', () => {
-        const testAppConfig = {
-          ...usePlugins(plugins.embedsPreset),
-          ...usePluginsConfig({
-            linkPreview: {
-              enableEmbed: undefined,
-              enableLinkPreview: undefined,
-            },
-          }),
-        };
-        beforeEach('load editor', () => {
-          cy.toggleTiptap(useTiptap);
-          cy.loadRicosEditorAndViewer('empty', testAppConfig);
-        });
+  context('convert link to preview', () => {
+    context('with default config', () => {
+      const testAppConfig = {
+        ...usePlugins(plugins.embedsPreset),
+        ...usePluginsConfig({
+          linkPreview: {
+            enableEmbed: undefined,
+            enableLinkPreview: undefined,
+          },
+        }),
+      };
 
-        it(`${getTestPrefix(
-          useTiptap
-        )} should create link preview from link after enter key`, function () {
-          cy.insertLinkAndEnter('www.wix.com', { isPreview: true });
-          cy.percySnapshot(this.test.title);
-        });
+      beforeEach('load editor', () => cy.loadRicosEditorAndViewer('empty', testAppConfig));
 
-        it(`${getTestPrefix(useTiptap)} should embed link that supports embed`, function () {
-          cy.insertLinkAndEnter('www.mockUrl.com');
-          cy.percySnapshot(this.test.title);
-        });
+      it('should create link preview from link after enter key', () => {
+        cy.insertLinkAndEnter('www.wix.com', { isPreview: true });
+        cy.percySnapshot();
+      });
+
+      it('should embed link that supports embed', () => {
+        cy.insertLinkAndEnter('www.mockUrl.com');
+        cy.percySnapshot();
       });
     });
-
     context('with custom config', () => {
       const testAppConfig = {
         ...usePlugins(plugins.embedsPreset),
@@ -307,27 +299,23 @@ describe('plugins', () => {
     });
   });
 
-  [true, false].forEach(useTiptap => {
-    context('social embed', () => {
-      const testAppConfig = {
-        plugins: [plugins.linkPreview],
-      };
-      beforeEach('load editor', () => {
-        cy.switchToDesktop();
-        cy.toggleTiptap(useTiptap);
-        cy.loadRicosEditorAndViewer('empty', testAppConfig);
-      });
+  context('social embed', () => {
+    const testAppConfig = {
+      plugins: [plugins.linkPreview],
+    };
+    beforeEach('load editor', () => {
+      cy.switchToDesktop();
+      cy.loadRicosEditorAndViewer('empty', testAppConfig);
+    });
 
-      const embedTypes = ['TWITTER', 'INSTAGRAM'];
-      embedTypes.forEach(embedType => {
-        it(`${getTestPrefix(useTiptap)} render social  embed modals upload modals`, function () {
-          cy.openEmbedModal(STATIC_TOOLBAR_BUTTONS[embedType]);
-          cy.percySnapshot(this.test.title + ' modal');
-          cy.addSocialEmbed('www.mockUrl.com').waitForHtmlToLoad();
-          cy.get(`#RicosViewerContainer [data-hook=HtmlComponent]`);
-          cy.focusEditor().type('{rightarrow}');
-          cy.percySnapshot(this.test.title + ' added');
-        });
+    const embedTypes = ['TWITTER', 'INSTAGRAM'];
+    embedTypes.forEach(embedType => {
+      it(`render ${embedType.toLowerCase()} upload modals`, function () {
+        cy.openEmbedModal(STATIC_TOOLBAR_BUTTONS[embedType]);
+        cy.percySnapshot(this.test.title + ' modal');
+        cy.addSocialEmbed('www.mockUrl.com').waitForHtmlToLoad();
+        cy.get(`#RicosViewerContainer [data-hook=HtmlComponent]`);
+        cy.percySnapshot(this.test.title + ' added');
       });
     });
   });
