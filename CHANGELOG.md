@@ -18,7 +18,7 @@
   </summary>
 </details>
 
-## 8.72.0 (Jul 19, 2022)
+## 8.72.1 (Jul 19, 2022)
 
 ## :rocket: New Feature
 
