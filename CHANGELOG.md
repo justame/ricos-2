@@ -17,11 +17,18 @@
     Click to see more.
   </summary>
 
+## :rocket: New Feature
+
+- `image`
+  - [#4144](https://github.com/wix/ricos/pull/4144) Use @wix/image renderer (FT)
+
 ## :bug: Bug Fix
 
 - `tiptap-editor`
   - [#4200](https://github.com/wix/ricos/pull/4200) text node from/to transformer (fixed id's)
-  </details>
+  
+</details>
+
 
 ## 8.71.50 (Jul 19, 2022)
 

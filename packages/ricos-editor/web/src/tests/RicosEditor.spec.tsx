@@ -1,5 +1,13 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable max-len */
+global.window.ResizeObserver = class {
+  observe() {}
+
+  disconnect() {}
+
+  unobserve() {}
+};
+
 import React from 'react';
 import { version } from '../../package.json';
 import type { RicosEditorProps, DraftEditorSettings } from '../index';

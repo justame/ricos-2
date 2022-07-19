@@ -29,6 +29,7 @@ const externals = [
   /^@tiptap.*/,
   /prosemirror/,
   /linkifyjs/,
+  /@wix\/image/,
 ];
 
 const excludedExternalsRegexArr = [/react-click-outsider/, /@tiptap/, /ricos-schema/, /\.scss/];

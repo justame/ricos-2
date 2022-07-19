@@ -1,3 +1,10 @@
+global.window.ResizeObserver = class {
+  observe() {}
+
+  disconnect() {}
+
+  unobserve() {}
+};
 import { pluginImage } from 'wix-rich-content-plugin-image';
 import { pluginGallery } from 'wix-rich-content-plugin-gallery';
 import { pluginVideo } from 'wix-rich-content-plugin-video';

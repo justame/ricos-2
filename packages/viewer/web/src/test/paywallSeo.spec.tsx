@@ -1,4 +1,12 @@
 import React from 'react';
+global.window.ResizeObserver = class {
+  observe() {}
+
+  disconnect() {}
+
+  unobserve() {}
+};
+
 import { imageTypeMapper } from 'wix-rich-content-plugin-image/viewer';
 import RichContentViewer from '../RichContentViewer';
 import { render } from '@testing-library/react';
