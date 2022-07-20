@@ -17,6 +17,10 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.72.2 (Jul 20, 2022)
+
 ## :house: Internal
 
 - `tiptap-editor`
@@ -29,8 +33,6 @@
 
 - `ricos-content`
   - [#4215](https://github.com/wix/ricos/pull/4215) draft video data to ricos conversion
-
-</details>
 
 ## 8.72.1 (Jul 19, 2022)
 
