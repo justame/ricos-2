@@ -96,20 +96,18 @@ export const placeholder: RicosExtension = {
                   const isEmpty = !node.isLeaf && !node.childCount;
                   if (isEmpty) {
                     if (this.options.extensionsPlaceholders.length) {
-                      this.options.extensionsPlaceholders.forEach(
-                        ({ predicate, translationKey, content }) => {
-                          if (predicate({ doc, pos, node })) {
-                            const { t } = this.options;
-                            const classes = [this.options.emptyNodeClass];
-                            const decoration = Decoration.node(pos, pos + node.nodeSize, {
-                              class: classes.join(' '),
-                              'data-placeholder': translationKey && t ? t(translationKey) : content,
-                            });
+                      this.options.extensionsPlaceholders.forEach(({ predicate, content }) => {
+                        if (predicate({ doc, pos, node })) {
+                          const { t } = this.options;
+                          const classes = [this.options.emptyNodeClass];
+                          const decoration = Decoration.node(pos, pos + node.nodeSize, {
+                            class: classes.join(' '),
+                            'data-placeholder': t?.(content) || content,
+                          });
 
-                            decorations.push(decoration);
-                          }
+                          decorations.push(decoration);
                         }
-                      );
+                      });
 
                       return true;
                     }

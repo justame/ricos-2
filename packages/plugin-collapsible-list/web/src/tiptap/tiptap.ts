@@ -109,7 +109,7 @@ export const tiptapExtensions = [
         const parentNode = doc.resolve(pos).parent;
         return parentNode.type.name === TIPTAP_COLLAPSIBLE_ITEM_TITLE_TYPE;
       },
-      translationKey: 'CollapsibleList_ShownText_Placeholder',
+      content: 'CollapsibleList_ShownText_Placeholder',
     },
     createExtensionConfig() {
       return {
@@ -138,7 +138,7 @@ export const tiptapExtensions = [
         const parentNode = doc.resolve(pos).parent;
         return parentNode.type.name === TIPTAP_COLLAPSIBLE_ITEM_BODY_TYPE;
       },
-      translationKey: 'CollapsibleList_CollapsedText_Placeholder',
+      content: 'CollapsibleList_CollapsedText_Placeholder',
     },
     createExtensionConfig() {
       return {

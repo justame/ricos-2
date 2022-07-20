@@ -22,7 +22,8 @@
 - `tiptap-editor`
   - [#4211](https://github.com/wix/ricos/pull/4211) warn about setNode & clearNodes tiptap commands usage
 - `tiptap-extensions`
-  - [#4218](https://github.com/wix/ricos/pull/4218) add `translationKey` property to placeholder extension
+  - [#4218](https://github.com/wix/ricos/pull/4218) add translate to placeholder extension
+  - [#4220](https://github.com/wix/ricos/pull/4220) remove `translationKey` and translate content directly in placeholder
 
 ## :bug: Bug Fix
 
