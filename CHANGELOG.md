@@ -23,6 +23,11 @@
 
   - [#4211](https://github.com/wix/ricos/pull/4211) warn about setNode & clearNodes tiptap commands usage
 
+## :bug: Bug Fix
+
+- `ricos-content`
+  - [#4215](https://github.com/wix/ricos/pull/4215) draft video data to ricos conversion
+
 </details>
 
 ## 8.72.1 (Jul 19, 2022)

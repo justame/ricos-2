@@ -772,4 +772,105 @@ describe('migrate from draft', () => {
       })
     ).toEqual({});
   });
+
+  it('should convert video with thumbnail correctly', () => {
+    const draftContent = {
+      blocks: [
+        {
+          key: 'foo',
+          text: 'Youtube video:',
+          type: 'unstyled',
+          depth: 0,
+          inlineStyleRanges: [],
+          entityRanges: [],
+          data: {},
+        },
+        {
+          key: '9v54q',
+          text: '',
+          type: 'unstyled',
+          depth: 0,
+          inlineStyleRanges: [],
+          entityRanges: [],
+          data: {},
+        },
+        {
+          key: 'c0so8',
+          text: ' ',
+          type: 'atomic',
+          depth: 0,
+          inlineStyleRanges: [],
+          entityRanges: [
+            {
+              offset: 0,
+              length: 1,
+              key: 0,
+            },
+          ],
+          data: {},
+        },
+        {
+          key: '81mcr',
+          text: '',
+          type: 'unstyled',
+          depth: 0,
+          inlineStyleRanges: [],
+          entityRanges: [],
+          data: {},
+        },
+      ],
+      entityMap: {
+        '0': {
+          type: 'wix-draft-plugin-video',
+          mutability: 'IMMUTABLE',
+          data: {
+            config: {
+              size: 'content',
+              alignment: 'center',
+              textWrap: 'wrap',
+            },
+            src: 'https://www.youtube.com/watch?v=ko5lL2MQKCU',
+            metadata: {
+              oembed: {
+                thumbnail_url: 'https://i.ytimg.com/vi/ko5lL2MQKCU/maxresdefault.jpg',
+                thumbnail_height: 720,
+                thumbnail_width: 1280,
+                video_url: 'https://www.youtube.com/watch?v=ko5lL2MQKCU',
+              },
+            },
+            duration: 374,
+          },
+        },
+      },
+      documentStyle: {},
+      VERSION: '8.71.49',
+      ID: '79347b8b-6a76-4e7e-bfed-c7ed8745fe8c',
+    };
+    const videoData = JSON.parse(JSON.stringify(fromDraft(draftContent).nodes[2].videoData));
+
+    const expectedVideoData = {
+      containerData: {
+        alignment: 'CENTER',
+        width: {
+          size: 'CONTENT',
+        },
+        textWrap: true,
+      },
+      video: {
+        src: {
+          url: 'https://www.youtube.com/watch?v=ko5lL2MQKCU',
+        },
+        duration: 374,
+      },
+      thumbnail: {
+        src: {
+          url: 'https://i.ytimg.com/vi/ko5lL2MQKCU/maxresdefault.jpg',
+        },
+        width: 1280,
+        height: 720,
+      },
+    };
+
+    expect(compare(videoData, expectedVideoData)).toEqual({});
+  });
 });

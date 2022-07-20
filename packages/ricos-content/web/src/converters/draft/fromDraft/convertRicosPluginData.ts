@@ -121,7 +121,18 @@ const convertContainerData = (
 
 const convertVideoData = (data: {
   src?: string | VideoComponentData;
-  metadata?: { thumbnail_url?: string; width?: number; height?: number; title?: string };
+  metadata?: {
+    oembed?: {
+      thumbnail_url?: string;
+      thumbnail_width?: string;
+      thumbnail_height?: string;
+      video_url?: string;
+    };
+    thumbnail_url?: string;
+    width?: number;
+    height?: number;
+    title?: string;
+  };
   video;
   thumbnail;
   title?;
@@ -129,10 +140,27 @@ const convertVideoData = (data: {
 }) => {
   if (typeof data.src === 'string') {
     data.video = { src: { url: data.src } };
-    const { thumbnail_url, width, height, title } = data.metadata || {};
+    const {
+      oembed,
+      thumbnail_url,
+      width: thumbnail_width,
+      height: thumbnail_height,
+      title,
+    } = data.metadata || {};
+    let src, width, height;
+    if (oembed) {
+      const { thumbnail_url, thumbnail_width, thumbnail_height } = oembed;
+      src = { url: thumbnail_url };
+      width = thumbnail_width;
+      height = thumbnail_height;
+    } else {
+      src = { url: thumbnail_url };
+      width = thumbnail_width;
+      height = thumbnail_height;
+    }
     title && (data.title = title);
     data.thumbnail = {
-      src: { url: thumbnail_url },
+      src,
       width,
       height,
     };
