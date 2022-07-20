@@ -16,6 +16,13 @@
     Changes that have landed in master but are not yet released.
     Click to see more.
   </summary>
+
+## :house: Internal
+
+- `tiptap-editor`
+
+  - [#4211](https://github.com/wix/ricos/pull/4211) warn about setNode & clearNodes tiptap commands usage
+
 </details>
 
 ## 8.72.1 (Jul 19, 2022)
