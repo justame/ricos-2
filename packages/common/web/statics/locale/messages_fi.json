@@ -592,6 +592,7 @@
 	"Poll_PollSettings_Tab_Design_TabName": "Design",
 	"ImageSettings_Link_Label": "Linkki",
 	"Poll_FormatToolbar_Design_Tooltip": "Muokkaa äänestyksen muotoilua",
+	"GallerySettings_Toolbar_Button_MangeMedia": "Mange Media",
 	"HtmlEditPanel_Source": "Sivuston osoite (URL)",
 	"VideoPlugin_Settings_VideoCanBeDownloaded_Tooltip": "Anna lukijoille mahdollisuus ladata videosi.",
 	"CollapsibleList_CollapsibleListSettings_Tab_Design_Background_Title": "Tausta",

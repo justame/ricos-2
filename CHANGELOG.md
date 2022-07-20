@@ -20,8 +20,9 @@
 ## :house: Internal
 
 - `tiptap-editor`
-
   - [#4211](https://github.com/wix/ricos/pull/4211) warn about setNode & clearNodes tiptap commands usage
+- `tiptap-extensions`
+  - [#4218](https://github.com/wix/ricos/pull/4218) add `translationKey` property to placeholder extension
 
 ## :bug: Bug Fix
 
