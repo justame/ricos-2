@@ -4,16 +4,14 @@ import { IMAGE_TYPE } from './types';
 import { get, includes, isFunction, uniqueId } from 'lodash';
 import type { ComponentData } from 'ricos-content';
 import { anchorScroll, addAnchorTagToUrl } from 'wix-rich-content-common';
-
 import { Image, initCustomElement } from '@wix/image';
-
-// eslint-disable-next-line max-len
-
 import { DEFAULTS } from './consts';
 import ExpandIcon from './icons/expand';
 import InPluginInput from './InPluginInput';
 
 import type { ImageViewerProps } from './types';
+
+initCustomElement();
 
 const IMAGE_FALLBACK_WIDTH = 300;
 
@@ -49,7 +47,6 @@ class WixImage extends React.Component<ImageViewerProps & { styles: Record<strin
 
   constructor(props) {
     super(props);
-    initCustomElement();
     this._id = uniqueId('new-image');
   }
 
