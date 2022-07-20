@@ -19,6 +19,11 @@
 
 </details>
 
+## 8.72.3 (Jul 20, 2022)
+
+- `image`
+  - [#4219](https://github.com/wix/ricos/pull/4219) @wix/image update & earlier initCustomElement
+
 ## 8.72.2 (Jul 20, 2022)
 
 ## :house: Internal
