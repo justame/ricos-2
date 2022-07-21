@@ -31,6 +31,9 @@ const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig, plugins }
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
+    modalService.onModalClosed(() => {
+      setIsModalOpen(modalService.isModalOpen(MODAL_ID));
+    });
     isHorizontalMenu &&
       !modalService.getModal(PLUGIN_MENU_HORIZONTAL_MODAL_ID) &&
       modalService.register({
@@ -39,12 +42,6 @@ const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig, plugins }
           <AddPluginMenuHorizontal referenceElement={buttonRef} plugins={plugins} {...props} />
         ),
       });
-  }, []);
-
-  useEffect(() => {
-    modalService.onModalClosed(id => {
-      setIsModalOpen(modalService.isModalOpen(MODAL_ID));
-    });
   }, []);
 
   const calcButtonPosition = (position: DOMRect): { top: string } => {
@@ -68,7 +65,7 @@ const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig, plugins }
             referenceElement: buttonRef,
           },
         });
-    setIsModalOpen(isModalOpen());
+    setIsModalOpen(isModalOpen);
   };
 
   return !isMobile ? (
