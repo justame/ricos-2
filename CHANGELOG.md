@@ -17,6 +17,14 @@
     Click to see more.
   </summary>
 
+## :house: Internal
+
+- `tiptap-extensions`
+  - [#4196](https://github.com/wix/ricos/pull/4196) add `dropcursor` extension
+  - [#4196](https://github.com/wix/ricos/pull/4196) add `custom-styles` to groups to exclude nodes from `style` extension
+- `collapsible-list`
+  - [#4196](https://github.com/wix/ricos/pull/4196) improve collapsible styling and ui in tiptap
+
 </details>
 
 ## 8.72.3 (Jul 20, 2022)

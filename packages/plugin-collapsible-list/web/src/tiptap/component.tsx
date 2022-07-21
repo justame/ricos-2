@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import type { PluginProps } from 'ricos-types';
 import NewPairButton from '../components/NewPairButton';
 import { mergeStyles } from 'wix-rich-content-common';
@@ -9,6 +9,7 @@ import { DndIcon } from '../icons';
 import { TIPTAP_COLLAPSIBLE_ITEM_TYPE } from 'ricos-content';
 import { findParentNodeClosestToPos, isInCollapsibleList } from './utils';
 import { RicosContext } from 'ricos-context';
+import classNames from 'classnames';
 
 export const CollapsibleList: React.FC<PluginProps> = ({
   editor,
@@ -43,7 +44,7 @@ export const CollapsibleList: React.FC<PluginProps> = ({
       // tabIndex="0"
       data-hook="collapsibleListComponent"
     >
-      <NodeViewContent />
+      <NodeViewContent className={styles.item} />
       {inCollapsibleList && (
         <NewPairButton
           onClick={addNewPair}
@@ -67,11 +68,21 @@ export const CollapsibleListItem: React.FC<PluginProps> = ({
     updateAttributes({ isExpanded: !isExpanded });
   };
   const inCollapsibleList = isInCollapsibleList(editor);
+  const [mouseDown, setMouseDown] = useState<boolean>(false);
 
   return (
     <div className={styles.itemContainer}>
       {inCollapsibleList && (
-        <div className={styles.dndIcon} draggable="true" contentEditable="false" data-drag-handle>
+        // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+        <div
+          className={classNames(styles.dndIcon, mouseDown && styles.mouseDown)}
+          draggable="true"
+          contentEditable="false"
+          data-drag-handle
+          onDragEnd={() => setMouseDown(false)}
+          onMouseUp={() => setMouseDown(false)}
+          onMouseDown={() => setMouseDown(true)}
+        >
           <DndIcon />
         </div>
       )}

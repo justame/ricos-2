@@ -69,7 +69,8 @@ export type Group =
   | 'text'
   | 'spoilerable'
   | 'shortcuts-enabled'
-  | 'overlay';
+  | 'overlay'
+  | 'custom-styles';
 
 export type RicosNodeExtension = {
   name: Node_Type | string;
