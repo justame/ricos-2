@@ -412,20 +412,33 @@ const COMMANDS = {
       .should('have.value', 'www.wix.com');
   },
 
+  openAlignmentDropdown: () => {
+    cy.get('[data-hook*=nodeAlignmentButton]').click({ force: true });
+  },
+
+  openSizeDropdown: () => {
+    cy.get('[data-hook*=nodeSizeButton]').click({ force: true });
+  },
+
   alignImage: (alignment: 'left' | 'right' | 'center') => {
     let button: string;
     switch (alignment) {
       case 'left':
-        button = PLUGIN_TOOLBAR_BUTTONS.SMALL_LEFT;
+        button = isTiptap ? PLUGIN_TOOLBAR_BUTTONS.ALIGN_LEFT : PLUGIN_TOOLBAR_BUTTONS.SMALL_LEFT;
         break;
       case 'center':
-        button = PLUGIN_TOOLBAR_BUTTONS.SMALL_CENTER;
+        button = isTiptap
+          ? PLUGIN_TOOLBAR_BUTTONS.ALIGN_CENTER
+          : PLUGIN_TOOLBAR_BUTTONS.SMALL_CENTER;
         break;
       case 'right':
       default:
-        button = PLUGIN_TOOLBAR_BUTTONS.SMALL_RIGHT;
+        button = isTiptap ? PLUGIN_TOOLBAR_BUTTONS.ALIGN_RIGHT : PLUGIN_TOOLBAR_BUTTONS.SMALL_RIGHT;
     }
     cy.get(`${RicosDriver.viewer.image.root}:first`).parent().click();
+    if (isTiptap) {
+      cy.get('[data-hook*=nodeAlignmentButton]').click({ force: true });
+    }
     cy.clickToolbarButton(button);
   },
 

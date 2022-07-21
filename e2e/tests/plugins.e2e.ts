@@ -11,16 +11,14 @@ import { usePlugins, plugins, usePluginsConfig } from '../cypress/testAppConfig'
 import { DEFAULT_MOBILE_WIDTHS } from './settings';
 import { getTestPrefix } from '../cypress/utils';
 
-describe('plugins', () => {
-  afterEach(() => cy.matchContentSnapshot());
-
-  [true, false].forEach(useTiptap => {
+[true, false].forEach(useTiptap => {
+  describe('plugins', () => {
+    beforeEach('load editor', () => {
+      cy.switchToDesktop();
+      cy.toggleTiptap(useTiptap);
+    });
+    afterEach(() => cy.matchContentSnapshot());
     context('html', () => {
-      beforeEach('load editor', () => {
-        cy.toggleTiptap(useTiptap);
-        cy.switchToDesktop();
-      });
-
       it(`${getTestPrefix(useTiptap)} add html with src url`, function () {
         cy.loadRicosEditorAndViewer('empty').newLine().addUrl().waitForHtmlToLoad();
         cy.percySnapshot(this.test.title);
@@ -32,15 +30,8 @@ describe('plugins', () => {
         cy.percySnapshot(this.test.title);
       });
     });
-  });
 
-  [true, false].forEach(useTiptap => {
     context('spoiler', () => {
-      beforeEach('load editor', () => {
-        cy.toggleTiptap(useTiptap);
-        cy.switchToDesktop();
-      });
-
       function editText(dataHook, title) {
         cy.get(`[data-hook="${dataHook}"]`).click().type(' - In Plugin Editing').blur();
       }
@@ -102,38 +93,30 @@ describe('plugins', () => {
       //   revealSpoilerOnBlock();
       // });
     });
-  });
 
-  [true, false].forEach(useTiptap => {
     context('divider', () => {
-      beforeEach('load editor', () => {
-        cy.switchToDesktop();
-        cy.toggleTiptap(useTiptap);
-      });
       it(`${getTestPrefix(useTiptap)} render plugin toolbar and change styling`, function () {
         cy.loadRicosEditorAndViewer('divider')
           .openPluginToolbar(PLUGIN_COMPONENT.DIVIDER)
           .openDividerStyles();
         cy.percySnapshot(this.test.title);
 
-        const openSizeDropdown = () =>
+        const openDividerSizeDropdown = () =>
           cy.get('[data-hook*=dividerSizeDropdownButton]').click({ force: true });
-        const openAlignmentDropdown = () =>
-          cy.get('[data-hook*=nodeAlignmentButton]').click({ force: true });
 
-        useTiptap && openSizeDropdown();
+        useTiptap && openDividerSizeDropdown();
         cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.SMALL);
 
-        useTiptap && openAlignmentDropdown();
+        useTiptap && cy.openAlignmentDropdown();
         cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.ALIGN_LEFT);
 
         cy.get('#RicosEditorContainer [data-hook=divider-double]').parent().click({ force: true });
         cy.get(`[data-hook*=${useTiptap ? 'floating-plugin-toolbar' : 'PluginToolbar'}]:first`);
 
-        useTiptap && openSizeDropdown();
+        useTiptap && openDividerSizeDropdown();
         cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.MEDIUM);
 
-        useTiptap && openAlignmentDropdown();
+        useTiptap && cy.openAlignmentDropdown();
         cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.ALIGN_RIGHT);
 
         cy.get('#RicosEditorContainer [data-hook=divider-dashed]').parent().click();
@@ -143,15 +126,13 @@ describe('plugins', () => {
         cy.percySnapshot(this.test.title);
       });
     });
-  });
 
-  context('map', () => {
-    before('load editor', () => {
-      cy.switchToDesktop();
-      cy.loadRicosEditorAndViewer('map');
-      cy.get('.dismissButton').eq(1);
-    });
-
+    // context('map', () => {
+    // before('load editor', () => {
+    //   cy.switchToDesktop();
+    //   cy.loadRicosEditorAndViewer('map');
+    //   cy.get('.dismissButton').eq(1);
+    // });
     // it('render map plugin toolbar and settings', () => {
     //   cy.openPluginToolbar(PLUGIN_COMPONENT.MAP);
     //   cy.percySnapshot('render map plugin toolbar');
@@ -159,92 +140,81 @@ describe('plugins', () => {
     //   cy.get('.gm-style-cc');
     //   cy.percySnapshot('render map settings');
     // });
-  });
+    // });
 
-  [true, false].forEach(useTiptap => {
     context('file-upload', () => {
-      before('load editor', () => {
-        cy.switchToDesktop();
-        cy.toggleTiptap(useTiptap);
-        cy.loadRicosEditorAndViewer('file-upload');
-      });
-
       it(`${getTestPrefix(useTiptap)} render file-upload plugin toolbar`, function () {
+        cy.loadRicosEditorAndViewer('file-upload');
         cy.openPluginToolbar(PLUGIN_COMPONENT.FILE_UPLOAD);
         cy.percySnapshot(this.test.title);
       });
     });
-  });
 
-  context('drag and drop', () => {
-    before('load editor', () => {
-      cy.switchToDesktop();
-      cy.loadRicosEditorAndViewer('dragAndDrop');
-    });
-
-    // eslint-disable-next-line mocha/no-skipped-tests
-    it.skip('drag and drop plugins', () => {
-      cy.focusEditor();
-      const src = `[data-hook=${PLUGIN_COMPONENT.IMAGE}] + [data-hook=componentOverlay]`;
-      const dest = `span[data-offset-key="fjkhf-0-0"]`;
-      cy.dragAndDropPlugin(src, dest);
-      cy.get('img[style="opacity: 1;"]');
-      cy.percySnapshot();
-    });
-  });
-
-  context('alignment', () => {
-    beforeEach('load editor', () => {
-      cy.switchToDesktop();
-    });
-
-    function testAtomicBlockAlignment(align: 'left' | 'right' | 'center') {
-      it('align atomic block ' + align, () => {
-        cy.loadRicosEditorAndViewer('images').alignImage(align);
+    context('drag and drop', () => {
+      if (useTiptap) {
+        return;
+      }
+      // eslint-disable-next-line mocha/no-skipped-tests
+      it.skip('drag and drop plugins', () => {
+        cy.loadRicosEditorAndViewer('dragAndDrop');
+        cy.focusEditor();
+        const src = `[data-hook=${PLUGIN_COMPONENT.IMAGE}] + [data-hook=componentOverlay]`;
+        const dest = `span[data-offset-key="fjkhf-0-0"]`;
+        cy.dragAndDropPlugin(src, dest);
+        cy.get('img[style="opacity: 1;"]');
         cy.percySnapshot();
       });
-    }
-
-    testAtomicBlockAlignment('left');
-    testAtomicBlockAlignment('center');
-    testAtomicBlockAlignment('right');
-  });
-
-  context('link preview', () => {
-    beforeEach('load editor', () =>
-      cy.loadRicosEditorAndViewer('link-preview', usePlugins(plugins.embedsPreset))
-    );
-
-    const takeSnapshot = name => {
-      cy.waitForHtmlToLoad();
-      cy.triggerLinkPreviewViewerUpdate();
-      cy.percySnapshot();
-    };
-
-    it('change link preview settings', function () {
-      cy.openPluginToolbar(PLUGIN_COMPONENT.LINK_PREVIEW);
-      cy.setLinkSettings();
-      takeSnapshot(this.test.title);
     });
-    //TODO: fix this flaky test
-    // eslint-disable-next-line mocha/no-skipped-tests
-    it('convert link preview to regular link', function () {
-      cy.openPluginToolbar(PLUGIN_COMPONENT.LINK_PREVIEW);
-      cy.clickToolbarButton('baseToolbarButton_replaceToLink');
-      takeSnapshot(this.test.title);
-    });
-    it('backspace key should convert link preview to regular link', function () {
-      cy.focusEditor().type('{downarrow}{downarrow}').type('{backspace}');
-      takeSnapshot(this.test.title);
-    });
-    it('delete link preview', function () {
-      cy.openPluginToolbar(PLUGIN_COMPONENT.LINK_PREVIEW).wait(100);
-      cy.clickToolbarButton('blockButton_delete');
-      takeSnapshot(this.test.title);
-    });
-  });
 
-  [true, false].forEach(useTiptap => {
+    context('alignment', () => {
+      function testAtomicBlockAlignment(align: 'left' | 'right' | 'center') {
+        it(`${getTestPrefix(useTiptap)} align atomic block ` + align, function () {
+          cy.loadRicosEditorAndViewer('images').alignImage(align);
+          cy.percySnapshot(this.test.title);
+        });
+      }
+      testAtomicBlockAlignment('left');
+      testAtomicBlockAlignment('center');
+      testAtomicBlockAlignment('right');
+    });
+
+    context('link preview', () => {
+      if (useTiptap) {
+        return;
+      }
+      beforeEach('load editor', () =>
+        cy.loadRicosEditorAndViewer('link-preview', usePlugins(plugins.embedsPreset))
+      );
+
+      const takeSnapshot = name => {
+        cy.waitForHtmlToLoad();
+        cy.triggerLinkPreviewViewerUpdate();
+        cy.percySnapshot();
+      };
+
+      it('change link preview settings', function () {
+        cy.openPluginToolbar(PLUGIN_COMPONENT.LINK_PREVIEW);
+        cy.setLinkSettings();
+        takeSnapshot(this.test.title);
+      });
+      //TODO: fix this flaky test
+      // eslint-disable-next-line mocha/no-skipped-tests
+      it('convert link preview to regular link', function () {
+        cy.openPluginToolbar(PLUGIN_COMPONENT.LINK_PREVIEW);
+        cy.clickToolbarButton('baseToolbarButton_replaceToLink');
+        takeSnapshot(this.test.title);
+      });
+      it('backspace key should convert link preview to regular link', function () {
+        cy.focusEditor().type('{downarrow}{downarrow}').type('{backspace}');
+        takeSnapshot(this.test.title);
+      });
+      it('delete link preview', function () {
+        cy.openPluginToolbar(PLUGIN_COMPONENT.LINK_PREVIEW).wait(100);
+        cy.clickToolbarButton('blockButton_delete');
+        takeSnapshot(this.test.title);
+      });
+    });
+
     context('convert link to preview', () => {
       context('with default config', () => {
         const testAppConfig = {
@@ -258,7 +228,6 @@ describe('plugins', () => {
         };
 
         beforeEach('load editor', () => {
-          cy.toggleTiptap(useTiptap);
           cy.loadRicosEditorAndViewer('empty', testAppConfig);
         });
 
@@ -297,15 +266,12 @@ describe('plugins', () => {
         });
       });
     });
-  });
 
-  [true, false].forEach(useTiptap => {
     context('social embed', () => {
       const testAppConfig = {
         plugins: [plugins.linkPreview],
       };
       beforeEach('load editor', () => {
-        cy.switchToDesktop();
         cy.loadRicosEditorAndViewer('empty', testAppConfig);
       });
 
@@ -322,42 +288,44 @@ describe('plugins', () => {
         });
       });
     });
-  });
 
-  context('verticals embed', () => {
-    context('verticals embed modal', () => {
-      beforeEach('load editor', () => {
-        cy.switchToDesktop();
-        cy.loadRicosEditorAndViewer('empty', usePlugins(plugins.verticalEmbed));
+    context('verticals embed', () => {
+      if (useTiptap) {
+        return;
+      }
+      context('verticals embed modal', () => {
+        beforeEach('load editor', () => {
+          cy.switchToDesktop();
+          cy.loadRicosEditorAndViewer('empty', usePlugins(plugins.verticalEmbed));
+        });
+        // const embedTypes = ['EVENT', 'PRODUCT', 'BOOKING'];
+        const embedTypes = ['PRODUCT', 'BOOKING', 'EVENT'];
+        it('render upload modals', () => {
+          embedTypes.forEach(embedType => {
+            cy.openEmbedModal(STATIC_TOOLBAR_BUTTONS[embedType]);
+            cy.percySnapshot(`verticals embed modal ${embedType}`);
+            cy.get(`[data-hook*=verticalsItemsList]`).children().first().click();
+            cy.get(`[data-hook=${ACTION_BUTTONS.SAVE}]`).click();
+          });
+        });
       });
-      // const embedTypes = ['EVENT', 'PRODUCT', 'BOOKING'];
-      const embedTypes = ['PRODUCT', 'BOOKING', 'EVENT'];
-      it('render upload modals', () => {
-        embedTypes.forEach(embedType => {
-          cy.openEmbedModal(STATIC_TOOLBAR_BUTTONS[embedType]);
-          cy.percySnapshot(`verticals embed modal ${embedType}`);
+
+      context('verticals embed widget', () => {
+        beforeEach('load editor', () => {
+          cy.switchToDesktop();
+          cy.loadRicosEditorAndViewer('vertical-embed', usePlugins(plugins.verticalEmbed));
+        });
+        it('should replace widget', () => {
+          cy.openPluginToolbar(PLUGIN_COMPONENT.VERTICAL_EMBED);
+          cy.clickToolbarButton('baseToolbarButton_replace');
           cy.get(`[data-hook*=verticalsItemsList]`).children().first().click();
           cy.get(`[data-hook=${ACTION_BUTTONS.SAVE}]`).click();
         });
       });
     });
 
-    context('verticals embed widget', () => {
-      beforeEach('load editor', () => {
-        cy.switchToDesktop();
-        cy.loadRicosEditorAndViewer('vertical-embed', usePlugins(plugins.verticalEmbed));
-      });
-      it('should replace widget', () => {
-        cy.openPluginToolbar(PLUGIN_COMPONENT.VERTICAL_EMBED);
-        cy.clickToolbarButton('baseToolbarButton_replace');
-        cy.get(`[data-hook*=verticalsItemsList]`).children().first().click();
-        cy.get(`[data-hook=${ACTION_BUTTONS.SAVE}]`).click();
-      });
-    });
-  });
-
-  context('link button', () => {
-    beforeEach('load editor', () => cy.loadRicosEditorAndViewer('link-button'));
+    // context('link button', () => {
+    //   beforeEach('load editor', () => cy.loadRicosEditorAndViewer('link-button'));
 
     //TODO: fix this flaky test
     // eslint-disable-next-line mocha/no-skipped-tests
@@ -375,175 +343,176 @@ describe('plugins', () => {
     //     .click();
     //   cy.percySnapshot();
     // });
-  });
-
-  context('action button', () => {
-    beforeEach('load editor', () =>
-      cy.loadRicosEditorAndViewer('action-button', usePlugins(plugins.actionButton))
-    );
-
-    // it('create action button & customize it', function() {
-    //   cy.focusEditor();
-    //   cy.openPluginToolbar(PLUGIN_COMPONENT.BUTTON)
-    //     .wait(100)
-    //     .get(`[data-hook*=${PLUGIN_TOOLBAR_BUTTONS.ADV_SETTINGS}][tabindex!=-1]`)
-    //     .click({ force: true })
-    //     .wait(100)
-    //     .get(`[data-hook*=${BUTTON_PLUGIN_MODAL.DESIGN_TAB}]`)
-    //     .click({ force: true })
-    //     .wait(100)
-    //     .get(`[data-hook*=${BUTTON_PLUGIN_MODAL.BUTTON_SAMPLE}] button`)
-    //     .click({ force: true })
-    //     .wait(100)
-    //     .get(`[data-hook*=${BUTTON_PLUGIN_MODAL.DONE}]`)
-    //     .click({ force: true });
-    //   cy.percySnapshot();
     // });
 
-    it('create action button & click it', () => {
-      const stub = cy.stub();
-      cy.on('window:alert', stub);
-      cy.get(`[data-hook*=${PLUGIN_COMPONENT.BUTTON}]`)
-        .last()
-        .click()
-        .then(() => {
-          expect(stub.getCall(0)).to.be.calledWith('onClick event..');
-        });
-      cy.percySnapshot();
+    context('action button', () => {
+      if (useTiptap) {
+        return;
+      }
+      // it('create action button & customize it', function() {
+      //   cy.focusEditor();
+      //   cy.openPluginToolbar(PLUGIN_COMPONENT.BUTTON)
+      //     .wait(100)
+      //     .get(`[data-hook*=${PLUGIN_TOOLBAR_BUTTONS.ADV_SETTINGS}][tabindex!=-1]`)
+      //     .click({ force: true })
+      //     .wait(100)
+      //     .get(`[data-hook*=${BUTTON_PLUGIN_MODAL.DESIGN_TAB}]`)
+      //     .click({ force: true })
+      //     .wait(100)
+      //     .get(`[data-hook*=${BUTTON_PLUGIN_MODAL.BUTTON_SAMPLE}] button`)
+      //     .click({ force: true })
+      //     .wait(100)
+      //     .get(`[data-hook*=${BUTTON_PLUGIN_MODAL.DONE}]`)
+      //     .click({ force: true });
+      //   cy.percySnapshot();
+      // });
+
+      it('create action button & click it', () => {
+        const stub = cy.stub();
+        cy.loadRicosEditorAndViewer('action-button', usePlugins(plugins.actionButton));
+        cy.on('window:alert', stub);
+        cy.get(`[data-hook*=${PLUGIN_COMPONENT.BUTTON}]`)
+          .last()
+          .click()
+          .then(() => {
+            expect(stub.getCall(0)).to.be.calledWith('onClick event..');
+          });
+        cy.percySnapshot();
+      });
     });
-  });
 
-  context('anchor', () => {
-    const testAppConfig = {
-      ...usePlugins(plugins.all),
-      ...usePluginsConfig({
-        link: {
-          linkTypes: { anchor: true },
-        },
-      }),
-    };
+    context('collapsible list', () => {
+      if (useTiptap) {
+        return;
+      }
 
-    function selectAnchorAndSave() {
-      cy.get(`[data-hook=test-blockKey`).click({ force: true });
-      cy.get(`[data-hook=${ACTION_BUTTONS.SAVE}]`).click();
-    }
+      const setCollapsibleListSetting = setting => {
+        cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.SETTINGS);
+        cy.get(`[data-hook=${setting}]`).click();
+        cy.get(`[data-hook=${ACTION_BUTTONS.SAVE}]`).click();
+      };
 
-    context('anchor desktop', () => {
-      beforeEach('load editor', () => {
-        cy.switchToDesktop();
-        cy.loadRicosEditorAndViewer('plugins-for-anchors', testAppConfig);
+      it('should change collapsible list settings', function () {
+        cy.loadRicosEditorAndViewer('collapsible-list-rich-text', {
+          plugins: [plugins.collapsibleList, plugins.embedsPreset, plugins.textPlugins],
+        });
+        cy.getCollapsibleList();
+        setCollapsibleListSetting(COLLAPSIBLE_LIST_SETTINGS.RTL_DIRECTION);
+        cy.percySnapshot(this.test.title + ' - rtl direction');
+        setCollapsibleListSetting(COLLAPSIBLE_LIST_SETTINGS.COLLAPSED);
+        cy.percySnapshot(this.test.title + ' - collapsed');
+        setCollapsibleListSetting(COLLAPSIBLE_LIST_SETTINGS.EXPANDED);
+        cy.percySnapshot(this.test.title + ' - final');
       });
 
-      it('should create anchor in text', () => {
-        cy.setEditorSelection(0, 6);
-        cy.wait(500);
-        cy.get(`[data-hook=inlineToolbar] [data-hook=${INLINE_TOOLBAR_BUTTONS.LINK}]`).click({
-          force: true,
-        });
-        cy.get(`[data-hook=linkPanelContainer] [data-hook=anchor-radio]`).click();
+      it('should focus & type', () => {
+        cy.loadRicosEditorAndViewer('empty-collapsible-list', usePlugins(plugins.collapsibleList))
+          .focusCollapsibleList(1)
+          .type('Yes\n')
+          .focusCollapsibleList(2);
+        cy.percySnapshot();
+      });
+
+      it('should insert image in collapsible list', () => {
+        cy.loadRicosEditorAndViewer('empty-collapsible-list', usePlugins(plugins.all))
+          .focusCollapsibleList(2)
+          .type('Image in collapsible list');
+        cy.insertPluginFromSideToolbar('ImagePlugin_InsertButton');
         cy.wait(1000);
         cy.percySnapshot();
-        selectAnchorAndSave();
       });
 
-      it('should create anchor in image', () => {
-        cy.openPluginToolbar(PLUGIN_COMPONENT.IMAGE);
-        cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.LINK);
-        cy.get(`[data-hook=linkPanelContainer] [data-hook=anchor-radio]`).click();
-        cy.wait(1000);
+      it('should collapse first pair', () => {
+        cy.loadRicosEditorAndViewer('empty-collapsible-list', usePlugins(plugins.collapsibleList))
+          .getCollapsibleList()
+          .toggleCollapseExpand(0);
         cy.percySnapshot();
-        selectAnchorAndSave();
-      });
-    });
-
-    context('anchor mobile', () => {
-      beforeEach('load editor', () => {
-        cy.switchToMobile();
-        cy.loadRicosEditorAndViewer('plugins-for-anchors', testAppConfig);
       });
 
-      it('should create anchor in text', function () {
-        cy.setEditorSelection(0, 6);
-        cy.get(`[data-hook=mobileToolbar] [data-hook=LinkButton]`).click({ force: true });
-        cy.get(`[data-hook=linkPanelContainerAnchorTab]`).click({ force: true });
-        cy.wait(1000);
-        cy.percySnapshot(this.test.title, DEFAULT_MOBILE_WIDTHS);
-        selectAnchorAndSave();
+      it('should have only one expanded pair', () => {
+        cy.loadRicosEditorAndViewer(
+          'empty-collapsible-list',
+          usePlugins(plugins.collapsibleList)
+        ).getCollapsibleList();
+        setCollapsibleListSetting(COLLAPSIBLE_LIST_SETTINGS.ONE_PAIR_EXPANDED);
+        cy.getCollapsibleList().toggleCollapseExpand(1);
+        cy.percySnapshot();
       });
 
-      it('should create anchor in image', function () {
-        cy.openPluginToolbar(PLUGIN_COMPONENT.IMAGE);
-        cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.LINK);
-        cy.get(`[data-hook=linkPanelContainerAnchorTab]`).click({ force: true });
-        cy.wait(1000);
-        cy.percySnapshot(this.test.title, DEFAULT_MOBILE_WIDTHS);
-        selectAnchorAndSave();
+      it('should delete second pair', () => {
+        cy.loadRicosEditorAndViewer('empty-collapsible-list', usePlugins(plugins.collapsibleList));
+        cy.focusCollapsibleList(3).type('{backspace}');
+        cy.percySnapshot();
       });
     });
   });
+});
 
-  context('collapsible list', () => {
+context('anchor', () => {
+  const testAppConfig = {
+    ...usePlugins(plugins.all),
+    ...usePluginsConfig({
+      link: {
+        linkTypes: { anchor: true },
+      },
+    }),
+  };
+
+  function selectAnchorAndSave() {
+    cy.get(`[data-hook=test-blockKey`).click({ force: true });
+    cy.get(`[data-hook=${ACTION_BUTTONS.SAVE}]`).click();
+  }
+
+  context('anchor desktop', () => {
     beforeEach('load editor', () => {
       cy.switchToDesktop();
+      cy.loadRicosEditorAndViewer('plugins-for-anchors', testAppConfig);
     });
 
-    const setCollapsibleListSetting = setting => {
-      cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.SETTINGS);
-      cy.get(`[data-hook=${setting}]`).click();
-      cy.get(`[data-hook=${ACTION_BUTTONS.SAVE}]`).click();
-    };
-
-    it('should change collapsible list settings', function () {
-      cy.loadRicosEditorAndViewer('collapsible-list-rich-text', {
-        plugins: [plugins.collapsibleList, plugins.embedsPreset, plugins.textPlugins],
+    it('should create anchor in text', () => {
+      cy.setEditorSelection(0, 6);
+      cy.wait(500);
+      cy.get(`[data-hook=inlineToolbar] [data-hook=${INLINE_TOOLBAR_BUTTONS.LINK}]`).click({
+        force: true,
       });
-      cy.getCollapsibleList();
-      setCollapsibleListSetting(COLLAPSIBLE_LIST_SETTINGS.RTL_DIRECTION);
-      cy.percySnapshot(this.test.title + ' - rtl direction');
-      setCollapsibleListSetting(COLLAPSIBLE_LIST_SETTINGS.COLLAPSED);
-      cy.percySnapshot(this.test.title + ' - collapsed');
-      setCollapsibleListSetting(COLLAPSIBLE_LIST_SETTINGS.EXPANDED);
-      cy.percySnapshot(this.test.title + ' - final');
-    });
-
-    it('should focus & type', () => {
-      cy.loadRicosEditorAndViewer('empty-collapsible-list', usePlugins(plugins.collapsibleList))
-        .focusCollapsibleList(1)
-        .type('Yes\n')
-        .focusCollapsibleList(2);
-      cy.percySnapshot();
-    });
-
-    it('should insert image in collapsible list', () => {
-      cy.loadRicosEditorAndViewer('empty-collapsible-list', usePlugins(plugins.all))
-        .focusCollapsibleList(2)
-        .type('Image in collapsible list');
-      cy.insertPluginFromSideToolbar('ImagePlugin_InsertButton');
+      cy.get(`[data-hook=linkPanelContainer] [data-hook=anchor-radio]`).click();
       cy.wait(1000);
       cy.percySnapshot();
+      selectAnchorAndSave();
     });
 
-    it('should collapse first pair', () => {
-      cy.loadRicosEditorAndViewer('empty-collapsible-list', usePlugins(plugins.collapsibleList))
-        .getCollapsibleList()
-        .toggleCollapseExpand(0);
+    it('should create anchor in image', () => {
+      cy.openPluginToolbar(PLUGIN_COMPONENT.IMAGE);
+      cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.LINK);
+      cy.get(`[data-hook=linkPanelContainer] [data-hook=anchor-radio]`).click();
+      cy.wait(1000);
       cy.percySnapshot();
+      selectAnchorAndSave();
+    });
+  });
+
+  context('anchor mobile', () => {
+    beforeEach('load editor', () => {
+      cy.switchToMobile();
+      cy.loadRicosEditorAndViewer('plugins-for-anchors', testAppConfig);
     });
 
-    it('should have only one expanded pair', () => {
-      cy.loadRicosEditorAndViewer(
-        'empty-collapsible-list',
-        usePlugins(plugins.collapsibleList)
-      ).getCollapsibleList();
-      setCollapsibleListSetting(COLLAPSIBLE_LIST_SETTINGS.ONE_PAIR_EXPANDED);
-      cy.getCollapsibleList().toggleCollapseExpand(1);
-      cy.percySnapshot();
+    it('should create anchor in text', function () {
+      cy.setEditorSelection(0, 6);
+      cy.get(`[data-hook=mobileToolbar] [data-hook=LinkButton]`).click({ force: true });
+      cy.get(`[data-hook=linkPanelContainerAnchorTab]`).click({ force: true });
+      cy.wait(1000);
+      cy.percySnapshot(this.test.title, DEFAULT_MOBILE_WIDTHS);
+      selectAnchorAndSave();
     });
 
-    it('should delete second pair', () => {
-      cy.loadRicosEditorAndViewer('empty-collapsible-list', usePlugins(plugins.collapsibleList));
-      cy.focusCollapsibleList(3).type('{backspace}');
-      cy.percySnapshot();
+    it('should create anchor in image', function () {
+      cy.openPluginToolbar(PLUGIN_COMPONENT.IMAGE);
+      cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.LINK);
+      cy.get(`[data-hook=linkPanelContainerAnchorTab]`).click({ force: true });
+      cy.wait(1000);
+      cy.percySnapshot(this.test.title, DEFAULT_MOBILE_WIDTHS);
+      selectAnchorAndSave();
     });
   });
 });
