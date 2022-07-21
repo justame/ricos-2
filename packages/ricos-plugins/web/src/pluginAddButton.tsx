@@ -127,7 +127,7 @@ export class PluginAddButton implements IPluginAddButton {
       isActive: () => false,
       isDisabled: () => false,
       dataHook: this.button.dataHook,
-      name: this.button.id,
+      name: this.button.label,
     };
   }
 
