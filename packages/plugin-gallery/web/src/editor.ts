@@ -24,7 +24,7 @@ export const pluginGallery: EditorPluginCreator<GalleryPluginEditorConfig> = con
     tiptapExtensions,
     addButtons: getAddButtons(pluginConfig, galleryPluginService),
     toolbar: { buttons: getToolbarButtons(pluginConfig, galleryPluginService) },
-    reconfigure: helpers => {
+    reconfigure: ({ helpers }) => {
       pluginConfig.handleFileSelection = helpers.handleFileSelection;
       pluginConfig.handleFileUpload = helpers.handleFileUpload;
     },

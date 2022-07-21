@@ -6,15 +6,20 @@ import type { EditorPluginCreator } from 'wix-rich-content-common';
 import { tiptapExtensions } from './tiptap/tiptap';
 import type { TiptapEditorPlugin } from 'ricos-types';
 import { getAddButtons } from './getAddButtons';
+import { getToolbarButtons } from './getToolbarButtons';
 
 export const pluginLinkPreview: EditorPluginCreator<LinkPreviewPluginEditorConfig> = config => {
-  const pluginConfig = { ...DEFAULTS.config, ...config };
+  const pluginConfig: LinkPreviewPluginEditorConfig = { ...DEFAULTS.config, ...config };
   return {
     config: pluginConfig,
     type: LINK_PREVIEW_TYPE,
     createPlugin: createLinkPreviewPlugin,
     ModalsMap: {},
     tiptapExtensions,
-    addButtons: getAddButtons(config),
+    addButtons: getAddButtons(pluginConfig),
+    toolbar: { buttons: getToolbarButtons(pluginConfig) },
+    reconfigure: ({ linkPanelSettings }) => {
+      pluginConfig.linkPanelSettings = linkPanelSettings;
+    },
   } as TiptapEditorPlugin;
 };

@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :house: Internal
+
+- `linkpreview`
+  - [#4199](https://github.com/wix/ricos/pull/4199) add settings toolbar buttons
+
 </details>
 
 ## 8.72.4 (Jul 21, 2022)

@@ -19,7 +19,7 @@ export const pluginAudio: EditorPluginCreator<AudioPluginEditorConfig> = config 
     tiptapExtensions,
     toolbar: { buttons: getToolbarButtons(pluginConfig) },
     addButtons: getAddButtons(pluginConfig),
-    reconfigure: helpers => {
+    reconfigure: ({ helpers }) => {
       pluginConfig.handleFileSelection = helpers.handleFileSelection;
       pluginConfig.handleFileUpload = helpers.handleFileUpload;
     },

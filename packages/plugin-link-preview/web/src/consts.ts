@@ -24,3 +24,7 @@ export const socialModals = {
   Twitter: 'twitterInsertModal',
   Pinterest: 'pinterestInsertModal',
 };
+
+export const linkPreviewModals = {
+  settings: 'settings',
+};

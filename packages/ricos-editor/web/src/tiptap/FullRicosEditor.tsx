@@ -109,11 +109,14 @@ export class FullRicosEditor extends React.Component<Props, State> {
   }
 
   initPlugins = () => {
-    const { plugins, _rcProps } = this.props;
+    const { plugins, _rcProps, linkPanelSettings } = this.props;
     const configuredPlugins = pluginsConfigMerger(plugins, _rcProps) || [];
     configuredPlugins.forEach(plugin => this.editorPlugins.register(plugin));
     const { handleFileUpload, handleFileSelection } = _rcProps?.helpers || {};
-    this.editorPlugins.configure({ handleFileUpload, handleFileSelection });
+    this.editorPlugins.configure({
+      helpers: { handleFileUpload, handleFileSelection },
+      linkPanelSettings,
+    });
   };
 
   initUploadService = () => {

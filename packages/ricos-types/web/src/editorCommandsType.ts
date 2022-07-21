@@ -38,6 +38,7 @@ import type {
   AUDIO_TYPE,
   LINK_BUTTON_TYPE,
   ACTION_BUTTON_TYPE,
+  LINK_PREVIEW_TYPE,
 } from 'ricos-content';
 import type {
   DividerData,
@@ -52,6 +53,7 @@ import type {
   ColorData,
   Link,
   ButtonData,
+  LinkPreviewData,
 } from 'ricos-schema';
 import type { MentionData } from './pluginTypes';
 import type { TextAlignment, InlineStyle } from './commonTypes';
@@ -117,6 +119,7 @@ export interface PluginsDataMap {
   [AUDIO_TYPE]?: any;
   [LINK_BUTTON_TYPE]?: ButtonData;
   [ACTION_BUTTON_TYPE]?: ButtonData;
+  [LINK_PREVIEW_TYPE]?: LinkPreviewData;
 }
 
 export const CUSTOM_LINK = 'custom-link';

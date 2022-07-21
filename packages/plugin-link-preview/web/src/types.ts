@@ -2,6 +2,7 @@ import type {
   EditorPluginConfig,
   ViewerPluginConfig,
   LinkPreviewData,
+  UISettings,
 } from 'wix-rich-content-common';
 import type { LinkPreviewProviders } from './consts';
 
@@ -18,6 +19,7 @@ export interface LinkPreviewPluginEditorConfig extends EditorPluginConfig {
   enableEmbed?: boolean | LinkPreviewProviders[];
   exposeEmbedButtons?: LinkPreviewProviders[];
   enableLinkPreview?: boolean;
+  linkPanelSettings?: UISettings['linkPanel'];
 }
 export interface LinkPreviewPluginViewerConfig extends ViewerPluginConfig {
   [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any

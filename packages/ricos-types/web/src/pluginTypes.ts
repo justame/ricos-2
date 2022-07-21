@@ -89,6 +89,7 @@ import type {
   ButtonData,
   MapData,
   CollapsibleListData,
+  LinkPreviewData,
 } from 'ricos-schema';
 import { LinkData, Node_Type, Decoration_Type } from 'ricos-schema';
 import type { EditorCommands } from './editorCommandsType';
@@ -134,6 +135,7 @@ export interface CreatePluginsDataMap {
   [ACTION_BUTTON_TYPE]?: CreatePluginData<ButtonData>;
   [RICOS_MAP_TYPE]?: CreatePluginData<MapData>;
   [RICOS_COLLAPSIBLE_LIST_TYPE]?: CreatePluginData<CollapsibleListData>;
+  [LINK_PREVIEW_TYPE]?: CreatePluginData<LinkPreviewData>;
 }
 
 import type { EditorPlugin as DraftEditorPlugin, PluginFunctions } from 'draft-js-plugins-editor';
