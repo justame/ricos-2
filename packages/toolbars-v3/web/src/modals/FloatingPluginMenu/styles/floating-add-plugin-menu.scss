@@ -13,7 +13,10 @@
   padding: 0;
   left: -40px;
   z-index: 3;
-
+  height: 25px;
+  &.floatingAddPluginMenu_plus_button_rotate {
+    transform: rotate(45deg);
+  }
   svg {
     color: $settings-action-color-fallback;
     fill: $settings-action-color-fallback;
