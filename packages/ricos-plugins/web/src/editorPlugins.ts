@@ -1,6 +1,6 @@
 import { EditorPlugin } from './editorPlugin';
 import { PluginAddButtons } from './pluginAddButton';
-import { PluginTextButtons } from './pluginTextButton';
+import { PluginTextButtons } from './plugin-text-button';
 import type {
   EditorPlugin as EditorPluginType,
   LegacyEditorPluginConfig,
@@ -63,20 +63,13 @@ export class EditorPlugins implements IEditorPlugins {
   }
 
   getTextButtons() {
-    //maybe use filter class func
-    const textButtons = this.plugins.reduce(
-      (prev, curr) => [...prev, ...(curr.getTextButtons() || [])],
-      []
-    );
+    const textButtons = this.plugins.flatMap(plugin => plugin.getTextButtons() || []);
     return new PluginTextButtons(textButtons);
   }
 
   getAddButtons() {
     //maybe use filter class func
-    const addButtons = this.plugins.reduce(
-      (prev, curr) => [...prev, ...(curr.getAddButtons() || [])],
-      []
-    );
+    const addButtons = this.plugins.flatMap(plugin => plugin.getAddButtons() || []);
     return new PluginAddButtons(addButtons, this.modalService);
   }
 
