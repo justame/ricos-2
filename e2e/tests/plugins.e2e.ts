@@ -7,7 +7,7 @@ import {
   COLLAPSIBLE_LIST_SETTINGS,
   ACTION_BUTTONS,
 } from '../cypress/dataHooks';
-import { usePlugins, plugins, usePluginsConfig, useTheming } from '../cypress/testAppConfig';
+import { usePlugins, plugins, usePluginsConfig } from '../cypress/testAppConfig';
 import { DEFAULT_MOBILE_WIDTHS } from './settings';
 import { getTestPrefix } from '../cypress/utils';
 
@@ -324,42 +324,6 @@ describe('plugins', () => {
     });
   });
 
-  context('list', () => {
-    beforeEach('load editor', () => cy.loadRicosEditorAndViewer());
-
-    // TODO: figure out how to test keyboard combinations of command/ctrl keys in cypress ci
-    // eslint-disable-next-line mocha/no-skipped-tests
-    it.skip('create nested lists using CMD+M/CMD+SHIFT+M', () => {
-      cy.loadRicosEditorAndViewer()
-        .enterParagraphs(['1. Hey I am an ordered list in depth 1.'])
-        .type('{command+m}')
-        .enterParagraphs(['\n Hey I am an ordered list in depth 2.'])
-        .type('{command+m}')
-        .enterParagraphs(['\n Hey I am an ordered list in depth 1.'])
-        .type('{command+shift+m}')
-        .enterParagraphs(['\n\n1. Hey I am an ordered list in depth 0.']);
-
-      // .enterParagraphs(['\n\n- Hey I am an unordered list in depth 1.'])
-      // .tab()
-      // .enterParagraphs(['\n Hey I am an unordered list in depth 2.'])
-      // .tab()
-      // .enterParagraphs(['\n Hey I am an unordered list in depth 1.'])
-      // .tab({ shift: true })
-      // .enterParagraphs(['\n\n- Hey I am an unordered list in depth 0.']);
-      cy.percySnapshot();
-    });
-  });
-
-  context('lists', () => {
-    it(`lists with line height`, function () {
-      cy.loadRicosEditorAndViewer(
-        'lists-with-line-height',
-        useTheming({ skipCssOverride: true, useParagraphLineHeight: true })
-      );
-      cy.percySnapshot(this.test.title);
-    });
-  });
-
   context('verticals embed', () => {
     context('verticals embed modal', () => {
       beforeEach('load editor', () => {
@@ -445,69 +409,6 @@ describe('plugins', () => {
         .then(() => {
           expect(stub.getCall(0)).to.be.calledWith('onClick event..');
         });
-      cy.percySnapshot();
-    });
-  });
-
-  context('headings', () => {
-    const testAppConfig = {
-      ...usePlugins(plugins.headings),
-      ...usePluginsConfig({
-        headings: {
-          customHeadings: ['P', 'H2', 'H3'],
-        },
-      }),
-    };
-
-    function setHeader(number, selection) {
-      cy.setTextStyle('headingsDropdownButton', selection)
-        .get(`[data-hook=headingsDropdownPanel] > :nth-child(${number})`)
-        .click()
-        .wait(500);
-    }
-
-    function testHeaders(config, title) {
-      cy.loadRicosEditorAndViewer('empty', config).enterParagraphs([
-        'Leverage agile frameworks',
-        'to provide a robust synopsis for high level overviews.',
-      ]);
-      setHeader(3, [0, 24]);
-      cy.percySnapshot(title);
-      setHeader(2, [28, 40]);
-      cy.setTextStyle('headingsDropdownButton', [28, 40]);
-      cy.percySnapshot(title + ' - final');
-    }
-
-    it('Change headers - with customHeadings config', () => {
-      testHeaders(testAppConfig, 'change headers (custom heading)');
-    });
-
-    it('Change headers - without customHeadings config', () => {
-      testHeaders(usePlugins(plugins.headings), 'change headers');
-    });
-  });
-
-  context('Headers markdown', () => {
-    beforeEach(() => cy.switchToDesktop());
-
-    it('Should render header-two', () => {
-      cy.loadRicosEditorAndViewer().type('{$h').type('2}Header-two{$h').type('}');
-      cy.percySnapshot();
-    });
-  });
-
-  context('Text/Highlight Color - mobile', () => {
-    beforeEach(() => cy.switchToMobile());
-
-    it('allow to color text', function () {
-      cy.loadRicosEditorAndViewer().enterParagraphs(['Color.']).setTextColor([0, 5], 'color4');
-      cy.percySnapshot(this.test.title, DEFAULT_MOBILE_WIDTHS);
-    });
-
-    it('allow to highlight text', () => {
-      cy.loadRicosEditorAndViewer()
-        .enterParagraphs(['Highlight.'])
-        .setHighlightColor([0, 9], 'color4');
       cy.percySnapshot();
     });
   });
