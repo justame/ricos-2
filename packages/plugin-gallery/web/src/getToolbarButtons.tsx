@@ -55,6 +55,7 @@ export const getToolbarButtons = (config, galleryPluginService): ToolbarButton[]
   return [
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS,
+      dataHook: 'baseToolbarButton_manage_media',
       modal: {
         id: galleryModals.manageMedia,
         Component: GallerySettingsModal,
@@ -83,6 +84,7 @@ export const getToolbarButtons = (config, galleryPluginService): ToolbarButton[]
     },
     {
       id: 'galleryLayout',
+      dataHook: 'baseToolbarButton_layout',
       command: ({ layout, editorCommands }) => {
         editorCommands
           .chain()

@@ -65,6 +65,9 @@ export const toolbarButtonsConfig: IPluginToolbarButtonsConfig = {
   settings: {
     id: PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS,
     type: 'modal',
+    presentation: {
+      dataHook: 'baseToolbarButton_settings',
+    },
     attributes: {
       selectedNode: getNodeInSelectionResolver,
     },

@@ -355,6 +355,37 @@ const changeTextColor = (title: string, useTiptap, isMobile = false) => {
     });
   });
 
+  context('text spoilers', () => {
+    beforeEach('load editor', () => {
+      cy.switchToDesktop();
+    });
+
+    it(`check text spoilers in editor and reveal it in viewer`, () => {
+      cy.loadRicosEditorAndViewer('empty', usePlugins(plugins.spoilerPreset)).enterParagraphs([
+        'Leverage agile frameworks to provide a robust synopsis for high level overviews.',
+        'Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition.', // eslint-disable-line max-len
+      ]);
+
+      cy.setTextStyle('textSpoilerButton', [15, 5]);
+      cy.blurEditor();
+      cy.setTextStyle('textSpoilerButton', [30, 10]);
+      cy.percySnapshot('adding some spoilers');
+      cy.setLink([5, 5], 'https://www.wix.com/');
+      cy.setTextStyle('textSpoilerButton', [0, 13]);
+      cy.percySnapshot('adding spoiler around link');
+      cy.setTextStyle('textSpoilerButton', [20, 10]);
+      cy.percySnapshot('apply spoiler on two existing spoilers');
+      cy.setTextStyle('textSpoilerButton', [20, 5]);
+      cy.percySnapshot('split spoiler');
+      cy.setTextStyle('textSpoilerButton', [70, 35]);
+      cy.percySnapshot('spoiler on multiple blocks');
+      cy.get('[data-hook="spoiler_0"]:first').click();
+      cy.percySnapshot('reveal spoiler');
+      cy.get('[data-hook="spoiler_3"]:last').click();
+      cy.percySnapshot('reveal spoiler on multiple blocks');
+    });
+  });
+
   describe(`[${useTiptap ? 'tiptap' : 'draft'}] text color mobile`, () => {
     beforeEach(() => {
       cy.switchToMobile();

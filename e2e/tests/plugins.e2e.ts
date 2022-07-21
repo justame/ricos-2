@@ -34,100 +34,74 @@ describe('plugins', () => {
     });
   });
 
-  context('spoiler', () => {
-    beforeEach('load editor', () => {
-      cy.switchToDesktop();
+  [true, false].forEach(useTiptap => {
+    context('spoiler', () => {
+      beforeEach('load editor', () => {
+        cy.toggleTiptap(useTiptap);
+        cy.switchToDesktop();
+      });
+
+      function editText(dataHook, title) {
+        cy.get(`[data-hook="${dataHook}"]`).click().type(' - In Plugin Editing').blur();
+      }
+
+      function revealSpoilerOnBlock() {
+        cy.get('[data-hook="revealSpoilerBtn"]').click({ multiple: true });
+      }
+
+      it(`${getTestPrefix(
+        useTiptap
+      )} check spoilers on an image in editor and reveal it in viewer`, function () {
+        cy.loadRicosEditorAndViewer('images', usePlugins(plugins.spoilerPreset));
+        cy.get('[data-hook="imageViewer"]:first').parent().click();
+
+        cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.SETTINGS);
+        cy.get(`[data-hook=imageSpoilerToggle]`).click();
+        cy.get(`[data-hook=${ACTION_BUTTONS.SAVE}]`).click();
+
+        cy.wait(100); //wait for setRef to get width and adjust correct blur
+        editText('spoilerTextArea', 'change the description - image');
+        editText('revealSpoilerContent', 'change the reveal button content - image');
+        revealSpoilerOnBlock();
+        cy.percySnapshot(this.test.title);
+      });
+
+      it(`${getTestPrefix(
+        useTiptap
+      )} check spoilers on a gallery in editor and reveal it in viewer`, function () {
+        cy.loadRicosEditorAndViewer('gallery', usePlugins(plugins.spoilerPreset));
+        cy.get('[data-hook="galleryViewer"]:first').parent().click();
+        cy.get('[data-hook="baseToolbarButton_layout"]').click();
+        cy.get(
+          `[data-hook="${
+            useTiptap ? 'GalleryPlugin_Layout_Slideshow' : 'Slideshow_dropdown_option'
+          }"]`
+        ).click();
+        cy.wait(100);
+
+        cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.SETTINGS);
+        cy.get(`[data-hook=gallerySpoilerToggle]`).click();
+        cy.get(`[data-hook=${ACTION_BUTTONS.SAVE}]`).click();
+        editText('spoilerTextArea', 'change the description - gallery');
+        editText('revealSpoilerContent', 'change the reveal button content - gallery');
+        revealSpoilerOnBlock();
+        cy.percySnapshot(this.test.title);
+      });
+
+      // it(`check spoilers on a video in editor and reveal it in viewer`, () => {
+      //   cy.loadRicosEditorAndViewer('empty', usePlugins(plugins.spoilerPreset));
+      //   cy.openVideoUploadModal().addVideoFromURL();
+      //   cy.waitForMediaToLoad();
+      //   cy.get('[data-hook="videoPlayer"]:first')
+      //     .parent()
+      //     .click();
+      //   cy.get(`[data-hook=${PLUGIN_TOOLBAR_BUTTONS.SPOILER}]:visible`).click();
+      //   cy.percySnapshot('adding spoiler on a video');
+      //   editText('spoilerTextArea', 'change the description');
+      //   editText('revealSpoilerContent', 'change the reveal button content');
+      //   revealSpoilerOnBlock();
+      // });
     });
-
-    it(`check text spoilers in editor and reveal it in viewer`, () => {
-      cy.loadRicosEditorAndViewer('empty', usePlugins(plugins.spoilerPreset)).enterParagraphs([
-        'Leverage agile frameworks to provide a robust synopsis for high level overviews.',
-        'Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition.', // eslint-disable-line max-len
-      ]);
-
-      cy.setTextStyle('textSpoilerButton', [15, 5]);
-      cy.blurEditor();
-      cy.setTextStyle('textSpoilerButton', [30, 10]);
-      cy.percySnapshot('adding some spoilers');
-      cy.setLink([5, 5], 'https://www.wix.com/');
-      cy.setTextStyle('textSpoilerButton', [0, 13]);
-      cy.percySnapshot('adding spoiler around link');
-      cy.setTextStyle('textSpoilerButton', [20, 10]);
-      cy.percySnapshot('apply spoiler on two existing spoilers');
-      cy.setTextStyle('textSpoilerButton', [20, 5]);
-      cy.percySnapshot('split spoiler');
-      cy.setTextStyle('textSpoilerButton', [70, 35]);
-      cy.percySnapshot('spoiler on multiple blocks');
-      cy.get('[data-hook="spoiler_0"]:first').click();
-      cy.percySnapshot('reveal spoiler');
-      cy.get('[data-hook="spoiler_3"]:last').click();
-      cy.percySnapshot('reveal spoiler on multiple blocks');
-    });
-
-    function editText(dataHook, title) {
-      cy.get(`[data-hook="${dataHook}"]`).click().type(' - In Plugin Editing').blur();
-      cy.percySnapshot(title);
-    }
-
-    function revealSpoilerOnBlock() {
-      cy.get('[data-hook="revealSpoilerBtn"]').click({ multiple: true });
-    }
-
-    it(`check spoilers on an image in editor and reveal it in viewer`, () => {
-      cy.loadRicosEditorAndViewer('images', usePlugins(plugins.spoilerPreset));
-      cy.get('[data-hook="imageViewer"]:first').parent().click();
-
-      // check spoiler from inline toolbar
-      // cy.get(`[data-hook=${PLUGIN_TOOLBAR_BUTTONS.SPOILER}]:visible`).click();
-
-      //check spoiler from settings modal
-      cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.SETTINGS);
-      cy.get(`[data-hook=imageSpoilerToggle]`).click();
-      cy.get(`[data-hook=${ACTION_BUTTONS.SAVE}]`).click();
-
-      cy.wait(100); //wait for setRef to get width and adjust correct blur
-      cy.percySnapshot('adding spoiler on an image');
-      editText('spoilerTextArea', 'change the description - image');
-      editText('revealSpoilerContent', 'change the reveal button content - image');
-      revealSpoilerOnBlock();
-      cy.percySnapshot('reveal spoiler in viewer - image');
-    });
-
-    it(`check spoilers on a gallery in editor and reveal it in viewer`, () => {
-      cy.loadRicosEditorAndViewer('gallery', usePlugins(plugins.spoilerPreset));
-      cy.get('[data-hook="galleryViewer"]:first').parent().click();
-      cy.get('[data-hook="baseToolbarButton_layout"]').click();
-      cy.get('[data-hook="Slideshow_dropdown_option"]').click();
-      cy.wait(100);
-
-      // check spoiler from inline toolbar
-      // cy.get(`[data-hook=${PLUGIN_TOOLBAR_BUTTONS.SPOILER}]:visible`).click();
-
-      //check spoiler from settings modal
-      cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.SETTINGS);
-      cy.get(`[data-hook=gallerySpoilerToggle]`).click();
-      cy.get(`[data-hook=${ACTION_BUTTONS.SAVE}]`).click();
-      // cy.wait(300);
-      // cy.percySnapshot('adding spoiler on a gallery');
-      editText('spoilerTextArea', 'change the description - gallery');
-      editText('revealSpoilerContent', 'change the reveal button content - gallery');
-      revealSpoilerOnBlock();
-      cy.percySnapshot('reveal spoiler in viewer - gallery');
-    });
-
-    // it(`check spoilers on a video in editor and reveal it in viewer`, () => {
-    //   cy.loadRicosEditorAndViewer('empty', usePlugins(plugins.spoilerPreset));
-    //   cy.openVideoUploadModal().addVideoFromURL();
-    //   cy.waitForMediaToLoad();
-    //   cy.get('[data-hook="videoPlayer"]:first')
-    //     .parent()
-    //     .click();
-    //   cy.get(`[data-hook=${PLUGIN_TOOLBAR_BUTTONS.SPOILER}]:visible`).click();
-    //   cy.percySnapshot('adding spoiler on a video');
-    //   editText('spoilerTextArea', 'change the description');
-    //   editText('revealSpoilerContent', 'change the reveal button content');
-    //   revealSpoilerOnBlock();
-    // });
   });
 
   [true, false].forEach(useTiptap => {

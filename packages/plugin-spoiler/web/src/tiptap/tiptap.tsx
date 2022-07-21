@@ -16,7 +16,7 @@ const SpoilerHoc = Component => {
   const Spoiler = props => {
     const { context, updateAttributes, node, editor, getPos, selected } = props;
     const { isMobile, theme, t } = context;
-    if (node.attrs.containerData.spoiler?.enabled) {
+    if (node.attrs.containerData?.spoiler?.enabled) {
       const { spoiler } = node.attrs.containerData;
 
       const componentData = {

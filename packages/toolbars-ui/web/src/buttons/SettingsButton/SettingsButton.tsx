@@ -7,9 +7,10 @@ import type { IToolbarItem } from 'ricos-types';
 
 interface Props {
   toolbarItem: IToolbarItem;
+  dataHook?: string;
 }
 
-const SettingsButton: FC<Props> = ({ toolbarItem }) => {
+const SettingsButton: FC<Props> = ({ toolbarItem, dataHook }) => {
   const modalService = useContext(ModalContext) || {};
   const { isMobile, t } = useContext(RicosContext) || {};
   const { uploadService, updateService } = useContext(UploadContext);
@@ -20,7 +21,7 @@ const SettingsButton: FC<Props> = ({ toolbarItem }) => {
     <ToggleButton
       Icon={SettingsIcon}
       onClick={() => onClick({ modalService, isMobile, node, uploadService, updateService })}
-      dataHook="baseToolbarButton_settings"
+      dataHook={dataHook}
       tooltip={t('SettingsButton_Tooltip')}
     />
   );
