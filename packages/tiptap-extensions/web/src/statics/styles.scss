@@ -70,17 +70,36 @@
 .orderedList,
 .bulletedList {
   margin: 0;
-  padding-inline-start: 40px;
+  padding: 0;
   @include ricosTypography('p', false);
 }
 
-.orderedList .orderedList,
-.bulletedList .bulletedList {
-  padding-inline-start: 1.5em;
+:global(.ProseMirror) .orderedList,
+:global(.ProseMirror) .bulletedList {
+  > .listItem {
+    margin-inline-start: 30px !important;
+    > div {
+      display: inline;
+    }
+  }
+}
+
+:global(.ProseMirror) .orderedList .orderedList,
+:global(.ProseMirror) .bulletedList .bulletedList {
+  > .listItem {
+    margin-inline-start: 1.5em !important;
+  }
+}
+
+:global(.ProseMirror) .orderedList {
+  > .listItem > div {
+    margin-inline-start: 0.5em;
+  }
 }
 
 .listItem {
-  padding-inline-start: 0.5em;
+  list-style-position: inside;
+  position: relative;
 }
 
 .orderedList,

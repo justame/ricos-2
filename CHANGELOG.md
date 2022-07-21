@@ -22,6 +22,7 @@
 - `tiptap-extensions`
   - [#4196](https://github.com/wix/ricos/pull/4196) add `dropcursor` extension
   - [#4196](https://github.com/wix/ricos/pull/4196) add `custom-styles` to groups to exclude nodes from `style` extension
+  - [#4229](https://github.com/wix/ricos/pull/4229) lists behavior like draft
 - `collapsible-list`
   - [#4196](https://github.com/wix/ricos/pull/4196) improve collapsible styling and ui in tiptap
 

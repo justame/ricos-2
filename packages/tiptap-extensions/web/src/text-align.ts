@@ -33,7 +33,6 @@ export const textAlign: RicosExtension = {
   ) {
     const types = extensions
       .filter(extension => extension.groups.includes('text-container'))
-      .filter(extension => extension.name !== Node_Type.LIST_ITEM)
       .map(({ name }) => name);
 
     return {
