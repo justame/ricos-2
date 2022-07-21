@@ -290,20 +290,15 @@ import { getTestPrefix } from '../cypress/utils';
     });
 
     context('verticals embed', () => {
-      if (useTiptap) {
-        return;
-      }
       context('verticals embed modal', () => {
         beforeEach('load editor', () => {
-          cy.switchToDesktop();
           cy.loadRicosEditorAndViewer('empty', usePlugins(plugins.verticalEmbed));
         });
-        // const embedTypes = ['EVENT', 'PRODUCT', 'BOOKING'];
         const embedTypes = ['PRODUCT', 'BOOKING', 'EVENT'];
-        it('render upload modals', () => {
+        it(`${getTestPrefix(useTiptap)} render upload modals`, () => {
           embedTypes.forEach(embedType => {
             cy.openEmbedModal(STATIC_TOOLBAR_BUTTONS[embedType]);
-            cy.percySnapshot(`verticals embed modal ${embedType}`);
+            cy.percySnapshot(`${getTestPrefix(useTiptap)} verticals embed modal ${embedType}`);
             cy.get(`[data-hook*=verticalsItemsList]`).children().first().click();
             cy.get(`[data-hook=${ACTION_BUTTONS.SAVE}]`).click();
           });
@@ -311,12 +306,17 @@ import { getTestPrefix } from '../cypress/utils';
       });
 
       context('verticals embed widget', () => {
-        beforeEach('load editor', () => {
-          cy.switchToDesktop();
+        it(`${getTestPrefix(useTiptap)} should replace widget`, () => {
           cy.loadRicosEditorAndViewer('vertical-embed', usePlugins(plugins.verticalEmbed));
-        });
-        it('should replace widget', () => {
-          cy.openPluginToolbar(PLUGIN_COMPONENT.VERTICAL_EMBED);
+          if (useTiptap) {
+            cy.get(`[data-hook*=${PLUGIN_COMPONENT.VERTICAL_EMBED}]`)
+              .first()
+              .parent()
+              .parent()
+              .click();
+          } else {
+            cy.openPluginToolbar(PLUGIN_COMPONENT.VERTICAL_EMBED);
+          }
           cy.clickToolbarButton('baseToolbarButton_replace');
           cy.get(`[data-hook*=verticalsItemsList]`).children().first().click();
           cy.get(`[data-hook=${ACTION_BUTTONS.SAVE}]`).click();

@@ -76,6 +76,9 @@ export const toolbarButtonsConfig: IPluginToolbarButtonsConfig = {
   replace: {
     id: PLUGIN_TOOLBAR_BUTTON_ID.REPLACE,
     type: 'toggle',
+    presentation: {
+      dataHook: 'baseToolbarButton_replace',
+    },
     attributes: {
       selectedNode: getNodeInSelectionResolver,
     },

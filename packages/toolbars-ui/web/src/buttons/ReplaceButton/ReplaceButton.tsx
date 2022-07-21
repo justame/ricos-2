@@ -7,9 +7,10 @@ import type { IToolbarItem } from 'ricos-types';
 
 type Props = {
   toolbarItem: IToolbarItem;
+  dataHook?: string;
 };
 
-const ReplaceButton: FC<Props> = ({ toolbarItem }) => {
+const ReplaceButton: FC<Props> = ({ toolbarItem, dataHook }) => {
   const modalService = useContext(ModalContext) || {};
   const uploadContext = useContext(UploadContext);
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
@@ -23,7 +24,7 @@ const ReplaceButton: FC<Props> = ({ toolbarItem }) => {
     <ToggleButton
       Icon={ReplaceIcon}
       onClick={onClick}
-      dataHook="baseToolbarButton_replace"
+      dataHook={dataHook}
       tooltip={t('ReplaceButton_Tooltip')}
       setRef={setReferenceElement}
     />
