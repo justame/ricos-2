@@ -17,6 +17,10 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.72.4 (Jul 21, 2022)
+
 ## :house: Internal
 
 - `tiptap-extensions`
@@ -25,8 +29,6 @@
   - [#4229](https://github.com/wix/ricos/pull/4229) lists behavior like draft
 - `collapsible-list`
   - [#4196](https://github.com/wix/ricos/pull/4196) improve collapsible styling and ui in tiptap
-
-</details>
 
 ## 8.72.3 (Jul 20, 2022)
 
