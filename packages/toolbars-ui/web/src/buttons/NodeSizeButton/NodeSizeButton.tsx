@@ -9,9 +9,10 @@ import { defaultSize, sizeMap, sizeIconMap } from './consts';
 type Props = {
   toolbarItem: IToolbarItem;
   options?: PluginContainerData_Width_Type[];
+  dataHook?: string;
 };
 
-const NodeSizeButton: FC<Props> = ({ options, toolbarItem }) => {
+const NodeSizeButton: FC<Props> = ({ options, toolbarItem, dataHook }) => {
   const { t } = useContext(RicosContext) || {};
   const modalService = useContext(ModalContext) || {};
 
@@ -23,7 +24,7 @@ const NodeSizeButton: FC<Props> = ({ options, toolbarItem }) => {
 
   return (
     <DropdownButton
-      dataHook={'NodeSizeButton'}
+      dataHook={dataHook}
       id={'NodeSizeButton'}
       options={dropDownOptions.map(({ dataHook, icon: Icon, text, commandKey, tooltip }) => (
         <ListItemSelect

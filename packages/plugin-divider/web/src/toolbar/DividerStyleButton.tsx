@@ -8,9 +8,10 @@ import { SingleLineStyle } from '../icons';
 
 type Props = {
   toolbarItem: IToolbarItem;
+  dataHook?: string;
 };
 
-export const DividerStyleButton: FC<Props> = ({ toolbarItem }) => {
+export const DividerStyleButton: FC<Props> = ({ toolbarItem, dataHook }) => {
   const { t } = useContext(RicosContext) || {};
   const modalService = useContext(ModalContext) || {};
 
@@ -22,7 +23,7 @@ export const DividerStyleButton: FC<Props> = ({ toolbarItem }) => {
 
   return (
     <DropdownButton
-      dataHook={'baseToolbarButton_type'}
+      dataHook={dataHook}
       id={'divider_style'}
       options={dividerStyleData.map(({ dataHook, icon: Icon, commandKey }) => (
         <ListItemSelect

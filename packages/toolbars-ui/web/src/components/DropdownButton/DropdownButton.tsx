@@ -13,8 +13,8 @@ type Props = {
   Icon: ComponentType;
   tooltip: string;
   id: string;
-  dataHook: string;
   options: ReactElement[];
+  dataHook?: string;
 };
 
 const DropdownButton = ({ Icon, dataHook, tooltip, options, id }: Props) => {

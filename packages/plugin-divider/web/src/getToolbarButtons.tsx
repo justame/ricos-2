@@ -11,6 +11,7 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
   return [
     {
       id: 'dividerStyle',
+      dataHook: 'dividerStyleDropdownButton',
       command: ({ lineStyle, editorCommands }) => {
         editorCommands
           .chain()
@@ -24,6 +25,7 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
     },
     {
       id: 'dividerSize',
+      dataHook: 'dividerSizeDropdownButton',
       command: ({ size, editorCommands }) => {
         editorCommands.chain().focus().setNodeSize(size).setNodeAlignment('CENTER').run();
       },

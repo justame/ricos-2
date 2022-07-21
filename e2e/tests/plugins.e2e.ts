@@ -9,24 +9,28 @@ import {
 } from '../cypress/dataHooks';
 import { usePlugins, plugins, usePluginsConfig, useTheming } from '../cypress/testAppConfig';
 import { DEFAULT_MOBILE_WIDTHS } from './settings';
+import { getTestPrefix } from '../cypress/utils';
 
 describe('plugins', () => {
   afterEach(() => cy.matchContentSnapshot());
 
-  context('html', () => {
-    beforeEach('load editor', () => {
-      cy.switchToDesktop();
-    });
+  [true, false].forEach(useTiptap => {
+    context('html', () => {
+      beforeEach('load editor', () => {
+        cy.toggleTiptap(useTiptap);
+        cy.switchToDesktop();
+      });
 
-    it('render html plugin with url', () => {
-      cy.loadRicosEditorAndViewer('empty').addUrl().waitForHtmlToLoad();
-      cy.percySnapshot();
-    });
+      it(`${getTestPrefix(useTiptap)} add html with src url`, function () {
+        cy.loadRicosEditorAndViewer('empty').newLine().addUrl().waitForHtmlToLoad();
+        cy.percySnapshot(this.test.title);
+      });
 
-    it('render html plugin toolbar', () => {
-      cy.loadRicosEditorAndViewer('empty').addHtml().waitForHtmlToLoad();
-      cy.get(`[data-hook*=${PLUGIN_TOOLBAR_BUTTONS.EDIT}]`).click({ multiple: true }).click();
-      cy.percySnapshot();
+      it(`${getTestPrefix(useTiptap)} add html with src html`, function () {
+        cy.loadRicosEditorAndViewer('empty').newLine().addHtml().waitForHtmlToLoad();
+        cy.get(`[data-hook*=${PLUGIN_TOOLBAR_BUTTONS.EDIT}]`).click({ multiple: true }).click();
+        cy.percySnapshot(this.test.title);
+      });
     });
   });
 
@@ -126,31 +130,44 @@ describe('plugins', () => {
     // });
   });
 
-  context('divider', () => {
-    beforeEach('load editor', () => {
-      cy.switchToDesktop();
-    });
+  [true, false].forEach(useTiptap => {
+    context('divider', () => {
+      beforeEach('load editor', () => {
+        cy.switchToDesktop();
+        cy.toggleTiptap(useTiptap);
+      });
+      it(`${getTestPrefix(useTiptap)} render plugin toolbar and change styling`, function () {
+        cy.loadRicosEditorAndViewer('divider')
+          .openPluginToolbar(PLUGIN_COMPONENT.DIVIDER)
+          .openDividerStyles();
+        cy.percySnapshot(this.test.title);
 
-    it('render plugin toolbar and change styling', () => {
-      cy.loadRicosEditorAndViewer('divider')
-        .openPluginToolbar(PLUGIN_COMPONENT.DIVIDER)
-        .openDropdownMenu();
-      cy.percySnapshot('render divider plugin toolbar');
+        const openSizeDropdown = () =>
+          cy.get('[data-hook*=dividerSizeDropdownButton]').click({ force: true });
+        const openAlignmentDropdown = () =>
+          cy.get('[data-hook*=nodeAlignmentButton]').click({ force: true });
 
-      cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.SMALL);
-      cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.ALIGN_LEFT);
+        useTiptap && openSizeDropdown();
+        cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.SMALL);
 
-      cy.get('#RicosEditorContainer [data-hook=divider-double]').parent().click();
-      cy.get('[data-hook*="PluginToolbar"]:first');
+        useTiptap && openAlignmentDropdown();
+        cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.ALIGN_LEFT);
 
-      cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.MEDIUM);
-      cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.ALIGN_RIGHT);
+        cy.get('#RicosEditorContainer [data-hook=divider-double]').parent().click({ force: true });
+        cy.get(`[data-hook*=${useTiptap ? 'floating-plugin-toolbar' : 'PluginToolbar'}]:first`);
 
-      cy.get('#RicosEditorContainer [data-hook=divider-dashed]').parent().click();
-      cy.get('[data-hook*="PluginToolbar"]:first').openDropdownMenu(
-        `[data-hook=${DIVIDER_DROPDOWN_OPTIONS.DOUBLE}]`
-      );
-      cy.percySnapshot('change divider styling');
+        useTiptap && openSizeDropdown();
+        cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.MEDIUM);
+
+        useTiptap && openAlignmentDropdown();
+        cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.ALIGN_RIGHT);
+
+        cy.get('#RicosEditorContainer [data-hook=divider-dashed]').parent().click();
+        cy.get(
+          `[data-hook*=${useTiptap ? 'floating-plugin-toolbar' : 'PluginToolbar'}]:first`
+        ).openDividerStyles(`[data-hook=${DIVIDER_DROPDOWN_OPTIONS.DOUBLE}]`);
+        cy.percySnapshot(this.test.title);
+      });
     });
   });
 
@@ -170,15 +187,18 @@ describe('plugins', () => {
     // });
   });
 
-  context('file-upload', () => {
-    before('load editor', () => {
-      cy.switchToDesktop();
-      cy.loadRicosEditorAndViewer('file-upload');
-    });
+  [true, false].forEach(useTiptap => {
+    context('file-upload', () => {
+      before('load editor', () => {
+        cy.switchToDesktop();
+        cy.toggleTiptap(useTiptap);
+        cy.loadRicosEditorAndViewer('file-upload');
+      });
 
-    it('render file-upload plugin toolbar', () => {
-      cy.openPluginToolbar(PLUGIN_COMPONENT.FILE_UPLOAD);
-      cy.percySnapshot();
+      it(`${getTestPrefix(useTiptap)} render file-upload plugin toolbar`, function () {
+        cy.openPluginToolbar(PLUGIN_COMPONENT.FILE_UPLOAD);
+        cy.percySnapshot(this.test.title);
+      });
     });
   });
 
@@ -250,72 +270,82 @@ describe('plugins', () => {
     });
   });
 
-  context('convert link to preview', () => {
-    context('with default config', () => {
-      const testAppConfig = {
-        ...usePlugins(plugins.embedsPreset),
-        ...usePluginsConfig({
-          linkPreview: {
-            enableEmbed: undefined,
-            enableLinkPreview: undefined,
-          },
-        }),
-      };
+  [true, false].forEach(useTiptap => {
+    context('convert link to preview', () => {
+      context('with default config', () => {
+        const testAppConfig = {
+          ...usePlugins(plugins.embedsPreset),
+          ...usePluginsConfig({
+            linkPreview: {
+              enableEmbed: undefined,
+              enableLinkPreview: undefined,
+            },
+          }),
+        };
 
-      beforeEach('load editor', () => cy.loadRicosEditorAndViewer('empty', testAppConfig));
+        beforeEach('load editor', () => {
+          cy.toggleTiptap(useTiptap);
+          cy.loadRicosEditorAndViewer('empty', testAppConfig);
+        });
 
-      it('should create link preview from link after enter key', () => {
-        cy.insertLinkAndEnter('www.wix.com', { isPreview: true });
-        cy.percySnapshot();
+        it(`${getTestPrefix(
+          useTiptap
+        )} should create link preview from link after enter key`, function () {
+          cy.insertLinkAndEnter('www.wix.com', { isPreview: true });
+          cy.percySnapshot(this.test.title);
+        });
+
+        it(`${getTestPrefix(useTiptap)} should embed link that supports embed`, function () {
+          cy.insertLinkAndEnter('www.mockUrl.com');
+          cy.percySnapshot(this.test.title);
+        });
       });
 
-      it('should embed link that supports embed', () => {
-        cy.insertLinkAndEnter('www.mockUrl.com');
-        cy.percySnapshot();
-      });
-    });
-    context('with custom config', () => {
-      const testAppConfig = {
-        ...usePlugins(plugins.embedsPreset),
-        ...usePluginsConfig({
-          linkPreview: {
-            enableEmbed: false,
-            enableLinkPreview: false,
-          },
-        }),
-      };
+      context('with custom config', () => {
+        const testAppConfig = {
+          ...usePlugins(plugins.embedsPreset),
+          ...usePluginsConfig({
+            linkPreview: {
+              enableEmbed: false,
+              enableLinkPreview: false,
+            },
+          }),
+        };
 
-      beforeEach('load editor', () => cy.loadRicosEditorAndViewer('empty', testAppConfig));
+        beforeEach('load editor', () => cy.loadRicosEditorAndViewer('empty', testAppConfig));
 
-      it('should not create link preview when enableLinkPreview is off', () => {
-        cy.insertLinkAndEnter('www.wix.com');
-        cy.percySnapshot();
-      });
-
-      it('should not embed link when enableEmbed is off', () => {
-        cy.insertLinkAndEnter('www.mockUrl.com');
-        cy.percySnapshot();
+        it(`${getTestPrefix(
+          useTiptap
+        )} should not create link preview/embed when enableLinkPreview is off`, function () {
+          cy.insertLinkAndEnter('www.wix.com');
+          cy.insertLinkAndEnter('www.mockUrl.com');
+          cy.percySnapshot(this.test.title);
+        });
       });
     });
   });
 
-  context('social embed', () => {
-    const testAppConfig = {
-      plugins: [plugins.linkPreview],
-    };
-    beforeEach('load editor', () => {
-      cy.switchToDesktop();
-      cy.loadRicosEditorAndViewer('empty', testAppConfig);
-    });
+  [true, false].forEach(useTiptap => {
+    context('social embed', () => {
+      const testAppConfig = {
+        plugins: [plugins.linkPreview],
+      };
+      beforeEach('load editor', () => {
+        cy.switchToDesktop();
+        cy.loadRicosEditorAndViewer('empty', testAppConfig);
+      });
 
-    const embedTypes = ['TWITTER', 'INSTAGRAM'];
-    embedTypes.forEach(embedType => {
-      it(`render ${embedType.toLowerCase()} upload modals`, function () {
-        cy.openEmbedModal(STATIC_TOOLBAR_BUTTONS[embedType]);
-        cy.percySnapshot(this.test.title + ' modal');
-        cy.addSocialEmbed('www.mockUrl.com').waitForHtmlToLoad();
-        cy.get(`#RicosViewerContainer [data-hook=HtmlComponent]`);
-        cy.percySnapshot(this.test.title + ' added');
+      const embedTypes = ['TWITTER', 'INSTAGRAM'];
+      embedTypes.forEach(embedType => {
+        it(`${getTestPrefix(
+          useTiptap
+        )} render ${embedType.toLowerCase()} upload modals`, function () {
+          cy.openEmbedModal(STATIC_TOOLBAR_BUTTONS[embedType]);
+          cy.percySnapshot(this.test.title + ' modal');
+          cy.addSocialEmbed('www.mockUrl.com').waitForHtmlToLoad();
+          cy.get(`#RicosViewerContainer [data-hook=HtmlComponent]`);
+          cy.percySnapshot(this.test.title + ' added');
+        });
       });
     });
   });

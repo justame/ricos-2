@@ -17,6 +17,7 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
   return [
     {
       id: 'editHtml',
+      dataHook: 'baseToolbarButton_edit',
       command: ({ htmlData, editorCommands }) => {
         editorCommands.chain().updateAttributes(TIPTAP_HTML_TYPE, htmlData).run();
       },
@@ -32,6 +33,7 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
       },
       icon: WidthIcon,
       tooltip: 'ChangeDimensions_Width_Tooltip',
+      dataHook: 'html_custom_width_slider',
       renderer: toolbarItem => (
         <DimensionSliderButton
           toolbarItem={toolbarItem}
@@ -52,6 +54,7 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
       },
       icon: HeightIcon,
       tooltip: 'ChangeDimensions_Height_Tooltip',
+      dataHook: 'html_custom_height_slider',
       renderer: toolbarItem => (
         <DimensionSliderButton
           toolbarItem={toolbarItem}

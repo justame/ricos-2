@@ -10,9 +10,10 @@ import { defaultAlignments, alignmentsMap } from './consts';
 type Props = {
   toolbarItem: IToolbarItem;
   options?: PluginContainerData_Alignment[];
+  dataHook?: string;
 };
 
-const NodeAlignmentButton: FC<Props> = ({ options, toolbarItem }) => {
+const NodeAlignmentButton: FC<Props> = ({ options, toolbarItem, dataHook }) => {
   const { t, languageDir } = useContext(RicosContext) || {};
   const modalService = useContext(ModalContext) || {};
 
@@ -26,7 +27,7 @@ const NodeAlignmentButton: FC<Props> = ({ options, toolbarItem }) => {
 
   return (
     <DropdownButton
-      dataHook={'nodeAlignmentButton'}
+      dataHook={dataHook}
       id={'nodeAlignmentButton'}
       options={dropDownOptions.map(({ dataHook, icon: Icon, text, commandKey, tooltip }) => (
         <ListItemSelect

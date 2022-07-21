@@ -34,6 +34,9 @@ export const toolbarButtonsConfig: IPluginToolbarButtonsConfig = {
     attributes: {
       nodeAlignment: getNodeAlignmentResolver,
     },
+    presentation: {
+      dataHook: 'nodeAlignmentButton',
+    },
     commands: {
       setAlignment:
         ({ editorCommands }) =>
@@ -47,6 +50,9 @@ export const toolbarButtonsConfig: IPluginToolbarButtonsConfig = {
     type: 'toggle',
     attributes: {
       nodeSize: getNodeSizeResolver,
+    },
+    presentation: {
+      dataHook: 'nodeSizeButton',
     },
     commands: {
       setSize:

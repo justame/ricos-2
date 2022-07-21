@@ -199,6 +199,7 @@ export const HTML_PLUGIN = {
   INPUT: 'htmlEditPanel_htmlInput',
   UPDATE: 'htmlEditPanel_Update',
   RADIO_URL: 'htmlEditPanel_radioUrl',
+  RADIO_HTML: 'htmlEditPanel_radioHtml',
 };
 
 export const GIPHY_PLUGIN = {

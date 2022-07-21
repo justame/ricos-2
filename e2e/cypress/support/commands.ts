@@ -342,7 +342,10 @@ const COMMANDS = {
   },
 
   clickToolbarButton: (buttonName: string) => {
-    cy.get(`button[data-hook=${buttonName}][tabindex=0]`).click({
+    const selector = isTiptap
+      ? `[data-hook=${buttonName}]`
+      : `button[data-hook=${buttonName}][tabindex=0]`;
+    cy.get(selector).click({
       force: true, //fixes element getting detached from dom and not clicking (maybe because of click scroll strategy)
     });
   },
@@ -428,11 +431,23 @@ const COMMANDS = {
 
   openPluginToolbar: (plugin: string) => {
     cy.get(`[data-hook*=${plugin}]`).first().parent().click();
-    cy.get('[data-hook*="PluginToolbar"]:first');
+    cy.get(`[data-hook*=${isTiptap ? 'floating-plugin-toolbar' : 'PluginToolbar'}]:first`);
   },
 
   openDropdownMenu: (selector = '') => {
     cy.get('button[role=combobox][data-hook=baseToolbarButton_type]').click();
+
+    if (selector) {
+      cy.get(selector).click();
+    }
+  },
+
+  openDividerStyles: (selector = '') => {
+    if (isTiptap) {
+      cy.get('[data-hook*=dividerStyleDropdownButton]').click({ force: true });
+    } else {
+      cy.get('button[role=combobox][data-hook=baseToolbarButton_type]').click();
+    }
     if (selector) {
       cy.get(selector).click();
     }
@@ -490,7 +505,7 @@ const COMMANDS = {
   addHtml: () => {
     addHtmlPlugin(
       // eslint-disable-next-line max-len
-      '<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">The updates, insights and stories of the engineering challenges we encounter, and our way of solving them. Subscribe to our fresh, monthly newsletter and get these goodies right to your e-mail:<a href="https://t.co/0ziRSJJAxK">https://t.co/0ziRSJJAxK</a> <a href="https://t.co/nTHlsG5z2a">pic.twitter.com/nTHlsG5z2a</a></p>&mdash; Wix Engineering (@WixEng) <a href="https://twitter.com/WixEng/status/1076810144774868992?ref_src=twsrc%5Etfw">December 23, 2018</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>'
+      `<div style="background-color: pink; border: 2px solid red; height: 400px; text-align: center; color: white;"><h1>This is html src test</h1></div>`
     );
   },
 
@@ -535,7 +550,6 @@ const COMMANDS = {
     cy.moveCursorToEnd()
       .type(url)
       .type('{enter}')
-      .moveCursorToEnd()
       .get(`a[href*="${url}"]${isPreview ? ' figure' : ''}`);
   },
 
@@ -776,8 +790,13 @@ function setInlineToolbarMenuItem(item: string, selection: [number, number], but
 
 function addHtmlPlugin(htmlSrc: string, isUrl = false) {
   cy.clickOnStaticButton(HTML_PLUGIN.STATIC_TOOLBAR_BUTTON);
+  if (isTiptap) {
+    cy.get(`[data-hook*=floating-plugin-toolbar] [data-hook*=baseToolbarButton_edit]`).click();
+  }
   if (isUrl) {
     cy.get(`[data-hook*=${HTML_PLUGIN.RADIO_URL}]`).click();
+  } else {
+    cy.get(`[data-hook*=${HTML_PLUGIN.RADIO_HTML}]`).click();
   }
   cy.get(`[data-hook*=${HTML_PLUGIN.INPUT}]`).click().clear();
   cy.get(`[data-hook*=${HTML_PLUGIN.INPUT}]`).typeAllAtOnce(htmlSrc);

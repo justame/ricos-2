@@ -9,8 +9,8 @@ import Tooltip from 'wix-rich-content-common/libs/Tooltip';
 interface Props {
   Icon: ComponentType;
   onClick: (args) => void;
-  dataHook: string;
   tooltip: string;
+  dataHook?: string;
   active?: boolean;
   disabled?: boolean;
   setRef?: (ref) => void;

@@ -59,7 +59,7 @@ export class PluginToolbarButton implements IPluginToolbarButton {
   }
 
   toToolbarItemConfig(): IToolbarItemConfigTiptap {
-    const { id, type, icon, tooltip, command, attributes = {} } = this.button;
+    const { id, type, icon, tooltip, dataHook, command, attributes = {} } = this.button;
 
     const toolbarItemConfig = toolbarButtonsConfig[id] || {};
     const { presentation = {}, commands } = toolbarItemConfig;
@@ -69,6 +69,7 @@ export class PluginToolbarButton implements IPluginToolbarButton {
       type: type || toolbarItemConfig.type,
       presentation: {
         tooltip: tooltip || presentation.tooltip,
+        dataHook: dataHook || presentation.dataHook,
         icon: icon || presentation.icon,
       },
       attributes: {

@@ -12,11 +12,17 @@ interface Props {
   max: number;
   inputMin?: number;
   inputMax?: number;
+  dataHook?: string;
 }
 
 const HTML_DIMENSION_MODAL_ID = 'htmlDimensionModal';
 
-export const DimensionSliderButton: FC<Props> = ({ toolbarItem, dimension, ...props }) => {
+export const DimensionSliderButton: FC<Props> = ({
+  toolbarItem,
+  dimension,
+  dataHook,
+  ...props
+}) => {
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
   const { t, isMobile } = useContext(RicosContext) || {};
   const modalService = useContext(ModalContext);
@@ -68,12 +74,7 @@ export const DimensionSliderButton: FC<Props> = ({ toolbarItem, dimension, ...pr
 
   return (
     <div ref={setReferenceElement}>
-      <ToggleButton
-        Icon={icon}
-        onClick={onClick}
-        dataHook={`html_custom_${dimension}_slider`}
-        tooltip={t(tooltip)}
-      />
+      <ToggleButton Icon={icon} onClick={onClick} dataHook={dataHook} tooltip={t(tooltip)} />
     </div>
   );
 };

@@ -272,6 +272,7 @@ export type ToolbarButton = {
   modal?: ModalConfig;
   icon?: ComponentType;
   tooltip?: string;
+  dataHook?: string;
   command?: (args: Record<string, any>) => void;
   attributes?: Record<string, { id: string; resolve: (content) => any }>;
 };

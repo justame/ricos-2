@@ -8,11 +8,12 @@ import { EditIcon } from '../icons';
 
 type Props = {
   toolbarItem: IToolbarItem;
+  dataHook?: string;
 };
 
 const HTML_EDIT_MODAL_ID = 'htmlEditModal';
 
-export const EditHtmlButton: FC<Props> = ({ toolbarItem }) => {
+export const EditHtmlButton: FC<Props> = ({ toolbarItem, dataHook }) => {
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
   const { t } = useContext(RicosContext) || {};
   const modalService = useContext(ModalContext);
@@ -48,7 +49,7 @@ export const EditHtmlButton: FC<Props> = ({ toolbarItem }) => {
   return (
     <div ref={setReferenceElement}>
       <ToggleButton
-        dataHook={'baseToolbarButton_edit'}
+        dataHook={dataHook}
         Icon={EditIcon}
         tooltip={t('HtmlPlugin_EditHtml_Tooltip')}
         onClick={onClick}

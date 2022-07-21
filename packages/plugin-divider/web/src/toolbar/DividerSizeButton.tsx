@@ -7,9 +7,10 @@ import { dividerSizeData } from './dividerButtonsData';
 
 type Props = {
   toolbarItem: IToolbarItem;
+  dataHook?: string;
 };
 
-export const DividerSizeButton: FC<Props> = ({ toolbarItem }) => {
+export const DividerSizeButton: FC<Props> = ({ toolbarItem, dataHook }) => {
   const { t } = useContext(RicosContext) || {};
   const modalService = useContext(ModalContext) || {};
 
@@ -20,7 +21,7 @@ export const DividerSizeButton: FC<Props> = ({ toolbarItem }) => {
 
   return (
     <DropdownButton
-      dataHook={'baseToolbarButton_type'}
+      dataHook={dataHook}
       id={'divider_size'}
       options={dividerSizeData.map(({ dataHook, icon: Icon, text, commandKey, tooltip }) => (
         <ListItemSelect
