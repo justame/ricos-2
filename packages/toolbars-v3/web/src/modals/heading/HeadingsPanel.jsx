@@ -34,7 +34,7 @@ class HeadingsPanel extends Component {
       .filter(([key, value]) => !value)
       .map(([key, value]) => key);
     return this.props.onChange({
-      [type]: omit({ ...documentStyle[type], ...currentInlineStyles }, omitValues),
+      [type]: omit({ ...documentStyle?.[type], ...currentInlineStyles }, omitValues),
     });
   };
 

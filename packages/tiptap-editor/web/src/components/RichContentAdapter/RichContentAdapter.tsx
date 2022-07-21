@@ -12,8 +12,9 @@ import {
   NUMBERED_LIST_TYPE,
   UNSTYLED,
 } from 'ricos-content';
-import { tiptapToDraft } from 'ricos-converters';
+import { tiptapToDraft, fromTiptapNode } from 'ricos-converters';
 import { Decoration_Type, Node_Type } from 'ricos-schema';
+import type { Node } from 'ricos-schema';
 import type { TiptapAdapter, EditorContextType, Pubsub, RicosServices } from 'ricos-types';
 import type { RicosCustomStyles, TextAlignment } from 'wix-rich-content-common';
 import {
@@ -28,6 +29,7 @@ import {
 } from 'wix-rich-content-common';
 import { TO_TIPTAP_TYPE } from '../../consts';
 import { findNodeById } from '../../helpers';
+import { convertInlineStylesToCSS } from '../../helpers/convertInlineStylesToCss';
 
 export class RichContentAdapter implements TiptapAdapter {
   private readonly initialContent: Fragment;
@@ -400,7 +402,25 @@ export class RichContentAdapter implements TiptapAdapter {
       return {};
     },
     getInlineStylesInSelection: () => {
-      return {};
+      const {
+        state: {
+          doc,
+          selection: { from, to },
+        },
+      } = this.tiptapEditor;
+
+      let node: Node | undefined;
+      doc.nodesBetween(from, to, currNode => {
+        if (
+          [Node_Type.PARAGRAPH as string, Node_Type.HEADING as string].includes(
+            currNode?.type?.name
+          )
+        ) {
+          node = fromTiptapNode({ ...currNode.toJSON(), type: currNode?.type?.name });
+          return false;
+        }
+      });
+      return node ? convertInlineStylesToCSS(node) : {};
     },
     updateDocumentStyle: () => {},
     clearSelectedBlocksInlineStyles: () => {},
