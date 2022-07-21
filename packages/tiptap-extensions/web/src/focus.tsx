@@ -2,7 +2,7 @@ import type { Editor } from '@tiptap/react';
 import { pipe } from 'fp-ts/function';
 import type { ComponentType } from 'react';
 import React, { useEffect, useState } from 'react';
-import type { RicosExtension } from 'ricos-tiptap-types';
+import type { RicosExtension } from 'ricos-types';
 
 const isInSelection = (selection: Editor['state']['selection']) => (position: number) =>
   position >= selection.$from.pos && position <= selection.$to.pos;

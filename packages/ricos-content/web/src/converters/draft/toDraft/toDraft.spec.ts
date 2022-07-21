@@ -218,7 +218,7 @@ describe('migrate to draft', () => {
         ],
       };
       const { blocks } = toDraft(content);
-      expect(blocks[0].key).toEqual('bar');
+      expect(blocks[0].key).toEqual('baz');
       expect(blocks[0].type).toEqual('unordered-list-item');
     });
 

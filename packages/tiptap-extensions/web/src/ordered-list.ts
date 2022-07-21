@@ -1,7 +1,8 @@
-import { mergeAttributes, wrappingInputRule } from '@tiptap/core';
+import { mergeAttributes, InputRule, getNodeType, isNodeActive } from '@tiptap/core';
 import { Node_Type } from 'ricos-schema';
+import { createListInputRuleHandler } from './list-input-rule-handler';
 import orderedListDataDefaults from 'ricos-schema/dist/statics/ordered_list.defaults.json';
-import type { DOMOutputSpec, RicosExtension } from 'ricos-tiptap-types';
+import type { DOMOutputSpec, RicosExtension } from 'ricos-types';
 import styles from './statics/styles.scss';
 
 declare module '@tiptap/core' {
@@ -11,11 +12,15 @@ declare module '@tiptap/core' {
        * Toggle an ordered list
        */
       toggleOrderedList: () => ReturnType;
+      /**
+       * Toggle off an ordered list if exists
+       */
+      toggleOffOrderedList: () => ReturnType;
     };
   }
 }
 
-export const inputRegex = /^(\d+)\.\s$/;
+export const inputRegex = /^1.\s$/;
 
 export const orderedList: RicosExtension = {
   type: 'node' as const,
@@ -75,7 +80,16 @@ export const orderedList: RicosExtension = {
           toggleOrderedList:
             () =>
             ({ commands }) => {
-              return commands.toggleList(this.name, this.options.itemTypeName);
+              return commands.toggleLists(this.name, this.options.itemTypeName);
+            },
+          toggleOffOrderedList:
+            () =>
+            ({ state, commands }) => {
+              const isActive = isNodeActive(state, getNodeType(this.name, state.schema));
+              if (isActive) {
+                return commands.toggleOrderedList();
+              }
+              return true;
             },
         };
       },
@@ -87,12 +101,14 @@ export const orderedList: RicosExtension = {
       },
 
       addInputRules() {
+        const getAttributes = match => ({ start: Number(match[1]) });
+        const joinPredicate = (match, node) =>
+          node.childCount + node.attrs.start === Number(match[1]);
+
         return [
-          wrappingInputRule({
+          new InputRule({
             find: inputRegex,
-            type: this.type,
-            getAttributes: match => ({ start: Number(match[1]) }),
-            joinPredicate: (match, node) => node.childCount + node.attrs.start === Number(match[1]),
+            handler: createListInputRuleHandler({ type: this.type, getAttributes, joinPredicate }),
           }),
         ];
       },

@@ -1,11 +1,24 @@
 import React from 'react';
-import type { ExtensionProps, RicosExtension, RicosExtensionConfig } from 'ricos-tiptap-types';
+import type { ExtensionProps, RicosExtension, RicosExtensionConfig } from 'ricos-types';
 import styles from './statics/styles.scss';
+import { NodeSelection } from 'prosemirror-state';
 
+const setSelection = (editor, getPos) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const selection = NodeSelection.create(editor.view.state.doc, (getPos as any)());
+  const transaction = editor.view.state.tr.setSelection(selection);
+  editor.view.dispatch(transaction);
+};
 const OverlayHoc = Component => {
   const Overlay = props => {
     return (
-      <div className={styles.overlay} role="none">
+      <div
+        className={styles.overlay}
+        role="none"
+        onClick={() => {
+          setSelection(props.editor, props.getPos);
+        }}
+      >
         <Component {...props} />
       </div>
     );

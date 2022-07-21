@@ -6,7 +6,7 @@ import { DEFAULTS } from './defaults';
 import type { EditorPluginCreator } from 'wix-rich-content-common';
 import { createCollapsibleListData } from './createCollapsibleListData';
 import { tiptapExtensions } from './tiptap/tiptap';
-import type { TiptapEditorPlugin } from 'ricos-tiptap-types';
+import type { TiptapEditorPlugin } from 'ricos-types';
 import { getAddButtons } from './getAddButtons';
 import { getToolbarButtons } from './getToolbarButtons';
 import { TIPTAP_COLLAPSIBLE_LIST_TYPE } from 'ricos-content';

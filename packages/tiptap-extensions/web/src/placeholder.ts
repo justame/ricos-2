@@ -5,7 +5,8 @@ import type {
   RicosExtension,
   RicosExtensionConfig,
   RicosNodeExtension,
-} from 'ricos-tiptap-types';
+  RicosServices,
+} from 'ricos-types';
 import { compact } from 'lodash';
 
 export const placeholder: RicosExtension = {
@@ -15,7 +16,9 @@ export const placeholder: RicosExtension = {
   reconfigure: (
     config: RicosExtensionConfig,
     _extensions: RicosExtension[],
-    ricosProps: ExtensionProps
+    ricosProps: ExtensionProps,
+    _settings: Record<string, unknown>,
+    services: RicosServices
   ) => ({
     ...config,
     addOptions() {
@@ -26,6 +29,7 @@ export const placeholder: RicosExtension = {
         showOnlyWhenEditable: true,
         showOnlyCurrent: true,
         includeChildren: false,
+        t: services.t,
         extensionsPlaceholders: compact(
           _extensions
             .filter(ext => ext.type === 'node')
@@ -94,10 +98,11 @@ export const placeholder: RicosExtension = {
                     if (this.options.extensionsPlaceholders.length) {
                       this.options.extensionsPlaceholders.forEach(({ predicate, content }) => {
                         if (predicate({ doc, pos, node })) {
+                          const { t } = this.options;
                           const classes = [this.options.emptyNodeClass];
                           const decoration = Decoration.node(pos, pos + node.nodeSize, {
                             class: classes.join(' '),
-                            'data-placeholder': content,
+                            'data-placeholder': t?.(content) || content,
                           });
 
                           decorations.push(decoration);

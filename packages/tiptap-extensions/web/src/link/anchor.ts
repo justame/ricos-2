@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import type { RicosExtension } from 'ricos-tiptap-types';
+import type { RicosExtension } from 'ricos-types';
 import { findChildren } from '@tiptap/core';
 import styles from '../statics/styles.scss';
 import { cleanAndSetSelection, getSelectedMarkRangeByTypeNames } from './utils';

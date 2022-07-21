@@ -19,19 +19,78 @@
 
 ## :house: Internal
 
+- `tiptap-extensions`
+  - [#4196](https://github.com/wix/ricos/pull/4196) add `dropcursor` extension
+  - [#4196](https://github.com/wix/ricos/pull/4196) add `custom-styles` to groups to exclude nodes from `style` extension
+- `collapsible-list`
+  - [#4196](https://github.com/wix/ricos/pull/4196) improve collapsible styling and ui in tiptap
+
+</details>
+
+## 8.72.3 (Jul 20, 2022)
+
+- `image`
+  - [#4219](https://github.com/wix/ricos/pull/4219) @wix/image update & earlier initCustomElement
+
+## 8.72.2 (Jul 20, 2022)
+
+## :house: Internal
+
+- `tiptap-editor`
+  - [#4211](https://github.com/wix/ricos/pull/4211) warn about setNode & clearNodes tiptap commands usage
+- `tiptap-extensions`
+  - [#4218](https://github.com/wix/ricos/pull/4218) add translate to placeholder extension
+  - [#4220](https://github.com/wix/ricos/pull/4220) remove `translationKey` and translate content directly in placeholder
+
+## :bug: Bug Fix
+
+- `ricos-content`
+  - [#4215](https://github.com/wix/ricos/pull/4215) draft video data to ricos conversion
+
+## 8.72.1 (Jul 19, 2022)
+
+## :rocket: New Feature
+
+- `image`
+  - [#4144](https://github.com/wix/ricos/pull/4144) Use @wix/image renderer (FT)
+
+## :bug: Bug Fix
+
+- `tiptap-editor`
+  - [#4200](https://github.com/wix/ricos/pull/4200) text node from/to transformer (fixed id's)
+
+## 8.71.50 (Jul 19, 2022)
+
+## :bug: Bug Fix
+
+- `tiptap-extensions`
+
+  - [#4204](https://github.com/wix/ricos/pull/4204) lists input rule with custom handler
+
+- `ricos-styles`
+  - [#4205](https://github.com/wix/ricos/pull/4205) document style set style merger
+
+## :house: Internal
+
+- `ricos-tiptap-types`
+
+  - [#4198](https://github.com/wix/ricos/pull/4198) ricos-tiptap-types merged into ricos-types
+  - [#4203](https://github.com/wix/ricos/pull/4203) overlay click triggers focus
+
 - `collapsible-list`
 
   - [#4193](https://github.com/wix/ricos/pull/4193) fix selection on tiptap
 
 - `audio`
+
   - [#4073](https://github.com/wix/ricos/pull/4073) add toolbar settings button
 
-## :nail_care: Polish
+- `gallery/audio`
+
+  - [#4206](https://github.com/wix/ricos/pull/4206) refactor getToolbarButtons.tsx
 
 - `gallery/polls`
   - [#4195](https://github.com/wix/ricos/pull/4195) code refactor/cleanup in getToolbarButtons.tsx
-  
-  </details>
 
 ## 8.71.49 (Jul 17, 2022)
 

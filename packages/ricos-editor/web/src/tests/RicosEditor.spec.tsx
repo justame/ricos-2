@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable max-len */
+
 import React from 'react';
 import { version } from '../../package.json';
 import type { RicosEditorProps, DraftEditorSettings } from '../index';

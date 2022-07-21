@@ -1,6 +1,6 @@
 import { TIPTAP_APP_EMBED_TYPE } from 'ricos-content';
 import appEmbedDataDefaults from 'ricos-schema/dist/statics/app_embed.defaults.json';
-import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-tiptap-types';
+import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-types';
 import { AppEmbed as Component } from './component';
 
 export const tiptapExtensions = [
@@ -22,7 +22,7 @@ export const tiptapExtensions = [
       return {
         name: this.name,
         group: 'block',
-        selectable: false,
+        selectable: true,
         draggable: true,
         addAttributes: () => appEmbedDataDefaults,
       };

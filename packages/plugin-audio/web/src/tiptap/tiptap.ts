@@ -1,6 +1,6 @@
 import { TIPTAP_AUDIO_TYPE } from 'ricos-content';
 import audioDataDefaults from 'ricos-schema/dist/statics/audio.defaults.json';
-import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-tiptap-types';
+import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-types';
 import { Audio as Component } from './component';
 
 const name = TIPTAP_AUDIO_TYPE;
@@ -8,7 +8,7 @@ const name = TIPTAP_AUDIO_TYPE;
 export const tiptapExtensions = [
   {
     type: 'node' as const,
-    groups: ['react'],
+    groups: ['react', 'overlay'],
     name,
     reconfigure: (
       config: NodeConfig,

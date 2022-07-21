@@ -1,4 +1,4 @@
-import type { RicosExtension, RicosExtensionConfig } from 'ricos-tiptap-types';
+import type { RicosExtension, RicosExtensionConfig } from 'ricos-types';
 import type { Transaction } from 'prosemirror-state';
 import { AllSelection } from 'prosemirror-state';
 import { isTextSelection } from '@tiptap/core';

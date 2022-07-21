@@ -1,4 +1,13 @@
-import type { EditorPluginConfig, ViewerPluginConfig } from 'wix-rich-content-common';
+import type {
+  EditorPluginConfig,
+  ViewerPluginConfig,
+  Helpers,
+  RichContentTheme,
+  SEOSettings,
+  CustomAnchorScroll,
+} from 'wix-rich-content-common';
+
+import type { AvailableExperiments } from 'ricos-types';
 
 export const IMAGE_TYPE = 'wix-draft-plugin-image';
 export const IMAGE_TYPE_LEGACY = 'IMAGE';
@@ -87,3 +96,24 @@ export type ExtendedBlob = Blob & {
   name: string;
   webkitRelativePath: string;
 };
+
+export interface ImageViewerProps {
+  componentData: ImageData;
+  className?: string;
+  dataUrl: string;
+  settings: ImagePluginViewerConfig;
+  defaultCaption: string;
+  onCaptionChange: (caption: string) => void;
+  setFocusToBlock: () => void;
+  theme: RichContentTheme;
+  helpers: Helpers;
+  getInPluginEditingMode?: () => unknown;
+  setInPluginEditingMode?: () => unknown;
+  isMobile: boolean;
+  setComponentUrl: (highres?: string) => unknown;
+  seoMode?: SEOSettings;
+  blockKey: string;
+  isLoading: boolean;
+  customAnchorScroll?: CustomAnchorScroll;
+  experiments?: AvailableExperiments;
+}

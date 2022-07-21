@@ -86,4 +86,4 @@ export const fixtures: Fixture[] = [
 ];
 
 export const fixturesToTestOnSeo: Fixture[] = ['images'];
-export const DEFAULT_MOBILE_WIDTHS = { widths: [375, 768] };
+export const DEFAULT_MOBILE_WIDTHS = { widths: [375] };

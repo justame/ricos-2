@@ -1,5 +1,5 @@
 import { PluginKey, Plugin } from 'prosemirror-state';
-import type { RicosExtension } from 'ricos-tiptap-types';
+import type { RicosExtension } from 'ricos-types';
 import { Node_Type } from 'ricos-schema';
 
 /**

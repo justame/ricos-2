@@ -1,12 +1,9 @@
 import React from 'react';
 import type { ToolbarButton } from 'ricos-types';
-import {
-  PLUGIN_TOOLBAR_BUTTON_ID,
-  decorateComponentWithProps,
-} from 'wix-rich-content-editor-common';
+import { PLUGIN_TOOLBAR_BUTTON_ID } from 'wix-rich-content-editor-common';
 import { GALLERY_TYPE } from './types';
 import { Uploader } from 'wix-rich-content-plugin-commons';
-import { AddMediaIcon, ManageMediaNewIcon } from './icons';
+import { AddMediaIcon } from './icons';
 import { GALLERY_LAYOUTS, layoutRicosData } from './layout-data-provider';
 import { fileInputAccept, galleryModals } from './consts';
 import GallerySettingsModal from './modals/SettingsModal';
@@ -19,7 +16,7 @@ const defaultData = {
 };
 
 export const getToolbarButtons = (config, galleryPluginService): ToolbarButton[] => {
-  const { accept = fileInputAccept, handleFileUpload } = config;
+  const { accept = fileInputAccept } = config;
 
   const handleFileSelection = (uploadService, updateService, node) => {
     if (config.handleFileSelection) {
@@ -46,7 +43,7 @@ export const getToolbarButtons = (config, galleryPluginService): ToolbarButton[]
           uploadService.uploadFile(
             file,
             node.attrs.id,
-            new Uploader(handleFileUpload),
+            new Uploader(config.handleFileUpload),
             GALLERY_TYPE,
             galleryPluginService
           )
@@ -54,33 +51,34 @@ export const getToolbarButtons = (config, galleryPluginService): ToolbarButton[]
       );
     }
   };
+
   return [
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS,
+      modal: {
+        id: galleryModals.manageMedia,
+        Component: GallerySettingsModal,
+      },
+      command: ({ modalService, isMobile, node, uploadService, updateService }) => {
+        modalService?.openModal(galleryModals.manageMedia, {
+          componentProps: {
+            nodeId: node.attrs.id,
+            handleFileSelection: () => handleFileSelection(uploadService, updateService, node),
+            handleFileUpload: config.handleFileUpload,
+            accept,
+            activeTab: 'manage_media',
+          },
+          positioning: { placement: 'right' },
+          layout: isMobile ? 'fullscreen' : 'drawer',
+        });
+      },
+    },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.REPLACE,
       icon: AddMediaIcon,
       tooltip: 'UploadMediaButton_Tooltip',
       command: ({ node, uploadContext: { uploadService, updateService } }) => {
         handleFileSelection(uploadService, updateService, node);
-      },
-    },
-    {
-      id: PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS,
-      modal: {
-        id: galleryModals.manageMedia,
-        Component: decorateComponentWithProps(GallerySettingsModal, { activeTab: 'manage_media' }),
-      },
-      icon: ManageMediaNewIcon,
-      command: ({ modalService, isMobile, node, uploadService, updateService }) => {
-        modalService?.openModal(galleryModals.manageMedia, {
-          componentProps: {
-            nodeId: node.attrs.id,
-            handleFileSelection: () => handleFileSelection(uploadService, updateService, node),
-            handleFileUpload,
-            accept,
-          },
-          positioning: { placement: 'right' },
-          layout: isMobile ? 'fullscreen' : 'drawer',
-        });
       },
     },
     {
@@ -113,7 +111,7 @@ export const getToolbarButtons = (config, galleryPluginService): ToolbarButton[]
           componentProps: {
             nodeId: node.attrs.id,
             handleFileSelection: () => handleFileSelection(uploadService, updateService, node),
-            handleFileUpload,
+            handleFileUpload: config.handleFileUpload,
             accept,
           },
           positioning: { placement: 'right' },

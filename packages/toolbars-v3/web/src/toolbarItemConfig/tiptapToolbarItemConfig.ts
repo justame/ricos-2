@@ -6,40 +6,24 @@ import {
   ItalicIcon,
   UnderlineIcon,
   BlockQuoteIcon,
-  CodeBlockIcon,
   OrderedListIcon,
   UnorderedListIcon,
-  SpoilerButtonIcon,
-  increaseIndentPluginIcon,
-  decreaseIndentPluginIcon,
-  LineSpacingIcon,
   LinkIcon,
-  TextColorIcon,
-  TextHighlightIcon,
   UndoIcon,
   RedoIcon,
   PlusIcon,
 } from '../icons';
 import {
   alwaysVisibleResolver,
-  isOnlyTextSelected,
   isTextContainsBoldResolver,
   isTextContainsItalicResolver,
   isTextContainsUnderlineResolver,
   isTextContainsQuoteResolver,
-  isTextContainsCodeblockResolver,
   isTextContainsOrderedListResolver,
   isTextContainsUnorderedListResolver,
-  isTextContainsSpoilerResolver,
   getAlignmentInSelectionResolver,
-  getHeadingInSelectionResolver,
   getFontSizeInSelectionResolver,
   isTextContainsLinkOrAnchorResolver,
-  getTextColorInSelectionResolver,
-  getHighlightColorInSelectionResolver,
-  getLineSpacingInSelectionResolver,
-  getLineSpacingBeforeSelectionResolver,
-  getLineSpacingAfterSelectionResolver,
 } from '../resolvers/tiptapResolvers';
 import type { IToolbarItemConfigTiptap } from 'ricos-types';
 
@@ -202,30 +186,6 @@ export const tiptapStaticToolbarConfig: IToolbarItemConfigTiptap[] = [
     },
   },
   {
-    id: 'codeBlock',
-    type: 'toggle',
-    presentation: {
-      dataHook: 'TextCodeBlockButton',
-      tooltip: 'TextCodeBlockButton_Tooltip',
-      tooltipShortcut: {
-        MacOS: ' (⌘⇧C)',
-        Windows: ' (Ctrl+⇧+C)',
-      },
-      icon: CodeBlockIcon,
-    },
-    attributes: {
-      visible: alwaysVisibleResolver,
-      active: isTextContainsCodeblockResolver,
-    },
-    commands: {
-      toggleCodeblock:
-        ({ editorCommands }) =>
-        () => {
-          editorCommands.chain().focus().toggleCodeBlock().run();
-        },
-    },
-  },
-  {
     id: 'orderedList',
     type: 'toggle',
     presentation: {
@@ -266,44 +226,6 @@ export const tiptapStaticToolbarConfig: IToolbarItemConfigTiptap[] = [
     },
   },
   {
-    id: 'increaseIndent',
-    type: 'toggle',
-    presentation: {
-      dataHook: 'increaseIndentButton',
-      tooltip: 'increaseIndentButton_Tooltip',
-      icon: increaseIndentPluginIcon,
-    },
-    attributes: {
-      visible: alwaysVisibleResolver,
-    },
-    commands: {
-      increaseIndent:
-        ({ editorCommands }) =>
-        () => {
-          editorCommands.chain().focus().indent().run();
-        },
-    },
-  },
-  {
-    id: 'decreaseIndent',
-    type: 'toggle',
-    presentation: {
-      dataHook: 'decreaseIndentButton',
-      tooltip: 'decreaseIndentButton_Tooltip',
-      icon: decreaseIndentPluginIcon,
-    },
-    attributes: {
-      visible: alwaysVisibleResolver,
-    },
-    commands: {
-      decreaseIndent:
-        ({ editorCommands }) =>
-        () => {
-          editorCommands.chain().focus().outdent().run();
-        },
-    },
-  },
-  {
     id: 'alignment',
     type: 'modal',
     presentation: {
@@ -319,142 +241,6 @@ export const tiptapStaticToolbarConfig: IToolbarItemConfigTiptap[] = [
         ({ editorCommands }) =>
         alignment => {
           editorCommands.chain().focus().setTextAlign(alignment).run();
-        },
-    },
-  },
-  {
-    id: 'title',
-    type: 'toggle',
-    presentation: {
-      dataHook: 'textBlockStyleButton_Title',
-      tooltip: 'TitleButton_Tooltip',
-    },
-    attributes: {
-      visible: alwaysVisibleResolver,
-      selectedHeading: getHeadingInSelectionResolver,
-    },
-    commands: {
-      setHeading:
-        ({ editorCommands }) =>
-        heading => {
-          if (heading === 'unstyled') {
-            editorCommands.chain().focus().setParagraph().run();
-          } else {
-            const headingMap = {
-              'header-one': 1,
-              'header-two': 2,
-              'header-three': 3,
-              'header-four': 4,
-              'header-five': 5,
-              'header-six': 6,
-            };
-            const headingLevel = headingMap[heading];
-            editorCommands.chain().focus().toggleHeading({ level: headingLevel }).run();
-          }
-        },
-    },
-  },
-  {
-    id: 'headings',
-    type: 'modal',
-    presentation: {
-      dataHook: 'headingsDropdownButton',
-      tooltip: 'FormattingToolbar_TextStyleButton_Tooltip',
-    },
-    attributes: {
-      visible: alwaysVisibleResolver,
-      selectedHeading: getHeadingInSelectionResolver,
-    },
-    commands: {
-      setHeading:
-        ({ editorCommands }) =>
-        heading => {
-          if (heading === 'unstyled') {
-            editorCommands.chain().focus().setParagraph().run();
-          } else {
-            const headingMap = {
-              'header-one': 1,
-              'header-two': 2,
-              'header-three': 3,
-              'header-four': 4,
-              'header-five': 5,
-              'header-six': 6,
-            };
-            const headingLevel = headingMap[heading];
-            editorCommands.chain().focus().toggleHeading({ level: headingLevel }).run();
-          }
-        },
-      setAndSaveHeading:
-        ({ editorCommands }) =>
-        documentStyle => {
-          // eslint-disable-next-line no-console
-          console.log('TODO: setAndSaveHeading');
-        },
-      removeInlineStyles:
-        ({ editorCommands }) =>
-        (exclude?: string[]) => {
-          // eslint-disable-next-line no-console
-          console.log('TODO: removeInlineStyles');
-        },
-    },
-  },
-  {
-    id: 'lineSpacing',
-    type: 'modal',
-    presentation: {
-      dataHook: 'LineSpacingButton',
-      tooltip: 'LineSpacingButton_Tooltip',
-      icon: LineSpacingIcon,
-    },
-    attributes: {
-      visible: alwaysVisibleResolver,
-      selectedLineSpacing: getLineSpacingInSelectionResolver,
-      selectedLineSpacingBefore: getLineSpacingBeforeSelectionResolver,
-      selectedLineSpacingAfter: getLineSpacingAfterSelectionResolver,
-    },
-    commands: {
-      setLineSpacing:
-        ({ editorCommands }) =>
-        value => {
-          if (!value) return;
-          const {
-            'line-height': stringLineHeight,
-            'padding-bottom': stringPaddingBottom,
-            'padding-top': stringPaddingTop,
-          } = value;
-
-          const lineHeight = parseFloat(stringLineHeight);
-          const paddingBottom = parseFloat(stringPaddingBottom);
-          const paddingTop = parseFloat(stringPaddingTop);
-
-          editorCommands
-            .chain()
-            .focus()
-            .setLineSpacing(lineHeight)
-            .setLineSpacingBefore(paddingTop)
-            .setLineSpacingAfter(paddingBottom)
-            .run();
-        },
-      setLineSpacingWithoutFocus:
-        ({ editorCommands }) =>
-        value => {
-          if (!value) return;
-          const {
-            'line-height': stringLineHeight,
-            'padding-bottom': stringPaddingBottom,
-            'padding-top': stringPaddingTop,
-          } = value;
-
-          const lineHeight = parseFloat(stringLineHeight);
-          const paddingBottom = parseFloat(stringPaddingBottom);
-          const paddingTop = parseFloat(stringPaddingTop);
-
-          editorCommands
-            .chain()
-            .setLineSpacing(lineHeight)
-            .setLineSpacingBefore(paddingTop)
-            .setLineSpacingAfter(paddingBottom)
-            .run();
         },
     },
   },
@@ -521,56 +307,6 @@ export const tiptapStaticToolbarConfig: IToolbarItemConfigTiptap[] = [
         ({ editorCommands }) =>
         () => {
           editorCommands.chain().focus().unsetAnchor().run();
-        },
-    },
-  },
-  {
-    id: 'textColor',
-    type: 'modal',
-    presentation: {
-      dataHook: 'TextColorButton',
-      tooltip: 'TextColorButton_Tooltip',
-      icon: TextColorIcon,
-    },
-    attributes: {
-      visible: alwaysVisibleResolver,
-      selectedTextColor: getTextColorInSelectionResolver,
-    },
-    commands: {
-      setTextColor:
-        ({ editorCommands }) =>
-        color => {
-          editorCommands.chain().focus().setColor(color.color).run();
-        },
-      resetTextColor:
-        ({ editorCommands }) =>
-        () => {
-          editorCommands.chain().focus().unsetColor().run();
-        },
-    },
-  },
-  {
-    id: 'textHighlight',
-    type: 'modal',
-    presentation: {
-      dataHook: 'TextHighlightButton',
-      tooltip: 'TextHighlightButton_Tooltip',
-      icon: TextHighlightIcon,
-    },
-    attributes: {
-      visible: alwaysVisibleResolver,
-      selectedHighlightColor: getHighlightColorInSelectionResolver,
-    },
-    commands: {
-      setHighlightColor:
-        ({ editorCommands }) =>
-        color => {
-          editorCommands.chain().focus().setHighlight(color.color).run();
-        },
-      resetHighlightColor:
-        ({ editorCommands }) =>
-        () => {
-          editorCommands.chain().focus().unsetHighlight().run();
         },
     },
   },

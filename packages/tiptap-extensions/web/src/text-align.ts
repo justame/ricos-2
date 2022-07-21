@@ -1,4 +1,4 @@
-import type { ExtensionProps, RicosExtension, RicosExtensionConfig } from 'ricos-tiptap-types';
+import type { ExtensionProps, RicosExtension, RicosExtensionConfig } from 'ricos-types';
 import { Node_Type, TextStyle_TextAlignment } from 'ricos-schema';
 import { Plugin, PluginKey } from 'prosemirror-state';
 

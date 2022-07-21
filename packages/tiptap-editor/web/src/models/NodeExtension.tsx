@@ -12,10 +12,14 @@ import { pipe } from 'fp-ts/function';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import type { ComponentType } from 'react';
 import React from 'react';
-import type { ExtensionProps, RicosExtension, RicosNodeExtension } from 'ricos-tiptap-types';
-import { isRicosNodeExtension } from 'ricos-tiptap-types';
+import type {
+  ExtensionProps,
+  RicosExtension,
+  RicosNodeExtension,
+  RicosServices,
+} from 'ricos-types';
+import { isRicosNodeExtension } from 'ricos-types';
 import { RicosNode } from '../components/RicosNode';
-import type { RicosServices } from 'ricos-types';
 import type {
   DecoratedNodeExtension,
   ExtensionAggregate,

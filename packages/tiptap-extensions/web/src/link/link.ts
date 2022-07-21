@@ -4,7 +4,7 @@ import { find } from 'linkifyjs';
 import type { Plugin } from 'prosemirror-state';
 import { Decoration_Type } from 'ricos-schema';
 import type { LinkData } from 'ricos-schema';
-import type { DOMOutputSpec, ExtensionProps, MarkConfig, RicosExtension } from 'ricos-tiptap-types';
+import type { DOMOutputSpec, ExtensionProps, MarkConfig, RicosExtension } from 'ricos-types';
 import type { DeepPartial } from 'utility-types';
 import styles from '../statics/styles.scss';
 import { autolink } from './helpers/autolink';

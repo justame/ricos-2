@@ -1,4 +1,4 @@
-import type { Group, RicosExtension } from 'ricos-tiptap-types';
+import type { Group, RicosExtension } from 'ricos-types';
 import findHashTag from './findHashTag';
 
 export const tiptapExtensions: RicosExtension[] = [

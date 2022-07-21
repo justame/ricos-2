@@ -1,5 +1,5 @@
 import { Plugin, PluginKey } from 'prosemirror-state';
-import type { ExtensionProps, RicosExtension, RicosExtensionConfig } from 'ricos-tiptap-types';
+import type { ExtensionProps, RicosExtension, RicosExtensionConfig } from 'ricos-types';
 
 const MAX_TEXT_LENGTH = 500000;
 

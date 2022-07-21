@@ -13,7 +13,7 @@ import type {
   NodeHocComposer,
 } from './domain-types';
 import { DEFAULT_PRIORITY } from './domain-types';
-import type { NodeHoc, NodeHocDescriptor, RicosNodeProps } from 'ricos-tiptap-types';
+import type { NodeHoc, NodeHocDescriptor, RicosNodeProps } from 'ricos-types';
 
 const byPriority: Ord<NodeHocDescriptor> = pipe(
   N.Ord,

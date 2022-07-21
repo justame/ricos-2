@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Node_Type } from 'ricos-schema';
-import type { RicosExtension } from 'ricos-tiptap-types';
+import type { RicosExtension } from 'ricos-types';
 import toConstantCase from 'to-constant-case';
 import { tiptapNodeDataToDraft } from 'ricos-converters';
 

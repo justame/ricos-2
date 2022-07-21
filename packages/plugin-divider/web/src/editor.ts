@@ -5,7 +5,7 @@ import { DIVIDER_TYPE } from './types';
 import type { EditorPluginCreator } from 'wix-rich-content-common';
 import { createDividerData } from './createDividerData';
 import { tiptapExtensions } from './tiptap/tiptap';
-import type { TiptapEditorPlugin } from 'ricos-tiptap-types';
+import type { TiptapEditorPlugin } from 'ricos-types';
 import { getAddButtons } from './getAddButtons';
 import { getToolbarButtons } from './getToolbarButtons';
 

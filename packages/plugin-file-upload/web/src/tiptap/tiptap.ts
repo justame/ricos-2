@@ -1,6 +1,6 @@
 import { TIPTAP_FILE_TYPE } from 'ricos-content';
 import fileDataDefaults from 'ricos-schema/dist/statics/file.defaults.json';
-import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-tiptap-types';
+import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-types';
 import { File as Component } from './component';
 
 const name = TIPTAP_FILE_TYPE;
@@ -24,7 +24,7 @@ export const tiptapExtensions: RicosExtension[] = [
       return {
         name: this.name,
         group: 'block',
-        selectable: false,
+        selectable: true,
         draggable: true,
         addAttributes: () => ({
           ...fileDataDefaults,

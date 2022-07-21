@@ -879,7 +879,13 @@
           "textWrap": true
         },
         "video": { "src": { "url": "https://youtu.be/NKNmp19Ergw" } },
-        "thumbnail": { "src": {} }
+        "thumbnail": { 
+          "height": 720,
+          "src":  {
+            "url": "https://i.ytimg.com/vi/NKNmp19Ergw/maxresdefault.jpg"
+          },
+          "width": 1280
+        }
       }
     },
     {

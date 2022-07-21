@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Component as HtmlComponent } from '../HtmlComponent';
-import type { PluginProps } from 'ricos-tiptap-types';
+import type { PluginProps } from 'ricos-types';
 import { RicosContext } from 'ricos-context';
 
 export const Html: React.FC<PluginProps> = ({

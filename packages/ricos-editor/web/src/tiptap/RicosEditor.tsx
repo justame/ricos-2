@@ -6,8 +6,9 @@ import { isContentStateEmpty, Version } from 'ricos-content';
 import type { GeneralContext } from 'ricos-context';
 import { EditorContextConsumer, EventsContextConsumer, RicosContextConsumer } from 'ricos-context';
 import { Node_Type } from 'ricos-schema';
-import type { HtmlAttributes, TiptapAdapter } from 'ricos-tiptap-types';
 import type {
+  HtmlAttributes,
+  TiptapAdapter,
   EditorContextType,
   EditorStyleClasses,
   EventData,

@@ -10,6 +10,7 @@ import {
   trailingNode,
   uniqueId,
   textDirection,
+  dropcursor,
 } from 'wix-tiptap-extensions';
 
 export const coreConfigs = [
@@ -24,4 +25,5 @@ export const coreConfigs = [
   uniqueId,
   textDirection,
   commands,
+  dropcursor,
 ];

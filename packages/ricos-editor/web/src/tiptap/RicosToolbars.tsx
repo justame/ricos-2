@@ -177,6 +177,17 @@ class RicosToolbars extends React.Component<
     );
   }
 
+  getTextToolbarButtonsConfig = plugins => {
+    const textButtonsFromPlugins = plugins
+      ?.getTextButtons()
+      .asArray()
+      .map(b => b.getButton());
+
+    return textButtonsFromPlugins
+      ? [...tiptapStaticToolbarConfig, ...textButtonsFromPlugins]
+      : tiptapStaticToolbarConfig;
+  };
+
   renderFormattingToolbar(finaltoolbarSettings: ToolbarSettingsFunctions[]) {
     const {
       ricosContext,
@@ -185,14 +196,7 @@ class RicosToolbars extends React.Component<
       plugins,
     } = this.props;
 
-    const textButtonsFromPlugins = plugins
-      ?.getTextButtons()
-      .asArray()
-      .map(b => b.getButton());
-
-    const toolbarButtonsConfig = textButtonsFromPlugins
-      ? [...tiptapStaticToolbarConfig, ...textButtonsFromPlugins]
-      : tiptapStaticToolbarConfig;
+    const toolbarButtonsConfig = this.getTextToolbarButtonsConfig(plugins);
 
     const toolbarType = TOOLBARS.INLINE;
     const toolbarConfig = this.getToolbarConfig(finaltoolbarSettings, toolbarType);
@@ -259,12 +263,15 @@ class RicosToolbars extends React.Component<
   }
 
   renderMobileToolbar(finaltoolbarSettings: ToolbarSettingsFunctions[]) {
-    const { ricosContext } = this.props;
+    const { ricosContext, plugins } = this.props;
+
+    const toolbarButtonsConfig = this.getTextToolbarButtonsConfig(plugins);
+
     const toolbarType = TOOLBARS.MOBILE;
     const toolbarConfig = this.getToolbarConfig(finaltoolbarSettings, toolbarType);
     const toolbarItemsConfig = ToolbarConfig.toTiptapToolbarItemsConfig(
       toolbarConfig,
-      tiptapStaticToolbarConfig,
+      toolbarButtonsConfig,
       toolbarType,
       'mobile'
     );
@@ -282,14 +289,17 @@ class RicosToolbars extends React.Component<
   }
 
   renderStaticToolbar(finaltoolbarSettings: ToolbarSettingsFunctions[]) {
-    const { toolbarSettings, ricosContext } = this.props;
+    const { toolbarSettings, ricosContext, plugins } = this.props;
     const { isMobile } = ricosContext;
+
+    const toolbarButtonsConfig = this.getTextToolbarButtonsConfig(plugins);
+
     const toolbarType = TOOLBARS.STATIC;
     const toolbarConfig = this.getToolbarConfig(finaltoolbarSettings, toolbarType);
     const htmlContainer = toolbarSettings?.textToolbarContainer;
     const toolbarItemsConfig = ToolbarConfig.toTiptapToolbarItemsConfig(
       toolbarConfig,
-      tiptapStaticToolbarConfig,
+      toolbarButtonsConfig,
       toolbarType,
       'desktop'
     );

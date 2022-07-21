@@ -6,7 +6,7 @@ import { DEFAULTS } from './defaults';
 import type { EditorPluginCreator } from 'wix-rich-content-common';
 import { createGalleryData } from './createGalleryData';
 import { tiptapExtensions } from './tiptap/tiptap';
-import type { TiptapEditorPlugin } from 'ricos-tiptap-types';
+import type { TiptapEditorPlugin } from 'ricos-types';
 import { getToolbarButtons } from './getToolbarButtons';
 import { getAddButtons } from './getAddButtons';
 import { GalleryPluginService } from './toolbar/galleryPluginService';

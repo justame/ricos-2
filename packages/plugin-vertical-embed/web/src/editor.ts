@@ -4,7 +4,7 @@ import { VERTICAL_EMBED_TYPE } from './types';
 import { ModalsMap } from './modals';
 import type { EditorPluginCreator } from 'wix-rich-content-common';
 import { tiptapExtensions } from './tiptap/tiptap';
-import type { TiptapEditorPlugin } from 'ricos-tiptap-types';
+import type { TiptapEditorPlugin } from 'ricos-types';
 import { getToolbarButtons } from './getToolbarButtons';
 import { getAddButtons } from './getAddButtons';
 

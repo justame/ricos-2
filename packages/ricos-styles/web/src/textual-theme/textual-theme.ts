@@ -6,8 +6,8 @@ import { Decorations } from '../decorations';
 import type { TextDecoration } from '../models/decoration';
 import type { TextNodeType, TextualTheme } from '../models/styles';
 import { TextStyleTransformer } from '../text-style-transformer';
-import TextStyle from '../document-style/text-style';
-import NodeStyle from '../document-style/node-style';
+import { RicosTextStyle } from '../document-style/text-style';
+import { RicosNodeStyle } from '../document-style/node-style';
 
 export default class RicosTextualTheme implements TextualTheme {
   theme: RicosTheme;
@@ -25,11 +25,11 @@ export default class RicosTextualTheme implements TextualTheme {
   }
 
   getTextStyle(nodeType: TextNodeType) {
-    return new TextStyle({ lineHeight: this.documentStyle[nodeType]?.lineHeight });
+    return RicosTextStyle.of({ lineHeight: this.documentStyle[nodeType]?.lineHeight });
   }
 
   getNodeStyle(nodeType: TextNodeType) {
-    return new NodeStyle(this.documentStyle[nodeType]?.nodeStyle || {});
+    return RicosNodeStyle.of(this.documentStyle[nodeType]?.nodeStyle);
   }
 
   toStyleTag() {

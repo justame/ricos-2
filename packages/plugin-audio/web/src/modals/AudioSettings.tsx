@@ -253,7 +253,9 @@ const AudioSettings: React.FC<Props> = ({
             <div className={styles.audio_settings_coverImage_wrapper}>
               <SettingsAddItem
                 handleFileChange={handleFileChange}
-                handleFileSelection={onFileSelection}
+                handleFileSelection={
+                  (helpers.handleFileSelection || handleFileSelection) && onFileSelection
+                }
                 isMobile={isMobile}
                 uploadMediaLabel={t('AudioPlugin_Settings_CoverImage_Label')}
                 theme={theme}

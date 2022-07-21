@@ -40,7 +40,7 @@ import englishResources from 'wix-rich-content-common/dist/statics/locale/messag
 import type { TextFormattingToolbarType } from './toolbars/TextFormattingToolbar';
 import { getBiFunctions } from './toolbars/utils/biUtils';
 import { renderSideBlockComponent } from './utils/renderBlockComponent';
-import type { TiptapEditorPlugin } from 'ricos-tiptap-types';
+import type { TiptapEditorPlugin } from 'ricos-types';
 import { createEditorStyleClasses } from './utils/createEditorStyleClasses';
 import { DraftEditorStateTranslator } from './content-conversion/draft-editor-state-translator';
 import { TiptapEditorStateTranslator } from './content-conversion/tiptap-editor-state-translator';

@@ -25,7 +25,7 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
     {
       id: 'dividerSize',
       command: ({ size, editorCommands }) => {
-        editorCommands.chain().focus().setNodeSize(size).run();
+        editorCommands.chain().focus().setNodeSize(size).setNodeAlignment('CENTER').run();
       },
       renderer: toolbarItem => <DividerSizeButton toolbarItem={toolbarItem} />,
     },

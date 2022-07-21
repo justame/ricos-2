@@ -1,12 +1,12 @@
 import { TIPTAP_DIVIDER_TYPE } from 'ricos-content';
 import dividerDataDefaults from 'ricos-schema/dist/statics/divider.defaults.json';
-import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-tiptap-types';
+import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-types';
 import { Divider as Component } from './component';
 
 export const tiptapExtensions = [
   {
     type: 'node' as const,
-    groups: ['overlay', 'react'],
+    groups: ['react', 'overlay'],
     reconfigure: (
       config: NodeConfig,
       _extensions: RicosExtension[],

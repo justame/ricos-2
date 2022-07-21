@@ -14,8 +14,7 @@ import {
 } from 'ricos-content';
 import { tiptapToDraft } from 'ricos-converters';
 import { Decoration_Type, Node_Type } from 'ricos-schema';
-import type { TiptapAdapter } from 'ricos-tiptap-types';
-import type { EditorContextType, Pubsub, RicosServices } from 'ricos-types';
+import type { TiptapAdapter, EditorContextType, Pubsub, RicosServices } from 'ricos-types';
 import type { RicosCustomStyles, TextAlignment } from 'wix-rich-content-common';
 import {
   defaultFontSizes,

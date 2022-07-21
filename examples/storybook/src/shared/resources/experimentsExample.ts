@@ -20,4 +20,5 @@ export const EXPERIMENTS = [
   { name: 'encAutoImageUrls', scope: 'ricos' },
   { name: 'imageFigureCaption', scope: 'ricos' },
   { name: 'removeRichContentSchemaNormalizer', scope: 'ricos' },
+  { name: 'useWixImage', scope: 'ricos' },
 ];

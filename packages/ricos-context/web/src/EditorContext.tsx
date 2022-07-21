@@ -1,6 +1,6 @@
 import type { ComponentType, FC, ReactChild } from 'react';
 import React from 'react';
-import type { TiptapAdapter } from 'ricos-tiptap-types';
+import type { TiptapAdapter } from 'ricos-types';
 
 type EditorContextProps = {
   adapter: TiptapAdapter;

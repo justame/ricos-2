@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { ImageViewer } from '..';
 import type { ImageData, ImagePluginViewerConfig } from '../types';
-import type { PluginProps } from 'ricos-tiptap-types';
+import type { PluginProps } from 'ricos-types';
 import { MediaItemErrorMsg, Loader } from 'wix-rich-content-ui-components';
 import { RicosContext } from 'ricos-context';
 

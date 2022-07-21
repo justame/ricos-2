@@ -1,9 +1,10 @@
-import { wrappingInputRule } from '@tiptap/core';
-import type { RicosExtension } from 'ricos-tiptap-types';
+import { InputRule, getNodeType, isNodeActive } from '@tiptap/core';
+import type { RicosExtension } from 'ricos-types';
 import bulletedListDataDefaults from 'ricos-schema/dist/statics/bulleted_list.defaults.json';
 import type { DOMOutputSpec } from 'prosemirror-model';
 import { Node_Type } from 'ricos-schema';
 import styles from './statics/styles.scss';
+import { createListInputRuleHandler } from './list-input-rule-handler';
 
 export interface BulletListOptions {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -17,6 +18,10 @@ declare module '@tiptap/core' {
        * Toggle a bullet list
        */
       toggleBulletList: () => ReturnType;
+      /**
+       * Toggle off an bulleted list if exists
+       */
+      toggleOffBulletList: () => ReturnType;
     };
   }
 }
@@ -64,7 +69,16 @@ export const bulletedList: RicosExtension = {
           toggleBulletList:
             () =>
             ({ commands }) => {
-              return commands.toggleList(this.name, Node_Type.LIST_ITEM);
+              return commands.toggleLists(this.name, Node_Type.LIST_ITEM);
+            },
+          toggleOffBulletList:
+            () =>
+            ({ state, commands }) => {
+              const isActive = isNodeActive(state, getNodeType(this.name, state.schema));
+              if (isActive) {
+                return commands.toggleBulletList();
+              }
+              return true;
             },
         };
       },
@@ -77,9 +91,9 @@ export const bulletedList: RicosExtension = {
 
       addInputRules() {
         return [
-          wrappingInputRule({
+          new InputRule({
             find: inputRegex,
-            type: this.type,
+            handler: createListInputRuleHandler({ type: this.type }),
           }),
         ];
       },

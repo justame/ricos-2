@@ -1,6 +1,6 @@
 import { TIPTAP_POLL_TYPE } from 'ricos-content';
 import pollDataDefaults from 'ricos-schema/dist/statics/poll.defaults.json';
-import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-tiptap-types';
+import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-types';
 import { Poll as Component } from './component';
 
 const name = TIPTAP_POLL_TYPE;

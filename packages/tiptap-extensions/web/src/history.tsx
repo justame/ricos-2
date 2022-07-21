@@ -1,4 +1,4 @@
-import type { RicosExtension } from 'ricos-tiptap-types';
+import type { RicosExtension } from 'ricos-types';
 import { history, undo, redo } from './history-infra';
 
 declare module '@tiptap/core' {

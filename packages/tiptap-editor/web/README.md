@@ -30,7 +30,7 @@ If you want to use an existing tiptap extension in ricos, the extension code sho
 
 ### ricos/tiptap public types
 
-All the tiptap-related public types should reside in `ricos-tiptap-types` package. The `wix-tiptap-editor` or `wix-tiptap-extensions` should never be a dependency of ricos package. The tiptap-related public types should never be added to any `ricos-*` or `wix-rich-content-*` package.
+All the tiptap-related public types should reside in `ricos-types` package. The `wix-tiptap-editor` or `wix-tiptap-extensions` should never be a dependency of ricos package. The tiptap-related public types should never be added to any `ricos-*` or `wix-rich-content-*` package.
 
 ### Extension Versions
 

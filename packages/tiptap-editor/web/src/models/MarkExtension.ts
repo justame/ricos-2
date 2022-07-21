@@ -2,9 +2,8 @@ import { Mark, markInputRule, markPasteRule, textblockTypeInputRule } from '@tip
 import type { MarkConfig } from '@tiptap/react';
 import { mergeAttributes } from '@tiptap/react';
 import { Plugin, PluginKey } from 'prosemirror-state';
-import type { ExtensionProps, RicosExtension } from 'ricos-tiptap-types';
-import { isRicosMarkExtension } from 'ricos-tiptap-types';
-import type { RicosServices } from 'ricos-types';
+import type { ExtensionProps, RicosExtension, RicosServices } from 'ricos-types';
+import { isRicosMarkExtension } from 'ricos-types';
 import type { ExtensionAggregate, IMarkExtension } from './domain-types';
 import { DEFAULT_PRIORITY } from './domain-types';
 

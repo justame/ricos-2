@@ -6,12 +6,7 @@ import { convertBlockDataToRicos } from 'ricos-content/libs/convertBlockDataToRi
 import type { LinkPreviewData } from 'ricos-schema';
 import linkPreviewDefaults from 'ricos-schema/dist/statics/link_preview.defaults.json';
 import embedDefaults from 'ricos-schema/dist/statics/embed.defaults.json';
-import type {
-  ExtensionProps,
-  NodeConfig,
-  RicosExtension,
-  RicosExtensionConfig,
-} from 'ricos-tiptap-types';
+import type { ExtensionProps, NodeConfig, RicosExtension, RicosExtensionConfig } from 'ricos-types';
 import type { DeepPartial } from 'utility-types';
 import {
   createLinkPreviewData,
@@ -103,7 +98,7 @@ export const tiptapExtensions = [
   {
     type: 'node' as const,
     name: TIPTAP_LINK_PREVIEW_TYPE,
-    groups: ['react'],
+    groups: ['react', 'overlay'],
     reconfigure: (
       config: NodeConfig,
       _extensions: RicosExtension[],
@@ -136,7 +131,7 @@ export const tiptapExtensions = [
   {
     type: 'node' as const,
     name: TIPTAP_EMBED_TYPE,
-    groups: ['react'],
+    groups: ['react', 'overlay'],
     reconfigure: (
       config: NodeConfig,
       _extensions: RicosExtension[],

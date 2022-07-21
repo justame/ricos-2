@@ -46,10 +46,10 @@ export interface IEditorPlugin {
   /**
    * Text Buttons
    *
-   * @returns  {IPluginTextButton[]}
+   * @returns  {FormattingToolbarButton[]}
    * @memberof IEditorPlugin
    */
-  getTextButtons(): IPluginTextButton[];
+  getTextButtons(): FormattingToolbarButton[];
   /**
    * Add Buttons
    *
@@ -134,10 +134,10 @@ export interface IEditorPlugins {
   /**
    * Plugins text Buttons
    *
-   * @returns  {IPluginTextButtons}
+   * @returns  {FormattingToolbarButtons}
    * @memberof IEditorPlugins
    */
-  getTextButtons(): IPluginTextButtons;
+  getTextButtons(): FormattingToolbarButtons;
   /**
    * Plugins add Buttons
    *
@@ -170,12 +170,12 @@ export interface IEditorPlugins {
   configure(config: Partial<LegacyEditorPluginConfig>); // runtime configuration
 }
 
-export interface IPluginTextButton {
+export interface FormattingToolbarButton {
   getButton: () => IToolbarItemConfigTiptap;
 }
 
-export interface IPluginTextButtons {
-  asArray: () => IPluginTextButton[];
+export interface FormattingToolbarButtons {
+  asArray: () => FormattingToolbarButton[];
 }
 
 export interface IPluginAddButton {

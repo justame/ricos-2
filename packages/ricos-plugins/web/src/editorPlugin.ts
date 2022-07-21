@@ -5,11 +5,11 @@ import type {
   IEditorPlugin,
   IPluginAddButton,
   IPluginToolbar,
-  IPluginTextButton,
+  TiptapEditorPlugin,
+  FormattingToolbarButton,
 } from 'ricos-types';
-import type { TiptapEditorPlugin } from 'ricos-tiptap-types';
 import { PluginAddButton } from './pluginAddButton';
-import { PluginTextButton } from './pluginTextButton';
+import { PluginTextButton } from './plugin-text-button';
 import { PluginToolbar } from './pluginToolbar';
 
 export class EditorPlugin implements IEditorPlugin {
@@ -17,7 +17,7 @@ export class EditorPlugin implements IEditorPlugin {
 
   addButtons?: IPluginAddButton[];
 
-  textButtons?: IPluginTextButton[];
+  textButtons?: FormattingToolbarButton[];
 
   toolbar?: IPluginToolbar;
 
@@ -34,7 +34,7 @@ export class EditorPlugin implements IEditorPlugin {
 
   private initTextButtons(plugin: EditorPluginType) {
     if (plugin.textButtons) {
-      this.textButtons = plugin.textButtons.map(button => PluginTextButton.of(button));
+      this.textButtons = plugin.textButtons.map(button => new PluginTextButton(button));
     }
   }
 
