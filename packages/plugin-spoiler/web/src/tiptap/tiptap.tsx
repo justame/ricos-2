@@ -8,24 +8,55 @@ import type {
 } from 'ricos-types';
 import { Decoration_Type } from 'ricos-schema';
 import { BlockSpoilerComponent } from '..';
+import { NodeSelection } from 'prosemirror-state';
 
 const SPOILER_STYLE = 'blur(0.25em)';
 
 const SpoilerHoc = Component => {
   const Spoiler = props => {
-    const { context, componentData } = props;
+    const { context, updateAttributes, node, editor, getPos, selected } = props;
     const { isMobile, theme, t } = context;
-    if (componentData?.containerData?.spoiler?.enabled) {
+    if (node.attrs.containerData.spoiler?.enabled) {
+      const { spoiler } = node.attrs.containerData;
+
+      const componentData = {
+        config: {
+          spoiler: {
+            ...spoiler,
+            buttonContent: spoiler.buttonText,
+          },
+        },
+      };
+      const updateComponentData = data => {
+        const containerData = { ...node.attrs.containerData, spoiler: { ...spoiler, ...data } };
+        updateAttributes({ containerData });
+      };
+
+      const handleDescriptionChange = description => updateComponentData({ description });
+
+      const handleButtonContentChange = buttonText => updateComponentData({ buttonText });
+
+      const setFocusToBlock = () => {
+        if (!selected) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const selection = NodeSelection.create(editor.view.state.doc, (getPos as any)());
+          const transaction = editor.view.state.tr.setSelection(selection);
+          editor.view.dispatch(transaction);
+        }
+      };
       return (
         <BlockSpoilerComponent
+          componentData={componentData}
           theme={theme}
           isMobile={isMobile}
           isEditableText
           t={t}
           pluginType="Image"
-          handleDescriptionChange={() => {}}
+          handleDescriptionChange={handleDescriptionChange}
+          handleButtonContentChange={handleButtonContentChange}
+          setFocusToBlock={setFocusToBlock}
           setInPluginEditingMode={() => {}}
-          handleButtonContentChange={() => {}}
+          disabledRevealSpoilerBtn
         >
           <Component {...props} />
         </BlockSpoilerComponent>

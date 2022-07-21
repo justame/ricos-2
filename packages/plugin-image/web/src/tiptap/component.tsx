@@ -13,9 +13,6 @@ export const Image: React.FC<PluginProps> = ({
 }) => {
   const { theme, t, isMobile, experiments } = useContext(RicosContext);
   const helpers = {};
-  const blockProps = {
-    setFocusToBlock: () => null,
-  };
   const setComponentUrl = () => null;
   const { loading, loadingPercentage, error, tempData } = node.attrs;
 
@@ -36,7 +33,7 @@ export const Image: React.FC<PluginProps> = ({
         settings={settings as ImagePluginViewerConfig}
         defaultCaption={t('ImageViewer_Caption')}
         onCaptionChange={handleCaptionChange}
-        setFocusToBlock={blockProps.setFocusToBlock}
+        setFocusToBlock={() => {}}
         setComponentUrl={setComponentUrl}
         blockKey={blockKey}
         experiments={experiments}
