@@ -19,6 +19,13 @@
 
 </details>
 
+## 8.72.6 (Jul 22, 2022)
+
+## :bug: Bug Fix
+
+- `tiptap-editor`
+  - [#3d2d98ef83ab30620f9b7ed3d2166b44dad8caef](https://github.com/wix/ricos/commit/3d2d98ef83ab30620f9b7ed3d2166b44dad8caef) external toolbar button key
+
 ## 8.72.5 (Jul 21, 2022)
 
 ## :house: Internal
