@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :house: Internal
+
+- `common-plugins`
+  - [#4214](https://github.com/wix/ricos/pull/4214) common-plugins package
+
 </details>
 
 ## 8.72.6 (Jul 22, 2022)
