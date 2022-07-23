@@ -7,20 +7,18 @@ import type { GeneralContext } from 'ricos-context';
 import { EditorContextConsumer, EventsContextConsumer, RicosContextConsumer } from 'ricos-context';
 import { Node_Type } from 'ricos-schema';
 import type {
-  HtmlAttributes,
-  TiptapAdapter,
-  EditorContextType,
   EditorStyleClasses,
   EventData,
   EventPublisher,
   EventRegistrar,
   EventSubscriptor,
-  Pubsub,
+  HtmlAttributes,
+  TiptapAdapter,
 } from 'ricos-types';
 import { getEmptyDraftContent } from 'wix-rich-content-editor-common';
 import {
-  EditorEventsContext,
   EditorEvents,
+  EditorEventsContext,
 } from 'wix-rich-content-editor-common/libs/EditorEventsContext';
 import { draftToTiptap, RicosTiptapEditor, TIPTAP_TYPE_TO_RICOS_TYPE } from 'wix-tiptap-editor';
 import editorCss from '../../statics/styles/editor-styles.scss';

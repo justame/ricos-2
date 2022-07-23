@@ -1,13 +1,8 @@
-import {
-  alwaysVisibleResolver,
-  getLineSpacingInSelectionResolver,
-  getLineSpacingBeforeSelectionResolver,
-  getLineSpacingAfterSelectionResolver,
-} from 'wix-rich-content-toolbars-v3';
-import type { IToolbarItemConfigTiptap } from 'ricos-types';
+import type { FormattingToolbarButtonConfig } from 'ricos-types';
+import { RESOLVERS_IDS } from 'wix-rich-content-toolbars-v3/libs/resolvers-ids';
 import LineSpacingIcon from './icons/toolbars-v3/LineSpacingIcon';
 
-export const getTextButtons = (): IToolbarItemConfigTiptap[] => {
+export const getTextButtons = (): FormattingToolbarButtonConfig[] => {
   return [
     {
       id: 'lineSpacing',
@@ -18,10 +13,10 @@ export const getTextButtons = (): IToolbarItemConfigTiptap[] => {
         icon: LineSpacingIcon,
       },
       attributes: {
-        visible: alwaysVisibleResolver,
-        selectedLineSpacing: getLineSpacingInSelectionResolver,
-        selectedLineSpacingBefore: getLineSpacingBeforeSelectionResolver,
-        selectedLineSpacingAfter: getLineSpacingAfterSelectionResolver,
+        visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
+        selectedLineSpacing: RESOLVERS_IDS.GET_LINE_SPACING_IN_SELECTION,
+        selectedLineSpacingBefore: RESOLVERS_IDS.GET_LINE_SPACING_BEFORE_SELECTION,
+        selectedLineSpacingAfter: RESOLVERS_IDS.GET_LINE_SPACING_AFTER_SELECTION,
       },
       commands: {
         setLineSpacing:

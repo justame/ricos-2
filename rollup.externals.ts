@@ -30,6 +30,8 @@ const externals = [
   /prosemirror/,
   /linkifyjs/,
   /@wix\/image/,
+  /wix-rich-content-toolbars-v3/,
+  /rope-sequence/,
 ];
 
 const excludedExternalsRegexArr = [/react-click-outsider/, /@tiptap/, /ricos-schema/, /\.scss/];

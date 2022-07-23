@@ -1,8 +1,8 @@
-import { alwaysVisibleResolver, isTextContainsSpoilerResolver } from 'wix-rich-content-toolbars-v3';
+import type { FormattingToolbarButtonConfig } from 'ricos-types';
+import { RESOLVERS_IDS } from 'wix-rich-content-toolbars-v3/libs/resolvers-ids';
 import SpoilerTextButtonIcon from './icons/SpoilerTextButtonIcon';
-import type { IToolbarItemConfigTiptap } from 'ricos-types';
 
-export const getTextButtons = (): IToolbarItemConfigTiptap[] => {
+export const getTextButtons = (): FormattingToolbarButtonConfig[] => {
   return [
     {
       id: 'spoiler',
@@ -13,8 +13,8 @@ export const getTextButtons = (): IToolbarItemConfigTiptap[] => {
         icon: SpoilerTextButtonIcon,
       },
       attributes: {
-        visible: alwaysVisibleResolver,
-        active: isTextContainsSpoilerResolver,
+        visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
+        active: RESOLVERS_IDS.IS_TEXT_CONTAINS_SPOILER,
       },
       commands: {
         toggleSpoiler:

@@ -310,6 +310,8 @@ export class RichContentAdapter implements TiptapAdapter {
       },
       deleteDecoration: type => {
         const deleteDecorationCommandMap = {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           [RICOS_LINK_TYPE]: () => this.tiptapEditor.commands.unsetLink(),
         };
         if (deleteDecorationCommandMap[type]) {
@@ -319,9 +321,15 @@ export class RichContentAdapter implements TiptapAdapter {
         }
       },
       setTextAlignment: alignment => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         this.tiptapEditor.commands.setTextAlign(alignment);
       },
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       undo: () => this.tiptapEditor.commands.undo(),
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       redo: () => this.tiptapEditor.commands.redo(),
       insertText: text =>
         this.tiptapEditor

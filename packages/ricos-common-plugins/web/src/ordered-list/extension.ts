@@ -1,9 +1,9 @@
 import { mergeAttributes, InputRule, getNodeType, isNodeActive } from '@tiptap/core';
 import { Node_Type } from 'ricos-schema';
-import { createListInputRuleHandler } from './list-input-rule-handler';
+import { createListInputRuleHandler } from '../list-input-rule-handler';
 import orderedListDataDefaults from 'ricos-schema/dist/statics/ordered_list.defaults.json';
 import type { DOMOutputSpec, RicosExtension } from 'ricos-types';
-import styles from './statics/styles.scss';
+import styles from '../statics/styles.scss';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {

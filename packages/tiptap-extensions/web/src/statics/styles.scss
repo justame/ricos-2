@@ -3,41 +3,11 @@
 @import '~wix-rich-content-common/dist/statics/styles/consts';
 @import '~wix-rich-content-common/dist/statics/styles/fonts';
 
-.blockStyleSpacing {
-  margin: 15px 18px;
-
-  @include phone {
-    margin: 15px calc((18px + (100% - #{$textMobileWidth}) / 2));
-  }
-}
-
 .elementSpacing {
   margin: 0;
 
   @include phone {
     margin: 0;
-  }
-}
-
-.quote {
-  composes: blockStyleSpacing;
-  border-inline-start-width: $ricos-quote-border-width;
-  border-inline-start-style: solid;
-  font-size: $quoteFontSize;
-  line-height: $quoteLineHeight;
-  padding-top: $ricos-quote-padding-top;
-  padding-bottom: $ricos-quote-padding-bottom;
-  padding-inline-start: $ricos-quote-padding-inline-start;
-  font-style: normal;
-  border-left-color: $ricos-quote-border-color;
-  border-right-color: $ricos-quote-border-color;
-  color: $ricos-quote-color;
-  @include ricosTypography('quote', false);
-
-  // this is required since the blockquote wraps paragraph
-  div {
-    color: $ricos-quote-color;
-    @include ricosTypography('quote', false);
   }
 }
 
@@ -48,84 +18,6 @@
   &:empty {
     height: 24px;
   }
-}
-
-.link {
-  color: $ricos-link-color;
-  @include ricosTypography('link', false);
-}
-
-.linkInEditor {
-  &:hover {
-    cursor: text;
-  }
-}
-
-.linkInViewer {
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-.orderedList,
-.bulletedList {
-  margin: 0;
-  padding: 0;
-  @include ricosTypography('p', false);
-}
-
-:global(.ProseMirror) .orderedList,
-:global(.ProseMirror) .bulletedList {
-  > .listItem {
-    margin-inline-start: 30px !important;
-    > div {
-      display: inline;
-    }
-  }
-}
-
-:global(.ProseMirror) .orderedList .orderedList,
-:global(.ProseMirror) .bulletedList .bulletedList {
-  > .listItem {
-    margin-inline-start: 1.5em !important;
-  }
-}
-
-:global(.ProseMirror) .orderedList {
-  > .listItem > div {
-    margin-inline-start: 0.5em;
-  }
-}
-
-.listItem {
-  list-style-position: inside;
-  position: relative;
-}
-
-.orderedList,
-.orderedList .orderedList .orderedList .orderedList {
-  list-style-type: decimal;
-}
-
-.orderedList .orderedList,
-.orderedList .orderedList .orderedList .orderedList .orderedList {
-  list-style-type: lower-alpha;
-}
-
-.orderedList .orderedList .orderedList {
-  list-style-type: lower-roman;
-}
-
-.bulletedList {
-  list-style-type: disc;
-}
-
-.bulletedList .bulletedList {
-  list-style-type: circle;
-}
-
-.bulletedList .bulletedList .bulletedList {
-  list-style-type: square;
 }
 
 .overlay {

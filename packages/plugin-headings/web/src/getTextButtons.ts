@@ -1,7 +1,7 @@
-import { alwaysVisibleResolver, getHeadingInSelectionResolver } from 'wix-rich-content-toolbars-v3';
-import type { IToolbarItemConfigTiptap } from 'ricos-types';
+import type { FormattingToolbarButtonConfig } from 'ricos-types';
+import { RESOLVERS_IDS } from 'wix-rich-content-toolbars-v3/libs/resolvers-ids';
 
-export const getTextButtons = (): IToolbarItemConfigTiptap[] => {
+export const getTextButtons = (): FormattingToolbarButtonConfig[] => {
   return [
     {
       id: 'headings',
@@ -11,8 +11,8 @@ export const getTextButtons = (): IToolbarItemConfigTiptap[] => {
         tooltip: 'FormattingToolbar_TextStyleButton_Tooltip',
       },
       attributes: {
-        visible: alwaysVisibleResolver,
-        selectedHeading: getHeadingInSelectionResolver,
+        visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
+        selectedHeading: RESOLVERS_IDS.GET_HEADING_IN_SELECTION,
       },
       commands: {
         setHeading:
@@ -55,8 +55,8 @@ export const getTextButtons = (): IToolbarItemConfigTiptap[] => {
         tooltip: 'TitleButton_Tooltip',
       },
       attributes: {
-        visible: alwaysVisibleResolver,
-        selectedHeading: getHeadingInSelectionResolver,
+        visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
+        selectedHeading: RESOLVERS_IDS.GET_HEADING_IN_SELECTION,
       },
       commands: {
         setHeading:

@@ -1,13 +1,9 @@
-import {
-  alwaysVisibleResolver,
-  getTextColorInSelectionResolver,
-  getHighlightColorInSelectionResolver,
-} from 'wix-rich-content-toolbars-v3';
-import type { IToolbarItemConfigTiptap } from 'ricos-types';
+import type { FormattingToolbarButtonConfig, IToolbarItemConfigTiptap } from 'ricos-types';
+import { RESOLVERS_IDS } from 'wix-rich-content-toolbars-v3/libs/resolvers-ids';
 import TextColorIcon from './icons/TextColorIcon';
 import TextHighlightIcon from './icons/TextHighlightIcon';
 
-export const getTextColorTextButtons = (): IToolbarItemConfigTiptap[] => {
+export const getTextColorTextButtons = (): FormattingToolbarButtonConfig[] => {
   return [
     {
       id: 'textColor',
@@ -18,8 +14,8 @@ export const getTextColorTextButtons = (): IToolbarItemConfigTiptap[] => {
         icon: TextColorIcon,
       },
       attributes: {
-        visible: alwaysVisibleResolver,
-        selectedTextColor: getTextColorInSelectionResolver,
+        visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
+        selectedTextColor: RESOLVERS_IDS.GET_TEXT_COLOR_IN_SELECTION,
       },
       commands: {
         setTextColor:
@@ -37,7 +33,7 @@ export const getTextColorTextButtons = (): IToolbarItemConfigTiptap[] => {
   ];
 };
 
-export const getTextHighlightTextButtons = (): IToolbarItemConfigTiptap[] => {
+export const getTextHighlightTextButtons = (): FormattingToolbarButtonConfig[] => {
   return [
     {
       id: 'textHighlight',
@@ -48,8 +44,8 @@ export const getTextHighlightTextButtons = (): IToolbarItemConfigTiptap[] => {
         icon: TextHighlightIcon,
       },
       attributes: {
-        visible: alwaysVisibleResolver,
-        selectedHighlightColor: getHighlightColorInSelectionResolver,
+        visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
+        selectedHighlightColor: RESOLVERS_IDS.GET_HIGHLIGHT_COLOR_IN_SELECTION,
       },
       commands: {
         setHighlightColor:

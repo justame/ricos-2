@@ -1,7 +1,5 @@
 import type { RicosExtension, RicosExtensionConfig } from 'ricos-types';
 import type { Transaction } from 'prosemirror-state';
-import { AllSelection } from 'prosemirror-state';
-import { isTextSelection } from '@tiptap/core';
 import type { Node } from 'prosemirror-model';
 import { Node_Type } from 'ricos-schema';
 
@@ -27,13 +25,20 @@ export const indent: RicosExtension = {
   type: 'extension' as const,
   groups: [],
   name: 'indent',
-  reconfigure(config: RicosExtensionConfig, extensions: RicosExtension[]) {
+  reconfigure(
+    config: RicosExtensionConfig,
+    extensions: RicosExtension[],
+    _,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    settings: Record<string, any>
+  ) {
     const types = extensions
       .filter(extension => extension.groups.includes('text-container'))
       .filter(extension => extension.name !== Node_Type.CODE_BLOCK)
       .map(({ name }) => name);
     const minLevel = 0;
     const maxLevel = 4;
+    const { isTextSelection, AllSelection } = settings;
     return {
       ...config,
       addGlobalAttributes() {

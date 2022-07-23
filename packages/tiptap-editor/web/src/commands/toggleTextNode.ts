@@ -24,8 +24,11 @@ export const toggleTextNode: RawCommands['toggleTextNode'] =
   ({ chain }) => {
     return (
       chain()
-        // try to toggle off lists if exists
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         .toggleOffOrderedList()
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         .toggleOffBulletList()
         .command(({ state, commands }) => {
           const type = getNodeType(typeOrName, state.schema);

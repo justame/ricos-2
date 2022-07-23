@@ -1,15 +1,15 @@
 import type {
-  LegacyEditorPluginConfig,
   EditorPlugin as EditorPluginType,
-  ModalService,
   IEditorPlugin,
   IPluginAddButton,
   IPluginToolbar,
+  IToolbarItemConfigTiptap,
+  LegacyEditorPluginConfig,
+  ModalService,
   TiptapEditorPlugin,
-  FormattingToolbarButton,
 } from 'ricos-types';
+import { PluginTextButtons } from './plugin-text-button';
 import { PluginAddButton } from './pluginAddButton';
-import { PluginTextButton } from './plugin-text-button';
 import { PluginToolbar } from './pluginToolbar';
 
 export class EditorPlugin implements IEditorPlugin {
@@ -17,7 +17,7 @@ export class EditorPlugin implements IEditorPlugin {
 
   addButtons?: IPluginAddButton[];
 
-  textButtons?: FormattingToolbarButton[];
+  textButtons?: PluginTextButtons;
 
   toolbar?: IPluginToolbar;
 
@@ -28,14 +28,8 @@ export class EditorPlugin implements IEditorPlugin {
   private constructor(plugin: EditorPluginType, modalService?: ModalService) {
     this.plugin = plugin;
     this.initAddButtons(plugin, modalService);
-    this.initTextButtons(plugin);
+    this.textButtons = PluginTextButtons.of(plugin.textButtons);
     this.initPluginToolbar(plugin, modalService);
-  }
-
-  private initTextButtons(plugin: EditorPluginType) {
-    if (plugin.textButtons) {
-      this.textButtons = plugin.textButtons.map(button => new PluginTextButton(button));
-    }
   }
 
   private initAddButtons(plugin, modalService) {
@@ -84,7 +78,9 @@ export class EditorPlugin implements IEditorPlugin {
   }
 
   getTextButtons() {
-    return this.textButtons || [];
+    const buttons =
+      this.textButtons?.asArray().map(b => b.getButton() as IToolbarItemConfigTiptap) || [];
+    return buttons;
   }
 
   getAddButtons() {

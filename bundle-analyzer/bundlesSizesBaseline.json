@@ -1,7 +1,7 @@
 {
   "converters": 135,
   "editor-common": 515,
-  "rce-with-plugins": 1140,
+  "rce-with-plugins": 1150,
   "rce": 792,
   "rcv-with-media-plugins": 566,
   "rcv-with-plugins": 220,
@@ -10,7 +10,7 @@
   "ricos-common": 29,
   "ricos-content": 38,
   "ricos-editor-no-modal": 882,
-  "ricos-editor-with-plugins": 1230,
+  "ricos-editor-with-plugins": 1240,
   "ricos-editor": 882,
   "ricos-viewer-no-modal": 155,
   "ricos-viewer-with-plugins": 252,

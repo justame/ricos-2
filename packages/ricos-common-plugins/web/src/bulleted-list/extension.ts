@@ -3,8 +3,8 @@ import type { RicosExtension } from 'ricos-types';
 import bulletedListDataDefaults from 'ricos-schema/dist/statics/bulleted_list.defaults.json';
 import type { DOMOutputSpec } from 'prosemirror-model';
 import { Node_Type } from 'ricos-schema';
-import styles from './statics/styles.scss';
-import { createListInputRuleHandler } from './list-input-rule-handler';
+import styles from '../statics/styles.scss';
+import { createListInputRuleHandler } from '../list-input-rule-handler';
 
 export interface BulletListOptions {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

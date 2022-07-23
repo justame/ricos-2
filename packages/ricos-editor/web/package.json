@@ -47,6 +47,7 @@
     "fp-ts": "^2.11.0",
     "react-modal": "~3.4.1",
     "ricos-common": "8.72.6",
+    "ricos-common-plugins": "8.72.6",
     "ricos-content": "8.72.6",
     "ricos-content-query": "8.72.6",
     "ricos-context": "8.72.6",

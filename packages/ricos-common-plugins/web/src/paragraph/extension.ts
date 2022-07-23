@@ -1,4 +1,4 @@
-import styles from './statics/styles.scss';
+import styles from '../statics/styles.scss';
 import { mergeAttributes } from '@tiptap/core';
 import type { Node as ProsemirrorNode } from 'prosemirror-model';
 import paragraphDataDefaults from 'ricos-schema/dist/statics/paragraph.defaults.json';
@@ -77,20 +77,12 @@ export const paragraph: RicosExtension = {
             ({ commands }) => {
               return commands.updateTextNode(this.name);
             },
-          softNewLine:
-            () =>
-            ({ state, dispatch }) => {
-              const transaction = state.tr.insertText('\n').scrollIntoView();
-              if (dispatch) dispatch(transaction);
-              return true;
-            },
         };
       },
 
       addKeyboardShortcuts() {
         return {
           // 'Mod-Alt-0': () => this.editor.commands.setParagraph(),
-          'Shift-Enter': () => this.editor.commands.softNewLine(),
         };
       },
     };

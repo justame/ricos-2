@@ -1,102 +1,101 @@
 // TODO: refactor this file
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type {
+  CompositeDecorator,
+  ContentBlock,
+  DraftDecorator,
+  DraftEditorCommand,
+  EditorProps,
+} from 'draft-js';
 import type { ComponentType, ReactElement } from 'react';
 import type {
-  ClassNameStrategy,
-  ContainerClassNameStrategy,
-  Pubsub,
-  GetToolbarSettings,
-  EditorContextType,
-  PluginButton,
-  ToolbarButtonProps,
-  TextButtonMapper,
-  GetEditorState,
-  SetEditorState,
-  ThemeGeneratorFunction,
-  RichContentTheme,
-  ThemeData,
-  IToolbarItemConfigTiptap,
-} from '.';
-import type {
-  ContentBlock,
-  EditorProps,
-  DraftDecorator,
-  CompositeDecorator,
-  DraftEditorCommand,
-} from 'draft-js';
-import type {
-  DraftContent,
-  PREVIEW,
-  LINK_BUTTON_TYPE,
   ACTION_BUTTON_TYPE,
+  AUDIO_TYPE,
   CODE_BLOCK_TYPE,
-  RICOS_DIVIDER_TYPE,
+  COLLAPSIBLE_LIST_TYPE,
   DIVIDER_TYPE,
+  DraftContent,
   EMOJI_TYPE,
-  RICOS_FILE_TYPE,
+  EXTERNAL,
+  EXTERNAL_LINK_TYPE,
+  EXTERNAL_MENTIONS_TYPE,
   FILE_UPLOAD_TYPE,
-  RICOS_GALLERY_TYPE,
   GALLERY_TYPE,
-  RICOS_GIPHY_TYPE,
   GIPHY_TYPE,
   HASHTAG_TYPE,
   HEADERS_MARKDOWN_TYPE,
-  RICOS_HTML_TYPE,
+  HEADINGS_DROPDOWN_TYPE,
   HTML_TYPE,
-  RICOS_IMAGE_TYPE,
   IMAGE_TYPE,
   IMAGE_TYPE_LEGACY,
   INDENT_TYPE,
   LINE_SPACING_TYPE,
-  HEADINGS_DROPDOWN_TYPE,
-  SPOILER_TYPE,
-  EXTERNAL_LINK_TYPE,
-  LINK_TYPE,
+  LINK_BUTTON_TYPE,
   LINK_PREVIEW_TYPE,
+  LINK_TYPE,
   MAP_TYPE,
-  EXTERNAL_MENTIONS_TYPE,
   MENTION_TYPE,
+  POLL_TYPE,
+  PREVIEW,
+  RICOS_COLLAPSIBLE_LIST_TYPE,
+  RICOS_DIVIDER_TYPE,
+  RICOS_FILE_TYPE,
+  RICOS_GALLERY_TYPE,
+  RICOS_GIPHY_TYPE,
+  RICOS_HTML_TYPE,
+  RICOS_IMAGE_TYPE,
+  RICOS_LINK_TYPE,
+  RICOS_MAP_TYPE,
+  RICOS_MENTION_TYPE,
+  RICOS_POLL_TYPE,
+  RICOS_VIDEO_TYPE,
+  SPOILER_TYPE,
+  TABLE_TYPE,
   TEXT_COLOR_TYPE,
   TEXT_HIGHLIGHT_TYPE,
   UNDO_REDO_TYPE,
+  UNSUPPORTED_BLOCKS_TYPE,
   VERTICAL_EMBED_TYPE,
-  RICOS_VIDEO_TYPE,
   VIDEO_TYPE,
   VIDEO_TYPE_LEGACY,
-  AUDIO_TYPE,
-  RICOS_POLL_TYPE,
-  POLL_TYPE,
-  COLLAPSIBLE_LIST_TYPE,
-  TABLE_TYPE,
-  UNSUPPORTED_BLOCKS_TYPE,
-  RICOS_LINK_TYPE,
-  RICOS_MENTION_TYPE,
-  EXTERNAL,
-  RICOS_MAP_TYPE,
-  RICOS_COLLAPSIBLE_LIST_TYPE,
 } from 'ricos-content';
 import type {
+  AudioData,
+  ButtonData,
+  CollapsibleListData,
   DividerData,
+  FileData,
+  GalleryData,
   GIFData,
   HTMLData,
-  GalleryData,
+  ImageData,
+  LinkPreviewData,
+  MapData,
+  MentionData as MentionPluginData,
   PollData,
   VideoData,
-  AudioData,
-  FileData,
-  ImageData,
-  MentionData as MentionPluginData,
-  ButtonData,
-  MapData,
-  CollapsibleListData,
-  LinkPreviewData,
 } from 'ricos-schema';
-import { LinkData, Node_Type, Decoration_Type } from 'ricos-schema';
+import { Decoration_Type, LinkData, Node_Type } from 'ricos-schema';
+import type {
+  ClassNameStrategy,
+  ContainerClassNameStrategy,
+  EditorContextType,
+  GetEditorState,
+  GetToolbarSettings,
+  PluginButton,
+  Pubsub,
+  RichContentTheme,
+  SetEditorState,
+  TextButtonMapper,
+  ThemeData,
+  ThemeGeneratorFunction,
+  ToolbarButtonProps,
+} from '.';
 import type { EditorCommands } from './editorCommandsType';
 import type { ModalConfig } from './modalTypes';
-import type { IUpdateService, IUploadService } from './uploadServicesTypes';
-import type { IToolbarItem } from './toolbarTypes';
 import type { ToolbarType } from './toolbarEnums';
+import type { FormattingToolbarButtonConfig, IToolbarItem } from './toolbarTypes';
+import type { IUpdateService, IUploadService } from './uploadServicesTypes';
 
 export { Node_Type, Decoration_Type, LinkData };
 
@@ -286,7 +285,7 @@ export interface EditorPlugin<PluginConfig extends EditorPluginConfig = Record<s
   ModalsMap?: ModalsMap;
   createPluginData?: CreatePluginData<PluginConfig>;
   addButtons?: AddButton[];
-  textButtons?: IToolbarItemConfigTiptap[];
+  textButtons?: FormattingToolbarButtonConfig[];
   toolbar?: {
     buttons: ToolbarButton[];
     isVisible?: (selection) => boolean;

@@ -11,7 +11,6 @@ import type {
 } from 'ricos-types';
 import { toTiptap } from 'ricos-converters';
 import { coreConfigs } from '../src/components/RicosTiptapEditor/core-configs';
-import { commonExtensions } from '../src/common-extensions';
 import { Extensions } from '../src/models/Extensions';
 import type { ContentTypes } from '../src/patch-extensions';
 import {
@@ -26,7 +25,7 @@ const createExtensions = (extensions: RicosExtension[]): Extensions =>
 const toSupportedContentTypes: (plugins: TiptapEditorPlugin[]) => ContentTypes = flow(
   A.chain(p => p.tiptapExtensions || []),
   A.concat(coreConfigs),
-  A.concat(commonExtensions),
+  // TODO: concat common-plugins
   createExtensions,
   toContentTypes
 );

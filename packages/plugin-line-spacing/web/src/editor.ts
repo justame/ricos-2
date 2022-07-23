@@ -5,6 +5,7 @@ import { ModalsMap } from './modals';
 import type { EditorPluginCreator } from 'wix-rich-content-common';
 import { DEFAULTS } from './defaults';
 import { getTextButtons } from './getTextButtons';
+import { lineSpacing } from './tiptap';
 
 export const pluginLineSpacing: EditorPluginCreator<LineSpacingPluginEditorConfig> = config => {
   return {
@@ -13,5 +14,6 @@ export const pluginLineSpacing: EditorPluginCreator<LineSpacingPluginEditorConfi
     createPlugin: createLineSpacingPlugin,
     ModalsMap,
     textButtons: getTextButtons(),
+    tiptapExtensions: [lineSpacing],
   };
 };

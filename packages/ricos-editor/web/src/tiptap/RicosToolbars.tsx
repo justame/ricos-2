@@ -178,10 +178,7 @@ class RicosToolbars extends React.Component<
   }
 
   getTextToolbarButtonsConfig = plugins => {
-    const textButtonsFromPlugins = plugins
-      ?.getTextButtons()
-      .asArray()
-      .map(b => b.getButton());
+    const textButtonsFromPlugins = plugins?.getTextButtons();
 
     return textButtonsFromPlugins
       ? [...tiptapStaticToolbarConfig, ...textButtonsFromPlugins]

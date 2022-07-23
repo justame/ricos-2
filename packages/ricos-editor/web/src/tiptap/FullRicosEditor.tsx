@@ -20,6 +20,7 @@ import { fromTiptapNode } from 'ricos-converters';
 import { RicosEvents } from 'ricos-events';
 import { ModalRenderer, RicosModalService } from 'ricos-modals';
 import { EditorPlugins } from 'ricos-plugins';
+import { commonPlugins, commonPluginConfig } from 'ricos-common-plugins';
 import { EditorKeyboardShortcuts, Shortcuts } from 'ricos-shortcuts';
 import { RicosStyles } from 'ricos-styles';
 import type {
@@ -28,6 +29,8 @@ import type {
   IUploadService,
   IUpdateService,
   TranslationFunction,
+  EditorPlugin,
+  LegacyEditorPluginConfig,
 } from 'ricos-types';
 import type { EditorCommands } from 'wix-rich-content-common';
 import { getLangDir } from 'wix-rich-content-common';
@@ -37,11 +40,13 @@ import { initializeTiptapAdapter } from 'wix-tiptap-editor';
 import RicosPortal from '../modals/RicosPortal';
 import type { RicosEditorRef } from '../RicosEditorRef';
 import { convertToolbarContext } from '../toolbars/convertToolbarContext';
-import pluginsConfigMerger from '../utils/pluginsConfigMerger/pluginsConfigMerger';
+import { pluginsConfigMerger } from '../utils/pluginsConfigMerger/pluginsConfigMerger';
 import RicosEditor from './RicosEditor';
 import RicosStylesRenderer from './RicosStyles';
 import RicosToolbars from './RicosToolbars';
 import { UploadService, UpdateService, StreamReader, ErrorNotifier } from 'ricos-common';
+import { pipe } from 'fp-ts/function';
+import * as A from 'fp-ts/Array';
 
 type State = {
   error: string;
@@ -108,10 +113,18 @@ export class FullRicosEditor extends React.Component<Props, State> {
     return { error };
   }
 
-  initPlugins = () => {
+  initPlugins = (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    commonPlugins: EditorPlugin<Record<string, any>>[],
+    commonPluginConfig: LegacyEditorPluginConfig
+  ) => {
     const { plugins, _rcProps, linkPanelSettings } = this.props;
-    const configuredPlugins = pluginsConfigMerger(plugins, _rcProps) || [];
-    configuredPlugins.forEach(plugin => this.editorPlugins.register(plugin));
+    pipe(
+      [...commonPlugins, ...(plugins || [])],
+      pluginsConfigMerger(_rcProps?.config),
+      pluginsConfigMerger(commonPluginConfig),
+      A.map((plugin: EditorPlugin) => this.editorPlugins.register(plugin))
+    );
     const { handleFileUpload, handleFileSelection } = _rcProps?.helpers || {};
     this.editorPlugins.configure({
       helpers: { handleFileUpload, handleFileSelection },
@@ -126,7 +139,8 @@ export class FullRicosEditor extends React.Component<Props, State> {
   };
 
   componentDidMount() {
-    this.initPlugins();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    this.initPlugins(commonPlugins as EditorPlugin<Record<string, any>>[], commonPluginConfig);
     this.updateService = new UpdateService();
     const { onMediaUploadStart, onMediaUploadEnd } = this.props._rcProps?.helpers || {};
     this.uploadService = new UploadService(new StreamReader(), this.updateService, {
@@ -222,17 +236,8 @@ export class FullRicosEditor extends React.Component<Props, State> {
   }
 
   private renderEditor() {
-    const {
-      t,
-      isMobile,
-      experiments,
-      locale,
-      localeContent,
-      theme,
-      _rcProps,
-      toolbarSettings,
-      content,
-    } = this.props;
+    const { t, isMobile, experiments, locale, localeContent, theme, toolbarSettings, content } =
+      this.props;
 
     const languageDir = getLangDir(locale);
     return (

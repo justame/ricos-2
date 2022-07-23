@@ -49,7 +49,7 @@ export interface IEditorPlugin {
    * @returns  {FormattingToolbarButton[]}
    * @memberof IEditorPlugin
    */
-  getTextButtons(): FormattingToolbarButton[];
+  getTextButtons(): IToolbarItemConfigTiptap[];
   /**
    * Add Buttons
    *
@@ -137,7 +137,7 @@ export interface IEditorPlugins {
    * @returns  {FormattingToolbarButtons}
    * @memberof IEditorPlugins
    */
-  getTextButtons(): FormattingToolbarButtons;
+  getTextButtons(): IToolbarItemConfigTiptap[];
   /**
    * Plugins add Buttons
    *
@@ -170,10 +170,28 @@ export interface IEditorPlugins {
   configure(config: Partial<LegacyEditorPluginConfig>); // runtime configuration
 }
 
+/**
+ * Represents formatting toolbar button.
+ * Responsibilities:
+ * - maps button attribute RESOLVERS_IDS to resolvers
+ *
+ * @export
+ * @interface FormattingToolbarButton
+ */
 export interface FormattingToolbarButton {
   getButton: () => IToolbarItemConfigTiptap;
 }
 
+/**
+ * Aggregates formatting toolbar buttons.
+ * Responsibilities:
+ * - orders buttons according to config
+ * - manages separators
+ * - constructs full tooltip from tooltip key and shortcut info
+ *
+ * @export
+ * @interface FormattingToolbarButtons
+ */
 export interface FormattingToolbarButtons {
   asArray: () => FormattingToolbarButton[];
 }

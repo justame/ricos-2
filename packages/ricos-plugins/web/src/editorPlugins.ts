@@ -1,14 +1,13 @@
-import { EditorPlugin } from './editorPlugin';
-import { PluginAddButtons } from './pluginAddButton';
-import { PluginTextButtons } from './plugin-text-button';
+import { compact } from 'lodash';
 import type {
   EditorPlugin as EditorPluginType,
+  IEditorPlugin,
+  IEditorPlugins,
   LegacyEditorPluginConfig,
   ModalService,
-  IEditorPlugins,
-  IEditorPlugin,
 } from 'ricos-types';
-import { compact } from 'lodash';
+import { EditorPlugin } from './editorPlugin';
+import { PluginAddButtons } from './pluginAddButton';
 
 export class PluginCollisionError extends Error {}
 
@@ -63,8 +62,7 @@ export class EditorPlugins implements IEditorPlugins {
   }
 
   getTextButtons() {
-    const textButtons = this.plugins.flatMap(plugin => plugin.getTextButtons() || []);
-    return new PluginTextButtons(textButtons);
+    return this.plugins.flatMap(plugin => plugin.getTextButtons() || []);
   }
 
   getAddButtons() {

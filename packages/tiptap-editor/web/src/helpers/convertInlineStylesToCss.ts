@@ -42,6 +42,10 @@ const ricosDecorationToCss = {
     background && (colors['background-color'] = background);
     return colors;
   },
+  [Decoration_Type.LINK]: () => ({}),
+  [Decoration_Type.ANCHOR]: () => ({}),
+  [Decoration_Type.SPOILER]: () => ({}),
+  [Decoration_Type.MENTION]: () => ({}),
 };
 
 const convertNodeStyleToCss = nodeStyle => {

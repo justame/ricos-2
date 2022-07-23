@@ -48,8 +48,15 @@ export type TiptapCommand = ({
 export type IToolbarItemConfigTiptap = Modify<
   IToolbarItem,
   {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    attributes: Record<string, any>;
+    // TODO: use RESOLVERS_IDS type instead of string
+    attributes: Record<string, IContentResolver<TiptapNode[]>>;
     commands: Record<string, TiptapCommand>;
+  }
+>;
+
+export type FormattingToolbarButtonConfig = Modify<
+  IToolbarItemConfigTiptap,
+  {
+    attributes: Record<string, string>;
   }
 >;

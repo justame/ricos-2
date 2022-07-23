@@ -3,7 +3,7 @@ import { mergeAttributes } from '@tiptap/core';
 import type { DOMOutputSpec, RicosExtension } from 'ricos-types';
 import { Node_Type } from 'ricos-schema';
 import { toggleLists } from './toggleLists';
-import styles from './statics/styles.scss';
+import styles from '../statics/styles.scss';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {

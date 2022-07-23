@@ -1,8 +1,9 @@
 import { generateId } from 'ricos-content';
 import { Node_Type, TextStyle_TextAlignment } from 'ricos-schema';
+
 import blockquoteDataDefaults from 'ricos-schema/dist/statics/blockquote.defaults.json';
 import type { DOMOutputSpec, ExtensionProps, NodeConfig, RicosExtension } from 'ricos-types';
-import styles from './statics/styles.scss';
+import styles from '../statics/styles.scss';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
