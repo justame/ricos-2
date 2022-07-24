@@ -19,12 +19,14 @@ export const toolbarButtonsConfig: IPluginToolbarButtonsConfig = {
   delete: {
     id: PLUGIN_TOOLBAR_BUTTON_ID.DELETE,
     type: 'toggle',
-    attributes: {},
+    attributes: {
+      selectedNode: getNodeInSelectionResolver,
+    },
     commands: {
       delete:
         ({ editorCommands }) =>
-        () => {
-          editorCommands.chain().focus().deleteSelection().run();
+        nodeId => {
+          editorCommands.chain().focus().deleteNode(nodeId).run();
         },
     },
   },
