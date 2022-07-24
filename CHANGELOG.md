@@ -17,6 +17,9 @@
     Click to see more.
   </summary>
 
+- `general`
+  - [#4253](https://github.com/wix/ricos/pull/4253) formatting shortcuts in plugins
+
 </details>
 
 ## 8.72.7 (Jul 25, 2022)
