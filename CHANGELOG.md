@@ -17,6 +17,8 @@
     Click to see more.
   </summary>
 
+## :house: Internal
+
 - `general`
   - [#4253](https://github.com/wix/ricos/pull/4253) formatting shortcuts in plugins
 
