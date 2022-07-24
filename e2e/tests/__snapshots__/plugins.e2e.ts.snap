@@ -1976,15 +1976,9 @@ exports[`plugins > convert link to preview > with custom config > [tiptap] shoul
           "offset": 0
         }
       ],
-      "inlineStyleRanges": [
-        {
-          "length": 11,
-          "offset": 0,
-          "style": "UNDERLINE"
-        }
-      ],
+      "inlineStyleRanges": [],
       "key": 0,
-      "text": "www.wix.com ",
+      "text": "www.wix.com",
       "type": "unstyled"
     },
     {
@@ -1997,15 +1991,9 @@ exports[`plugins > convert link to preview > with custom config > [tiptap] shoul
           "offset": 0
         }
       ],
-      "inlineStyleRanges": [
-        {
-          "length": 15,
-          "offset": 0,
-          "style": "UNDERLINE"
-        }
-      ],
+      "inlineStyleRanges": [],
       "key": 1,
-      "text": "www.mockUrl.com ",
+      "text": "www.mockUrl.com",
       "type": "unstyled"
     },
     {
@@ -2022,18 +2010,16 @@ exports[`plugins > convert link to preview > with custom config > [tiptap] shoul
   "entityMap": {
     "0": {
       "data": {
-        "rel": "",
-        "target": "_blank",
-        "url": "www.wix.com"
+        "target": "_self",
+        "url": "http://www.wix.com"
       },
       "mutability": "MUTABLE",
       "type": "LINK"
     },
     "1": {
       "data": {
-        "rel": "",
-        "target": "_blank",
-        "url": "www.mockUrl.com"
+        "target": "_self",
+        "url": "http://www.mockUrl.com"
       },
       "mutability": "MUTABLE",
       "type": "LINK"

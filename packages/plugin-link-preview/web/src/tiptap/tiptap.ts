@@ -59,7 +59,12 @@ const addLinkPreview =
       fetchData,
       link: linkConfig,
     } = config || {};
-    if (pos.nodeBefore?.text && isLinkOnlyBlock(pos) && fetchData) {
+    if (
+      pos.nodeBefore?.text &&
+      isLinkOnlyBlock(pos) &&
+      fetchData &&
+      (enableEmbed || enableLinkPreview)
+    ) {
       const { target, rel } = linkConfig || {};
       const url = pos.nodeBefore?.text;
       fetchLinkPreview(fetchData, url)
@@ -78,6 +83,7 @@ const addLinkPreview =
                 );
                 editor
                   .chain()
+                  .focus()
                   .deleteRange({ from: pos.pos - (pos.nodeBefore?.nodeSize || 0), to: pos.pos })
                   .insertContent({
                     type: shouldEmbed ? TIPTAP_EMBED_TYPE : TIPTAP_LINK_PREVIEW_TYPE,
