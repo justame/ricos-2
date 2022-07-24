@@ -1,13 +1,13 @@
-.toolbar{
-    width: fit-content;
-    height: fit-content;
-    box-sizing: border-box;
-    overflow: visible;
-    display: block;
-    border-radius: var(--ricos-settings-whitebox-border-radius, 2px);
-    border: solid 1px rgba(51, 51, 51, 0.1);
-    box-shadow: var(--ricos-settings-whitebox-box-shadow, 0 0 10px 0 rgba(0, 0, 0, 0.06));
-    z-index: 6;
-    background-color: rgb(255, 255, 255);
-    color: var(--ricos-settings-text-color, #000);
+.toolbar {
+  width: fit-content;
+  height: fit-content;
+  box-sizing: border-box;
+  overflow: visible;
+  display: block;
+  border-radius: var(--ricos-settings-whitebox-border-radius, 2px);
+  border: solid 1px rgba(51, 51, 51, 0.1);
+  box-shadow: var(--ricos-settings-whitebox-box-shadow, 0 0 10px 0 rgba(0, 0, 0, 0.06));
+  z-index: 10000;
+  background-color: rgb(255, 255, 255);
+  color: var(--ricos-settings-text-color, #000);
 }

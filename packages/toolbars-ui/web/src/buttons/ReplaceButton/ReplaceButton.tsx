@@ -25,7 +25,7 @@ const ReplaceButton: FC<Props> = ({ toolbarItem, dataHook }) => {
       Icon={ReplaceIcon}
       onClick={onClick}
       dataHook={dataHook}
-      tooltip={t('ReplaceButton_Tooltip')}
+      tooltip={t('Settings_Replace_Image_Tooltip')}
       setRef={setReferenceElement}
     />
   );
