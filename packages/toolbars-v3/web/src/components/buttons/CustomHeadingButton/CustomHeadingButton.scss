@@ -3,61 +3,61 @@
 @import '~wix-rich-content-common/dist/statics/styles/fonts';
 
 .customHeadingModalButtonWrapper {
-    font-family: $ricos-settings-font-family;
-    font-size: 14px;
-    background: transparent;
-    padding: 4px;
-    cursor: pointer;
-    color: var(--ricos-settings-text-color, #000);
+  font-family: $ricos-settings-font-family;
+  font-size: 14px;
+  background: transparent;
+  padding: 4px;
+  cursor: pointer;
+  color: var(--ricos-settings-text-color, #000);
 
-    &:hover {
-        background-color: rgba(var(--ricos-settings-action-color-tuple, $fallbackColorTuple), 0.06);
-    }
+  &:hover {
+    background-color: rgba(var(--ricos-settings-action-color-tuple, $fallbackColorTuple), 0.06);
+  }
 
-    &.active {
-        background-color: rgba($action-color-fallback-tuple, 0.1);
-        color: var(--ricos-settings-text-color, $action-color-fallback);
-        fill: var(--ricos-settings-text-color, $action-color-fallback);
-        @include svg-fill;
-    }
+  &.active {
+    background-color: rgba($action-color-fallback-tuple, 0.1);
+    color: var(--ricos-settings-text-color, $action-color-fallback);
+    fill: var(--ricos-settings-text-color, $action-color-fallback);
+    @include svg-fill;
+  }
 }
 
 .customHeadingModalButton {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 20px;
-    min-width: 20px;
-    width: max-content;
-    gap: 8px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  min-width: 20px;
+  width: max-content;
+  gap: 8px;
 }
 
 .popperContainer {
-    z-index: 9;
+  z-index: 10000;
 }
 
 .modal {
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.06);
-    border: solid 1px rgba(51, 51, 51, 0.1);
-    border-radius: 2px;
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    // position: absolute;
-    // top: 36px;
-    z-index: 10;
-    width: max-content;
-    min-width: 42px;
-    @include border-box;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.06);
+  border: solid 1px rgba(51, 51, 51, 0.1);
+  border-radius: 2px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  // position: absolute;
+  // top: 36px;
+  z-index: 10;
+  width: max-content;
+  min-width: 42px;
+  @include border-box;
 
-    @include phone {
-        z-index: 100000;
-        position: fixed;
-    }
+  @include phone {
+    z-index: 100000;
+    position: fixed;
+  }
 }
 
 .toolbarLabelUpdate {
-    position: absolute;
-    right: 10px;
+  position: absolute;
+  right: 10px;
 }
