@@ -63,6 +63,9 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
       renderer: toolbarItem => <PollLayoutButton toolbarItem={toolbarItem} />,
     },
     {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+    },
+    {
       id: 'pollDesign',
       modal: {
         Component: PollSettingsModal,
@@ -75,12 +78,18 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
       renderer: toolbarItem => <PollDesignButton toolbarItem={toolbarItem} />,
     },
     {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+    },
+    {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS,
       modal: {
         Component: PollSettingsModal,
         id: pollModals.settings,
       },
       command: getCommandByTab(TABS.SETTINGS),
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.DELETE,

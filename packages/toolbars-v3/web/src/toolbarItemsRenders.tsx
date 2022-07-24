@@ -13,7 +13,7 @@ import {
   AnchorLinkButton,
   HeadingButtonSwitch,
 } from './components/buttons';
-import { ToolbarButtonSeparator } from './components/ToolbarButtonSeparator';
+import { ToolbarButtonSeparator } from 'wix-rich-content-toolbars-ui';
 
 export const toolbarItemsRenders = {
   anchorLink: toolbarItem => {

@@ -132,4 +132,11 @@ export const toolbarButtonsConfig: IPluginToolbarButtonsConfig = {
         },
     },
   },
+  seperator: {
+    id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+    type: 'separator',
+    presentation: {},
+    attributes: {},
+    commands: {},
+  },
 };

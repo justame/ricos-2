@@ -27,6 +27,9 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
       },
     },
     {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+    },
+    {
       id: 'htmlWidth',
       command: ({ data, editorCommands }) => {
         editorCommands.chain().updateAttributes(TIPTAP_HTML_TYPE, data).run();
@@ -69,7 +72,13 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
       },
     },
     {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+    },
+    {
       id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.DELETE,

@@ -40,6 +40,9 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
       renderer: toolbarItem => <LinkPreviewSettingsButton toolbarItem={toolbarItem} />,
     },
     {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+    },
+    {
       id: PLUGIN_TOOLBAR_BUTTON_ID.DELETE,
     },
   ];

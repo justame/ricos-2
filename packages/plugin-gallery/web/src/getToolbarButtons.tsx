@@ -54,6 +54,17 @@ export const getToolbarButtons = (config, galleryPluginService): ToolbarButton[]
 
   return [
     {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.REPLACE,
+      icon: AddMediaIcon,
+      tooltip: 'UploadMediaButton_Tooltip',
+      command: ({ node, uploadContext: { uploadService, updateService } }) => {
+        handleFileSelection(uploadService, updateService, node);
+      },
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+    },
+    {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS,
       dataHook: 'baseToolbarButton_manage_media',
       modal: {
@@ -75,12 +86,7 @@ export const getToolbarButtons = (config, galleryPluginService): ToolbarButton[]
       },
     },
     {
-      id: PLUGIN_TOOLBAR_BUTTON_ID.REPLACE,
-      icon: AddMediaIcon,
-      tooltip: 'UploadMediaButton_Tooltip',
-      command: ({ node, uploadContext: { uploadService, updateService } }) => {
-        handleFileSelection(uploadService, updateService, node);
-      },
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
     },
     {
       id: 'galleryLayout',
@@ -97,10 +103,19 @@ export const getToolbarButtons = (config, galleryPluginService): ToolbarButton[]
       renderer: toolbarItem => <GalleryLayoutButton toolbarItem={toolbarItem} />,
     },
     {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+    },
+    {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SIZE,
     },
     {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+    },
+    {
       id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS,
@@ -120,6 +135,9 @@ export const getToolbarButtons = (config, galleryPluginService): ToolbarButton[]
           layout: isMobile ? 'fullscreen' : 'drawer',
         });
       },
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.DELETE,

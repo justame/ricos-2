@@ -22,7 +22,32 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SIZE,
     },
     {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+    },
+    {
       id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS,
+      modal: {
+        id: videoModals.settings,
+        Component: VideoSettingsModal,
+      },
+      command: ({ modalService, isMobile, node }) => {
+        modalService?.openModal(videoModals.settings, {
+          componentProps: {
+            nodeId: node.attrs.id,
+          },
+          positioning: { placement: 'right' },
+          layout: isMobile ? 'fullscreen' : 'drawer',
+        });
+      },
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.REPLACE,
@@ -48,22 +73,6 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
             layout: isMobile ? 'fullscreen' : 'popover',
           });
         }
-      },
-    },
-    {
-      id: PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS,
-      modal: {
-        id: videoModals.settings,
-        Component: VideoSettingsModal,
-      },
-      command: ({ modalService, isMobile, node }) => {
-        modalService?.openModal(videoModals.settings, {
-          componentProps: {
-            nodeId: node.attrs.id,
-          },
-          positioning: { placement: 'right' },
-          layout: isMobile ? 'fullscreen' : 'drawer',
-        });
       },
     },
     {

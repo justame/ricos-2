@@ -7,6 +7,7 @@ import {
   NodeAlignmentButton,
   NodeSizeButton,
   DeleteButton,
+  ToolbarButtonSeparator,
 } from 'wix-rich-content-toolbars-ui';
 
 export const toolbarButtonsRenders = {
@@ -27,5 +28,8 @@ export const toolbarButtonsRenders = {
   },
   [PLUGIN_TOOLBAR_BUTTON_ID.LINK]: toolbarItem => {
     return <NodeLinkButton toolbarItem={toolbarItem} />;
+  },
+  [PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR]: () => {
+    return <ToolbarButtonSeparator />;
   },
 };

@@ -32,26 +32,13 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
       ),
     },
     {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+    },
+    {
       id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
     },
     {
-      id: PLUGIN_TOOLBAR_BUTTON_ID.LINK,
-    },
-    {
-      id: PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS,
-      modal: {
-        Component: ImageSettingsModal,
-        id: imageModals.settings,
-      },
-      command: ({ modalService, isMobile, node }) => {
-        modalService?.openModal(imageModals.settings, {
-          componentProps: {
-            nodeId: node.attrs.id,
-          },
-          positioning: { placement: 'right' },
-          layout: isMobile ? 'fullscreen' : 'drawer',
-        });
-      },
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
     },
     {
       id: IMAGE_EDITOR_BUTTON_ID,
@@ -82,6 +69,37 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
         },
         selectedNode: selectedNodeResolver,
       },
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+      attributes: {
+        visible: {
+          id: 'IS_IMAGE_EDIT_BUTTON_VISIBLE',
+          resolve: () => !!config.imageEditorWixSettings,
+        },
+      },
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.LINK,
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS,
+      modal: {
+        Component: ImageSettingsModal,
+        id: imageModals.settings,
+      },
+      command: ({ modalService, isMobile, node }) => {
+        modalService?.openModal(imageModals.settings, {
+          componentProps: {
+            nodeId: node.attrs.id,
+          },
+          positioning: { placement: 'right' },
+          layout: isMobile ? 'fullscreen' : 'drawer',
+        });
+      },
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.REPLACE,

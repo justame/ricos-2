@@ -25,6 +25,7 @@
   - [#4214](https://github.com/wix/ricos/pull/4214) common-plugins package
 - `ricos-plugins`
   - [#4238](https://github.com/wix/ricos/pull/4238) plugin toolbar delete command by id instead of selection
+  - [#4241](https://github.com/wix/ricos/pull/4241) plugin toolbar seperators and button order
 
 </details>
 

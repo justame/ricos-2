@@ -2,8 +2,7 @@
 import React from 'react';
 
 const EditImageIcon = props => (
-  <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="36" height="36" fill="white" />
+  <svg width="40" height="40" viewBox="7 0 22 34" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       fillRule="evenodd"
       clipRule="evenodd"

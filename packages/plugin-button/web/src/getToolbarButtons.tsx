@@ -12,6 +12,9 @@ export const getToolbarButtons = (config, type): ToolbarButton[] => {
       id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
     },
     {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+    },
+    {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS,
       modal: {
         Component: decorateComponentWithProps(ButtonSettingsModal, {
@@ -30,6 +33,9 @@ export const getToolbarButtons = (config, type): ToolbarButton[] => {
           layout: isMobile ? 'fullscreen' : 'drawer',
         });
       },
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.DELETE,

@@ -24,12 +24,18 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
       renderer: toolbarItem => <DividerStyleButton toolbarItem={toolbarItem} />,
     },
     {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+    },
+    {
       id: 'dividerSize',
       dataHook: 'dividerSizeDropdownButton',
       command: ({ size, editorCommands }) => {
         editorCommands.chain().focus().setNodeSize(size).setNodeAlignment('CENTER').run();
       },
       renderer: toolbarItem => <DividerSizeButton toolbarItem={toolbarItem} />,
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
@@ -39,6 +45,9 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
           options={['LEFT', 'CENTER', 'RIGHT'] as PluginContainerData_Alignment[]}
         />
       ),
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.DELETE,
