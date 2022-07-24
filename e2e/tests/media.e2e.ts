@@ -82,13 +82,12 @@ describe('plugins', () => {
         cy.getImageLink();
       });
 
-      it('render image with loader - loading in component data', () => {
-        if (useTiptap) {
-          return;
-        }
-        cy.loadRicosEditorAndViewer('image-with-loader-percent');
-        cy.get(`[data-hook=loader]`).should('to.be.visible');
-      });
+      if (!useTiptap) {
+        it('render image with loader - loading in component data', () => {
+          cy.loadRicosEditorAndViewer('image-with-loader-percent');
+          cy.get(`[data-hook=loader]`).should('to.be.visible');
+        });
+      }
 
       it(`${getTestPrefix(useTiptap)} should disable image expand`, function () {
         cy.loadRicosEditorAndViewer('images');

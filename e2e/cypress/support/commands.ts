@@ -518,7 +518,7 @@ const COMMANDS = {
   addHtml: () => {
     addHtmlPlugin(
       // eslint-disable-next-line max-len
-      `<div style="background-color: pink; border: 2px solid red; height: 400px; text-align: center; color: white;"><h1>This is html src test</h1></div>`
+      '<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">The updates, insights and stories of the engineering challenges we encounter, and our way of solving them. Subscribe to our fresh, monthly newsletter and get these goodies right to your e-mail:<a href="https://t.co/0ziRSJJAxK">https://t.co/0ziRSJJAxK</a> <a href="https://t.co/nTHlsG5z2a">pic.twitter.com/nTHlsG5z2a</a></p>&mdash; Wix Engineering (@WixEng) <a href="https://twitter.com/WixEng/status/1076810144774868992?ref_src=twsrc%5Etfw">December 23, 2018</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>'
     );
   },
 

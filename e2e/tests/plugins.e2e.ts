@@ -150,21 +150,20 @@ import { getTestPrefix } from '../cypress/utils';
       });
     });
 
-    context('drag and drop', () => {
-      if (useTiptap) {
-        return;
-      }
-      // eslint-disable-next-line mocha/no-skipped-tests
-      it.skip('drag and drop plugins', () => {
-        cy.loadRicosEditorAndViewer('dragAndDrop');
-        cy.focusEditor();
-        const src = `[data-hook=${PLUGIN_COMPONENT.IMAGE}] + [data-hook=componentOverlay]`;
-        const dest = `span[data-offset-key="fjkhf-0-0"]`;
-        cy.dragAndDropPlugin(src, dest);
-        cy.get('img[style="opacity: 1;"]');
-        cy.percySnapshot();
+    if (!useTiptap) {
+      context('drag and drop', () => {
+        // eslint-disable-next-line mocha/no-skipped-tests
+        it.skip('drag and drop plugins', () => {
+          cy.loadRicosEditorAndViewer('dragAndDrop');
+          cy.focusEditor();
+          const src = `[data-hook=${PLUGIN_COMPONENT.IMAGE}] + [data-hook=componentOverlay]`;
+          const dest = `span[data-offset-key="fjkhf-0-0"]`;
+          cy.dragAndDropPlugin(src, dest);
+          cy.get('img[style="opacity: 1;"]');
+          cy.percySnapshot();
+        });
       });
-    });
+    }
 
     context('alignment', () => {
       function testAtomicBlockAlignment(align: 'left' | 'right' | 'center') {
@@ -178,42 +177,41 @@ import { getTestPrefix } from '../cypress/utils';
       testAtomicBlockAlignment('right');
     });
 
-    context('link preview', () => {
-      if (useTiptap) {
-        return;
-      }
-      beforeEach('load editor', () =>
-        cy.loadRicosEditorAndViewer('link-preview', usePlugins(plugins.embedsPreset))
-      );
+    if (!useTiptap) {
+      context('link preview', () => {
+        beforeEach('load editor', () =>
+          cy.loadRicosEditorAndViewer('link-preview', usePlugins(plugins.embedsPreset))
+        );
 
-      const takeSnapshot = name => {
-        cy.waitForHtmlToLoad();
-        cy.triggerLinkPreviewViewerUpdate();
-        cy.percySnapshot();
-      };
+        const takeSnapshot = name => {
+          cy.waitForHtmlToLoad();
+          cy.triggerLinkPreviewViewerUpdate();
+          cy.percySnapshot();
+        };
 
-      it('change link preview settings', function () {
-        cy.openPluginToolbar(PLUGIN_COMPONENT.LINK_PREVIEW);
-        cy.setLinkSettings();
-        takeSnapshot(this.test.title);
+        it('change link preview settings', function () {
+          cy.openPluginToolbar(PLUGIN_COMPONENT.LINK_PREVIEW);
+          cy.setLinkSettings();
+          takeSnapshot(this.test.title);
+        });
+        //TODO: fix this flaky test
+        // eslint-disable-next-line mocha/no-skipped-tests
+        it('convert link preview to regular link', function () {
+          cy.openPluginToolbar(PLUGIN_COMPONENT.LINK_PREVIEW);
+          cy.clickToolbarButton('baseToolbarButton_replaceToLink');
+          takeSnapshot(this.test.title);
+        });
+        it('backspace key should convert link preview to regular link', function () {
+          cy.focusEditor().type('{downarrow}{downarrow}').type('{backspace}');
+          takeSnapshot(this.test.title);
+        });
+        it('delete link preview', function () {
+          cy.openPluginToolbar(PLUGIN_COMPONENT.LINK_PREVIEW).wait(100);
+          cy.clickToolbarButton('blockButton_delete');
+          takeSnapshot(this.test.title);
+        });
       });
-      //TODO: fix this flaky test
-      // eslint-disable-next-line mocha/no-skipped-tests
-      it('convert link preview to regular link', function () {
-        cy.openPluginToolbar(PLUGIN_COMPONENT.LINK_PREVIEW);
-        cy.clickToolbarButton('baseToolbarButton_replaceToLink');
-        takeSnapshot(this.test.title);
-      });
-      it('backspace key should convert link preview to regular link', function () {
-        cy.focusEditor().type('{downarrow}{downarrow}').type('{backspace}');
-        takeSnapshot(this.test.title);
-      });
-      it('delete link preview', function () {
-        cy.openPluginToolbar(PLUGIN_COMPONENT.LINK_PREVIEW).wait(100);
-        cy.clickToolbarButton('blockButton_delete');
-        takeSnapshot(this.test.title);
-      });
-    });
+    }
 
     context('convert link to preview', () => {
       context('with default config', () => {
@@ -345,106 +343,106 @@ import { getTestPrefix } from '../cypress/utils';
     // });
     // });
 
-    context('action button', () => {
-      if (useTiptap) {
-        return;
-      }
-      // it('create action button & customize it', function() {
-      //   cy.focusEditor();
-      //   cy.openPluginToolbar(PLUGIN_COMPONENT.BUTTON)
-      //     .wait(100)
-      //     .get(`[data-hook*=${PLUGIN_TOOLBAR_BUTTONS.ADV_SETTINGS}][tabindex!=-1]`)
-      //     .click({ force: true })
-      //     .wait(100)
-      //     .get(`[data-hook*=${BUTTON_PLUGIN_MODAL.DESIGN_TAB}]`)
-      //     .click({ force: true })
-      //     .wait(100)
-      //     .get(`[data-hook*=${BUTTON_PLUGIN_MODAL.BUTTON_SAMPLE}] button`)
-      //     .click({ force: true })
-      //     .wait(100)
-      //     .get(`[data-hook*=${BUTTON_PLUGIN_MODAL.DONE}]`)
-      //     .click({ force: true });
-      //   cy.percySnapshot();
-      // });
+    if (!useTiptap) {
+      context('action button', () => {
+        // it('create action button & customize it', function() {
+        //   cy.focusEditor();
+        //   cy.openPluginToolbar(PLUGIN_COMPONENT.BUTTON)
+        //     .wait(100)
+        //     .get(`[data-hook*=${PLUGIN_TOOLBAR_BUTTONS.ADV_SETTINGS}][tabindex!=-1]`)
+        //     .click({ force: true })
+        //     .wait(100)
+        //     .get(`[data-hook*=${BUTTON_PLUGIN_MODAL.DESIGN_TAB}]`)
+        //     .click({ force: true })
+        //     .wait(100)
+        //     .get(`[data-hook*=${BUTTON_PLUGIN_MODAL.BUTTON_SAMPLE}] button`)
+        //     .click({ force: true })
+        //     .wait(100)
+        //     .get(`[data-hook*=${BUTTON_PLUGIN_MODAL.DONE}]`)
+        //     .click({ force: true });
+        //   cy.percySnapshot();
+        // });
 
-      it('create action button & click it', () => {
-        const stub = cy.stub();
-        cy.loadRicosEditorAndViewer('action-button', usePlugins(plugins.actionButton));
-        cy.on('window:alert', stub);
-        cy.get(`[data-hook*=${PLUGIN_COMPONENT.BUTTON}]`)
-          .last()
-          .click()
-          .then(() => {
-            expect(stub.getCall(0)).to.be.calledWith('onClick event..');
-          });
-        cy.percySnapshot();
-      });
-    });
-
-    context('collapsible list', () => {
-      if (useTiptap) {
-        return;
-      }
-
-      const setCollapsibleListSetting = setting => {
-        cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.SETTINGS);
-        cy.get(`[data-hook=${setting}]`).click();
-        cy.get(`[data-hook=${ACTION_BUTTONS.SAVE}]`).click();
-      };
-
-      it('should change collapsible list settings', function () {
-        cy.loadRicosEditorAndViewer('collapsible-list-rich-text', {
-          plugins: [plugins.collapsibleList, plugins.embedsPreset, plugins.textPlugins],
+        it('create action button & click it', () => {
+          const stub = cy.stub();
+          cy.loadRicosEditorAndViewer('action-button', usePlugins(plugins.actionButton));
+          cy.on('window:alert', stub);
+          cy.get(`[data-hook*=${PLUGIN_COMPONENT.BUTTON}]`)
+            .last()
+            .click()
+            .then(() => {
+              expect(stub.getCall(0)).to.be.calledWith('onClick event..');
+            });
+          cy.percySnapshot();
         });
-        cy.getCollapsibleList();
-        setCollapsibleListSetting(COLLAPSIBLE_LIST_SETTINGS.RTL_DIRECTION);
-        cy.percySnapshot(this.test.title + ' - rtl direction');
-        setCollapsibleListSetting(COLLAPSIBLE_LIST_SETTINGS.COLLAPSED);
-        cy.percySnapshot(this.test.title + ' - collapsed');
-        setCollapsibleListSetting(COLLAPSIBLE_LIST_SETTINGS.EXPANDED);
-        cy.percySnapshot(this.test.title + ' - final');
       });
+    }
 
-      it('should focus & type', () => {
-        cy.loadRicosEditorAndViewer('empty-collapsible-list', usePlugins(plugins.collapsibleList))
-          .focusCollapsibleList(1)
-          .type('Yes\n')
-          .focusCollapsibleList(2);
-        cy.percySnapshot();
-      });
+    if (!useTiptap) {
+      context('collapsible list', () => {
+        const setCollapsibleListSetting = setting => {
+          cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.SETTINGS);
+          cy.get(`[data-hook=${setting}]`).click();
+          cy.get(`[data-hook=${ACTION_BUTTONS.SAVE}]`).click();
+        };
 
-      it('should insert image in collapsible list', () => {
-        cy.loadRicosEditorAndViewer('empty-collapsible-list', usePlugins(plugins.all))
-          .focusCollapsibleList(2)
-          .type('Image in collapsible list');
-        cy.insertPluginFromSideToolbar('ImagePlugin_InsertButton');
-        cy.wait(1000);
-        cy.percySnapshot();
-      });
+        it('should change collapsible list settings', function () {
+          cy.loadRicosEditorAndViewer('collapsible-list-rich-text', {
+            plugins: [plugins.collapsibleList, plugins.embedsPreset, plugins.textPlugins],
+          });
+          cy.getCollapsibleList();
+          setCollapsibleListSetting(COLLAPSIBLE_LIST_SETTINGS.RTL_DIRECTION);
+          cy.percySnapshot(this.test.title + ' - rtl direction');
+          setCollapsibleListSetting(COLLAPSIBLE_LIST_SETTINGS.COLLAPSED);
+          cy.percySnapshot(this.test.title + ' - collapsed');
+          setCollapsibleListSetting(COLLAPSIBLE_LIST_SETTINGS.EXPANDED);
+          cy.percySnapshot(this.test.title + ' - final');
+        });
 
-      it('should collapse first pair', () => {
-        cy.loadRicosEditorAndViewer('empty-collapsible-list', usePlugins(plugins.collapsibleList))
-          .getCollapsibleList()
-          .toggleCollapseExpand(0);
-        cy.percySnapshot();
-      });
+        it('should focus & type', () => {
+          cy.loadRicosEditorAndViewer('empty-collapsible-list', usePlugins(plugins.collapsibleList))
+            .focusCollapsibleList(1)
+            .type('Yes\n')
+            .focusCollapsibleList(2);
+          cy.percySnapshot();
+        });
 
-      it('should have only one expanded pair', () => {
-        cy.loadRicosEditorAndViewer(
-          'empty-collapsible-list',
-          usePlugins(plugins.collapsibleList)
-        ).getCollapsibleList();
-        setCollapsibleListSetting(COLLAPSIBLE_LIST_SETTINGS.ONE_PAIR_EXPANDED);
-        cy.getCollapsibleList().toggleCollapseExpand(1);
-        cy.percySnapshot();
-      });
+        it('should insert image in collapsible list', () => {
+          cy.loadRicosEditorAndViewer('empty-collapsible-list', usePlugins(plugins.all))
+            .focusCollapsibleList(2)
+            .type('Image in collapsible list');
+          cy.insertPluginFromSideToolbar('ImagePlugin_InsertButton');
+          cy.wait(1000);
+          cy.percySnapshot();
+        });
 
-      it('should delete second pair', () => {
-        cy.loadRicosEditorAndViewer('empty-collapsible-list', usePlugins(plugins.collapsibleList));
-        cy.focusCollapsibleList(3).type('{backspace}');
-        cy.percySnapshot();
+        it('should collapse first pair', () => {
+          cy.loadRicosEditorAndViewer('empty-collapsible-list', usePlugins(plugins.collapsibleList))
+            .getCollapsibleList()
+            .toggleCollapseExpand(0);
+          cy.percySnapshot();
+        });
+
+        it('should have only one expanded pair', () => {
+          cy.loadRicosEditorAndViewer(
+            'empty-collapsible-list',
+            usePlugins(plugins.collapsibleList)
+          ).getCollapsibleList();
+          setCollapsibleListSetting(COLLAPSIBLE_LIST_SETTINGS.ONE_PAIR_EXPANDED);
+          cy.getCollapsibleList().toggleCollapseExpand(1);
+          cy.percySnapshot();
+        });
+
+        it('should delete second pair', () => {
+          cy.loadRicosEditorAndViewer(
+            'empty-collapsible-list',
+            usePlugins(plugins.collapsibleList)
+          );
+          cy.focusCollapsibleList(3).type('{backspace}');
+          cy.percySnapshot();
+        });
       });
-    });
+    }
   });
 });
 
