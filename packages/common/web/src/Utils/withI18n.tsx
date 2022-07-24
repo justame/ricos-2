@@ -39,15 +39,16 @@ export default <T, P>(
     }
 
     async componentDidMount() {
-      if (this.props.locale !== 'en') {
+      const { locale } = this.props;
+      if (locale !== 'en') {
         try {
-          const { locale, localeResource } = await import(
+          const localeResource = await import(
             /* webpackChunkName: "messages_[request]" */
-            `wix-rich-content-common/dist/statics/locale/messages_${this.props.locale}.json`
+            `wix-rich-content-common/dist/statics/locale/messages_${locale}.json`
           ).then(res => res.default);
           this.changeLocale({ locale, localeResource });
         } catch (err) {
-          console.warn(`can't find ${this.props.locale} locale`);
+          console.warn(`can't find ${locale} locale`);
         }
       }
     }
