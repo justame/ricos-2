@@ -164,4 +164,18 @@ describe('Document Style', () => {
     };
     expect(documentStyleContent).toStrictEqual(expected);
   });
+
+  it('Should resetStyle match expected', () => {
+    const documentStyleContent = new DocumentStyle(documentStyle)
+      .resetStyle('headerOne')
+      .toContent();
+
+    const expected = {
+      headerOne: {},
+      paragraph: {
+        decorations,
+      },
+    };
+    expect(documentStyleContent).toStrictEqual(expected);
+  });
 });

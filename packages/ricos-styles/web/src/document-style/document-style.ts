@@ -53,6 +53,10 @@ export default class RicosDocumentStyle implements DocumentStyle {
     return new RicosDocumentStyle({ ...this.documentStyle, [nodeType]: style });
   }
 
+  resetStyle(nodeType: TextNodeType) {
+    return new RicosDocumentStyle({ ...this.documentStyle, [nodeType]: {} });
+  }
+
   mergeWith(documentStyle: RichContentDocumentStyle) {
     return (
       Object.entries(documentStyle) as [keyof RichContentDocumentStyle, TextNodeStyle][]
