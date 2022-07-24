@@ -24,7 +24,7 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
       renderer: toolbarItem => <DividerStyleButton toolbarItem={toolbarItem} />,
     },
     {
-      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
       id: 'dividerSize',
@@ -35,7 +35,7 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
       renderer: toolbarItem => <DividerSizeButton toolbarItem={toolbarItem} />,
     },
     {
-      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
@@ -47,7 +47,7 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
       ),
     },
     {
-      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.DELETE,

@@ -29,7 +29,7 @@ export const toolbarButtonsRenders = {
   [PLUGIN_TOOLBAR_BUTTON_ID.LINK]: toolbarItem => {
     return <NodeLinkButton toolbarItem={toolbarItem} />;
   },
-  [PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR]: () => {
+  [PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR]: () => {
     return <ToolbarButtonSeparator />;
   },
 };

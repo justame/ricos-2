@@ -62,7 +62,7 @@ export const getToolbarButtons = (config, galleryPluginService): ToolbarButton[]
       },
     },
     {
-      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS,
@@ -86,7 +86,7 @@ export const getToolbarButtons = (config, galleryPluginService): ToolbarButton[]
       },
     },
     {
-      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
       id: 'galleryLayout',
@@ -103,19 +103,19 @@ export const getToolbarButtons = (config, galleryPluginService): ToolbarButton[]
       renderer: toolbarItem => <GalleryLayoutButton toolbarItem={toolbarItem} />,
     },
     {
-      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SIZE,
     },
     {
-      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
     },
     {
-      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS,
@@ -137,7 +137,7 @@ export const getToolbarButtons = (config, galleryPluginService): ToolbarButton[]
       },
     },
     {
-      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.DELETE,

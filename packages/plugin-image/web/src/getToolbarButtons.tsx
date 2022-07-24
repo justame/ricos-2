@@ -32,13 +32,13 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
       ),
     },
     {
-      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
     },
     {
-      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
       id: IMAGE_EDITOR_BUTTON_ID,
@@ -71,7 +71,7 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
       },
     },
     {
-      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
       attributes: {
         visible: {
           id: 'IS_IMAGE_EDIT_BUTTON_VISIBLE',
@@ -99,7 +99,7 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
       },
     },
     {
-      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.REPLACE,

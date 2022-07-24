@@ -27,7 +27,7 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
       },
     },
     {
-      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
       id: 'htmlWidth',
@@ -72,13 +72,13 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
       },
     },
     {
-      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
     },
     {
-      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPERATOR,
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.DELETE,

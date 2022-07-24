@@ -261,7 +261,7 @@ const ItemActionsMenu = props => {
   );
 
   const separator = key => (
-    <span className={styles.seperator} key={key}>
+    <span className={styles.separator} key={key}>
       ·
     </span>
   );
