@@ -19,6 +19,8 @@
 
 ## :house: Internal
 
+- `collapsibleList`
+  - [#4099](https://github.com/wix/ricos/pull/4099) collapsibleList add settings button
 - `common-plugins`
   - [#4214](https://github.com/wix/ricos/pull/4214) common-plugins package
 - `ricos-plugins`

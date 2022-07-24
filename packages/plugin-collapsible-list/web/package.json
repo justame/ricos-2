@@ -38,6 +38,8 @@
   "dependencies": {
     "react-beautiful-dnd": "13.0.0",
     "ricos-context": "8.72.6",
+    "ricos-types": "8.72.6",
+    "ricos-content": "8.72.6",
     "wix-rich-content-common": "8.72.6",
     "wix-rich-content-editor-common": "8.72.6",
     "wix-rich-content-plugin-commons": "8.72.6",

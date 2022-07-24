@@ -9,7 +9,7 @@ type Pair = {
   content: EditorState;
 };
 
-interface ComponentData {
+export interface ComponentData {
   config: {
     expandState: string;
     direction: string;
