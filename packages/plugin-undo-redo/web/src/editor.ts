@@ -1,4 +1,4 @@
-import type { EditorPluginCreator } from 'wix-rich-content-common';
+import type { EditorCommands, EditorPluginCreator } from 'wix-rich-content-common';
 import { RESOLVERS_IDS } from 'wix-rich-content-toolbars-v3/libs/resolvers-ids';
 import { createUndoRedoPlugin } from './createUndoRedoPlugin';
 import { DEFAULTS } from './defaults';
@@ -15,6 +15,30 @@ export const pluginUndoRedo: EditorPluginCreator<UndoRedoPluginEditorConfig> = c
     createPlugin: createUndoRedoPlugin,
     ModalsMap: {},
     tiptapExtensions: [undoRedo],
+    shortcuts: [
+      {
+        name: 'undo',
+        description: 'Undoes the last action',
+        keys: 'Meta+Z',
+        command(editorCommands: EditorCommands) {
+          editorCommands.undo();
+        },
+        group: 'formatting',
+        keyCombinationText: 'Cmd+Z',
+        enabled: true,
+      },
+      {
+        name: 'redo',
+        description: 'Redoes the last action',
+        keys: 'Meta+Shift+Z',
+        command(editorCommands: EditorCommands) {
+          editorCommands.redo();
+        },
+        group: 'formatting',
+        keyCombinationText: 'Cmd+Shift+Z',
+        enabled: true,
+      },
+    ],
     textButtons: [
       {
         id: 'undo',

@@ -2,9 +2,8 @@ import type { FC, ReactChild } from 'react';
 import React, { useContext, useEffect, useRef } from 'react';
 import { configure, HotKeys } from 'react-hotkeys';
 import { EditorContext, ModalContext, RicosContext, ShortcutsContext } from 'ricos-context';
-import type { KeyboardShortcut, ModalConfig, ModalService } from 'ricos-types';
+import type { KeyboardShortcut, ModalService } from 'ricos-types';
 import type { Shortcuts as ShortcutManager } from './models/shortcuts';
-import { ShortcutsDialog } from './ShortcutsDialog';
 
 export type ShortcutsProps = {
   group: string;
@@ -49,7 +48,7 @@ export const Shortcuts: FC<ShortcutsProps> = (props: ShortcutsProps) => {
   const { group, root, children } = { ...defaultProps, ...props };
 
   const shortcuts = useContext(ShortcutsContext) as ShortcutManager;
-  if (root && shortcuts.filter(s => s.getName() === 'Keyboard Shortcuts').asArray().length === 0) {
+  if (root && shortcuts.asArray().filter(s => s.getName() === 'Keyboard Shortcuts').length === 0) {
     shortcuts.register(helpShortcut);
   }
 
@@ -61,9 +60,7 @@ export const Shortcuts: FC<ShortcutsProps> = (props: ShortcutsProps) => {
   useComponentWillMount(() => {
     if (root) {
       configure({
-        ignoreKeymapAndHandlerChangesByDefault: false,
         ignoreTags: [],
-        simulateMissingKeyPressEvents: false,
         ignoreEventsCondition: () => false,
         logLevel: 'warn',
       });

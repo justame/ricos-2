@@ -176,10 +176,7 @@ export interface EditorCommands {
   deleteDecoration: <
     K extends keyof Omit<
       DecorationsDataMap,
-      | typeof RICOS_MENTION_TYPE
-      | typeof RICOS_INDENT_TYPE
-      | typeof RICOS_LINE_SPACING_TYPE
-      | typeof CUSTOM_LINK
+      typeof RICOS_MENTION_TYPE | typeof RICOS_LINE_SPACING_TYPE | typeof CUSTOM_LINK
     >
   >(
     type: K

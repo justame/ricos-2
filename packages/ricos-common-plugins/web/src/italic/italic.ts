@@ -1,5 +1,5 @@
 import { Decoration_Type } from 'ricos-schema';
-import type { TiptapEditorPlugin } from 'ricos-types';
+import type { EditorCommands, TiptapEditorPlugin } from 'ricos-types';
 import { RESOLVERS_IDS } from 'wix-rich-content-toolbars-v3/libs/resolvers-ids';
 import { italic } from './extension';
 import ItalicIcon from './ItalicIcon';
@@ -8,6 +8,19 @@ export const pluginItalic: TiptapEditorPlugin = {
   type: Decoration_Type.ITALIC,
   config: {},
   tiptapExtensions: [italic],
+  shortcuts: [
+    {
+      name: 'italic',
+      description: 'Toggles italic style of selected text',
+      keys: 'Meta+I',
+      command(editorCommands: EditorCommands) {
+        editorCommands.toggleInlineStyle('italic');
+      },
+      group: 'formatting',
+      keyCombinationText: 'Cmd+I',
+      enabled: true,
+    },
+  ],
   textButtons: [
     {
       id: 'italic',

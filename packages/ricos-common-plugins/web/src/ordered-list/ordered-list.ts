@@ -1,5 +1,6 @@
+import { NUMBERED_LIST_TYPE } from 'ricos-content';
 import { Node_Type } from 'ricos-schema';
-import type { TiptapEditorPlugin } from 'ricos-types';
+import type { EditorCommands, TiptapEditorPlugin } from 'ricos-types';
 import { RESOLVERS_IDS } from 'wix-rich-content-toolbars-v3/libs/resolvers-ids';
 import { orderedList } from './extension';
 import OrderedListIcon from './OrderedListIcon';
@@ -7,6 +8,19 @@ import OrderedListIcon from './OrderedListIcon';
 export const pluginOrderedList: TiptapEditorPlugin = {
   type: Node_Type.ORDERED_LIST,
   config: {},
+  shortcuts: [
+    {
+      name: 'orderedList',
+      description: 'Toggles ordered list to current node',
+      keys: 'Meta+Shift+7',
+      command(editorCommands: EditorCommands) {
+        editorCommands.setBlockType(NUMBERED_LIST_TYPE);
+      },
+      group: 'formatting',
+      keyCombinationText: 'Cmd+Shift+7',
+      enabled: true,
+    },
+  ],
   tiptapExtensions: [orderedList],
   textButtons: [
     {

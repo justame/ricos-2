@@ -1,6 +1,16 @@
 import React from 'react';
 import { EditorPlugins, PluginCollisionError } from './editorPlugins';
-import type { EditorPlugin as EditorPluginType, ToolbarType, ModalService } from 'ricos-types';
+import type {
+  EditorPlugin as EditorPluginType,
+  ToolbarType,
+  ModalService,
+  ShortcutRegistrar,
+} from 'ricos-types';
+
+const shortcuts: ShortcutRegistrar = {
+  register: () => {},
+  unregister: () => {},
+} as ShortcutRegistrar;
 
 const mockModalService = {
   register: config => {},
@@ -102,7 +112,7 @@ describe('Editor Plugins', () => {
   };
 
   it('should register/unregister plugin', () => {
-    const registered = new EditorPlugins(mockModalService);
+    const registered = new EditorPlugins(mockModalService, shortcuts);
     registered.register(linkPreview);
     expect(registered.asArray().length).toEqual(1);
     registered.unregister(registered.asArray()[0]);
@@ -110,7 +120,7 @@ describe('Editor Plugins', () => {
   });
 
   it('should validate there is no duplication while register plugin', () => {
-    const registered = new EditorPlugins(mockModalService);
+    const registered = new EditorPlugins(mockModalService, shortcuts);
     registered.register(linkPreview);
     try {
       registered.register(linkPreview);
@@ -120,14 +130,14 @@ describe('Editor Plugins', () => {
   });
 
   it('should filter plugins', () => {
-    const registered = new EditorPlugins(mockModalService);
+    const registered = new EditorPlugins(mockModalService, shortcuts);
     registered.register(linkPreview);
     registered.filter(plugin => !!plugin.getAddButtons());
     expect(registered.asArray().length).toEqual(1);
   });
 
   it('should produce add buttons', () => {
-    const registered = new EditorPlugins(mockModalService);
+    const registered = new EditorPlugins(mockModalService, shortcuts);
     registered.register(linkPreview);
     registered.register(emoji);
     registered.register(divider);

@@ -1,5 +1,6 @@
+import { BLOCKQUOTE } from 'ricos-content';
 import { Node_Type } from 'ricos-schema';
-import type { TiptapEditorPlugin } from 'ricos-types';
+import type { EditorCommands, TiptapEditorPlugin } from 'ricos-types';
 import { RESOLVERS_IDS } from 'wix-rich-content-toolbars-v3/libs/resolvers-ids';
 import BlockQuoteIcon from './BlockQuoteIcon';
 import { blockquote } from './extension';
@@ -8,6 +9,19 @@ export const pluginBlockquote: TiptapEditorPlugin = {
   type: Node_Type.BLOCKQUOTE,
   config: {},
   tiptapExtensions: [blockquote],
+  shortcuts: [
+    {
+      name: 'blockquote',
+      description: 'Toggles quote to current node',
+      keys: 'Meta+Shift+9',
+      command(editorCommands: EditorCommands) {
+        editorCommands.setBlockType(BLOCKQUOTE);
+      },
+      group: 'formatting',
+      keyCombinationText: 'Cmd+Shift+9',
+      enabled: true,
+    },
+  ],
   textButtons: [
     {
       id: 'blockquote',

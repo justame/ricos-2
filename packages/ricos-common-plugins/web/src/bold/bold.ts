@@ -1,5 +1,5 @@
 import { Decoration_Type } from 'ricos-schema';
-import type { TiptapEditorPlugin } from 'ricos-types';
+import type { EditorCommands, TiptapEditorPlugin } from 'ricos-types';
 import { RESOLVERS_IDS } from 'wix-rich-content-toolbars-v3/libs/resolvers-ids';
 import BoldIcon from './BoldIcon';
 import { bold } from './extension';
@@ -8,6 +8,20 @@ export const pluginBold: TiptapEditorPlugin = {
   type: Decoration_Type.BOLD,
   config: {},
   tiptapExtensions: [bold],
+  shortcuts: [
+    {
+      name: 'bold',
+      description: 'Toggles bold style of selected text',
+      keys: 'Meta+B',
+      command(editorCommands: EditorCommands) {
+        editorCommands.toggleInlineStyle('bold');
+      },
+      group: 'formatting',
+      keyCombinationText: '(⌘B)',
+      enabled: true,
+    },
+  ],
+
   textButtons: [
     {
       id: 'bold',

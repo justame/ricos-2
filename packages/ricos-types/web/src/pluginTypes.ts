@@ -286,6 +286,7 @@ export interface EditorPlugin<PluginConfig extends EditorPluginConfig = Record<s
   createPluginData?: CreatePluginData<PluginConfig>;
   addButtons?: AddButton[];
   textButtons?: FormattingToolbarButtonConfig[];
+  shortcuts?: KeyboardShortcut[];
   toolbar?: {
     buttons: ToolbarButton[];
     isVisible?: (selection) => boolean;

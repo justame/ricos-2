@@ -1,5 +1,6 @@
+import { BULLET_LIST_TYPE } from 'ricos-content';
 import { Node_Type } from 'ricos-schema';
-import type { TiptapEditorPlugin } from 'ricos-types';
+import type { EditorCommands, TiptapEditorPlugin } from 'ricos-types';
 import { RESOLVERS_IDS } from 'wix-rich-content-toolbars-v3/libs/resolvers-ids';
 import { bulletedList } from './extension';
 import UnorderedListIcon from './UnorderedListIcon';
@@ -8,6 +9,19 @@ export const pluginBulletedList: TiptapEditorPlugin = {
   type: Node_Type.BULLETED_LIST,
   config: {},
   tiptapExtensions: [bulletedList],
+  shortcuts: [
+    {
+      name: 'bulletedList',
+      description: 'Toggles bulleted list to current node',
+      keys: 'Meta+Shift+8',
+      command(editorCommands: EditorCommands) {
+        editorCommands.setBlockType(BULLET_LIST_TYPE);
+      },
+      group: 'formatting',
+      keyCombinationText: 'Cmd+Shift+8',
+      enabled: true,
+    },
+  ],
   textButtons: [
     {
       id: 'unorderedList',

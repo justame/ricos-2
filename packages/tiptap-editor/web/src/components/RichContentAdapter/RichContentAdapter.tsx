@@ -10,12 +10,19 @@ import {
   generateId,
   HEADER_BLOCK,
   NUMBERED_LIST_TYPE,
+  RICOS_INDENT_TYPE,
   UNSTYLED,
 } from 'ricos-content';
 import { tiptapToDraft, fromTiptapNode } from 'ricos-converters';
 import { Decoration_Type, Node_Type } from 'ricos-schema';
 import type { Node } from 'ricos-schema';
-import type { TiptapAdapter, EditorContextType, Pubsub, RicosServices } from 'ricos-types';
+import type {
+  TiptapAdapter,
+  EditorContextType,
+  Pubsub,
+  RicosServices,
+  EditorCommands,
+} from 'ricos-types';
 import type { RicosCustomStyles, TextAlignment } from 'wix-rich-content-common';
 import {
   defaultFontSizes,
@@ -194,6 +201,7 @@ export class RichContentAdapter implements TiptapAdapter {
           [RICOS_TEXT_COLOR_TYPE]: data => ({ command: 'setColor', args: data.color }),
           [RICOS_TEXT_HIGHLIGHT_TYPE]: data => ({ command: 'setHighlight', args: data.color }),
           [RICOS_MENTION_TYPE]: data => ({ command: 'insertMention', args: data.mention }),
+          [RICOS_INDENT_TYPE]: () => ({ command: 'indent', args: undefined }),
         };
         if (decorationCommandMap[type]) {
           const { command, args } = decorationCommandMap[type](data);
@@ -313,6 +321,9 @@ export class RichContentAdapter implements TiptapAdapter {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           [RICOS_LINK_TYPE]: () => this.tiptapEditor.commands.unsetLink(),
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          [RICOS_INDENT_TYPE]: () => this.tiptapEditor.commands.outdent(),
         };
         if (deleteDecorationCommandMap[type]) {
           deleteDecorationCommandMap[type]();

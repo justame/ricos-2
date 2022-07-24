@@ -111,6 +111,7 @@ const deleteDecorationsMapFuncs = {
   [RICOS_TEXT_COLOR_TYPE]: setTextColor,
   [RICOS_TEXT_HIGHLIGHT_TYPE]: setHighlightColor,
   [RICOS_FONT_SIZE_TYPE]: setFontSize,
+  [RICOS_INDENT_TYPE]: () => {},
 };
 
 let savedEditorState;

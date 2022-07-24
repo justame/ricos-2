@@ -100,7 +100,7 @@ export class FullRicosEditor extends React.Component<Props, State> {
     this.modalService = new RicosModalService(this.events);
     this.styles = new RicosStyles();
     this.shortcuts = new EditorKeyboardShortcuts(this.events, this.modalService);
-    this.editorPlugins = new EditorPlugins(this.modalService);
+    this.editorPlugins = new EditorPlugins(this.modalService, this.shortcuts);
     this.content = Content.create<Node[]>([], {
       styles: this.styles,
       nodeService: this.nodeService,

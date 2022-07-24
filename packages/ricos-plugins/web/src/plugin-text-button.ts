@@ -8,11 +8,6 @@ import type {
 } from 'ricos-types';
 import { resolversById } from 'wix-rich-content-toolbars-v3';
 
-type ResolvedButton = IToolbarItemConfigTiptap & {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  attributes: Record<string, IContentResolver<any>>;
-};
-
 export class PluginTextButton implements FormattingToolbarButton {
   private readonly button: IToolbarItemConfigTiptap;
 
@@ -33,7 +28,7 @@ export class PluginTextButton implements FormattingToolbarButton {
     return button as unknown as IToolbarItemConfigTiptap;
   }
 
-  getButton(): ResolvedButton {
+  getButton(): IToolbarItemConfigTiptap {
     return this.button;
   }
 }
@@ -50,21 +45,6 @@ export class PluginTextButtons implements FormattingToolbarButtons {
   }
 
   asArray() {
-    // eslint-disable-next-line no-console
-    console.assert(
-      this.buttons.every(b =>
-        Object.values(b.getButton().attributes).every(
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (v: IContentResolver<any>) =>
-            typeof v !== 'undefined' &&
-            typeof v.id !== 'undefined' &&
-            typeof v.resolve !== 'undefined'
-        )
-      ),
-      `All attributes must be resolved (${this.buttons.map(
-        b => b.getButton().id
-      )} are not resolved)`
-    );
     return this.buttons;
   }
 }

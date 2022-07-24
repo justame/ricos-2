@@ -1,12 +1,22 @@
 import React from 'react';
 import { EditorPlugin } from './editorPlugin';
 import { PluginAddButton } from './pluginAddButton';
-import type { EditorPlugin as EditorPluginType, ModalService, ToolbarType } from 'ricos-types';
+import type {
+  EditorPlugin as EditorPluginType,
+  ModalService,
+  ShortcutRegistrar,
+  ToolbarType,
+} from 'ricos-types';
 
 const mockModalService = {
   register: config => {},
   unregister: id => {},
 } as ModalService;
+
+const shortcuts: ShortcutRegistrar = {
+  register: () => {},
+  unregister: () => {},
+} as ShortcutRegistrar;
 
 describe('Editor Plugin', () => {
   const plugin: EditorPluginType = {
@@ -35,7 +45,8 @@ describe('Editor Plugin', () => {
     ],
   };
 
-  const actual = EditorPlugin.of(plugin, mockModalService);
+  const actual = EditorPlugin.of(plugin, mockModalService, shortcuts);
+  actual.register();
   it('should create valid instance', () => {
     expect(actual).toBeInstanceOf(EditorPlugin);
     expect(actual.getType()).toEqual('ricos-plugin');
@@ -55,7 +66,8 @@ describe('Editor Plugin', () => {
         type: 'ricos-plugin2',
         config: {},
       },
-      mockModalService
+      mockModalService,
+      shortcuts
     );
 
     expect(actual2.equals(actual)).toBeFalsy();

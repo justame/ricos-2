@@ -5,6 +5,7 @@ import type {
   IEditorPlugins,
   LegacyEditorPluginConfig,
   ModalService,
+  ShortcutRegistrar,
 } from 'ricos-types';
 import { EditorPlugin } from './editorPlugin';
 import { PluginAddButtons } from './pluginAddButton';
@@ -16,12 +17,15 @@ export class EditorPlugins implements IEditorPlugins {
 
   private modalService: ModalService;
 
-  constructor(modalService: ModalService) {
+  private readonly shortcuts: ShortcutRegistrar;
+
+  constructor(modalService: ModalService, shortcuts: ShortcutRegistrar) {
     this.modalService = modalService;
+    this.shortcuts = shortcuts;
   }
 
   register(plugin: EditorPluginType) {
-    const candidate = EditorPlugin.of(plugin, this.modalService);
+    const candidate = EditorPlugin.of(plugin, this.modalService, this.shortcuts);
 
     const duplicate = this.hasDuplicate(candidate);
     if (duplicate) {
