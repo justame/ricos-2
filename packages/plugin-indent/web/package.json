@@ -1,6 +1,6 @@
 {
   "name": "wix-rich-content-plugin-indent",
-  "version": "8.72.6",
+  "version": "8.72.7",
   "author": {
     "name": "Aviv Maimon",
     "email": "avivm@wix.com"
@@ -34,10 +34,10 @@
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx,d.ts}'"
   },
   "dependencies": {
-    "wix-rich-content-common": "8.72.6",
-    "wix-rich-content-editor-common": "8.72.6",
-    "wix-rich-content-plugin-commons": "8.72.6",
-    "wix-rich-content-toolbars-v3": "8.72.6"
+    "wix-rich-content-common": "8.72.7",
+    "wix-rich-content-editor-common": "8.72.7",
+    "wix-rich-content-plugin-commons": "8.72.7",
+    "wix-rich-content-toolbars-v3": "8.72.7"
   },
   "unpkg": true,
   "publishConfig": {

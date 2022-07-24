@@ -17,6 +17,10 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.72.7 (Jul 25, 2022)
+
 ## :house: Internal
 
 - `collapsibleList`
@@ -26,8 +30,6 @@
 - `ricos-plugins`
   - [#4238](https://github.com/wix/ricos/pull/4238) plugin toolbar delete command by id instead of selection
   - [#4241](https://github.com/wix/ricos/pull/4241) plugin toolbar separators and button order
-
-</details>
 
 ## 8.72.6 (Jul 22, 2022)
 
