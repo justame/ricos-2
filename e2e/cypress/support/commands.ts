@@ -324,20 +324,24 @@ const COMMANDS = {
   },
 
   shrinkPlugin: (dataHook: string) => {
+    isTiptap && openSizeDropdown();
     cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.SMALL_CENTER)
       .get(`[data-hook=${dataHook}]:first`, { timeout: 15000 })
       .should('have.css', 'width', '350px');
   },
 
   pluginSizeBestFit: () => {
+    isTiptap && openSizeDropdown();
     cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.BEST_FIT);
   },
 
   pluginSizeFullWidth: () => {
+    isTiptap && openSizeDropdown();
     cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.FULL_WIDTH);
   },
 
   pluginSizeOriginal: () => {
+    isTiptap && openSizeDropdown();
     cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.ORIGINAL);
   },
 
@@ -414,10 +418,6 @@ const COMMANDS = {
 
   openAlignmentDropdown: () => {
     cy.get('[data-hook*=nodeAlignmentButton]').click({ force: true });
-  },
-
-  openSizeDropdown: () => {
-    cy.get('[data-hook*=nodeSizeButton]').click({ force: true });
   },
 
   alignImage: (alignment: 'left' | 'right' | 'center') => {
@@ -838,3 +838,7 @@ function waitForMutations(container: HTMLElement, { timeToWaitForMutation = 400 
     }
   });
 }
+
+const openSizeDropdown = () => {
+  cy.get('[data-hook*=nodeSizeButton]').click({ force: true });
+};

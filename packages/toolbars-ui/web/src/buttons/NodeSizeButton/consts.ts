@@ -13,7 +13,7 @@ export const sizeMap = {
     tooltip: 'SizeSmallCenterButton_Tooltip',
     commandKey: 'SMALL',
     icon: SizeSmallIcon,
-    dataHook: 'blockAlignmentAndSizeButton_sizeSmall',
+    dataHook: 'blockAlignmentAndSizeButton_sizeSmallCenter',
   },
   ORIGINAL: {
     text: 'SizeOriginalButton_Tooltip',

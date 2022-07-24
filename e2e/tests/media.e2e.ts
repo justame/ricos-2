@@ -12,6 +12,7 @@ import {
 } from '../cypress/dataHooks';
 import { usePlugins, plugins, usePluginsConfig, useExperiments } from '../cypress/testAppConfig';
 import { DEFAULT_MOBILE_WIDTHS } from './settings';
+import { getTestPrefix } from '../cypress/utils';
 
 describe('plugins', () => {
   afterEach(() => cy.matchContentSnapshot());
@@ -48,56 +49,58 @@ describe('plugins', () => {
     });
   });
 
-  context('image', () => {
-    beforeEach('load editor', () => {
-      cy.switchToDesktop();
-    });
+  [true, false].forEach(useTiptap => {
+    context('image', () => {
+      beforeEach('load editor', () => {
+        cy.switchToDesktop();
+        cy.toggleTiptap(useTiptap);
+      });
 
-    it('render image toolbar and settings', function () {
-      cy.loadRicosEditor('images');
-      cy.openPluginToolbar(PLUGIN_COMPONENT.IMAGE);
-      cy.openSettings();
-      cy.percySnapshot(this.test.title + ' - settings');
-      cy.addImageTitle();
-      cy.percySnapshot(this.test.title + ' - add image title');
-      cy.editImageTitle();
-      cy.percySnapshot(this.test.title + ' - in plugin editing');
-      cy.openSettings().deleteImageTitle();
-      cy.percySnapshot(this.test.title + ' - delete image title');
-      cy.addImageLink();
-      cy.percySnapshot(this.test.title + ' - add a link');
-      cy.openPluginToolbar(PLUGIN_COMPONENT.IMAGE).pluginSizeOriginal();
-      cy.percySnapshot(this.test.title + '  - plugin original size');
-      cy.openPluginToolbar(PLUGIN_COMPONENT.IMAGE).shrinkPlugin(PLUGIN_COMPONENT.IMAGE);
-      cy.percySnapshot(this.test.title + '  - plugin toolbar');
-      cy.openPluginToolbar(PLUGIN_COMPONENT.IMAGE).pluginSizeBestFit();
-      cy.percySnapshot(this.test.title + '  - plugin content size');
-      cy.openPluginToolbar(PLUGIN_COMPONENT.IMAGE).pluginSizeFullWidth();
-      cy.percySnapshot(this.test.title + '  - plugin full width size');
-    });
+      it(`${getTestPrefix(useTiptap)} render image toolbar and settings`, function () {
+        cy.loadRicosEditor('images');
+        cy.openPluginToolbar(PLUGIN_COMPONENT.IMAGE);
+        cy.openSettings();
+        cy.percySnapshot(this.test.title + ' - settings');
+        cy.addImageTitle();
+        cy.editImageTitle();
+        cy.percySnapshot(this.test.title + ' - add image title with inline editing');
+        cy.openSettings().deleteImageTitle();
+        cy.addImageLink();
+        cy.percySnapshot(this.test.title + ' - add a link');
+        cy.openPluginToolbar(PLUGIN_COMPONENT.IMAGE).pluginSizeOriginal();
+        cy.percySnapshot(this.test.title + '  - plugin original size');
+        cy.openPluginToolbar(PLUGIN_COMPONENT.IMAGE).shrinkPlugin(PLUGIN_COMPONENT.IMAGE);
+        cy.percySnapshot(this.test.title + '  - plugin toolbar');
+        cy.openPluginToolbar(PLUGIN_COMPONENT.IMAGE).pluginSizeBestFit();
+        cy.percySnapshot(this.test.title + '  - plugin content size');
+        cy.openPluginToolbar(PLUGIN_COMPONENT.IMAGE).pluginSizeFullWidth();
+        cy.percySnapshot(this.test.title + '  - plugin full width size');
+      });
 
-    it('render image with link', () => {
-      cy.loadRicosEditorAndViewer('image-with-link');
-      cy.getImageLink();
-    });
+      it(`${getTestPrefix(useTiptap)} render image with link`, () => {
+        cy.loadRicosEditorAndViewer('image-with-link');
+        cy.getImageLink();
+      });
 
-    it('render image with loader - loading in component data', () => {
-      cy.loadRicosEditorAndViewer('image-with-loader-percent');
-      cy.get(`[data-hook=loader]`).should('to.be.visible');
-    });
+      it('render image with loader - loading in component data', () => {
+        if (useTiptap) {
+          return;
+        }
+        cy.loadRicosEditorAndViewer('image-with-loader-percent');
+        cy.get(`[data-hook=loader]`).should('to.be.visible');
+      });
 
-    it('should disable image expand', function () {
-      cy.loadRicosEditorAndViewer('images');
-      cy.openPluginToolbar(PLUGIN_COMPONENT.IMAGE);
-      cy.openSettings();
-      cy.percySnapshot(this.test.title + ' - settings open');
-      cy.get(`[data-hook=${IMAGE_SETTINGS.IMAGE_EXPAND_TOGGLE}]`).click();
-      cy.wait(200);
-      cy.percySnapshot(this.test.title + ' - expand click');
-      cy.get(`[data-hook=${ACTION_BUTTONS.SAVE}]`).click();
-      cy.wait(200);
-      cy.get(`[data-hook=${PLUGIN_COMPONENT.IMAGE}]`).eq(2).parent().click();
-      cy.percySnapshot(this.test.title + ' - final');
+      it(`${getTestPrefix(useTiptap)} should disable image expand`, function () {
+        cy.loadRicosEditorAndViewer('images');
+        cy.openPluginToolbar(PLUGIN_COMPONENT.IMAGE);
+        cy.openSettings();
+        cy.get(`[data-hook=${IMAGE_SETTINGS.IMAGE_EXPAND_TOGGLE}]`).click();
+        cy.wait(200);
+        cy.get(`[data-hook=${ACTION_BUTTONS.SAVE}]`).click();
+        cy.wait(200);
+        cy.get(`[data-hook=${PLUGIN_COMPONENT.IMAGE}]`).eq(2).parent().click();
+        cy.percySnapshot(this.test.title + ' - final');
+      });
     });
   });
 
@@ -398,22 +401,22 @@ describe('plugins', () => {
     });
   });
 
-  context('emoji', () => {
-    beforeEach('load editor', () => {
-      cy.switchToDesktop();
-    });
+  // context('emoji', () => {
+  //   beforeEach('load editor', () => {
+  //     cy.switchToDesktop();
+  //   });
 
-    // it('render some emojies', function() {
-    //   cy.loadRicosEditorAndViewer('empty');
-    //   cy.get(`button[data-hook=${PLUGIN_COMPONENT.EMOJI}]`).click();
-    //   cy.percySnapshot('render emoji modal');
-    //   cy.get(`[data-hook=emoji-5]`).click();
-    //   cy.get(`[data-hook=emoji-group-5]`).click();
-    //   cy.get(`[data-hook=emoji-95]`).click();
-    //   cy.get(`[data-hook=emoji-121]`).click();
-    //   cy.percySnapshot();
-    // });
-  });
+  // it('render some emojies', function() {
+  //   cy.loadRicosEditorAndViewer('empty');
+  //   cy.get(`button[data-hook=${PLUGIN_COMPONENT.EMOJI}]`).click();
+  //   cy.percySnapshot('render emoji modal');
+  //   cy.get(`[data-hook=emoji-5]`).click();
+  //   cy.get(`[data-hook=emoji-group-5]`).click();
+  //   cy.get(`[data-hook=emoji-95]`).click();
+  //   cy.get(`[data-hook=emoji-121]`).click();
+  //   cy.percySnapshot();
+  // });
+  // });
 
   context('audio', () => {
     const testAppConfig = {
