@@ -22,6 +22,7 @@ class LinkModal extends PureComponent {
         url,
         target,
         rel,
+        sponsored: rel?.includes?.('sponsored'),
       },
       anchorPanelValues: this.renderBasicLinkPanel
         ? undefined

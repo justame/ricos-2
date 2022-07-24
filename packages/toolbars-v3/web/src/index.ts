@@ -64,5 +64,5 @@ export * from './resolvers/tiptapResolvers';
 export { ToggleButton } from './components/buttons';
 export { default as RicosToolbarComponent } from './components/RicosToolbarComponent';
 export { default as FloatingAddPluginMenu } from './modals/FloatingPluginMenu/FloatingAddPluginMenu';
-export { LinkButton } from './components/buttons';
+export { NodeLinkButton } from './components/buttons';
 export { default as InsertPluginToolbar } from './components/InsertPluginToolbar/InsertPluginToolbar';

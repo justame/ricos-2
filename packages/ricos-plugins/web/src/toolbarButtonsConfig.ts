@@ -3,6 +3,7 @@ import {
   isNodeContainsLinkOrAnchorResolver,
   getNodeAlignmentResolver,
   getNodeSizeResolver,
+  getNodeLinkDataResolver,
 } from 'wix-rich-content-toolbars-v3';
 import { LinkIcon } from 'wix-rich-content-toolbars-ui';
 import type { IToolbarItemConfigTiptap } from 'ricos-types';
@@ -90,12 +91,14 @@ export const toolbarButtonsConfig: IPluginToolbarButtonsConfig = {
     id: PLUGIN_TOOLBAR_BUTTON_ID.LINK,
     type: 'modal',
     presentation: {
+      dataHook: 'LinkButton',
       tooltip: 'TextLinkButton_Tooltip',
       icon: LinkIcon,
     },
     attributes: {
       selectedNode: getNodeInSelectionResolver,
       active: isNodeContainsLinkOrAnchorResolver,
+      linkData: getNodeLinkDataResolver,
     },
     commands: {
       insertLink:

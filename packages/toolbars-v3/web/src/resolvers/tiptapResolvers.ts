@@ -480,6 +480,17 @@ export const getNodeSizeResolver = TiptapContentResolver.create(
   }
 );
 
+export const getNodeLinkDataResolver = TiptapContentResolver.create(
+  RESOLVERS_IDS.GET_NODE_LINK_DATA,
+  content => {
+    if (Array.isArray(content) && content.length > 0) {
+      return content[0].attrs?.link;
+    } else {
+      return undefined;
+    }
+  }
+);
+
 const pluginSelectedResolvers = [
   isImageSelected,
   isVideoSelected,

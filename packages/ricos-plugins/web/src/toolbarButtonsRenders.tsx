@@ -1,5 +1,5 @@
 import React from 'react';
-import { LinkButton } from 'wix-rich-content-toolbars-v3';
+import { NodeLinkButton } from 'wix-rich-content-toolbars-v3';
 import { PLUGIN_TOOLBAR_BUTTON_ID } from 'wix-rich-content-editor-common';
 import {
   SettingsButton,
@@ -26,6 +26,6 @@ export const toolbarButtonsRenders = {
     return <ReplaceButton toolbarItem={toolbarItem} />;
   },
   [PLUGIN_TOOLBAR_BUTTON_ID.LINK]: toolbarItem => {
-    return <LinkButton toolbarItem={toolbarItem} />;
+    return <NodeLinkButton toolbarItem={toolbarItem} />;
   },
 };
