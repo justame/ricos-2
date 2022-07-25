@@ -40,7 +40,7 @@ export const paragraph: RicosExtension = {
 
       addOptions() {
         return {
-          HTMLAttributes: { class: styles.text },
+          HTMLAttributes: { class: styles.paragraph },
         };
       },
 

@@ -3,23 +3,6 @@
 @import '~wix-rich-content-common/dist/statics/styles/consts';
 @import '~wix-rich-content-common/dist/statics/styles/fonts';
 
-.elementSpacing {
-  margin: 0;
-
-  @include phone {
-    margin: 0;
-  }
-}
-
-.text {
-  composes: elementSpacing;
-  @include ricosTypography('p', false);
-
-  &:empty {
-    height: 24px;
-  }
-}
-
 .overlay {
   width: 100%;
   height: 100%;

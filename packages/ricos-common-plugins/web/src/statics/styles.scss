@@ -3,6 +3,23 @@
 @import '~wix-rich-content-common/dist/statics/styles/consts';
 @import '~wix-rich-content-common/dist/statics/styles/fonts';
 
+.elementSpacing {
+  margin: 0;
+
+  @include phone {
+    margin: 0;
+  }
+}
+
+.paragraph {
+  composes: elementSpacing;
+  @include ricosTypography('p', false);
+
+  &:empty {
+    height: 24px;
+  }
+}
+
 .blockStyleSpacing {
   margin: 15px 18px;
 
