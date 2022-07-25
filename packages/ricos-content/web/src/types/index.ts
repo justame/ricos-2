@@ -41,3 +41,4 @@ export * from './contentTypes';
 export * from './contentApi';
 export * from './mediaUploadTypes';
 export * from './node-refined-types';
+export * from './decoration-refined-types';
