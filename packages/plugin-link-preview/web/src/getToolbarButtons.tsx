@@ -25,14 +25,17 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
         id: linkPreviewModals.settings,
       },
       command: ({ modalService, isMobile, node, referenceElement }) => {
-        modalService?.openModal(linkPreviewModals.settings, {
-          componentProps: {
-            nodeId: node.attrs.id,
-            uiSettings: { linkPanel: config.linkPanelSettings },
-          },
-          positioning: { placement: 'bottom', referenceElement },
-          layout: isMobile ? 'fullscreen' : 'popover',
-        });
+        const isModalOpen = modalService.isModalOpen(linkPreviewModals.settings);
+        isModalOpen
+          ? modalService.closeModal(linkPreviewModals.settings)
+          : modalService?.openModal(linkPreviewModals.settings, {
+              componentProps: {
+                nodeId: node.attrs.id,
+                uiSettings: { linkPanel: config.linkPanelSettings },
+              },
+              positioning: { placement: 'bottom', referenceElement },
+              layout: isMobile ? 'fullscreen' : 'popover',
+            });
       },
       attributes: {
         selectedNode: selectedNodeResolver,
