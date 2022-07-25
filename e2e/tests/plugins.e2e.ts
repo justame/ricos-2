@@ -24,11 +24,11 @@ import { getTestPrefix } from '../cypress/utils';
         cy.percySnapshot(this.test.title);
       });
 
-      it(`${getTestPrefix(useTiptap)} add html with src html`, function () {
-        cy.loadRicosEditorAndViewer('empty').newLine().addHtml().waitForHtmlToLoad();
-        cy.get(`[data-hook*=${PLUGIN_TOOLBAR_BUTTONS.EDIT}]`).click({ multiple: true }).click();
-        cy.percySnapshot(this.test.title);
-      });
+      // it(`${getTestPrefix(useTiptap)} add html with src html`, function () {
+      //   cy.loadRicosEditorAndViewer('empty').newLine().addHtml().waitForHtmlToLoad();
+      //   cy.get(`[data-hook*=${PLUGIN_TOOLBAR_BUTTONS.EDIT}]`).click({ multiple: true }).click();
+      //   cy.percySnapshot(this.test.title);
+      // });
     });
 
     context('spoiler', () => {

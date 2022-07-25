@@ -2231,15 +2231,6 @@ exports[`plugins > social embed > [tiptap] render twitter upload modals #0`] =
     {
       "data": {},
       "depth": 0,
-      "entityRanges": [],
-      "inlineStyleRanges": [],
-      "key": 0,
-      "text": "",
-      "type": "unstyled"
-    },
-    {
-      "data": {},
-      "depth": 0,
       "entityRanges": [
         {
           "key": 0,
@@ -2248,7 +2239,7 @@ exports[`plugins > social embed > [tiptap] render twitter upload modals #0`] =
         }
       ],
       "inlineStyleRanges": [],
-      "key": 1,
+      "key": 0,
       "text": " ",
       "type": "atomic"
     },
@@ -2257,7 +2248,7 @@ exports[`plugins > social embed > [tiptap] render twitter upload modals #0`] =
       "depth": 0,
       "entityRanges": [],
       "inlineStyleRanges": [],
-      "key": 2,
+      "key": 1,
       "text": "",
       "type": "unstyled"
     }
@@ -2269,11 +2260,12 @@ exports[`plugins > social embed > [tiptap] render twitter upload modals #0`] =
         "config": {
           "alignment": "center",
           "link": {
-            "rel": "",
+            "rel": "noopener",
             "target": "_blank",
             "url": "www.mockUrl.com"
           },
           "size": "content",
+          "textWrap": "wrap",
           "width": 350
         },
         "html": "<div style=\"background-color: black; border: 10px solid pink; height: 400px; text-align: center; color: white;\">This is a mock embed</div>"
@@ -2290,15 +2282,6 @@ exports[`plugins > social embed > [tiptap] render instagram upload modals #0`] =
     {
       "data": {},
       "depth": 0,
-      "entityRanges": [],
-      "inlineStyleRanges": [],
-      "key": 0,
-      "text": "",
-      "type": "unstyled"
-    },
-    {
-      "data": {},
-      "depth": 0,
       "entityRanges": [
         {
           "key": 0,
@@ -2307,7 +2290,7 @@ exports[`plugins > social embed > [tiptap] render instagram upload modals #0`] =
         }
       ],
       "inlineStyleRanges": [],
-      "key": 1,
+      "key": 0,
       "text": " ",
       "type": "atomic"
     },
@@ -2316,7 +2299,7 @@ exports[`plugins > social embed > [tiptap] render instagram upload modals #0`] =
       "depth": 0,
       "entityRanges": [],
       "inlineStyleRanges": [],
-      "key": 2,
+      "key": 1,
       "text": "",
       "type": "unstyled"
     }
@@ -2328,11 +2311,12 @@ exports[`plugins > social embed > [tiptap] render instagram upload modals #0`] =
         "config": {
           "alignment": "center",
           "link": {
-            "rel": "",
+            "rel": "noopener",
             "target": "_blank",
             "url": "www.mockUrl.com"
           },
           "size": "content",
+          "textWrap": "wrap",
           "width": 350
         },
         "html": "<div style=\"background-color: black; border: 10px solid pink; height: 400px; text-align: center; color: white;\">This is a mock embed</div>"

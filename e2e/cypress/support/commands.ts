@@ -555,7 +555,7 @@ const COMMANDS = {
       .each($el => {
         cy.wrap($el).its('0.contentDocument.body').should('not.be.undefined');
       })
-      .wait(4000);
+      .wait(7000);
   },
 
   insertLinkAndEnter: (url: string, { isPreview }: { isPreview?: boolean } = {}) => {
