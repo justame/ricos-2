@@ -17,12 +17,14 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.72.8 (Jul 25, 2022)
+
 ## :house: Internal
 
 - `general`
   - [#4253](https://github.com/wix/ricos/pull/4253) formatting shortcuts in plugins
-
-</details>
 
 ## 8.72.7 (Jul 25, 2022)
 
