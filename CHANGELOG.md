@@ -17,12 +17,14 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.72.9 (Jul 25, 2022)
+
 ## :bug: Bug Fix
 
 - `toolbars-v3`
   - [#4255](https://github.com/wix/ricos/pull/4255) libs entry
-
-</details>
 
 ## 8.72.8 (Jul 25, 2022)
 
