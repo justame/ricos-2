@@ -70,12 +70,10 @@ export const link: RicosExtension = {
           {
             tag: 'a[href]:not([href *= "javascript:" i])',
             getAttrs: node => {
-              return {
-                link: {
-                  url: node.getAttribute('href') || '',
-                  target: node.getAttribute('target') || '',
-                },
-              };
+              const url = node.getAttribute('href') || '';
+              const target = node.getAttribute('target') || '';
+              const rel = node.getAttribute('rel') || '';
+              return { link: RicosLink.of(url, target, rel).toLink() };
             },
           },
         ];
