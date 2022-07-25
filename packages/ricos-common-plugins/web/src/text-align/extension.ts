@@ -56,8 +56,12 @@ export const textAlign: RicosExtension = {
             attributes: {
               textStyle: {
                 default: this.options.textAlignment,
-                parseHTML: element =>
-                  styleToEnum(element.style.textAlign) || this.options.textAlignment,
+                parseHTML: element => {
+                  return {
+                    textAlignment:
+                      styleToEnum(element.style.textAlign) || this.options.textAlignment,
+                  };
+                },
                 renderHTML: attributes => {
                   if (
                     attributes?.textStyle?.textAlignment &&

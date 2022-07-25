@@ -53,7 +53,7 @@ export const paragraph: RicosExtension = {
       },
 
       parseHTML() {
-        return [{ tag: 'div' }];
+        return [{ tag: 'div' }, { tag: 'p' }, { tag: 'br' }];
       },
 
       renderHTML({ HTMLAttributes, node }) {

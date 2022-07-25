@@ -21,6 +21,7 @@ export const getSizeClassName = (styles, size, theme: RichContentTheme = {}) => 
     return '';
   }
   const key = `size${upperFirst(camelCase(size))}`;
+
   return classNames(styles[key], theme[key]);
 };
 
@@ -51,7 +52,6 @@ export const getComponentStyles = ({ componentData, theme, isFocused, isMobile }
   const alignment = componentData?.containerData?.alignment;
   const size = componentData?.containerData?.width?.size;
   const textWrap = componentData?.containerData?.textWrap;
-
   return {
     alignmentClassName: getAlignmentClassName(stylesWithRTL, alignment, theme),
     sizeClassName: getSizeClassName(stylesWithRTL, size, theme),

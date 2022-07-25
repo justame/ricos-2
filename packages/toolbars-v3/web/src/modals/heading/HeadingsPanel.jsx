@@ -38,10 +38,10 @@ class HeadingsPanel extends Component {
     });
   };
 
-  onResetHeading = type => {
+  onResetType = type => {
     this.props?.onToolbarButtonClick?.('Reset ' + type);
     this.setState({ openOption: '' });
-    return this.props.onChange({ [type]: {} });
+    return this.props.onResetType({ [type]: {} });
   };
 
   getUpdatePanelModal = heading => {
@@ -52,7 +52,7 @@ class HeadingsPanel extends Component {
       <UpdateHeadingPanel
         optionName={this.props.translateHeading(heading, t)}
         onApply={clickFromKeyboard => this.onSaveHeading(headerType, clickFromKeyboard)}
-        onReset={() => this.onResetHeading(documentStyleType)}
+        onReset={() => this.onResetType(documentStyleType)}
         onUpdate={() => this.onUpdateHeading(documentStyleType)}
         t={this.props.t}
         resetEnabled={() => !isEmpty(this.props.documentStyle?.[documentStyleType])}

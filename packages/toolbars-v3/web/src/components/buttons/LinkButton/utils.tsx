@@ -15,7 +15,7 @@ const handleLinkSettings = linkSettings => {
   const { anchorTarget = '_blank', customAnchorScroll } = linkSettings;
   let { relValue, rel } = linkSettings;
   if (relValue) {
-    console.warn(`relValue is deprecated, Please use rel prop instead.`);
+    // console.warn(`relValue is deprecated, Please use rel prop instead.`);
     rel = convertRelStringToObject(relValue) || rel;
   }
   relValue = convertRelObjectToString(rel);

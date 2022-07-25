@@ -61,13 +61,20 @@ describe('tiptap resolvers', () => {
       const mockContentWithBold = [
         {
           type: { name: 'text' },
-          marks: [{ type: { name: Decoration_Type.BOLD } }],
+          marks: [
+            {
+              type: { name: Decoration_Type.BOLD },
+              attrs: {
+                fontWeightValue: 700,
+              },
+            },
+          ],
           text: 'World',
         },
       ];
-      expect(isTextContainsBoldResolver.resolve(mockContentWithBold as TiptapNode[], {})).toBe(
-        true
-      );
+      expect(
+        isTextContainsBoldResolver.resolve(mockContentWithBold as unknown as TiptapNode[], {})
+      ).toBe(true);
     });
 
     it('should return false if selected text is not bold', () => {
@@ -89,13 +96,20 @@ describe('tiptap resolvers', () => {
       const mockContentWithItalic = [
         {
           type: { name: 'text' },
-          marks: [{ type: { name: Decoration_Type.ITALIC } }],
+          marks: [
+            {
+              type: { name: Decoration_Type.ITALIC },
+              attrs: {
+                italicData: true,
+              },
+            },
+          ],
           text: 'World',
         },
       ];
-      expect(isTextContainsItalicResolver.resolve(mockContentWithItalic as TiptapNode[], {})).toBe(
-        true
-      );
+      expect(
+        isTextContainsItalicResolver.resolve(mockContentWithItalic as unknown as TiptapNode[], {})
+      ).toBe(true);
     });
 
     it('should return false if selected text is not italic', () => {

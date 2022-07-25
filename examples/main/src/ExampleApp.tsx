@@ -89,13 +89,14 @@ class ExampleApp extends PureComponent<ExampleAppProps, ExampleAppState> {
       textWrap: true,
       showSideBlockComponent: false,
       editorKey: 1,
-      editorSettings: {
-        pluginsConfig: initialPluginConfig,
-        toolbarConfig: { addPluginMenuConfig },
-      },
+      // editorSettings: {
+      //   pluginsConfig: initialPluginConfig,
+      //   toolbarConfig: { addPluginMenuConfig },
+      // },
       ...localState,
     };
   }
+  
 
   componentDidMount() {
     this.editorScrollingElementFn = () =>

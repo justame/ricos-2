@@ -3,6 +3,7 @@ export {
   toDraft,
   ensureDraftContent,
   ensureRicosContent,
+  parseDocStyle,
   TO_RICOS_NODE_TYPE,
 } from '../src/converters/draft';
 export { fromPlainText, toPlainText } from '../src/converters/plainText';

@@ -48,10 +48,6 @@ const ricosDecorationToCss = {
     background && (colors['background-color'] = background);
     return colors;
   },
-  [Decoration_Type.LINK]: () => ({}),
-  [Decoration_Type.ANCHOR]: () => ({}),
-  [Decoration_Type.SPOILER]: () => ({}),
-  [Decoration_Type.MENTION]: () => ({}),
 };
 
 const convertNodeStyleToCss = nodeStyle => {
@@ -75,4 +71,19 @@ export const convertInlineStylesToCSS = (node: Node) => {
     return { ...styles, ...convertNodeStyleToCss({ ...nodeStyle, lineHeight }) };
   }
   return {};
+};
+
+export const getInlineStylesInSelection = (content, nodeService) => {
+  let node;
+  // eslint-disable-next-line fp/no-loops
+  for (const currNode of content) {
+    if (
+      [Node_Type.PARAGRAPH as string, Node_Type.HEADING as string].includes(currNode?.type?.name)
+    ) {
+      node = nodeService.fromTiptapNode({ ...currNode.toJSON(), type: currNode?.type?.name });
+      break;
+    }
+  }
+
+  return node ? convertInlineStylesToCSS(node) : {};
 };

@@ -66,7 +66,19 @@ export const link: RicosExtension = {
       },
 
       parseHTML() {
-        return [{ tag: 'a[href]:not([href *= "javascript:" i])' }];
+        return [
+          {
+            tag: 'a[href]:not([href *= "javascript:" i])',
+            getAttrs: node => {
+              return {
+                link: {
+                  url: node.getAttribute('href') || '',
+                  target: node.getAttribute('target') || '',
+                },
+              };
+            },
+          },
+        ];
       },
 
       renderHTML({ HTMLAttributes }) {
@@ -79,6 +91,7 @@ export const link: RicosExtension = {
         } = HTMLAttributes.link
           ? RicosLink.fromLink(HTMLAttributes.link).toHtmlAttributes()
           : this.options.defaultLink.toHtmlAttributes();
+
         return ['a', { href, rel, target, class: classes }, 0] as DOMOutputSpec;
       },
 

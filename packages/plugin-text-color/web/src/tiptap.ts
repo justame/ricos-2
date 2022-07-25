@@ -58,15 +58,18 @@ export const tiptapExtensions = [
           return colorDataDefaults;
         },
         parseHTML() {
-          return [
-            {
-              tag: 'span',
+          return ['span', 'b'].map(tag => {
+            return {
+              tag,
               getAttrs: element => {
                 const { color, backgroundColor } = (element as HTMLElement).style || {};
-                return color || backgroundColor ? {} : false;
+                return {
+                  foreground: color,
+                  background: backgroundColor,
+                };
               },
-            },
-          ];
+            };
+          });
         },
 
         renderHTML({ HTMLAttributes }) {

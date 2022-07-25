@@ -13,7 +13,7 @@ export const RicosNode = ({ Component, tiptapNodeProps }) => {
     NodeViewContent,
   };
   return (
-    <div className={styles['ricos-node']}>
+    <div data-hook="ricos-node" className={styles['ricos-node']}>
       <Component {...componentProps} />
     </div>
   );

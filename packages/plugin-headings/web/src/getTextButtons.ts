@@ -11,6 +11,7 @@ export const getTextButtons = (): FormattingToolbarButtonConfig[] => {
         tooltip: 'FormattingToolbar_TextStyleButton_Tooltip',
       },
       attributes: {
+        isStylesMatch: RESOLVERS_IDS.IS_TEXT_STYLES_MATCH_DOCUMENT_STYLES,
         visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
         selectedHeading: RESOLVERS_IDS.GET_HEADING_IN_SELECTION,
       },
@@ -35,10 +36,20 @@ export const getTextButtons = (): FormattingToolbarButtonConfig[] => {
           },
         setAndSaveHeading:
           ({ editorCommands }) =>
-          documentStyle => {
-            // eslint-disable-next-line no-console
-            console.log('TODO: setAndSaveHeading');
+          () => {
+            editorCommands.chain().focus().updateDocumentStyleBySelectedNode().run();
           },
+
+        resetToDefaultsByNodeType: ({ editorCommands }) => {
+          return nodeType => {
+            return editorCommands
+              .chain()
+              .focus()
+              .unsetAllMarks()
+              .resetDocumentStyleByNodeType(nodeType)
+              .run();
+          };
+        },
         removeInlineStyles:
           ({ editorCommands }) =>
           (exclude?: string[]) => {

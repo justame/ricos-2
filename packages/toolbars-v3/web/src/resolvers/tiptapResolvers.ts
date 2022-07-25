@@ -4,6 +4,7 @@ import { RESOLVERS_IDS } from './resolvers-ids';
 import { Node_Type } from 'ricos-schema';
 import { Decoration_Type } from 'ricos-types';
 import type { RicosStyles } from 'ricos-styles';
+import { isEqual } from 'lodash';
 
 export const alwaysVisibleResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.ALWAYS_VISIBLE,
@@ -36,11 +37,23 @@ export const isTextContainsBoldResolver = TiptapContentResolver.create(
           return decoration.fontWeightValue === 700;
         });
       }
-      return (
-        node?.marks.some(mark => mark.type.name === Decoration_Type.BOLD) ||
-        hasBoldDecorationInDocumentStyles
-      );
+      const hasInlineBold = node?.marks.some(mark => {
+        return mark.type.name === Decoration_Type.BOLD && mark.attrs.fontWeightValue === 700;
+      });
+
+      const hasInlineNormalWeight = node?.marks.some(mark => {
+        return mark.type.name === Decoration_Type.BOLD && mark.attrs.fontWeightValue === 400;
+      });
+
+      if (hasInlineBold) {
+        return true;
+      }
+
+      if (!hasInlineNormalWeight && hasBoldDecorationInDocumentStyles) {
+        return true;
+      }
     }
+
     return false;
   }
 );
@@ -62,10 +75,20 @@ export const isTextContainsItalicResolver = TiptapContentResolver.create(
           return decoration.italicData;
         });
       }
-      return (
-        node?.marks.some(mark => mark.type.name === Decoration_Type.ITALIC) ||
-        hasItalicDecorationInDocumentStyles
-      );
+
+      const hasInlineItalic = node?.marks.some(mark => {
+        return mark.type.name === Decoration_Type.ITALIC && mark.attrs.italicData !== false;
+      });
+
+      const hasInlineUnsetItalic = node?.marks.some(mark => {
+        return mark.type.name === Decoration_Type.ITALIC && mark.attrs.italicData === false;
+      });
+
+      if (hasInlineUnsetItalic) {
+        return false;
+      }
+
+      return hasInlineItalic || hasItalicDecorationInDocumentStyles;
     }
     return false;
   }
@@ -171,6 +194,55 @@ export const getHeadingInSelectionResolver = TiptapContentResolver.create(
   }
 );
 
+export const isTextStylesMatchDocumentStylesResolver = TiptapContentResolver.create(
+  RESOLVERS_IDS.IS_TEXT_STYLES_MATCH_DOCUMENT_STYLES,
+  (content = [], { styles, nodeService }: { styles: RicosStyles; nodeService }) => {
+    const currentNode = content.filter(node => {
+      return node.type.name === Node_Type.HEADING || node.type.name === Node_Type.PARAGRAPH;
+    });
+
+    let stylesMatched = true;
+    if (currentNode.length === 1) {
+      const ricosCurrentNode = nodeService.nodeToRicosNode(currentNode[0]);
+
+      const currentNodeDocumentsStyles = styles.getDocumentStyle().getDecorations(ricosCurrentNode);
+      const textsDecorations = ricosCurrentNode.nodes
+        .filter(node => {
+          return node.type === Node_Type.TEXT;
+        })
+        .map(node => {
+          return node.textData.decorations;
+        })
+        .flat();
+
+      stylesMatched = textsDecorations.every(decoration => {
+        const currentDocumentStyleDecoration = currentNodeDocumentsStyles.find(documentStyle => {
+          return documentStyle.type === decoration.type;
+        });
+        if (currentDocumentStyleDecoration) {
+          const removeNullReplacer = (key, value) => (value === null ? undefined : value);
+
+          const cleanDecoration = JSON.parse(JSON.stringify(decoration, removeNullReplacer));
+          const cleaneDcurrentDocumentStyleDecoration = JSON.parse(
+            JSON.stringify(currentDocumentStyleDecoration, removeNullReplacer)
+          );
+          if (currentDocumentStyleDecoration) {
+            if (!isEqual(cleaneDcurrentDocumentStyleDecoration, cleanDecoration)) {
+              return false;
+            }
+          }
+        } else {
+          return false;
+        }
+
+        return true;
+      });
+    }
+
+    return stylesMatched;
+  }
+);
+
 export const getLineSpacingInSelectionResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.GET_LINE_SPACING_IN_SELECTION,
   content => {
@@ -212,7 +284,9 @@ export const getLineSpacingAfterSelectionResolver = TiptapContentResolver.create
 
 export const getFontSizeInSelectionResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.GET_FONT_SIZE_IN_SELECTION,
-  content => {
+  (content, { styles, nodeService }: { styles: RicosStyles; nodeService }) => {
+    let fontSizeInDocumentStyle;
+
     if (Array.isArray(content)) {
       let returnedFontSize = '';
       let currentFontSize = '';
@@ -234,6 +308,22 @@ export const getFontSizeInSelectionResolver = TiptapContentResolver.create(
             );
             currentFontSize = `${fontSizeMark?.attrs.value}`;
           }
+          if (node && styles && nodeService) {
+            // eslint-disable-next-line max-depth
+            for (const node of content) {
+              const decoration = styles.getDecoration(
+                nodeService.nodeToRicosNode(node),
+                Decoration_Type.FONT_SIZE
+              );
+
+              // eslint-disable-next-line max-depth
+              if (decoration.fontSizeData?.value) {
+                fontSizeInDocumentStyle = decoration.colorData?.foreground;
+                break;
+              }
+            }
+          }
+          currentFontSize = currentFontSize || fontSizeInDocumentStyle;
           if (returnedFontSize !== '' && returnedFontSize !== currentFontSize) return '';
           returnedFontSize = currentFontSize;
         }
@@ -338,22 +428,6 @@ export const getHighlightColorInSelectionResolver = TiptapContentResolver.create
     return false;
   }
 );
-export const isOnlyTextSelected = TiptapContentResolver.create('yaronResolverExample', content => {
-  if (Array.isArray(content)) {
-    const noneTextNode = content.find(
-      node =>
-        node.type.name !== Node_Type.PARAGRAPH &&
-        node.type.name !== Node_Type.HEADING &&
-        node.type.name !== 'text'
-    );
-    if (noneTextNode) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-  return false;
-});
 
 export const isNodeContainsLinkOrAnchorResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.IS_NODE_CONTAINS_LINK_OR_ANCHOR,

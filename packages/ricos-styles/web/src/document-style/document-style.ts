@@ -2,6 +2,7 @@ import type {
   Decoration_Type,
   DocumentStyle as RichContentDocumentStyle,
   TextNodeStyle,
+  Decoration,
 } from 'ricos-schema';
 import { Decorations } from '../decorations';
 import type { TextDecoration } from '../models/decoration';
@@ -27,6 +28,13 @@ export default class RicosDocumentStyle implements DocumentStyle {
 
   getDecoration(nodeType: TextNodeType, decorationType: Decoration_Type): TextDecoration {
     return Decorations.of(this.documentStyle[nodeType]?.decorations || []).byType(decorationType);
+  }
+
+  getDecorations(node: ParagraphNode | HeadingNode): Decoration[] {
+    const documentStyleKey = new TextNodeTransformer(node).getDocumentStyleKey();
+    return Decorations.of(
+      this.documentStyle[documentStyleKey]?.decorations || []
+    ).toDecorationArray();
   }
 
   getTextStyle(nodeType: TextNodeType) {

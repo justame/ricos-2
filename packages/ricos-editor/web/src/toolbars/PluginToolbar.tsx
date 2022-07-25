@@ -50,7 +50,18 @@ class PluginsToolbar extends React.Component<
     const isVisible = () => !!toolbar;
 
     return (
-      <FloatingToolbar editor={tiptapEditor} portal={ricosContext.portal} isVisible={isVisible}>
+      <FloatingToolbar
+        editor={tiptapEditor}
+        portal={ricosContext.portal}
+        isVisible={isVisible}
+        getReferenceElement={selectedDOM => {
+          if (selectedDOM && selectedDOM.querySelector) {
+            return selectedDOM?.querySelector('[data-hook=ricos-node]')?.firstChild as HTMLElement;
+          } else {
+            return null;
+          }
+        }}
+      >
         {() => (
           <div
             dir={ricosContext.languageDir}

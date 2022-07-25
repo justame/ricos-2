@@ -11,6 +11,7 @@ import type { Styles } from './models/styles';
 import TextualTheme from './textual-theme/textual-theme';
 import { TextNodeTransformer } from './text-node-transformer';
 import type { ParagraphNode, HeadingNode, BlockquoteNode, CodeBlockNode } from 'ricos-content';
+import { parseDocStyle } from 'ricos-content/libs/converters';
 
 export type TextNodeContainer = ParagraphNode | HeadingNode | BlockquoteNode | CodeBlockNode;
 
@@ -72,5 +73,9 @@ export class RicosStyles implements Styles {
   setDocumentStyle(documentStyle: RichContentDocumentStyle) {
     this.documentStyle = new DocumentStyle(documentStyle);
     return this;
+  }
+
+  toDraftDocumentStyle() {
+    return parseDocStyle(this.documentStyle.toContent());
   }
 }

@@ -2,6 +2,8 @@ import { Node_Type, TextStyle_TextAlignment } from 'ricos-schema';
 import headingDataDefaults from 'ricos-schema/dist/statics/heading.defaults.json';
 import type { DOMOutputSpec, ExtensionProps, NodeConfig, RicosExtension } from 'ricos-types';
 import styles from '../statics/styles/headings.scss';
+import { Plugin, PluginKey } from 'prosemirror-state';
+import { Decoration, DecorationSet } from 'prosemirror-view';
 
 type Level = 1 | 2 | 3 | 4 | 5 | 6;
 const HEADER_NAMES = ['One', 'Two', 'Three', 'Four', 'Five', 'Six'];
@@ -101,6 +103,31 @@ export const tiptapExtensions = [
                 return commands.toggleTextNode(this.name, Node_Type.PARAGRAPH, attributes);
               },
           };
+        },
+        addProseMirrorPlugins() {
+          return [
+            new Plugin({
+              key: new PluginKey('id-attribute-decoration'),
+              props: {
+                decorations: ({ doc }) => {
+                  const decorations: Decoration[] = [];
+
+                  doc.descendants((node, pos) => {
+                    if (node.isTextblock && node.attrs.id) {
+                      const decoration = Decoration.node(pos, pos + node.nodeSize, {
+                        'data-ricos-id': node.attrs.id,
+                      });
+
+                      decorations.push(decoration);
+                      return this.options.includeChildren;
+                    }
+                  });
+
+                  return DecorationSet.create(doc, decorations);
+                },
+              },
+            }),
+          ];
         },
 
         addKeyboardShortcuts() {

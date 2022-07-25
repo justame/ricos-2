@@ -16,11 +16,13 @@ export const FloatingToolbar = ({
   portal,
   isVisible,
   children,
+  getReferenceElement,
 }: {
   editor: Editor;
   portal: RicosPortal;
   isVisible: (selection: Selection) => boolean;
   children: any;
+  getReferenceElement?: (selectedDomNode) => HTMLElement | null;
 }) => {
   const { state, view } = editor;
   const { from, to } = state.selection;
@@ -75,8 +77,14 @@ export const FloatingToolbar = ({
 
   useLayoutEffect(() => {
     // Call reference with the virtual element inside an effect
+    const nodeDOM = editor.view.nodeDOM(from);
+    const externalRefNode = getReferenceElement && getReferenceElement(nodeDOM);
     reference({
       getBoundingClientRect() {
+        const rect = externalRefNode?.getBoundingClientRect();
+        if (rect) {
+          return rect;
+        }
         return posToDOMRect(view, from, to);
       },
     });

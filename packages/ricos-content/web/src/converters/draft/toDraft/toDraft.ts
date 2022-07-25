@@ -21,6 +21,20 @@ import {
 import { createAtomicEntityData, createTextBlockData } from './getDraftEntityData';
 import preprocess from './preprocess';
 
+const parseDocStyle = documentStyle => {
+  const draftDocStyle = {};
+  Object.entries(documentStyle).forEach(([header, values]) => {
+    if (values) {
+      const { decorations = [], nodeStyle, lineHeight } = values as TextNodeStyle;
+      draftDocStyle[header as string] = {
+        ...convertDocumentStyleDecorationTypes(decorations),
+        ...convertNodeStyleToCss({ ...nodeStyle, lineHeight }),
+      };
+    }
+  });
+  return draftDocStyle;
+};
+
 const convert =
   (options = { ignoreUnsupportedTypes: false }) =>
   (ricosContent: RichContent): DraftContent => {
@@ -179,3 +193,5 @@ export const toDraft = (content: RichContent, options = { ignoreUnsupportedTypes
 
 export const ensureDraftContent = (content: RichContent | DraftContent): DraftContent =>
   'nodes' in content ? toDraft(content) : content;
+
+export { parseDocStyle };

@@ -32,6 +32,8 @@ export const RicosTiptapEditor: FunctionComponent<RicosTiptapEditorProps> = ({
   onLoad,
   ...context
 }) => {
+  //@ts-ignore
+  window.editorInstance = editor;
   const forceUpdate = useForceUpdate();
   const { experiments } = useContext(RicosContext);
 
@@ -55,6 +57,8 @@ export const RicosTiptapEditor: FunctionComponent<RicosTiptapEditorProps> = ({
       });
     });
     editor.on('transaction', forceUpdate);
+    //@ts-ignore
+    window.ricosEditor = editor;
     onLoad && editor.on('create', onLoad);
   }, []);
 

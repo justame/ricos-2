@@ -8,7 +8,7 @@ import { getLangDir } from 'wix-rich-content-common';
 import cx from 'classnames';
 import styles from './CustomHeadingButton.scss';
 import { DropdownArrowIcon } from '../../../icons';
-import { withToolbarContext } from 'ricos-context';
+import { withStylesContext, withToolbarContext } from 'ricos-context';
 import HeadingsPanel from '../../../modals/heading/HeadingsPanel';
 import { translateHeading, getCustomHeadingsLabel } from './utils';
 import Tooltip from 'wix-rich-content-common/libs/Tooltip';
@@ -27,7 +27,7 @@ const onChange = (documentStyle, toolbarItem, setModalOpen) => {
   setModalOpen(false);
 };
 
-const CustomHeadingButton = ({ toolbarItem, context, dataHook }) => {
+const CustomHeadingButton = ({ toolbarItem, context, dataHook, styles: ricosStyles }) => {
   const { isMobile, t, theme, getEditorCommands, headingsData, locale, portal } = context || {};
   if (!context) return null;
   const [isModalOpen, setModalOpen] = useState(false);
@@ -95,14 +95,19 @@ const CustomHeadingButton = ({ toolbarItem, context, dataHook }) => {
                 theme={theme}
                 translateHeading={translateHeading}
                 currentSelect={selectedHeading}
-                documentStyle={editorCommands.getDocumentStyle()}
+                documentStyle={ricosStyles.toDraftDocumentStyle()}
                 customHeadings={headingsData?.customHeadings}
                 allowHeadingCustomization
                 currentInlineStyles={editorCommands.getInlineStylesInSelection()}
                 wiredFontStyles={editorCommands.getWiredFontStyles(theme?.customStyles, isMobile)}
                 onSave={({ data }) => onSave(data, selectedHeading, toolbarItem, setModalOpen)}
                 onChange={documentStyle => onChange(documentStyle, toolbarItem, setModalOpen)}
-                // onCancel={() => console.log('onCancel')}
+                onResetType={types => {
+                  Object.keys(types).forEach(type => {
+                    toolbarItem.commands?.resetToDefaultsByNodeType(type);
+                  });
+                  setModalOpen(false);
+                }}
               />
             </div>
           </div>,
@@ -112,4 +117,4 @@ const CustomHeadingButton = ({ toolbarItem, context, dataHook }) => {
   );
 };
 
-export default withToolbarContext(CustomHeadingButton);
+export default withStylesContext(withToolbarContext(CustomHeadingButton));

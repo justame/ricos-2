@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { isEqual } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 import { usePopper } from 'react-popper';
 import { ModalContext } from 'ricos-context';
@@ -17,7 +18,7 @@ export const Popper = ({ children, modalConfig, closeModal, className }: Props) 
   const modalService = useContext(ModalContext) || {};
 
   const { referenceElement, placement } = modalConfig.positioning || {};
-  const { styles: popperStyles, attributes } = usePopper(referenceElement, modalElement, {
+  const popper = usePopper(referenceElement, modalElement, {
     placement,
     modifiers: [
       {
@@ -28,6 +29,28 @@ export const Popper = ({ children, modalConfig, closeModal, className }: Props) 
       },
     ],
   });
+  const { styles: popperStyles, attributes, update } = popper || {};
+
+  useEffect(() => {
+    let frameId;
+    const prevRefRect = referenceElement?.getBoundingClientRect().toJSON();
+
+    function frameLoop() {
+      const refBoundClientRect = referenceElement?.getBoundingClientRect().toJSON();
+
+      if (!isEqual(refBoundClientRect, prevRefRect)) {
+        update?.();
+      }
+
+      frameId = requestAnimationFrame(frameLoop);
+    }
+
+    frameLoop();
+
+    return () => {
+      return cancelAnimationFrame(frameId);
+    };
+  }, [referenceElement, popper]);
 
   const closeOpenModalsWithSameRef = () => {
     //Closes all open modals with the same reference element

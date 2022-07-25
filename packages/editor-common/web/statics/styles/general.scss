@@ -7,8 +7,7 @@
 }
 
 // *:focus,
-.focused {
-}
+.focused {}
 
 //*** BLOCK ***//
 .hasFocus {
@@ -23,6 +22,7 @@
   top: 0;
   left: 0;
   cursor: move;
+
   &.noPointerEventsOnFocus {
     pointer-events: none;
   }
@@ -52,6 +52,7 @@
 
   &:hover {
     @include block-select;
+
     &.noBorder {
       box-shadow: none;
     }
@@ -76,6 +77,7 @@
     @extend .glob_fontElementMap;
     font-family: $ricos-settings-font-family;
     color: $settings-text-color;
+
     input {
       font-family: $ricos-settings-font-family;
     }
@@ -104,9 +106,11 @@ button {
   overflow-y: hidden;
   margin-left: -20px;
   margin-right: -20px;
+
   &.show::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0.5);
   }
+
   &.hide::-webkit-scrollbar-thumb {
     background-color: transparent;
   }
@@ -128,4 +132,8 @@ button {
 
 .pluginWithHorizontalScrollbar::-webkit-scrollbar:horizontal {
   height: 10px;
+}
+
+.sizeOriginal {
+  width: fit-content;
 }

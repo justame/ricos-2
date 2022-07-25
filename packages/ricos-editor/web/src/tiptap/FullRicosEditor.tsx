@@ -59,6 +59,7 @@ type Props = RicosEditorProps & {
 
 export class FullRicosEditor extends React.Component<Props, State> {
   nodeService = {
+    fromTiptapNode,
     nodeToRicosNode: node => {
       return fromTiptapNode(node.toJSON());
     },
