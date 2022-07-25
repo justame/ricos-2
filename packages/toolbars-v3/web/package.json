@@ -15,7 +15,8 @@
   },
   "homepage": "https://github.com/wix/ricos/tree/master/rich-content-toolbars-v3",
   "files": [
-    "dist"
+    "dist",
+    "libs"
   ],
   "main": "dist/cjs/index.js",
   "types": "dist/src/index.d.ts",
