@@ -19,6 +19,13 @@
 
 </details>
 
+## 8.72.10 (Jul 25, 2022)
+
+## :bug: Bug Fix
+
+- `wix-image`
+  - [#4248](https://github.com/wix/ricos/pull/4248) pass socialAttrs props
+
 ## 8.72.9 (Jul 25, 2022)
 
 ## :bug: Bug Fix
