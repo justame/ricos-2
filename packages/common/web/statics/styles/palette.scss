@@ -60,6 +60,7 @@ $settings-text-color: var(--ricos-settings-text-color, #333333);
 $settings-whitebox-border-radius: var(--ricos-settings-whitebox-border-radius, 2px);
 $settings-whitebox-box-shadow: var(--ricos-settings-whitebox-box-shadow, $default-box-shadow);
 $settings-smallButtons-border-radius: var(--ricos-settings-small-buttons-border-radius, 50%);
+$settings-hover-color: var(--ricos-settings-hover-color, rgba(var(--ricos-fallback-color-tuple, (0, 0, 0)),.5));
 $settings-colorPaletteSelectedButton-border-radius: var(
   --ricos-settings-color-palette-selected-button-border-radius,
   50%

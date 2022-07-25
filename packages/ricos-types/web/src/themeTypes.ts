@@ -130,6 +130,9 @@ export interface RicosSettingsStyles {
   disabled?: {
     backgroundColor?: CSSProperties['backgroundColor'];
   };
+  hover?: {
+    color?: CSSProperties['color'];
+  };
 }
 export interface RicosOneAppStyles {
   text?: {

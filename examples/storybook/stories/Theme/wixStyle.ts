@@ -2,7 +2,7 @@ import { merge } from 'lodash';
 import type { RicosTheme } from 'ricos-common';
 
 type WithStyle = (theme?: RicosTheme) => RicosTheme;
-const bmActionColor = '#3899EC';
+const bmActionColor = '#116DFF';
 
 export const withWixStyle: WithStyle = theme =>
   merge<RicosTheme, RicosTheme>(
@@ -23,17 +23,18 @@ export const withWixStyle: WithStyle = theme =>
         },
         dividers: {
           color: '#DFE5EB',
+          height: '12px',
         },
         icons: {
-          color: '#32536A',
+          color: '#333853',
         },
         inputs: {
-          borderColor: '#C1E4FE',
+          borderColor: '#A8CAFF',
           borderRadius: '6px',
-          placeholderColor: '#7A92A5',
+          placeholderColor: '#868AA5',
         },
         text: {
-          color: '#32536A',
+          color: '#333853',
           fontFamily: 'Madefor',
         },
         whitebox: {
@@ -47,10 +48,13 @@ export const withWixStyle: WithStyle = theme =>
           borderRadius: '4px',
         },
         bgColor: {
-          backgroundColor: '#DAEFFE',
+          backgroundColor: '#D6E6FE',
         },
         disabled: {
-          backgroundColor: '#162d3d4d',
+          backgroundColor: '#00062480',
+        },
+        hover: {
+          color: '#33385380',
         },
       },
     },

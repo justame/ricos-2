@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `theme`
+  - [#4256](https://github.com/wix/ricos/pull/4256) add hover-state color type to themeTypes.tsx & some wiring fixes
+
 </details>
 
 ## 8.72.10 (Jul 25, 2022)
