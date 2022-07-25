@@ -16,6 +16,11 @@
     Changes that have landed in master but are not yet released.
     Click to see more.
   </summary>
+  
+## :house: Internal
+
+- `ricos-content`
+  - [#4224](https://github.com/wix/ricos/pull/4224) refined types for decorations 
 
 ## :bug: Bug Fix
 
