@@ -231,6 +231,12 @@ class WixImage extends React.Component<ImageViewerProps & { styles: Record<strin
 
     console.log('image props stiil need to be handled', imageProps); //eslint-disable-line
 
+    const socialAttrs = {};
+
+    ['data-pin-nopin', 'data-pin-url', 'data-pin-media'].forEach(
+      attr => imageProps[attr] && (socialAttrs[attr] = imageProps[attr])
+    );
+
     setComponentUrl?.(imageSrc);
 
     const accesibilityProps = !this.hasLink() && { role: 'button', tabIndex: 0 };
@@ -278,6 +284,7 @@ class WixImage extends React.Component<ImageViewerProps & { styles: Record<strin
             height={dim.height}
             uri={imageSrc}
             alt={metadata.alt || ''}
+            socialAttrs={socialAttrs}
             {...(!isEditor && { placeholderTransition: 'blur', shouldUseLQIP: true })}
           />
 

@@ -6351,10 +6351,10 @@
     "@babel/runtime" "^7.0.0"
     tslib "^2.0.0"
 
-"@wix/image@1.28.0":
-  version "1.28.0"
-  resolved "https://registry.yarnpkg.com/@wix/image/-/image-1.28.0.tgz#2f43d66581edd2e99e1738083882255f0e3d97c0"
-  integrity sha512-vFENGSUBp1gSAn933fSjEknnD8t+5Vc/PZqTlTKOZ95KU6nI6fAgXxj4WqDs8VE6gBhbsErBHlsVUBS4jjAxMw==
+"@wix/image@1.30.0":
+  version "1.30.0"
+  resolved "https://registry.yarnpkg.com/@wix/image/-/image-1.30.0.tgz#43a0e117cf635075c4282c75b507f4486ae542b6"
+  integrity sha512-BgLFjm5/rgn05ElZUKNvlNwdaurer7VU0v/CcTIyd4YEq9oBODW2C0hYjOmA3gtSrv8evFrPlkFC5e1j4CkxGQ==
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@wix/image-kit" "^1.19.0"
