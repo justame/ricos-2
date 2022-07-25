@@ -1,6 +1,6 @@
 {
   "name": "ricos-modals",
-  "version": "8.72.9",
+  "version": "8.72.10",
   "author": {
     "name": "Dana Rish",
     "email": "danari@wix.com"
@@ -44,10 +44,10 @@
   },
   "dependencies": {
     "react-popper": "2.2.5",
-    "ricos-common": "8.72.9",
-    "ricos-context": "8.72.9",
-    "ricos-types": "8.72.9",
-    "wix-rich-content-editor-common": "8.72.9"
+    "ricos-common": "8.72.10",
+    "ricos-context": "8.72.10",
+    "ricos-types": "8.72.10",
+    "wix-rich-content-editor-common": "8.72.10"
   },
   "unpkg": true,
   "publishConfig": {
