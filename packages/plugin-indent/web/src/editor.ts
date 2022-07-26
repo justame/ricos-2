@@ -54,7 +54,7 @@ export const pluginIndent: EditorPluginCreator<IndentPluginEditorConfig> = confi
           increaseIndent:
             ({ editorCommands }) =>
             () => {
-              editorCommands.chain().focus().indent().run();
+              editorCommands.chain().indent().run();
             },
           decreaseIndent: () => () => {},
         },
@@ -75,7 +75,7 @@ export const pluginIndent: EditorPluginCreator<IndentPluginEditorConfig> = confi
           decreaseIndent:
             ({ editorCommands }) =>
             () => {
-              editorCommands.chain().focus().outdent().run();
+              editorCommands.chain().outdent().run();
             },
         },
       },

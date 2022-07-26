@@ -39,7 +39,7 @@ export const pluginBlockquote: TiptapEditorPlugin = {
         toggleQuote:
           ({ editorCommands }) =>
           () => {
-            editorCommands.chain().focus().toggleBlockquote().run();
+            editorCommands.chain().toggleBlockquote().run();
           },
       },
     },

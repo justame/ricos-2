@@ -74,7 +74,7 @@ export const getTextButtons = (): FormattingToolbarButtonConfig[] => {
           ({ editorCommands }) =>
           heading => {
             if (heading === 'unstyled') {
-              editorCommands.chain().focus().setParagraph().run();
+              editorCommands.chain().setParagraph().run();
             } else {
               const headingMap = {
                 'header-one': 1,
@@ -85,7 +85,7 @@ export const getTextButtons = (): FormattingToolbarButtonConfig[] => {
                 'header-six': 6,
               };
               const headingLevel = headingMap[heading];
-              editorCommands.chain().focus().toggleHeading({ level: headingLevel }).run();
+              editorCommands.chain().toggleHeading({ level: headingLevel }).run();
             }
           },
       },

@@ -39,7 +39,7 @@ export const pluginBulletedList: TiptapEditorPlugin = {
         toggleUnorderedList:
           ({ editorCommands }) =>
           () => {
-            editorCommands.chain().focus().toggleBulletList().run();
+            editorCommands.chain().toggleBulletList().run();
           },
       },
     },

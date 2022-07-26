@@ -23,4 +23,9 @@ export class ToolbarButton implements DataHookDecoratedToolbarButton {
       dataHook,
     });
   }
+
+  getButtonDataHook(): string {
+    const { dataHook = '' } = this.toolbarItem.presentation || {};
+    return dataHook;
+  }
 }

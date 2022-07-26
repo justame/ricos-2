@@ -42,7 +42,7 @@ export const pluginUnderline: TiptapEditorPlugin = {
         toggleUnderline:
           ({ editorCommands }) =>
           () => {
-            editorCommands.chain().focus().toggleUnderline().run();
+            editorCommands.chain().toggleUnderline().run();
           },
       },
     },

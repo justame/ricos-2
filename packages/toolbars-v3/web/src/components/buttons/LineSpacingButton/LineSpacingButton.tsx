@@ -1,17 +1,16 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { usePopper } from 'react-popper';
 import { ClickOutside } from 'wix-rich-content-editor-common';
-import cx from 'classnames';
 import styles from './LineSpacingButton.scss';
 import { DropdownArrowIcon } from '../../../icons';
 import { withToolbarContext } from 'ricos-context';
 import LineSpacingPanel from '../../../modals/line-spacing/LineSpacingPanel';
 import { getLangDir } from 'wix-rich-content-common';
 import { getCurrentSelection } from './utils';
-import Tooltip from 'wix-rich-content-common/libs/Tooltip';
+import { ToolbarButton } from '../ToolbarButton';
+import { onModalKeyDown } from '../modal-buttons-utils';
 
 const onSave = (data, toolbarItem, setModalOpen) => {
   toolbarItem.commands?.setLineSpacing(data);
@@ -72,27 +71,21 @@ const LineSpacingButton = ({ toolbarItem, context, dataHook }) => {
   const tooltip = t(toolbarItem.presentation?.tooltip);
   return (
     <ClickOutside onClickOutside={onClickOutside}>
-      <Tooltip key={tooltip} content={tooltip} tooltipOffset={{ x: 0, y: -8 }}>
-        <div
-          className={cx(styles.lineSpacingModalButtonWrapper, isModalOpen ? styles.active : '', {
-            [styles.mobileLineSpacingModalButtonWrapper]: isMobile,
-          })}
-          ref={setReferenceElement}
-        >
-          <div
-            data-hook={dataHook}
-            className={cx(styles.lineSpacingModalButton, {
-              [styles.mobileLineSpacingModalButton]: isMobile,
-            })}
-            role="button"
-            onClick={openCloseModal}
-            tabIndex={0}
-          >
-            <Icon />
-            <DropdownArrowIcon />
-          </div>
-        </div>
-      </Tooltip>
+      <div ref={setReferenceElement}>
+        <ToolbarButton
+          isMobile={isMobile}
+          active={isModalOpen}
+          tooltip={tooltip}
+          onClick={openCloseModal}
+          icon={() => (
+            <>
+              <Icon />
+              <DropdownArrowIcon />
+            </>
+          )}
+          dataHook={dataHook}
+        />
+      </div>
       {isModalOpen &&
         ReactDOM.createPortal(
           <div
@@ -102,7 +95,12 @@ const LineSpacingButton = ({ toolbarItem, context, dataHook }) => {
             {...attributes.popper}
             className={isMobile ? '' : styles.popperContainer}
           >
-            <div data-id="toolbar-modal-button" tabIndex={-1} className={styles.modal}>
+            <div
+              data-id="toolbar-modal-button"
+              tabIndex={-1}
+              className={styles.modal}
+              onKeyDown={e => onModalKeyDown(e, () => setModalOpen(false))}
+            >
               <LineSpacingPanel
                 isMobile={isMobile}
                 t={t}

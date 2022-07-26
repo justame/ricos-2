@@ -70,7 +70,7 @@ const FontSizeButton = ({ toolbarItem, context, dataHook }) => {
             className={styles.fontSizeModalButton}
             role="button"
             onClick={() => setModalOpen(!isModalOpen)}
-            tabIndex={0}
+            tabIndex={-1}
           >
             <input
               className={styles.fontSizeModalInputButton}

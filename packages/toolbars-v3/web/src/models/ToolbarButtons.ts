@@ -31,4 +31,16 @@ export class ToolbarButtons implements DataHookDecoratedToolbarButtons, ToolbarB
   getButtonsElementsWithDataHook(): ReactElement[] {
     return this.toolbarButtons.map(toolbarButton => toolbarButton.getButtonElementWithDataHook());
   }
+
+  getFirstButtonDataHook(): string | null {
+    if (this.isEmpty()) return null;
+    const firstButton = this.toolbarButtons[0];
+    return firstButton.getButtonDataHook();
+  }
+
+  getLastButtonDataHook(): string | null {
+    if (this.isEmpty()) return null;
+    const lastButton = this.toolbarButtons[this.toolbarButtons.length - 1];
+    return lastButton.getButtonDataHook();
+  }
 }

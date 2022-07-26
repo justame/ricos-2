@@ -2,29 +2,31 @@
 @import '~wix-rich-content-common/dist/statics/styles/palette';
 
 .toolbarUrlContainer {
-    display: flex;
-    margin-right: 5px;
+  display: flex;
+  margin-right: 5px;
+}
+
+.toolbarUrl {
+  color: $settings-action-color-fallback;
+  max-width: 270px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
   }
-  
+}
+.toolbarUrlAnchor {
+  border: 0 none;
+  background: transparent;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+@media only screen and (max-width: 640px) {
   .toolbarUrl {
-    color: $settings-action-color-fallback;
-    max-width: 270px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-decoration: none;
-    &:hover {
-      text-decoration: underline;
-    }
+    max-width: 160px;
   }
-  .toolbarUrlAnchor {
-    &:hover {
-      cursor: pointer;
-    }
-  }
-  
-  @media only screen and (max-width: 640px) {
-    .toolbarUrl {
-      max-width: 160px;
-    }
-  }
+}

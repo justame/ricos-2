@@ -1,17 +1,16 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { usePopper } from 'react-popper';
 import { ClickOutside } from 'wix-rich-content-editor-common';
-import cx from 'classnames';
 import styles from './AlignmentButton.scss';
 import { DropdownArrowIcon } from '../../../icons';
 import { withToolbarContext } from 'ricos-context';
 import AlignmentPanel from '../../../modals/alignment/AlignmentPanel';
 import { getLangDir } from 'wix-rich-content-common';
 import { getDefaultAlignment, alignmentMap } from './utils';
-import Tooltip from 'wix-rich-content-common/libs/Tooltip';
+import { ToolbarButton } from '../ToolbarButton';
+import { onModalKeyDown } from '../modal-buttons-utils';
 
 const onSave = (data, toolbarItem) => {
   toolbarItem.commands?.setAlignment(data);
@@ -48,27 +47,21 @@ const AlignmentButton = ({ toolbarItem, context, dataHook }) => {
   const tooltip = t(toolbarItem.presentation?.tooltip);
   return (
     <ClickOutside onClickOutside={onClickOutside}>
-      <Tooltip key={tooltip} content={tooltip} tooltipOffset={{ x: 0, y: -8 }}>
-        <div
-          className={cx(styles.alignmentModalButtonWrapper, isModalOpen ? styles.active : '', {
-            [styles.mobileAlignmentModalButtonWrapper]: isMobile,
-          })}
-          ref={setReferenceElement}
-        >
-          <div
-            data-hook={dataHook}
-            className={cx(styles.alignmentModalButton, {
-              [styles.mobileAlignmentModalButton]: isMobile,
-            })}
-            role="button"
-            onClick={() => setModalOpen(!isModalOpen)}
-            tabIndex={0}
-          >
-            <SelectedAlignmentIcon />
-            <DropdownArrowIcon />
-          </div>
-        </div>
-      </Tooltip>
+      <div ref={setReferenceElement}>
+        <ToolbarButton
+          isMobile={isMobile}
+          active={isModalOpen}
+          tooltip={tooltip}
+          onClick={() => setModalOpen(!isModalOpen)}
+          icon={() => (
+            <>
+              <SelectedAlignmentIcon />
+              <DropdownArrowIcon />
+            </>
+          )}
+          dataHook={dataHook}
+        />
+      </div>
       {isModalOpen &&
         ReactDOM.createPortal(
           <div
@@ -78,7 +71,12 @@ const AlignmentButton = ({ toolbarItem, context, dataHook }) => {
             {...attributes.popper}
             className={isMobile ? '' : styles.popperContainer}
           >
-            <div data-id="toolbar-modal-button" tabIndex={-1} className={styles.modal}>
+            <div
+              data-id="toolbar-modal-button"
+              tabIndex={-1}
+              className={styles.modal}
+              onKeyDown={e => onModalKeyDown(e, () => setModalOpen(false))}
+            >
               <AlignmentPanel
                 isMobile={isMobile}
                 t={t}

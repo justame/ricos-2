@@ -39,7 +39,7 @@ export const pluginOrderedList: TiptapEditorPlugin = {
         toggleOrderedList:
           ({ editorCommands }) =>
           () => {
-            editorCommands.chain().focus().toggleOrderedList().run();
+            editorCommands.chain().toggleOrderedList().run();
           },
       },
     },

@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+import React, { Component, createRef } from 'react';
+import type { RefObject } from 'react';
 import { SizeMe } from 'react-sizeme';
 import cx from 'classnames';
 import type { ToolbarSpec, OverflowedItemsPosition } from '../../types';
@@ -8,6 +10,7 @@ import { SizeCalculator } from '../SizeCalculator';
 import { ClickOutside } from '../Clickoutside/ClickOutside';
 import { MoreButton } from '../buttons';
 import { ToolbarButton, ToolbarButtons } from '../../models';
+import { handleCircularFocus } from './utils';
 
 type ToolbarProps = {
   toolbar: RicosToolbar;
@@ -24,6 +27,8 @@ class ToolbarComponent extends Component<ToolbarProps, Record<string, unknown>> 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   items: Record<string, any> = {};
 
+  moreButtonWrapperRef: RefObject<HTMLDivElement>;
+
   state = {
     dummyUpdate: 1,
     showMore: false,
@@ -31,6 +36,8 @@ class ToolbarComponent extends Component<ToolbarProps, Record<string, unknown>> 
 
   constructor(props) {
     super(props);
+
+    this.moreButtonWrapperRef = createRef<HTMLDivElement>();
 
     props.toolbar.on(RicosToolbar.EVENTS.UPDATED, () => {
       // force update
@@ -88,17 +95,30 @@ class ToolbarComponent extends Component<ToolbarProps, Record<string, unknown>> 
                       </div>
                     );
                     return (
-                      <div>
+                      <div
+                        onKeyDown={e =>
+                          handleCircularFocus({
+                            e,
+                            firstButtonDataHook: visibleButtons.getFirstButtonDataHook(),
+                            lastButtonDataHook: visibleButtons.getLastButtonDataHook(),
+                            moreButtonWrapperRef: this.moreButtonWrapperRef.current,
+                            isMoreModalOpen: showMore,
+                            moreModalLastButtonDataHook: overflowedButtons.getLastButtonDataHook(),
+                          })
+                        }
+                      >
                         {showMoreAbove && overflowedButtonsRenders}
                         {!visibleButtons.isEmpty() && (
                           <div className={styles.visibleItems}>
                             {visibleButtons.getButtonsElementsWithDataHook()}
                             {!overflowedButtons.isEmpty() && (
-                              <MoreButton
-                                key={'more-button'}
-                                onClick={this.toggleMoreItems}
-                                showMore={showMore}
-                              />
+                              <div ref={this.moreButtonWrapperRef}>
+                                <MoreButton
+                                  key={'more-button'}
+                                  onClick={this.toggleMoreItems}
+                                  showMore={showMore}
+                                />
+                              </div>
                             )}
                           </div>
                         )}
