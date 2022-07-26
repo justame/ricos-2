@@ -50,10 +50,10 @@ export class EditorPlugin implements IEditorPlugin {
     plugin: EditorPluginType<Record<string, any>>,
     modalService: ModalService
   ) {
-    if (plugin.addButtons) {
-      this.addButtons = plugin.addButtons.map((button: AddButton) =>
-        PluginAddButton.of(button, modalService)
-      );
+    if (plugin.getAddButtons) {
+      this.addButtons = plugin
+        .getAddButtons(plugin.config)
+        .map((button: AddButton) => PluginAddButton.of(button, modalService));
     }
   }
 
@@ -67,7 +67,11 @@ export class EditorPlugin implements IEditorPlugin {
     modalService: ModalService
   ) {
     if (plugin.toolbar) {
-      this.toolbar = PluginToolbar.of(plugin.toolbar, this.getExtensionName(), modalService);
+      this.toolbar = PluginToolbar.of(
+        { buttons: plugin.toolbar.getButtons(plugin.config), isVisible: plugin.toolbar.isVisible },
+        this.getExtensionName(),
+        modalService
+      );
     }
   }
 
@@ -85,10 +89,6 @@ export class EditorPlugin implements IEditorPlugin {
     this.toolbar?.unregister();
     this.plugin.shortcuts?.map(shortcut => this.shortcutRegistrar.unregister(shortcut));
     this.toolbar?.unregister();
-  }
-
-  configure(config: Partial<LegacyEditorPluginConfig>) {
-    this.plugin.reconfigure?.(config);
   }
 
   getType(): string {

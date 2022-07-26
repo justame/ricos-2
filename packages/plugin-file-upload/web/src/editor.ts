@@ -22,7 +22,7 @@ export const pluginFileUpload: EditorPluginCreator<FilePluginEditorConfig> = con
     ModalsMap,
     createPluginData: createFileData,
     tiptapExtensions,
-    toolbar: { buttons: getToolbarButtons(pluginConfig, filePluginService) },
-    addButtons: getAddButtons(pluginConfig, filePluginService),
+    toolbar: { getButtons: config => getToolbarButtons(config, filePluginService) },
+    getAddButtons: config => getAddButtons(config, filePluginService),
   } as TiptapEditorPlugin;
 };

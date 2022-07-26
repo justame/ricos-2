@@ -284,14 +284,13 @@ export interface EditorPlugin<PluginConfig extends EditorPluginConfig = Record<s
   createPlugin?: CreatePluginFunction<PluginConfig>;
   ModalsMap?: ModalsMap;
   createPluginData?: CreatePluginData<PluginConfig>;
-  addButtons?: AddButton[];
+  getAddButtons?: (config?) => AddButton[];
   textButtons?: FormattingToolbarButtonConfig[];
   shortcuts?: KeyboardShortcut[];
   toolbar?: {
-    buttons: ToolbarButton[];
+    getButtons: (config?) => ToolbarButton[];
     isVisible?: (selection) => boolean;
   };
-  reconfigure?: (config: PluginConfig) => void;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

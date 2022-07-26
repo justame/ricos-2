@@ -17,11 +17,9 @@
     Click to see more.
   </summary>
 
-
-
 </details>
 
-## 8.72.11 (Jul 25, 2022)
+## 8.72.12 (Jul 26, 2022)
 
 ## :bug: Bug Fix
 
@@ -31,7 +29,7 @@
 ## :house: Internal
 
 - `ricos-content`
-  - [#4224](https://github.com/wix/ricos/pull/4224) refined types for decorations 
+  - [#4224](https://github.com/wix/ricos/pull/4224) refined types for decorations
 
 ## 8.72.10 (Jul 25, 2022)
 

@@ -47,6 +47,7 @@ import RicosToolbars from './RicosToolbars';
 import { UploadService, UpdateService, StreamReader, ErrorNotifier } from 'ricos-common';
 import { pipe } from 'fp-ts/function';
 import * as A from 'fp-ts/Array';
+import { deprecateHelpers } from './deprecateHelpers';
 
 type State = {
   error: string;
@@ -120,17 +121,21 @@ export class FullRicosEditor extends React.Component<Props, State> {
     commonPluginConfig: LegacyEditorPluginConfig
   ) => {
     const { plugins, _rcProps, linkPanelSettings } = this.props;
+    const { handleFileUpload, handleFileSelection } = _rcProps?.helpers || {};
+    const { config = {} } = _rcProps || {};
+
+    deprecateHelpers(config, {
+      handleFileUpload,
+      handleFileSelection,
+      linkPanelSettings,
+    });
+
     pipe(
       [...commonPlugins, ...(plugins || [])],
-      pluginsConfigMerger(_rcProps?.config),
+      pluginsConfigMerger(config),
       pluginsConfigMerger(commonPluginConfig),
       A.map((plugin: EditorPlugin) => this.editorPlugins.register(plugin))
     );
-    const { handleFileUpload, handleFileSelection } = _rcProps?.helpers || {};
-    this.editorPlugins.configure({
-      helpers: { handleFileUpload, handleFileSelection },
-      linkPanelSettings,
-    });
   };
 
   initUploadService = () => {

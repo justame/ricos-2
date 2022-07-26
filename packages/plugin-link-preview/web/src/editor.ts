@@ -16,10 +16,7 @@ export const pluginLinkPreview: EditorPluginCreator<LinkPreviewPluginEditorConfi
     createPlugin: createLinkPreviewPlugin,
     ModalsMap: {},
     tiptapExtensions,
-    addButtons: getAddButtons(pluginConfig),
-    toolbar: { buttons: getToolbarButtons(pluginConfig) },
-    reconfigure: ({ linkPanelSettings }) => {
-      pluginConfig.linkPanelSettings = linkPanelSettings;
-    },
+    getAddButtons: config => getAddButtons(config),
+    toolbar: { getButtons: config => getToolbarButtons(config) },
   } as TiptapEditorPlugin;
 };

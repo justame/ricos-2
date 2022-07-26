@@ -18,7 +18,7 @@ export const pluginDivider: EditorPluginCreator<DividerPluginEditorConfig> = con
     ModalsMap: {},
     createPluginData: createDividerData,
     tiptapExtensions,
-    addButtons: getAddButtons(),
-    toolbar: { buttons: getToolbarButtons(config) },
+    getAddButtons: () => getAddButtons(),
+    toolbar: { getButtons: config => getToolbarButtons(config) },
   } as TiptapEditorPlugin;
 };
