@@ -43,7 +43,7 @@ export const pluginBold: TiptapEditorPlugin = {
         toggleBold:
           ({ editorCommands }) =>
           () => {
-            editorCommands.chain().focus().toggleBold().run();
+            editorCommands.chain().toggleBold().run();
           },
       },
     },

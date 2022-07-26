@@ -1,16 +1,16 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { usePopper } from 'react-popper';
 import { ClickOutside } from '../../Clickoutside/ClickOutside';
-import cx from 'classnames';
 import styles from './TextColorButton.scss';
 import { withToolbarContext } from 'ricos-context';
 import { ColorPicker } from 'wix-rich-content-plugin-commons';
 import { getLangDir } from 'wix-rich-content-common';
 import { extractPalette, getBlockDocumentStyle, colorPicker } from './utils';
-import Tooltip from 'wix-rich-content-common/libs/Tooltip';
+import { ToolbarButton } from '../ToolbarButton';
+import { FocusManager } from 'wix-rich-content-ui-components';
+import { onModalKeyDown } from '../modal-buttons-utils';
 
 const onChange = (color, toolbarItem, setModalOpen) => {
   toolbarItem.commands?.setTextColor({ color });
@@ -66,27 +66,15 @@ const TextColorButton = ({ toolbarItem, context, dataHook }) => {
   const tooltip = t(toolbarItem.presentation?.tooltip);
   return (
     <ClickOutside onClickOutside={onClickOutside} wrapper="div">
-      <Tooltip key={tooltip} content={tooltip} tooltipOffset={{ x: 0, y: -8 }}>
-        <div
-          onMouseDown={e => e.preventDefault()}
-          className={cx(styles.textColorModalButtonWrapper, {
-            [styles.mobileTextColorModalButtonWrapper]: isMobile,
-          })}
-          ref={setReferenceElement}
-        >
-          <div
-            data-hook={dataHook}
-            className={cx(styles.textColorModalButton, {
-              [styles.mobileTextColorModalButton]: isMobile,
-            })}
-            role="button"
-            onClick={() => setModalOpen(!isModalOpen)}
-            tabIndex={0}
-          >
-            <Icon style={{ color: currentColor }} />
-          </div>
-        </div>
-      </Tooltip>
+      <div ref={setReferenceElement}>
+        <ToolbarButton
+          isMobile={isMobile}
+          tooltip={tooltip}
+          onClick={() => setModalOpen(!isModalOpen)}
+          icon={() => <Icon style={{ color: currentColor }} />}
+          dataHook={dataHook}
+        />
+      </div>
       {isModalOpen &&
         ReactDOM.createPortal(
           <div
@@ -96,21 +84,28 @@ const TextColorButton = ({ toolbarItem, context, dataHook }) => {
             {...attributes.popper}
             className={isMobile ? '' : styles.popperContainer}
           >
-            <div data-id="toolbar-modal-button" tabIndex={-1} className={styles.modal}>
-              <ColorPicker
-                color={currentColor}
-                palette={paletteColors}
-                userColors={userColors.slice(-12)}
-                onColorAdded={onColorAdded}
-                theme={theme}
-                isMobile={isMobile}
-                onChange={({ color }) => onChange(color, toolbarItem, setModalOpen)}
-                t={t}
-                onResetColor={() => onResetColor(toolbarItem, setModalOpen)}
+            <FocusManager>
+              <div
+                data-id="toolbar-modal-button"
+                tabIndex={-1}
+                className={styles.modal}
+                onKeyDown={e => onModalKeyDown(e, () => setModalOpen(false))}
               >
-                {colorPicker({ isMobile, header: t('Color_Picker_TextColorButton_Header') })}
-              </ColorPicker>
-            </div>
+                <ColorPicker
+                  color={currentColor}
+                  palette={paletteColors}
+                  userColors={userColors.slice(-12)}
+                  onColorAdded={onColorAdded}
+                  theme={theme}
+                  isMobile={isMobile}
+                  onChange={({ color }) => onChange(color, toolbarItem, setModalOpen)}
+                  t={t}
+                  onResetColor={() => onResetColor(toolbarItem, setModalOpen)}
+                >
+                  {colorPicker({ isMobile, header: t('Color_Picker_TextColorButton_Header') })}
+                </ColorPicker>
+              </div>
+            </FocusManager>
           </div>,
           portal
         )}

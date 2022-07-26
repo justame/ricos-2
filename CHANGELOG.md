@@ -16,18 +16,22 @@
     Changes that have landed in master but are not yet released.
     Click to see more.
   </summary>
-  
-## :house: Internal
 
-- `ricos-content`
-  - [#4224](https://github.com/wix/ricos/pull/4224) refined types for decorations 
+
+
+</details>
+
+## 8.72.11 (Jul 25, 2022)
 
 ## :bug: Bug Fix
 
 - `theme`
   - [#4256](https://github.com/wix/ricos/pull/4256) add hover-state color type to themeTypes.tsx & some wiring fixes
 
-</details>
+## :house: Internal
+
+- `ricos-content`
+  - [#4224](https://github.com/wix/ricos/pull/4224) refined types for decorations 
 
 ## 8.72.10 (Jul 25, 2022)
 

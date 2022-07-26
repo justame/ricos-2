@@ -24,7 +24,7 @@ export const getTextButtons = (): FormattingToolbarButtonConfig[] => {
         toggleCodeblock:
           ({ editorCommands }) =>
           () => {
-            editorCommands.chain().focus().toggleCodeBlock().run();
+            editorCommands.chain().toggleCodeBlock().run();
           },
       },
     },

@@ -42,7 +42,7 @@ export const pluginItalic: TiptapEditorPlugin = {
         toggleItalic:
           ({ editorCommands }) =>
           () => {
-            editorCommands.chain().focus().toggleItalic().run();
+            editorCommands.chain().toggleItalic().run();
           },
       },
     },

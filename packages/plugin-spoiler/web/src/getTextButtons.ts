@@ -20,7 +20,7 @@ export const getTextButtons = (): FormattingToolbarButtonConfig[] => {
         toggleSpoiler:
           ({ editorCommands }) =>
           () => {
-            editorCommands.chain().focus().toggleSpoiler().run();
+            editorCommands.chain().toggleSpoiler().run();
           },
       },
     },

@@ -1,17 +1,17 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { usePopper } from 'react-popper';
 import { ClickOutside } from 'wix-rich-content-editor-common';
-import cx from 'classnames';
 import styles from './LinkButton.scss';
 import { withToolbarContext } from 'ricos-context';
 import LinkModal from '../../../modals/link/LinkComponents/LinkModal';
 import { getLangDir, CUSTOM_LINK } from 'wix-rich-content-common';
 import { getLinkModalProps } from './utils';
 import { withContentQueryContext } from 'ricos-content-query';
-import Tooltip from 'wix-rich-content-common/libs/Tooltip';
+import { ToolbarButton } from '../ToolbarButton';
+import { onModalKeyDown } from '../modal-buttons-utils';
+import { FocusManager } from 'wix-rich-content-ui-components';
 
 const onDone = (data, toolbarItem, setModalOpen) => {
   if (data.url) {
@@ -85,31 +85,19 @@ const LinkButton = ({ toolbarItem, context, contentQueryService, dataHook }) => 
     }
   };
 
-  const Icon = toolbarItem.presentation?.icon;
-
   const tooltip = t(toolbarItem.presentation?.tooltip);
   return (
     <ClickOutside onClickOutside={onClickOutside}>
-      <Tooltip key={tooltip} content={tooltip} tooltipOffset={{ x: 0, y: -8 }}>
-        <div
-          className={cx(
-            styles.linkModalButtonWrapper,
-            isModalOpen || toolbarItem.attributes.active ? styles.active : '',
-            { [styles.mobileLinkModalButtonWrapper]: isMobile }
-          )}
-          ref={setReferenceElement}
-        >
-          <div
-            data-hook={dataHook}
-            className={cx(styles.linkModalButton, { [styles.mobileLinkModalButton]: isMobile })}
-            role="button"
-            onClick={openCloseModal}
-            tabIndex={0}
-          >
-            <Icon />
-          </div>
-        </div>
-      </Tooltip>
+      <div ref={setReferenceElement}>
+        <ToolbarButton
+          isMobile={isMobile}
+          active={isModalOpen || toolbarItem.attributes.active}
+          tooltip={tooltip}
+          onClick={openCloseModal}
+          icon={toolbarItem.presentation?.icon}
+          dataHook={dataHook}
+        />
+      </div>
       {isModalOpen &&
         ReactDOM.createPortal(
           <div
@@ -119,21 +107,28 @@ const LinkButton = ({ toolbarItem, context, contentQueryService, dataHook }) => 
             {...attributes.popper}
             className={isMobile ? '' : styles.popperContainer}
           >
-            <div data-id="toolbar-modal-button" tabIndex={-1} className={styles.modal}>
-              <LinkModal
-                isMobile={isMobile}
-                t={t}
-                theme={theme}
-                {...rest}
-                {...linkSettingsData}
-                {...linkData}
-                anchorableBlocksData={anchorableBlocks}
-                isActive={!!linkData.url || !!linkData.anchor}
-                onDone={({ data }) => onDone(data, toolbarItem, setModalOpen)}
-                onCancel={() => setModalOpen(false)}
-                onDelete={() => onDelete(toolbarItem, setModalOpen, linkData)}
-              />
-            </div>
+            <FocusManager>
+              <div
+                data-id="toolbar-modal-button"
+                tabIndex={-1}
+                className={styles.modal}
+                onKeyDown={e => onModalKeyDown(e, () => setModalOpen(false))}
+              >
+                <LinkModal
+                  isMobile={isMobile}
+                  t={t}
+                  theme={theme}
+                  {...rest}
+                  {...linkSettingsData}
+                  {...linkData}
+                  anchorableBlocksData={anchorableBlocks}
+                  isActive={!!linkData.url || !!linkData.anchor}
+                  onDone={({ data }) => onDone(data, toolbarItem, setModalOpen)}
+                  onCancel={() => setModalOpen(false)}
+                  onDelete={() => onDelete(toolbarItem, setModalOpen, linkData)}
+                />
+              </div>
+            </FocusManager>
           </div>,
           portal
         )}

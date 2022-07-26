@@ -15,13 +15,13 @@ const AnchorLinkButton = ({ toolbarItem, context, dataHook }) => {
   const selectedAnchor = toolbarItem.attributes.selectedAnchorLinkData;
   return (
     <div className={styles.toolbarUrlContainer}>
-      <div
+      <button
         data-hook={dataHook}
         className={cx(styles.toolbarUrl, styles.toolbarUrlAnchor)}
         onClick={e => onClick(e, toolbarItem, selectedAnchor)}
       >
         {t('LinkTo_Toolbar_GoTo')}
-      </div>
+      </button>
     </div>
   );
 };

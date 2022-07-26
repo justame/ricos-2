@@ -1,44 +1,6 @@
 @import '~wix-rich-content-common/dist/statics/styles/mixins';
 @import '~wix-rich-content-common/dist/statics/styles/palette';
 
-.alignmentModalButtonWrapper {
-  background: transparent;
-  padding: 4px;
-  cursor: pointer;
-  color: var(--ricos-settings-text-color, #000);
-
-  &:hover {
-    background-color: rgba(var(--ricos-settings-action-color-tuple, $fallbackColorTuple), 0.06);
-  }
-
-  &.active {
-    background-color: rgba($action-color-fallback-tuple, 0.1);
-    color: var(--ricos-settings-text-color, $action-color-fallback);
-    fill: var(--ricos-settings-text-color, $action-color-fallback);
-    @include svg-fill;
-  }
-
-  &.mobileAlignmentModalButtonWrapper:not(.active) {
-    &:hover {
-      background-color: unset;
-    }
-  }
-}
-
-.alignmentModalButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 20px;
-  min-width: 20px;
-  gap: 8px;
-
-  &.mobileAlignmentModalButton {
-    height: 32px;
-    min-width: 32px;
-  }
-}
-
 .popperContainer {
   z-index: 10000;
 }
