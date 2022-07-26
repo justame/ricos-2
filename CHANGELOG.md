@@ -17,6 +17,10 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.72.13 (Jul 27, 2022)
+
 ## :bug: Bug Fix
 
 - `ricos-schema`
@@ -26,8 +30,6 @@
 
 - `ricos-plugins`
   - [#4270](https://github.com/wix/ricos/pull/4270) text buttons modal registration
-
-</details>
 
 ## 8.72.12 (Jul 26, 2022)
 
