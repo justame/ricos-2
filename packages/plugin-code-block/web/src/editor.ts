@@ -28,7 +28,7 @@ export const pluginCodeBlock: EditorPluginCreator<CodeBlockPluginEditorConfig> =
         enabled: true,
       },
     ],
-    addButtons: getAddButtons(),
+    getAddButtons: () => getAddButtons(),
     tiptapExtensions,
     textButtons: getTextButtons(),
   } as TiptapEditorPlugin;

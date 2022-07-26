@@ -84,13 +84,6 @@ export interface IEditorPlugin {
    * @memberof IEditorPlugin
    */
   unregister(): void;
-  /**
-   * Reconfigure Plugin
-   *
-   * @param {Partial<LegacyEditorPluginConfig>} config
-   * @memberof IEditorPlugin
-   */
-  configure(config: Partial<LegacyEditorPluginConfig>); // runtime configuration
 }
 
 /**
@@ -160,14 +153,6 @@ export interface IEditorPlugins {
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getTiptapExtensions(): any[]; // TODO: fix RicosExtension type
-  /**
-   * Reconfigure Plugin
-   *
-   * @param {string} type
-   * @param {Partial<LegacyEditorPluginConfig>} config
-   * @memberof IEditorPlugins
-   */
-  configure(config: Partial<LegacyEditorPluginConfig>); // runtime configuration
 }
 
 /**

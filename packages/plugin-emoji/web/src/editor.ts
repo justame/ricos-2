@@ -12,6 +12,6 @@ export const pluginEmoji: EditorPluginCreator<EmojiPluginEditorConfig> = config 
     type: EMOJI_TYPE,
     createPlugin: createEmojiPlugin,
     ModalsMap: {},
-    addButtons: getAddButtons(config),
+    getAddButtons: config => getAddButtons(config),
   };
 };

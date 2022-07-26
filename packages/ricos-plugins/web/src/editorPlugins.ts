@@ -61,10 +61,6 @@ export class EditorPlugins implements IEditorPlugins {
     return this.plugins.filter(plugin => plugin.getType() === type)[0]?.getConfig() || {};
   }
 
-  configure(config: Partial<LegacyEditorPluginConfig>) {
-    return this.plugins.forEach(plugin => plugin.configure(config));
-  }
-
   getTextButtons() {
     return this.plugins.flatMap(plugin => plugin.getTextButtons() || []);
   }

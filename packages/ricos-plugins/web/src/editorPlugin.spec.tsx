@@ -22,7 +22,7 @@ describe('Editor Plugin', () => {
   const plugin: EditorPluginType = {
     type: 'ricos-plugin',
     config: {},
-    addButtons: [
+    getAddButtons: () => [
       {
         id: 'ricos-plugin',
         icon: () => <div />,

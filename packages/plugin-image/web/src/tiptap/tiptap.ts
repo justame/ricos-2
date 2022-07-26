@@ -4,6 +4,7 @@ import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-types';
 import { Image as Component } from './component';
 import type { RicosServices } from 'ricos-types';
 import { ImagePluginService } from '../toolbar/imagePluginService';
+import { Uploader } from 'wix-rich-content-plugin-commons';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -79,7 +80,7 @@ export const tiptapExtensions = [
                       this.options.services?.uploadService?.uploadFile(
                         file,
                         nodeId,
-                        this.options.uploader,
+                        new Uploader(this.options.handleFileUpload),
                         TIPTAP_IMAGE_TYPE,
                         this.options.imagePluginService
                       );

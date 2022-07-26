@@ -21,7 +21,7 @@ describe('Editor Plugins', () => {
   const linkPreview: EditorPluginType = {
     type: 'ricos-link-preview',
     config: { exposeButtons: ['Instagram', 'Tiktok'] },
-    addButtons: [
+    getAddButtons: () => [
       {
         id: 'linkPreview',
         icon: () => <div />,
@@ -66,7 +66,7 @@ describe('Editor Plugins', () => {
   const emoji: EditorPluginType = {
     type: 'ricos-emoji',
     config: {},
-    addButtons: [
+    getAddButtons: () => [
       {
         id: 'emoji',
         icon: () => <div />,
@@ -92,7 +92,7 @@ describe('Editor Plugins', () => {
   const divider: EditorPluginType = {
     type: 'ricos-divider',
     config: {},
-    addButtons: [
+    getAddButtons: () => [
       {
         id: 'divider',
         icon: () => <div />,

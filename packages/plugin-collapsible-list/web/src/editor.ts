@@ -22,9 +22,9 @@ export const pluginCollapsibleList: EditorPluginCreator<
     ModalsMap,
     createPluginData: createCollapsibleListData,
     tiptapExtensions,
-    addButtons: getAddButtons(),
+    getAddButtons: () => getAddButtons(),
     toolbar: {
-      buttons: getToolbarButtons(pluginConfig),
+      getButtons: config => getToolbarButtons(config),
       isVisible: selection =>
         selection.from === selection.to &&
         selection.$anchor?.path?.find(node => node?.type?.name === TIPTAP_COLLAPSIBLE_LIST_TYPE),
