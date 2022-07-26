@@ -4,7 +4,6 @@ import type {
   FormattingToolbarButtons,
   IEditorPlugin,
   IEditorPlugins,
-  LegacyEditorPluginConfig,
   ModalService,
   ShortcutRegistrar,
 } from 'ricos-types';
@@ -68,7 +67,7 @@ export class EditorPlugins implements IEditorPlugins {
     const textButtons = this.plugins.flatMap(
       plugin => (plugin.getTextButtons() as PluginTextButton[]) || []
     );
-    return new PluginTextButtons(textButtons);
+    return PluginTextButtons.of(textButtons);
   }
 
   getAddButtons() {

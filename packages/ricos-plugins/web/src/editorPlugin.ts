@@ -10,8 +10,7 @@ import type {
   ShortcutRegistrar,
   TiptapEditorPlugin,
 } from 'ricos-types';
-import type { PluginTextButton } from './plugin-text-button';
-import { PluginTextButtons } from './plugin-text-button';
+import { PluginTextButton } from './plugin-text-button';
 import { PluginAddButton } from './pluginAddButton';
 import { PluginToolbar } from './pluginToolbar';
 
@@ -20,7 +19,7 @@ export class EditorPlugin implements IEditorPlugin {
 
   addButtons?: IPluginAddButton[];
 
-  textButtons!: PluginTextButton[];
+  textButtons?: PluginTextButton[];
 
   toolbar?: IPluginToolbar;
 
@@ -45,6 +44,7 @@ export class EditorPlugin implements IEditorPlugin {
     this.modalService = modalService;
     this.shortcutRegistrar = shortcuts;
     this.initAddButtons(plugin, modalService);
+    this.initTextButtons(plugin, modalService);
     this.initPluginToolbar(plugin, modalService);
   }
 
@@ -57,6 +57,16 @@ export class EditorPlugin implements IEditorPlugin {
       this.addButtons = plugin
         .getAddButtons(plugin.config)
         .map((button: AddButton) => PluginAddButton.of(button, modalService));
+    }
+  }
+
+  private initTextButtons(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    plugin: EditorPluginType<Record<string, any>>,
+    modalService: ModalService
+  ) {
+    if (plugin.textButtons) {
+      this.textButtons = plugin.textButtons.map(b => PluginTextButton.of(b, modalService));
     }
   }
 
@@ -80,15 +90,17 @@ export class EditorPlugin implements IEditorPlugin {
 
   register() {
     this.initAddButtons(this.plugin, this.modalService);
-    this.textButtons = PluginTextButtons.of(this.plugin.textButtons).asArray();
+    this.initTextButtons(this.plugin, this.modalService);
     this.initPluginToolbar(this.plugin, this.modalService);
     this.plugin.shortcuts?.map(shortcut => this.shortcutRegistrar.register(shortcut));
     this.addButtons?.map(b => b.register());
+    this.textButtons?.map(b => b.register());
     this.toolbar?.register();
   }
 
   unregister() {
     this.addButtons?.map(b => b.unregister());
+    this.textButtons?.map(b => b.unregister());
     this.toolbar?.unregister();
     this.plugin.shortcuts?.map(shortcut => this.shortcutRegistrar.unregister(shortcut));
     this.toolbar?.unregister();
@@ -110,7 +122,7 @@ export class EditorPlugin implements IEditorPlugin {
   }
 
   getTextButtons(): FormattingToolbarButton[] {
-    return this.textButtons;
+    return this.textButtons || [];
   }
 
   getAddButtons() {

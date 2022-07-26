@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :house: Internal
+
+- `ricos-plugins`
+  - [#4270](https://github.com/wix/ricos/pull/4270) text buttons modal registration
+
 </details>
 
 ## 8.72.12 (Jul 26, 2022)

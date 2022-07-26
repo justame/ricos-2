@@ -10,14 +10,35 @@ import type {
   ToolbarButtonProps,
   TranslationFunction,
   IContent,
+  ModalService,
 } from 'ricos-types';
 import { resolversById } from 'wix-rich-content-toolbars-v3';
 
 export class PluginTextButton implements FormattingToolbarButton {
   private readonly button: FormattingToolbarButtonConfig;
 
-  constructor(button: FormattingToolbarButtonConfig) {
+  private modalService: ModalService;
+
+  private constructor(button: FormattingToolbarButtonConfig, modalService: ModalService) {
     this.button = button;
+    this.modalService = modalService;
+  }
+
+  static of(button: FormattingToolbarButtonConfig, modalService: ModalService) {
+    return new PluginTextButton(button, modalService);
+  }
+
+  register() {
+    const modal = this.button.modal;
+    if (modal) {
+      this.modalService?.register(modal);
+    }
+  }
+
+  unregister() {
+    if (this.button.modal) {
+      this.modalService.unregister(this.button.modal?.id);
+    }
   }
 
   private toResolvedAttributes(): IToolbarItemConfigTiptap['attributes'] {
@@ -54,7 +75,14 @@ export class PluginTextButton implements FormattingToolbarButton {
       toolbars: [],
       getIcon: () => this.button.presentation?.icon,
       getLabel: () => this.button.id,
-      onClick: () => this.button.command?.(editorCommands),
+      onClick: () =>
+        this.button.modal
+          ? this.modalService?.isModalOpen(this.button.modal.id)
+            ? this.modalService?.closeModal(this.button.modal.id)
+            : this.modalService?.openModal(this.button.modal.id, {
+                layout: 'dialog',
+              })
+          : this.button.command?.(editorCommands),
       isActive: () => !!attributes.active && !!content.resolve(attributes.active),
       isDisabled: () => false,
       dataHook: this.button.presentation?.dataHook,
@@ -66,12 +94,12 @@ export class PluginTextButton implements FormattingToolbarButton {
 export class PluginTextButtons implements FormattingToolbarButtons {
   private readonly buttons: PluginTextButton[];
 
-  constructor(buttons: PluginTextButton[]) {
+  private constructor(buttons: PluginTextButton[]) {
     this.buttons = buttons;
   }
 
-  static of(buttons: FormattingToolbarButtonConfig[] = []): PluginTextButtons {
-    return new PluginTextButtons(buttons.map(button => new PluginTextButton(button)));
+  static of(buttons: PluginTextButton[]): PluginTextButtons {
+    return new PluginTextButtons(buttons);
   }
 
   asArray() {
