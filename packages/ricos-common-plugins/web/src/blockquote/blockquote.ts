@@ -35,12 +35,9 @@ export const pluginBlockquote: TiptapEditorPlugin = {
         visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
         active: RESOLVERS_IDS.IS_TEXT_CONTAINS_QUOTE,
       },
-      commands: {
-        toggleQuote:
-          ({ editorCommands }) =>
-          () => {
-            editorCommands.chain().toggleBlockquote().run();
-          },
+      command(editorCommands: EditorCommands) {
+        editorCommands.setBlockType(BLOCKQUOTE);
+        return true;
       },
     },
   ],

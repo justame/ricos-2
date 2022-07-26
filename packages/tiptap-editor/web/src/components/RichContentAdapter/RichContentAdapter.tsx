@@ -16,13 +16,8 @@ import {
 import { tiptapToDraft, fromTiptapNode } from 'ricos-converters';
 import { Decoration_Type, Node_Type } from 'ricos-schema';
 import type { Node } from 'ricos-schema';
-import type {
-  TiptapAdapter,
-  EditorContextType,
-  Pubsub,
-  RicosServices,
-  EditorCommands,
-} from 'ricos-types';
+import type { TiptapAdapter, EditorContextType, Pubsub, RicosServices } from 'ricos-types';
+import { ToolbarType } from 'ricos-types';
 import type { RicosCustomStyles, TextAlignment } from 'wix-rich-content-common';
 import {
   defaultFontSizes,
@@ -55,24 +50,24 @@ export class RichContentAdapter implements TiptapAdapter {
     this.getEditorCommands = this.getEditorCommands.bind(this);
     this.shouldRevealConverterErrors =
       ricosEditorProps.experiments?.removeRichContentSchemaNormalizer?.enabled;
-    this.getToolbarProps = type => ({
-      buttons: services.plugins
-        .getAddButtons()
-        .asArray()
-        .reduce((acc, b) => {
-          return {
-            ...acc,
-            [b.getButton().label || '']: b.toExternalToolbarButtonConfig(
-              this.getEditorCommands(),
-              services.t,
-              services.uploadService,
-              services.updateService
-            ),
-          };
-        }, {}),
-      context: {} as EditorContextType,
-      pubsub: {} as Pubsub,
-    });
+    this.getToolbarProps = type => {
+      const buttons =
+        type === ToolbarType.INSERT_PLUGIN
+          ? services.plugins.getAddButtons()
+          : services.plugins.getTextButtons();
+
+      return {
+        buttons: buttons.toExternalToolbarButtonsConfigs(
+          this.getEditorCommands(),
+          services.t,
+          services.uploadService,
+          services.updateService,
+          services.content
+        ),
+        context: {} as EditorContextType,
+        pubsub: {} as Pubsub,
+      };
+    };
   }
 
   isContentChanged = (): boolean => !this.initialContent.eq(this.tiptapEditor.state.doc.content);
@@ -338,10 +333,10 @@ export class RichContentAdapter implements TiptapAdapter {
       },
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      undo: () => this.tiptapEditor.commands.undo(),
+      undo: () => this.tiptapEditor.chain().focus().undo().run(),
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      redo: () => this.tiptapEditor.commands.redo(),
+      redo: () => this.tiptapEditor.chain().focus().redo().run(),
       insertText: text =>
         this.tiptapEditor
           .chain()

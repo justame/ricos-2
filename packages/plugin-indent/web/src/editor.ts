@@ -50,13 +50,9 @@ export const pluginIndent: EditorPluginCreator<IndentPluginEditorConfig> = confi
         attributes: {
           visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
         },
-        commands: {
-          increaseIndent:
-            ({ editorCommands }) =>
-            () => {
-              editorCommands.chain().indent().run();
-            },
-          decreaseIndent: () => () => {},
+        command(editorCommands: EditorCommands) {
+          editorCommands.insertDecoration(RICOS_INDENT_TYPE);
+          return true;
         },
       },
       {
@@ -70,13 +66,9 @@ export const pluginIndent: EditorPluginCreator<IndentPluginEditorConfig> = confi
         attributes: {
           visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
         },
-        commands: {
-          increaseIndent: () => () => {},
-          decreaseIndent:
-            ({ editorCommands }) =>
-            () => {
-              editorCommands.chain().outdent().run();
-            },
+        command(editorCommands: EditorCommands) {
+          editorCommands.deleteDecoration(RICOS_INDENT_TYPE);
+          return true;
         },
       },
     ],

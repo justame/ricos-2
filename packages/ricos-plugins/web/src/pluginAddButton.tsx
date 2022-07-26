@@ -202,4 +202,28 @@ export class PluginAddButtons implements IPluginAddButtons {
       ),
     });
   }
+
+  toToolbarItemsConfigs(): IToolbarItemConfigTiptap[] {
+    return this.buttons.map(b => b.toToolbarItemConfig());
+  }
+
+  toExternalToolbarButtonsConfigs(
+    editorCommands: EditorCommands,
+    t: TranslationFunction,
+    uploadService: IUploadService,
+    updateService: IUpdateService
+  ): Record<string, ToolbarButtonProps> {
+    return this.buttons.reduce((acc, b) => {
+      const buttonConfig = b.toExternalToolbarButtonConfig(
+        editorCommands,
+        t,
+        uploadService,
+        updateService
+      );
+      return {
+        ...acc,
+        [buttonConfig.getLabel?.() || '']: buttonConfig,
+      };
+    }, {});
+  }
 }

@@ -9,7 +9,7 @@ import {
   mockImageUploadFunc,
   mockImageNativeUploadFunc,
 } from '../../../storybook/src/shared/utils/fileUploadUtil';
-import type { TOOLBARS } from 'wix-rich-content-editor-common';
+import { TOOLBARS } from 'wix-rich-content-editor-common';
 import type { DraftContent, TextToolbarType, AvailableExperiments } from 'wix-rich-content-common';
 import type { RicosTheme } from 'ricos-types';
 import type { TestAppConfig } from '../../src/types';
@@ -138,7 +138,11 @@ export default class Editor extends PureComponent<ExampleEditorProps> {
 
   renderExternalToolbar() {
     const { externalToolbar: ExternalToolbar, externalToolbarToShow } = this.props;
-    if (ExternalToolbar && this.editor) {
+    if (
+      ExternalToolbar &&
+      this.editor &&
+      [TOOLBARS.FORMATTING, TOOLBARS.INSERT_PLUGIN].includes(externalToolbarToShow)
+    ) {
       return (
         <div className="toolbar">
           <ExternalToolbar {...this.editor.getToolbarProps(externalToolbarToShow)} theme={theme} />

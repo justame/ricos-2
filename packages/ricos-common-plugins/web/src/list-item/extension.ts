@@ -118,7 +118,7 @@ export const listItem: RicosExtension = {
                 node.attrs.id &&
                   (node.type.name === Node_Type.ORDERED_LIST ||
                     node.type.name === Node_Type.BULLETED_LIST) &&
-                  (indentation = node.attrs.indentation - 1);
+                  (indentation = node.attrs.indentation);
               });
               if (indentation > 0) {
                 return commands.liftListItem(this.name);

@@ -1,15 +1,16 @@
 import type {
   AddButton,
   EditorPlugin as EditorPluginType,
+  FormattingToolbarButton,
   IEditorPlugin,
   IPluginAddButton,
   IPluginToolbar,
-  IToolbarItemConfigTiptap,
   LegacyEditorPluginConfig,
   ModalService,
   ShortcutRegistrar,
   TiptapEditorPlugin,
 } from 'ricos-types';
+import type { PluginTextButton } from './plugin-text-button';
 import { PluginTextButtons } from './plugin-text-button';
 import { PluginAddButton } from './pluginAddButton';
 import { PluginToolbar } from './pluginToolbar';
@@ -19,7 +20,7 @@ export class EditorPlugin implements IEditorPlugin {
 
   addButtons?: IPluginAddButton[];
 
-  textButtons?: PluginTextButtons;
+  textButtons!: PluginTextButton[];
 
   toolbar?: IPluginToolbar;
 
@@ -43,6 +44,8 @@ export class EditorPlugin implements IEditorPlugin {
     this.plugin = plugin;
     this.modalService = modalService;
     this.shortcutRegistrar = shortcuts;
+    this.initAddButtons(plugin, modalService);
+    this.initPluginToolbar(plugin, modalService);
   }
 
   private initAddButtons(
@@ -77,7 +80,7 @@ export class EditorPlugin implements IEditorPlugin {
 
   register() {
     this.initAddButtons(this.plugin, this.modalService);
-    this.textButtons = PluginTextButtons.of(this.plugin.textButtons);
+    this.textButtons = PluginTextButtons.of(this.plugin.textButtons).asArray();
     this.initPluginToolbar(this.plugin, this.modalService);
     this.plugin.shortcuts?.map(shortcut => this.shortcutRegistrar.register(shortcut));
     this.addButtons?.map(b => b.register());
@@ -106,10 +109,8 @@ export class EditorPlugin implements IEditorPlugin {
     return this.plugin.config;
   }
 
-  getTextButtons() {
-    const buttons =
-      this.textButtons?.asArray().map(b => b.getButton() as IToolbarItemConfigTiptap) || [];
-    return buttons;
+  getTextButtons(): FormattingToolbarButton[] {
+    return this.textButtons;
   }
 
   getAddButtons() {

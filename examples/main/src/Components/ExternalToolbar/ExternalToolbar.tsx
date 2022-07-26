@@ -38,6 +38,7 @@ class ExternalToolbar extends Component<{
     const { onClick, getIcon, dataHook, isDisabled, isActive, tooltip } = buttonProps;
     const Icon = getIcon();
     const style = isActive() ? { background: 'lightslategray' } : {};
+
     return (
       <Tooltip content={tooltip} place="bottom">
         <button

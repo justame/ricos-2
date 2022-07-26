@@ -13,6 +13,7 @@ import type { ToolbarButtonProps } from './buttonTypes';
 import type { EditorCommands } from './editorCommandsType';
 import type { IUpdateService, IUploadService } from './uploadServicesTypes';
 import type { TranslationFunction } from './commonTypes';
+import type { IContent } from './content';
 
 /**
  * Represents a plugin in Ricos Editor.
@@ -49,7 +50,7 @@ export interface IEditorPlugin {
    * @returns  {FormattingToolbarButton[]}
    * @memberof IEditorPlugin
    */
-  getTextButtons(): IToolbarItemConfigTiptap[];
+  getTextButtons(): FormattingToolbarButton[];
   /**
    * Add Buttons
    *
@@ -130,7 +131,7 @@ export interface IEditorPlugins {
    * @returns  {FormattingToolbarButtons}
    * @memberof IEditorPlugins
    */
-  getTextButtons(): IToolbarItemConfigTiptap[];
+  getTextButtons(): FormattingToolbarButtons;
   /**
    * Plugins add Buttons
    *
@@ -164,7 +165,14 @@ export interface IEditorPlugins {
  * @interface FormattingToolbarButton
  */
 export interface FormattingToolbarButton {
-  getButton: () => IToolbarItemConfigTiptap;
+  toToolbarItemConfig(editorCommands: EditorCommands): IToolbarItemConfigTiptap;
+  toExternalToolbarButtonConfig(
+    editorCommands: EditorCommands,
+    t: TranslationFunction,
+    uploadService: IUploadService,
+    updateService: IUpdateService,
+    content: IContent<unknown>
+  ): ToolbarButtonProps;
 }
 
 /**
@@ -179,6 +187,14 @@ export interface FormattingToolbarButton {
  */
 export interface FormattingToolbarButtons {
   asArray: () => FormattingToolbarButton[];
+  toToolbarItemsConfigs(editorCommands: EditorCommands): IToolbarItemConfigTiptap[];
+  toExternalToolbarButtonsConfigs(
+    editorCommands: EditorCommands,
+    t: TranslationFunction,
+    uploadService: IUploadService,
+    updateService: IUpdateService,
+    content: IContent<unknown>
+  ): Record<string, ToolbarButtonProps>;
 }
 
 export interface IPluginAddButton {
@@ -220,6 +236,15 @@ export interface IPluginAddButtons {
   toToolbarButtonsConfig: () => IToolbarItemConfigTiptap[];
 
   registerPluginMenuModal: (config?: AddPluginMenuConfig) => void;
+
+  toToolbarItemsConfigs(): IToolbarItemConfigTiptap[];
+
+  toExternalToolbarButtonsConfigs(
+    editorCommands: EditorCommands,
+    t: TranslationFunction,
+    uploadService: IUploadService,
+    updateService: IUpdateService
+  ): Record<string, ToolbarButtonProps>;
 }
 
 export interface IPluginToolbar {

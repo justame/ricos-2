@@ -1,4 +1,6 @@
 import type { Node as TiptapNode } from 'prosemirror-model';
+import type { EditorCommands } from './editorCommandsType';
+import type { ModalConfig } from './modalTypes';
 
 export type IToolbarItem = {
   id: string;
@@ -58,5 +60,8 @@ export type FormattingToolbarButtonConfig = Modify<
   IToolbarItemConfigTiptap,
   {
     attributes: Record<string, string>;
+    commands?: Record<string, TiptapCommand>;
+    command?: (editorCommands: EditorCommands) => boolean;
+    modal?: ModalConfig;
   }
 >;

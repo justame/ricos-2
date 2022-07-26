@@ -35,12 +35,9 @@ export const pluginBulletedList: TiptapEditorPlugin = {
         visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
         active: RESOLVERS_IDS.IS_TEXT_CONTAINS_UNORDERED_LIST,
       },
-      commands: {
-        toggleUnorderedList:
-          ({ editorCommands }) =>
-          () => {
-            editorCommands.chain().toggleBulletList().run();
-          },
+      command(editorCommands: EditorCommands) {
+        editorCommands.setBlockType(BULLET_LIST_TYPE);
+        return true;
       },
     },
   ],

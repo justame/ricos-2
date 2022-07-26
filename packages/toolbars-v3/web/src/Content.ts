@@ -1,6 +1,7 @@
+import type { IContent } from 'ricos-types';
 import EventEmitter from './lib/EventEmitter';
 
-export class Content<T> extends EventEmitter {
+export class Content<T> extends EventEmitter implements IContent<T> {
   static EVENTS = {
     contentChangeEvent: 'contentChange',
   };

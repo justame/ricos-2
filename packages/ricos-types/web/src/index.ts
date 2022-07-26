@@ -3,6 +3,7 @@ import type { EventRegistrar, EventSubscriptor } from './events';
 import type { AmbientStyles } from './styles';
 import type { IUploadService, IUpdateService } from './uploadServicesTypes';
 import type { TranslationFunction } from './commonTypes';
+import type { IContent } from './content';
 
 export type {
   ComponentData,
@@ -34,6 +35,7 @@ export * from './toolbarTypes';
 export * from './styles';
 export * from './editorPluginTypes';
 export * from './tiptap';
+export * from './content';
 
 export type RicosServices = {
   events: EventRegistrar & EventSubscriptor;
@@ -42,4 +44,5 @@ export type RicosServices = {
   uploadService: IUploadService;
   updateService: IUpdateService;
   t: TranslationFunction;
+  content: IContent<unknown>;
 };

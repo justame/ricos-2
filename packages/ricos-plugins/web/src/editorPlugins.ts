@@ -1,6 +1,7 @@
 import { compact } from 'lodash';
 import type {
   EditorPlugin as EditorPluginType,
+  FormattingToolbarButtons,
   IEditorPlugin,
   IEditorPlugins,
   LegacyEditorPluginConfig,
@@ -8,6 +9,8 @@ import type {
   ShortcutRegistrar,
 } from 'ricos-types';
 import { EditorPlugin } from './editorPlugin';
+import type { PluginTextButton } from './plugin-text-button';
+import { PluginTextButtons } from './plugin-text-button';
 import { PluginAddButtons } from './pluginAddButton';
 
 export class PluginCollisionError extends Error {}
@@ -61,8 +64,11 @@ export class EditorPlugins implements IEditorPlugins {
     return this.plugins.filter(plugin => plugin.getType() === type)[0]?.getConfig() || {};
   }
 
-  getTextButtons() {
-    return this.plugins.flatMap(plugin => plugin.getTextButtons() || []);
+  getTextButtons(): FormattingToolbarButtons {
+    const textButtons = this.plugins.flatMap(
+      plugin => (plugin.getTextButtons() as PluginTextButton[]) || []
+    );
+    return new PluginTextButtons(textButtons);
   }
 
   getAddButtons() {

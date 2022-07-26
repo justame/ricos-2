@@ -15,7 +15,32 @@ import {
 } from './components/buttons';
 import { ToolbarButtonSeparator } from 'wix-rich-content-toolbars-ui';
 
+const toggleRenders = [
+  'undo',
+  'redo',
+  'bold',
+  'italic',
+  'underline',
+  'blockquote',
+  'codeBlock',
+  'orderedList',
+  'unorderedList',
+  'spoiler',
+  'increaseIndent',
+  'decreaseIndent',
+].reduce((acc, t) => {
+  return {
+    ...acc,
+    [t]: toolbarItem => {
+      return (
+        <ToggleButton onClick={e => toolbarItem.commands?.click(e)} toolbarItem={toolbarItem} />
+      );
+    },
+  };
+}, {});
+
 export const toolbarItemsRenders = {
+  ...toggleRenders,
   anchorLink: toolbarItem => {
     return <AnchorLinkButton toolbarItem={toolbarItem} />;
   },
@@ -43,86 +68,6 @@ export const toolbarItemsRenders = {
   },
   separator: () => {
     return <ToolbarButtonSeparator />;
-  },
-  undo: toolbarItem => {
-    return <ToggleButton onClick={e => toolbarItem.commands?.undo(e)} toolbarItem={toolbarItem} />;
-  },
-  redo: toolbarItem => {
-    return <ToggleButton onClick={e => toolbarItem.commands?.redo(e)} toolbarItem={toolbarItem} />;
-  },
-  bold: toolbarItem => {
-    return (
-      <ToggleButton onClick={e => toolbarItem.commands?.toggleBold(e)} toolbarItem={toolbarItem} />
-    );
-  },
-  italic: toolbarItem => {
-    return (
-      <ToggleButton
-        onClick={e => toolbarItem.commands?.toggleItalic(e)}
-        toolbarItem={toolbarItem}
-      />
-    );
-  },
-  underline: toolbarItem => {
-    return (
-      <ToggleButton
-        onClick={e => toolbarItem.commands?.toggleUnderline(e)}
-        toolbarItem={toolbarItem}
-      />
-    );
-  },
-  blockquote: toolbarItem => {
-    return (
-      <ToggleButton onClick={e => toolbarItem.commands?.toggleQuote(e)} toolbarItem={toolbarItem} />
-    );
-  },
-  codeBlock: toolbarItem => {
-    return (
-      <ToggleButton
-        onClick={e => toolbarItem.commands?.toggleCodeblock(e)}
-        toolbarItem={toolbarItem}
-      />
-    );
-  },
-  orderedList: toolbarItem => {
-    return (
-      <ToggleButton
-        onClick={e => toolbarItem.commands?.toggleOrderedList(e)}
-        toolbarItem={toolbarItem}
-      />
-    );
-  },
-  unorderedList: toolbarItem => {
-    return (
-      <ToggleButton
-        onClick={e => toolbarItem.commands?.toggleUnorderedList(e)}
-        toolbarItem={toolbarItem}
-      />
-    );
-  },
-  spoiler: toolbarItem => {
-    return (
-      <ToggleButton
-        onClick={e => toolbarItem.commands?.toggleSpoiler(e)}
-        toolbarItem={toolbarItem}
-      />
-    );
-  },
-  increaseIndent: toolbarItem => {
-    return (
-      <ToggleButton
-        onClick={e => toolbarItem.commands?.increaseIndent(e)}
-        toolbarItem={toolbarItem}
-      />
-    );
-  },
-  decreaseIndent: toolbarItem => {
-    return (
-      <ToggleButton
-        onClick={e => toolbarItem.commands?.decreaseIndent(e)}
-        toolbarItem={toolbarItem}
-      />
-    );
   },
   alignment: toolbarItem => {
     return <AlignmentButton toolbarItem={toolbarItem} />;

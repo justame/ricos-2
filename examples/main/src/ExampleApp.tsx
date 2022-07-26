@@ -85,7 +85,7 @@ class ExampleApp extends PureComponent<ExampleAppProps, ExampleAppState> {
       activeFont: 0,
       activePalette: 0,
       experiments: get('experiments') || {},
-      externalToolbarToShow: ToolbarType.FORMATTING,
+      externalToolbarToShow: '',
       textWrap: true,
       showSideBlockComponent: false,
       editorKey: 1,
@@ -96,7 +96,6 @@ class ExampleApp extends PureComponent<ExampleAppProps, ExampleAppState> {
       ...localState,
     };
   }
-  
 
   componentDidMount() {
     this.editorScrollingElementFn = () =>

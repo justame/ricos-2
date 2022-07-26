@@ -53,13 +53,9 @@ export const pluginUndoRedo: EditorPluginCreator<UndoRedoPluginEditorConfig> = c
           //TODO:
           // disabled: isUndoStackEmptyResolver,
         },
-        commands: {
-          redo: () => () => {},
-          undo:
-            ({ editorCommands }) =>
-            () => {
-              editorCommands.chain().focus().undo().run();
-            },
+        command(editorCommands: EditorCommands) {
+          editorCommands.undo();
+          return true;
         },
       },
       {
@@ -75,13 +71,9 @@ export const pluginUndoRedo: EditorPluginCreator<UndoRedoPluginEditorConfig> = c
           //TODO:
           // disabled: isRedoStackEmptyResolver,
         },
-        commands: {
-          undo: () => () => {},
-          redo:
-            ({ editorCommands }) =>
-            () => {
-              editorCommands.chain().focus().redo().run();
-            },
+        command(editorCommands: EditorCommands) {
+          editorCommands.redo();
+          return true;
         },
       },
     ],

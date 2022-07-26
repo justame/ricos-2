@@ -35,12 +35,9 @@ export const pluginOrderedList: TiptapEditorPlugin = {
         visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
         active: RESOLVERS_IDS.IS_TEXT_CONTAINS_ORDERED_LIST,
       },
-      commands: {
-        toggleOrderedList:
-          ({ editorCommands }) =>
-          () => {
-            editorCommands.chain().toggleOrderedList().run();
-          },
+      command(editorCommands: EditorCommands) {
+        editorCommands.setBlockType(NUMBERED_LIST_TYPE);
+        return true;
       },
     },
   ],

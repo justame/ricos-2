@@ -31,6 +31,7 @@ import type {
   TranslationFunction,
   EditorPlugin,
   LegacyEditorPluginConfig,
+  IEditorPlugins,
 } from 'ricos-types';
 import type { EditorCommands } from 'wix-rich-content-common';
 import { getLangDir } from 'wix-rich-content-common';
@@ -80,7 +81,7 @@ export class FullRicosEditor extends React.Component<Props, State> {
 
   private readonly shortcuts: EditorKeyboardShortcuts;
 
-  private readonly editorPlugins: EditorPlugins;
+  private readonly editorPlugins: IEditorPlugins;
 
   private uploadService!: IUploadService;
 
@@ -160,6 +161,7 @@ export class FullRicosEditor extends React.Component<Props, State> {
       updateService: this.updateService,
       uploadService: this.uploadService,
       t: this.props.t,
+      content: this.content,
     });
     this.initUploadService();
 

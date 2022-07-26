@@ -39,12 +39,9 @@ export const pluginBold: TiptapEditorPlugin = {
         visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
         active: RESOLVERS_IDS.IS_TEXT_CONTAINS_BOLD,
       },
-      commands: {
-        toggleBold:
-          ({ editorCommands }) =>
-          () => {
-            editorCommands.chain().toggleBold().run();
-          },
+      command: (editorCommands: EditorCommands) => {
+        editorCommands.toggleInlineStyle('bold');
+        return true;
       },
     },
   ],
