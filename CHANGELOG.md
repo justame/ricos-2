@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `ricos-schema`
+  - [#4249](https://github.com/wix/ricos/pull/4249) support blog legacy file data fields
+
 ## :house: Internal
 
 - `ricos-plugins`
