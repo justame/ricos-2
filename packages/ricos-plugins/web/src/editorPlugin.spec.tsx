@@ -4,19 +4,27 @@ import { PluginAddButton } from './pluginAddButton';
 import type {
   EditorPlugin as EditorPluginType,
   ModalService,
+  ShortcutDataProvider,
   ShortcutRegistrar,
   ToolbarType,
 } from 'ricos-types';
+import { identity } from 'fp-ts/function';
 
 const mockModalService = {
   register: config => {},
   unregister: id => {},
 } as ModalService;
 
-const shortcuts: ShortcutRegistrar = {
+const shortcuts: ShortcutRegistrar & ShortcutDataProvider = {
   register: () => {},
   unregister: () => {},
-} as ShortcutRegistrar;
+  getShortcutDisplayData: () => ({
+    name: '',
+    description: '',
+    keyCombinationText: '',
+    group: '',
+  }),
+} as ShortcutRegistrar & ShortcutDataProvider;
 
 describe('Editor Plugin', () => {
   const plugin: EditorPluginType = {
@@ -45,7 +53,7 @@ describe('Editor Plugin', () => {
     ],
   };
 
-  const actual = EditorPlugin.of(plugin, mockModalService, shortcuts);
+  const actual = EditorPlugin.of(plugin, mockModalService, shortcuts, identity);
   actual.register();
   it('should create valid instance', () => {
     expect(actual).toBeInstanceOf(EditorPlugin);
@@ -67,7 +75,8 @@ describe('Editor Plugin', () => {
         config: {},
       },
       mockModalService,
-      shortcuts
+      shortcuts,
+      identity
     );
 
     expect(actual2.equals(actual)).toBeFalsy();

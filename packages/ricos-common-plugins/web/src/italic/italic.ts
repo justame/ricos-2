@@ -12,12 +12,11 @@ export const pluginItalic: TiptapEditorPlugin = {
     {
       name: 'italic',
       description: 'Toggles italic style of selected text',
-      keys: 'Meta+I',
+      keys: { macOs: 'Meta+I', windows: 'Ctrl+I' },
       command(editorCommands: EditorCommands) {
         editorCommands.toggleInlineStyle('italic');
       },
       group: 'formatting',
-      keyCombinationText: 'Cmd+I',
       enabled: true,
     },
   ],
@@ -28,10 +27,6 @@ export const pluginItalic: TiptapEditorPlugin = {
       presentation: {
         dataHook: 'textInlineStyleButton_Italic',
         tooltip: 'ItalicButton_Tooltip',
-        tooltipShortcut: {
-          MacOS: ' (⌘I)',
-          Windows: ' (Ctrl+I)',
-        },
         icon: ItalicIcon,
       },
       attributes: {

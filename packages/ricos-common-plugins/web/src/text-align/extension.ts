@@ -115,15 +115,6 @@ export const textAlign: RicosExtension = {
     return {
       name: this.name,
       priority: 3,
-      addKeyboardShortcuts() {
-        return {
-          'Mod-Shift-l': () => this.editor.commands.setTextAlign(TextStyle_TextAlignment.LEFT),
-          'Mod-Shift-e': () => this.editor.commands.setTextAlign(TextStyle_TextAlignment.CENTER),
-          'Mod-Shift-r': () => this.editor.commands.setTextAlign(TextStyle_TextAlignment.RIGHT),
-          'Mod-Shift-j': () => this.editor.commands.setTextAlign(TextStyle_TextAlignment.JUSTIFY),
-          'Mod-Shift-u': () => this.editor.commands.unsetTextAlign(),
-        };
-      },
       addProseMirrorPlugins() {
         return [
           new Plugin({

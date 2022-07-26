@@ -19,12 +19,11 @@ export const pluginCodeBlock: EditorPluginCreator<CodeBlockPluginEditorConfig> =
       {
         name: 'codeBlock',
         description: 'Toggles code style of selected text',
-        keys: 'Meta+Shift+C',
+        keys: { macOs: 'Meta+Shift+C', windows: 'Ctrl+Shift+C' },
         command(editorCommands: EditorCommands) {
           editorCommands.setBlockType(CODE_BLOCK_TYPE);
         },
         group: 'formatting',
-        keyCombinationText: 'Cmd+Shift+C',
         enabled: true,
       },
     ],

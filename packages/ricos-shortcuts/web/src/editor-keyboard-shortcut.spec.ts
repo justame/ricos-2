@@ -6,19 +6,18 @@ describe('Editor Keyboard Shortcut', () => {
   const shortcut: KeyboardShortcut = {
     name: 'Bold',
     description: 'Toggles bold style of selected text',
-    keys: 'Shift+Meta+B',
+    keys: { macOs: 'Meta+B', windows: 'Ctrl+B' },
     command(editorCommands: EditorCommands) {
       editorCommands.toggleInlineStyle('bold');
     },
     group: 'formatting',
-    keyCombinationText: 'Cmd+B',
     enabled: true,
   };
 
   const actual = EditorKeyboardShortcut.of(shortcut);
   it('should create valid instance', () => {
     expect(actual).toBeInstanceOf(EditorKeyboardShortcut);
-    expect(actual.getKeys().toString()).toEqual('Meta+Shift+B');
+    expect(actual.getKeys('macOs').toString()).toEqual('Meta+B');
     expect(actual.getGroup()).toEqual('formatting');
     expect(actual.getName()).toEqual('Bold');
     expect(actual.getKeyboardShortcut()).toEqual(shortcut);
@@ -26,10 +25,10 @@ describe('Editor Keyboard Shortcut', () => {
   });
 
   it('should produce valid display data', () => {});
-  expect(actual.getDisplayData(identity)).toEqual({
+  expect(actual.getDisplayData(identity, 'macOs')).toEqual({
     name: 'Bold',
     description: 'Toggles bold style of selected text',
-    keyCombinationText: 'Cmd+B',
+    keyCombinationText: '⌘B',
     group: 'formatting',
   });
 
@@ -37,15 +36,19 @@ describe('Editor Keyboard Shortcut', () => {
     const reconfigured = actual.configure({
       name: 'Underline',
       description: 'Adds underline style',
+      keys: { macOs: 'Meta+Alt+U', windows: 'Meta+Alt+U' },
       enabled: false,
     });
     expect(reconfigured.isEnabled()).toBeFalsy();
-    expect(reconfigured.getDisplayData(identity)).toEqual({
+    expect(reconfigured.getDisplayData(identity, 'macOs')).toEqual({
       name: 'Underline',
       description: 'Adds underline style',
       group: 'formatting',
-      keyCombinationText: 'Cmd+B',
+      keyCombinationText: '⌘⌥U',
     });
+    expect(reconfigured.getDisplayData(identity, 'windows').keyCombinationText).toEqual(
+      'Win+Alt+U'
+    );
   });
 
   it('should compare shortcuts correctly', () => {

@@ -1,11 +1,18 @@
-import type { EditorCommands, KeyboardShortcut, TranslationFunction } from 'ricos-types';
-import type { LocalizedDisplayData, Shortcut } from './models/shortcuts';
+import type {
+  EditorCommands,
+  KeyboardShortcut,
+  PlatformDependent,
+  TranslationFunction,
+  Platform,
+  LocalizedDisplayData,
+} from 'ricos-types';
+import type { Shortcut } from './models/shortcuts';
 import { Keys } from './keys';
 
 export class EditorKeyboardShortcut implements Shortcut {
   shortcut: KeyboardShortcut;
 
-  keys: Keys;
+  keys: PlatformDependent<Keys>;
 
   static of(shortcut: KeyboardShortcut) {
     return new EditorKeyboardShortcut(shortcut);
@@ -13,20 +20,22 @@ export class EditorKeyboardShortcut implements Shortcut {
 
   private constructor(shortcut: KeyboardShortcut) {
     this.shortcut = shortcut;
-    this.keys = Keys.parse(shortcut.keys);
+    this.keys = {
+      macOs: Keys.parse(shortcut.keys.macOs),
+      windows: Keys.parse(shortcut.keys.windows),
+    };
   }
 
-  // TODO: generate locale/platform-dependent hint
-  private createKeyCombinationText() {
-    return this.keys.toString();
+  private getKeyCombinationText(platform: Platform): string {
+    return this.keys[platform].toPlatformString(platform);
   }
 
   getKeyboardShortcut() {
     return this.shortcut;
   }
 
-  getKeys(): Keys {
-    return this.keys;
+  getKeys(platform: Platform): Keys {
+    return this.keys[platform];
   }
 
   getCommand(): (commands: EditorCommands) => void {
@@ -45,12 +54,12 @@ export class EditorKeyboardShortcut implements Shortcut {
     return this.shortcut.group;
   }
 
-  getDisplayData(t: TranslationFunction): LocalizedDisplayData {
+  getDisplayData(t: TranslationFunction, platform: Platform): LocalizedDisplayData {
     return {
       name: t(this.shortcut.name),
       description: t(this.shortcut.description),
       group: t(this.shortcut.group),
-      keyCombinationText: this.shortcut.keyCombinationText || this.createKeyCombinationText(),
+      keyCombinationText: this.getKeyCombinationText(platform),
     };
   }
 
@@ -59,6 +68,10 @@ export class EditorKeyboardShortcut implements Shortcut {
   }
 
   equals(shortcut: Shortcut): boolean {
-    return this.keys.equals(shortcut.getKeys()) && this.getGroup() === shortcut.getGroup();
+    return (
+      this.keys.macOs.equals(shortcut.getKeys('macOs')) &&
+      this.keys.windows.equals(shortcut.getKeys('windows')) &&
+      this.getGroup() === shortcut.getGroup()
+    );
   }
 }

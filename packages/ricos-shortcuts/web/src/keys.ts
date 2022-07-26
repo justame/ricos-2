@@ -1,8 +1,9 @@
+import * as E from 'fp-ts/Either';
 import { identity, pipe } from 'fp-ts/function';
-import * as O from 'fp-ts/Option';
 import { getMatches } from 'ricos-content';
+import type { AnyKey, BasicKeyCombination, ModifierKeys, NavigationKeys } from 'ricos-types';
 import { isAnyKey, isModifierKey } from 'ricos-types';
-import type { AnyKey, BasicKeyCombination, ModifierKeys } from 'ricos-types';
+import type { WhitespaceKeys } from 'ricos-types/src';
 
 export class KeyboardShortcutParseError extends Error {}
 
@@ -17,6 +18,52 @@ export class Keys {
   modifiers: ModifierKeys[];
 
   key: AnyKey;
+
+  private readonly macOsMap: Record<ModifierKeys & WhitespaceKeys & NavigationKeys, string> = {
+    Meta: '⌘',
+    Ctrl: '⌃',
+    Alt: '⌥',
+    Shift: '⇧',
+    Enter: '↩',
+    Space: '␣',
+    Backspace: '⌫',
+    Tab: '⇥',
+    Escape: '⎋',
+    ArrowLeft: '←',
+    ArrowRight: '→',
+    ArrowUp: '↑',
+    ArrowDown: '↓',
+    Delete: '⌦',
+    Home: '⇱',
+    End: '⇲',
+    PageUp: '⇞',
+    PageDown: '⇟',
+    Insert: '⌤',
+    AltGraph: '⌥',
+  };
+
+  private readonly windowsMap: Record<ModifierKeys & WhitespaceKeys & NavigationKeys, string> = {
+    Meta: 'Win',
+    Ctrl: 'Ctrl',
+    Alt: 'Alt',
+    Shift: 'Shift',
+    Enter: 'Enter',
+    Space: 'Space',
+    Backspace: 'Backspace',
+    Tab: 'Tab',
+    Escape: 'Escape',
+    ArrowLeft: 'Left',
+    ArrowRight: 'Right',
+    ArrowUp: 'Up',
+    ArrowDown: 'Down',
+    Delete: 'Delete',
+    Home: 'Home',
+    End: 'End',
+    PageUp: 'PageUp',
+    PageDown: 'PageDown',
+    Insert: 'Insert',
+    AltGraph: 'AltGr',
+  };
 
   private static isValidKeys(key: AnyKey, modifiers: ModifierKeys[]): boolean {
     return isAnyKey(key) && !isModifierKey(key) && modifiers.filter(Boolean).every(isModifierKey);
@@ -41,8 +88,26 @@ export class Keys {
    */
   toString(): string {
     return `${
-      this.modifiers.length > 0 ? this.modifiers.filter(Boolean).join('+').concat('+') : ''
+      this.modifiers.length > 0 ? this.modifiers.sort().filter(Boolean).join('+').concat('+') : ''
     }${this.key}`;
+  }
+
+  toPlatformString(platform: 'macOs' | 'windows'): string {
+    return platform === 'macOs' ? this.toMacOsString() : this.toWindowsString();
+  }
+
+  private toMacOsString(): string {
+    return this.modifiers
+      .map(modifier => this.macOsMap[modifier])
+      .concat(this.key)
+      .join('');
+  }
+
+  private toWindowsString(): string {
+    return this.modifiers
+      .map(modifier => this.windowsMap[modifier])
+      .concat(this.key)
+      .join('+');
   }
 
   equals(keys: Keys) {
@@ -68,16 +133,13 @@ export class Keys {
     return pipe(
       keys,
       getMatches(/(?:([^+]+)\+)?(?:([^+]+)\+)?(.+)/gi),
-      O.map(([, modifier1, modifier2, key]: string[]) => {
-        if (!Keys.isValidKeys(key, [modifier1 as ModifierKeys, modifier2 as ModifierKeys])) {
-          console.error(`failed to parse "${keys}" key combination`);
-          return new Keys('F20', []);
-        }
-        return new Keys(key, [modifier1 as ModifierKeys, modifier2 as ModifierKeys].sort());
-      }),
-      O.fold(() => {
-        console.error(`failed to parse ${keys} key combination`);
-        return new Keys('F20', []); // default keys set to F20
+      E.fromOption(() => new KeyboardShortcutParseError(`invalid keys combination: ${keys}`)),
+      E.map(
+        ([, modifier1, modifier2, key]: string[]) =>
+          new Keys(key, [modifier1, modifier2].filter(Boolean) as ModifierKeys[])
+      ),
+      E.fold(e => {
+        throw e;
       }, identity)
     );
   }

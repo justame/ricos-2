@@ -41,7 +41,10 @@ export const Shortcuts: FC<ShortcutsProps> = (props: ShortcutsProps) => {
         layout: 'drawer',
       });
     },
-    keys: 'Meta+/',
+    keys: {
+      macOs: 'Meta+/',
+      windows: 'Ctrl+/',
+    },
     enabled: true,
   };
 
@@ -55,7 +58,8 @@ export const Shortcuts: FC<ShortcutsProps> = (props: ShortcutsProps) => {
   const { t } = useContext(RicosContext);
   const { getEditorCommands } = useContext(EditorContext);
   const commands = getEditorCommands();
-  const { handlers, keyMap } = shortcuts.getHotKeysProps(group, commands, t);
+  // TODO: get real platform
+  const { handlers, keyMap } = shortcuts.getHotKeysProps(group, commands, t, 'macOs');
 
   useComponentWillMount(() => {
     if (root) {

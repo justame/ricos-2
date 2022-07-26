@@ -1,10 +1,5 @@
 import { identity } from 'fp-ts/function';
-import type {
-  BasicKeyCombination,
-  EditorCommands,
-  EventRegistrar,
-  ModalService,
-} from 'ricos-types';
+import type { EditorCommands, EventRegistrar, KeyboardShortcut, ModalService } from 'ricos-types';
 import { RICOS_DIVIDER_TYPE } from 'wix-rich-content-common';
 import { EditorKeyboardShortcuts } from './editor-keyboard-shortcuts';
 
@@ -19,38 +14,35 @@ describe('Editor Keyboard Shortcuts', () => {
     }),
   };
 
-  const bold = {
+  const bold: KeyboardShortcut = {
     name: 'Bold',
     description: 'Toggles bold style of selected text',
-    keys: 'Shift+Meta+B' as BasicKeyCombination,
+    keys: { macOs: 'Meta+B', windows: 'Ctrl+B' },
     command(editorCommands: EditorCommands) {
       editorCommands.toggleInlineStyle('bold');
     },
     group: 'formatting' as const,
-    keyCombinationText: 'Cmd+B',
     enabled: true,
   };
-  const italic = {
+  const italic: KeyboardShortcut = {
     name: 'Italic',
     description: 'Toggles italic style of selected text',
-    keys: 'Meta+I' as BasicKeyCombination,
+    keys: { macOs: 'Meta+I', windows: 'Ctrl+I' },
     command(editorCommands: EditorCommands) {
       editorCommands.toggleInlineStyle('italic');
     },
     group: 'formatting' as const,
-    keyCombinationText: 'Cmd+I',
     enabled: true,
   };
 
-  const addDivider = {
+  const addDivider: KeyboardShortcut = {
     name: 'AddDivider',
     description: 'Adds Divider',
-    keys: 'Meta+B' as BasicKeyCombination,
+    keys: { macOs: 'Meta+B', windows: 'Ctrl+B' },
     command(editorCommands: EditorCommands) {
       editorCommands.insertBlock(RICOS_DIVIDER_TYPE);
     },
     group: 'add-plugin' as const,
-    keyCombinationText: 'Cmd+B',
     enabled: true,
   };
 
@@ -93,13 +85,13 @@ describe('Editor Keyboard Shortcuts', () => {
         {
           name: 'Bold',
           description: 'Toggles bold style of selected text',
-          keyCombinationText: 'Cmd+B',
+          keyCombinationText: '⌘B',
           group: 'formatting',
         },
         {
           name: 'Italic',
           description: 'Toggles italic style of selected text',
-          keyCombinationText: 'Cmd+I',
+          keyCombinationText: '⌘I',
           group: 'formatting',
         },
       ],
@@ -107,13 +99,13 @@ describe('Editor Keyboard Shortcuts', () => {
         {
           name: 'AddDivider',
           description: 'Adds Divider',
-          keyCombinationText: 'Cmd+B',
+          keyCombinationText: '⌘B',
           group: 'add-plugin',
         },
       ],
     };
 
-    expect(registered.getDisplayData(identity)).toEqual(expected);
+    expect(registered.getDisplayData(identity, 'macOs')).toEqual(expected);
   });
 
   it('should produce HotKeys props for group', () => {
@@ -129,21 +121,22 @@ describe('Editor Keyboard Shortcuts', () => {
     const { keyMap, handlers } = actual.getHotKeysProps(
       'formatting',
       commands as EditorCommands,
-      identity
+      identity,
+      'macOs'
     );
 
     expect(keyMap).toEqual({
       Bold: {
         description: 'Toggles bold style of selected text',
         group: 'formatting',
-        keyCombinationText: 'Cmd+B',
+        keyCombinationText: '⌘B',
         name: 'Bold',
-        sequences: ['meta+shift+b'],
+        sequences: ['meta+b'],
       },
       Italic: {
         description: 'Toggles italic style of selected text',
         group: 'formatting',
-        keyCombinationText: 'Cmd+I',
+        keyCombinationText: '⌘I',
         name: 'Italic',
         sequences: ['meta+i'],
       },

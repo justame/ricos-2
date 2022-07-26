@@ -12,12 +12,11 @@ export const pluginBold: TiptapEditorPlugin = {
     {
       name: 'bold',
       description: 'Toggles bold style of selected text',
-      keys: 'Meta+B',
+      keys: { macOs: 'Meta+B', windows: 'Ctrl+B' },
       command(editorCommands: EditorCommands) {
         editorCommands.toggleInlineStyle('bold');
       },
       group: 'formatting',
-      keyCombinationText: '(⌘B)',
       enabled: true,
     },
   ],
@@ -29,10 +28,6 @@ export const pluginBold: TiptapEditorPlugin = {
       presentation: {
         dataHook: 'textInlineStyleButton_Bold',
         tooltip: 'BoldButton_Tooltip',
-        tooltipShortcut: {
-          MacOS: ' (⌘B)',
-          Windows: ' (Ctrl+B)',
-        },
         icon: BoldIcon,
       },
       attributes: {

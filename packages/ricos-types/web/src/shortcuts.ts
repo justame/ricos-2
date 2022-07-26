@@ -1,5 +1,22 @@
+import type { TranslationFunction } from 'i18next';
 import type { EditorCommands } from './editorCommandsType';
 import type { BasicKeyCombination } from './key-types';
+
+export type PlatformDependent<T> = {
+  macOs: T;
+  windows: T;
+};
+
+export type Platform = 'macOs' | 'windows';
+
+export type LocalizedDisplayData = {
+  name: KeyboardShortcut['name'];
+  description: KeyboardShortcut['description'];
+  keyCombinationText: string;
+  group: KeyboardShortcut['group'];
+};
+
+export type PlatformDependentKeys = PlatformDependent<BasicKeyCombination>;
 
 /**
  * Keyboard shortcut configuration
@@ -39,20 +56,13 @@ export interface KeyboardShortcut {
    * @type {BasicKeyCombination}
    * @memberof KeyboardShortcut
    */
-  keys: BasicKeyCombination;
+  keys: PlatformDependentKeys;
   /**
    * Command for execution
    *
    * @memberof KeyboardShortcut
    */
   command: (commands: EditorCommands) => void; // TODO: define return value type
-  /**
-   * Textual representation of key combination like 'Ctrl+B' or '⌘ B' (optional)
-   *
-   * @type {string}
-   * @memberof KeyboardShortcut
-   */
-  keyCombinationText?: string;
   /**
    * Enables shortcut
    *
@@ -76,4 +86,21 @@ export interface ShortcutRegistrar {
    * @memberof ShortcutRegistrar
    */
   unregister: (shortcut: KeyboardShortcut) => void;
+}
+
+export interface ShortcutDataProvider {
+  /**
+   * Provides shortcut display data by given shortcut name for current locale and platform
+   *
+   * @param {KeyboardShortcut['name']} name
+   * @param {TranslationFunction} t
+   * @param {Platform} platform
+   * @returns  {LocalizedDisplayData}
+   * @memberof ShortcutDataProvider
+   */
+  getShortcutDisplayData(
+    name: KeyboardShortcut['name'],
+    t: TranslationFunction,
+    platform: Platform
+  ): LocalizedDisplayData;
 }

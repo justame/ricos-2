@@ -9,12 +9,11 @@ export const pluginParagraph: TiptapEditorPlugin = {
     {
       name: 'paragraph',
       description: 'Toggles paragraph to current node',
-      keys: 'Meta+Alt+0',
+      keys: { macOs: 'Meta+Alt+0', windows: 'Ctrl+Alt+0' },
       command(editorCommands: EditorCommands) {
         editorCommands.setBlockType(UNSTYLED);
       },
       group: 'formatting',
-      keyCombinationText: 'Meta+Opt+0',
       enabled: true,
     },
   ],

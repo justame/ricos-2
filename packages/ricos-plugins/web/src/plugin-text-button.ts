@@ -10,6 +10,8 @@ import type {
   ToolbarButtonProps,
   TranslationFunction,
   IContent,
+  ShortcutDataProvider,
+  Platform,
   ModalService,
 } from 'ricos-types';
 import { resolversById } from 'wix-rich-content-toolbars-v3';
@@ -17,15 +19,46 @@ import { resolversById } from 'wix-rich-content-toolbars-v3';
 export class PluginTextButton implements FormattingToolbarButton {
   private readonly button: FormattingToolbarButtonConfig;
 
-  private modalService: ModalService;
+  private readonly keyCombinationText: string;
 
-  private constructor(button: FormattingToolbarButtonConfig, modalService: ModalService) {
+  private readonly t: TranslationFunction;
+
+  private readonly modalService: ModalService;
+
+  constructor(
+    button: FormattingToolbarButtonConfig,
+    modalService: ModalService,
+    shortcuts: ShortcutDataProvider,
+    t: TranslationFunction,
+    platform: Platform
+  ) {
     this.button = button;
+    this.t = t;
     this.modalService = modalService;
+
+    this.keyCombinationText = shortcuts.getShortcutDisplayData(
+      button.id,
+      t,
+      platform
+    ).keyCombinationText;
   }
 
-  static of(button: FormattingToolbarButtonConfig, modalService: ModalService) {
-    return new PluginTextButton(button, modalService);
+  private getTooltip() {
+    return this.button.presentation?.tooltip
+      ? `${this.t(this.button.presentation.tooltip)} ${
+          this.keyCombinationText ? `(${this.keyCombinationText})` : ''
+        }`
+      : '';
+  }
+
+  static of(
+    button: FormattingToolbarButtonConfig,
+    modalService: ModalService,
+    shortcuts: ShortcutDataProvider,
+    t: TranslationFunction,
+    platform: Platform
+  ) {
+    return new PluginTextButton(button, modalService, shortcuts, t, platform);
   }
 
   register() {
@@ -51,6 +84,10 @@ export class PluginTextButton implements FormattingToolbarButton {
   toToolbarItemConfig(editorCommands: EditorCommands): IToolbarItemConfigTiptap {
     return {
       ...this.button,
+      presentation: {
+        ...(this.button.presentation || {}),
+        tooltip: this.getTooltip(),
+      },
       attributes: this.toResolvedAttributes(),
       commands: {
         ...this.button.commands,
@@ -63,7 +100,7 @@ export class PluginTextButton implements FormattingToolbarButton {
 
   toExternalToolbarButtonConfig(
     editorCommands: EditorCommands,
-    t: TranslationFunction,
+    _t: TranslationFunction,
     _uploadService: IUploadService,
     _updateService: IUpdateService,
     content: IContent<unknown>
@@ -71,7 +108,7 @@ export class PluginTextButton implements FormattingToolbarButton {
     const attributes = this.toResolvedAttributes();
     return {
       type: 'button',
-      tooltip: t(this.button.presentation?.tooltip),
+      tooltip: this.getTooltip(),
       toolbars: [],
       getIcon: () => this.button.presentation?.icon,
       getLabel: () => this.button.id,

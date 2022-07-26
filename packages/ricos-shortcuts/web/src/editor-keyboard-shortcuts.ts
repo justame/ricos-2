@@ -5,10 +5,12 @@ import type {
   EventRegistrar,
   KeyboardShortcut,
   ModalService,
+  Platform,
   TranslationFunction,
+  LocalizedDisplayData,
 } from 'ricos-types';
 import { EditorKeyboardShortcut } from './editor-keyboard-shortcut';
-import type { HotKeysProps, LocalizedDisplayData, Shortcut, Shortcuts } from './models/shortcuts';
+import type { HotKeysProps, Shortcut, Shortcuts } from './models/shortcuts';
 import { ShortcutsDialog } from './ShortcutsDialog';
 
 export class ShortcutCollisionError extends Error {}
@@ -30,7 +32,12 @@ export class EditorKeyboardShortcuts implements Shortcuts {
     return this.shortcuts.find(s => s.equals(shortcut));
   }
 
-  getHotKeysProps(group: string, commands: EditorCommands, t: TranslationFunction): HotKeysProps {
+  getHotKeysProps(
+    group: string,
+    commands: EditorCommands,
+    t: TranslationFunction,
+    platform: Platform
+  ): HotKeysProps {
     return this.shortcuts
       .filter(s => s.getGroup() === group || s.getGroup() === 'global')
       .reduce(
@@ -40,8 +47,8 @@ export class EditorKeyboardShortcuts implements Shortcuts {
             keyMap: {
               ...keyMap,
               [shortcut.getName()]: {
-                sequences: [shortcut.getKeys().toString().toLowerCase()],
-                ...shortcut.getDisplayData(t),
+                sequences: [shortcut.getKeys(platform).toString().toLowerCase()],
+                ...shortcut.getDisplayData(t, platform),
               },
             },
             handlers: {
@@ -51,8 +58,8 @@ export class EditorKeyboardShortcuts implements Shortcuts {
                 shortcut.getCommand()(commands);
                 this.publisher.publish(
                   `🎹 keyboard shortcut ${shortcut.getName()} applied (${shortcut
-                    .getKeys()
-                    .toString()})`
+                    .getKeys(platform)
+                    .toPlatformString(platform)})`
                 );
               },
             },
@@ -89,11 +96,36 @@ export class EditorKeyboardShortcuts implements Shortcuts {
     return this.shortcuts;
   }
 
-  getDisplayData(t: TranslationFunction) {
+  getShortcutDisplayData(
+    name: string,
+    t: TranslationFunction,
+    platform: Platform
+  ): LocalizedDisplayData {
+    const shortcut = this.shortcuts.find(s => s.getName() === name);
+
+    if (!shortcut) {
+      return {
+        name: '',
+        description: '',
+        keyCombinationText: '',
+        group: '',
+      };
+    }
+
+    return shortcut.getDisplayData(t, platform);
+  }
+
+  getDisplayData(
+    t: TranslationFunction,
+    platform: Platform
+  ): { [group: string]: LocalizedDisplayData[] } {
     return this.shortcuts.reduce(
       (map, shortcut) => ({
         ...map,
-        [shortcut.getGroup()]: [...(map[shortcut.getGroup()] || []), shortcut.getDisplayData(t)],
+        [shortcut.getGroup()]: [
+          ...(map[shortcut.getGroup()] || []),
+          shortcut.getDisplayData(t, platform),
+        ],
       }),
       {} as { [group: string]: LocalizedDisplayData[] }
     );

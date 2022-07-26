@@ -12,12 +12,11 @@ export const pluginOrderedList: TiptapEditorPlugin = {
     {
       name: 'orderedList',
       description: 'Toggles ordered list to current node',
-      keys: 'Meta+Shift+7',
+      keys: { macOs: 'Meta+Shift+7', windows: 'Ctrl+Shift+7' },
       command(editorCommands: EditorCommands) {
         editorCommands.setBlockType(NUMBERED_LIST_TYPE);
       },
       group: 'formatting',
-      keyCombinationText: 'Cmd+Shift+7',
       enabled: true,
     },
   ],

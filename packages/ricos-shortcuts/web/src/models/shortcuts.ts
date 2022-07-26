@@ -1,20 +1,14 @@
 import type { KeyMap } from 'react-hotkeys';
 import type {
   EditorCommands,
-  EventPublisher,
   KeyboardShortcut,
-  TranslationFunction,
-  EventData,
   ShortcutRegistrar,
+  TranslationFunction,
+  Platform,
+  LocalizedDisplayData,
+  ShortcutDataProvider,
 } from 'ricos-types';
 import type { Keys } from '../keys';
-
-export type LocalizedDisplayData = {
-  name: KeyboardShortcut['name'];
-  description: KeyboardShortcut['description'];
-  keyCombinationText: KeyboardShortcut['keyCombinationText'];
-  group: KeyboardShortcut['group'];
-};
 
 export type HotKeysProps = {
   keyMap: KeyMap;
@@ -36,7 +30,7 @@ export interface Shortcut {
    * @returns  {Keys}
    * @memberof Shortcut
    */
-  getKeys(): Keys;
+  getKeys(platform: Platform): Keys;
   /**
    * Command to run
    *
@@ -65,7 +59,7 @@ export interface Shortcut {
    * @returns  {LocalizedDisplayData}
    * @memberof Shortcut
    */
-  getDisplayData(t: TranslationFunction): LocalizedDisplayData;
+  getDisplayData(t: TranslationFunction, platform: Platform): LocalizedDisplayData;
   /**
    * Enabled status
    *
@@ -105,7 +99,7 @@ export interface Shortcut {
  * @export
  * @interface Shortcuts
  */
-export interface Shortcuts extends ShortcutRegistrar {
+export interface Shortcuts extends ShortcutRegistrar, ShortcutDataProvider {
   /**
    * Filters shortcuts according to predicate
    *
@@ -123,7 +117,10 @@ export interface Shortcuts extends ShortcutRegistrar {
    *
    * @memberof Shortcuts
    */
-  getDisplayData: (t: TranslationFunction) => { [group: string]: LocalizedDisplayData[] };
+  getDisplayData: (
+    t: TranslationFunction,
+    platform: Platform
+  ) => { [group: string]: LocalizedDisplayData[] };
   /**
    * Constructs `react-hotkeys` compatible data for given group
    *
@@ -132,6 +129,7 @@ export interface Shortcuts extends ShortcutRegistrar {
   getHotKeysProps: (
     group: string,
     commands: EditorCommands,
-    t: TranslationFunction
+    t: TranslationFunction,
+    platform: Platform
   ) => HotKeysProps;
 }
