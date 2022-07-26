@@ -63,12 +63,18 @@ export const getComponentStyles = ({ componentData, theme, isFocused, isMobile }
 
 const StylesHOC = Component => {
   const Styles = props => {
-    const { context, componentData, selected } = props;
+    const { context, componentData, selected, node, editor } = props;
+    const nodeId = node.attrs.id;
     const { isMobile, theme } = context;
+    const { selection } = editor.state;
+    let isFocused = false;
+    editor.state.doc.nodesBetween(selection.from, selection.to, node => {
+      node.attrs.id === nodeId && (isFocused = true);
+    });
     const componentStyles = getComponentStyles({
       componentData,
       theme,
-      isFocused: selected,
+      isFocused,
       isMobile,
     });
 
