@@ -41,7 +41,9 @@ $HEADER_HEIGHT_MOBILE: $TITLE_HEIGHT_MOBILE + $TABS_HEIGHT;
     background-color: white;
   }
   &.audio_upload_tab {
-    height: 58px;
+    height: 158px;
+    min-width: 341px;
+    max-width: 420px;
   }
 }
 

@@ -107,9 +107,9 @@
 //! New/Old Modal Combined Css
 
 .inputModal_container {
-  height: fit-content;
-  width: 301px;
-  max-width: 400px;
+  min-height: 118px;
+  min-width: 301px;
+  max-width: 420px;
   .inputModal_content {
     padding: 0;
     .inputModal_mobile & {
@@ -177,9 +177,6 @@
   @extend %input_header_text;
 }
 
-.mediaUploadModal_container {
-  height: 138px;
-}
 .mediaUploadModal {
   background-color: $settings-action-color-fallback;
   color: $fallbackColorBright;
