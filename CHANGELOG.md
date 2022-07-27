@@ -17,12 +17,14 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.72.14 (Jul 27, 2022)
+
 ## :house: Internal
 
 - `ricos-shortcuts`
   - [#4273](https://github.com/wix/ricos/pull/4273) platform-dependent shortcut keys
-
-</details>
 
 ## 8.72.13 (Jul 27, 2022)
 
