@@ -8,7 +8,7 @@ import type { AddButton } from 'ricos-types';
 import { DEFAULTS, gifModals } from './constants';
 import InsertModal from './modals/InsertModal';
 
-export const getAddButtons = (config): AddButton[] => {
+export const getAddButtons = (config, services): AddButton[] => {
   return [
     {
       id: 'gif',

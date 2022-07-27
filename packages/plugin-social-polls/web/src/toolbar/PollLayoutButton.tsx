@@ -5,6 +5,8 @@ import type { IToolbarItem } from 'ricos-types';
 import { DropdownButton, ListItemSelect } from 'wix-rich-content-toolbars-ui';
 import { LayoutGridIcon, LayoutListIcon } from '../assets/icons';
 import styles from '../../statics/styles/customize-toolbar-button.scss';
+import { pollModals } from '../consts';
+import { TABS } from '../components/settings/constants';
 
 type Props = {
   toolbarItem: IToolbarItem;
@@ -36,10 +38,13 @@ const layoutData = [
     commandKey: 'LAYOUT',
     dataHook: 'poll_layout',
     onClick: (toolbarItem, modalService, isMobile) =>
-      toolbarItem.commands?.click({
-        modalService,
-        isMobile,
-        node: toolbarItem.attributes.selectedNode,
+      modalService?.openModal(pollModals.settings, {
+        componentProps: {
+          nodeId: toolbarItem.attributes.selectedNode.attrs.id,
+          activeTab: TABS.LAYOUT,
+        },
+        positioning: { placement: 'right' },
+        layout: isMobile ? 'fullscreen' : 'drawer',
       }),
     component: CustomizeButton,
   },

@@ -95,7 +95,7 @@ import type { EditorCommands } from './editorCommandsType';
 import type { ModalConfig } from './modalTypes';
 import type { ToolbarType } from './toolbarEnums';
 import type { FormattingToolbarButtonConfig, IToolbarItem } from './toolbarTypes';
-import type { IUpdateService, IUploadService } from './uploadServicesTypes';
+import type { PluginServices } from './editorPluginTypes';
 
 export { Node_Type, Decoration_Type, LinkData };
 
@@ -250,11 +250,7 @@ type MenuConfig = {
 export type AddButton = {
   id: string;
   icon: ComponentType;
-  command: (
-    editorCommands: EditorCommands,
-    uploadService?: IUploadService,
-    updateService?: IUpdateService
-  ) => boolean;
+  command: (editorCommands: EditorCommands) => boolean;
   tooltip: string;
   toolbars: ToolbarType[];
   dataHook: string;
@@ -284,11 +280,11 @@ export interface EditorPlugin<PluginConfig extends EditorPluginConfig = Record<s
   createPlugin?: CreatePluginFunction<PluginConfig>;
   ModalsMap?: ModalsMap;
   createPluginData?: CreatePluginData<PluginConfig>;
-  getAddButtons?: (config?) => AddButton[];
+  getAddButtons?: (config?, services?: PluginServices) => AddButton[];
   textButtons?: FormattingToolbarButtonConfig[];
   shortcuts?: KeyboardShortcut[];
   toolbar?: {
-    getButtons: (config?) => ToolbarButton[];
+    getButtons: (config?, services?: PluginServices) => ToolbarButton[];
     isVisible?: (selection) => boolean;
   };
 }

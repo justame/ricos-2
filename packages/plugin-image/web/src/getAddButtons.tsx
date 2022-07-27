@@ -38,7 +38,7 @@ const handleNativeFileChange = (editorCommands, uploadService, uploader) => (fil
   });
 };
 
-export const getAddButtons = (config): AddButton[] => {
+export const getAddButtons = (config, services): AddButton[] => {
   return [
     {
       id: 'image',
@@ -48,27 +48,25 @@ export const getAddButtons = (config): AddButton[] => {
       tooltip: 'ImagePlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
 
-      command: (editorCommands, uploadService, updateService) => {
-        if (uploadService && updateService) {
-          if (config.handleFileSelection) {
-            config.handleFileSelection(
-              undefined,
-              !!config.multi,
-              handleExternalFileChange(editorCommands, updateService),
-              undefined,
-              RICOS_DEFAULTS
-            );
-          } else {
-            const { accept = 'image/*', multi = true, handleFileUpload } = config;
-            uploadService?.selectFiles(
-              accept,
-              multi,
-              handleNativeFileChange(editorCommands, uploadService, new Uploader(handleFileUpload))
-            );
-          }
-          return true;
+      command: editorCommands => {
+        const { uploadService, updateService } = services;
+        if (config.handleFileSelection) {
+          config.handleFileSelection(
+            undefined,
+            !!config.multi,
+            handleExternalFileChange(editorCommands, updateService),
+            undefined,
+            RICOS_DEFAULTS
+          );
+        } else {
+          const { accept = 'image/*', multi = true, handleFileUpload } = config;
+          uploadService?.selectFiles(
+            accept,
+            multi,
+            handleNativeFileChange(editorCommands, uploadService, new Uploader(handleFileUpload))
+          );
         }
-        return false;
+        return true;
       },
       menuConfig: {
         tags: 'Image_plugin_search_tags',

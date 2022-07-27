@@ -7,7 +7,7 @@ import { TIPTAP_HTML_TYPE } from 'ricos-content';
 import { MAX_HEIGHT_INPUT, MIN_WIDTH, MAX_WIDTH, MIN_HEIGHT, MAX_HEIGHT } from './defaults';
 import { HeightIcon, WidthIcon } from 'wix-rich-content-plugin-commons';
 
-export const getToolbarButtons = (config): ToolbarButton[] => {
+export const getToolbarButtons = (config, services): ToolbarButton[] => {
   const {
     minHeight = MIN_HEIGHT,
     maxHeight = MAX_HEIGHT,

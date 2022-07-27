@@ -16,7 +16,8 @@ const selectedNodeResolver = {
   },
 };
 
-export const getToolbarButtons = (config): ToolbarButton[] => {
+export const getToolbarButtons = (config, services): ToolbarButton[] => {
+  const { modalService } = services;
   return [
     {
       id: 'linkPreviewSettings',
@@ -24,7 +25,7 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
         Component: LinkPreviewSettingsModal,
         id: linkPreviewModals.settings,
       },
-      command: ({ modalService, isMobile, node, referenceElement }) => {
+      command: ({ isMobile, node, referenceElement }) => {
         const isModalOpen = modalService.isModalOpen(linkPreviewModals.settings);
         isModalOpen
           ? modalService.closeModal(linkPreviewModals.settings)

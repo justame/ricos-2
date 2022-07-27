@@ -18,7 +18,8 @@ const imagePluginService = new ImagePluginService();
 
 const IMAGE_EDITOR_BUTTON_ID = 'IMAGE_EDITOR_BUTTON';
 
-export const getToolbarButtons = (config): ToolbarButton[] => {
+export const getToolbarButtons = (config, services): ToolbarButton[] => {
+  const { modalService, uploadService, updateService } = services;
   return [
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SIZE,
@@ -50,7 +51,7 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
         }),
         id: imageModals.imageEditor,
       },
-      command: ({ modalService, nodeId, src }) => {
+      command: ({ nodeId, src }) => {
         modalService?.openModal(imageModals.imageEditor, {
           componentProps: {
             nodeId,
@@ -88,7 +89,7 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
         Component: ImageSettingsModal,
         id: imageModals.settings,
       },
-      command: ({ modalService, isMobile, node }) => {
+      command: ({ isMobile, node }) => {
         modalService?.openModal(imageModals.settings, {
           componentProps: {
             nodeId: node.attrs.id,
@@ -104,7 +105,7 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.REPLACE,
       tooltip: 'ReplaceImageButton_Tooltip',
-      command: ({ node, uploadContext: { uploadService, updateService } }) => {
+      command: ({ node }) => {
         if (config.handleFileSelection) {
           config.handleFileSelection(
             undefined,

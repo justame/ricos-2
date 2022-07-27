@@ -44,7 +44,7 @@ const handleNativeFileChange =
     });
   };
 
-export const getAddButtons = (config, filePluginService): AddButton[] => {
+export const getAddButtons = (config, services, filePluginService): AddButton[] => {
   return [
     {
       id: 'file-upload',
@@ -53,28 +53,26 @@ export const getAddButtons = (config, filePluginService): AddButton[] => {
       icon: InsertPluginIcon,
       tooltip: 'FileUploadInsertButton_tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
-      command: (editorCommands, uploadService, updateService) => {
-        if (uploadService && updateService) {
-          if (config.handleFileSelection) {
-            config.handleFileSelection(
-              handleExternalFileChange(editorCommands, updateService, filePluginService)
-            );
-          } else {
-            const { accept = '*', multi = true, onFileSelected } = config;
-            uploadService?.selectFiles(
-              accept,
-              multi,
-              handleNativeFileChange(
-                editorCommands,
-                uploadService,
-                new Uploader(onFileSelected),
-                filePluginService
-              )
-            );
-          }
-          return true;
+      command: editorCommands => {
+        const { uploadService, updateService } = services;
+        if (config.handleFileSelection) {
+          config.handleFileSelection(
+            handleExternalFileChange(editorCommands, updateService, filePluginService)
+          );
+        } else {
+          const { accept = '*', multi = true, onFileSelected } = config;
+          uploadService?.selectFiles(
+            accept,
+            multi,
+            handleNativeFileChange(
+              editorCommands,
+              uploadService,
+              new Uploader(onFileSelected),
+              filePluginService
+            )
+          );
         }
-        return false;
+        return true;
       },
       menuConfig: {
         tags: 'UploadFile_plugin_search_tags',

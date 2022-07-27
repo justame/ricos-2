@@ -6,8 +6,18 @@ import type {
   ModalService,
   ShortcutRegistrar,
   ShortcutDataProvider,
+  PluginServices,
+  EventRegistrar,
+  EventSubscriptor,
+  IUploadService,
+  IUpdateService,
 } from 'ricos-types';
 import { identity } from 'fp-ts/function';
+
+const modalService = {
+  register: config => {},
+  unregister: id => {},
+} as ModalService;
 
 const shortcuts: ShortcutRegistrar & ShortcutDataProvider = {
   register: () => {},
@@ -20,10 +30,20 @@ const shortcuts: ShortcutRegistrar & ShortcutDataProvider = {
   }),
 } as ShortcutRegistrar & ShortcutDataProvider;
 
-const mockModalService = {
-  register: config => {},
-  unregister: id => {},
-} as ModalService;
+const events = {} as EventRegistrar & EventSubscriptor;
+
+const uploadService = {} as IUploadService;
+
+const updateService = {} as IUpdateService;
+
+const services: PluginServices = {
+  modalService,
+  shortcuts,
+  t: identity,
+  events,
+  uploadService,
+  updateService,
+};
 
 describe('Editor Plugins', () => {
   const linkPreview: EditorPluginType = {
@@ -120,7 +140,7 @@ describe('Editor Plugins', () => {
   };
 
   it('should register/unregister plugin', () => {
-    const registered = new EditorPlugins(mockModalService, shortcuts, identity);
+    const registered = new EditorPlugins(services);
     registered.register(linkPreview);
     expect(registered.asArray().length).toEqual(1);
     registered.unregister(registered.asArray()[0]);
@@ -128,7 +148,7 @@ describe('Editor Plugins', () => {
   });
 
   it('should validate there is no duplication while register plugin', () => {
-    const registered = new EditorPlugins(mockModalService, shortcuts, identity);
+    const registered = new EditorPlugins(services);
     registered.register(linkPreview);
     try {
       registered.register(linkPreview);
@@ -138,14 +158,14 @@ describe('Editor Plugins', () => {
   });
 
   it('should filter plugins', () => {
-    const registered = new EditorPlugins(mockModalService, shortcuts, identity);
+    const registered = new EditorPlugins(services);
     registered.register(linkPreview);
     registered.filter(plugin => !!plugin.getAddButtons());
     expect(registered.asArray().length).toEqual(1);
   });
 
   it('should produce add buttons', () => {
-    const registered = new EditorPlugins(mockModalService, shortcuts, identity);
+    const registered = new EditorPlugins(services);
     registered.register(linkPreview);
     registered.register(emoji);
     registered.register(divider);

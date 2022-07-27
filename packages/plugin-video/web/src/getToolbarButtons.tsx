@@ -7,10 +7,11 @@ import InsertModal from './modals/InsertModal';
 import VideoSettingsModal from './modals/SettingsModal';
 import { videoModals } from './constants';
 
-export const getToolbarButtons = (config): ToolbarButton[] => {
+export const getToolbarButtons = (config, services): ToolbarButton[] => {
   const { enableCustomUploadOnMobile, getVideoUrl, handleFileSelection, handleFileUpload } =
     config || {};
 
+  const { modalService } = services;
   const modalBaseProps = {
     enableCustomUploadOnMobile,
     getVideoUrl,
@@ -36,7 +37,7 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
         id: videoModals.settings,
         Component: VideoSettingsModal,
       },
-      command: ({ modalService, isMobile, node }) => {
+      command: ({ isMobile, node }) => {
         modalService?.openModal(videoModals.settings, {
           componentProps: {
             nodeId: node.attrs.id,
@@ -55,7 +56,7 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
         Component: decorateComponentWithProps(InsertModal, { modalId: videoModals.replace }),
         id: videoModals.replace,
       },
-      command: ({ modalService, isMobile, node, referenceElement }) => {
+      command: ({ isMobile, node, referenceElement }) => {
         const {
           video: { src },
           id,

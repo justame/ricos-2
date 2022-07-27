@@ -11,8 +11,10 @@ import { NodeSizeButton } from 'wix-rich-content-toolbars-ui';
 import type { PluginContainerData_Width_Type } from 'ricos-schema';
 import { DEFAULTS as defaultData } from './defaults';
 
-export const getToolbarButtons = (config): ToolbarButton[] => {
+export const getToolbarButtons = (config, services): ToolbarButton[] => {
   const { getAudioUrl, fetchData } = config || {};
+  const { modalService } = services;
+
   const handleFileSelection = config.handleFileSelection
     ? updateEntity =>
         config.handleFileSelection(undefined, false, updateEntity, undefined, defaultData)
@@ -38,15 +40,15 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
         id: audioModals.replace,
       },
 
-      command: ({ modalService, isMobile, node, referenceElement }) => {
+      command: ({ isMobile, node, referenceElement }) => {
         const {
           audio: { src },
           id,
         } = node.attrs;
-        if (modalService?.isModalOpen(audioModals.replace)) {
+        if (modalService.isModalOpen(audioModals.replace)) {
           modalService.closeModal(audioModals.replace);
         } else {
-          modalService?.openModal(audioModals.replace, {
+          modalService.openModal(audioModals.replace, {
             componentProps: {
               componentData: node.attrs, //TODO: convert to draft
               nodeId: id,
@@ -68,7 +70,7 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
         Component: AudioSettingsModal,
         id: audioModals.settings,
       },
-      command: ({ modalService, isMobile, node }) => {
+      command: ({ isMobile, node }) => {
         modalService?.openModal(audioModals.settings, {
           componentProps: {
             nodeId: node.attrs.id,

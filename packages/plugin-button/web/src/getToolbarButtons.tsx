@@ -6,7 +6,7 @@ import {
 import { buttonsModals } from './constants';
 import ButtonSettingsModal from './modals/SettingsModal';
 
-export const getToolbarButtons = (config, type): ToolbarButton[] => {
+export const getToolbarButtons = (config, services, type): ToolbarButton[] => {
   return [
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
@@ -22,8 +22,8 @@ export const getToolbarButtons = (config, type): ToolbarButton[] => {
         }),
         id: buttonsModals[type],
       },
-      command: ({ modalService, isMobile, node }) => {
-        modalService?.openModal(buttonsModals[type], {
+      command: ({ isMobile, node }) => {
+        services.modalService.openModal(buttonsModals[type], {
           componentProps: {
             nodeId: node.attrs.id,
             settings: config,

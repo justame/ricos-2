@@ -3,10 +3,9 @@ import { toolbarButtonsRenders } from './toolbarButtonsRenders';
 import { alwaysVisibleResolver } from 'wix-rich-content-toolbars-v3';
 import type {
   ToolbarButton,
-  ModalService,
   IPluginToolbarButton,
-  TiptapContentResolver,
   IToolbarItemConfigTiptap,
+  PluginServices,
 } from 'ricos-types';
 
 export class PluginToolbarButtonCollisionError extends Error {}
@@ -21,28 +20,28 @@ export class PluginToolbarButtonCollisionError extends Error {}
 export class PluginToolbarButton implements IPluginToolbarButton {
   button: ToolbarButton;
 
-  modalService: ModalService;
+  services: PluginServices;
 
-  private constructor(button: ToolbarButton, modalService: ModalService) {
+  private constructor(button: ToolbarButton, services: PluginServices) {
     this.button = button;
-    this.modalService = modalService;
+    this.services = services;
   }
 
-  static of(button: ToolbarButton, modalService: ModalService) {
-    return new PluginToolbarButton(button, modalService);
+  static of(button: ToolbarButton, services: PluginServices) {
+    return new PluginToolbarButton(button, services);
   }
 
   register() {
     const modal = this.getModal();
     if (modal) {
-      this.modalService?.register(modal);
+      this.services.modalService?.register(modal);
     }
   }
 
   unregister() {
     const modal = this.getModal();
     if (modal) {
-      this.modalService?.unregister(modal.id);
+      this.services.modalService?.unregister(modal.id);
     }
   }
 
@@ -82,7 +81,7 @@ export class PluginToolbarButton implements IPluginToolbarButton {
             click:
               ({ editorCommands }) =>
               args => {
-                command({ editorCommands, ...args });
+                command({ ...this.services, editorCommands, ...args });
               },
           }
         : { ...commands },

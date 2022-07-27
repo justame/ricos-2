@@ -6,7 +6,8 @@ import {
 import { verticalEmbedModals } from './constants';
 import InsertModal from './modals/InsertModal';
 
-export const getToolbarButtons = (config): ToolbarButton[] => {
+export const getToolbarButtons = (config, services): ToolbarButton[] => {
+  const { modalService } = services;
   return [
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.REPLACE,
@@ -16,7 +17,7 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
         }),
         id: verticalEmbedModals.replace,
       },
-      command: ({ modalService, isMobile, node, referenceElement }) => {
+      command: ({ isMobile, node, referenceElement }) => {
         if (modalService?.isModalOpen(verticalEmbedModals.replace)) {
           modalService.closeModal(verticalEmbedModals.replace);
         } else {

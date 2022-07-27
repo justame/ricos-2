@@ -20,7 +20,7 @@ export const pluginImage: EditorPluginCreator<ImagePluginEditorConfig> = config 
     ModalsMap,
     createPluginData: createImageData,
     tiptapExtensions,
-    toolbar: { getButtons: config => getToolbarButtons(config) },
-    getAddButtons: config => getAddButtons(config),
+    toolbar: { getButtons: (config, services) => getToolbarButtons(config, services) },
+    getAddButtons: (config, services) => getAddButtons(config, services),
   } as TiptapEditorPlugin;
 };

@@ -8,7 +8,7 @@ import { EventIcon, ProductIcon, BookingIcon } from './icons';
 import { verticalEmbedModals } from './constants';
 import InsertModal from './modals/InsertModal';
 
-export const getAddButtons = (config): AddButton[] => {
+export const getAddButtons = (config, services): AddButton[] => {
   const { exposeEmbedButtons = [] } = config || {};
   const buttonsMap: Record<string, AddButton> = {
     event: {

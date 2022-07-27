@@ -6,7 +6,7 @@ import { Uploader } from 'wix-rich-content-plugin-commons';
 import { NodeSizeButton } from 'wix-rich-content-toolbars-ui';
 import type { PluginContainerData_Width_Type } from 'ricos-schema';
 
-export const getToolbarButtons = (config, filePluginService): ToolbarButton[] => {
+export const getToolbarButtons = (config, services, filePluginService): ToolbarButton[] => {
   return [
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SIZE,
@@ -29,7 +29,8 @@ export const getToolbarButtons = (config, filePluginService): ToolbarButton[] =>
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.REPLACE,
       tooltip: 'FileUploadReplaceButton_tooltip',
-      command: ({ node, uploadContext: { uploadService, updateService } }) => {
+      command: ({ node }) => {
+        const { updateService, uploadService } = services;
         if (config.handleFileSelection) {
           config.handleFileSelection(({ data }) => {
             const file = Array.isArray(data) ? data[0] : data;

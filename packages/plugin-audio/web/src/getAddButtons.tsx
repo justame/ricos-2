@@ -12,7 +12,7 @@ import { audioButtonsTypes } from './types';
 import { audioModals } from './consts';
 import { compact } from 'lodash';
 
-export const getAddButtons = (config): AddButton[] => {
+export const getAddButtons = (config, services): AddButton[] => {
   const {
     getAudioUrl,
     exposeButtons = [audioButtonsTypes.audio],

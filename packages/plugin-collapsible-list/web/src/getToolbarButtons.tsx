@@ -3,7 +3,7 @@ import CollapsibleListSettings from './modals/SettingsModals';
 import { collapsibleModals } from './consts';
 import type { ToolbarButton } from 'ricos-types';
 
-export const getToolbarButtons = (config): ToolbarButton[] => {
+export const getToolbarButtons = (config, services): ToolbarButton[] => {
   return [
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS,
@@ -11,8 +11,8 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
         Component: CollapsibleListSettings,
         id: collapsibleModals.settings,
       },
-      command: ({ modalService, isMobile, node }) => {
-        modalService?.openModal(collapsibleModals.settings, {
+      command: ({ isMobile, node }) => {
+        services.modalService.openModal(collapsibleModals.settings, {
           componentProps: {
             nodeId: node.attrs.id,
           },

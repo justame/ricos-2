@@ -38,7 +38,7 @@ const handleNativeFileChange =
     });
   };
 
-export const getAddButtons = (config, galleryPluginService): AddButton[] => {
+export const getAddButtons = (config, services, galleryPluginService): AddButton[] => {
   return [
     {
       id: 'gallery',
@@ -47,32 +47,30 @@ export const getAddButtons = (config, galleryPluginService): AddButton[] => {
       icon: InsertPluginIcon,
       tooltip: 'GalleryPlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
-      command: (editorCommands, uploadService, updateService) => {
-        if (uploadService && updateService) {
-          if (config.handleFileSelection) {
-            config.handleFileSelection(
-              undefined,
-              true,
-              handleExternalFileChange(editorCommands, updateService, galleryPluginService),
-              undefined,
-              defaultData
-            );
-          } else {
-            const { accept = '*', multi = true, handleFileUpload } = config;
-            uploadService?.selectFiles(
-              accept,
-              multi,
-              handleNativeFileChange(
-                editorCommands,
-                uploadService,
-                new Uploader(handleFileUpload),
-                galleryPluginService
-              )
-            );
-          }
-          return true;
+      command: editorCommands => {
+        const { uploadService, updateService } = services;
+        if (config.handleFileSelection) {
+          config.handleFileSelection(
+            undefined,
+            true,
+            handleExternalFileChange(editorCommands, updateService, galleryPluginService),
+            undefined,
+            defaultData
+          );
+        } else {
+          const { accept = '*', multi = true, handleFileUpload } = config;
+          uploadService?.selectFiles(
+            accept,
+            multi,
+            handleNativeFileChange(
+              editorCommands,
+              uploadService,
+              new Uploader(handleFileUpload),
+              galleryPluginService
+            )
+          );
         }
-        return false;
+        return true;
       },
       menuConfig: {
         tags: 'Gallery_plugin_search_tags',
