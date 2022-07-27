@@ -16,12 +16,15 @@ type PluginsToolbarProps = {
 class PluginsToolbar extends React.Component<
   PluginsToolbarProps & { ricosContext: GeneralContext; editor: RichContentAdapter }
 > {
-  renderPluginToolbar(toolbar) {
+  renderPluginToolbar() {
     const {
       ricosContext,
       editor: { tiptapEditor },
       content,
+      plugins,
     } = this.props;
+
+    const toolbar = plugins?.getVisibleToolbar(tiptapEditor.state.selection);
 
     if (toolbar) {
       return (
@@ -46,8 +49,7 @@ class PluginsToolbar extends React.Component<
       plugins,
     } = this.props;
 
-    const toolbar = plugins?.getVisibleToolbar(tiptapEditor.state.selection);
-    const isVisible = () => !!toolbar;
+    const isVisible = () => !!plugins?.getVisibleToolbar(tiptapEditor.state.selection);
 
     return (
       <FloatingToolbar
@@ -68,7 +70,7 @@ class PluginsToolbar extends React.Component<
             data-hook={'floating-plugin-toolbar'}
             className={styles.floatingToolbar}
           >
-            {this.renderPluginToolbar(toolbar)}
+            {this.renderPluginToolbar()}
           </div>
         )}
       </FloatingToolbar>
