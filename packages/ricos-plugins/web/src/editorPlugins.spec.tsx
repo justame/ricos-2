@@ -5,12 +5,20 @@ import type {
   ToolbarType,
   ModalService,
   ShortcutRegistrar,
+  ShortcutDataProvider,
 } from 'ricos-types';
+import { identity } from 'fp-ts/function';
 
-const shortcuts: ShortcutRegistrar = {
+const shortcuts: ShortcutRegistrar & ShortcutDataProvider = {
   register: () => {},
   unregister: () => {},
-} as ShortcutRegistrar;
+  getShortcutDisplayData: () => ({
+    name: '',
+    description: '',
+    keyCombinationText: '',
+    group: '',
+  }),
+} as ShortcutRegistrar & ShortcutDataProvider;
 
 const mockModalService = {
   register: config => {},
@@ -112,7 +120,7 @@ describe('Editor Plugins', () => {
   };
 
   it('should register/unregister plugin', () => {
-    const registered = new EditorPlugins(mockModalService, shortcuts);
+    const registered = new EditorPlugins(mockModalService, shortcuts, identity);
     registered.register(linkPreview);
     expect(registered.asArray().length).toEqual(1);
     registered.unregister(registered.asArray()[0]);
@@ -120,7 +128,7 @@ describe('Editor Plugins', () => {
   });
 
   it('should validate there is no duplication while register plugin', () => {
-    const registered = new EditorPlugins(mockModalService, shortcuts);
+    const registered = new EditorPlugins(mockModalService, shortcuts, identity);
     registered.register(linkPreview);
     try {
       registered.register(linkPreview);
@@ -130,14 +138,14 @@ describe('Editor Plugins', () => {
   });
 
   it('should filter plugins', () => {
-    const registered = new EditorPlugins(mockModalService, shortcuts);
+    const registered = new EditorPlugins(mockModalService, shortcuts, identity);
     registered.register(linkPreview);
     registered.filter(plugin => !!plugin.getAddButtons());
     expect(registered.asArray().length).toEqual(1);
   });
 
   it('should produce add buttons', () => {
-    const registered = new EditorPlugins(mockModalService, shortcuts);
+    const registered = new EditorPlugins(mockModalService, shortcuts, identity);
     registered.register(linkPreview);
     registered.register(emoji);
     registered.register(divider);

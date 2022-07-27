@@ -873,4 +873,75 @@ describe('migrate from draft', () => {
 
     expect(compare(videoData, expectedVideoData)).toEqual({});
   });
+
+  it('should file upload legacy data fields correctly (blog)', () => {
+    const draftContent = {
+      blocks: [
+        {
+          key: 'c0so8',
+          text: ' ',
+          type: 'atomic',
+          depth: 0,
+          inlineStyleRanges: [],
+          entityRanges: [
+            {
+              offset: 0,
+              length: 1,
+              key: 0,
+            },
+          ],
+          data: {},
+        },
+      ],
+      entityMap: {
+        '0': {
+          type: 'wix-draft-plugin-file-upload',
+          mutability: 'IMMUTABLE',
+          data: {
+            config: {
+              alignment: 'center',
+              size: 'content',
+              textWrap: 'wrap',
+            },
+            name: 'document.pdf',
+            type: 'pdf',
+            url: 'https://www.w3.org/wai/er/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+            privacy: 'public',
+            size: 150000,
+            pdfSettings: {
+              viewMode: 'FULL',
+              disableDownload: false,
+              disablePrint: false,
+            },
+            mimeType: 'document',
+            path: 'bla/bla.pdf',
+          },
+        },
+      },
+      documentStyle: {},
+      VERSION: '8.71.49',
+      ID: '79347b8b-6a76-4e7e-bfed-c7ed8745fe8c',
+    };
+    const fileData = JSON.parse(JSON.stringify(fromDraft(draftContent).nodes[0].fileData));
+
+    const expectedFileData = {
+      containerData: {
+        alignment: 'CENTER',
+        width: { size: 'CONTENT' },
+        textWrap: true,
+      },
+      src: {
+        url: 'https://www.w3.org/wai/er/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+        private: false,
+      },
+      name: 'document.pdf',
+      type: 'pdf',
+      size: 150000,
+      pdfSettings: { viewMode: 'FULL', disableDownload: false, disablePrint: false },
+      mimeType: 'document',
+      path: 'bla/bla.pdf',
+    };
+
+    expect(compare(fileData, expectedFileData)).toEqual({});
+  });
 });

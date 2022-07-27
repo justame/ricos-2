@@ -11,14 +11,13 @@ export const pluginBulletedList: TiptapEditorPlugin = {
   tiptapExtensions: [bulletedList],
   shortcuts: [
     {
-      name: 'bulletedList',
+      name: 'unorderedList',
       description: 'Toggles bulleted list to current node',
-      keys: 'Meta+Shift+8',
+      keys: { macOs: 'Meta+Shift+8', windows: 'Ctrl+Shift+8' },
       command(editorCommands: EditorCommands) {
         editorCommands.setBlockType(BULLET_LIST_TYPE);
       },
       group: 'formatting',
-      keyCombinationText: 'Cmd+Shift+8',
       enabled: true,
     },
   ],

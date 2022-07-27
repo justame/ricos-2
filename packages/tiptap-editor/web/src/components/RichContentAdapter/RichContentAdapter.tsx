@@ -326,7 +326,7 @@ export class RichContentAdapter implements TiptapAdapter {
           console.error(`delete ${type} decoration type not supported`);
         }
       },
-      setTextAlignment: alignment => {
+      setTextAlignment: (alignment: TextAlignment) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         this.tiptapEditor.commands.setTextAlign(alignment);

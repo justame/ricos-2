@@ -19,23 +19,21 @@ export const pluginUndoRedo: EditorPluginCreator<UndoRedoPluginEditorConfig> = c
       {
         name: 'undo',
         description: 'Undoes the last action',
-        keys: 'Meta+Z',
+        keys: { macOs: 'Meta+Z', windows: 'Ctrl+Z' },
         command(editorCommands: EditorCommands) {
           editorCommands.undo();
         },
         group: 'formatting',
-        keyCombinationText: 'Cmd+Z',
         enabled: true,
       },
       {
         name: 'redo',
         description: 'Redoes the last action',
-        keys: 'Meta+Shift+Z',
+        keys: { macOs: 'Meta+Shift+Z', windows: 'Ctrl+Shift+Z' },
         command(editorCommands: EditorCommands) {
           editorCommands.redo();
         },
         group: 'formatting',
-        keyCombinationText: 'Cmd+Shift+Z',
         enabled: true,
       },
     ],

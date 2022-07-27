@@ -4,9 +4,10 @@ import type {
   FormattingToolbarButtons,
   IEditorPlugin,
   IEditorPlugins,
-  LegacyEditorPluginConfig,
   ModalService,
+  ShortcutDataProvider,
   ShortcutRegistrar,
+  TranslationFunction,
 } from 'ricos-types';
 import { EditorPlugin } from './editorPlugin';
 import type { PluginTextButton } from './plugin-text-button';
@@ -20,15 +21,22 @@ export class EditorPlugins implements IEditorPlugins {
 
   private modalService: ModalService;
 
-  private readonly shortcuts: ShortcutRegistrar;
+  private readonly shortcuts: ShortcutRegistrar & ShortcutDataProvider;
 
-  constructor(modalService: ModalService, shortcuts: ShortcutRegistrar) {
+  private readonly t: TranslationFunction;
+
+  constructor(
+    modalService: ModalService,
+    shortcuts: ShortcutRegistrar & ShortcutDataProvider,
+    t: TranslationFunction
+  ) {
     this.modalService = modalService;
     this.shortcuts = shortcuts;
+    this.t = t;
   }
 
   register(plugin: EditorPluginType) {
-    const candidate = EditorPlugin.of(plugin, this.modalService, this.shortcuts);
+    const candidate = EditorPlugin.of(plugin, this.modalService, this.shortcuts, this.t);
 
     const duplicate = this.hasDuplicate(candidate);
     if (duplicate) {
@@ -68,7 +76,7 @@ export class EditorPlugins implements IEditorPlugins {
     const textButtons = this.plugins.flatMap(
       plugin => (plugin.getTextButtons() as PluginTextButton[]) || []
     );
-    return new PluginTextButtons(textButtons);
+    return PluginTextButtons.of(textButtons);
   }
 
   getAddButtons() {

@@ -17,7 +17,24 @@
     Click to see more.
   </summary>
 
+## :house: Internal
+
+- `ricos-shortcuts`
+  - [#4273](https://github.com/wix/ricos/pull/4273) platform-dependent shortcut keys
+
 </details>
+
+## 8.72.13 (Jul 27, 2022)
+
+## :bug: Bug Fix
+
+- `ricos-schema`
+  - [#4249](https://github.com/wix/ricos/pull/4249) support blog legacy file data fields
+
+## :house: Internal
+
+- `ricos-plugins`
+  - [#4270](https://github.com/wix/ricos/pull/4270) text buttons modal registration
 
 ## 8.72.12 (Jul 26, 2022)
 

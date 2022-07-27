@@ -18,23 +18,21 @@ export const pluginIndent: EditorPluginCreator<IndentPluginEditorConfig> = confi
       {
         name: 'increaseIndent',
         description: 'Indents the current node',
-        keys: 'Meta+]',
+        keys: { macOs: 'Meta+]', windows: 'Ctrl+]' },
         command(editorCommands: EditorCommands) {
           editorCommands.insertDecoration(RICOS_INDENT_TYPE);
         },
         group: 'formatting',
-        keyCombinationText: 'Meta+]',
         enabled: true,
       },
       {
         name: 'decreaseIndent',
         description: 'Unindents the current node',
-        keys: 'Meta+[',
+        keys: { macOs: 'Meta+[', windows: 'Ctrl+[' },
         command(editorCommands: EditorCommands) {
           editorCommands.deleteDecoration(RICOS_INDENT_TYPE);
         },
         group: 'formatting',
-        keyCombinationText: 'Meta+[',
         enabled: true,
       },
     ],

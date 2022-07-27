@@ -22,7 +22,7 @@ const getShortcut = (level: 1 | 2 | 3 | 4 | 5 | 6): KeyboardShortcut =>
   ({
     name: `heading${level}`,
     description: `Toggles H${level} style to current node`,
-    keys: `Meta+Alt+${level}`,
+    keys: { macOs: `Meta+Alt+${level}`, windows: `Ctrl+Alt+${level}` },
     command(editorCommands: EditorCommands) {
       editorCommands.setBlockType(headerBlockByLevel[level - 1]);
     },

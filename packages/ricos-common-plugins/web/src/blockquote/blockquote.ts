@@ -13,12 +13,11 @@ export const pluginBlockquote: TiptapEditorPlugin = {
     {
       name: 'blockquote',
       description: 'Toggles quote to current node',
-      keys: 'Meta+Shift+9',
+      keys: { macOs: 'Meta+Shift+9', windows: 'Ctrl+Shift+9' },
       command(editorCommands: EditorCommands) {
         editorCommands.setBlockType(BLOCKQUOTE);
       },
       group: 'formatting',
-      keyCombinationText: 'Cmd+Shift+9',
       enabled: true,
     },
   ],

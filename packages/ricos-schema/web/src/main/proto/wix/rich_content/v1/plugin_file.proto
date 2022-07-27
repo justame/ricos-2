@@ -24,4 +24,6 @@ message FileData {
   google.protobuf.StringValue type = 4;
   google.protobuf.Int32Value size = 5;
   PDFSettings pdf_settings = 6;
+  google.protobuf.StringValue mime_type = 7;
+  google.protobuf.StringValue path = 8;
 }

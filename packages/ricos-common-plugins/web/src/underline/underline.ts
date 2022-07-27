@@ -12,12 +12,11 @@ export const pluginUnderline: TiptapEditorPlugin = {
     {
       name: 'underline',
       description: 'Toggles underline style of selected text',
-      keys: 'Meta+U',
+      keys: { macOs: 'Meta+U', windows: 'Ctrl+U' },
       command(editorCommands: EditorCommands) {
         editorCommands.toggleInlineStyle('underline');
       },
       group: 'formatting',
-      keyCombinationText: 'Cmd+U',
       enabled: true,
     },
   ],
@@ -28,10 +27,6 @@ export const pluginUnderline: TiptapEditorPlugin = {
       presentation: {
         dataHook: 'textInlineStyleButton_Underline',
         tooltip: 'UnderlineButton_Tooltip',
-        tooltipShortcut: {
-          MacOS: ' (⌘U)',
-          Windows: ' (Ctrl+U)',
-        },
         icon: UnderlineIcon,
       },
       attributes: {

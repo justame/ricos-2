@@ -7,10 +7,9 @@ describe('Keys', () => {
     expect(actual).toEqual('Meta+Shift+Z');
   });
 
-  it('should fallback to F20 on invalid keys', () => {
+  it('should throw KeyboardShortcutParseError on invalid keys', () => {
     ['bad', '', 'Shift+Alt', 'Z+', 'Ctrl+A+', 'Alt+Test'].forEach((keys: BasicKeyCombination) => {
-      const actual = Keys.parse(keys).toString();
-      expect(actual).toEqual('F20');
+      expect(() => Keys.parse(keys)).toThrow(/invalid keys combination/);
     });
   });
 
