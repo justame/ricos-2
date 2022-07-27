@@ -64,7 +64,9 @@ const GallerySettingsModal: FC<Props> = ({
   };
 
   const closeModal = () => {
-    modalService.closeModal(galleryModals.settings);
+    modalService.closeModal(
+      activeTab === 'manage_media' ? galleryModals.manageMedia : galleryModals.settings
+    );
   };
 
   const onCancel = () => {
