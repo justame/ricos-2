@@ -35,16 +35,20 @@ export const EditHtmlButton: FC<Props> = ({ toolbarItem, dataHook }) => {
     toolbarItem.commands?.click({ htmlData });
   };
 
-  const onClick = () =>
-    modalService.openModal(HTML_EDIT_MODAL_ID, {
-      componentProps: {
-        componentData,
-        updateData,
-        close: () => modalService.closeModal(HTML_EDIT_MODAL_ID),
-      },
-      layout: 'popover',
-      positioning: { referenceElement, placement: 'bottom' },
-    });
+  const onClick = () => {
+    const isModalOpen = modalService.isModalOpen(HTML_EDIT_MODAL_ID);
+    isModalOpen
+      ? modalService.closeModal(HTML_EDIT_MODAL_ID)
+      : modalService.openModal(HTML_EDIT_MODAL_ID, {
+          componentProps: {
+            componentData,
+            updateData,
+            close: () => modalService.closeModal(HTML_EDIT_MODAL_ID),
+          },
+          layout: 'popover',
+          positioning: { referenceElement, placement: 'bottom' },
+        });
+  };
 
   return (
     <div ref={setReferenceElement}>
