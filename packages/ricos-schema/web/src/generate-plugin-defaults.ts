@@ -68,7 +68,12 @@ const defaultContent = {
       },
     },
     { type: 'HEADING', headingData: { textStyle: {} } },
-    { type: 'HTML', htmlData: { containerData: { ...containerData, width: { custom: '350' } } } },
+    {
+      type: 'HTML',
+      htmlData: {
+        containerData: { ...containerData, width: { custom: '350' }, height: { custom: '550' } },
+      },
+    },
     { type: 'IMAGE', imageData: { containerData, image: {}, link: {} } },
     { type: 'LINK_PREVIEW', linkPreviewData: { containerData, link: {} } },
     { type: 'MAP', mapData: { containerData, mapSettings: {} } },
