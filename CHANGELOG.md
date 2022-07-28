@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :house: Internal
+
+- `ricos-plugins`
+  - [#4290](https://github.com/wix/ricos/pull/4290) fix plugin shortcuts
+
 </details>
 
 ## 8.72.14 (Jul 27, 2022)
