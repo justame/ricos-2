@@ -38,6 +38,7 @@ export class EditorPlugin implements IEditorPlugin {
       this.addButtons = this.plugin
         .getAddButtons(this.plugin.config, this.services)
         .map((button: AddButton) => PluginAddButton.of(button, this.services));
+      this.addButtons?.map(b => b.register());
     }
   }
 
@@ -47,6 +48,7 @@ export class EditorPlugin implements IEditorPlugin {
       this.textButtons = this.plugin.textButtons.map(b =>
         PluginTextButton.of(b, this.services, 'macOs')
       );
+      this.textButtons?.map(b => b.register());
     }
   }
 
@@ -64,23 +66,21 @@ export class EditorPlugin implements IEditorPlugin {
         this.getExtensionName(),
         this.services
       );
+      this.toolbar?.register();
     }
   }
 
   register() {
+    this.plugin.shortcuts?.map(shortcut => this.services.shortcuts.register(shortcut));
     this.initAddButtons();
     this.initTextButtons();
     this.initPluginToolbar();
-    this.plugin.shortcuts?.map(shortcut => this.services.shortcuts.register(shortcut));
-    this.addButtons?.map(b => b.register());
-    this.textButtons?.map(b => b.register());
-    this.toolbar?.register();
   }
 
   unregister() {
-    this.addButtons?.map(b => b.unregister());
-    this.textButtons?.map(b => b.unregister());
     this.toolbar?.unregister();
+    this.textButtons?.map(b => b.unregister());
+    this.addButtons?.map(b => b.unregister());
     this.plugin.shortcuts?.map(shortcut => this.services.shortcuts.unregister(shortcut));
   }
 
