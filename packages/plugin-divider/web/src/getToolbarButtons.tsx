@@ -7,7 +7,7 @@ import { DividerSizeButton } from './toolbar/DividerSizeButton';
 import { DividerStyleButton } from './toolbar/DividerStyleButton';
 import { TIPTAP_DIVIDER_TYPE } from 'ricos-content';
 
-export const getToolbarButtons = (config): ToolbarButton[] => {
+export const getToolbarButtons = (config, services): ToolbarButton[] => {
   return [
     {
       id: 'dividerStyle',

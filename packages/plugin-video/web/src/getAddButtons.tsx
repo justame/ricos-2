@@ -11,7 +11,7 @@ import { videoButtonsTypes } from './types';
 import { videoModals } from './constants';
 import { compact } from 'lodash';
 
-export const getAddButtons = (config): AddButton[] => {
+export const getAddButtons = (config, services): AddButton[] => {
   const {
     enableCustomUploadOnMobile,
     getVideoUrl,

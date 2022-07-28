@@ -7,10 +7,15 @@ import type {
   ShortcutDataProvider,
   ShortcutRegistrar,
   ToolbarType,
+  PluginServices,
+  EventRegistrar,
+  EventSubscriptor,
+  IUploadService,
+  IUpdateService,
 } from 'ricos-types';
 import { identity } from 'fp-ts/function';
 
-const mockModalService = {
+const modalService = {
   register: config => {},
   unregister: id => {},
 } as ModalService;
@@ -25,6 +30,21 @@ const shortcuts: ShortcutRegistrar & ShortcutDataProvider = {
     group: '',
   }),
 } as ShortcutRegistrar & ShortcutDataProvider;
+
+const events = {} as EventRegistrar & EventSubscriptor;
+
+const uploadService = {} as IUploadService;
+
+const updateService = {} as IUpdateService;
+
+const services: PluginServices = {
+  modalService,
+  shortcuts,
+  t: identity,
+  events,
+  uploadService,
+  updateService,
+};
 
 describe('Editor Plugin', () => {
   const plugin: EditorPluginType = {
@@ -53,7 +73,7 @@ describe('Editor Plugin', () => {
     ],
   };
 
-  const actual = EditorPlugin.of(plugin, mockModalService, shortcuts, identity);
+  const actual = EditorPlugin.of(plugin, services);
   actual.register();
   it('should create valid instance', () => {
     expect(actual).toBeInstanceOf(EditorPlugin);
@@ -74,9 +94,7 @@ describe('Editor Plugin', () => {
         type: 'ricos-plugin2',
         config: {},
       },
-      mockModalService,
-      shortcuts,
-      identity
+      services
     );
 
     expect(actual2.equals(actual)).toBeFalsy();

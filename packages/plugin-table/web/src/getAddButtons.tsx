@@ -9,7 +9,7 @@ import type { AddButton } from 'ricos-types';
 import { getDefaultsSettings } from './tableUtil';
 import { tableModals } from './types';
 
-export const getAddButtons = (): AddButton[] => {
+export const getAddButtons = (config, services): AddButton[] => {
   return [
     {
       id: 'table',

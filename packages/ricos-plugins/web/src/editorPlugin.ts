@@ -6,11 +6,8 @@ import type {
   IPluginAddButton,
   IPluginToolbar,
   LegacyEditorPluginConfig,
-  ModalService,
-  ShortcutDataProvider,
-  ShortcutRegistrar,
   TiptapEditorPlugin,
-  TranslationFunction,
+  PluginServices,
 } from 'ricos-types';
 import { PluginTextButton } from './plugin-text-button';
 import { PluginAddButton } from './pluginAddButton';
@@ -25,38 +22,31 @@ export class EditorPlugin implements IEditorPlugin {
 
   private toolbar?: IPluginToolbar;
 
-  private readonly modalService: ModalService;
+  services: PluginServices;
 
-  private readonly t: TranslationFunction;
-
-  private readonly shortcutRegistrar: ShortcutRegistrar & ShortcutDataProvider;
-
-  static of(
-    plugin: EditorPluginType,
-    modalService: ModalService,
-    shortcuts: ShortcutRegistrar & ShortcutDataProvider,
-    t: TranslationFunction
-  ): EditorPlugin {
-    return new EditorPlugin(plugin, modalService, shortcuts, t);
+  static of(plugin: EditorPluginType, services: PluginServices): EditorPlugin {
+    return new EditorPlugin(plugin, services);
   }
 
-  private constructor(
-    plugin: EditorPluginType,
-    modalService: ModalService,
-    shortcuts: ShortcutRegistrar & ShortcutDataProvider,
-    t: TranslationFunction
-  ) {
+  private constructor(plugin: EditorPluginType, services: PluginServices) {
     this.plugin = plugin;
-    this.modalService = modalService;
-    this.t = t;
-    this.shortcutRegistrar = shortcuts;
+    this.services = services;
   }
 
   private initAddButtons() {
     if (this.plugin.getAddButtons) {
       this.addButtons = this.plugin
-        .getAddButtons(this.plugin.config)
-        .map((button: AddButton) => PluginAddButton.of(button, this.modalService));
+        .getAddButtons(this.plugin.config, this.services)
+        .map((button: AddButton) => PluginAddButton.of(button, this.services));
+    }
+  }
+
+  // TODO: pass real platform
+  private initTextButtons() {
+    if (this.plugin.textButtons) {
+      this.textButtons = this.plugin.textButtons.map(b =>
+        PluginTextButton.of(b, this.services, 'macOs')
+      );
     }
   }
 
@@ -68,29 +58,20 @@ export class EditorPlugin implements IEditorPlugin {
     if (this.plugin.toolbar) {
       this.toolbar = PluginToolbar.of(
         {
-          buttons: this.plugin.toolbar.getButtons(this.plugin.config),
+          buttons: this.plugin.toolbar.getButtons(this.plugin.config, this.services),
           isVisible: this.plugin.toolbar.isVisible,
         },
         this.getExtensionName(),
-        this.modalService
-      );
-    }
-  }
-
-  // TODO: pass real platform
-  private initTextButtons() {
-    if (this.plugin.textButtons) {
-      this.textButtons = this.plugin.textButtons.map(b =>
-        PluginTextButton.of(b, this.modalService, this.shortcutRegistrar, this.t, 'macOs')
+        this.services
       );
     }
   }
 
   register() {
     this.initAddButtons();
-    this.plugin.shortcuts?.map(shortcut => this.shortcutRegistrar.register(shortcut));
     this.initTextButtons();
     this.initPluginToolbar();
+    this.plugin.shortcuts?.map(shortcut => this.services.shortcuts.register(shortcut));
     this.addButtons?.map(b => b.register());
     this.textButtons?.map(b => b.register());
     this.toolbar?.register();
@@ -100,7 +81,7 @@ export class EditorPlugin implements IEditorPlugin {
     this.addButtons?.map(b => b.unregister());
     this.textButtons?.map(b => b.unregister());
     this.toolbar?.unregister();
-    this.plugin.shortcuts?.map(shortcut => this.shortcutRegistrar.unregister(shortcut));
+    this.plugin.shortcuts?.map(shortcut => this.services.shortcuts.unregister(shortcut));
   }
 
   getType(): string {

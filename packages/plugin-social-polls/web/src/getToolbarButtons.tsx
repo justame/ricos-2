@@ -32,7 +32,8 @@ const getCommandByTab =
     });
   };
 
-export const getToolbarButtons = (config): ToolbarButton[] => {
+export const getToolbarButtons = (config, services): ToolbarButton[] => {
+  const { modalService } = services;
   return [
     {
       id: 'pollLayout',
@@ -43,22 +44,20 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
         Component: PollSettingsModal,
         id: pollModals.layout,
       },
-      command: ({ layout, editorCommands, modalService, isMobile, node }) => {
-        !modalService &&
-          editorCommands
-            .chain()
-            .focus()
-            .updateAttributes(TIPTAP_POLL_TYPE, {
-              layout: {
-                poll: {
-                  type: layout,
-                  direction: 'LTR',
-                  enableImage: true,
-                },
+      command: ({ layout, editorCommands }) => {
+        editorCommands
+          .chain()
+          .focus()
+          .updateAttributes(TIPTAP_POLL_TYPE, {
+            layout: {
+              poll: {
+                type: layout,
+                direction: 'LTR',
+                enableImage: true,
               },
-            })
-            .run();
-        modalService && getCommandByTab(TABS.LAYOUT)({ modalService, isMobile, node });
+            },
+          })
+          .run();
       },
       renderer: toolbarItem => <PollLayoutButton toolbarItem={toolbarItem} />,
     },

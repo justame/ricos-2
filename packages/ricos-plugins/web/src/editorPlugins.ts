@@ -4,10 +4,7 @@ import type {
   FormattingToolbarButtons,
   IEditorPlugin,
   IEditorPlugins,
-  ModalService,
-  ShortcutDataProvider,
-  ShortcutRegistrar,
-  TranslationFunction,
+  PluginServices,
 } from 'ricos-types';
 import { EditorPlugin } from './editorPlugin';
 import type { PluginTextButton } from './plugin-text-button';
@@ -19,25 +16,14 @@ export class PluginCollisionError extends Error {}
 export class EditorPlugins implements IEditorPlugins {
   private plugins: IEditorPlugin[] = [];
 
-  private modalService: ModalService;
+  private services: PluginServices;
 
-  private readonly shortcuts: ShortcutRegistrar & ShortcutDataProvider;
-
-  private readonly t: TranslationFunction;
-
-  constructor(
-    modalService: ModalService,
-    shortcuts: ShortcutRegistrar & ShortcutDataProvider,
-    t: TranslationFunction
-  ) {
-    this.modalService = modalService;
-    this.shortcuts = shortcuts;
-    this.t = t;
+  constructor(services: PluginServices) {
+    this.services = services;
   }
 
   register(plugin: EditorPluginType) {
-    const candidate = EditorPlugin.of(plugin, this.modalService, this.shortcuts, this.t);
-
+    const candidate = EditorPlugin.of(plugin, this.services);
     const duplicate = this.hasDuplicate(candidate);
     if (duplicate) {
       throw new PluginCollisionError(
@@ -82,7 +68,7 @@ export class EditorPlugins implements IEditorPlugins {
   getAddButtons() {
     //maybe use filter class func
     const addButtons = this.plugins.flatMap(plugin => plugin.getAddButtons() || []);
-    return new PluginAddButtons(addButtons, this.modalService);
+    return new PluginAddButtons(addButtons, this.services);
   }
 
   getVisibleToolbar(selection) {

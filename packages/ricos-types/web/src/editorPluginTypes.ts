@@ -11,9 +11,11 @@ import type { ToolbarType } from './toolbarEnums';
 import type { PluginButton, AddPluginMenuConfig } from './toolbarSettingsTypes';
 import type { ToolbarButtonProps } from './buttonTypes';
 import type { EditorCommands } from './editorCommandsType';
-import type { IUpdateService, IUploadService } from './uploadServicesTypes';
 import type { TranslationFunction } from './commonTypes';
+import type { ModalService } from './modalTypes';
+import type { ShortcutRegistrar, ShortcutDataProvider } from './shortcuts';
 import type { IContent } from './content';
+import type { RicosServices } from '.';
 
 /**
  * Represents a plugin in Ricos Editor.
@@ -168,9 +170,6 @@ export interface FormattingToolbarButton {
   toToolbarItemConfig(editorCommands: EditorCommands): IToolbarItemConfigTiptap;
   toExternalToolbarButtonConfig(
     editorCommands: EditorCommands,
-    t: TranslationFunction,
-    uploadService: IUploadService,
-    updateService: IUpdateService,
     content: IContent<unknown>
   ): ToolbarButtonProps;
 }
@@ -190,9 +189,6 @@ export interface FormattingToolbarButtons {
   toToolbarItemsConfigs(editorCommands: EditorCommands): IToolbarItemConfigTiptap[];
   toExternalToolbarButtonsConfigs(
     editorCommands: EditorCommands,
-    t: TranslationFunction,
-    uploadService: IUploadService,
-    updateService: IUpdateService,
     content: IContent<unknown>
   ): Record<string, ToolbarButtonProps>;
 }
@@ -208,12 +204,7 @@ export interface IPluginAddButton {
 
   toToolbarItemConfig: () => IToolbarItemConfigTiptap;
 
-  toExternalToolbarButtonConfig: (
-    editorCommands: EditorCommands,
-    t: TranslationFunction,
-    uploadService: IUploadService,
-    updateService: IUpdateService
-  ) => ToolbarButtonProps;
+  toExternalToolbarButtonConfig: (editorCommands: EditorCommands) => ToolbarButtonProps;
 
   getToolbars: () => ToolbarType[];
 
@@ -240,10 +231,7 @@ export interface IPluginAddButtons {
   toToolbarItemsConfigs(): IToolbarItemConfigTiptap[];
 
   toExternalToolbarButtonsConfigs(
-    editorCommands: EditorCommands,
-    t: TranslationFunction,
-    uploadService: IUploadService,
-    updateService: IUpdateService
+    editorCommands: EditorCommands
   ): Record<string, ToolbarButtonProps>;
 }
 
@@ -275,3 +263,9 @@ export interface IPluginToolbarButton {
 
   unregister: () => void;
 }
+
+export type PluginServices = Partial<RicosServices> & {
+  t: TranslationFunction;
+  shortcuts: ShortcutRegistrar & ShortcutDataProvider;
+  modalService: ModalService;
+};

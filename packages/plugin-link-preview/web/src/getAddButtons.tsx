@@ -9,7 +9,7 @@ import type { AddButton } from 'ricos-types';
 import { socialModals } from './consts';
 import { compact } from 'lodash';
 
-export const getAddButtons = (config): AddButton[] => {
+export const getAddButtons = (config, services): AddButton[] => {
   const { exposeEmbedButtons = [], fetchData } = config || {};
 
   const buttonsMap: Record<string, AddButton> = {

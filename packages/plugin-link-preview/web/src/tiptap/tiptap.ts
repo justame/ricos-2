@@ -85,10 +85,13 @@ const addLinkPreview =
                   .chain()
                   .focus()
                   .deleteRange({ from: pos.pos - (pos.nodeBefore?.nodeSize || 0), to: pos.pos })
-                  .insertContent({
-                    type: shouldEmbed ? TIPTAP_EMBED_TYPE : TIPTAP_LINK_PREVIEW_TYPE,
-                    attrs: convertedLinkPreviewData,
-                  })
+                  .insertContent([
+                    {
+                      type: shouldEmbed ? TIPTAP_EMBED_TYPE : TIPTAP_LINK_PREVIEW_TYPE,
+                      attrs: convertedLinkPreviewData,
+                    },
+                    { type: 'PARAGRAPH' },
+                  ])
                   .run();
               }
             );

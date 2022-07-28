@@ -4,7 +4,7 @@ import type { AddButton } from 'ricos-types';
 import { defaultCollapsibleItem } from './tiptap/defaults';
 import { COLLAPSIBLE_LIST_TYPE } from './types';
 
-export const getAddButtons = (): AddButton[] => {
+export const getAddButtons = (config, services): AddButton[] => {
   return [
     {
       id: 'collapsibleList',

@@ -4,7 +4,7 @@ import InsertModal from './modals/InsertModal';
 import type { AddButton } from 'ricos-types';
 import { emojiModals } from './types';
 
-export const getAddButtons = (config): AddButton[] => {
+export const getAddButtons = (config, services): AddButton[] => {
   return [
     {
       id: 'emoji',

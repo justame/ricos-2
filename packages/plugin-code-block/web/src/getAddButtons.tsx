@@ -3,7 +3,7 @@ import { INSERT_PLUGIN_BUTTONS, TOOLBARS } from 'wix-rich-content-editor-common'
 import type { AddButton } from 'ricos-types';
 import { CODE_BLOCK_TYPE } from './types';
 
-export const getAddButtons = (): AddButton[] => {
+export const getAddButtons = (config, services): AddButton[] => {
   return [
     {
       id: 'code-block',

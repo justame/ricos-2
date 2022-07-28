@@ -22,7 +22,9 @@ export const pluginGallery: EditorPluginCreator<GalleryPluginEditorConfig> = con
     ModalsMap,
     createPluginData: createGalleryData,
     tiptapExtensions,
-    getAddButtons: config => getAddButtons(config, galleryPluginService),
-    toolbar: { getButtons: config => getToolbarButtons(config, galleryPluginService) },
+    getAddButtons: (config, services) => getAddButtons(config, services, galleryPluginService),
+    toolbar: {
+      getButtons: (config, services) => getToolbarButtons(config, services, galleryPluginService),
+    },
   } as TiptapEditorPlugin;
 };

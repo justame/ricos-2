@@ -3,7 +3,7 @@ import { INSERT_PLUGIN_BUTTONS, TOOLBARS } from 'wix-rich-content-editor-common'
 import type { AddButton } from 'ricos-types';
 import buttonDataDefaults from 'ricos-schema/dist/statics/button.defaults.json';
 
-export const getAddButtons = (config, type): AddButton[] => {
+export const getAddButtons = (config, services, type): AddButton[] => {
   return [
     {
       id: 'button',

@@ -99,11 +99,26 @@ export class FullRicosEditor extends React.Component<Props, State> {
     super(props);
     this.portalRef = createRef<RicosPortalType>();
 
+    const { onMediaUploadStart, onMediaUploadEnd } = props._rcProps?.helpers || {};
+    this.uploadService = new UploadService(new StreamReader(), this.updateService, {
+      onMediaUploadStart,
+      onMediaUploadEnd,
+    });
+
+    this.updateService = new UpdateService();
     this.events = new RicosEvents();
     this.modalService = new RicosModalService(this.events);
     this.styles = new RicosStyles();
     this.shortcuts = new EditorKeyboardShortcuts(this.events, this.modalService);
-    this.editorPlugins = new EditorPlugins(this.modalService, this.shortcuts, this.props.t);
+    this.editorPlugins = new EditorPlugins({
+      modalService: this.modalService,
+      events: this.events,
+      uploadService: this.uploadService,
+      updateService: this.updateService,
+      shortcuts: this.shortcuts,
+      t: props.t,
+    });
+
     this.content = Content.create<Node[]>([], {
       styles: this.styles,
       nodeService: this.nodeService,
@@ -148,12 +163,6 @@ export class FullRicosEditor extends React.Component<Props, State> {
   componentDidMount() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     this.initPlugins(commonPlugins as EditorPlugin<Record<string, any>>[], commonPluginConfig);
-    this.updateService = new UpdateService();
-    const { onMediaUploadStart, onMediaUploadEnd } = this.props._rcProps?.helpers || {};
-    this.uploadService = new UploadService(new StreamReader(), this.updateService, {
-      onMediaUploadStart,
-      onMediaUploadEnd,
-    });
     this.tiptapAdapter = initializeTiptapAdapter(this.props, {
       events: this.events,
       styles: this.styles,

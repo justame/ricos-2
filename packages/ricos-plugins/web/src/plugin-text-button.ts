@@ -5,72 +5,56 @@ import type {
   FormattingToolbarButtonConfig,
   FormattingToolbarButtons,
   IToolbarItemConfigTiptap,
-  IUpdateService,
-  IUploadService,
   ToolbarButtonProps,
-  TranslationFunction,
   IContent,
-  ShortcutDataProvider,
+  PluginServices,
   Platform,
-  ModalService,
 } from 'ricos-types';
 import { resolversById } from 'wix-rich-content-toolbars-v3';
 
 export class PluginTextButton implements FormattingToolbarButton {
   private readonly button: FormattingToolbarButtonConfig;
 
+  private services: PluginServices;
+
   private readonly keyCombinationText: string;
 
-  private readonly t: TranslationFunction;
-
-  private readonly modalService: ModalService;
-
-  constructor(
+  private constructor(
     button: FormattingToolbarButtonConfig,
-    modalService: ModalService,
-    shortcuts: ShortcutDataProvider,
-    t: TranslationFunction,
+    services: PluginServices,
     platform: Platform
   ) {
     this.button = button;
-    this.t = t;
-    this.modalService = modalService;
-
-    this.keyCombinationText = shortcuts.getShortcutDisplayData(
+    this.services = services;
+    this.keyCombinationText = services.shortcuts.getShortcutDisplayData(
       button.id,
-      t,
+      this.services.t,
       platform
     ).keyCombinationText;
   }
 
+  static of(button: FormattingToolbarButtonConfig, services: PluginServices, platform: Platform) {
+    return new PluginTextButton(button, services, platform);
+  }
+
   private getTooltip() {
     return this.button.presentation?.tooltip
-      ? `${this.t(this.button.presentation.tooltip)} ${
+      ? `${this.services.t(this.button.presentation.tooltip)} ${
           this.keyCombinationText ? `(${this.keyCombinationText})` : ''
         }`
       : '';
   }
 
-  static of(
-    button: FormattingToolbarButtonConfig,
-    modalService: ModalService,
-    shortcuts: ShortcutDataProvider,
-    t: TranslationFunction,
-    platform: Platform
-  ) {
-    return new PluginTextButton(button, modalService, shortcuts, t, platform);
-  }
-
   register() {
     const modal = this.button.modal;
     if (modal) {
-      this.modalService?.register(modal);
+      this.services.modalService?.register(modal);
     }
   }
 
   unregister() {
     if (this.button.modal) {
-      this.modalService.unregister(this.button.modal?.id);
+      this.services.modalService.unregister(this.button.modal?.id);
     }
   }
 
@@ -100,12 +84,10 @@ export class PluginTextButton implements FormattingToolbarButton {
 
   toExternalToolbarButtonConfig(
     editorCommands: EditorCommands,
-    _t: TranslationFunction,
-    _uploadService: IUploadService,
-    _updateService: IUpdateService,
     content: IContent<unknown>
   ): ToolbarButtonProps {
     const attributes = this.toResolvedAttributes();
+    const { modalService, t } = this.services;
     return {
       type: 'button',
       tooltip: this.getTooltip(),
@@ -114,9 +96,9 @@ export class PluginTextButton implements FormattingToolbarButton {
       getLabel: () => this.button.id,
       onClick: () =>
         this.button.modal
-          ? this.modalService?.isModalOpen(this.button.modal.id)
-            ? this.modalService?.closeModal(this.button.modal.id)
-            : this.modalService?.openModal(this.button.modal.id, {
+          ? modalService?.isModalOpen(this.button.modal.id)
+            ? modalService?.closeModal(this.button.modal.id)
+            : modalService?.openModal(this.button.modal.id, {
                 layout: 'dialog',
               })
           : this.button.command?.(editorCommands),
@@ -149,9 +131,6 @@ export class PluginTextButtons implements FormattingToolbarButtons {
 
   toExternalToolbarButtonsConfigs(
     editorCommands: EditorCommands,
-    t: TranslationFunction,
-    uploadService: IUploadService,
-    updateService: IUpdateService,
     content: IContent<unknown>
   ): Record<string, ToolbarButtonProps> {
     //TODO: support all buttons
@@ -169,13 +148,7 @@ export class PluginTextButtons implements FormattingToolbarButtons {
     return this.buttons
       .filter(b => !unsupportedTextButtons.includes(b.toToolbarItemConfig(editorCommands).id))
       .reduce((acc, b) => {
-        const buttonConfig = b.toExternalToolbarButtonConfig(
-          editorCommands,
-          t,
-          uploadService,
-          updateService,
-          content
-        );
+        const buttonConfig = b.toExternalToolbarButtonConfig(editorCommands, content);
         return {
           ...acc,
           [buttonConfig.getLabel?.() || '']: buttonConfig,

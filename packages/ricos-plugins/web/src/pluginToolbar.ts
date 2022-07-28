@@ -1,8 +1,8 @@
 import type {
-  ModalService,
   ToolbarButton,
   IPluginToolbar,
   IPluginToolbarButton,
+  PluginServices,
 } from 'ricos-types';
 import { PluginToolbarButton } from './pluginToolbarButton';
 import type { Selection } from 'prosemirror-state';
@@ -19,10 +19,9 @@ export class PluginToolbar implements IPluginToolbar {
   constructor(
     toolbar: { buttons: ToolbarButton[]; isVisible?: (selection: Selection) => boolean },
     pluginType: string,
-    modalService: ModalService
+    services: PluginServices
   ) {
-    this.buttons =
-      toolbar.buttons?.map(button => PluginToolbarButton.of(button, modalService)) || [];
+    this.buttons = toolbar.buttons?.map(button => PluginToolbarButton.of(button, services)) || [];
     this.pluginType = pluginType;
     this.customIsVisible = toolbar.isVisible;
   }
@@ -30,9 +29,9 @@ export class PluginToolbar implements IPluginToolbar {
   static of(
     toolbar: { buttons: ToolbarButton[]; isVisible? },
     pluginType: string,
-    modalService: ModalService
+    services: PluginServices
   ) {
-    return new PluginToolbar(toolbar, pluginType, modalService);
+    return new PluginToolbar(toolbar, pluginType, services);
   }
 
   register() {

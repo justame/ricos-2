@@ -6,7 +6,7 @@ import { HTML_TYPE } from './types';
 import htmlDataDefaults from 'ricos-schema/dist/statics/html.defaults.json';
 import { compact } from 'lodash';
 
-export const getAddButtons = (config): AddButton[] => {
+export const getAddButtons = (config, services): AddButton[] => {
   const { exposeButtons = [htmlButtonsTypes.html], siteDomain } = config || {};
   const index = exposeButtons.indexOf(htmlButtonsTypes.adsense);
   if (!siteDomain && index > -1) {

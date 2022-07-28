@@ -63,7 +63,7 @@ const AddPluginMenu: React.FC<Props> = ({
           },
           layout: pluginModalLayout,
         })
-      : command(getEditorCommands?.(), uploadContext.uploadService, uploadContext.updateService);
+      : command(getEditorCommands?.());
   };
 
   const pluginMenuButtons: IPluginMenuButton[] = addButtons.asArray().map(addButton => {

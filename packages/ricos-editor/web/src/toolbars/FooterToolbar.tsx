@@ -8,7 +8,6 @@ import styles from '../../statics/styles/footer-toolbar.scss';
 export const FooterToolbar: FC = () => {
   const plugins = useContext(PluginsContext);
   const modalService = useContext(ModalContext);
-  const uploadContext = useContext(UploadContext);
   const { getEditorCommands } = useContext(EditorContext);
 
   const onButtonClick = ({ modal, command }: AddButton, event: Event) => {
@@ -20,7 +19,7 @@ export const FooterToolbar: FC = () => {
           },
           layout: 'popover',
         })
-      : command(getEditorCommands?.(), uploadContext.uploadService, uploadContext.updateService);
+      : command(getEditorCommands?.());
   };
 
   return (

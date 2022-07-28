@@ -15,7 +15,7 @@ const defaultData = {
   options: layoutRicosData[GALLERY_LAYOUTS.GRID],
 };
 
-export const getToolbarButtons = (config, galleryPluginService): ToolbarButton[] => {
+export const getToolbarButtons = (config, services, galleryPluginService): ToolbarButton[] => {
   const { accept = fileInputAccept } = config;
 
   const handleFileSelection = (uploadService, updateService, node) => {
@@ -52,12 +52,14 @@ export const getToolbarButtons = (config, galleryPluginService): ToolbarButton[]
     }
   };
 
+  const { modalService, uploadService, updateService } = services;
+
   return [
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.REPLACE,
       icon: AddMediaIcon,
       tooltip: 'UploadMediaButton_Tooltip',
-      command: ({ node, uploadContext: { uploadService, updateService } }) => {
+      command: ({ node }) => {
         handleFileSelection(uploadService, updateService, node);
       },
     },
@@ -71,7 +73,7 @@ export const getToolbarButtons = (config, galleryPluginService): ToolbarButton[]
         id: galleryModals.manageMedia,
         Component: GallerySettingsModal,
       },
-      command: ({ modalService, isMobile, node, uploadService, updateService }) => {
+      command: ({ isMobile, node }) => {
         modalService?.openModal(galleryModals.manageMedia, {
           componentProps: {
             nodeId: node.attrs.id,
@@ -123,7 +125,7 @@ export const getToolbarButtons = (config, galleryPluginService): ToolbarButton[]
         id: galleryModals.settings,
         Component: GallerySettingsModal,
       },
-      command: ({ modalService, isMobile, node, uploadService, updateService }) => {
+      command: ({ isMobile, node }) => {
         modalService?.openModal(galleryModals.settings, {
           componentProps: {
             nodeId: node.attrs.id,

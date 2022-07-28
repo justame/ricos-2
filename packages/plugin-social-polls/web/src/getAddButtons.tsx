@@ -11,7 +11,7 @@ import { POLL_TYPE } from './types';
 import { pollModals } from './consts';
 import { merge } from 'lodash';
 
-export const getAddButtons = (config): AddButton[] => {
+export const getAddButtons = (config, services): AddButton[] => {
   const componentData = merge(DEFAULT_COMPONENT_DATA, {
     poll: { settings: { voteRole: config?.voteRole || MEMBER_ROLES.ALL } },
   });

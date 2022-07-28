@@ -9,7 +9,7 @@ import { gifModals } from './constants';
 import { NodeSizeButton } from 'wix-rich-content-toolbars-ui';
 import type { PluginContainerData_Width_Type } from 'ricos-schema';
 
-export const getToolbarButtons = (config): ToolbarButton[] => {
+export const getToolbarButtons = (config, services): ToolbarButton[] => {
   return [
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SIZE,
@@ -37,7 +37,8 @@ export const getToolbarButtons = (config): ToolbarButton[] => {
         Component: decorateComponentWithProps(InsertModal, { modalId: gifModals.replace }),
         id: gifModals.replace,
       },
-      command: ({ modalService, isMobile, node, referenceElement }) => {
+      command: ({ isMobile, node, referenceElement }) => {
+        const { modalService } = services;
         if (modalService?.isModalOpen(gifModals.replace)) {
           modalService.closeModal(gifModals.replace);
         } else {
