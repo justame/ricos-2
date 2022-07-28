@@ -100,12 +100,13 @@ export class FullRicosEditor extends React.Component<Props, State> {
     this.portalRef = createRef<RicosPortalType>();
 
     const { onMediaUploadStart, onMediaUploadEnd } = props._rcProps?.helpers || {};
+
+    this.updateService = new UpdateService();
     this.uploadService = new UploadService(new StreamReader(), this.updateService, {
       onMediaUploadStart,
       onMediaUploadEnd,
     });
 
-    this.updateService = new UpdateService();
     this.events = new RicosEvents();
     this.modalService = new RicosModalService(this.events);
     this.styles = new RicosStyles();
