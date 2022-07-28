@@ -4,7 +4,6 @@ import { renderToString } from 'react-dom/server';
 import RichContentApp from '../../../../examples/main/shared/RichContentApp';
 import serialize from 'serialize-javascript';
 import TestApp from '../client/TestApp';
-import PreviewTestApp from '../client/PreviewTestApp';
 import IsolatedTestApp from '../client/IsolatedTestApp';
 import RicosTestApp from '../client/RicosTestApp';
 
@@ -16,7 +15,6 @@ export default function renderer() {
     const compMap = {
       rce: TestApp,
       'rce-isolated': IsolatedTestApp,
-      rcp: PreviewTestApp,
       ricos: RicosTestApp,
       tiptap: RicosTestApp,
     };
