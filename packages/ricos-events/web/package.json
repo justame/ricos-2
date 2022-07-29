@@ -36,8 +36,7 @@
   "dependencies": {
     "fp-ts": "^2.11.0",
     "idb": "^7.0.0",
-    "ricos-types": "8.72.14",
-    "wix-rich-content-editor-common": "8.72.14"
+    "ricos-types": "8.72.14"
   },
   "unpkg": true,
   "publishConfig": {

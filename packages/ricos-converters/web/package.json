@@ -35,12 +35,11 @@
   },
   "dependencies": {
     "fp-ts": "^2.11.0",
-    "ricos-common": "8.72.14",
     "ricos-content": "8.72.14",
     "ricos-schema": "8.72.14",
     "ricos-types": "8.72.14",
     "to-camel-case": "1.0.0",
-    "to-constant-case": "1.0.0"
+    "wix-rich-content-common": "8.72.14"
   },
   "unpkg": true,
   "publishConfig": {
