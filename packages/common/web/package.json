@@ -39,7 +39,6 @@
     "i18next": "^11.6.0",
     "jsonschema": "~1.2.4",
     "react-i18next": "^7.0.0",
-    "react-intersection-observer": "~8.24.1",
     "react-portal-tooltip": "^2.4.7",
     "ricos-content": "8.72.14",
     "ricos-types": "8.72.14"
