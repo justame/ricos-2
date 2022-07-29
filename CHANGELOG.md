@@ -19,6 +19,8 @@
 
 ## :house: Internal
 
+- `general`
+  - [#4292](https://github.com/wix/ricos/pull/4292) general cleanup (redundant deps, tests, files)
 - `ricos-plugins`
   - [#4290](https://github.com/wix/ricos/pull/4290) fix plugin shortcuts
 
