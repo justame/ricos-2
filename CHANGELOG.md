@@ -21,6 +21,7 @@
 
 - `general`
   - [#4292](https://github.com/wix/ricos/pull/4292) general cleanup (redundant deps, tests, files)
+  - [#4293](https://github.com/wix/ricos/pull/4293) RicosServices refactored
 - `ricos-plugins`
   - [#4290](https://github.com/wix/ricos/pull/4290) fix plugin shortcuts
 
