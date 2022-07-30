@@ -27,13 +27,13 @@ import { and } from 'ricos-content';
 import { not } from 'fp-ts/Predicate';
 import PluginsToolbar from '../toolbars/PluginToolbar';
 import { FooterToolbar } from '../toolbars/FooterToolbar';
-import type { IEditorPlugins, IToolbarItemConfigTiptap } from 'ricos-types';
+import type { RicosEditorPlugins, IToolbarItemConfigTiptap } from 'ricos-types';
 import { isTextSelection } from '@tiptap/core';
 
 type RicosToolbarProps = {
   content: Content<Node[]>;
   toolbarSettings?: ToolbarSettings;
-  plugins?: IEditorPlugins;
+  plugins: RicosEditorPlugins;
 };
 
 type RicosToolbarState = {
@@ -82,7 +82,7 @@ class RicosToolbars extends React.Component<
       };
 
       const pluginButtons = plugins
-        ?.getAddButtons()
+        .getAddButtons()
         .asArray()
         .map(b => b.toToolbarButtonSettings());
 
@@ -100,10 +100,9 @@ class RicosToolbars extends React.Component<
 
       const finalToolbarSettings = mergeToolbarSettings({ defaultSettings, customSettings });
 
-      if (plugins) {
-        const toolbarConfig = this.getToolbarConfig(finalToolbarSettings, TOOLBARS.SIDE);
-        plugins.getAddButtons().registerPluginMenuModal(toolbarConfig?.addPluginMenuConfig);
-      }
+      const toolbarConfig = this.getToolbarConfig(finalToolbarSettings, TOOLBARS.SIDE);
+      plugins.getAddButtons().registerPluginMenuModal(toolbarConfig?.addPluginMenuConfig);
+
       this.setState({
         finalToolbarSettings,
       });
@@ -177,10 +176,10 @@ class RicosToolbars extends React.Component<
     );
   }
 
-  getTextToolbarButtonsConfig = (plugins?: IEditorPlugins) => {
+  getTextToolbarButtonsConfig = (plugins: RicosEditorPlugins) => {
     const { editor } = this.props;
     const textButtonsFromPlugins = plugins
-      ?.getTextButtons()
+      .getTextButtons()
       .toToolbarItemsConfigs(editor.getEditorCommands());
 
     return textButtonsFromPlugins

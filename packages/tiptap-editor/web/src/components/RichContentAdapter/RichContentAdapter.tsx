@@ -16,7 +16,7 @@ import {
 import { tiptapToDraft, fromTiptapNode } from 'ricos-converters';
 import { Decoration_Type, Node_Type } from 'ricos-schema';
 import type { Node } from 'ricos-schema';
-import type { TiptapAdapter, EditorContextType, Pubsub, RicosServices } from 'ricos-types';
+import type { TiptapAdapter, EditorContextType, Pubsub } from 'ricos-types';
 import { ToolbarType } from 'ricos-types';
 import type { RicosCustomStyles, TextAlignment } from 'wix-rich-content-common';
 import {
@@ -32,6 +32,7 @@ import {
 import { TO_TIPTAP_TYPE } from '../../consts';
 import { findNodeById } from '../../helpers';
 import { convertInlineStylesToCSS } from '../../helpers/convertInlineStylesToCss';
+import type { TiptapAdapterServices } from '../../initializeTiptapAdapter';
 
 export class RichContentAdapter implements TiptapAdapter {
   private readonly initialContent: Fragment;
@@ -43,7 +44,7 @@ export class RichContentAdapter implements TiptapAdapter {
   constructor(
     public tiptapEditor: Editor,
     ricosEditorProps: RicosEditorProps,
-    services: RicosServices
+    services: TiptapAdapterServices
   ) {
     this.tiptapEditor = tiptapEditor;
     this.initialContent = this.tiptapEditor.state.doc.content;

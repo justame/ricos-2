@@ -1,6 +1,6 @@
 import type { Mark } from '@tiptap/core';
 import type { RicosEditorProps } from 'ricos-common';
-import type { RicosServices } from 'wix-rich-content-common';
+import type { TiptapAdapterServices } from '../initializeTiptapAdapter';
 import type { ExtensionAggregate, IMarkExtension, MarkExtensionAggregate } from './domain-types';
 import { IExtensionAggregate } from './IExtensionAggregate';
 
@@ -14,7 +14,7 @@ export class MarkExtensions implements MarkExtensionAggregate {
   toTiptapExtensions(
     extensions: ExtensionAggregate,
     ricosProps: RicosEditorProps,
-    services: RicosServices
+    services: TiptapAdapterServices
   ) {
     return this.extensions
       .asArray()

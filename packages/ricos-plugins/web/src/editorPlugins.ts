@@ -2,19 +2,21 @@ import { compact } from 'lodash';
 import type {
   EditorPlugin as EditorPluginType,
   FormattingToolbarButtons,
-  IEditorPlugin,
-  IEditorPlugins,
-  PluginServices,
+  RicosEditorPlugin,
+  RicosEditorPlugins,
+  RicosServices,
 } from 'ricos-types';
 import { EditorPlugin } from './editorPlugin';
 import type { PluginTextButton } from './plugin-text-button';
 import { PluginTextButtons } from './plugin-text-button';
-import { PluginAddButtons } from './pluginAddButton';
+import { RicosPluginAddButtons } from './pluginAddButton';
+
+export type PluginServices = Omit<RicosServices, 'plugins'>;
 
 export class PluginCollisionError extends Error {}
 
-export class EditorPlugins implements IEditorPlugins {
-  private plugins: IEditorPlugin[] = [];
+export class EditorPlugins implements RicosEditorPlugins {
+  private plugins: RicosEditorPlugin[] = [];
 
   private services: PluginServices;
 
@@ -35,7 +37,7 @@ export class EditorPlugins implements IEditorPlugins {
     this.plugins.push(candidate);
   }
 
-  unregister(plugin: IEditorPlugin) {
+  unregister(plugin: RicosEditorPlugin) {
     plugin.unregister();
     return this.filter(p => !p.equals(plugin));
   }
@@ -45,7 +47,7 @@ export class EditorPlugins implements IEditorPlugins {
     this.plugins = [];
   }
 
-  filter(predicate: (plugin: IEditorPlugin) => boolean) {
+  filter(predicate: (plugin: RicosEditorPlugin) => boolean) {
     this.plugins = this.plugins.filter(predicate);
     return this.plugins;
   }
@@ -68,7 +70,7 @@ export class EditorPlugins implements IEditorPlugins {
   getAddButtons() {
     //maybe use filter class func
     const addButtons = this.plugins.flatMap(plugin => plugin.getAddButtons() || []);
-    return new PluginAddButtons(addButtons, this.services);
+    return new RicosPluginAddButtons(addButtons, this.services);
   }
 
   getVisibleToolbar(selection) {
@@ -82,7 +84,7 @@ export class EditorPlugins implements IEditorPlugins {
     return compact(this.plugins.flatMap(plugin => plugin.getTiptapExtensions?.() || []));
   }
 
-  private hasDuplicate(plugin: IEditorPlugin) {
+  private hasDuplicate(plugin: RicosEditorPlugin) {
     return this.plugins.find(p => p.equals(plugin));
   }
 }

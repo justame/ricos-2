@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 import { EditorContext, RicosContext, ModalContext, UploadContext } from 'ricos-context';
 import InsertPluginToolbar from '../../components/InsertPluginToolbar/InsertPluginToolbar';
-import type { AddButton, IEditorPlugins } from 'ricos-types';
+import type { AddButton, RicosEditorPlugins } from 'ricos-types';
 import { LAYOUTS, PLACEMENTS } from 'ricos-modals';
 import { PLUGIN_MENU_HORIZONTAL_MODAL_ID } from './consts';
 
 interface Props {
   referenceElement?: React.RefObject<HTMLElement>;
-  plugins: IEditorPlugins;
+  plugins: RicosEditorPlugins;
 }
 
 const AddPluginMenuHorizontal: React.FC<Props> = ({ referenceElement, plugins }) => {

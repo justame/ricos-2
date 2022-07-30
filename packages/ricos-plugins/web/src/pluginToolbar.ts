@@ -1,16 +1,11 @@
-import type {
-  ToolbarButton,
-  IPluginToolbar,
-  IPluginToolbarButton,
-  PluginServices,
-} from 'ricos-types';
-import { PluginToolbarButton } from './pluginToolbarButton';
+import type { ToolbarButton, RicosServices, PluginToolbarButton, PluginToolbar } from 'ricos-types';
+import { RicosPluginToolbarButton } from './pluginToolbarButton';
 import type { Selection } from 'prosemirror-state';
 
 export class PluginToolbarButtonCollisionError extends Error {}
 
-export class PluginToolbar implements IPluginToolbar {
-  buttons: IPluginToolbarButton[];
+export class RicosPluginToolbar implements PluginToolbar {
+  buttons: PluginToolbarButton[];
 
   pluginType: string;
 
@@ -19,9 +14,10 @@ export class PluginToolbar implements IPluginToolbar {
   constructor(
     toolbar: { buttons: ToolbarButton[]; isVisible?: (selection: Selection) => boolean },
     pluginType: string,
-    services: PluginServices
+    services: RicosServices
   ) {
-    this.buttons = toolbar.buttons?.map(button => PluginToolbarButton.of(button, services)) || [];
+    this.buttons =
+      toolbar.buttons?.map(button => RicosPluginToolbarButton.of(button, services)) || [];
     this.pluginType = pluginType;
     this.customIsVisible = toolbar.isVisible;
   }
@@ -29,9 +25,9 @@ export class PluginToolbar implements IPluginToolbar {
   static of(
     toolbar: { buttons: ToolbarButton[]; isVisible? },
     pluginType: string,
-    services: PluginServices
+    services: RicosServices
   ) {
-    return new PluginToolbar(toolbar, pluginType, services);
+    return new RicosPluginToolbar(toolbar, pluginType, services);
   }
 
   register() {

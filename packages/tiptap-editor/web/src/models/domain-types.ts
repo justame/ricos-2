@@ -1,12 +1,7 @@
 import type { AnyExtension, Extension, Mark, Node } from '@tiptap/core';
 import type { ComponentType } from 'react';
-import type {
-  ExtensionProps,
-  Group,
-  NodeHocDescriptor,
-  RicosExtension,
-  RicosServices,
-} from 'ricos-types';
+import type { ExtensionProps, Group, NodeHocDescriptor, RicosExtension } from 'ricos-types';
+import type { TiptapAdapterServices } from '../initializeTiptapAdapter';
 
 export const DEFAULT_PRIORITY = 100;
 
@@ -14,7 +9,7 @@ export interface ConvertableExtension {
   toTiptapExtension(
     extensions: ExtensionAggregate,
     ricosProps: ExtensionProps,
-    services: RicosServices
+    services: TiptapAdapterServices
   ): AnyExtension;
 }
 
@@ -66,7 +61,7 @@ export interface IFunctionalExtension
   getNodeHocDescriptor(
     extensions: ExtensionAggregate,
     ricosProps: ExtensionProps,
-    services: RicosServices
+    services: TiptapAdapterServices
   ): NodeHocDescriptor;
   getRicosExtension: () => RicosExtension;
 }
@@ -91,7 +86,7 @@ export type ConvertableNodeExtensionAggregate = {
   toTiptapExtensions: (
     extensions: ExtensionAggregate,
     ricosProps: ExtensionProps,
-    services: RicosServices
+    services: TiptapAdapterServices
   ) => Node[];
 };
 
@@ -99,12 +94,12 @@ export type FunctionalExtensionAggregate = {
   toTiptapExtensions: (
     extensions: ExtensionAggregate,
     ricosProps: ExtensionProps,
-    services: RicosServices
+    services: TiptapAdapterServices
   ) => Extension[];
   getNodeHocComposer: (
     extensions: ExtensionAggregate,
     ricosProps: ExtensionProps,
-    services: RicosServices
+    services: TiptapAdapterServices
   ) => NodeHocComposer;
 };
 
@@ -112,7 +107,7 @@ export type MarkExtensionAggregate = {
   toTiptapExtensions: (
     extensions: ExtensionAggregate,
     ricosProps: ExtensionProps,
-    services: RicosServices
+    services: TiptapAdapterServices
   ) => Mark[];
 };
 

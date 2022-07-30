@@ -2,8 +2,8 @@
 import React from 'react';
 import type { AddButton, ToolbarType } from 'ricos-types';
 import {
-  PluginAddButton,
-  PluginAddButtons,
+  RicosPluginAddButton,
+  RicosPluginAddButtons,
   PluginAddButtonCollisionError,
 } from './pluginAddButton';
 import { alwaysVisibleResolver } from 'wix-rich-content-toolbars-v3';
@@ -85,24 +85,24 @@ const divider: AddButton = {
 };
 
 describe('Add button', () => {
-  const actual = PluginAddButton.of(emoji, {} as any);
+  const actual = RicosPluginAddButton.of(emoji, {} as any);
   const { label, tooltip } = actual.getButton();
 
   it('should create valid instance', () => {
-    expect(actual).toBeInstanceOf(PluginAddButton);
+    expect(actual).toBeInstanceOf(RicosPluginAddButton);
     expect(label).toEqual('Emoji');
     expect(tooltip).toEqual('insert emoji');
     expect(actual.getTags()).toEqual('emoji');
   });
 
   it('should compare buttons correctly', () => {
-    const button = PluginAddButton.of(divider, {} as any);
+    const button = RicosPluginAddButton.of(divider, {} as any);
     expect(button.equals(actual)).toBeFalsy();
     expect(button.equals(button)).toBeTruthy();
   });
 
   it('should create toolbar item config correctly', () => {
-    const button = PluginAddButton.of(divider, {} as any);
+    const button = RicosPluginAddButton.of(divider, {} as any);
     const { tooltip, icon, id } = button.getButton();
 
     const expected = {
@@ -129,7 +129,7 @@ describe('Add button', () => {
 
 describe('Add buttons', () => {
   it('should register/unregister plugin add button', () => {
-    const registered = new PluginAddButtons([], {} as any);
+    const registered = new RicosPluginAddButtons([], {} as any);
     registered.register(instagram);
     expect(registered.asArray().length).toEqual(1);
     registered.unregister(instagram);
@@ -137,7 +137,7 @@ describe('Add buttons', () => {
   });
 
   it('should validate there is no duplication while register plugin add button', () => {
-    const registered = new PluginAddButtons([], {} as any);
+    const registered = new RicosPluginAddButtons([], {} as any);
     registered.register(instagram);
     try {
       registered.register(instagram);
@@ -147,7 +147,7 @@ describe('Add buttons', () => {
   });
 
   it('should filter buttons by group', () => {
-    const registered = new PluginAddButtons([], {} as any);
+    const registered = new RicosPluginAddButtons([], {} as any);
     registered.register(instagram);
     registered.register(tiktok);
     registered.register(divider);

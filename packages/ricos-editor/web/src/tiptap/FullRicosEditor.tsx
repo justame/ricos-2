@@ -31,7 +31,7 @@ import type {
   TranslationFunction,
   EditorPlugin,
   LegacyEditorPluginConfig,
-  IEditorPlugins,
+  RicosEditorPlugins,
 } from 'ricos-types';
 import type { EditorCommands } from 'wix-rich-content-common';
 import { getLangDir } from 'wix-rich-content-common';
@@ -81,7 +81,7 @@ export class FullRicosEditor extends React.Component<Props, State> {
 
   private readonly shortcuts: EditorKeyboardShortcuts;
 
-  private readonly editorPlugins: IEditorPlugins;
+  private readonly editorPlugins: RicosEditorPlugins;
 
   private uploadService!: IUploadService;
 
@@ -111,19 +111,23 @@ export class FullRicosEditor extends React.Component<Props, State> {
     this.modalService = new RicosModalService(this.events);
     this.styles = new RicosStyles();
     this.shortcuts = new EditorKeyboardShortcuts(this.events, this.modalService);
-    this.editorPlugins = new EditorPlugins({
-      modalService: this.modalService,
-      events: this.events,
-      uploadService: this.uploadService,
-      updateService: this.updateService,
-      shortcuts: this.shortcuts,
-      t: props.t,
-    });
 
     this.content = Content.create<Node[]>([], {
       styles: this.styles,
       nodeService: this.nodeService,
     });
+    this.editorPlugins = new EditorPlugins({
+      modals: this.modalService,
+      events: this.events,
+      uploadService: this.uploadService,
+      updateService: this.updateService,
+      shortcuts: this.shortcuts,
+      t: props.t,
+      styles: this.styles,
+      content: this.content,
+      tiptapAdapter: this.tiptapAdapter,
+    });
+
     this.errorNotifier = React.createRef();
     this.inputRef = React.createRef();
   }
@@ -172,6 +176,8 @@ export class FullRicosEditor extends React.Component<Props, State> {
       uploadService: this.uploadService,
       t: this.props.t,
       content: this.content,
+      shortcuts: this.shortcuts,
+      modals: this.modalService,
     });
     this.initUploadService();
 
@@ -308,6 +314,7 @@ export class FullRicosEditor extends React.Component<Props, State> {
                                             <RicosToolbars
                                               content={this.content}
                                               toolbarSettings={toolbarSettings}
+                                              plugins={this.editorPlugins}
                                             />
                                           </ContentQueryProvider>
                                         </ToolbarContext.Provider>

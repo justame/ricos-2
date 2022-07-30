@@ -9,6 +9,8 @@ import { coreConfigs } from './components/RicosTiptapEditor/core-configs';
 import { Extensions } from './models/Extensions';
 import { patchExtensions } from './patch-extensions';
 
+export type TiptapAdapterServices = Omit<RicosServices, 'tiptapAdapter'>;
+
 const extractExtensionProps = (props: RicosEditorProps): ExtensionProps => {
   const { placeholder, textAlignment, iframeSandboxDomain, textWrap, maxTextLength, linkSettings } =
     props;
@@ -27,14 +29,17 @@ const extractExtensionProps = (props: RicosEditorProps): ExtensionProps => {
   };
 };
 
-const extractExtensions = (services: RicosServices, props: RicosEditorProps): Extensions => {
+const extractExtensions = (
+  services: TiptapAdapterServices,
+  props: RicosEditorProps
+): Extensions => {
   const extensions = services.plugins.getTiptapExtensions();
   return Extensions.of(extensions, extractExtensionProps(props), services);
 };
 
 export const initializeTiptapAdapter = (
   ricosEditorProps: RicosEditorProps,
-  services: RicosServices
+  services: TiptapAdapterServices
 ) => {
   const content =
     ricosEditorProps.injectedContent || ricosEditorProps.content || getEmptyDraftContent();

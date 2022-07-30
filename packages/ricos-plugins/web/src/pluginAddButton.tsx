@@ -5,15 +5,15 @@ import type {
   AddButton,
   ToolbarType,
   PluginButton,
-  IPluginAddButton,
-  IPluginAddButtons,
+  PluginAddButton,
+  PluginAddButtons,
   IToolbarItemConfigTiptap,
   AddPluginMenuConfig,
   ToolbarButtonProps,
   EditorCommands,
-  PluginServices,
 } from 'ricos-types';
 import { AddPluginMenu, PLUGIN_MENU_MODAL_ID } from 'wix-rich-content-toolbars-ui';
+import type { PluginServices } from './editorPlugins';
 
 export class PluginAddButtonCollisionError extends Error {}
 
@@ -24,7 +24,7 @@ export class PluginAddButtonCollisionError extends Error {}
  * @export
  * @class PluginAddButton
  */
-export class PluginAddButton implements IPluginAddButton {
+export class RicosPluginAddButton implements PluginAddButton {
   button: AddButton;
 
   services: PluginServices;
@@ -36,23 +36,23 @@ export class PluginAddButton implements IPluginAddButton {
     this.services = services;
   }
 
-  static of(button: AddButton, services: PluginServices): IPluginAddButton {
-    return new PluginAddButton(button, services);
+  static of(button: AddButton, services: PluginServices): PluginAddButton {
+    return new RicosPluginAddButton(button, services);
   }
 
   register() {
     const modal = this.getModal();
     if (modal) {
-      const { modalService } = this.services;
-      modalService?.register(modal);
+      const { modals } = this.services;
+      modals.register(modal);
     }
   }
 
   unregister() {
     const modal = this.getModal();
     if (modal) {
-      const { modalService } = this.services;
-      modalService?.unregister(modal.id);
+      const { modals } = this.services;
+      modals.unregister(modal.id);
     }
   }
 
@@ -76,7 +76,7 @@ export class PluginAddButton implements IPluginAddButton {
     return this.button.toolbars;
   }
 
-  equals(button: IPluginAddButton): boolean {
+  equals(button: PluginAddButton): boolean {
     return this.button.id === button.getButton().id;
   }
 
@@ -103,7 +103,7 @@ export class PluginAddButton implements IPluginAddButton {
   }
 
   toExternalToolbarButtonConfig(editorCommands: EditorCommands): ToolbarButtonProps {
-    const { modalService, t } = this.services;
+    const { modals, t } = this.services;
     return {
       type: 'button',
       tooltip: t(this.button.tooltip),
@@ -112,9 +112,9 @@ export class PluginAddButton implements IPluginAddButton {
       getLabel: () => this.button.label || '',
       onClick: () => {
         this.button.modal
-          ? modalService?.isModalOpen(this.button.modal.id)
-            ? modalService?.closeModal(this.button.modal.id)
-            : modalService?.openModal(this.button.modal.id, {
+          ? modals?.isModalOpen(this.button.modal.id)
+            ? modals?.closeModal(this.button.modal.id)
+            : modals?.openModal(this.button.modal.id, {
                 layout: 'dialog',
               })
           : this.button.command(editorCommands);
@@ -135,17 +135,17 @@ export class PluginAddButton implements IPluginAddButton {
   }
 }
 
-export class PluginAddButtons implements IPluginAddButtons {
-  buttons: IPluginAddButton[] = [];
+export class RicosPluginAddButtons implements PluginAddButtons {
+  buttons: PluginAddButton[] = [];
 
   services: PluginServices;
 
-  constructor(buttons: IPluginAddButton[] = [], services: PluginServices) {
+  constructor(buttons: PluginAddButton[] = [], services: PluginServices) {
     this.buttons = buttons;
     this.services = services;
   }
 
-  private hasDuplicate(candidate: IPluginAddButton) {
+  private hasDuplicate(candidate: PluginAddButton) {
     return this.buttons.find(b => b.equals(candidate));
   }
 
@@ -154,21 +154,21 @@ export class PluginAddButtons implements IPluginAddButtons {
   }
 
   byGroup(group: MenuGroups) {
-    return new PluginAddButtons(
+    return new RicosPluginAddButtons(
       this.buttons.filter(button => button.getGroup() === group),
       this.services
     );
   }
 
   byToolbar(toolbar: ToolbarType) {
-    return new PluginAddButtons(
+    return new RicosPluginAddButtons(
       this.buttons.filter(button => button.getToolbars().includes(toolbar)),
       this.services
     );
   }
 
   register(button: AddButton) {
-    const candidate = PluginAddButton.of(button, this.services);
+    const candidate = RicosPluginAddButton.of(button, this.services);
     const duplicate = this.hasDuplicate(candidate);
     if (duplicate) {
       throw new PluginAddButtonCollisionError(
@@ -181,7 +181,7 @@ export class PluginAddButtons implements IPluginAddButtons {
   }
 
   unregister(button: AddButton) {
-    const candidate = PluginAddButton.of(button, this.services);
+    const candidate = RicosPluginAddButton.of(button, this.services);
     this.buttons = this.buttons.filter(b => !b.equals(candidate));
   }
 
@@ -190,7 +190,7 @@ export class PluginAddButtons implements IPluginAddButtons {
   }
 
   registerPluginMenuModal(config?: AddPluginMenuConfig) {
-    this.services.modalService?.register({
+    this.services.modals?.register({
       id: PLUGIN_MENU_MODAL_ID,
       Component: props => (
         <AddPluginMenu addButtons={this} addPluginMenuConfig={config} {...props} />

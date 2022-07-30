@@ -7,10 +7,10 @@ import type {
   IToolbarItemConfigTiptap,
   ToolbarButtonProps,
   IContent,
-  PluginServices,
   Platform,
 } from 'ricos-types';
 import { resolversById } from 'wix-rich-content-toolbars-v3';
+import type { PluginServices } from './editorPlugins';
 
 export class PluginTextButton implements FormattingToolbarButton {
   private readonly button: FormattingToolbarButtonConfig;
@@ -48,13 +48,13 @@ export class PluginTextButton implements FormattingToolbarButton {
   register() {
     const modal = this.button.modal;
     if (modal) {
-      this.services.modalService?.register(modal);
+      this.services.modals.register(modal);
     }
   }
 
   unregister() {
     if (this.button.modal) {
-      this.services.modalService.unregister(this.button.modal?.id);
+      this.services.modals.unregister(this.button.modal?.id);
     }
   }
 
@@ -87,7 +87,7 @@ export class PluginTextButton implements FormattingToolbarButton {
     content: IContent<unknown>
   ): ToolbarButtonProps {
     const attributes = this.toResolvedAttributes();
-    const { modalService, t } = this.services;
+    const { modals } = this.services;
     return {
       type: 'button',
       tooltip: this.getTooltip(),
@@ -96,9 +96,9 @@ export class PluginTextButton implements FormattingToolbarButton {
       getLabel: () => this.button.id,
       onClick: () =>
         this.button.modal
-          ? modalService?.isModalOpen(this.button.modal.id)
-            ? modalService?.closeModal(this.button.modal.id)
-            : modalService?.openModal(this.button.modal.id, {
+          ? modals.isModalOpen(this.button.modal.id)
+            ? modals.closeModal(this.button.modal.id)
+            : modals.openModal(this.button.modal.id, {
                 layout: 'dialog',
               })
           : this.button.command?.(editorCommands),

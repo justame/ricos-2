@@ -12,7 +12,7 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
         id: collapsibleModals.settings,
       },
       command: ({ isMobile, node }) => {
-        services.modalService.openModal(collapsibleModals.settings, {
+        services.modals.openModal(collapsibleModals.settings, {
           componentProps: {
             nodeId: node.attrs.id,
           },

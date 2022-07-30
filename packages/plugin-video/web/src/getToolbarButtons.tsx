@@ -11,7 +11,7 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
   const { enableCustomUploadOnMobile, getVideoUrl, handleFileSelection, handleFileUpload } =
     config || {};
 
-  const { modalService } = services;
+  const { modals } = services;
   const modalBaseProps = {
     enableCustomUploadOnMobile,
     getVideoUrl,
@@ -38,7 +38,7 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
         Component: VideoSettingsModal,
       },
       command: ({ isMobile, node }) => {
-        modalService?.openModal(videoModals.settings, {
+        modals?.openModal(videoModals.settings, {
           componentProps: {
             nodeId: node.attrs.id,
           },
@@ -61,10 +61,10 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
           video: { src },
           id,
         } = node.attrs;
-        if (modalService?.isModalOpen(videoModals.replace)) {
-          modalService.closeModal(videoModals.replace);
+        if (modals?.isModalOpen(videoModals.replace)) {
+          modals.closeModal(videoModals.replace);
         } else {
-          modalService?.openModal(videoModals.replace, {
+          modals?.openModal(videoModals.replace, {
             componentProps: {
               componentData: { isCustomVideo: src.id, src: src.url || src.id }, //TODO: convert to draft
               nodeId: id,

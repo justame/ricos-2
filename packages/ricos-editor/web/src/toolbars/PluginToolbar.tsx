@@ -6,11 +6,11 @@ import { withRicosContext, withEditorContext, withPluginsContext } from 'ricos-c
 import type { GeneralContext } from 'ricos-context';
 import type { RichContentAdapter } from 'wix-tiptap-editor';
 import styles from '../../statics/styles/plugin-toolbar.scss';
-import type { IEditorPlugins } from 'ricos-types';
+import type { RicosEditorPlugins } from 'ricos-types';
 
 type PluginsToolbarProps = {
   content: Content<Node[]>;
-  plugins?: IEditorPlugins;
+  plugins?: RicosEditorPlugins;
 };
 
 class PluginsToolbar extends React.Component<

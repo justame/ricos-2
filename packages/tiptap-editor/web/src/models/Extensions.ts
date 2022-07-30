@@ -1,18 +1,13 @@
 import { Extension } from '@tiptap/core';
 import { not } from 'fp-ts/Predicate';
 import { and, firstRight } from 'ricos-content';
-import type {
-  Group,
-  RicosExtension,
-  RicosNodeExtension,
-  ExtensionProps,
-  RicosServices,
-} from 'ricos-types';
+import type { Group, RicosExtension, RicosNodeExtension, ExtensionProps } from 'ricos-types';
 import {
   isRicosFunctionalExtension,
   isRicosMarkExtension,
   isRicosNodeExtension,
 } from 'ricos-types';
+import type { TiptapAdapterServices } from '../initializeTiptapAdapter';
 import type {
   ExtensionAggregate,
   IExtension,
@@ -68,15 +63,19 @@ export class Extensions implements ExtensionAggregate {
 
   private readonly ricosProps: ExtensionProps;
 
-  private readonly services: RicosServices;
+  private readonly services: TiptapAdapterServices;
 
-  private constructor(extensions: IExtension[], props: ExtensionProps, services: RicosServices) {
+  private constructor(
+    extensions: IExtension[],
+    props: ExtensionProps,
+    services: TiptapAdapterServices
+  ) {
     this.extensions = new IExtensionAggregate<IExtension>(extensions);
     this.ricosProps = props;
     this.services = services;
   }
 
-  static of(extensions: RicosExtension[], props: ExtensionProps, services: RicosServices) {
+  static of(extensions: RicosExtension[], props: ExtensionProps, services: TiptapAdapterServices) {
     const iExtensions = extensions.map(toIExtension);
     validate(iExtensions);
     return new Extensions(iExtensions, props, services);
