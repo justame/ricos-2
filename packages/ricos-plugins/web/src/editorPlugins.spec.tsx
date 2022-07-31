@@ -2,7 +2,9 @@ import React from 'react';
 import type { EditorPlugin as EditorPluginType, ToolbarType } from 'ricos-types';
 import type { PluginServices } from './editorPlugins';
 import { EditorPlugins, PluginCollisionError } from './editorPlugins';
+import type { ToolbarSettings } from 'ricos-common';
 
+const toolbarSettings: ToolbarSettings = {};
 const services = {
   modals: {
     register: jest.fn(),
@@ -105,7 +107,7 @@ describe('Editor Plugins', () => {
   };
 
   it('should register/unregister plugin', () => {
-    const registered = new EditorPlugins(services);
+    const registered = new EditorPlugins(services, toolbarSettings);
     registered.register(linkPreview);
     expect(registered.asArray().length).toEqual(1);
     registered.unregister(registered.asArray()[0]);
@@ -113,7 +115,7 @@ describe('Editor Plugins', () => {
   });
 
   it('should validate there is no duplication while register plugin', () => {
-    const registered = new EditorPlugins(services);
+    const registered = new EditorPlugins(services, toolbarSettings);
     registered.register(linkPreview);
     try {
       registered.register(linkPreview);
@@ -123,14 +125,14 @@ describe('Editor Plugins', () => {
   });
 
   it('should filter plugins', () => {
-    const registered = new EditorPlugins(services);
+    const registered = new EditorPlugins(services, toolbarSettings);
     registered.register(linkPreview);
     registered.filter(plugin => !!plugin.getAddButtons());
     expect(registered.asArray().length).toEqual(1);
   });
 
   it('should produce add buttons', () => {
-    const registered = new EditorPlugins(services);
+    const registered = new EditorPlugins(services, toolbarSettings);
     registered.register(linkPreview);
     registered.register(emoji);
     registered.register(divider);

@@ -5,6 +5,7 @@ import type {
   RicosEditorPlugin,
   RicosEditorPlugins,
   RicosServices,
+  ToolbarSettings,
 } from 'ricos-types';
 import { EditorPlugin } from './editorPlugin';
 import type { PluginTextButton } from './plugin-text-button';
@@ -20,8 +21,11 @@ export class EditorPlugins implements RicosEditorPlugins {
 
   private services: PluginServices;
 
-  constructor(services: PluginServices) {
+  toolbarSettings: ToolbarSettings;
+
+  constructor(services: PluginServices, toolbarSettings: ToolbarSettings) {
     this.services = services;
+    this.toolbarSettings = toolbarSettings;
   }
 
   register(plugin: EditorPluginType) {
@@ -64,7 +68,7 @@ export class EditorPlugins implements RicosEditorPlugins {
     const textButtons = this.plugins.flatMap(
       plugin => (plugin.getTextButtons() as PluginTextButton[]) || []
     );
-    return PluginTextButtons.of(textButtons);
+    return PluginTextButtons.of(textButtons, this.toolbarSettings);
   }
 
   getAddButtons() {

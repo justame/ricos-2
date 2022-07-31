@@ -2,6 +2,7 @@ import type { ToolbarButtonProps } from './buttonTypes';
 import type { IContent } from './content';
 import type { EditorCommands } from './editorCommandsType';
 import type { IToolbarItemConfigTiptap } from './toolbarTypes';
+import type { ToolbarType } from './toolbarEnums';
 
 /**
  * Represents formatting toolbar button.
@@ -30,8 +31,12 @@ export interface FormattingToolbarButton {
  * @interface FormattingToolbarButtons
  */
 export interface FormattingToolbarButtons {
-  asArray: () => FormattingToolbarButton[];
-  toToolbarItemsConfigs(editorCommands: EditorCommands): IToolbarItemConfigTiptap[];
+  toToolbarItemsConfig: (
+    ToolbarType: ToolbarType,
+    isMobile: boolean,
+    editorCommands: EditorCommands
+  ) => IToolbarItemConfigTiptap[];
+
   toExternalToolbarButtonsConfigs(
     editorCommands: EditorCommands,
     content: IContent<unknown>

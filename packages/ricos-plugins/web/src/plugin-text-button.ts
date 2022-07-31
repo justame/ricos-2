@@ -6,10 +6,17 @@ import type {
   FormattingToolbarButtons,
   IToolbarItemConfigTiptap,
   ToolbarButtonProps,
+  ToolbarSettings,
   IContent,
   Platform,
+  ToolbarType,
+  ToolbarSettingsFunctions,
 } from 'ricos-types';
-import { resolversById } from 'wix-rich-content-toolbars-v3';
+import { resolversById, tiptapStaticToolbarConfig } from 'wix-rich-content-toolbars-v3';
+import { cleanSeparators } from './toolbar-utils/cleanSeparators';
+import { toTiptapToolbarItemsConfig } from './toolbar-utils/toTiptapToolbarItemsConfig';
+import { getToolbarConfig } from './toolbar-utils/getToolbarConfig';
+import { initToolbarSettings } from './toolbar-utils/initToolbarSettings';
 import type { PluginServices } from './editorPlugins';
 
 export class PluginTextButton implements FormattingToolbarButton {
@@ -113,20 +120,35 @@ export class PluginTextButton implements FormattingToolbarButton {
 export class PluginTextButtons implements FormattingToolbarButtons {
   private readonly buttons: PluginTextButton[];
 
-  private constructor(buttons: PluginTextButton[]) {
+  private readonly finalToolbarSettings: ToolbarSettingsFunctions[];
+
+  private constructor(buttons: PluginTextButton[], toolbarSettings: ToolbarSettings) {
     this.buttons = buttons;
+    this.finalToolbarSettings = initToolbarSettings(toolbarSettings);
   }
 
-  static of(buttons: PluginTextButton[]): PluginTextButtons {
-    return new PluginTextButtons(buttons);
+  static of(buttons: PluginTextButton[] = [], toolbarSettings: ToolbarSettings): PluginTextButtons {
+    return new PluginTextButtons(buttons, toolbarSettings);
   }
 
-  asArray() {
-    return this.buttons;
-  }
+  toToolbarItemsConfig(
+    toolbarType: ToolbarType,
+    isMobile: boolean,
+    editorCommands: EditorCommands
+  ) {
+    const toolbarConfig = getToolbarConfig(this.finalToolbarSettings, toolbarType);
+    const toolbarItemConfigs = [
+      ...this.buttons.map(b => b.toToolbarItemConfig(editorCommands)),
+      ...tiptapStaticToolbarConfig,
+    ];
+    const toolbarItemsConfig = toTiptapToolbarItemsConfig(
+      toolbarConfig,
+      toolbarItemConfigs,
+      toolbarType,
+      isMobile ? 'mobile' : 'desktop'
+    );
 
-  toToolbarItemsConfigs(editorCommands: EditorCommands): IToolbarItemConfigTiptap[] {
-    return this.buttons.map(b => b.toToolbarItemConfig(editorCommands));
+    return cleanSeparators(toolbarItemsConfig);
   }
 
   toExternalToolbarButtonsConfigs(

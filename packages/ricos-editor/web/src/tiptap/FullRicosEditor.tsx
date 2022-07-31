@@ -116,17 +116,20 @@ export class FullRicosEditor extends React.Component<Props, State> {
       styles: this.styles,
       nodeService: this.nodeService,
     });
-    this.editorPlugins = new EditorPlugins({
-      modals: this.modalService,
-      events: this.events,
-      uploadService: this.uploadService,
-      updateService: this.updateService,
-      shortcuts: this.shortcuts,
-      t: props.t,
-      styles: this.styles,
-      content: this.content,
-      tiptapAdapter: this.tiptapAdapter,
-    });
+    this.editorPlugins = new EditorPlugins(
+      {
+        modals: this.modalService,
+        events: this.events,
+        uploadService: this.uploadService,
+        updateService: this.updateService,
+        shortcuts: this.shortcuts,
+        t: props.t,
+        styles: this.styles,
+        content: this.content,
+        tiptapAdapter: this.tiptapAdapter,
+      },
+      props.toolbarSettings
+    );
 
     this.errorNotifier = React.createRef();
     this.inputRef = React.createRef();

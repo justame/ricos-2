@@ -34,6 +34,8 @@
     "test:watchAll": "jest --verbose --watchAll"
   },
   "dependencies": {
+    "fp-ts": "^2.11.0",
+    "ricos-context": "8.72.14",
     "ricos-types": "8.72.14",
     "wix-rich-content-toolbars-ui": "8.72.14",
     "wix-rich-content-toolbars-v3": "8.72.14"
