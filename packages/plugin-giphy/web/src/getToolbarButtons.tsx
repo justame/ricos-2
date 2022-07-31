@@ -38,11 +38,11 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
         id: gifModals.replace,
       },
       command: ({ isMobile, node, referenceElement }) => {
-        const { modalService } = services;
-        if (modalService?.isModalOpen(gifModals.replace)) {
-          modalService.closeModal(gifModals.replace);
+        const { modals } = services;
+        if (modals?.isModalOpen(gifModals.replace)) {
+          modals.closeModal(gifModals.replace);
         } else {
-          modalService?.openModal(gifModals.replace, {
+          modals?.openModal(gifModals.replace, {
             componentProps: {
               giphySdkApiKey: config?.giphySdkApiKey,
               componentData: node.attrs, //TODO: convert to draft

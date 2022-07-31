@@ -20,20 +20,7 @@ import {
 } from './decorationParsers';
 import { createAtomicEntityData, createTextBlockData } from './getDraftEntityData';
 import preprocess from './preprocess';
-
-const parseDocStyle = documentStyle => {
-  const draftDocStyle = {};
-  Object.entries(documentStyle).forEach(([header, values]) => {
-    if (values) {
-      const { decorations = [], nodeStyle, lineHeight } = values as TextNodeStyle;
-      draftDocStyle[header as string] = {
-        ...convertDocumentStyleDecorationTypes(decorations),
-        ...convertNodeStyleToCss({ ...nodeStyle, lineHeight }),
-      };
-    }
-  });
-  return draftDocStyle;
-};
+import parseDocStyle from './utils/parseDocStyle';
 
 const convert =
   (options = { ignoreUnsupportedTypes: false }) =>
@@ -159,20 +146,6 @@ const convert =
       draftContent.blocks = [...draftContent.blocks, newBlock];
     };
 
-    const parseDocStyle = documentStyle => {
-      const draftDocStyle = {};
-      Object.entries(documentStyle).forEach(([header, values]) => {
-        if (values) {
-          const { decorations, nodeStyle, lineHeight } = values as TextNodeStyle;
-          draftDocStyle[header as string] = {
-            ...convertDocumentStyleDecorationTypes(decorations),
-            ...convertNodeStyleToCss({ ...nodeStyle, lineHeight }),
-          };
-        }
-      });
-      return draftDocStyle;
-    };
-
     parseNodes();
     documentStyle && (draftContent.documentStyle = parseDocStyle(documentStyle));
     draftContent.VERSION = Version.currentVersion;
@@ -180,18 +153,8 @@ const convert =
     return draftContent;
   };
 
-const convertNodeStyleToCss = nodeStyle => {
-  const css = {};
-  nodeStyle.paddingTop && (css['padding-top'] = nodeStyle.paddingTop);
-  nodeStyle.paddingBottom && (css['padding-bottom'] = nodeStyle.paddingBottom);
-  nodeStyle.lineHeight && (css['line-height'] = nodeStyle.lineHeight);
-  return css;
-};
-
 export const toDraft = (content: RichContent, options = { ignoreUnsupportedTypes: false }) =>
   pipe(content, preprocess, convert(options));
 
 export const ensureDraftContent = (content: RichContent | DraftContent): DraftContent =>
   'nodes' in content ? toDraft(content) : content;
-
-export { parseDocStyle };

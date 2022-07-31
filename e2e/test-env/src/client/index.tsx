@@ -4,7 +4,6 @@ import RichContentApp from '../../../../examples/main/shared/RichContentApp';
 import TestApp from './TestApp';
 import IsolatedTestApp from './IsolatedTestApp';
 import RicosTestApp from './RicosTestApp';
-import PreviewTestApp from './PreviewTestApp';
 
 import './app.css';
 import type { TestAppConfig } from '../../../../examples/main/src/types';
@@ -12,7 +11,6 @@ import type { TestAppConfig } from '../../../../examples/main/src/types';
 const compMap = {
   rce: TestApp,
   'rce-isolated': IsolatedTestApp,
-  rcp: PreviewTestApp,
   ricos: RicosTestApp,
   tiptap: RicosTestApp,
 };

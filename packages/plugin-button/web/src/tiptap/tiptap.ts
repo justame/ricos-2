@@ -7,7 +7,7 @@ import { LINK_BUTTON_TYPE, ACTION_BUTTON_TYPE } from '../types';
 const getButtonExtension = name => [
   {
     type: 'node' as const,
-    groups: ['react', 'overlay'],
+    groups: ['react', 'overlay', 'resizable', 'draggable'],
     reconfigure: (
       config: NodeConfig,
       _extensions: RicosExtension[],

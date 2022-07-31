@@ -112,7 +112,3 @@ export interface EventSubscriptor {
     id: string
   ) => Subscription;
 }
-
-export interface EventSource {
-  // events: Event
-}

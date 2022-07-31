@@ -2,25 +2,26 @@ import type {
   AddButton,
   EditorPlugin as EditorPluginType,
   FormattingToolbarButton,
-  IEditorPlugin,
-  IPluginAddButton,
-  IPluginToolbar,
+  RicosEditorPlugin,
+  PluginAddButton,
+  PluginToolbar,
   LegacyEditorPluginConfig,
   TiptapEditorPlugin,
-  PluginServices,
+  RicosServices,
 } from 'ricos-types';
+import type { PluginServices } from './editorPlugins';
 import { PluginTextButton } from './plugin-text-button';
-import { PluginAddButton } from './pluginAddButton';
-import { PluginToolbar } from './pluginToolbar';
+import { RicosPluginAddButton } from './pluginAddButton';
+import { RicosPluginToolbar } from './pluginToolbar';
 
-export class EditorPlugin implements IEditorPlugin {
+export class EditorPlugin implements RicosEditorPlugin {
   private readonly plugin: EditorPluginType;
 
-  private addButtons?: IPluginAddButton[];
+  private addButtons?: PluginAddButton[];
 
   private textButtons?: PluginTextButton[];
 
-  private toolbar?: IPluginToolbar;
+  private toolbar?: PluginToolbar;
 
   services: PluginServices;
 
@@ -36,8 +37,9 @@ export class EditorPlugin implements IEditorPlugin {
   private initAddButtons() {
     if (this.plugin.getAddButtons) {
       this.addButtons = this.plugin
-        .getAddButtons(this.plugin.config, this.services)
-        .map((button: AddButton) => PluginAddButton.of(button, this.services));
+        .getAddButtons(this.plugin.config, this.services as RicosServices)
+        .map((button: AddButton) => RicosPluginAddButton.of(button, this.services));
+      this.addButtons?.map(b => b.register());
     }
   }
 
@@ -47,6 +49,7 @@ export class EditorPlugin implements IEditorPlugin {
       this.textButtons = this.plugin.textButtons.map(b =>
         PluginTextButton.of(b, this.services, 'macOs')
       );
+      this.textButtons?.map(b => b.register());
     }
   }
 
@@ -56,31 +59,32 @@ export class EditorPlugin implements IEditorPlugin {
 
   private initPluginToolbar() {
     if (this.plugin.toolbar) {
-      this.toolbar = PluginToolbar.of(
+      this.toolbar = RicosPluginToolbar.of(
         {
-          buttons: this.plugin.toolbar.getButtons(this.plugin.config, this.services),
+          buttons: this.plugin.toolbar.getButtons(
+            this.plugin.config,
+            this.services as RicosServices
+          ),
           isVisible: this.plugin.toolbar.isVisible,
         },
         this.getExtensionName(),
-        this.services
+        this.services as RicosServices
       );
+      this.toolbar?.register();
     }
   }
 
   register() {
+    this.plugin.shortcuts?.map(shortcut => this.services.shortcuts.register(shortcut));
     this.initAddButtons();
     this.initTextButtons();
     this.initPluginToolbar();
-    this.plugin.shortcuts?.map(shortcut => this.services.shortcuts.register(shortcut));
-    this.addButtons?.map(b => b.register());
-    this.textButtons?.map(b => b.register());
-    this.toolbar?.register();
   }
 
   unregister() {
-    this.addButtons?.map(b => b.unregister());
-    this.textButtons?.map(b => b.unregister());
     this.toolbar?.unregister();
+    this.textButtons?.map(b => b.unregister());
+    this.addButtons?.map(b => b.unregister());
     this.plugin.shortcuts?.map(shortcut => this.services.shortcuts.unregister(shortcut));
   }
 
@@ -111,7 +115,7 @@ export class EditorPlugin implements IEditorPlugin {
     return this.toolbar;
   }
 
-  equals(plugin: IEditorPlugin) {
+  equals(plugin: RicosEditorPlugin) {
     return this.plugin.type === plugin.getType();
   }
 }

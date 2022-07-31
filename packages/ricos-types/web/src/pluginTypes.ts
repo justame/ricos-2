@@ -1,5 +1,3 @@
-// TODO: refactor this file
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type {
   CompositeDecorator,
   ContentBlock,
@@ -95,7 +93,9 @@ import type { EditorCommands } from './editorCommandsType';
 import type { ModalConfig } from './modalTypes';
 import type { ToolbarType } from './toolbarEnums';
 import type { FormattingToolbarButtonConfig, IToolbarItem } from './toolbarTypes';
-import type { PluginServices } from './editorPluginTypes';
+import type { RicosServices } from './services';
+import type { EditorPlugin as DraftEditorPlugin, PluginFunctions } from 'draft-js-plugins-editor';
+import type { KeyboardShortcut } from './shortcuts';
 
 export { Node_Type, Decoration_Type, LinkData };
 
@@ -129,6 +129,7 @@ export interface CreatePluginsDataMap {
   [LINK_TYPE]?: CreatePluginData<LinkData>;
   [RICOS_MENTION_TYPE]?: CreatePluginData<MentionData>;
   [MENTION_TYPE]?: CreatePluginData<MentionData>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [EXTERNAL]?: CreatePluginData<Record<string, any>>;
   [LINK_BUTTON_TYPE]?: CreatePluginData<ButtonData>;
   [ACTION_BUTTON_TYPE]?: CreatePluginData<ButtonData>;
@@ -136,9 +137,6 @@ export interface CreatePluginsDataMap {
   [RICOS_COLLAPSIBLE_LIST_TYPE]?: CreatePluginData<CollapsibleListData>;
   [LINK_PREVIEW_TYPE]?: CreatePluginData<LinkPreviewData>;
 }
-
-import type { EditorPlugin as DraftEditorPlugin, PluginFunctions } from 'draft-js-plugins-editor';
-import type { KeyboardShortcut } from './shortcuts';
 
 export type PluginMapping = Partial<{
   [type: string]: {
@@ -270,21 +268,24 @@ export type ToolbarButton = {
   icon?: ComponentType;
   tooltip?: string;
   dataHook?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   command?: (args: Record<string, any>) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   attributes?: Record<string, { id: string; resolve: (content) => any }>;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface EditorPlugin<PluginConfig extends EditorPluginConfig = Record<string, any>>
   extends BasePluginConfig {
   config: PluginConfig;
   createPlugin?: CreatePluginFunction<PluginConfig>;
   ModalsMap?: ModalsMap;
   createPluginData?: CreatePluginData<PluginConfig>;
-  getAddButtons?: (config?, services?: PluginServices) => AddButton[];
+  getAddButtons?: (config?, services?: RicosServices) => AddButton[];
   textButtons?: FormattingToolbarButtonConfig[];
   shortcuts?: KeyboardShortcut[];
   toolbar?: {
-    getButtons: (config?, services?: PluginServices) => ToolbarButton[];
+    getButtons: (config?, services?: RicosServices) => ToolbarButton[];
     isVisible?: (selection) => boolean;
   };
 }

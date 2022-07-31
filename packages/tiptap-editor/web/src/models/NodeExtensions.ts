@@ -1,6 +1,6 @@
 import type { Node } from '@tiptap/core';
 import type { RicosEditorProps } from 'ricos-common';
-import type { RicosServices } from 'ricos-types';
+import type { TiptapAdapterServices } from '../initializeTiptapAdapter';
 import type {
   DecoratedNodeExtension,
   ConvertableNodeExtensionAggregate,
@@ -40,7 +40,7 @@ export class DecoratedNodeExtensions implements ConvertableNodeExtensionAggregat
   toTiptapExtensions(
     extensions: ExtensionAggregate,
     ricosProps: RicosEditorProps,
-    services: RicosServices
+    services: TiptapAdapterServices
   ) {
     return this.extensions
       .asArray()
@@ -62,7 +62,7 @@ export class HtmlNodeExtensions implements ConvertableNodeExtensionAggregate {
   toTiptapExtensions(
     extensions: ExtensionAggregate,
     ricosProps: RicosEditorProps,
-    services: RicosServices
+    services: TiptapAdapterServices
   ) {
     return this.extensions
       .asArray()

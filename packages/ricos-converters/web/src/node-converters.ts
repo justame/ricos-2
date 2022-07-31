@@ -28,6 +28,7 @@ import { htmlConverter } from './nodes/html-converter';
 import { linkPreviewConverter } from './nodes/link-preview-converter';
 import { orderedListConverter } from './nodes/ordered-list-converter';
 import { bulletedListConverter } from './nodes/bulleted-list-converter';
+import { appEmbedConverter } from './nodes/app-embed-converter';
 import type { TiptapNode, TiptapNodeConverter } from './types';
 
 export const getUnsupportedToTiptap = (node: Node): TiptapNodeConverter['toTiptap'] => {
@@ -89,4 +90,5 @@ export const nodeConverters = [
   linkPreviewConverter,
   orderedListConverter,
   bulletedListConverter,
+  appEmbedConverter,
 ];

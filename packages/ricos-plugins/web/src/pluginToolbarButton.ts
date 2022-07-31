@@ -2,10 +2,10 @@ import { toolbarButtonsConfig } from './toolbarButtonsConfig';
 import { toolbarButtonsRenders } from './toolbarButtonsRenders';
 import { alwaysVisibleResolver } from 'wix-rich-content-toolbars-v3';
 import type {
+  PluginToolbarButton,
   ToolbarButton,
-  IPluginToolbarButton,
   IToolbarItemConfigTiptap,
-  PluginServices,
+  RicosServices,
 } from 'ricos-types';
 
 export class PluginToolbarButtonCollisionError extends Error {}
@@ -17,31 +17,31 @@ export class PluginToolbarButtonCollisionError extends Error {}
  * @export
  * @class PluginToolbarButton
  */
-export class PluginToolbarButton implements IPluginToolbarButton {
+export class RicosPluginToolbarButton implements PluginToolbarButton {
   button: ToolbarButton;
 
-  services: PluginServices;
+  services: RicosServices;
 
-  private constructor(button: ToolbarButton, services: PluginServices) {
+  private constructor(button: ToolbarButton, services: RicosServices) {
     this.button = button;
     this.services = services;
   }
 
-  static of(button: ToolbarButton, services: PluginServices) {
-    return new PluginToolbarButton(button, services);
+  static of(button: ToolbarButton, services: RicosServices) {
+    return new RicosPluginToolbarButton(button, services);
   }
 
   register() {
     const modal = this.getModal();
     if (modal) {
-      this.services.modalService?.register(modal);
+      this.services.modals.register(modal);
     }
   }
 
   unregister() {
     const modal = this.getModal();
     if (modal) {
-      this.services.modalService?.unregister(modal.id);
+      this.services.modals.unregister(modal.id);
     }
   }
 
@@ -53,7 +53,7 @@ export class PluginToolbarButton implements IPluginToolbarButton {
     return this.button.modal;
   }
 
-  equals(button: IPluginToolbarButton): boolean {
+  equals(button: PluginToolbarButton): boolean {
     return this.button.id === button.getButton().id;
   }
 

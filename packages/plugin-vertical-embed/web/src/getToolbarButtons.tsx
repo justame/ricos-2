@@ -7,7 +7,7 @@ import { verticalEmbedModals } from './constants';
 import InsertModal from './modals/InsertModal';
 
 export const getToolbarButtons = (config, services): ToolbarButton[] => {
-  const { modalService } = services;
+  const { modals } = services;
   return [
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.REPLACE,
@@ -18,10 +18,10 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
         id: verticalEmbedModals.replace,
       },
       command: ({ isMobile, node, referenceElement }) => {
-        if (modalService?.isModalOpen(verticalEmbedModals.replace)) {
-          modalService.closeModal(verticalEmbedModals.replace);
+        if (modals?.isModalOpen(verticalEmbedModals.replace)) {
+          modals.closeModal(verticalEmbedModals.replace);
         } else {
-          modalService?.openModal(verticalEmbedModals.replace, {
+          modals?.openModal(verticalEmbedModals.replace, {
             componentProps: {
               verticalsApi: config?.verticalsApi,
               componentData: { type: node.attrs.type.toLowerCase() }, //TODO: convert to draft

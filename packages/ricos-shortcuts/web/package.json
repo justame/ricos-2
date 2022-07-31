@@ -1,6 +1,6 @@
 {
   "name": "ricos-shortcuts",
-  "version": "8.72.14",
+  "version": "8.72.15",
   "author": {
     "name": "Alex Greenstein",
     "email": "alexgr@wix.com"
@@ -35,12 +35,8 @@
   },
   "dependencies": {
     "react-hotkeys": "^2.0.0",
-    "ricos-common": "8.72.14",
-    "ricos-context": "8.72.14",
-    "ricos-modals": "8.72.14",
-    "ricos-types": "8.72.14",
-    "wix-rich-content-editor-common": "8.72.14",
-    "wix-tiptap-editor": "8.72.14"
+    "ricos-context": "8.72.15",
+    "ricos-types": "8.72.15"
   },
   "unpkg": true,
   "publishConfig": {

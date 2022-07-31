@@ -4,15 +4,10 @@ import type { Content } from 'wix-rich-content-toolbars-v3';
 import {
   FloatingToolbar,
   RicosTiptapToolbar,
-  tiptapStaticToolbarConfig,
   linkToolbarItemConfig,
   FloatingAddPluginMenu,
 } from 'wix-rich-content-toolbars-v3';
 import type { ToolbarSettings } from 'ricos-common';
-import {
-  desktopTextButtonList,
-  mobileTextButtonList,
-} from '../toolbars/utils/defaultTextFormattingButtons';
 import type { TextButtons, ToolbarSettingsFunctions } from 'wix-rich-content-common';
 import { firstRight } from 'wix-rich-content-common';
 import { TOOLBARS, mergeToolbarSettings, isiOS } from 'wix-rich-content-editor-common';
@@ -20,20 +15,19 @@ import type { RichContentAdapter } from 'wix-tiptap-editor';
 import { getDefaultToolbarSettings } from 'wix-rich-content-editor';
 import RicosPortal from '../modals/RicosPortal';
 import type { Selection } from 'prosemirror-state';
-import { ToolbarConfig } from './ricosToolbarConfig';
 import type { GeneralContext } from 'ricos-context';
 import { withEditorContext, withRicosContext, withPluginsContext } from 'ricos-context';
 import { and } from 'ricos-content';
 import { not } from 'fp-ts/Predicate';
 import PluginsToolbar from '../toolbars/PluginToolbar';
 import { FooterToolbar } from '../toolbars/FooterToolbar';
-import type { IEditorPlugins, IToolbarItemConfigTiptap } from 'ricos-types';
+import type { RicosEditorPlugins, IToolbarItemConfigTiptap } from 'ricos-types';
 import { isTextSelection } from '@tiptap/core';
 
 type RicosToolbarProps = {
   content: Content<Node[]>;
   toolbarSettings?: ToolbarSettings;
-  plugins?: IEditorPlugins;
+  plugins: RicosEditorPlugins;
 };
 
 type RicosToolbarState = {
@@ -77,12 +71,12 @@ class RicosToolbars extends React.Component<
     const { toolbarSettings, plugins } = this.props;
     if (toolbarSettings?.getToolbarSettings) {
       const textButtons: TextButtons = {
-        mobile: mobileTextButtonList,
-        desktop: desktopTextButtonList,
+        mobile: [],
+        desktop: [],
       };
 
       const pluginButtons = plugins
-        ?.getAddButtons()
+        .getAddButtons()
         .asArray()
         .map(b => b.toToolbarButtonSettings());
 
@@ -100,10 +94,9 @@ class RicosToolbars extends React.Component<
 
       const finalToolbarSettings = mergeToolbarSettings({ defaultSettings, customSettings });
 
-      if (plugins) {
-        const toolbarConfig = this.getToolbarConfig(finalToolbarSettings, TOOLBARS.SIDE);
-        plugins.getAddButtons().registerPluginMenuModal(toolbarConfig?.addPluginMenuConfig);
-      }
+      const toolbarConfig = this.getToolbarConfig(finalToolbarSettings, TOOLBARS.SIDE);
+      plugins.getAddButtons().registerPluginMenuModal(toolbarConfig?.addPluginMenuConfig);
+
       this.setState({
         finalToolbarSettings,
       });
@@ -177,35 +170,16 @@ class RicosToolbars extends React.Component<
     );
   }
 
-  getTextToolbarButtonsConfig = (plugins?: IEditorPlugins) => {
-    const { editor } = this.props;
-    const textButtonsFromPlugins = plugins
-      ?.getTextButtons()
-      .toToolbarItemsConfigs(editor.getEditorCommands());
-
-    return textButtonsFromPlugins
-      ? [...tiptapStaticToolbarConfig, ...textButtonsFromPlugins]
-      : tiptapStaticToolbarConfig;
-  };
-
   renderFormattingToolbar(finaltoolbarSettings: ToolbarSettingsFunctions[]) {
     const {
       ricosContext,
-      editor: { tiptapEditor },
+      editor: { tiptapEditor, getEditorCommands },
       toolbarSettings,
       plugins,
     } = this.props;
 
-    const toolbarButtonsConfig = this.getTextToolbarButtonsConfig(plugins);
-
     const toolbarType = TOOLBARS.INLINE;
     const toolbarConfig = this.getToolbarConfig(finaltoolbarSettings, toolbarType);
-    const toolbarItemsConfig = ToolbarConfig.toTiptapToolbarItemsConfig(
-      toolbarConfig,
-      toolbarButtonsConfig,
-      toolbarType,
-      'desktop'
-    );
 
     const shouldCreate = this.getShouldCreate(ricosContext.isMobile, toolbarConfig?.shouldCreate);
 
@@ -220,7 +194,9 @@ class RicosToolbars extends React.Component<
             this.floatingToolbarChildren(
               'floating-formatting-toolbar',
               tiptapEditor.view.dom.clientWidth,
-              toolbarItemsConfig
+              plugins
+                ?.getTextButtons()
+                .toToolbarItemsConfig(toolbarType, ricosContext.isMobile, getEditorCommands()) || []
             )
           }
         </FloatingToolbar>
@@ -263,24 +239,24 @@ class RicosToolbars extends React.Component<
   }
 
   renderMobileToolbar(finaltoolbarSettings: ToolbarSettingsFunctions[]) {
-    const { ricosContext, plugins } = this.props;
-
-    const toolbarButtonsConfig = this.getTextToolbarButtonsConfig(plugins);
+    const { ricosContext, plugins, editor } = this.props;
 
     const toolbarType = TOOLBARS.MOBILE;
     const toolbarConfig = this.getToolbarConfig(finaltoolbarSettings, toolbarType);
-    const toolbarItemsConfig = ToolbarConfig.toTiptapToolbarItemsConfig(
-      toolbarConfig,
-      toolbarButtonsConfig,
-      toolbarType,
-      'mobile'
-    );
     const shouldCreate = this.getShouldCreate(ricosContext.isMobile, toolbarConfig?.shouldCreate);
 
     if (ricosContext.isMobile && shouldCreate) {
       return (
         <div data-hook="mobileToolbar" dir={ricosContext.languageDir}>
-          {this.renderToolbar(toolbarItemsConfig)}
+          {this.renderToolbar(
+            plugins
+              ?.getTextButtons()
+              .toToolbarItemsConfig(
+                toolbarType,
+                ricosContext.isMobile,
+                editor.getEditorCommands()
+              ) || []
+          )}
         </div>
       );
     } else {
@@ -289,21 +265,19 @@ class RicosToolbars extends React.Component<
   }
 
   renderStaticToolbar(finaltoolbarSettings: ToolbarSettingsFunctions[]) {
-    const { toolbarSettings, ricosContext, plugins } = this.props;
+    const { toolbarSettings, ricosContext, plugins, editor } = this.props;
     const { isMobile } = ricosContext;
-
-    const toolbarButtonsConfig = this.getTextToolbarButtonsConfig(plugins);
 
     const toolbarType = TOOLBARS.STATIC;
     const toolbarConfig = this.getToolbarConfig(finaltoolbarSettings, toolbarType);
     const htmlContainer = toolbarSettings?.textToolbarContainer;
-    const toolbarItemsConfig = ToolbarConfig.toTiptapToolbarItemsConfig(
-      toolbarConfig,
-      toolbarButtonsConfig,
-      toolbarType,
-      'desktop'
-    );
+
     const shouldCreate = this.getShouldCreate(isMobile, toolbarConfig?.shouldCreate);
+
+    const toolbarItemsConfig =
+      plugins
+        ?.getTextButtons()
+        .toToolbarItemsConfig(toolbarType, ricosContext.isMobile, editor.getEditorCommands()) || [];
 
     if (htmlContainer && shouldCreate) {
       return (

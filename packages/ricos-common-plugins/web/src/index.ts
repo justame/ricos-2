@@ -8,6 +8,8 @@ import { pluginOrderedList } from './ordered-list/ordered-list';
 import { pluginParagraph } from './paragraph/paragraph';
 import { pluginTextAlignment } from './text-align/text-align';
 import { pluginUnderline } from './underline/underline';
+import { pluginResizable } from './resizable/resizable';
+import { pluginDraggable } from './draggable/draggable';
 
 import { undo, redo, history } from './history-infra';
 import { isTextSelection } from '@tiptap/core';
@@ -26,6 +28,8 @@ export const commonPlugins = [
   pluginParagraph,
   pluginTextAlignment,
   pluginUnderline,
+  pluginResizable,
+  pluginDraggable,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ] as EditorPlugin<Record<string, any>>[];
 

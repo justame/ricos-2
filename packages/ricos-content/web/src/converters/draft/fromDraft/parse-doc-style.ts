@@ -56,7 +56,7 @@ const normalizeColorDecorations = (decorations: Decoration[]) => {
 
   return decorations;
 };
-export const parseDocStyle = (documentStyle?: DocumentStyle): RicosDocumentStyle | undefined => {
+export const parseDocStyle = documentStyle => {
   if (documentStyle) {
     const ricosDocumentStyle: RicosDocumentStyle = {};
     Object.entries(documentStyle).forEach(([header, styles]) => {
@@ -65,7 +65,8 @@ export const parseDocStyle = (documentStyle?: DocumentStyle): RicosDocumentStyle
           convertHeaderToRicosDecorations(styles) as Decoration[]
         );
         const nodeStyle = convertCssToNodeStyle(styles);
-        const lineHeight = styles['line-height'];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const lineHeight = (styles as any)['line-height'];
         ricosDocumentStyle[header] = {};
         decorations?.length > 0 && (ricosDocumentStyle[header].decorations = decorations);
         nodeStyle && (ricosDocumentStyle[header].nodeStyle = nodeStyle);

@@ -1,7 +1,8 @@
+import type { Node } from 'prosemirror-model';
 import type { IContent } from 'ricos-types';
 import EventEmitter from './lib/EventEmitter';
 
-export class Content<T> extends EventEmitter implements IContent<T> {
+export class Content<T = Node[]> extends EventEmitter implements IContent<T> {
   static EVENTS = {
     contentChangeEvent: 'contentChange',
   };

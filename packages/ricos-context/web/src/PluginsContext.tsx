@@ -1,14 +1,14 @@
 import React from 'react';
 import type { FC, ReactChild } from 'react';
-import type { IEditorPlugins } from 'ricos-types';
+import type { RicosEditorPlugins } from 'ricos-types';
 
 export interface PluginsContextProps {
-  plugins: IEditorPlugins;
+  plugins: RicosEditorPlugins;
   children: ReactChild;
 }
 
-export const PluginsContext = React.createContext<IEditorPlugins>(
-  null as unknown as IEditorPlugins
+export const PluginsContext = React.createContext<RicosEditorPlugins>(
+  null as unknown as RicosEditorPlugins
 );
 
 export const PluginsContextProvider: FC<PluginsContextProps> = ({ plugins, children }) => (

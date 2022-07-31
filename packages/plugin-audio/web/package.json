@@ -1,6 +1,6 @@
 {
   "name": "wix-rich-content-plugin-audio",
-  "version": "8.72.14",
+  "version": "8.72.15",
   "author": {
     "name": "Tamrat Bayeh",
     "email": "tamratb@wix.com"
@@ -39,16 +39,14 @@
   },
   "dependencies": {
     "id3js": "2.1.1",
-    "ricos-content": "8.72.14",
-    "ricos-context": "8.72.14",
-    "ricos-modals": "8.72.14",
-    "ricos-types": "8.72.14",
-    "wix-rich-content-common": "8.72.14",
-    "wix-rich-content-editor-common": "8.72.14",
-    "wix-rich-content-plugin-commons": "8.72.14",
-    "wix-rich-content-plugin-html": "8.72.14",
-    "wix-rich-content-toolbars-ui": "8.72.14",
-    "wix-tiptap-editor": "8.72.14"
+    "ricos-content": "8.72.15",
+    "ricos-context": "8.72.15",
+    "ricos-types": "8.72.15",
+    "wix-rich-content-common": "8.72.15",
+    "wix-rich-content-editor-common": "8.72.15",
+    "wix-rich-content-plugin-commons": "8.72.15",
+    "wix-rich-content-plugin-html": "8.72.15",
+    "wix-rich-content-toolbars-ui": "8.72.15"
   },
   "jest": {
     "globals": {

@@ -6,11 +6,18 @@ import type {
   FormattingToolbarButtons,
   IToolbarItemConfigTiptap,
   ToolbarButtonProps,
+  ToolbarSettings,
   IContent,
-  PluginServices,
   Platform,
+  ToolbarType,
+  ToolbarSettingsFunctions,
 } from 'ricos-types';
-import { resolversById } from 'wix-rich-content-toolbars-v3';
+import { resolversById, tiptapStaticToolbarConfig } from 'wix-rich-content-toolbars-v3';
+import { cleanSeparators } from './toolbar-utils/cleanSeparators';
+import { toTiptapToolbarItemsConfig } from './toolbar-utils/toTiptapToolbarItemsConfig';
+import { getToolbarConfig } from './toolbar-utils/getToolbarConfig';
+import { initToolbarSettings } from './toolbar-utils/initToolbarSettings';
+import type { PluginServices } from './editorPlugins';
 
 export class PluginTextButton implements FormattingToolbarButton {
   private readonly button: FormattingToolbarButtonConfig;
@@ -48,13 +55,13 @@ export class PluginTextButton implements FormattingToolbarButton {
   register() {
     const modal = this.button.modal;
     if (modal) {
-      this.services.modalService?.register(modal);
+      this.services.modals.register(modal);
     }
   }
 
   unregister() {
     if (this.button.modal) {
-      this.services.modalService.unregister(this.button.modal?.id);
+      this.services.modals.unregister(this.button.modal?.id);
     }
   }
 
@@ -87,7 +94,7 @@ export class PluginTextButton implements FormattingToolbarButton {
     content: IContent<unknown>
   ): ToolbarButtonProps {
     const attributes = this.toResolvedAttributes();
-    const { modalService, t } = this.services;
+    const { modals } = this.services;
     return {
       type: 'button',
       tooltip: this.getTooltip(),
@@ -96,9 +103,9 @@ export class PluginTextButton implements FormattingToolbarButton {
       getLabel: () => this.button.id,
       onClick: () =>
         this.button.modal
-          ? modalService?.isModalOpen(this.button.modal.id)
-            ? modalService?.closeModal(this.button.modal.id)
-            : modalService?.openModal(this.button.modal.id, {
+          ? modals.isModalOpen(this.button.modal.id)
+            ? modals.closeModal(this.button.modal.id)
+            : modals.openModal(this.button.modal.id, {
                 layout: 'dialog',
               })
           : this.button.command?.(editorCommands),
@@ -113,20 +120,35 @@ export class PluginTextButton implements FormattingToolbarButton {
 export class PluginTextButtons implements FormattingToolbarButtons {
   private readonly buttons: PluginTextButton[];
 
-  private constructor(buttons: PluginTextButton[]) {
+  private readonly finalToolbarSettings: ToolbarSettingsFunctions[];
+
+  private constructor(buttons: PluginTextButton[], toolbarSettings: ToolbarSettings) {
     this.buttons = buttons;
+    this.finalToolbarSettings = initToolbarSettings(toolbarSettings);
   }
 
-  static of(buttons: PluginTextButton[]): PluginTextButtons {
-    return new PluginTextButtons(buttons);
+  static of(buttons: PluginTextButton[] = [], toolbarSettings: ToolbarSettings): PluginTextButtons {
+    return new PluginTextButtons(buttons, toolbarSettings);
   }
 
-  asArray() {
-    return this.buttons;
-  }
+  toToolbarItemsConfig(
+    toolbarType: ToolbarType,
+    isMobile: boolean,
+    editorCommands: EditorCommands
+  ) {
+    const toolbarConfig = getToolbarConfig(this.finalToolbarSettings, toolbarType);
+    const toolbarItemConfigs = [
+      ...this.buttons.map(b => b.toToolbarItemConfig(editorCommands)),
+      ...tiptapStaticToolbarConfig,
+    ];
+    const toolbarItemsConfig = toTiptapToolbarItemsConfig(
+      toolbarConfig,
+      toolbarItemConfigs,
+      toolbarType,
+      isMobile ? 'mobile' : 'desktop'
+    );
 
-  toToolbarItemsConfigs(editorCommands: EditorCommands): IToolbarItemConfigTiptap[] {
-    return this.buttons.map(b => b.toToolbarItemConfig(editorCommands));
+    return cleanSeparators(toolbarItemsConfig);
   }
 
   toExternalToolbarButtonsConfigs(

@@ -1,49 +1,16 @@
 import React from 'react';
+import type { EditorPlugin as EditorPluginType, ToolbarType } from 'ricos-types';
+import type { PluginServices } from './editorPlugins';
 import { EditorPlugins, PluginCollisionError } from './editorPlugins';
-import type {
-  EditorPlugin as EditorPluginType,
-  ToolbarType,
-  ModalService,
-  ShortcutRegistrar,
-  ShortcutDataProvider,
-  PluginServices,
-  EventRegistrar,
-  EventSubscriptor,
-  IUploadService,
-  IUpdateService,
-} from 'ricos-types';
-import { identity } from 'fp-ts/function';
+import type { ToolbarSettings } from 'ricos-common';
 
-const modalService = {
-  register: config => {},
-  unregister: id => {},
-} as ModalService;
-
-const shortcuts: ShortcutRegistrar & ShortcutDataProvider = {
-  register: () => {},
-  unregister: () => {},
-  getShortcutDisplayData: () => ({
-    name: '',
-    description: '',
-    keyCombinationText: '',
-    group: '',
-  }),
-} as ShortcutRegistrar & ShortcutDataProvider;
-
-const events = {} as EventRegistrar & EventSubscriptor;
-
-const uploadService = {} as IUploadService;
-
-const updateService = {} as IUpdateService;
-
-const services: PluginServices = {
-  modalService,
-  shortcuts,
-  t: identity,
-  events,
-  uploadService,
-  updateService,
-};
+const toolbarSettings: ToolbarSettings = {};
+const services = {
+  modals: {
+    register: jest.fn(),
+    unregister: jest.fn(),
+  },
+} as unknown as PluginServices;
 
 describe('Editor Plugins', () => {
   const linkPreview: EditorPluginType = {
@@ -140,7 +107,7 @@ describe('Editor Plugins', () => {
   };
 
   it('should register/unregister plugin', () => {
-    const registered = new EditorPlugins(services);
+    const registered = new EditorPlugins(services, toolbarSettings);
     registered.register(linkPreview);
     expect(registered.asArray().length).toEqual(1);
     registered.unregister(registered.asArray()[0]);
@@ -148,7 +115,7 @@ describe('Editor Plugins', () => {
   });
 
   it('should validate there is no duplication while register plugin', () => {
-    const registered = new EditorPlugins(services);
+    const registered = new EditorPlugins(services, toolbarSettings);
     registered.register(linkPreview);
     try {
       registered.register(linkPreview);
@@ -158,14 +125,14 @@ describe('Editor Plugins', () => {
   });
 
   it('should filter plugins', () => {
-    const registered = new EditorPlugins(services);
+    const registered = new EditorPlugins(services, toolbarSettings);
     registered.register(linkPreview);
     registered.filter(plugin => !!plugin.getAddButtons());
     expect(registered.asArray().length).toEqual(1);
   });
 
   it('should produce add buttons', () => {
-    const registered = new EditorPlugins(services);
+    const registered = new EditorPlugins(services, toolbarSettings);
     registered.register(linkPreview);
     registered.register(emoji);
     registered.register(divider);

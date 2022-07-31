@@ -13,7 +13,7 @@ import { DEFAULTS as defaultData } from './defaults';
 
 export const getToolbarButtons = (config, services): ToolbarButton[] => {
   const { getAudioUrl, fetchData } = config || {};
-  const { modalService } = services;
+  const { modals } = services;
 
   const handleFileSelection = config.handleFileSelection
     ? updateEntity =>
@@ -45,10 +45,10 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
           audio: { src },
           id,
         } = node.attrs;
-        if (modalService.isModalOpen(audioModals.replace)) {
-          modalService.closeModal(audioModals.replace);
+        if (modals.isModalOpen(audioModals.replace)) {
+          modals.closeModal(audioModals.replace);
         } else {
-          modalService.openModal(audioModals.replace, {
+          modals.openModal(audioModals.replace, {
             componentProps: {
               componentData: node.attrs, //TODO: convert to draft
               nodeId: id,
@@ -71,7 +71,7 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
         id: audioModals.settings,
       },
       command: ({ isMobile, node }) => {
-        modalService?.openModal(audioModals.settings, {
+        modals?.openModal(audioModals.settings, {
           componentProps: {
             nodeId: node.attrs.id,
             handleFileSelection,

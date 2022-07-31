@@ -1,12 +1,12 @@
-import { InsertPluginIcon, AdsenseIcon } from './icons';
-import { INSERT_PLUGIN_BUTTONS, TOOLBARS } from 'wix-rich-content-editor-common';
-import type { AddButton } from 'ricos-types';
-import { htmlButtonsTypes } from './defaults';
-import { HTML_TYPE } from './types';
-import htmlDataDefaults from 'ricos-schema/dist/statics/html.defaults.json';
 import { compact } from 'lodash';
+import htmlDataDefaults from 'ricos-schema/dist/statics/html.defaults.json';
+import type { AddButton } from 'ricos-types';
+import { INSERT_PLUGIN_BUTTONS, TOOLBARS } from 'wix-rich-content-editor-common';
+import { htmlButtonsTypes } from './defaults';
+import { AdsenseIcon, InsertPluginIcon } from './icons';
+import { HTML_TYPE } from './types';
 
-export const getAddButtons = (config, services): AddButton[] => {
+export const getAddButtons = (config, _services): AddButton[] => {
   const { exposeButtons = [htmlButtonsTypes.html], siteDomain } = config || {};
   const index = exposeButtons.indexOf(htmlButtonsTypes.adsense);
   if (!siteDomain && index > -1) {

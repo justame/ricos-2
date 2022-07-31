@@ -70,7 +70,9 @@ export type Group =
   | 'spoilerable'
   | 'shortcuts-enabled'
   | 'overlay'
-  | 'custom-styles';
+  | 'custom-styles'
+  | 'resizable'
+  | 'draggable';
 
 export type RicosNodeExtension = {
   name: Node_Type | string;

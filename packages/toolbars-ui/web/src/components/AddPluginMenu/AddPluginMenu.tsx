@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import type { Helpers } from 'wix-rich-content-common';
-import type { AddButton, AddPluginMenuConfig, IPluginAddButtons } from 'ricos-types';
+import type { AddButton, AddPluginMenuConfig, PluginAddButtons } from 'ricos-types';
 import { AddPluginMenu as AddPluginMenuComponent, SECTIONS } from 'wix-rich-content-editor';
 import PluginMenuButton from './PluginMenuButton';
 import { RicosContext, EditorContext, ModalContext, UploadContext } from 'ricos-context';
@@ -8,7 +8,7 @@ import { PLUGIN_MENU_MODAL_ID } from './consts';
 import { calcPluginModalLayout, calcPluginModalPlacement } from './utils';
 
 interface Props {
-  addButtons: IPluginAddButtons;
+  addButtons: PluginAddButtons;
   helpers?: Helpers;
   referenceElement?: React.RefObject<HTMLElement>;
   addPluginMenuConfig?: AddPluginMenuConfig;

@@ -23,7 +23,7 @@ export const getToolbarButtons = (config, services, type): ToolbarButton[] => {
         id: buttonsModals[type],
       },
       command: ({ isMobile, node }) => {
-        services.modalService.openModal(buttonsModals[type], {
+        services.modals.openModal(buttonsModals[type], {
           componentProps: {
             nodeId: node.attrs.id,
             settings: config,

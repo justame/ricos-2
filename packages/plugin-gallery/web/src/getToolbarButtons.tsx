@@ -52,7 +52,7 @@ export const getToolbarButtons = (config, services, galleryPluginService): Toolb
     }
   };
 
-  const { modalService, uploadService, updateService } = services;
+  const { modals, uploadService, updateService } = services;
 
   return [
     {
@@ -74,7 +74,7 @@ export const getToolbarButtons = (config, services, galleryPluginService): Toolb
         Component: GallerySettingsModal,
       },
       command: ({ isMobile, node }) => {
-        modalService?.openModal(galleryModals.manageMedia, {
+        modals?.openModal(galleryModals.manageMedia, {
           componentProps: {
             nodeId: node.attrs.id,
             handleFileSelection: () => handleFileSelection(uploadService, updateService, node),
@@ -126,7 +126,7 @@ export const getToolbarButtons = (config, services, galleryPluginService): Toolb
         Component: GallerySettingsModal,
       },
       command: ({ isMobile, node }) => {
-        modalService?.openModal(galleryModals.settings, {
+        modals?.openModal(galleryModals.settings, {
           componentProps: {
             nodeId: node.attrs.id,
             handleFileSelection: () => handleFileSelection(uploadService, updateService, node),

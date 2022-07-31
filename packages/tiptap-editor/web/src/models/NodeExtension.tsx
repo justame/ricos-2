@@ -47,10 +47,19 @@ const toFullNodeConfig =
       ...(ext.groups.includes('text')
         ? {}
         : {
-            parseHTML: () => [{ tag: `${config.name}-component` }],
+            parseHTML: () => [
+              {
+                tag: `${config.name}-component`,
+                getAttrs: node => {
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  const attrs = (node as any).getAttribute?.('data-node-attrs');
+                  return JSON.parse(attrs);
+                },
+              },
+            ],
             renderHTML: ({ HTMLAttributes }) => [
               `${config.name}-component`,
-              mergeAttributes(HTMLAttributes),
+              { 'data-node-attrs': JSON.stringify(HTMLAttributes) },
             ],
           }),
       ...rest,

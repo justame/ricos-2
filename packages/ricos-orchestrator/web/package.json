@@ -1,0 +1,72 @@
+{
+  "name": "ricos-orchestrator",
+  "version": "8.72.15",
+  "author": {
+    "name": "Alex Greenstein",
+    "email": "alexgr@wix.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wix/ricos.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wix/ricos/issues"
+  },
+  "homepage": "https://github.com/wix/ricos/tree/master/packages/ricos-orchestrator",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/cjs/index.js",
+  "types": "dist/src/index.d.ts",
+  "module": "dist/es/index.js",
+  "scripts": {
+    "clean": "rm -rf dist/",
+    "prebuild": "npm run clean",
+    "build:rollup": "rollup --environment DYNAMIC_IMPORT,MODULE_NAME:ricos-orchestrator,EXTRACT_CSS:false -c ../../../rollup.config.js",
+    "build": "npm run build:rollup",
+    "build:dev": "cross-env NODE_ENV=development npm run build",
+    "build:analyze:editor": "npm run build -- --environment MODULE_ANALYZE_EDITOR  && open stats.html",
+    "build:analyze:viewer": "npm run build -- --environment MODULE_ANALYZE_VIEWER && open stats.html",
+    "watch": "cross-env NODE_ENV=development npm run build:rollup -- --watch",
+    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx,d.ts}'",
+    "test": "jest --verbose",
+    "test:watchAll": "jest --verbose --watchAll"
+  },
+  "dependencies": {
+    "fp-ts": "^2.11.0",
+    "prosemirror-model": "1.15.0",
+    "ricos-common": "8.72.15",
+    "ricos-common-plugins": "8.72.15",
+    "ricos-converters": "8.72.15",
+    "ricos-events": "8.72.15",
+    "ricos-modals": "8.72.15",
+    "ricos-plugins": "8.72.15",
+    "ricos-shortcuts": "8.72.15",
+    "ricos-styles": "8.72.15",
+    "ricos-types": "8.72.15",
+    "wix-rich-content-toolbars-v3": "8.72.15",
+    "wix-tiptap-editor": "8.72.15"
+  },
+  "unpkg": true,
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "jest": {
+    "globals": {
+      "NODE_ENV": "test"
+    },
+    "testMatch": [
+      "**/?(*.)+(spec|test).+(ts|tsx|js)"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)?$": "ts-jest",
+      "^.+\\.(jsx|js)?$": "<rootDir>/../../../babel.jest.monorepo.js",
+      "\\.(svg)$": "<rootDir>/__mocks__/fileTransformer.js"
+    },
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|svg)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|scss)$": "<rootDir>/__mocks__/styleMock.js"
+    }
+  }
+}

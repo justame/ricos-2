@@ -77,8 +77,7 @@ export const FloatingToolbar = ({
 
   useLayoutEffect(() => {
     // Call reference with the virtual element inside an effect
-    const nodeDOM = editor.view.nodeDOM(from);
-    const externalRefNode = getReferenceElement && getReferenceElement(nodeDOM);
+    const externalRefNode = getReferenceElement && getReferenceElement(editor.view.nodeDOM(from));
     reference({
       getBoundingClientRect() {
         const rect = externalRefNode?.getBoundingClientRect();

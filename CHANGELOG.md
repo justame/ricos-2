@@ -17,7 +17,27 @@
     Click to see more.
   </summary>
 
+## :house: Internal
+
+- `collapsible-list`
+  - [#4276](https://github.com/wix/ricos/pull/4276) toolbar buttons and position
+
 </details>
+
+## 8.72.15 (Jul 31, 2022)
+
+## :bug: Bug Fix
+
+- `image-plugin`
+  - [#4296](https://github.com/wix/ricos/pull/4296) pass isSeoBot prop to wixImage component
+
+## :house: Internal
+
+- `general`
+  - [#4292](https://github.com/wix/ricos/pull/4292) general cleanup (redundant deps, tests, files)
+  - [#4293](https://github.com/wix/ricos/pull/4293) RicosServices refactored
+- `ricos-plugins`
+  - [#4290](https://github.com/wix/ricos/pull/4290) fix plugin shortcuts
 
 ## 8.72.14 (Jul 27, 2022)
 

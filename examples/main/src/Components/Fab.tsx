@@ -8,7 +8,6 @@ import type { OnVisibilityChanged } from '../types';
 const Fab = React.memo<{
   isMobile: boolean;
   isEditorShown: boolean;
-  isPreviewShown: boolean;
   isViewerShown: boolean;
   isContentStateShown: boolean;
   isEditorSettingsShown: boolean;
@@ -17,7 +16,6 @@ const Fab = React.memo<{
   ({
     isMobile,
     isEditorShown,
-    isPreviewShown,
     isViewerShown,
     isContentStateShown,
     isEditorSettingsShown,
@@ -25,19 +23,9 @@ const Fab = React.memo<{
   }) => {
     let hideFab = true;
     if (!isMobile) {
-      hideFab =
-        isEditorShown &&
-        isViewerShown &&
-        isContentStateShown &&
-        isPreviewShown &&
-        isEditorSettingsShown;
+      hideFab = isEditorShown && isViewerShown && isContentStateShown && isEditorSettingsShown;
     } else {
-      hideFab =
-        isEditorShown ||
-        isViewerShown ||
-        isContentStateShown ||
-        isPreviewShown ||
-        isEditorSettingsShown;
+      hideFab = isEditorShown || isViewerShown || isContentStateShown || isEditorSettingsShown;
     }
     if (hideFab) {
       return null;
@@ -61,17 +49,6 @@ const Fab = React.memo<{
           text="Viewer"
           key="viewer-action"
           onClick={() => toggleSectionVisibility('Viewer', true)}
-        >
-          <MdRemoveRedEye />
-        </Action>
-      );
-    }
-    if (!isPreviewShown) {
-      FabActions.push(
-        <Action
-          text="Preview"
-          key="preview-action"
-          onClick={() => toggleSectionVisibility('Preview', true)}
         >
           <MdRemoveRedEye />
         </Action>

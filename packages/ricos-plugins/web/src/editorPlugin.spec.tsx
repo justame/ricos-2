@@ -1,50 +1,15 @@
 import React from 'react';
+import type { EditorPlugin as EditorPluginType, ToolbarType } from 'ricos-types';
 import { EditorPlugin } from './editorPlugin';
-import { PluginAddButton } from './pluginAddButton';
-import type {
-  EditorPlugin as EditorPluginType,
-  ModalService,
-  ShortcutDataProvider,
-  ShortcutRegistrar,
-  ToolbarType,
-  PluginServices,
-  EventRegistrar,
-  EventSubscriptor,
-  IUploadService,
-  IUpdateService,
-} from 'ricos-types';
-import { identity } from 'fp-ts/function';
+import type { PluginServices } from './editorPlugins';
+import { RicosPluginAddButton } from './pluginAddButton';
 
-const modalService = {
-  register: config => {},
-  unregister: id => {},
-} as ModalService;
-
-const shortcuts: ShortcutRegistrar & ShortcutDataProvider = {
-  register: () => {},
-  unregister: () => {},
-  getShortcutDisplayData: () => ({
-    name: '',
-    description: '',
-    keyCombinationText: '',
-    group: '',
-  }),
-} as ShortcutRegistrar & ShortcutDataProvider;
-
-const events = {} as EventRegistrar & EventSubscriptor;
-
-const uploadService = {} as IUploadService;
-
-const updateService = {} as IUpdateService;
-
-const services: PluginServices = {
-  modalService,
-  shortcuts,
-  t: identity,
-  events,
-  uploadService,
-  updateService,
-};
+const services = {
+  modals: {
+    register: jest.fn(),
+    unregister: jest.fn(),
+  },
+} as unknown as PluginServices;
 
 describe('Editor Plugin', () => {
   const plugin: EditorPluginType = {
@@ -84,7 +49,7 @@ describe('Editor Plugin', () => {
   it('should produce valid add buttons', () => {
     const buttons = actual.getAddButtons();
     if (buttons) {
-      expect(buttons[0]).toBeInstanceOf(PluginAddButton);
+      expect(buttons[0]).toBeInstanceOf(RicosPluginAddButton);
     }
   });
 

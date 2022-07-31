@@ -23,7 +23,6 @@ const ContentStateEditor = React.lazy(() => import('./Components/ContentStateEdi
 const EditorSettings = React.lazy(() => import('./Components/EditorSettings'));
 const Editor = React.lazy(() => import('../shared/editor/Editor'));
 const Viewer = React.lazy(() => import('../shared/viewer/Viewer'));
-const Preview = React.lazy(() => import('../shared/preview/Preview'));
 
 interface ExampleAppProps {
   isMobile?: boolean;
@@ -41,11 +40,9 @@ interface ExampleAppState {
   containerKey?: string;
   isEditorShown?: boolean;
   isViewerShown?: boolean;
-  isPreviewShown?: boolean;
   isContentStateShown?: boolean;
   isEditorSettingsShown?: boolean;
   viewerResetKey?: number;
-  previewResetKey?: number;
   editorResetKey?: number;
   shouldNativeUpload?: boolean;
   shouldUseNewContent?: boolean;
@@ -74,11 +71,9 @@ class ExampleApp extends PureComponent<ExampleAppProps, ExampleAppState> {
       containerKey,
       isEditorShown: true,
       isViewerShown: !isMobile,
-      isPreviewShown: false,
       isContentStateShown: false,
       isEditorSettingsShown: false,
       viewerResetKey: 0,
-      previewResetKey: 0,
       editorResetKey: 0,
       shouldNativeUpload: false,
       shouldUseNewContent: false,
@@ -372,45 +367,6 @@ class ExampleApp extends PureComponent<ExampleAppProps, ExampleAppState> {
     );
   };
 
-  renderPreview = () => {
-    const { contentState, isMobile, locale, localeResource } = this.props;
-    const { isPreviewShown } = this.state;
-    const settings = [
-      {
-        name: 'Mobile',
-        action: () =>
-          this.setState(state => ({
-            previewIsMobile: !state.previewIsMobile,
-            previewResetKey: state.previewResetKey + 1,
-          })),
-      },
-    ];
-    return (
-      isPreviewShown && (
-        <ReflexElement
-          key={`preview-section-${this.state.previewResetKey}`}
-          className="section preview-example"
-        >
-          <SectionHeader
-            title="Preview"
-            settings={settings}
-            onHide={this.onSectionVisibilityChange}
-          />
-          <SectionContent>
-            <ErrorBoundary>
-              <Preview
-                initialState={ensureDraftContent(contentState)}
-                isMobile={this.state.previewIsMobile || isMobile}
-                locale={locale}
-                localeResource={localeResource}
-              />
-            </ErrorBoundary>
-          </SectionContent>
-        </ReflexElement>
-      )
-    );
-  };
-
   renderViewer = () => {
     const { contentState, isMobile, locale } = this.props;
     const { isViewerShown, experiments } = this.state;
@@ -491,7 +447,6 @@ class ExampleApp extends PureComponent<ExampleAppProps, ExampleAppState> {
     const sections = compact([
       this.renderEditor(),
       this.renderViewer(),
-      this.renderPreview(),
       this.renderContentState(),
       this.renderEditorSettings(),
     ]);
@@ -505,15 +460,8 @@ class ExampleApp extends PureComponent<ExampleAppProps, ExampleAppState> {
 
   render() {
     const { isMobile } = this.props;
-    const {
-      isEditorShown,
-      isViewerShown,
-      isContentStateShown,
-      isPreviewShown,
-      isEditorSettingsShown,
-    } = this.state;
-    const showEmptyState =
-      !isEditorShown && !isViewerShown && !isContentStateShown && !isPreviewShown;
+    const { isEditorShown, isViewerShown, isContentStateShown, isEditorSettingsShown } = this.state;
+    const showEmptyState = !isEditorShown && !isViewerShown && !isContentStateShown;
     this.initSectionsSettings();
 
     return (
@@ -529,7 +477,6 @@ class ExampleApp extends PureComponent<ExampleAppProps, ExampleAppState> {
           isMobile={isMobile}
           isEditorShown={isEditorShown}
           isViewerShown={isViewerShown}
-          isPreviewShown={isPreviewShown}
           isContentStateShown={isContentStateShown}
           isEditorSettingsShown={isEditorSettingsShown}
           toggleSectionVisibility={this.onSectionVisibilityChange}

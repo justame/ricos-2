@@ -5,11 +5,11 @@ import RicosToolbarComponent from '../RicosToolbarComponent';
 import { Content } from '../../Content';
 import ToggleButton from '../buttons/ToggleButton/ToggleButton';
 import styles from './insert-plugin-toolbar.scss';
-import type { AddButton, IPluginAddButtons } from 'ricos-types';
+import type { AddButton, PluginAddButtons } from 'ricos-types';
 import type { OverflowedItemsPosition } from '../../types';
 
 interface Props {
-  buttons: IPluginAddButtons;
+  buttons: PluginAddButtons;
   referenceElement?: React.RefObject<HTMLElement>;
   onButtonClick: (button: AddButton, e: Event) => void;
   overflowedItemsPosition?: OverflowedItemsPosition;
