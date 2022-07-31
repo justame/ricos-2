@@ -38,7 +38,7 @@ export const CollapsibleList: React.FC<PluginProps> = ({
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div
-      className={styles[componentData.direction]}
+      className={styles[componentData.config?.direction || 'ltr']}
       onMouseDown={preventDeselection}
       // onFocus={this.onFocus}
       // tabIndex="0"

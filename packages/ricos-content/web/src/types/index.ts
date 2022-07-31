@@ -20,6 +20,7 @@ export interface ComponentData {
     link?: { url?: string; rel?: string; target?: string };
     anchor?: string;
     disableExpand?: boolean;
+    direction?: string;
   };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   src?: any;

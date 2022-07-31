@@ -22,6 +22,9 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
       },
     },
     {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
+    },
+    {
       id: PLUGIN_TOOLBAR_BUTTON_ID.DELETE,
     },
   ];
