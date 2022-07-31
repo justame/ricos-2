@@ -4,7 +4,6 @@
 
 .urlInput_container {
   padding: 80px 120px;
-
   &.endAlignment,
   &.urlInputModal_topControls {
     padding: 24px;
@@ -108,6 +107,9 @@
 //! New/Old Modal Combined Css
 
 .inputModal_container {
+  min-height: 118px;
+  min-width: 301px;
+  max-width: 420px;
   .inputModal_content {
     padding: 0;
     .inputModal_mobile & {
