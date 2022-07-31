@@ -209,6 +209,7 @@ class WixImage extends React.Component<ImageViewerProps & { styles: Record<strin
       getInPluginEditingMode,
       styles,
       isMobile,
+      seoMode,
     } = this.props;
 
     const data = componentData || DEFAULTS;
@@ -285,6 +286,7 @@ class WixImage extends React.Component<ImageViewerProps & { styles: Record<strin
             uri={imageSrc}
             alt={metadata.alt || ''}
             socialAttrs={socialAttrs}
+            isSEOBot={!!seoMode}
             {...(!isEditor && { placeholderTransition: 'blur', shouldUseLQIP: true })}
           />
 

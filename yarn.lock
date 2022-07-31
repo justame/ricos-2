@@ -6343,21 +6343,21 @@
     immutable "~3.7.4"
     object-assign "^4.1.1"
 
-"@wix/image-kit@^1.19.0":
-  version "1.19.0"
-  resolved "https://registry.yarnpkg.com/@wix/image-kit/-/image-kit-1.19.0.tgz#a0d311700d09300f4ba8e49efbebb27fef4679d3"
-  integrity sha512-0Om5NFtblBpjbayRlPmcF1uVwHe+ZoRlSVVg2cxERGByl3NB9yprzAEABqXGUJ0cOrn4cw/QORwRRYdqr2uaIA==
+"@wix/image-kit@^1.21.0":
+  version "1.21.0"
+  resolved "https://registry.yarnpkg.com/@wix/image-kit/-/image-kit-1.21.0.tgz#5ead50c54c58dc636405c7de19c35a62f7e96cab"
+  integrity sha512-MBpJlRuYFVVLUc5/fsoVYaQQMKC0+g/RR3k43b/p6xWA+tmVSBfVvf+Zo0zby9lV0CWmtZVkR5/r0MPMveh3AA==
   dependencies:
     "@babel/runtime" "^7.0.0"
     tslib "^2.0.0"
 
-"@wix/image@1.30.0":
-  version "1.30.0"
-  resolved "https://registry.yarnpkg.com/@wix/image/-/image-1.30.0.tgz#43a0e117cf635075c4282c75b507f4486ae542b6"
-  integrity sha512-BgLFjm5/rgn05ElZUKNvlNwdaurer7VU0v/CcTIyd4YEq9oBODW2C0hYjOmA3gtSrv8evFrPlkFC5e1j4CkxGQ==
+"@wix/image@1.33.0":
+  version "1.33.0"
+  resolved "https://registry.yarnpkg.com/@wix/image/-/image-1.33.0.tgz#01b0d1115f582ba1a68f782b2cb270a46309393f"
+  integrity sha512-O6yRz8PPIPO0j41+TzsUwaUYt1YkBVZ+vrDaLgLVS4LP5DwQuHru5cImVNA2QP3IirYj+p/WFNFRtMAS49MPCw==
   dependencies:
     "@babel/runtime" "^7.0.0"
-    "@wix/image-kit" "^1.19.0"
+    "@wix/image-kit" "^1.21.0"
     fastdom "^1.0.10"
     tslib "^2.0.0"
 
