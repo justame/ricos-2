@@ -13,6 +13,7 @@ export default (
     popoverComponent,
     handleDropdownOpen,
     handleDropdownClose,
+    supportWhitespace = true,
   },
   PluginKey
 ) => {
@@ -26,7 +27,7 @@ export default (
   return Suggestion({
     editor,
     char: mentionTrigger,
-    allowSpaces: true,
+    allowSpaces: supportWhitespace,
     pluginKey: new PluginKey('mention'),
     command: ({ editor, range, props }) => {
       editor.chain().focus().insertMention({ name: props.id }, range).run;
