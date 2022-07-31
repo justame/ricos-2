@@ -7,12 +7,13 @@ import type {
   RicosServices,
   ToolbarSettings,
 } from 'ricos-types';
-import { EditorPlugin } from './editorPlugin';
 import type { PluginTextButton } from './plugin-text-button';
 import { PluginTextButtons } from './plugin-text-button';
 import { RicosPluginAddButtons } from './pluginAddButton';
+import { mergeConfig } from './mergeConfig';
+import { EditorPlugin } from './editorPlugin';
 
-export type PluginServices = Omit<RicosServices, 'plugins'>;
+export type PluginServices = Omit<RicosServices, 'plugins' | 'tiptapAdapter'>;
 
 export class PluginCollisionError extends Error {}
 
@@ -21,7 +22,9 @@ export class EditorPlugins implements RicosEditorPlugins {
 
   private services: PluginServices;
 
-  toolbarSettings: ToolbarSettings;
+  private toolbarSettings: ToolbarSettings;
+
+  static mergeConfig = mergeConfig;
 
   constructor(services: PluginServices, toolbarSettings: ToolbarSettings) {
     this.services = services;

@@ -67,3 +67,10 @@ export const tiptapToDraft = (
 ): DraftContent => pipe(proseContent, fromTiptap, normalize(!shouldRevealConverterErrors), toDraft);
 
 export * from './utils/text-direction';
+
+export const nodeConverter = {
+  fromTiptapNode,
+  nodeToRicosNode: (node: TiptapNode) => {
+    return fromTiptapNode(node.toJSON());
+  },
+};

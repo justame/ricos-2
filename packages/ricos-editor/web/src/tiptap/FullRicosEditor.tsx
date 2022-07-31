@@ -1,54 +1,38 @@
-import type { Node } from 'prosemirror-model';
 import type { ForwardedRef, RefObject } from 'react';
 import React, { createRef, forwardRef } from 'react';
 import type { RicosEditorProps } from 'ricos-common';
+import { ErrorNotifier } from 'ricos-common';
 import { ContentQueryProvider } from 'ricos-content-query';
 import type { ToolbarContextType } from 'ricos-context';
 import {
-  RicosContextProvider,
   EditorContextConsumer,
   EditorContextProvider,
   EventsContextProvider,
   ModalContextProvider,
   PluginsContextProvider,
+  RicosContextProvider,
   ShortcutsContextProvider,
   StylesContextProvider,
   ToolbarContext,
   UploadContextProvider,
 } from 'ricos-context';
-import { fromTiptapNode } from 'ricos-converters';
-import { RicosEvents } from 'ricos-events';
-import { ModalRenderer, RicosModalService } from 'ricos-modals';
-import { EditorPlugins } from 'ricos-plugins';
-import { commonPlugins, commonPluginConfig } from 'ricos-common-plugins';
-import { EditorKeyboardShortcuts, Shortcuts } from 'ricos-shortcuts';
-import { RicosStyles } from 'ricos-styles';
+import { ModalRenderer } from 'ricos-modals';
+import { Shortcuts } from 'ricos-shortcuts';
 import type {
-  TiptapAdapter,
+  Orchestrator,
   RicosPortal as RicosPortalType,
-  IUploadService,
-  IUpdateService,
   TranslationFunction,
-  EditorPlugin,
-  LegacyEditorPluginConfig,
-  RicosEditorPlugins,
 } from 'ricos-types';
 import type { EditorCommands } from 'wix-rich-content-common';
 import { getLangDir } from 'wix-rich-content-common';
-import { Content } from 'wix-rich-content-toolbars-v3';
 import type { RichContentAdapter } from 'wix-tiptap-editor';
-import { initializeTiptapAdapter } from 'wix-tiptap-editor';
 import RicosPortal from '../modals/RicosPortal';
 import type { RicosEditorRef } from '../RicosEditorRef';
 import { convertToolbarContext } from '../toolbars/convertToolbarContext';
-import { pluginsConfigMerger } from '../utils/pluginsConfigMerger/pluginsConfigMerger';
 import RicosEditor from './RicosEditor';
 import RicosStylesRenderer from './RicosStyles';
 import RicosToolbars from './RicosToolbars';
-import { UploadService, UpdateService, StreamReader, ErrorNotifier } from 'ricos-common';
-import { pipe } from 'fp-ts/function';
-import * as A from 'fp-ts/Array';
-import { deprecateHelpers } from './deprecateHelpers';
+import { RicosOrchestrator } from 'ricos-orchestrator';
 
 type State = {
   error: string;
@@ -60,137 +44,40 @@ type Props = RicosEditorProps & {
 };
 
 export class FullRicosEditor extends React.Component<Props, State> {
-  nodeService = {
-    fromTiptapNode,
-    nodeToRicosNode: node => {
-      return fromTiptapNode(node.toJSON());
-    },
-  };
-
   state = { error: '' };
 
   portalRef: RefObject<RicosPortalType>;
-
-  private tiptapAdapter!: TiptapAdapter;
-
-  private readonly events: RicosEvents;
-
-  private readonly modalService: RicosModalService;
-
-  private readonly styles: RicosStyles;
-
-  private readonly shortcuts: EditorKeyboardShortcuts;
-
-  private readonly editorPlugins: RicosEditorPlugins;
-
-  private uploadService!: IUploadService;
-
-  private updateService!: IUpdateService;
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private readonly content: Content<Node<any>[]>;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   errorNotifier: React.RefObject<any>;
 
   inputRef: React.RefObject<HTMLInputElement>;
 
+  orchestrator: Orchestrator;
+
   constructor(props) {
     super(props);
     this.portalRef = createRef<RicosPortalType>();
-
-    const { onMediaUploadStart, onMediaUploadEnd } = props._rcProps?.helpers || {};
-
-    this.updateService = new UpdateService();
-    this.uploadService = new UploadService(new StreamReader(), this.updateService, {
-      onMediaUploadStart,
-      onMediaUploadEnd,
-    });
-
-    this.events = new RicosEvents();
-    this.modalService = new RicosModalService(this.events);
-    this.styles = new RicosStyles();
-    this.shortcuts = new EditorKeyboardShortcuts(this.events, this.modalService);
-
-    this.content = Content.create<Node[]>([], {
-      styles: this.styles,
-      nodeService: this.nodeService,
-    });
-    this.editorPlugins = new EditorPlugins(
-      {
-        modals: this.modalService,
-        events: this.events,
-        uploadService: this.uploadService,
-        updateService: this.updateService,
-        shortcuts: this.shortcuts,
-        t: props.t,
-        styles: this.styles,
-        content: this.content,
-        tiptapAdapter: this.tiptapAdapter,
-      },
-      props.toolbarSettings
-    );
-
     this.errorNotifier = React.createRef();
     this.inputRef = React.createRef();
+    this.orchestrator = new RicosOrchestrator(props, props.t);
   }
 
   static getDerivedStateFromError(error: string) {
     return { error };
   }
 
-  initPlugins = (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    commonPlugins: EditorPlugin<Record<string, any>>[],
-    commonPluginConfig: LegacyEditorPluginConfig
-  ) => {
-    const { plugins, _rcProps, linkPanelSettings } = this.props;
-    const { handleFileUpload, handleFileSelection } = _rcProps?.helpers || {};
-    const { config = {} } = _rcProps || {};
-
-    deprecateHelpers(config, {
-      handleFileUpload,
-      handleFileSelection,
-      linkPanelSettings,
-    });
-
-    pipe(
-      [...commonPlugins, ...(plugins || [])],
-      pluginsConfigMerger(config),
-      pluginsConfigMerger(commonPluginConfig),
-      A.map((plugin: EditorPlugin) => this.editorPlugins.register(plugin))
-    );
-  };
-
-  initUploadService = () => {
-    this.updateService.setEditorCommands(this.tiptapAdapter.getEditorCommands());
-    this.uploadService.setErrorNotifier(() => this.errorNotifier.current);
-    this.uploadService.setHiddenInputElement(() => this.inputRef.current as HTMLInputElement);
-  };
-
   componentDidMount() {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this.initPlugins(commonPlugins as EditorPlugin<Record<string, any>>[], commonPluginConfig);
-    this.tiptapAdapter = initializeTiptapAdapter(this.props, {
-      events: this.events,
-      styles: this.styles,
-      plugins: this.editorPlugins,
-      updateService: this.updateService,
-      uploadService: this.uploadService,
-      t: this.props.t,
-      content: this.content,
-      shortcuts: this.shortcuts,
-      modals: this.modalService,
-    });
-    this.initUploadService();
+    this.orchestrator.onDomReady(
+      () => this.errorNotifier.current,
+      () => this.inputRef.current as HTMLInputElement
+    );
 
     this.forceUpdate();
   }
 
   componentWillUnmount() {
-    this.editorPlugins.destroy();
-    this.modalService.destroy();
-    this.events.clear();
+    this.orchestrator.finalize();
   }
 
   componentDidCatch(error, errorInfo) {
@@ -236,7 +123,7 @@ export class FullRicosEditor extends React.Component<Props, State> {
       theme,
       locale,
       helpers,
-      plugins: this.editorPlugins,
+      plugins: this.orchestrator.getServices().plugins,
       linkPanelSettings,
       linkSettings,
       experiments,
@@ -266,10 +153,22 @@ export class FullRicosEditor extends React.Component<Props, State> {
     const { t, isMobile, experiments, locale, localeContent, theme, toolbarSettings, content } =
       this.props;
 
+    const {
+      plugins,
+      shortcuts,
+      content: toolbarContent,
+      modals,
+      uploadService,
+      updateService,
+      tiptapAdapter,
+      events,
+      styles,
+    } = this.orchestrator.getServices();
+
     const languageDir = getLangDir(locale);
     return (
-      <EventsContextProvider events={this.events}>
-        <StylesContextProvider styles={this.styles}>
+      <EventsContextProvider events={events}>
+        <StylesContextProvider styles={styles}>
           <>
             <RicosPortal
               languageDir={languageDir}
@@ -293,16 +192,16 @@ export class FullRicosEditor extends React.Component<Props, State> {
                 portal={this.portalRef.current}
               >
                 <>
-                  <EditorContextProvider adapter={this.tiptapAdapter}>
-                    <ModalContextProvider modalService={this.modalService}>
-                      <ShortcutsContextProvider shortcuts={this.shortcuts}>
-                        <PluginsContextProvider plugins={this.editorPlugins}>
+                  <EditorContextProvider adapter={tiptapAdapter}>
+                    <ModalContextProvider modalService={modals}>
+                      <ShortcutsContextProvider shortcuts={shortcuts}>
+                        <PluginsContextProvider plugins={plugins}>
                           <>
                             <Shortcuts group="global" root>
                               <>
                                 <UploadContextProvider
-                                  uploadService={this.uploadService}
-                                  updateService={this.updateService}
+                                  uploadService={uploadService}
+                                  updateService={updateService}
                                 >
                                   <>
                                     <EditorContextConsumer>
@@ -315,9 +214,9 @@ export class FullRicosEditor extends React.Component<Props, State> {
                                         >
                                           <ContentQueryProvider editor={editor.tiptapEditor}>
                                             <RicosToolbars
-                                              content={this.content}
+                                              content={toolbarContent}
                                               toolbarSettings={toolbarSettings}
-                                              plugins={this.editorPlugins}
+                                              plugins={plugins}
                                             />
                                           </ContentQueryProvider>
                                         </ToolbarContext.Provider>

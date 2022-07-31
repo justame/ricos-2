@@ -1,5 +1,4 @@
 import type { TranslationFunction } from './commonTypes';
-import type { IContent } from './content';
 import type { EventRegistrar, EventSubscriptor } from './events';
 import type { ModalService } from './modalTypes';
 import type { RicosEditorPlugins } from './ricos-editor-plugins';
@@ -16,7 +15,8 @@ export type RicosServices = {
   updateService: IUpdateService;
   t: TranslationFunction;
   shortcuts: ShortcutRegistrar & ShortcutDataProvider;
-  content: IContent<unknown>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  content: any;
   modals: ModalService;
   tiptapAdapter: TiptapAdapter;
 };
