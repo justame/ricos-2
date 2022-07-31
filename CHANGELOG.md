@@ -17,6 +17,15 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.72.15 (Jul 31, 2022)
+
+## :bug: Bug Fix
+
+- `image-plugin`
+  - [#4296](https://github.com/wix/ricos/pull/4296) pass isSeoBot prop to wixImage component
+
 ## :house: Internal
 
 - `general`
@@ -24,8 +33,6 @@
   - [#4293](https://github.com/wix/ricos/pull/4293) RicosServices refactored
 - `ricos-plugins`
   - [#4290](https://github.com/wix/ricos/pull/4290) fix plugin shortcuts
-
-</details>
 
 ## 8.72.14 (Jul 27, 2022)
 
