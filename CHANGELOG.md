@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+
+</details>
+
+## 8.72.16 (Aug 01, 2022)
+
 ## :bug: Bug Fix
 
 - `divider`
@@ -26,8 +31,6 @@
 
 - `collapsible-list`
   - [#4276](https://github.com/wix/ricos/pull/4276) toolbar buttons and position
-
-</details>
 
 ## 8.72.15 (Jul 31, 2022)
 
