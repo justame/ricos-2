@@ -13,7 +13,6 @@ type Props = {
 export const DividerSizeButton: FC<Props> = ({ toolbarItem, dataHook }) => {
   const { t } = useContext(RicosContext) || {};
   const modalService = useContext(ModalContext) || {};
-
   const nodeSize = toolbarItem?.attributes.nodeSize;
   const selectedSize = (nodeSize as string) || 'CONTENT';
   const SelectedSizeIcon = dividerSizeData.find(({ commandKey }) => commandKey === selectedSize)
@@ -22,7 +21,7 @@ export const DividerSizeButton: FC<Props> = ({ toolbarItem, dataHook }) => {
   return (
     <DropdownButton
       dataHook={dataHook}
-      id={'divider_size'}
+      id="divider_size"
       options={dividerSizeData.map(({ dataHook, icon: Icon, text, commandKey, tooltip }) => (
         <ListItemSelect
           key={commandKey}

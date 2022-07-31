@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `divider`
+  - [#4297](https://github.com/wix/ricos/pull/4297) fix divider convertor & tiptap command toolbar commands
+
 ## :house: Internal
 
 - `collapsible-list`

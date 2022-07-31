@@ -5481,8 +5481,8 @@ exports[`plugins > divider > [tiptap] render plugin toolbar and change styling #
     "0": {
       "data": {
         "config": {
-          "alignment": "center",
-          "size": "large",
+          "alignment": "left",
+          "size": "small",
           "textWrap": "nowrap"
         },
         "type": "single"
@@ -5493,8 +5493,8 @@ exports[`plugins > divider > [tiptap] render plugin toolbar and change styling #
     "1": {
       "data": {
         "config": {
-          "alignment": "center",
-          "size": "large",
+          "alignment": "right",
+          "size": "medium",
           "textWrap": "nowrap"
         },
         "type": "double"

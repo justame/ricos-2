@@ -107,7 +107,8 @@ import { getTestPrefix } from '../cypress/utils';
         useTiptap && openDividerSizeDropdown();
         cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.SMALL);
 
-        useTiptap && cy.openAlignmentDropdown();
+        useTiptap && cy.get('[data-hook*=dividerAlignment]').eq(1).click({ force: true });
+
         cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.ALIGN_LEFT);
 
         cy.get('#RicosEditorContainer [data-hook=divider-double]').parent().click({ force: true });
@@ -116,7 +117,7 @@ import { getTestPrefix } from '../cypress/utils';
         useTiptap && openDividerSizeDropdown();
         cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.MEDIUM);
 
-        useTiptap && cy.openAlignmentDropdown();
+        useTiptap && cy.get('[data-hook*=dividerAlignment]').eq(1).click({ force: true });
         cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.ALIGN_RIGHT);
 
         cy.get('#RicosEditorContainer [data-hook=divider-dashed]').parent().click();
