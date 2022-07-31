@@ -3,7 +3,7 @@ import { EditorContent } from '@tiptap/react';
 import type { Node } from 'prosemirror-model';
 import type { FunctionComponent } from 'react';
 import React, { useEffect, useContext } from 'react';
-import { getLangDir } from 'wix-rich-content-common';
+import { getLangDir, isSSR } from 'wix-rich-content-common';
 import { tiptapToDraft } from 'ricos-converters';
 import { RicosTiptapContext } from '../../context';
 import { RicosContext } from 'ricos-context';
@@ -32,8 +32,6 @@ export const RicosTiptapEditor: FunctionComponent<RicosTiptapEditorProps> = ({
   onLoad,
   ...context
 }) => {
-  //@ts-ignore
-  window.editorInstance = editor;
   const forceUpdate = useForceUpdate();
   const { experiments } = useContext(RicosContext);
 
@@ -57,8 +55,10 @@ export const RicosTiptapEditor: FunctionComponent<RicosTiptapEditorProps> = ({
       });
     });
     editor.on('transaction', forceUpdate);
-    //@ts-ignore
-    window.ricosEditor = editor;
+    if (!isSSR()) {
+      //@ts-ignore
+      window.ricosEditor = editor;
+    }
     onLoad && editor.on('create', onLoad);
   }, []);
 

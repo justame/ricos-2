@@ -3,6 +3,7 @@
 @import '~wix-rich-content-common/dist/statics/styles/consts';
 @import '~wix-rich-content-common/dist/statics/styles/fonts';
 
+
 .elementSpacing {
   margin: 0;
 
@@ -59,9 +60,10 @@
 
 :global(.ProseMirror) .orderedList,
 :global(.ProseMirror) .bulletedList {
-  > .listItem {
+  >.listItem {
     margin-inline-start: 30px !important;
-    > div {
+
+    >div {
       display: inline;
     }
   }
@@ -69,13 +71,13 @@
 
 :global(.ProseMirror) .orderedList .orderedList,
 :global(.ProseMirror) .bulletedList .bulletedList {
-  > .listItem {
+  >.listItem {
     margin-inline-start: 1.5em !important;
   }
 }
 
 :global(.ProseMirror) .orderedList {
-  > .listItem > div {
+  >.listItem>div {
     margin-inline-start: 0.5em;
   }
 }
@@ -109,4 +111,38 @@
 
 .bulletedList .bulletedList .bulletedList {
   list-style-type: square;
+}
+
+
+// Resizer Extension
+%resizeableHandle {
+  content: '';
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  z-index: 1;
+  background: #fff;
+  border: 2px solid $focus-action-color;
+  position: absolute;
+  top: calc(50% - 7px);
+}
+
+
+
+.handlerRight {
+  @extend %resizeableHandle;
+  right: -8px;
+}
+
+
+
+.handlerLeft {
+  @extend %resizeableHandle;
+  left: -8px;
+}
+
+:global(.ProseMirror) {
+  [data-drag-handle] {
+    cursor: move;
+  }
 }

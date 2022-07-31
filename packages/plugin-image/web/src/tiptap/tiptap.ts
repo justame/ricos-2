@@ -1,8 +1,7 @@
 import { TIPTAP_IMAGE_TYPE, generateId } from 'ricos-content';
 import imageDataDefaults from 'ricos-schema/dist/statics/image.defaults.json';
-import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-types';
+import type { ExtensionProps, NodeConfig, RicosExtension, RicosServices } from 'ricos-types';
 import { Image as Component } from './component';
-import type { RicosServices } from 'ricos-types';
 import { ImagePluginService } from '../toolbar/imagePluginService';
 import { Uploader } from 'wix-rich-content-plugin-commons';
 
@@ -27,7 +26,7 @@ export const tiptapExtensions = [
   {
     type: 'node' as const,
     name,
-    groups: ['react', 'spoilerable'],
+    groups: ['react', 'spoilerable', 'resizable', 'draggable'],
     reconfigure: (
       config: NodeConfig,
       _extensions: RicosExtension[],
