@@ -1,6 +1,6 @@
 {
   "name": "ricos-events",
-  "version": "8.72.16",
+  "version": "8.72.17",
   "author": {
     "name": "Alex Greenstein",
     "email": "alexgr@wix.com"
@@ -36,7 +36,7 @@
   "dependencies": {
     "fp-ts": "^2.11.0",
     "idb": "^7.0.0",
-    "ricos-types": "8.72.16"
+    "ricos-types": "8.72.17"
   },
   "unpkg": true,
   "publishConfig": {

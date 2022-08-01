@@ -1,6 +1,6 @@
 {
   "name": "wix-tiptap-extensions",
-  "version": "8.72.16",
+  "version": "8.72.17",
   "author": {
     "name": "Alex Greenstein",
     "email": "alexgr@wix.com"
@@ -40,17 +40,17 @@
     "prosemirror-dropcursor": "1.4.0",
     "prosemirror-state": "^1.3.4",
     "prosemirror-transform": "^1.3.3",
-    "ricos-content": "8.72.16",
-    "ricos-converters": "8.72.16",
-    "ricos-schema": "8.72.16",
-    "ricos-styles": "8.72.16",
-    "ricos-types": "8.72.16",
+    "ricos-content": "8.72.17",
+    "ricos-converters": "8.72.17",
+    "ricos-schema": "8.72.17",
+    "ricos-styles": "8.72.17",
+    "ricos-types": "8.72.17",
     "rope-sequence": "^1.3.0",
     "to-constant-case": "1.0.0",
     "uuid": "^3.4.0",
-    "wix-rich-content-common": "8.72.16",
-    "wix-rich-content-editor-common": "8.72.16",
-    "wix-rich-content-plugin-unsupported-blocks": "8.72.16"
+    "wix-rich-content-common": "8.72.17",
+    "wix-rich-content-editor-common": "8.72.17",
+    "wix-rich-content-plugin-unsupported-blocks": "8.72.17"
   },
   "peerDependencies": {
     "lodash": "^4.0.0"
