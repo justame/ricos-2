@@ -23,6 +23,9 @@ export const toolbarButtonsConfig: IPluginToolbarButtonsConfig = {
     attributes: {
       selectedNode: getNodeInSelectionResolver,
     },
+    presentation: {
+      dataHook: 'blockButton_delete',
+    },
     commands: {
       delete:
         ({ editorCommands }) =>
