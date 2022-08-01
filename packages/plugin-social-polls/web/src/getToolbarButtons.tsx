@@ -20,8 +20,8 @@ const selectedNodeResolver = {
 };
 
 const getCommandByTab =
-  activeTab =>
-  ({ modalService, isMobile, node }) => {
+  (activeTab, modalService) =>
+  ({ isMobile, node }) => {
     modalService?.openModal(pollModals.settings, {
       componentProps: {
         nodeId: node.attrs.id,
@@ -33,7 +33,7 @@ const getCommandByTab =
   };
 
 export const getToolbarButtons = (config, services): ToolbarButton[] => {
-  const { modalService } = services;
+  const { modals } = services;
   return [
     {
       id: 'pollLayout',
@@ -70,7 +70,7 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
         Component: PollSettingsModal,
         id: pollModals.design,
       },
-      command: getCommandByTab(TABS.DESIGN),
+      command: getCommandByTab(TABS.DESIGN, modals),
       attributes: {
         selectedNode: selectedNodeResolver,
       },
@@ -85,7 +85,7 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
         Component: PollSettingsModal,
         id: pollModals.settings,
       },
-      command: getCommandByTab(TABS.SETTINGS),
+      command: getCommandByTab(TABS.SETTINGS, modals),
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
