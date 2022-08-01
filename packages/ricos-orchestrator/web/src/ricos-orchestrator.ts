@@ -50,13 +50,13 @@ export class RicosOrchestrator implements Orchestrator {
 
   constructor(editorProps: RicosEditorProps, t: TranslationFunction) {
     const { onMediaUploadStart, onMediaUploadEnd } = editorProps._rcProps?.helpers || {};
+    this.updateService = new UpdateService();
     this.uploadService = new UploadService(new StreamReader(), this.updateService, {
       onMediaUploadStart,
       onMediaUploadEnd,
     });
     this.t = t;
     this.editorProps = editorProps;
-    this.updateService = new UpdateService();
     this.events = new RicosEvents();
     this.modals = new RicosModalService(this.events);
     this.styles = new RicosStyles();
