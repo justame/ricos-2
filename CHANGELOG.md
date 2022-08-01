@@ -17,8 +17,12 @@
     Click to see more.
   </summary>
 
-
 </details>
+
+## 8.72.17 (Aug 01, 2022)
+
+- `image-plugin`
+  - [#4307](https://github.com/wix/ricos/pull/4307) wix-image cleanup console log
 
 ## 8.72.16 (Aug 01, 2022)
 
