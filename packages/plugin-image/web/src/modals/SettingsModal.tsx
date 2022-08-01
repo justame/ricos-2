@@ -18,6 +18,8 @@ const ImageSettingsModal: FC<Props> = ({ nodeId }) => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [initialData, setInitialData] = useState<Record<string, any>>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [componentData, setComponentData] = useState<Record<string, any>>();
   const [converters, setConverters] = useState<{
     tiptapNodeDataToDraft?: Function;
     draftBlockDataToTiptap?: Function;
@@ -30,25 +32,21 @@ const ImageSettingsModal: FC<Props> = ({ nodeId }) => {
     ).then(convertersModule => {
       const { draftBlockDataToTiptap, tiptapNodeDataToDraft } = convertersModule;
       setConverters({ tiptapNodeDataToDraft, draftBlockDataToTiptap });
-      setInitialData(
-        tiptapNodeDataToDraft?.(
-          TIPTAP_IMAGE_TYPE,
-          getEditorCommands().getBlockComponentData(nodeId)
-        )
+      const componentData = tiptapNodeDataToDraft(
+        TIPTAP_IMAGE_TYPE,
+        getEditorCommands().getBlockComponentData(nodeId)
       );
+      setInitialData(componentData);
+      setComponentData(componentData);
     });
   }, []);
-
-  const componentData = converters.tiptapNodeDataToDraft?.(
-    TIPTAP_IMAGE_TYPE,
-    getEditorCommands().getBlockComponentData(nodeId)
-  );
 
   const updateData = data => {
     getEditorCommands().setBlock(nodeId, IMAGE_TYPE, {
       ...converters.draftBlockDataToTiptap?.(IMAGE_TYPE, { ...componentData, ...data }),
       id: nodeId,
     });
+    setComponentData({ ...componentData, ...data });
   };
 
   const closeModal = () => {

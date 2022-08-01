@@ -35,7 +35,7 @@ class CollapsibleListSettingsModal extends Component<Props> {
 
   constructor(props) {
     super(props);
-    this.state = this.initState(props);
+    this.state = this.initState();
     const { theme } = props;
     this.styles = mergeStyles({ styles, theme });
   }
@@ -44,7 +44,7 @@ class CollapsibleListSettingsModal extends Component<Props> {
 
   modalsWithEditorCommands = this.props.experiments?.tiptapEditor?.enabled;
 
-  initState(props) {
+  initState() {
     return {
       initialComponentData: this.props.componentData,
     };

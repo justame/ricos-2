@@ -18,7 +18,7 @@ const ImageEditorButton: FC<Props> = ({ toolbarItem }) => {
   const node = (toolbarItem.attributes as Record<string, any>).selectedNode;
 
   const nodeId = node?.attrs.id;
-  const src = node?.attrs.image?.src.id;
+  const src = node?.attrs.image?.src?.id;
 
   return (
     <ToggleButton
