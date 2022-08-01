@@ -1111,7 +1111,12 @@
             "metadata": {
               "type": "image",
               "height": 1922,
-              "width": 1920
+              "width": 1920,
+              "link": {
+                "url": "wix.com",
+                "rel": "nofollow",
+                "target": "_blank"
+              }
             },
             "url": "8bb438_6a7159be0f944dde9098fe566bf22831.jpg"
           },

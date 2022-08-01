@@ -219,7 +219,8 @@ const convertGalleryItem = item => {
     const src = { url: poster.url || poster };
     item.video.thumbnail = { src, height: poster.height || height, width: poster.width || width };
   }
-  type === 'image' && link && (item.image.link = link);
+  type === 'image' && link && (item.image.link = createLink(link));
+
   return item;
 };
 

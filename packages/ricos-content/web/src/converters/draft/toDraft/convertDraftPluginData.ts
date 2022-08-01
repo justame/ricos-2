@@ -260,7 +260,7 @@ const convertGalleryItem = item => {
     } = item.video.thumbnail;
     item.metadata.poster = { url, height, width };
   }
-  has(item, 'image.link') && (item.metadata.link = item.image.link);
+  item.image?.link && (item.metadata.link = parseLink(item.image.link));
   delete item.video;
   delete item.image;
   delete item.title;
