@@ -11,6 +11,17 @@ import { NodeSizeButton } from 'wix-rich-content-toolbars-ui';
 import type { PluginContainerData_Width_Type } from 'ricos-schema';
 import { DEFAULTS as defaultData } from './defaults';
 
+const isCustomAudioResolver = {
+  id: 'isCustomAudio',
+  resolve: content => {
+    if (Array.isArray(content) && content.length > 0) {
+      return !!content[0].attrs?.audio?.src?.id;
+    } else {
+      return false;
+    }
+  },
+};
+
 export const getToolbarButtons = (config, services): ToolbarButton[] => {
   const { getAudioUrl, fetchData } = config || {};
   const { modals } = services;
@@ -69,6 +80,9 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
       modal: {
         Component: AudioSettingsModal,
         id: audioModals.settings,
+      },
+      attributes: {
+        visible: isCustomAudioResolver,
       },
       command: ({ isMobile, node }) => {
         modals?.openModal(audioModals.settings, {
