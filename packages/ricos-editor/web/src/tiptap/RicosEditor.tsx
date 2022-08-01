@@ -4,17 +4,9 @@ import React, { forwardRef } from 'react';
 import type { RicosEditorProps } from 'ricos-common';
 import { isContentStateEmpty, Version } from 'ricos-content';
 import type { GeneralContext } from 'ricos-context';
-import { EditorContextConsumer, EventsContextConsumer, RicosContextConsumer } from 'ricos-context';
+import { EditorContextConsumer, RicosContextConsumer } from 'ricos-context';
 import { Node_Type } from 'ricos-schema';
-import type {
-  EditorStyleClasses,
-  EventData,
-  EventPublisher,
-  EventRegistrar,
-  EventSubscriptor,
-  HtmlAttributes,
-  TiptapAdapter,
-} from 'ricos-types';
+import type { EditorStyleClasses, HtmlAttributes, TiptapAdapter } from 'ricos-types';
 import { getEmptyDraftContent } from 'wix-rich-content-editor-common';
 import {
   EditorEvents,
@@ -36,7 +28,6 @@ type RicosEditorState = {
 type Props = RicosEditorProps & {
   ricosContext: GeneralContext;
   editor: TiptapAdapter;
-  events: EventRegistrar;
 };
 
 class RicosEditor extends React.Component<Props, RicosEditorState> implements RicosEditorRef {
@@ -49,10 +40,6 @@ class RicosEditor extends React.Component<Props, RicosEditorState> implements Ri
 
   private isLastChangeEdit = false;
 
-  private readonly editorLoadedPublisher: EventPublisher<EventData>;
-
-  private readonly firstContentEditPublisher: EventPublisher<EventData>;
-
   private firstEdit = false;
 
   constructor(props) {
@@ -63,8 +50,6 @@ class RicosEditor extends React.Component<Props, RicosEditorState> implements Ri
       experiments,
       editorCss,
     });
-    this.editorLoadedPublisher = props.events.register('ricos.editor.instance.loaded');
-    this.firstContentEditPublisher = props.events.register('ricos.editor.content.firstEdit');
   }
 
   focus: RicosEditorRef['focus'] = () => {
@@ -147,7 +132,7 @@ class RicosEditor extends React.Component<Props, RicosEditorState> implements Ri
   onUpdate = ({ content }) => {
     if (!this.firstEdit) {
       this.firstEdit = true;
-      this.firstContentEditPublisher.publishOnce('📝 first content edit');
+      // this.firstContentEditPublisher.publishOnce('📝 first content edit');
     }
     this.isLastChangeEdit = true;
     this.props.onChange?.(content);
@@ -164,7 +149,7 @@ class RicosEditor extends React.Component<Props, RicosEditorState> implements Ri
     });
 
     this.props.editorEvents?.subscribe(EditorEvents.RICOS_PUBLISH, this.onPublish);
-    this.editorLoadedPublisher.publish('🖖 editor mounted');
+    // this.editorLoadedPublisher.publish('🖖 editor mounted');
     this.reportDebuggingInfo();
   }
 
@@ -228,30 +213,25 @@ class RicosEditor extends React.Component<Props, RicosEditorState> implements Ri
 }
 
 const RicosEditorWithForwardRef = forwardRef<RicosEditorRef, RicosEditorProps>((props, ref) => (
-  <EventsContextConsumer>
-    {(events: EventRegistrar & EventSubscriptor) => (
-      <RicosContextConsumer>
-        {(ricosContext: GeneralContext) => (
-          <EditorContextConsumer>
-            {(editor: TiptapAdapter) => (
-              <EditorEventsContext.Consumer>
-                {editorEvents => (
-                  <RicosEditor
-                    {...props}
-                    ref={ref as ForwardedRef<RicosEditor>}
-                    ricosContext={ricosContext}
-                    editor={editor}
-                    events={events}
-                    editorEvents={editorEvents}
-                  />
-                )}
-              </EditorEventsContext.Consumer>
+  <RicosContextConsumer>
+    {(ricosContext: GeneralContext) => (
+      <EditorContextConsumer>
+        {(editor: TiptapAdapter) => (
+          <EditorEventsContext.Consumer>
+            {editorEvents => (
+              <RicosEditor
+                {...props}
+                ref={ref as ForwardedRef<RicosEditor>}
+                ricosContext={ricosContext}
+                editor={editor}
+                editorEvents={editorEvents}
+              />
             )}
-          </EditorContextConsumer>
+          </EditorEventsContext.Consumer>
         )}
-      </RicosContextConsumer>
+      </EditorContextConsumer>
     )}
-  </EventsContextConsumer>
+  </RicosContextConsumer>
 ));
 
 export default RicosEditorWithForwardRef;

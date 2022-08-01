@@ -1,31 +1,45 @@
 import type {
-  EventPublisher,
-  EventRegistrar,
-  EventSubscriptor,
+  EventSource,
+  Modal,
   ModalConfig,
   ModalService,
-  Modal,
+  PolicySubscriber,
+  PublisherProvider,
+  SubscriptorProvider,
 } from 'ricos-types';
 
-export class RicosModalService implements ModalService {
+const TOPICS: ['ricos.modals.functionality.modalOpened', 'ricos.modals.functionality.modalClosed'] =
+  ['ricos.modals.functionality.modalOpened', 'ricos.modals.functionality.modalClosed'];
+
+export class RicosModalService
+  implements
+    ModalService,
+    PolicySubscriber<
+      ['ricos.modals.functionality.modalOpened', 'ricos.modals.functionality.modalClosed']
+    >,
+    EventSource<
+      ['ricos.modals.functionality.modalOpened', 'ricos.modals.functionality.modalClosed']
+      // eslint-disable-next-line prettier/prettier
+    > {
   private modals: ((ModalConfig | Modal) & { state: { isOpen: boolean } })[] = [];
 
-  private openModalPublisher: EventPublisher<ModalConfig['id']>;
-
-  private closeModalPublisher: EventPublisher<ModalConfig['id']>;
-
-  eventSubscriptor: EventSubscriptor;
-
-  constructor(events: EventRegistrar & EventSubscriptor) {
+  constructor() {
     this.modals = [];
-    this.openModalPublisher = events.register<ModalConfig['id']>(
-      'ricos.modals.functionality.modalOpened'
-    );
-    this.closeModalPublisher = events.register<ModalConfig['id']>(
-      'ricos.modals.functionality.modalClosed'
-    );
-    this.eventSubscriptor = events as EventSubscriptor;
   }
+
+  id = 'ricos-modal-service';
+
+  topicsToPublish = TOPICS;
+
+  topicsToSubscribe = TOPICS;
+
+  publishers!: PublisherProvider<
+    ['ricos.modals.functionality.modalOpened', 'ricos.modals.functionality.modalClosed']
+  >;
+
+  subscriptors!: SubscriptorProvider<
+    ['ricos.modals.functionality.modalOpened', 'ricos.modals.functionality.modalClosed']
+  >;
 
   public register(modalConfig: ModalConfig) {
     const modal = this.modals.find(modal => modal.id === modalConfig.id);
@@ -56,7 +70,7 @@ export class RicosModalService implements ModalService {
     } else {
       modal.state.isOpen = true;
       Object.keys(config).forEach(key => (modal[key] = config[key]));
-      this.openModalPublisher.publish(id);
+      this.publishers.byTopic('ricos.modals.functionality.modalOpened').publish(id);
       return true;
     }
   }
@@ -68,7 +82,7 @@ export class RicosModalService implements ModalService {
       return false;
     } else {
       this.modals.forEach(modal => modal.id === id && (modal.state.isOpen = false));
-      this.closeModalPublisher.publish(id);
+      this.publishers.byTopic('ricos.modals.functionality.modalClosed').publish(id);
       return true;
     }
   }
@@ -89,19 +103,11 @@ export class RicosModalService implements ModalService {
   }
 
   public onModalOpened(onOpen: (id: string) => unknown) {
-    return this.eventSubscriptor.subscribe(
-      'ricos.modals.functionality.modalOpened',
-      onOpen,
-      'ricos-modal-service'
-    );
+    return this.subscriptors.byTopic('ricos.modals.functionality.modalOpened').subscribe(onOpen);
   }
 
   public onModalClosed(onClose: (id: string) => unknown) {
-    return this.eventSubscriptor.subscribe(
-      'ricos.modals.functionality.modalClosed',
-      onClose,
-      'ricos-modal-service'
-    );
+    return this.subscriptors.byTopic('ricos.modals.functionality.modalClosed').subscribe(onClose);
   }
 
   public getModal(id: string) {
