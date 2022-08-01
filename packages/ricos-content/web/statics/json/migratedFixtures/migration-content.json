@@ -514,6 +514,13 @@
                 },
                 "width": 1920,
                 "height": 1922
+              },
+              "link": {
+                "url": "wix.com",
+                "target": "BLANK",
+                "rel": {
+                  "nofollow": true
+                }
               }
             }
           },
