@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import type { FC } from 'react';
 import { InsertPluginToolbar } from 'wix-rich-content-toolbars-v3';
 import type { AddButton } from 'ricos-types';
-import { ModalContext, EditorContext, PluginsContext, UploadContext } from 'ricos-context';
+import { ModalContext, EditorContext, PluginsContext } from 'ricos-context';
 import styles from '../../statics/styles/footer-toolbar.scss';
 
 export const FooterToolbar: FC = () => {

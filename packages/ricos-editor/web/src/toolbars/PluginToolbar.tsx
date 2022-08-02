@@ -4,10 +4,8 @@ import type { Content } from 'wix-rich-content-toolbars-v3';
 import { RicosToolbarComponent, FloatingToolbar } from 'wix-rich-content-toolbars-v3';
 import { withRicosContext, withEditorContext, withPluginsContext } from 'ricos-context';
 import type { GeneralContext } from 'ricos-context';
-import type { RichContentAdapter } from 'wix-tiptap-editor';
 import styles from '../../statics/styles/plugin-toolbar.scss';
-import type { RicosEditorPlugins } from 'ricos-types';
-import type { Editor } from '@tiptap/core';
+import type { IRicosEditor, RicosEditorPlugins } from 'ricos-types';
 import { TIPTAP_COLLAPSIBLE_LIST_TYPE } from 'ricos-content';
 
 type PluginsToolbarProps = {
@@ -21,15 +19,11 @@ const getFirstRefrenceableDOMNode = (editor, from) => {
 };
 
 class PluginsToolbar extends React.Component<
-  PluginsToolbarProps & { ricosContext: GeneralContext; editor: Editor & RichContentAdapter }
+  PluginsToolbarProps & { ricosContext: GeneralContext; editor: IRicosEditor }
 > {
   renderPluginToolbar() {
-    const {
-      ricosContext,
-      editor: { tiptapEditor },
-      content,
-      plugins,
-    } = this.props;
+    const { ricosContext, editor, content, plugins } = this.props;
+    const tiptapEditor = editor.adapter.tiptapEditor;
 
     const toolbar = plugins?.getVisibleToolbar(tiptapEditor.state.selection);
 
@@ -50,9 +44,8 @@ class PluginsToolbar extends React.Component<
   }
 
   getNestedNodeContainerElement() {
-    const {
-      editor: { tiptapEditor },
-    } = this.props;
+    const { editor } = this.props;
+    const tiptapEditor = editor.adapter.tiptapEditor;
     const selectedDOM = getFirstRefrenceableDOMNode(
       tiptapEditor,
       tiptapEditor.state.selection.from
@@ -66,9 +59,8 @@ class PluginsToolbar extends React.Component<
   }
 
   isNestedNodeInSelection() {
-    const {
-      editor: { tiptapEditor },
-    } = this.props;
+    const { editor } = this.props;
+    const tiptapEditor = editor.adapter.tiptapEditor;
 
     const { selection } = tiptapEditor.state;
     return (
@@ -81,11 +73,8 @@ class PluginsToolbar extends React.Component<
   }
 
   render() {
-    const {
-      ricosContext,
-      editor: { tiptapEditor },
-      plugins,
-    } = this.props;
+    const { ricosContext, editor, plugins } = this.props;
+    const tiptapEditor = editor.adapter.tiptapEditor;
 
     const isVisible = () => !!plugins?.getVisibleToolbar(tiptapEditor.state.selection);
 

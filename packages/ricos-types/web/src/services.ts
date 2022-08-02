@@ -4,7 +4,7 @@ import type { ModalService } from './modalTypes';
 import type { RicosEditorPlugins } from './ricos-editor-plugins';
 import type { ShortcutDataProvider, ShortcutRegistrar } from './shortcuts';
 import type { AmbientStyles } from './styles';
-import type { TiptapAdapter } from './tiptap';
+import type { IRicosEditor } from './editor';
 import type { IUpdateService, IUploadService } from './uploadServicesTypes';
 
 export type RicosServices = {
@@ -18,5 +18,5 @@ export type RicosServices = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   content: any;
   modals: ModalService;
-  tiptapAdapter: TiptapAdapter;
+  editor: IRicosEditor;
 };

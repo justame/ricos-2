@@ -22,7 +22,8 @@ const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig, plugins }
   const buttonRef = useRef<HTMLButtonElement>(null);
   const modalService: ModalService = useContext(ModalContext) || {};
   const { languageDir, isMobile } = useContext(RicosContext) || {};
-  const { tiptapEditor } = useContext(EditorContext);
+  const { adapter } = useContext(EditorContext);
+  const tiptapEditor = adapter.tiptapEditor;
   const isHorizontalMenu =
     !isMobile && (!addPluginMenuConfig || addPluginMenuConfig?.horizontalMenuLayout);
   const layout = LAYOUTS.TOOLBAR;
