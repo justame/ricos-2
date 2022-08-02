@@ -136,7 +136,7 @@ class RicosEditor extends React.Component<Props, RicosEditorState> implements Ri
   onUpdate = ({ content }) => {
     if (!this.firstEdit) {
       this.firstEdit = true;
-      // this.firstContentEditPublisher.publishOnce('📝 first content edit');
+      this.props.editor.publishFirstEdit();
     }
     this.isLastChangeEdit = true;
     this.props.onChange?.(content);
@@ -153,7 +153,7 @@ class RicosEditor extends React.Component<Props, RicosEditorState> implements Ri
     });
 
     this.props.editorEvents?.subscribe(EditorEvents.RICOS_PUBLISH, this.onPublish);
-    // this.editorLoadedPublisher.publish('🖖 editor mounted');
+    this.props.editor.publishLoaded();
     this.reportDebuggingInfo();
   }
 
@@ -165,6 +165,7 @@ class RicosEditor extends React.Component<Props, RicosEditorState> implements Ri
     const draftContent = this.tiptapAdapter.getDraftContent();
     const onPublish = this.props._rcProps?.helpers?.onPublish;
     publishBI(draftContent, onPublish);
+    this.props.editor.publishContentSaved();
     console.log('editor publish callback'); // eslint-disable-line
     return {
       type: 'EDITOR_PUBLISH',

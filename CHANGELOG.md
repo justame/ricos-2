@@ -26,6 +26,7 @@
 
 - `orchestrator`
   - [#4304](https://github.com/wix/ricos/pull/4304) Editor Entity
+  - [#4311](https://github.com/wix/ricos/pull/4311) Editor Entity implements Event Source API
 
 ## :house: Internal
 

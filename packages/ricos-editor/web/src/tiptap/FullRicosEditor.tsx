@@ -77,7 +77,7 @@ export class FullRicosEditor extends React.Component<Props, State> {
   }
 
   componentDidCatch(error, errorInfo) {
-    console.error({ error, errorInfo });
+    this.orchestrator.getServices().editor.publishError(error, errorInfo);
   }
 
   renderUploadServiceElements = (languageDir: string) => {
