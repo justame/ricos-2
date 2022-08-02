@@ -9,7 +9,7 @@ import { coreConfigs } from './components/RicosTiptapEditor/core-configs';
 import { Extensions } from './models/Extensions';
 import { patchExtensions } from './patch-extensions';
 
-export type TiptapAdapterServices = Omit<RicosServices, 'tiptapAdapter'>;
+export type TiptapAdapterServices = Omit<RicosServices, 'editor'>;
 
 const extractExtensionProps = (props: RicosEditorProps): ExtensionProps => {
   const { placeholder, textAlignment, iframeSandboxDomain, textWrap, maxTextLength, linkSettings } =

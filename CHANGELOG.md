@@ -20,6 +20,11 @@
 ## :house: Internal
 
 - `orchestrator`
+  - [#4304](https://github.com/wix/ricos/pull/4304) Editor Entity
+
+## :house: Internal
+
+- `orchestrator`
   - [#4300](https://github.com/wix/ricos/pull/4300) Event Source API
 
 </details>

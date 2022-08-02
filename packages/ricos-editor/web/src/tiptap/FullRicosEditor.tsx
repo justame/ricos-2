@@ -5,9 +5,7 @@ import { ErrorNotifier } from 'ricos-common';
 import { ContentQueryProvider } from 'ricos-content-query';
 import type { ToolbarContextType } from 'ricos-context';
 import {
-  EditorContextConsumer,
   EditorContextProvider,
-  EventsContextProvider,
   ModalContextProvider,
   PluginsContextProvider,
   RicosContextProvider,
@@ -23,9 +21,7 @@ import type {
   RicosPortal as RicosPortalType,
   TranslationFunction,
 } from 'ricos-types';
-import type { EditorCommands } from 'wix-rich-content-common';
 import { getLangDir } from 'wix-rich-content-common';
-import type { RichContentAdapter } from 'wix-tiptap-editor';
 import RicosPortal from '../modals/RicosPortal';
 import type { RicosEditorRef } from '../RicosEditorRef';
 import { convertToolbarContext } from '../toolbars/convertToolbarContext';
@@ -55,7 +51,7 @@ export class FullRicosEditor extends React.Component<Props, State> {
 
   orchestrator: Orchestrator;
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
     this.portalRef = createRef<RicosPortalType>();
     this.errorNotifier = React.createRef();
@@ -105,7 +101,7 @@ export class FullRicosEditor extends React.Component<Props, State> {
     );
   };
 
-  getToolbarContext(getEditorCommands: () => EditorCommands): ToolbarContextType {
+  getToolbarContext(): ToolbarContextType {
     const {
       theme,
       locale,
@@ -117,20 +113,21 @@ export class FullRicosEditor extends React.Component<Props, State> {
       toolbarSettings,
     } = this.props;
     const helpers = this.props._rcProps?.helpers;
+    const { plugins, editor } = this.orchestrator.getServices();
 
     const toolbarContext = convertToolbarContext({
       isMobile,
       theme,
       locale,
       helpers,
-      plugins: this.orchestrator.getServices().plugins,
+      plugins,
       linkPanelSettings,
       linkSettings,
       experiments,
       toolbarSettings,
       cssOverride,
       contentId: '',
-      getEditorCommands,
+      getEditorCommands: editor.getEditorCommands,
     });
     return toolbarContext as unknown as ToolbarContextType;
   }
@@ -160,7 +157,7 @@ export class FullRicosEditor extends React.Component<Props, State> {
       modals,
       uploadService,
       updateService,
-      tiptapAdapter,
+      editor,
       styles,
     } = this.orchestrator.getServices();
 
@@ -187,7 +184,7 @@ export class FullRicosEditor extends React.Component<Props, State> {
               portal={this.portalRef.current}
             >
               <>
-                <EditorContextProvider adapter={tiptapAdapter}>
+                <EditorContextProvider editor={editor}>
                   <ModalContextProvider modalService={modals}>
                     <ShortcutsContextProvider shortcuts={shortcuts}>
                       <PluginsContextProvider plugins={plugins}>
@@ -199,24 +196,21 @@ export class FullRicosEditor extends React.Component<Props, State> {
                                 updateService={updateService}
                               >
                                 <>
-                                  <EditorContextConsumer>
-                                    {(editor: RichContentAdapter) => (
-                                      <ToolbarContext.Provider
-                                        value={{
-                                          ...this.getToolbarContext(editor.getEditorCommands),
-                                          portal: this.portalRef.current as RicosPortalType,
-                                        }}
-                                      >
-                                        <ContentQueryProvider editor={editor.tiptapEditor}>
-                                          <RicosToolbars
-                                            content={toolbarContent}
-                                            toolbarSettings={toolbarSettings}
-                                            plugins={plugins}
-                                          />
-                                        </ContentQueryProvider>
-                                      </ToolbarContext.Provider>
-                                    )}
-                                  </EditorContextConsumer>
+                                  <ToolbarContext.Provider
+                                    value={{
+                                      ...this.getToolbarContext(),
+                                      portal: this.portalRef.current as RicosPortalType,
+                                    }}
+                                  >
+                                    <ContentQueryProvider editor={editor.adapter.tiptapEditor}>
+                                      <RicosToolbars
+                                        content={toolbarContent}
+                                        toolbarSettings={toolbarSettings}
+                                        plugins={plugins}
+                                      />
+                                    </ContentQueryProvider>
+                                  </ToolbarContext.Provider>
+
                                   <ModalRenderer />
                                 </>
                               </UploadContextProvider>

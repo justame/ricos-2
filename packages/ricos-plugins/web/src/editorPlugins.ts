@@ -13,7 +13,7 @@ import { RicosPluginAddButtons } from './pluginAddButton';
 import { mergeConfig } from './mergeConfig';
 import { EditorPlugin } from './editorPlugin';
 
-export type PluginServices = Omit<RicosServices, 'plugins' | 'tiptapAdapter'>;
+export type PluginServices = Omit<RicosServices, 'plugins' | 'editor'>;
 
 export class PluginCollisionError extends Error {}
 

@@ -29,6 +29,7 @@ export * from './shortcuts';
 export * from './styles';
 export * from './themeTypes';
 export * from './tiptap';
+export * from './editor';
 export * from './toolbarEnums';
 export * from './toolbarSettingsTypes';
 export * from './toolbarTypes';

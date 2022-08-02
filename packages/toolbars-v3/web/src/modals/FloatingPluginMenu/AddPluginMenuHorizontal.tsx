@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { EditorContext, RicosContext, ModalContext, UploadContext } from 'ricos-context';
+import { EditorContext, RicosContext, ModalContext } from 'ricos-context';
 import InsertPluginToolbar from '../../components/InsertPluginToolbar/InsertPluginToolbar';
 import type { AddButton, RicosEditorPlugins } from 'ricos-types';
 import { LAYOUTS, PLACEMENTS } from 'ricos-modals';
@@ -14,7 +14,6 @@ const AddPluginMenuHorizontal: React.FC<Props> = ({ referenceElement, plugins })
   const { getEditorCommands } = useContext(EditorContext);
   const modalService = useContext(ModalContext) || {};
   const { languageDir } = useContext(RicosContext) || {};
-  const uploadContext = useContext(UploadContext);
 
   const onButtonClick = ({ modal, command }: AddButton) => {
     modalService.closeModal(PLUGIN_MENU_HORIZONTAL_MODAL_ID);

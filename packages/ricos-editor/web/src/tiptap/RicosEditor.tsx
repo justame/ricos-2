@@ -6,7 +6,7 @@ import { isContentStateEmpty, Version } from 'ricos-content';
 import type { GeneralContext } from 'ricos-context';
 import { EditorContextConsumer, RicosContextConsumer } from 'ricos-context';
 import { Node_Type } from 'ricos-schema';
-import type { EditorStyleClasses, HtmlAttributes, TiptapAdapter } from 'ricos-types';
+import type { EditorStyleClasses, HtmlAttributes, IRicosEditor, TiptapAdapter } from 'ricos-types';
 import { getEmptyDraftContent } from 'wix-rich-content-editor-common';
 import {
   EditorEvents,
@@ -27,7 +27,7 @@ type RicosEditorState = {
 
 type Props = RicosEditorProps & {
   ricosContext: GeneralContext;
-  editor: TiptapAdapter;
+  editor: IRicosEditor;
 };
 
 class RicosEditor extends React.Component<Props, RicosEditorState> implements RicosEditorRef {
@@ -42,7 +42,9 @@ class RicosEditor extends React.Component<Props, RicosEditorState> implements Ri
 
   private firstEdit = false;
 
-  constructor(props) {
+  private tiptapAdapter: TiptapAdapter;
+
+  constructor(props: Props) {
     super(props);
     const { isMobile, experiments } = props;
     this.editorStyleClasses = createEditorStyleClasses({
@@ -50,14 +52,15 @@ class RicosEditor extends React.Component<Props, RicosEditorState> implements Ri
       experiments,
       editorCss,
     });
+    this.tiptapAdapter = props.editor.adapter;
   }
 
   focus: RicosEditorRef['focus'] = () => {
-    this.props.editor.focus();
+    this.tiptapAdapter.focus();
   };
 
   blur: RicosEditorRef['blur'] = () => {
-    this.props.editor.blur();
+    this.tiptapAdapter.blur();
   };
 
   getContent: RicosEditorRef['getContent'] = (
@@ -65,7 +68,7 @@ class RicosEditor extends React.Component<Props, RicosEditorState> implements Ri
     forPublish,
     shouldRemoveErrorBlocks = true
   ) => {
-    const draftContent = this.props.editor.getDraftContent();
+    const draftContent = this.tiptapAdapter.getDraftContent();
     const content = shouldRemoveErrorBlocks ? errorBlocksRemover(draftContent) : draftContent;
     if (postId && forPublish) {
       console.warn(PUBLISH_DEPRECATION_WARNING_v9); // eslint-disable-line
@@ -80,16 +83,17 @@ class RicosEditor extends React.Component<Props, RicosEditorState> implements Ri
 
   getContentTraits: RicosEditorRef['getContentTraits'] = () => {
     return {
-      isEmpty: isContentStateEmpty(this.props.editor.getDraftContent()),
-      isContentChanged: this.props.editor.isContentChanged(),
+      isEmpty: isContentStateEmpty(this.tiptapAdapter.getDraftContent()),
+      isContentChanged: this.tiptapAdapter.isContentChanged(),
       isLastChangeEdit: this.isLastChangeEdit,
     };
   };
 
-  getToolbarProps: RicosEditorRef['getToolbarProps'] = this.props.editor.getToolbarProps;
+  getToolbarProps: RicosEditorRef['getToolbarProps'] = type =>
+    this.tiptapAdapter.getToolbarProps(type);
 
   getEditorCommands: RicosEditorRef['getEditorCommands'] = () => {
-    return this.props.editor.getEditorCommands();
+    return this.tiptapAdapter.getEditorCommands();
   };
 
   onSelectionUpdate = ({ selectedNodes, content }) => {
@@ -158,7 +162,7 @@ class RicosEditor extends React.Component<Props, RicosEditorState> implements Ri
   }
 
   onPublish = async () => {
-    const draftContent = this.props.editor.getDraftContent();
+    const draftContent = this.tiptapAdapter.getDraftContent();
     const onPublish = this.props._rcProps?.helpers?.onPublish;
     publishBI(draftContent, onPublish);
     console.log('editor publish callback'); // eslint-disable-line
@@ -181,7 +185,7 @@ class RicosEditor extends React.Component<Props, RicosEditorState> implements Ri
           version: Version.currentVersion,
           reporter: 'Ricos Editor (Tiptap)',
           plugins: this.props.plugins?.map(p => p.type) || [],
-          getContent: () => this.props.editor.getDraftContent(),
+          getContent: () => this.tiptapAdapter.getDraftContent(),
           getConfig: () => this.props.plugins?.map(p => p.config) || [],
         });
       });
@@ -189,7 +193,7 @@ class RicosEditor extends React.Component<Props, RicosEditorState> implements Ri
   }
 
   render() {
-    const { ricosContext, editor, onLoad } = this.props;
+    const { ricosContext, onLoad } = this.props;
     const { initialContent, htmlAttributes } = this.state;
     if (!initialContent) {
       return null;
@@ -197,7 +201,7 @@ class RicosEditor extends React.Component<Props, RicosEditorState> implements Ri
     return (
       <RicosTiptapEditor
         onLoad={onLoad}
-        editor={editor.tiptapEditor}
+        editor={this.tiptapAdapter.tiptapEditor}
         content={initialContent}
         t={ricosContext.t}
         onUpdate={this.onUpdate}
@@ -216,7 +220,7 @@ const RicosEditorWithForwardRef = forwardRef<RicosEditorRef, RicosEditorProps>((
   <RicosContextConsumer>
     {(ricosContext: GeneralContext) => (
       <EditorContextConsumer>
-        {(editor: TiptapAdapter) => (
+        {(editor: IRicosEditor) => (
           <EditorEventsContext.Consumer>
             {editorEvents => (
               <RicosEditor

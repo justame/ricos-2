@@ -17,7 +17,6 @@ import type {
   IUploadService,
   LegacyEditorPluginConfig,
   RicosServices,
-  TiptapAdapter,
   TranslationFunction,
   Orchestrator,
   TopicDescriptor,
@@ -25,7 +24,7 @@ import type {
   EventData,
 } from 'ricos-types';
 import { Content } from 'wix-rich-content-toolbars-v3';
-import { initializeTiptapAdapter } from 'wix-tiptap-editor';
+import { RicosEditor } from './ricos-editor';
 import { getHelpersConfig } from './helpers-config';
 import { PublisherInitializer, SubscriptorInitializer } from './event-orchestrators';
 
@@ -50,7 +49,7 @@ export class RicosOrchestrator implements Orchestrator {
 
   private readonly content: Content;
 
-  private readonly tiptapAdapter: TiptapAdapter;
+  private readonly editor: RicosEditor;
 
   constructor(editorProps: RicosEditorProps, t: TranslationFunction) {
     this.t = t;
@@ -90,7 +89,7 @@ export class RicosOrchestrator implements Orchestrator {
 
     this.initPlugins(commonPlugins, commonPluginConfig);
 
-    this.tiptapAdapter = initializeTiptapAdapter(this.editorProps, {
+    this.editor = new RicosEditor(this.editorProps, {
       events: this.events,
       styles: this.styles,
       plugins: this.plugins,
@@ -101,7 +100,7 @@ export class RicosOrchestrator implements Orchestrator {
       shortcuts: this.shortcuts,
       modals: this.modals,
     });
-    this.updateService.setEditorCommands(this.tiptapAdapter.getEditorCommands());
+    this.updateService.setEditorCommands(this.editor.getEditorCommands());
     this.initialize();
   }
 
@@ -155,7 +154,7 @@ export class RicosOrchestrator implements Orchestrator {
       shortcuts: this.shortcuts,
       content: this.content,
       modals: this.modals,
-      tiptapAdapter: this.tiptapAdapter,
+      editor: this.editor,
     };
   }
 
