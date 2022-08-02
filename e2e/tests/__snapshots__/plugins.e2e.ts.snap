@@ -6038,7 +6038,7 @@ exports[`plugins > html > [draft] add html with src html #0`] =
       "data": {
         "config": {
           "alignment": "center",
-          "height": 517,
+          "height": 550,
           "textWrap": "wrap",
           "width": 350
         },
