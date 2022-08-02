@@ -2,6 +2,7 @@ import type {
   EventData,
   EventPublisher,
   SubscribeTopicDescriptor,
+  Subscription,
   TopicDescriptor,
 } from './events';
 import type { RicosServices } from './services';
@@ -23,16 +24,59 @@ import type { INotifier } from './uploadServicesTypes';
 export interface Orchestrator {
   getServices(): RicosServices;
   finalize(): void;
-  onDomReady(setErrorNotifier: () => INotifier, setFileInput: () => HTMLInputElement): void;
+  setUpdateServiceDom(
+    setErrorNotifier: () => INotifier,
+    setFileInput: () => HTMLInputElement
+  ): void;
 }
 
-export interface Event extends EventPublisher<EventData> {}
-
-export interface EventSource {
-  events: TopicDescriptor[];
+/**
+ * Provides event publishers to event sources
+ *
+ * @export
+ * @interface PublisherProvider
+ * @template T
+ */
+export interface PublisherProvider<T extends TopicDescriptor[]> {
+  byTopic(key: T[number]): EventPublisher<EventData>;
 }
 
-export interface Policy<T extends EventData> {
-  topic: SubscribeTopicDescriptor;
-  handler: (topic: TopicDescriptor, data: T) => void;
+/**
+ * Admits publishing of certain topics. Allows event registration in orchestrated manner.
+ *
+ * @export
+ * @interface EventSource
+ * @template T
+ */
+export interface EventSource<T extends TopicDescriptor[]> {
+  topicsToPublish: T;
+  publishers: PublisherProvider<T>;
+}
+
+export type Subscriptor = (
+  handler: (topic: TopicDescriptor, data: EventData) => void
+) => Subscription;
+
+/**
+ * Provides subscriptor to event subscriber
+ *
+ * @export
+ * @interface SubscriptionProvider
+ * @template T
+ */
+export interface SubscriptorProvider<T extends SubscribeTopicDescriptor[]> {
+  byTopic(key: T[number]): { subscribe: Subscriptor };
+}
+
+/**
+ * Admits subscribing to certain topics
+ *
+ * @export
+ * @interface PolicySubscriber
+ * @template T
+ */
+export interface PolicySubscriber<T extends SubscribeTopicDescriptor[]> {
+  id: string;
+  topicsToSubscribe: T;
+  subscriptors: SubscriptorProvider<T>;
 }

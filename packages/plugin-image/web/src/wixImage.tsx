@@ -230,8 +230,6 @@ class WixImage extends React.Component<ImageViewerProps & { styles: Record<strin
         : settings.imageProps;
     }
 
-    console.log('image props stiil need to be handled', imageProps); //eslint-disable-line
-
     const socialAttrs = {};
 
     ['data-pin-nopin', 'data-pin-url', 'data-pin-media'].forEach(

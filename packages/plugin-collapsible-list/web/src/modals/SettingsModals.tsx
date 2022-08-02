@@ -18,6 +18,8 @@ const CollapsibleListSettingsModal: FC<Props> = ({ nodeId }) => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [initialData, setInitialData] = useState<Record<string, any>>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [componentData, setComponentData] = useState<any>();
   const [converters, setConverters] = useState<{
     tiptapNodeDataToDraft?: Function;
     draftBlockDataToTiptap?: Function;
@@ -30,28 +32,21 @@ const CollapsibleListSettingsModal: FC<Props> = ({ nodeId }) => {
     ).then(convertersModule => {
       const { draftBlockDataToTiptap, tiptapNodeDataToDraft } = convertersModule;
       setConverters({ tiptapNodeDataToDraft, draftBlockDataToTiptap });
-      setInitialData(
-        tiptapNodeDataToDraft?.(
-          TIPTAP_COLLAPSIBLE_LIST_TYPE,
-          getEditorCommands().getBlockComponentData(nodeId)
-        )
+      const componentData = tiptapNodeDataToDraft(
+        TIPTAP_COLLAPSIBLE_LIST_TYPE,
+        getEditorCommands().getBlockComponentData(nodeId)
       );
+      setInitialData(componentData);
+      setComponentData(componentData);
     });
   }, []);
-
-  const getComponentData = () =>
-    converters.tiptapNodeDataToDraft?.(
-      TIPTAP_COLLAPSIBLE_LIST_TYPE,
-      getEditorCommands().getBlockComponentData(nodeId)
-    );
-
-  const componentData = getComponentData();
 
   const updateData = data => {
     getEditorCommands().setBlock(nodeId, COLLAPSIBLE_LIST_TYPE, {
       ...converters.draftBlockDataToTiptap?.(COLLAPSIBLE_LIST_TYPE, { ...componentData, ...data }),
       id: nodeId,
     });
+    setComponentData({ ...componentData, ...data });
   };
 
   const closeModal = () => {

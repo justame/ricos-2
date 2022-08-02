@@ -1,13 +1,12 @@
 import type {
   EditorCommands,
-  EventData,
-  EventPublisher,
-  EventRegistrar,
+  EventSource,
   KeyboardShortcut,
+  LocalizedDisplayData,
   ModalService,
   Platform,
+  PublisherProvider,
   TranslationFunction,
-  LocalizedDisplayData,
 } from 'ricos-types';
 import { EditorKeyboardShortcut } from './editor-keyboard-shortcut';
 import type { HotKeysProps, Shortcut, Shortcuts } from './models/shortcuts';
@@ -15,13 +14,18 @@ import { ShortcutsDialog } from './ShortcutsDialog';
 
 export class ShortcutCollisionError extends Error {}
 
-export class EditorKeyboardShortcuts implements Shortcuts {
+const TOPICS: ['ricos.shortcuts.functionality.applied'] = ['ricos.shortcuts.functionality.applied'];
+
+export class EditorKeyboardShortcuts
+  // eslint-disable-next-line prettier/prettier
+  implements Shortcuts, EventSource<['ricos.shortcuts.functionality.applied']> {
   private shortcuts: Shortcut[] = [];
 
-  private readonly publisher: EventPublisher<EventData>;
+  readonly topicsToPublish = TOPICS;
 
-  constructor(events: EventRegistrar, modalService: ModalService) {
-    this.publisher = events.register('ricos.shortcuts.functionality.shortcutApplied');
+  publishers!: PublisherProvider<['ricos.shortcuts.functionality.applied']>;
+
+  constructor(modalService: ModalService) {
     modalService.register({
       Component: ShortcutsDialog,
       id: 'shortcuts-help',
@@ -38,6 +42,7 @@ export class EditorKeyboardShortcuts implements Shortcuts {
     t: TranslationFunction,
     platform: Platform
   ): HotKeysProps {
+    const publisher = this.publishers.byTopic('ricos.shortcuts.functionality.applied');
     return this.shortcuts
       .filter(s => s.getGroup() === group || s.getGroup() === 'global')
       .reduce(
@@ -56,7 +61,7 @@ export class EditorKeyboardShortcuts implements Shortcuts {
               [shortcut.getName()]: (e: KeyboardEvent) => {
                 e.preventDefault();
                 shortcut.getCommand()(commands);
-                this.publisher.publish(
+                publisher.publish(
                   `🎹 keyboard shortcut ${shortcut.getName()} applied (${shortcut
                     .getKeys(platform)
                     .toPlatformString(platform)})`

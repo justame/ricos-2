@@ -74,7 +74,7 @@ export const tiptapExtensions = [
                       const nodeId = generateId();
                       this.editor.commands.insertContent({
                         type: TIPTAP_IMAGE_TYPE,
-                        attrs: { id: nodeId },
+                        attrs: { id: nodeId, ...imageDataDefaults },
                       });
                       this.options.services?.uploadService?.uploadFile(
                         file,

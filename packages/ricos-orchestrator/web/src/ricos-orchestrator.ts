@@ -20,10 +20,14 @@ import type {
   TiptapAdapter,
   TranslationFunction,
   Orchestrator,
+  TopicDescriptor,
+  SubscribeTopicDescriptor,
+  EventData,
 } from 'ricos-types';
 import { Content } from 'wix-rich-content-toolbars-v3';
 import { initializeTiptapAdapter } from 'wix-tiptap-editor';
 import { getHelpersConfig } from './helpers-config';
+import { PublisherInitializer, SubscriptorInitializer } from './event-orchestrators';
 
 export class RicosOrchestrator implements Orchestrator {
   private readonly editorProps: RicosEditorProps;
@@ -49,18 +53,22 @@ export class RicosOrchestrator implements Orchestrator {
   private readonly tiptapAdapter: TiptapAdapter;
 
   constructor(editorProps: RicosEditorProps, t: TranslationFunction) {
+    this.t = t;
+    this.editorProps = editorProps;
+
+    this.updateService = new UpdateService();
+    this.events = new RicosEvents();
+    this.styles = new RicosStyles();
+
     const { onMediaUploadStart, onMediaUploadEnd } = editorProps._rcProps?.helpers || {};
     this.uploadService = new UploadService(new StreamReader(), this.updateService, {
       onMediaUploadStart,
       onMediaUploadEnd,
     });
-    this.t = t;
-    this.editorProps = editorProps;
-    this.updateService = new UpdateService();
-    this.events = new RicosEvents();
-    this.modals = new RicosModalService(this.events);
-    this.styles = new RicosStyles();
-    this.shortcuts = new EditorKeyboardShortcuts(this.events, this.modals);
+
+    this.modals = new RicosModalService();
+
+    this.shortcuts = new EditorKeyboardShortcuts(this.modals);
 
     this.content = Content.create<Node[]>([], {
       styles: this.styles,
@@ -94,6 +102,7 @@ export class RicosOrchestrator implements Orchestrator {
       modals: this.modals,
     });
     this.updateService.setEditorCommands(this.tiptapAdapter.getEditorCommands());
+    this.initialize();
   }
 
   finalize() {
@@ -102,7 +111,26 @@ export class RicosOrchestrator implements Orchestrator {
     this.events.clear();
   }
 
-  initialize() {}
+  initialize() {
+    const eventSources = [this.shortcuts, this.modals];
+
+    eventSources.forEach(source => {
+      const initializer = new PublisherInitializer(source.topicsToPublish);
+      initializer.initializeMap((t: TopicDescriptor) => this.events.register(t));
+      source.publishers = initializer;
+    });
+
+    const eventSubscribers = [this.modals];
+
+    eventSubscribers.forEach(subscriber => {
+      const initializer = new SubscriptorInitializer(subscriber.topicsToSubscribe);
+      initializer.initializeMap((t: SubscribeTopicDescriptor) => ({
+        subscribe: (handler: (topic: TopicDescriptor, data: EventData) => void) =>
+          this.events.subscribe(t, handler, subscriber.id),
+      }));
+      subscriber.subscriptors = initializer;
+    });
+  }
 
   private initUploadService(
     setErrorNotifier: () => INotifier,
@@ -112,7 +140,7 @@ export class RicosOrchestrator implements Orchestrator {
     this.uploadService.setHiddenInputElement(setFileInput);
   }
 
-  onDomReady(setErrorNotifier: () => INotifier, setFileInput: () => HTMLInputElement) {
+  setUpdateServiceDom(setErrorNotifier: () => INotifier, setFileInput: () => HTMLInputElement) {
     this.initUploadService(setErrorNotifier, setFileInput);
   }
 
@@ -146,8 +174,4 @@ export class RicosOrchestrator implements Orchestrator {
       A.map((plugin: EditorPlugin) => this.plugins.register(plugin))
     );
   }
-
-  private registerEvents() {}
-
-  private subscribeEvents() {}
 }

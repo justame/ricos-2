@@ -20,6 +20,8 @@ const LinkPreviewSettingsModal: FC<Props> = ({ nodeId, uiSettings }) => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [initialData, setInitialData] = useState<Record<string, any>>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [componentData, setComponentData] = useState<Record<string, any>>();
   const [converters, setConverters] = useState<{
     tiptapNodeDataToDraft?: Function;
     draftBlockDataToTiptap?: Function;
@@ -32,27 +34,21 @@ const LinkPreviewSettingsModal: FC<Props> = ({ nodeId, uiSettings }) => {
     ).then(convertersModule => {
       const { draftBlockDataToTiptap, tiptapNodeDataToDraft } = convertersModule;
       setConverters({ tiptapNodeDataToDraft, draftBlockDataToTiptap });
-      setInitialData(
-        tiptapNodeDataToDraft?.(
-          TIPTAP_LINK_PREVIEW_TYPE,
-          getEditorCommands().getBlockComponentData(nodeId)
-        )
+      const componentData = tiptapNodeDataToDraft(
+        TIPTAP_LINK_PREVIEW_TYPE,
+        getEditorCommands().getBlockComponentData(nodeId)
       );
+      setInitialData(componentData);
+      setComponentData(componentData);
     });
   }, []);
-  const getComponentData = () =>
-    converters.tiptapNodeDataToDraft?.(
-      TIPTAP_LINK_PREVIEW_TYPE,
-      getEditorCommands().getBlockComponentData(nodeId)
-    );
-
-  const componentData = getComponentData();
 
   const updateData = data => {
     getEditorCommands().setBlock(nodeId, LINK_PREVIEW_TYPE, {
       ...converters.draftBlockDataToTiptap?.(LINK_PREVIEW_TYPE, { ...componentData, ...data }),
       id: nodeId,
     });
+    setComponentData({ ...componentData, ...data });
   };
 
   const { url, target, rel } = componentData?.config?.link || {};
@@ -68,7 +64,7 @@ const LinkPreviewSettingsModal: FC<Props> = ({ nodeId, uiSettings }) => {
   const onDone = ({ url, target, rel }) => {
     const newComponentData = {
       ...componentData,
-      config: { ...componentData.config, link: { url, target, rel } },
+      config: { ...componentData?.config, link: { url, target, rel } },
     };
     updateData(newComponentData);
 

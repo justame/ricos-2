@@ -4,7 +4,6 @@ import type { FC } from 'react';
 import { ModalContext, RicosContext, EditorContext } from 'ricos-context';
 import ButtonSettings from '../toolbar/buttonInputModal';
 import type { LINK_BUTTON_TYPE, ACTION_BUTTON_TYPE, ButtonPluginEditorConfig } from '../types';
-import { buttonsModals } from '../constants';
 import { Node_Type } from 'wix-rich-content-common';
 
 interface Props {
@@ -21,6 +20,8 @@ const ButtonSettingsModal: FC<Props> = ({ nodeId, settings, type, modalId }) => 
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [initialData, setInitialData] = useState<Record<string, any>>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [componentData, setComponentData] = useState<Record<string, any>>();
   const [converters, setConverters] = useState<{
     tiptapNodeDataToDraft?: Function;
     draftBlockDataToTiptap?: Function;
@@ -33,22 +34,21 @@ const ButtonSettingsModal: FC<Props> = ({ nodeId, settings, type, modalId }) => 
     ).then(convertersModule => {
       const { draftBlockDataToTiptap, tiptapNodeDataToDraft } = convertersModule;
       setConverters({ tiptapNodeDataToDraft, draftBlockDataToTiptap });
-      setInitialData(
-        tiptapNodeDataToDraft?.(Node_Type.BUTTON, getEditorCommands().getBlockComponentData(nodeId))
+      const componentData = tiptapNodeDataToDraft(
+        Node_Type.BUTTON,
+        getEditorCommands().getBlockComponentData(nodeId)
       );
+      setInitialData(componentData);
+      setComponentData(componentData);
     });
   }, []);
-
-  const componentData = converters.tiptapNodeDataToDraft?.(
-    Node_Type.BUTTON,
-    getEditorCommands().getBlockComponentData(nodeId)
-  );
 
   const updateData = data => {
     getEditorCommands().setBlock(nodeId, type, {
       ...converters.draftBlockDataToTiptap?.(type, { ...componentData, ...data }),
       id: nodeId,
     });
+    setComponentData({ ...componentData, ...data });
   };
 
   const closeModal = () => {

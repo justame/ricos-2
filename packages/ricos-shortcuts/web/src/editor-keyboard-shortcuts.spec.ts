@@ -1,19 +1,9 @@
 import { identity } from 'fp-ts/function';
-import type { EditorCommands, EventRegistrar, KeyboardShortcut, ModalService } from 'ricos-types';
+import type { EditorCommands, KeyboardShortcut, ModalService } from 'ricos-types';
 import { RICOS_DIVIDER_TYPE } from 'wix-rich-content-common';
 import { EditorKeyboardShortcuts } from './editor-keyboard-shortcuts';
 
 describe('Editor Keyboard Shortcuts', () => {
-  const events: EventRegistrar = {
-    getAllTopics: () => [],
-    register: () => ({
-      publish: () => false,
-      publishSync: () => false,
-      publishOnce: () => false,
-      topic: 'ricos.shortcuts.test.EditorKeyboardShortcuts',
-    }),
-  };
-
   const bold: KeyboardShortcut = {
     name: 'Bold',
     description: 'Toggles bold style of selected text',
@@ -59,8 +49,18 @@ describe('Editor Keyboard Shortcuts', () => {
     getModal: () => undefined,
   };
 
+  const publishers = {
+    byTopic: () => ({
+      publish: jest.fn(),
+      publishSync: jest.fn(),
+      publishOnce: jest.fn(),
+      topic: 'ricos.keyboard.shortcut.test' as const,
+    }),
+  };
+
   it('should register/unregister shortcut', () => {
-    const registered = new EditorKeyboardShortcuts(events, modalService);
+    const registered = new EditorKeyboardShortcuts(modalService);
+    registered.publishers = publishers;
     registered.register(bold);
     expect(registered.asArray().length).toEqual(1);
     registered.unregister(registered.asArray()[0].getKeyboardShortcut());
@@ -68,14 +68,16 @@ describe('Editor Keyboard Shortcuts', () => {
   });
 
   it('should filter shortcuts', () => {
-    const registered = new EditorKeyboardShortcuts(events, modalService);
+    const registered = new EditorKeyboardShortcuts(modalService);
+    registered.publishers = publishers;
     registered.register(bold);
     const filtered = registered.filter(shortcut => shortcut.getGroup() === 'add-plugin');
     expect(filtered.asArray().length).toEqual(0);
   });
 
   it('should produce grouped display data', () => {
-    const registered = new EditorKeyboardShortcuts(events, modalService);
+    const registered = new EditorKeyboardShortcuts(modalService);
+    registered.publishers = publishers;
     registered.register(bold);
     registered.register(italic);
     registered.register(addDivider);
@@ -114,7 +116,8 @@ describe('Editor Keyboard Shortcuts', () => {
       insertBlock: identity,
     };
 
-    const actual = new EditorKeyboardShortcuts(events, modalService);
+    const actual = new EditorKeyboardShortcuts(modalService);
+    actual.publishers = publishers;
     actual.register(bold);
     actual.register(italic);
     actual.register(addDivider);

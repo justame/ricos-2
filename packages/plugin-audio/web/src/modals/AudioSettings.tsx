@@ -42,7 +42,6 @@ export interface Props {
   isMobile: boolean;
   experiments: AvailableExperiments;
   blockKey: string;
-  getComponentData: () => ComponentData;
   handleFileSelection: handleFileSelectionType;
   handleFileUpload: handleFileUploadType;
 }
@@ -59,7 +58,6 @@ const AudioSettings: React.FC<Props> = ({
   isMobile,
   experiments,
   blockKey = componentData?.id,
-  getComponentData,
   handleFileSelection,
   handleFileUpload,
 }) => {
@@ -139,7 +137,7 @@ const AudioSettings: React.FC<Props> = ({
       const uploader = new Uploader(helpers?.handleFileUpload || handleFileUpload);
       setIsLoadingImage(true);
       await uploadService.uploadFile(file, blockKey, uploader, AUDIO_TYPE, AudioPluginService);
-      setCoverImage(getComponentData().coverImage);
+      setCoverImage(componentData.coverImage);
       setIsLoadingImage(false);
     } else {
       setIsLoadingImage(true);

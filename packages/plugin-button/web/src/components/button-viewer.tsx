@@ -5,7 +5,6 @@ import type { Helpers, RichContentTheme, AnchorTarget } from 'wix-rich-content-c
 import { mergeStyles, getRelValue } from 'wix-rich-content-common';
 import Styles from '../../statics/styles/default-styles.scss';
 import { ACTION_BUTTON_TYPE, LINK_BUTTON_TYPE } from '../types';
-import { merge } from 'lodash';
 
 interface Props {
   style: Record<string, unknown>;

@@ -19,6 +19,8 @@ const PollSettingsModal: FC<Props> = ({ nodeId, activeTab }) => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [initialData, setInitialData] = useState<Record<string, any>>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [componentData, setComponentData] = useState<Record<string, any>>();
   const [converters, setConverters] = useState<{
     tiptapNodeDataToDraft?: Function;
     draftBlockDataToTiptap?: Function;
@@ -31,22 +33,21 @@ const PollSettingsModal: FC<Props> = ({ nodeId, activeTab }) => {
     ).then(convertersModule => {
       const { draftBlockDataToTiptap, tiptapNodeDataToDraft } = convertersModule;
       setConverters({ tiptapNodeDataToDraft, draftBlockDataToTiptap });
-      setInitialData(
-        tiptapNodeDataToDraft?.(TIPTAP_POLL_TYPE, getEditorCommands().getBlockComponentData(nodeId))
+      const componentData = tiptapNodeDataToDraft(
+        TIPTAP_POLL_TYPE,
+        getEditorCommands().getBlockComponentData(nodeId)
       );
+      setInitialData(componentData);
+      setComponentData(componentData);
     });
   }, []);
-
-  const componentData = converters.tiptapNodeDataToDraft?.(
-    TIPTAP_POLL_TYPE,
-    getEditorCommands().getBlockComponentData(nodeId)
-  );
 
   const updateData = data => {
     getEditorCommands().setBlock(nodeId, POLL_TYPE, {
       ...converters.draftBlockDataToTiptap?.(POLL_TYPE, { ...componentData, ...data }),
       id: nodeId,
     });
+    setComponentData({ ...componentData, ...data });
   };
 
   const closeModal = () => {

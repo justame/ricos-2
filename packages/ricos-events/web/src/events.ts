@@ -31,7 +31,7 @@ export class RicosEvents implements EventRegistrar, EventSubscriptor {
 
   subscribe(
     topic: SubscribeTopicDescriptor,
-    handler: (data: EventData) => void,
+    handler: (topic: TopicDescriptor, data: EventData) => void,
     id: string
   ): Subscription {
     const subscriptions = this.events

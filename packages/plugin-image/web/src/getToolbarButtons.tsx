@@ -12,7 +12,7 @@ import { ImagePluginService } from './toolbar/imagePluginService';
 import { Uploader } from 'wix-rich-content-plugin-commons';
 import { NodeSizeButton } from 'wix-rich-content-toolbars-ui';
 import type { PluginContainerData_Width_Type } from 'ricos-schema';
-import ImageEditorButton from './toolbar/editImageButton';
+import ImageEditorButton from './toolbar/ImageEditorButton';
 
 const imagePluginService = new ImagePluginService();
 

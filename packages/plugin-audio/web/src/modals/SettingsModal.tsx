@@ -21,6 +21,9 @@ const AudioSettingsModal: FC<Props> = ({ nodeId, handleFileSelection, handleFile
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [initialData, setInitialData] = useState<Record<string, any>>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [componentData, setComponentData] = useState<Record<string, any>>();
+
   const [converters, setConverters] = useState<{
     tiptapNodeDataToDraft?: Function;
     draftBlockDataToTiptap?: Function;
@@ -33,28 +36,22 @@ const AudioSettingsModal: FC<Props> = ({ nodeId, handleFileSelection, handleFile
     ).then(convertersModule => {
       const { draftBlockDataToTiptap, tiptapNodeDataToDraft } = convertersModule;
       setConverters({ tiptapNodeDataToDraft, draftBlockDataToTiptap });
-      setInitialData(
-        tiptapNodeDataToDraft?.(
-          TIPTAP_AUDIO_TYPE,
-          getEditorCommands().getBlockComponentData(nodeId)
-        )
+
+      const componentData = tiptapNodeDataToDraft(
+        TIPTAP_AUDIO_TYPE,
+        getEditorCommands().getBlockComponentData(nodeId)
       );
+      setInitialData(componentData);
+      setComponentData(componentData);
     });
   }, []);
-
-  const getComponentData = () =>
-    converters.tiptapNodeDataToDraft?.(
-      TIPTAP_AUDIO_TYPE,
-      getEditorCommands().getBlockComponentData(nodeId)
-    );
-
-  const componentData = getComponentData();
 
   const updateData = data => {
     getEditorCommands().setBlock(nodeId, AUDIO_TYPE, {
       ...converters.draftBlockDataToTiptap?.(AUDIO_TYPE, { ...componentData, ...data }),
       id: nodeId,
     });
+    setComponentData({ ...componentData, ...data });
   };
 
   const closeModal = () => {
@@ -80,7 +77,6 @@ const AudioSettingsModal: FC<Props> = ({ nodeId, handleFileSelection, handleFile
       handleFileSelection={handleFileSelection}
       handleFileUpload={handleFileUpload}
       blockKey={nodeId}
-      getComponentData={getComponentData}
     />
   ) : null;
 };
