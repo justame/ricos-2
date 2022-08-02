@@ -5,3 +5,4 @@ export { default as PinterestIcon } from './PinterestIcon';
 export { default as TikTokIcon } from './TikTokIcon';
 export { default as FacebookIcon } from './FacebookIcon';
 export { default as YoutubeIcon } from './YoutubeIcon';
+export { default as RemovePreviewIcon } from './RemovePreviewIcon';

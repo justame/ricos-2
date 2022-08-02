@@ -10,7 +10,7 @@ import { TABS } from '../components/settings/constants';
 
 type Props = {
   toolbarItem: IToolbarItem;
-  children?: React.ReactElement;
+  dataHook?: string;
 };
 
 const CustomizeButton = ({ onClick, text }) => (
@@ -50,7 +50,7 @@ const layoutData = [
   },
 ];
 
-export const PollLayoutButton: FC<Props> = ({ toolbarItem }) => {
+export const PollLayoutButton: FC<Props> = ({ toolbarItem, dataHook }) => {
   const { t, isMobile } = useContext(RicosContext) || {};
   const modalService = useContext(ModalContext) || {};
   const nodeStyle = toolbarItem?.attributes.layout;
@@ -70,7 +70,7 @@ export const PollLayoutButton: FC<Props> = ({ toolbarItem }) => {
   };
   return (
     <DropdownButton
-      dataHook="baseToolbarButton_layout"
+      dataHook={dataHook}
       id="poll_layout"
       options={layoutData.map(
         ({ dataHook, icon: Icon, commandKey, text, onClick, component: Component }) =>

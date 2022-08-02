@@ -4,6 +4,7 @@ import { linkPreviewModals } from './consts';
 import { PLUGIN_TOOLBAR_BUTTON_ID } from 'wix-rich-content-editor-common';
 import LinkPreviewSettingsModal from './modals/SettingsModal';
 import { LinkPreviewSettingsButton } from './toolbar/SettingsButton';
+import { RemovePreviewButton } from './toolbar/RemovePreviewButton';
 
 const selectedNodeResolver = {
   id: 'selectedNode',
@@ -20,7 +21,23 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
   const { modals } = services;
   return [
     {
+      id: 'removePreview',
+      dataHook: 'baseToolbarButton_replaceToLink',
+      command: ({ editorCommands, node }) => {
+        editorCommands
+          .chain()
+          .focus()
+          .insertContent(node.attrs.link.url + ' ')
+          .run();
+      },
+      attributes: {
+        selectedNode: selectedNodeResolver,
+      },
+      renderer: toolbarItem => <RemovePreviewButton toolbarItem={toolbarItem} />,
+    },
+    {
       id: 'linkPreviewSettings',
+      dataHook: 'LinkButton',
       modal: {
         Component: LinkPreviewSettingsModal,
         id: linkPreviewModals.settings,

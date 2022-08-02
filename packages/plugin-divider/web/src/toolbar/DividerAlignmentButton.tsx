@@ -16,7 +16,7 @@ type Props = {
   dataHook?: string;
 };
 
-export const DividerAlignmentButton: FC<Props> = ({ options, toolbarItem }) => {
+export const DividerAlignmentButton: FC<Props> = ({ options, toolbarItem, dataHook }) => {
   const { t, languageDir } = useContext(RicosContext) || {};
   const modalService = useContext(ModalContext) || {};
   const node = toolbarItem.attributes.selectedNode;
@@ -30,7 +30,7 @@ export const DividerAlignmentButton: FC<Props> = ({ options, toolbarItem }) => {
 
   return (
     <DropdownButton
-      dataHook="dividerAlignment"
+      dataHook={dataHook}
       id="dividerAlignment"
       options={dropDownOptions.map(({ dataHook, icon: Icon, text, commandKey, tooltip }) => (
         <ListItemSelect

@@ -7,9 +7,10 @@ import type { IToolbarItem } from 'ricos-types';
 
 interface Props {
   toolbarItem: IToolbarItem;
+  dataHook?: string;
 }
 
-const ImageEditorButton: FC<Props> = ({ toolbarItem }) => {
+const ImageEditorButton: FC<Props> = ({ toolbarItem, dataHook }) => {
   const modalService = useContext(ModalContext) || {};
   const { isMobile, t } = useContext(RicosContext) || {};
 
@@ -24,7 +25,7 @@ const ImageEditorButton: FC<Props> = ({ toolbarItem }) => {
     <ToggleButton
       Icon={EditImageIcon}
       onClick={() => onClick({ modalService, isMobile, nodeId, src })}
-      dataHook="imageToolbarButton_image_editor"
+      dataHook={dataHook}
       tooltip={t('ImageEditorButton_Tooltip')}
       disabled={!src}
     />

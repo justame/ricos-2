@@ -51,6 +51,7 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
         }),
         id: imageModals.imageEditor,
       },
+      dataHook: 'imageToolbarButton_image_editor',
       command: ({ nodeId, src }) => {
         modals?.openModal(imageModals.imageEditor, {
           componentProps: {
