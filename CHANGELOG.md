@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `plugin-commons/ui-components`
+  - [#4312](https://github.com/wix/ricos/pull/4312) add focus to colorPicker input & fix TextInput bizMgr styles
+
 ## :house: Internal
 
 - `orchestrator`

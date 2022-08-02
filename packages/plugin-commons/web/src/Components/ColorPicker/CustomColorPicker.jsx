@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { mergeStyles } from 'wix-rich-content-common';
 import Styles from '../../../statics/styles/custom-color-picker.scss';
@@ -7,6 +7,12 @@ import { HexColorPicker, HexColorInput } from 'react-colorful';
 import classNames from 'classnames';
 
 const CustomColorPicker = ({ t, color, theme, onChange, isMobile }) => {
+  const colorInputDataHook = 'colorInput';
+
+  useEffect(() => {
+    document.querySelector(`[data-hook=${colorInputDataHook}]`)?.focus();
+  }, []);
+
   const styles = mergeStyles({ styles: Styles, theme });
   return (
     <div className={classNames(styles.colorPickerDialog, { [styles.mobile]: isMobile })}>
@@ -20,7 +26,7 @@ const CustomColorPicker = ({ t, color, theme, onChange, isMobile }) => {
           <HexColorInput
             className={styles.hexColorInput}
             placeholder="000000"
-            data-hook="colorInput"
+            data-hook={colorInputDataHook}
             color={color}
             onChange={onChange}
           />

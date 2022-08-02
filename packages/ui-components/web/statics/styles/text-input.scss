@@ -19,8 +19,8 @@
   padding-left: 18px;
   box-sizing: border-box;
   font-family: $ricos-settings-font-family;
-  border: 1px solid $settings-inputs-border-color;
-  border-radius: $settings-inputs-border-radius;
+  border: 1px solid $settings-inputs-border-color !important;
+  border-radius: $settings-inputs-border-radius !important;
 
   &::placeholder {
     color: var(--ricos-settings-inputs-placeholder-color, rgba(0, 0, 0, 0.6));
