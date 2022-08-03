@@ -1432,6 +1432,7 @@ exports[`[tiptap] insert plugins tests > [tiptap] footer toolbar #0`] =
           },
           "textWrap": "wrap",
           "width": 350
+          "height": 550
         },
         "srcType": "url"
       },
