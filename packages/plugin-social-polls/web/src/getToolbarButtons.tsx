@@ -37,6 +37,7 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
   return [
     {
       id: 'pollLayout',
+      dataHook: 'baseToolbarButton_layout',
       attributes: {
         selectedNode: selectedNodeResolver,
       },
@@ -66,6 +67,7 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
     },
     {
       id: 'pollDesign',
+      dataHook: 'baseToolbarButton_design',
       modal: {
         Component: PollSettingsModal,
         id: pollModals.design,

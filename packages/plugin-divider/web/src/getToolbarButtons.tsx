@@ -60,6 +60,7 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
     },
     {
       id: 'dividerAlignment',
+      dataHook: 'dividerAlignment',
       command: ({ alignment, editorCommands, node }) => {
         const nodeContainerData = node.attrs?.containerData;
         editorCommands

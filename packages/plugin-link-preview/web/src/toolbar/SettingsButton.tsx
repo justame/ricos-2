@@ -7,9 +7,10 @@ import { PluginSettingsIcon } from 'wix-rich-content-plugin-commons';
 
 type Props = {
   toolbarItem: IToolbarItem;
+  dataHook?: string;
 };
 
-export const LinkPreviewSettingsButton: FC<Props> = ({ toolbarItem }) => {
+export const LinkPreviewSettingsButton: FC<Props> = ({ toolbarItem, dataHook }) => {
   const { t, isMobile } = useContext(RicosContext) || {};
   const modalService = useContext(ModalContext) || {};
   const node = toolbarItem.attributes.selectedNode;
@@ -21,7 +22,7 @@ export const LinkPreviewSettingsButton: FC<Props> = ({ toolbarItem }) => {
       onClick={() =>
         toolbarItem.commands?.click({ modalService, isMobile, node, referenceElement })
       }
-      dataHook="LinkButton"
+      dataHook={dataHook}
       tooltip={t('LinkPreview_Settings_Tooltip')}
       setRef={setReferenceElement}
     />

@@ -1,25 +1,25 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import type { FC } from 'react';
 import { RicosContext } from 'ricos-context';
 import type { IToolbarItem } from 'ricos-types';
 import { ToggleButton } from 'wix-rich-content-toolbars-ui';
-import DesignIcon from '../assets/icons/DesignIcon';
+import { RemovePreviewIcon } from '../icons';
 
 type Props = {
   toolbarItem: IToolbarItem;
   dataHook?: string;
 };
 
-export const PollDesignButton: FC<Props> = ({ toolbarItem, dataHook }) => {
-  const { t, isMobile } = useContext(RicosContext) || {};
+export const RemovePreviewButton: FC<Props> = ({ toolbarItem, dataHook }) => {
+  const { t } = useContext(RicosContext) || {};
   const node = toolbarItem.attributes.selectedNode;
 
   return (
     <ToggleButton
-      Icon={DesignIcon}
-      onClick={() => toolbarItem.commands?.click({ isMobile, node })}
+      Icon={RemovePreviewIcon}
+      onClick={() => toolbarItem.commands?.click({ node })}
       dataHook={dataHook}
-      tooltip={t('Poll_PollSettings_Tab_Design_TabName')}
+      tooltip={t('LinkPreview_RemovePreview_Tooltip')}
     />
   );
 };

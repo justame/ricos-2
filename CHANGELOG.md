@@ -17,17 +17,23 @@
     Click to see more.
   </summary>
 
+
+
+</details>
+
+## 8.72.18 (Aug 03, 2022)
+
+## :bug: Bug Fix
+
+- `plugin-commons/ui-components`
+  - [#4312](https://github.com/wix/ricos/pull/4312) add focus to colorPicker input & fix TextInput bizMgr styles
+
 ## :house: Internal
 
 - `orchestrator`
   - [#4304](https://github.com/wix/ricos/pull/4304) Editor Entity
-
-## :house: Internal
-
-- `orchestrator`
   - [#4300](https://github.com/wix/ricos/pull/4300) Event Source API
-
-</details>
+  - [#4311](https://github.com/wix/ricos/pull/4311) Editor Entity implements Event Source API
 
 ## 8.72.17 (Aug 01, 2022)
 

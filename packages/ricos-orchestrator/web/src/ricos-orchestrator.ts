@@ -111,7 +111,7 @@ export class RicosOrchestrator implements Orchestrator {
   }
 
   initialize() {
-    const eventSources = [this.shortcuts, this.modals];
+    const eventSources = [this.shortcuts, this.modals, this.editor];
 
     eventSources.forEach(source => {
       const initializer = new PublisherInitializer(source.topicsToPublish);
