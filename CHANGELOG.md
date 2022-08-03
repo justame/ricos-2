@@ -25,7 +25,7 @@
 ## :house: Internal
 
 - `toolbars-v3`
-  - [#4313](https://github.com/wix/ricos/pull/4313) Toolbars events aggregate
+  - [#4313](https://github.com/wix/ricos/pull/4313) Toolbars aggregate
 
 </details>
 
