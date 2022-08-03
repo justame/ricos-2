@@ -35,3 +35,4 @@ export * from './toolbarSettingsTypes';
 export * from './toolbarTypes';
 export * from './uploadServicesTypes';
 export * from './orchestration';
+export * from './ricos-toolbars';

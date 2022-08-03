@@ -1,21 +1,13 @@
 /* eslint-disable brace-style */
 import type { RicosEditorProps } from 'ricos-common';
-import type { RicosEvents } from 'ricos-events';
-import type { RicosStyles } from 'ricos-styles';
 import type {
-  IContent,
-  RicosEditorPlugins,
-  IUpdateService,
-  IUploadService,
-  TranslationFunction,
   TiptapAdapter,
   IRicosEditor,
   EventSource,
   PublisherProvider,
+  RicosServices,
 } from 'ricos-types';
 import { initializeTiptapAdapter } from 'wix-tiptap-editor';
-import type { RicosModalService } from 'ricos-modals';
-import type { IShortcuts } from 'ricos-shortcuts';
 
 type Topics = [
   'ricos.editor.instance.loaded',
@@ -31,22 +23,10 @@ const topics: Topics = [
   'ricos.editor.content.saved',
 ];
 
-type RicosProps = {
-  events: RicosEvents;
-  styles: RicosStyles;
-  plugins: RicosEditorPlugins;
-  updateService: IUpdateService;
-  uploadService: IUploadService;
-  t: TranslationFunction;
-  content: IContent<unknown>;
-  shortcuts: IShortcuts;
-  modals: RicosModalService;
-};
-
 export class RicosEditor implements IRicosEditor, EventSource<Topics> {
   private tiptapAdapter: TiptapAdapter;
 
-  constructor(editorProps: RicosEditorProps, ricosProps: RicosProps) {
+  constructor(editorProps: RicosEditorProps, ricosProps: Omit<RicosServices, 'editor'>) {
     this.tiptapAdapter = initializeTiptapAdapter(editorProps, ricosProps);
   }
 

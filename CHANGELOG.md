@@ -22,6 +22,11 @@
 - `toolbars-v3`
   - [#4314](https://github.com/wix/ricos/pull/4314) headings modal breaks with no focus in static toolbar
 
+## :house: Internal
+
+- `toolbars-v3`
+  - [#4313](https://github.com/wix/ricos/pull/4313) Toolbars events aggregate
+
 </details>
 
 ## 8.72.18 (Aug 03, 2022)

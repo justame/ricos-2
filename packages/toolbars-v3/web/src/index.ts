@@ -68,3 +68,4 @@ export { default as RicosToolbarComponent } from './components/RicosToolbarCompo
 export { default as FloatingAddPluginMenu } from './modals/FloatingPluginMenu/FloatingAddPluginMenu';
 export { NodeLinkButton } from './components/buttons';
 export { default as InsertPluginToolbar } from './components/InsertPluginToolbar/InsertPluginToolbar';
+export { RicosToolbars } from './ricos-toolbars';

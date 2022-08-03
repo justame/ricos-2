@@ -23,7 +23,7 @@ import type {
   SubscribeTopicDescriptor,
   EventData,
 } from 'ricos-types';
-import { Content } from 'wix-rich-content-toolbars-v3';
+import { Content, RicosToolbars } from 'wix-rich-content-toolbars-v3';
 import { RicosEditor } from './ricos-editor';
 import { getHelpersConfig } from './helpers-config';
 import { PublisherInitializer, SubscriptorInitializer } from './event-orchestrators';
@@ -34,6 +34,8 @@ export class RicosOrchestrator implements Orchestrator {
   private updateService!: IUpdateService;
 
   private readonly events: RicosEvents;
+
+  private readonly toolbars: RicosToolbars;
 
   private readonly modals: RicosModalService;
 
@@ -57,6 +59,7 @@ export class RicosOrchestrator implements Orchestrator {
 
     this.updateService = new UpdateService();
     this.events = new RicosEvents();
+    this.toolbars = new RicosToolbars();
     this.styles = new RicosStyles();
 
     const { onMediaUploadStart, onMediaUploadEnd } = editorProps._rcProps?.helpers || {};
@@ -83,6 +86,7 @@ export class RicosOrchestrator implements Orchestrator {
         t: this.t,
         content: this.content,
         styles: this.styles,
+        toolbars: this.toolbars,
       },
       this.editorProps.toolbarSettings || {}
     );
@@ -99,6 +103,7 @@ export class RicosOrchestrator implements Orchestrator {
       content: this.content,
       shortcuts: this.shortcuts,
       modals: this.modals,
+      toolbars: this.toolbars,
     });
     this.updateService.setEditorCommands(this.editor.getEditorCommands());
     this.initialize();
@@ -111,7 +116,7 @@ export class RicosOrchestrator implements Orchestrator {
   }
 
   initialize() {
-    const eventSources = [this.shortcuts, this.modals, this.editor];
+    const eventSources = [this.shortcuts, this.modals, this.editor, this.toolbars];
 
     eventSources.forEach(source => {
       const initializer = new PublisherInitializer(source.topicsToPublish);
@@ -155,6 +160,7 @@ export class RicosOrchestrator implements Orchestrator {
       content: this.content,
       modals: this.modals,
       editor: this.editor,
+      toolbars: this.toolbars,
     };
   }
 
