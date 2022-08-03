@@ -5851,6 +5851,7 @@ exports[`plugins > html > [tiptap] add html with src url #0`] =
           },
           "textWrap": "wrap",
           "width": 350
+          "height":550
         },
         "src": "https://cdn.bitdegree.org/learn/test-iframe.htm",
         "srcType": "url"
@@ -6037,7 +6038,6 @@ exports[`plugins > html > [draft] add html with src html #0`] =
       "data": {
         "config": {
           "alignment": "center",
-          "height": 550,
           "textWrap": "wrap",
           "width": 350
         },
