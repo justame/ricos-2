@@ -195,13 +195,13 @@ export class FullRicosEditor extends React.Component<Props, State> {
                                 uploadService={uploadService}
                                 updateService={updateService}
                               >
-                                <>
-                                  <ToolbarContext.Provider
-                                    value={{
-                                      ...this.getToolbarContext(),
-                                      portal: this.portalRef.current as RicosPortalType,
-                                    }}
-                                  >
+                                <ToolbarContext.Provider
+                                  value={{
+                                    ...this.getToolbarContext(),
+                                    portal: this.portalRef.current as RicosPortalType,
+                                  }}
+                                >
+                                  <>
                                     <ContentQueryProvider editor={editor.adapter.tiptapEditor}>
                                       <RicosToolbars
                                         content={toolbarContent}
@@ -209,10 +209,10 @@ export class FullRicosEditor extends React.Component<Props, State> {
                                         plugins={plugins}
                                       />
                                     </ContentQueryProvider>
-                                  </ToolbarContext.Provider>
 
-                                  <ModalRenderer />
-                                </>
+                                    <ModalRenderer />
+                                  </>
+                                </ToolbarContext.Provider>
                               </UploadContextProvider>
                               <Shortcuts group="formatting">
                                 <RicosEditor {...this.props} ref={this.props.forwardRef} />

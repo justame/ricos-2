@@ -46,6 +46,7 @@ import {
   RICOS_TEXT_COLOR_TYPE,
   RICOS_TEXT_HIGHLIGHT_TYPE,
   RICOS_LINK_TYPE,
+  RICOS_ANCHOR_TYPE,
   RICOS_MENTION_TYPE,
   RICOS_FONT_SIZE_TYPE,
   UNSUPPORTED_BLOCKS_TYPE,
@@ -112,6 +113,7 @@ const deleteDecorationsMapFuncs = {
   [RICOS_TEXT_HIGHLIGHT_TYPE]: setHighlightColor,
   [RICOS_FONT_SIZE_TYPE]: setFontSize,
   [RICOS_INDENT_TYPE]: () => {},
+  [RICOS_ANCHOR_TYPE]: () => {},
 };
 
 let savedEditorState;

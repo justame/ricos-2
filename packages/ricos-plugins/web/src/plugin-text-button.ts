@@ -106,6 +106,9 @@ export class PluginTextButton implements FormattingToolbarButton {
           ? modals.isModalOpen(this.button.modal.id)
             ? modals.closeModal(this.button.modal.id)
             : modals.openModal(this.button.modal.id, {
+                componentProps: {
+                  closeModal: () => this.button.modal && modals.closeModal(this.button.modal.id),
+                },
                 layout: 'dialog',
               })
           : this.button.command?.(editorCommands),
@@ -163,7 +166,6 @@ export class PluginTextButtons implements FormattingToolbarButtons {
       'headings',
       'textColor',
       'textHighlight',
-      'link',
       'lineSpacing',
     ];
 
