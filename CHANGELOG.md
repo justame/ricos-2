@@ -17,7 +17,10 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
 
+- `toolbars-v3`
+  - [#4314](https://github.com/wix/ricos/pull/4314) headings modal breaks with no focus in static toolbar
 
 </details>
 
