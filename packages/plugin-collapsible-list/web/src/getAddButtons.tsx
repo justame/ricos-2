@@ -14,7 +14,9 @@ export const getAddButtons = (config, services): AddButton[] => {
       tooltip: 'CollapsibleListPlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
       command: editorCommands => {
-        editorCommands.insertBlock(COLLAPSIBLE_LIST_TYPE, { content: defaultCollapsibleItem });
+        editorCommands.insertBlockWithBlankLines(COLLAPSIBLE_LIST_TYPE, {
+          content: defaultCollapsibleItem,
+        });
         return true;
       },
       menuConfig: {

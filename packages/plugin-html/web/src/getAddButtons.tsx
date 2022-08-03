@@ -21,7 +21,7 @@ export const getAddButtons = (config, _services): AddButton[] => {
       tooltip: 'HtmlPlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
       command: editorCommands => {
-        editorCommands.insertBlock(HTML_TYPE, htmlDataDefaults);
+        editorCommands.insertBlockWithBlankLines(HTML_TYPE, htmlDataDefaults);
         return true;
       },
       menuConfig: {
@@ -36,7 +36,7 @@ export const getAddButtons = (config, _services): AddButton[] => {
       tooltip: 'AdSensePlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
       command: editorCommands => {
-        editorCommands.insertBlock(HTML_TYPE, htmlDataDefaults);
+        editorCommands.insertBlockWithBlankLines(HTML_TYPE, htmlDataDefaults);
         return true;
       },
       menuConfig: {

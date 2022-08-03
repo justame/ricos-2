@@ -14,14 +14,14 @@ const handleExternalFileChange =
     if (data instanceof Array) {
       data.forEach((file, index) => {
         setTimeout(() => {
-          const nodeId = editorCommands.insertBlockWithBlankLines?.(IMAGE_TYPE, RICOS_DEFAULTS, {
+          const nodeId = editorCommands.insertBlockWithBlankLines(IMAGE_TYPE, RICOS_DEFAULTS, {
             updateSelection: data.length === index + 1,
           });
           updateService.updatePluginData({ data: file }, nodeId, IMAGE_TYPE, imagePluginService);
         });
       });
     } else {
-      const nodeId = editorCommands.insertBlockWithBlankLines?.(IMAGE_TYPE, RICOS_DEFAULTS);
+      const nodeId = editorCommands.insertBlockWithBlankLines(IMAGE_TYPE, RICOS_DEFAULTS);
       updateService.updatePluginData({ data }, nodeId, IMAGE_TYPE, imagePluginService);
     }
   };
@@ -30,7 +30,7 @@ const handleNativeFileChange = (editorCommands, uploadService, uploader) => (fil
   files.forEach((file, index) => {
     // prevents rerenders when next file starts uploading
     setTimeout(() => {
-      const nodeId = editorCommands.insertBlockWithBlankLines?.(IMAGE_TYPE, RICOS_DEFAULTS, {
+      const nodeId = editorCommands.insertBlockWithBlankLines(IMAGE_TYPE, RICOS_DEFAULTS, {
         updateSelection: files.length === index + 1,
       });
       uploadService.uploadFile(file, nodeId, uploader, IMAGE_TYPE, imagePluginService);

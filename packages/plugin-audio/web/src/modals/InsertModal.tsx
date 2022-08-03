@@ -35,7 +35,7 @@ const InsertModal: FC<Props> = ({
 
   const onConfirm = audio => {
     const data = convertBlockDataToRicos(AUDIO_TYPE, audio);
-    const nodeId = getEditorCommands().insertBlock(AUDIO_TYPE, data);
+    const nodeId = getEditorCommands().insertBlockWithBlankLines(AUDIO_TYPE, data);
     return { newBlock: { key: nodeId } };
   };
 

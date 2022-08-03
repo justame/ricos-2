@@ -13,7 +13,7 @@ export const getAddButtons = (config, services): AddButton[] => {
       tooltip: 'TextCodeBlock_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.SIDE, TOOLBARS.FOOTER],
       command: editorCommands => {
-        editorCommands.insertBlock(CODE_BLOCK_TYPE, {});
+        editorCommands.insertBlockWithBlankLines(CODE_BLOCK_TYPE, {});
         return true;
       },
       menuConfig: {

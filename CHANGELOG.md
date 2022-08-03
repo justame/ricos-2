@@ -26,6 +26,8 @@
 
 - `toolbars-v3`
   - [#4313](https://github.com/wix/ricos/pull/4313) Toolbars aggregate
+- `*`
+  - [#4319](https://github.com/wix/ricos/pull/4319) insert all plugins with `insertBlockWithBlankLines`
 
 </details>
 

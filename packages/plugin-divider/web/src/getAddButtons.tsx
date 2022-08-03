@@ -13,7 +13,7 @@ export const getAddButtons = (config, services): AddButton[] => {
       tooltip: 'DividerPlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
       command: editorCommands => {
-        editorCommands.insertBlock(DIVIDER_TYPE, {});
+        editorCommands.insertBlockWithBlankLines(DIVIDER_TYPE, {});
         return true;
       },
       menuConfig: {

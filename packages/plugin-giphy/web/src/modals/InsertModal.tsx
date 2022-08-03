@@ -27,7 +27,7 @@ const GiphyInsertModal: FC<Props> = ({ componentData, giphySdkApiKey, nodeId, mo
     if (nodeId) {
       editorCommands?.setBlock(nodeId, GIPHY_TYPE, data);
     } else {
-      editorCommands?.insertBlock(GIPHY_TYPE, data);
+      editorCommands?.insertBlockWithBlankLines(GIPHY_TYPE, data);
     }
   };
 

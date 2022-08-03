@@ -297,10 +297,23 @@ export const createEditorCommands = (
 
   const pluginsCommands: {
     insertBlock: EditorCommands['insertBlock'];
+    insertBlockWithBlankLines: EditorCommands['insertBlockWithBlankLines'];
     setBlock: EditorCommands['setBlock'];
     deleteBlock: EditorCommands['deleteBlock'];
   } = {
     insertBlock: (type: string, data, settings) => {
+      const draftType = TO_DRAFT_PLUGIN_TYPE_MAP[type];
+      const { [draftType]: createPluginData } = createPluginsDataMap;
+      const pluginData = createPluginData(data, settings?.isRicosSchema);
+      const { newBlock, newSelection, newEditorState } = createBlock(
+        getEditorState(),
+        pluginData,
+        draftType
+      );
+      setEditorState(EditorState.forceSelection(newEditorState, newSelection));
+      return newBlock.getKey();
+    },
+    insertBlockWithBlankLines: (type: string, data, settings) => {
       const draftType = TO_DRAFT_PLUGIN_TYPE_MAP[type];
       const { [draftType]: createPluginData } = createPluginsDataMap;
       const pluginData = createPluginData(data, settings?.isRicosSchema);

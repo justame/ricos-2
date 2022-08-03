@@ -28,7 +28,7 @@ const InsertModal: FC<Props> = ({ componentData, verticalsApi, nodeId, modalId }
     if (nodeId) {
       editorCommands?.setBlock(nodeId, VERTICAL_EMBED_TYPE, data);
     } else {
-      editorCommands?.insertBlock(VERTICAL_EMBED_TYPE, data);
+      editorCommands?.insertBlockWithBlankLines(VERTICAL_EMBED_TYPE, data);
     }
     closeModal();
   };

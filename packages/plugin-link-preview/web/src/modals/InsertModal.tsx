@@ -28,7 +28,7 @@ const InsertModal: FC<Props> = ({ componentData, fetchData, nodeId, socialType }
     if (nodeId) {
       editorCommands?.setBlock(nodeId, EMBED_TYPE, data);
     } else {
-      editorCommands?.insertBlock(EMBED_TYPE, data);
+      editorCommands?.insertBlockWithBlankLines(EMBED_TYPE, data);
     }
   };
 

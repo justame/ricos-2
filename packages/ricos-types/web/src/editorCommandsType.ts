@@ -190,7 +190,7 @@ export interface EditorCommands {
       isRicosSchema?: boolean;
     }
   ) => string;
-  insertBlockWithBlankLines?: <K extends keyof PluginsDataMap>(
+  insertBlockWithBlankLines: <K extends keyof PluginsDataMap>(
     type: K,
     data?: PluginsDataMap[K],
     settings?: {

@@ -22,7 +22,7 @@ const PollsInsertModal: FC<Props> = ({ componentData }) => {
   const onPollAdd = poll => {
     const editorCommands = getEditorCommands();
     const data = convertBlockDataToRicos(POLL_TYPE, poll);
-    editorCommands?.insertBlock(POLL_TYPE, data);
+    editorCommands?.insertBlockWithBlankLines(POLL_TYPE, data);
     closeModal();
   };
 
