@@ -112,3 +112,14 @@ export interface EventSubscriptor {
     id: string
   ) => Subscription;
 }
+
+export interface RicosEventTarget {
+  addEventListener: (
+    type: SubscribeTopicDescriptor,
+    listener: (topic: TopicDescriptor, data: EventData) => void
+  ) => void;
+  removeEventListener: (
+    type: SubscribeTopicDescriptor,
+    listener: (topic: TopicDescriptor, data: EventData) => void
+  ) => void;
+}

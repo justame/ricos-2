@@ -61,11 +61,7 @@ export class EditorKeyboardShortcuts
               [shortcut.getName()]: (e: KeyboardEvent) => {
                 e.preventDefault();
                 shortcut.getCommand()(commands);
-                publisher.publish(
-                  `🎹 keyboard shortcut ${shortcut.getName()} applied (${shortcut
-                    .getKeys(platform)
-                    .toPlatformString(platform)})`
-                );
+                publisher.publish(shortcut.getName());
               },
             },
           };
