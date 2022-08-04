@@ -25,3 +25,8 @@ export const imageModals = {
   settings: 'imageSettings',
   imageEditor: 'imageEditor',
 };
+
+export const IMAGE_BUTTONS = {
+  size: 'imageSize',
+  alignment: 'imageAlignment',
+};

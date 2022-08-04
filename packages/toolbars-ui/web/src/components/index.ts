@@ -1,4 +1,5 @@
 export { DropdownButton } from './DropdownButton';
+export { DropdownModal, AlignmentPanel, SizePanel } from './DropdownModals';
 export { ToggleButton } from './ToggleButton';
 export { ListItemSelect, ListItemSection } from './ListItem';
 export { DropdownPanel } from './DropdownPanel';

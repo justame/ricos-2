@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
-import type { FC } from 'react';
-import { DropdownButton } from '../../components';
+import type { FC, ComponentType } from 'react';
 import { RicosContext, ModalContext } from 'ricos-context';
 import type { IToolbarItem } from 'ricos-types';
-import { sizeIconMap } from './consts';
+import { DropdownButton } from 'wix-rich-content-toolbars-ui';
+import { dividerSizeData } from './dividerButtonsData';
 
 type Props = {
   toolbarItem: IToolbarItem;
@@ -11,17 +11,19 @@ type Props = {
   dataHook?: string;
 };
 
-const NodeSizeButton: FC<Props> = ({ toolbarItem, dataHook, id }) => {
-  const { t, isMobile } = useContext(RicosContext) || {};
+export const DividerSizeButton: FC<Props> = ({ toolbarItem, dataHook, id }) => {
+  const { isMobile, t } = useContext(RicosContext) || {};
   const modalService = useContext(ModalContext) || {};
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
-  const getSelectedSize: () => string = () => toolbarItem?.attributes.nodeSize || 'CONTENT';
-  const selectedSize: string = getSelectedSize();
-  const SelectedSizeIcon = sizeIconMap[`${selectedSize}`];
+  const getSelectedSize: () => string = () => toolbarItem?.attributes.nodeSize || 'MEDIUM';
+  const SelectedSizeIcon = dividerSizeData.find(
+    ({ commandKey }) => commandKey === getSelectedSize()
+  )?.icon as ComponentType;
+
   const closeModal = () => modalService.closeModal(id);
 
   const onSizeClick = size => {
-    toolbarItem.commands?.setSize(size);
+    toolbarItem.commands?.click({ size });
     closeModal();
   };
 
@@ -30,6 +32,7 @@ const NodeSizeButton: FC<Props> = ({ toolbarItem, dataHook, id }) => {
       componentProps: {
         getSelectedSize,
         onClick: onSizeClick,
+        closeModal,
       },
       layout: isMobile ? 'drawer' : 'toolbar',
       positioning: { referenceElement, placement: 'bottom' },
@@ -46,5 +49,3 @@ const NodeSizeButton: FC<Props> = ({ toolbarItem, dataHook, id }) => {
     />
   );
 };
-
-export default NodeSizeButton;

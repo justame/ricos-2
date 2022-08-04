@@ -5,28 +5,44 @@ import {
   decorateComponentWithProps,
 } from 'wix-rich-content-editor-common';
 import InsertModal from './modals/InsertModal';
-import { gifModals } from './constants';
-import { NodeSizeButton } from 'wix-rich-content-toolbars-ui';
+import { gifModals, GIF_BUTTONS } from './constants';
+import {
+  AlignmentPanel,
+  NodeAlignmentButton,
+  NodeSizeButton,
+  SizePanel,
+} from 'wix-rich-content-toolbars-ui';
 import type { PluginContainerData_Width_Type } from 'ricos-schema';
 
 export const getToolbarButtons = (config, services): ToolbarButton[] => {
   return [
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SIZE,
-      renderer: toolbarItem => (
-        <NodeSizeButton
-          toolbarItem={toolbarItem}
-          options={
-            ['SMALL', 'CONTENT', 'FULL_WIDTH', 'ORIGINAL'] as PluginContainerData_Width_Type[]
-          }
-        />
-      ),
+      modal: {
+        Component: decorateComponentWithProps(SizePanel, {
+          options: [
+            'SMALL',
+            'CONTENT',
+            'FULL_WIDTH',
+            'ORIGINAL',
+          ] as PluginContainerData_Width_Type[],
+        }),
+        id: GIF_BUTTONS.size,
+      },
+      renderer: toolbarItem => <NodeSizeButton id={GIF_BUTTONS.size} toolbarItem={toolbarItem} />,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
+      modal: {
+        Component: AlignmentPanel,
+        id: GIF_BUTTONS.alignment,
+      },
+      renderer: toolbarItem => (
+        <NodeAlignmentButton toolbarItem={toolbarItem} id={GIF_BUTTONS.alignment} />
+      ),
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,

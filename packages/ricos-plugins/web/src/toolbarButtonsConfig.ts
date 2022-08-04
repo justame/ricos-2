@@ -10,6 +10,7 @@ import type { IToolbarItemConfigTiptap } from 'ricos-types';
 import { PLUGIN_TOOLBAR_BUTTON_ID } from 'wix-rich-content-editor-common';
 import { createLink } from 'ricos-content/libs/nodeUtils';
 import { convertRelObjectToString, convertRelStringToObject } from 'wix-rich-content-common';
+import type { ComponentType } from 'react';
 
 type PluginButtonId = typeof PLUGIN_TOOLBAR_BUTTON_ID[keyof typeof PLUGIN_TOOLBAR_BUTTON_ID];
 
@@ -36,7 +37,7 @@ export const toolbarButtonsConfig: IPluginToolbarButtonsConfig = {
   },
   alignment: {
     id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
-    type: 'toggle',
+    type: 'modal',
     attributes: {
       nodeAlignment: getNodeAlignmentResolver,
     },
@@ -53,7 +54,7 @@ export const toolbarButtonsConfig: IPluginToolbarButtonsConfig = {
   },
   size: {
     id: PLUGIN_TOOLBAR_BUTTON_ID.SIZE,
-    type: 'toggle',
+    type: 'modal',
     attributes: {
       nodeSize: getNodeSizeResolver,
     },

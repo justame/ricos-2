@@ -5,7 +5,15 @@ import {
 } from 'wix-rich-content-editor-common';
 import InsertModal from './modals/InsertModal';
 import VideoSettingsModal from './modals/SettingsModal';
-import { videoModals } from './constants';
+import { videoModals, VIDEO_BUTTONS } from './constants';
+import {
+  AlignmentPanel,
+  NodeAlignmentButton,
+  NodeSizeButton,
+  SizePanel,
+} from 'wix-rich-content-toolbars-ui';
+import React from 'react';
+import type { PluginContainerData_Width_Type } from 'ricos-schema';
 
 export const getToolbarButtons = (config, services): ToolbarButton[] => {
   const { enableCustomUploadOnMobile, getVideoUrl, handleFileSelection, handleFileUpload } =
@@ -21,12 +29,26 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
   return [
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SIZE,
+      modal: {
+        Component: decorateComponentWithProps(SizePanel, {
+          options: ['SMALL', 'CONTENT'] as PluginContainerData_Width_Type[],
+        }),
+        id: VIDEO_BUTTONS.size,
+      },
+      renderer: toolbarItem => <NodeSizeButton id={VIDEO_BUTTONS.size} toolbarItem={toolbarItem} />,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
+      modal: {
+        Component: AlignmentPanel,
+        id: VIDEO_BUTTONS.alignment,
+      },
+      renderer: toolbarItem => (
+        <NodeAlignmentButton toolbarItem={toolbarItem} id={VIDEO_BUTTONS.alignment} />
+      ),
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,

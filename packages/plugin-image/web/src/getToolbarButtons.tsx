@@ -6,12 +6,18 @@ import {
 } from 'wix-rich-content-editor-common';
 import ImageSettingsModal from './modals/SettingsModal';
 import ImageEditorModal from './modals/ImageEditorModal';
-import { imageModals } from './consts';
+import { imageModals, IMAGE_BUTTONS } from './consts';
 import { IMAGE_TYPE } from './types';
 import { ImagePluginService } from './toolbar/imagePluginService';
 import { Uploader } from 'wix-rich-content-plugin-commons';
-import { NodeSizeButton } from 'wix-rich-content-toolbars-ui';
-import type { PluginContainerData_Width_Type } from 'ricos-schema';
+import {
+  AlignmentPanel,
+  DropdownModal,
+  NodeAlignmentButton,
+  NodeSizeButton,
+  SizePanel,
+} from 'wix-rich-content-toolbars-ui';
+import type { PluginContainerData_Alignment, PluginContainerData_Width_Type } from 'ricos-schema';
 import ImageEditorButton from './toolbar/ImageEditorButton';
 
 const imagePluginService = new ImagePluginService();
@@ -23,20 +29,31 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
   return [
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SIZE,
-      renderer: toolbarItem => (
-        <NodeSizeButton
-          toolbarItem={toolbarItem}
-          options={
-            ['SMALL', 'CONTENT', 'FULL_WIDTH', 'ORIGINAL'] as PluginContainerData_Width_Type[]
-          }
-        />
-      ),
+      modal: {
+        Component: decorateComponentWithProps(SizePanel, {
+          options: [
+            'SMALL',
+            'CONTENT',
+            'FULL_WIDTH',
+            'ORIGINAL',
+          ] as PluginContainerData_Width_Type[],
+        }),
+        id: IMAGE_BUTTONS.size,
+      },
+      renderer: toolbarItem => <NodeSizeButton id={IMAGE_BUTTONS.size} toolbarItem={toolbarItem} />,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
+      modal: {
+        Component: AlignmentPanel,
+        id: IMAGE_BUTTONS.alignment,
+      },
+      renderer: toolbarItem => (
+        <NodeAlignmentButton toolbarItem={toolbarItem} id={IMAGE_BUTTONS.alignment} />
+      ),
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,

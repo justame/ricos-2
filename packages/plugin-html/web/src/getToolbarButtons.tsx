@@ -6,6 +6,8 @@ import { DimensionSliderButton } from './toolbar/DimensionSliderButton';
 import { TIPTAP_HTML_TYPE } from 'ricos-content';
 import { MAX_HEIGHT_INPUT, MIN_WIDTH, MAX_WIDTH, MIN_HEIGHT, MAX_HEIGHT } from './defaults';
 import { HeightIcon, WidthIcon } from 'wix-rich-content-plugin-commons';
+import { AlignmentPanel, NodeAlignmentButton } from 'wix-rich-content-toolbars-ui';
+import { HTML_BUTTONS } from './consts';
 
 export const getToolbarButtons = (config, services): ToolbarButton[] => {
   const {
@@ -76,6 +78,13 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
+      modal: {
+        Component: AlignmentPanel,
+        id: HTML_BUTTONS.alignment,
+      },
+      renderer: toolbarItem => (
+        <NodeAlignmentButton toolbarItem={toolbarItem} id={HTML_BUTTONS.alignment} />
+      ),
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,

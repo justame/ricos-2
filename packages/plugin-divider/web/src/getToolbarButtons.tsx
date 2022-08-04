@@ -1,12 +1,47 @@
 import React from 'react';
 import type { ToolbarButton } from 'ricos-types';
-import { PLUGIN_TOOLBAR_BUTTON_ID } from 'wix-rich-content-editor-common';
+import {
+  decorateComponentWithProps,
+  PLUGIN_TOOLBAR_BUTTON_ID,
+} from 'wix-rich-content-editor-common';
+import { AlignmentPanel } from 'wix-rich-content-toolbars-ui';
 import type { PluginContainerData_Alignment } from 'ricos-schema';
-import { DividerAlignmentButton } from './toolbar/DividerAlignmentButton';
-import { DividerSizeButton } from './toolbar/DividerSizeButton';
-import { DividerStyleButton } from './toolbar/DividerStyleButton';
+import { DividerAlignmentButton } from './toolbar/buttons/DividerAlignmentButton';
+import { DividerSizeButton } from './toolbar/buttons/DividerSizeButton';
+import { DividerStyleButton } from './toolbar/buttons/DividerStyleButton';
 import { TIPTAP_DIVIDER_TYPE } from 'ricos-content';
-import { DIVIDER_SIZES } from './toolbar/dividerButtonsData';
+import {
+  DIVIDER_SIZE_RESOLVER_ID,
+  DIVIDER_STYLE_RESOLVER_ID,
+  DIVIDER_SIZE_BUTTON_DATA_HOOK,
+  DIVIDER_STYLE_BUTTON_DATA_HOOK,
+  DIVIDER_BUTTONS,
+  DIVIDER_SIZE_BUTTON_ID,
+} from './const';
+import LineStylePanel from './toolbar/modals/LineStylePanel';
+import DividerSizePanel from './toolbar/modals/DividerSizePanel';
+
+const getNodeSizeResolver = {
+  id: DIVIDER_SIZE_RESOLVER_ID,
+  resolve: content => {
+    if (Array.isArray(content) && content.length > 0) {
+      return content[0].attrs?.width;
+    } else {
+      return undefined;
+    }
+  },
+};
+
+const getNodeStyleResolver = {
+  id: DIVIDER_STYLE_RESOLVER_ID,
+  resolve: content => {
+    if (Array.isArray(content) && content.length > 0) {
+      return content[0].attrs?.lineStyle;
+    } else {
+      return undefined;
+    }
+  },
+};
 
 const selectedNodeResolver = {
   id: 'selectedNode',
@@ -22,8 +57,8 @@ const selectedNodeResolver = {
 export const getToolbarButtons = (config, services): ToolbarButton[] => {
   return [
     {
-      id: 'dividerStyle',
-      dataHook: 'dividerStyleDropdownButton',
+      id: DIVIDER_BUTTONS.style,
+      dataHook: DIVIDER_STYLE_BUTTON_DATA_HOOK,
       command: ({ lineStyle, editorCommands }) => {
         editorCommands
           .chain()
@@ -33,34 +68,49 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
           })
           .run();
       },
-      renderer: toolbarItem => <DividerStyleButton toolbarItem={toolbarItem} />,
+      modal: {
+        Component: LineStylePanel,
+        id: DIVIDER_BUTTONS.style,
+      },
+      attributes: {
+        nodeStyle: getNodeStyleResolver,
+      },
+      renderer: toolbarItem => (
+        <DividerStyleButton toolbarItem={toolbarItem} id={DIVIDER_BUTTONS.style} />
+      ),
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
-      id: 'dividerSize',
-      dataHook: 'dividerSizeDropdownButton',
+      id: DIVIDER_BUTTONS.size,
+      dataHook: DIVIDER_SIZE_BUTTON_DATA_HOOK,
       command: ({ size, editorCommands }) => {
         editorCommands
           .chain()
           .focus()
           .updateAttributes(TIPTAP_DIVIDER_TYPE, {
-            width: DIVIDER_SIZES[size].toUpperCase(),
+            width: size,
           })
           .run();
       },
-      attributes: {
-        selectedNode: selectedNodeResolver,
+      modal: {
+        Component: DividerSizePanel,
+        id: DIVIDER_BUTTONS.size,
       },
-      renderer: toolbarItem => <DividerSizeButton toolbarItem={toolbarItem} />,
+      attributes: {
+        nodeSize: getNodeSizeResolver,
+      },
+      renderer: toolbarItem => (
+        <DividerSizeButton toolbarItem={toolbarItem} id={DIVIDER_BUTTONS.size} />
+      ),
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
-      id: 'dividerAlignment',
-      dataHook: 'dividerAlignment',
+      id: DIVIDER_SIZE_BUTTON_ID,
+      dataHook: DIVIDER_BUTTONS.alignment,
       command: ({ alignment, editorCommands, node }) => {
         const nodeContainerData = node.attrs?.containerData;
         editorCommands
@@ -72,14 +122,15 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
           })
           .run();
       },
+      modal: {
+        Component: AlignmentPanel,
+        id: DIVIDER_BUTTONS.alignment,
+      },
       attributes: {
         selectedNode: selectedNodeResolver,
       },
       renderer: toolbarItem => (
-        <DividerAlignmentButton
-          toolbarItem={toolbarItem}
-          options={['LEFT', 'CENTER', 'RIGHT'] as PluginContainerData_Alignment[]}
-        />
+        <DividerAlignmentButton id={DIVIDER_BUTTONS.alignment} toolbarItem={toolbarItem} />
       ),
     },
     {

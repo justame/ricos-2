@@ -19,6 +19,10 @@ export const DEFAULT_CONFIG = {
   width: 'fit-content',
 };
 
+export const BUTTON_BUTTONS = {
+  alignment: 'buttonAlignment',
+};
+
 export const buttonsModals = {
   [ACTION_BUTTON_TYPE]: 'actionButtonSettingsModal',
   [LINK_BUTTON_TYPE]: 'linkButtonSettingsModal',

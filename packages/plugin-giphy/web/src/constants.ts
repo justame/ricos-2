@@ -62,3 +62,8 @@ export const gifModals = {
   insert: 'gifInsertModal',
   replace: 'gifReplaceModal',
 };
+
+export const GIF_BUTTONS = {
+  alignment: 'gifAlignment',
+  size: 'gifSize',
+};

@@ -1,59 +1,29 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useState, useContext, useEffect } from 'react';
-import type { ReactElement, ComponentType } from 'react';
+import React, { useContext } from 'react';
+import type { ComponentType } from 'react';
 import cx from 'classnames';
 import styles from './DropdownButton.scss';
 import { DropdownArrowIcon } from '../../icons';
 import Tooltip from 'wix-rich-content-common/libs/Tooltip';
-import { RicosContext, ModalContext } from 'ricos-context';
-import { DropdownPanel } from '../DropdownPanel';
-import type { ModalService } from 'ricos-types';
+import { RicosContext } from 'ricos-context';
 
 type Props = {
   Icon: ComponentType;
+  onClick: () => void;
   tooltip: string;
-  id: string;
-  options: ReactElement[];
   dataHook?: string;
+  setRef: React.Dispatch<React.SetStateAction<HTMLDivElement | null>>;
 };
 
-const DropdownButton = ({ Icon, dataHook, tooltip, options, id }: Props) => {
+const DropdownButton: React.FC<Props> = ({ Icon, dataHook, tooltip, onClick, setRef }) => {
   const { isMobile, t } = useContext(RicosContext) || {};
-  const modalService: ModalService = useContext(ModalContext) || {};
-  const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
-
-  const ModalComponent = () => (
-    <div tabIndex={-1} className={styles.modal}>
-      <DropdownPanel options={options} />
-    </div>
-  );
-
-  useEffect(() => {
-    !modalService.getModal(id) &&
-      modalService.register({
-        Component: ModalComponent,
-        id,
-      });
-  }, []);
-
-  const onClick = () => {
-    if (modalService?.isModalOpen(id)) {
-      modalService.closeModal(id);
-    } else {
-      modalService?.openModal(id, {
-        layout: isMobile ? 'drawer' : 'toolbar',
-        positioning: { referenceElement, placement: 'bottom' },
-      });
-    }
-  };
-
   return (
     <Tooltip key={t(tooltip)} content={t(tooltip)} tooltipOffset={{ x: 0, y: -8 }}>
       <div
         className={cx(styles.dropdownModalButtonWrapper, {
           [styles.mobileDropdownModalButtonWrapper]: isMobile,
         })}
-        ref={setReferenceElement}
+        ref={setRef}
       >
         <div
           data-hook={dataHook}

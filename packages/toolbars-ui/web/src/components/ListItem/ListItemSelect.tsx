@@ -1,5 +1,5 @@
 import React from 'react';
-import type { FC } from 'react';
+import type { FC, KeyboardEventHandler } from 'react';
 import styles from './list-item-select.scss';
 import Tooltip from 'wix-rich-content-common/libs/Tooltip';
 import classNames from 'classnames';
@@ -16,7 +16,8 @@ type Props = {
   onClick?: () => void;
   ellipsis?: boolean;
   tooltip?: string;
-  onKeyDown?: () => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onKeyDown?: (e: any) => void;
 };
 
 const ListItemSelect: FC<Props> = ({

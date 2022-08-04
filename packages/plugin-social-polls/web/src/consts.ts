@@ -4,3 +4,7 @@ export const pollModals = {
   design: 'pollDesign',
   layout: 'pollLayout',
 };
+
+export const POLL_BUTTONS = {
+  layout: 'pollLayout',
+};

@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react';
 import type { FC } from 'react';
-import { DropdownButton } from '../../components';
 import { RicosContext, ModalContext } from 'ricos-context';
 import type { IToolbarItem } from 'ricos-types';
-import { sizeIconMap } from './consts';
+import { DropdownButton } from 'wix-rich-content-toolbars-ui';
+import { dividerStyleData } from './dividerButtonsData';
+import { SingleLineStyle } from '../../icons';
 
 type Props = {
   toolbarItem: IToolbarItem;
@@ -11,25 +12,28 @@ type Props = {
   dataHook?: string;
 };
 
-const NodeSizeButton: FC<Props> = ({ toolbarItem, dataHook, id }) => {
+export const DividerStyleButton: FC<Props> = ({ toolbarItem, dataHook, id }) => {
   const { t, isMobile } = useContext(RicosContext) || {};
   const modalService = useContext(ModalContext) || {};
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
-  const getSelectedSize: () => string = () => toolbarItem?.attributes.nodeSize || 'CONTENT';
-  const selectedSize: string = getSelectedSize();
-  const SelectedSizeIcon = sizeIconMap[`${selectedSize}`];
+  const getSelectedStyle: () => string = () => toolbarItem?.attributes.nodeStyle || 'SINGLE';
+  const SelectedStyleIcon =
+    dividerStyleData.find(({ commandKey }) => commandKey === getSelectedStyle())?.icon ||
+    SingleLineStyle;
+
   const closeModal = () => modalService.closeModal(id);
 
-  const onSizeClick = size => {
-    toolbarItem.commands?.setSize(size);
+  const onStyleClick = lineStyle => {
+    toolbarItem.commands?.click({ lineStyle });
     closeModal();
   };
 
   const onClick = () => {
     modalService?.openModal(id, {
       componentProps: {
-        getSelectedSize,
-        onClick: onSizeClick,
+        getSelectedStyle,
+        onClick: onStyleClick,
+        closeModal,
       },
       layout: isMobile ? 'drawer' : 'toolbar',
       positioning: { referenceElement, placement: 'bottom' },
@@ -41,10 +45,8 @@ const NodeSizeButton: FC<Props> = ({ toolbarItem, dataHook, id }) => {
       dataHook={dataHook}
       onClick={onClick}
       setRef={setReferenceElement}
-      Icon={SelectedSizeIcon}
-      tooltip={t('ButtonModal_Size_Section')}
+      Icon={() => <SelectedStyleIcon width={'37px'} />}
+      tooltip={t('DividerPlugin_SelectType_Tooltip')}
     />
   );
 };
-
-export default NodeSizeButton;

@@ -1,27 +1,44 @@
 import React from 'react';
 import type { ToolbarButton } from 'ricos-types';
-import { PLUGIN_TOOLBAR_BUTTON_ID } from 'wix-rich-content-editor-common';
+import {
+  decorateComponentWithProps,
+  PLUGIN_TOOLBAR_BUTTON_ID,
+} from 'wix-rich-content-editor-common';
 import { FILE_UPLOAD_TYPE } from './types';
 import { Uploader } from 'wix-rich-content-plugin-commons';
-import { NodeSizeButton } from 'wix-rich-content-toolbars-ui';
+import {
+  AlignmentPanel,
+  NodeAlignmentButton,
+  NodeSizeButton,
+  SizePanel,
+} from 'wix-rich-content-toolbars-ui';
 import type { PluginContainerData_Width_Type } from 'ricos-schema';
+import { FILE_BUTTONS } from './consts';
 
 export const getToolbarButtons = (config, services, filePluginService): ToolbarButton[] => {
   return [
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SIZE,
-      renderer: toolbarItem => (
-        <NodeSizeButton
-          toolbarItem={toolbarItem}
-          options={['SMALL', 'CONTENT'] as PluginContainerData_Width_Type[]}
-        />
-      ),
+      modal: {
+        Component: decorateComponentWithProps(SizePanel, {
+          options: ['SMALL', 'CONTENT'] as PluginContainerData_Width_Type[],
+        }),
+        id: FILE_BUTTONS.size,
+      },
+      renderer: toolbarItem => <NodeSizeButton id={FILE_BUTTONS.size} toolbarItem={toolbarItem} />,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
+      modal: {
+        Component: AlignmentPanel,
+        id: FILE_BUTTONS.alignment,
+      },
+      renderer: toolbarItem => (
+        <NodeAlignmentButton toolbarItem={toolbarItem} id={FILE_BUTTONS.alignment} />
+      ),
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,

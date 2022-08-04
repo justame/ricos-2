@@ -6,8 +6,13 @@ import {
 } from 'wix-rich-content-editor-common';
 import AudioSettingsModal from './modals/SettingsModal';
 import InsertModal from './modals/InsertModal';
-import { audioModals } from './consts';
-import { NodeSizeButton } from 'wix-rich-content-toolbars-ui';
+import { audioModals, AUDIO_BUTTONS } from './consts';
+import {
+  NodeSizeButton,
+  AlignmentPanel,
+  SizePanel,
+  NodeAlignmentButton,
+} from 'wix-rich-content-toolbars-ui';
 import type { PluginContainerData_Width_Type } from 'ricos-schema';
 import { DEFAULTS as defaultData } from './defaults';
 
@@ -34,15 +39,23 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
   return [
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SIZE,
-      renderer: toolbarItem => (
-        <NodeSizeButton
-          toolbarItem={toolbarItem}
-          options={['SMALL', 'CONTENT'] as PluginContainerData_Width_Type[]}
-        />
-      ),
+      modal: {
+        Component: decorateComponentWithProps(SizePanel, {
+          options: ['SMALL', 'CONTENT'] as PluginContainerData_Width_Type[],
+        }),
+        id: AUDIO_BUTTONS.size,
+      },
+      renderer: toolbarItem => <NodeSizeButton id={AUDIO_BUTTONS.size} toolbarItem={toolbarItem} />,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
+      modal: {
+        Component: AlignmentPanel,
+        id: AUDIO_BUTTONS.alignment,
+      },
+      renderer: toolbarItem => (
+        <NodeAlignmentButton toolbarItem={toolbarItem} id={AUDIO_BUTTONS.alignment} />
+      ),
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.REPLACE,

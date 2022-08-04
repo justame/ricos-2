@@ -1,44 +1,50 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import type { FC, ComponentType } from 'react';
 import { RicosContext, ModalContext } from 'ricos-context';
 import type { IToolbarItem } from 'ricos-types';
-import { DropdownButton, ListItemSelect } from 'wix-rich-content-toolbars-ui';
+import { DropdownButton } from 'wix-rich-content-toolbars-ui';
 import { galleryLayoutsData } from './galleryLayoutsData';
 import { GALLERY_LAYOUTS } from '../layout-data-provider';
 
 type Props = {
   toolbarItem: IToolbarItem;
+  id: string;
   dataHook?: string;
 };
 
-export const GalleryLayoutButton: FC<Props> = ({ toolbarItem, dataHook }) => {
-  const { t } = useContext(RicosContext) || {};
+export const GalleryLayoutButton: FC<Props> = ({ toolbarItem, dataHook, id }) => {
+  const { t, isMobile } = useContext(RicosContext) || {};
   const modalService = useContext(ModalContext);
-
-  const galleryLayout = toolbarItem?.attributes.galleryLayout;
-  const selectedLayout = (galleryLayout as string) || GALLERY_LAYOUTS.GRID;
+  const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
+  const getSelectedLayout = () =>
+    (GALLERY_LAYOUTS[toolbarItem?.attributes.layout] || GALLERY_LAYOUTS.GRID) as number;
   const SelectedLayoutIcon = galleryLayoutsData.find(
-    ({ commandKey }) => commandKey === selectedLayout
+    ({ commandKey }) => commandKey === getSelectedLayout()
   )?.icon as ComponentType;
+
+  const closeModal = () => modalService.closeModal(id);
+  const onLayoutClick = layout => {
+    toolbarItem.commands?.click({ layout });
+    closeModal();
+  };
+
+  const onClick = () => {
+    modalService?.openModal(id, {
+      componentProps: {
+        onClick: onLayoutClick,
+        getSelectedLayout,
+        closeModal,
+      },
+      layout: isMobile ? 'drawer' : 'toolbar',
+      positioning: { referenceElement, placement: 'bottom' },
+    });
+  };
 
   return (
     <DropdownButton
       dataHook={dataHook}
-      id={'gallery_layout'}
-      options={galleryLayoutsData.map(({ dataHook, icon: Icon, text, commandKey, tooltip }) => (
-        <ListItemSelect
-          key={commandKey}
-          dataHook={dataHook}
-          prefix={<Icon />}
-          title={t(text)}
-          selected={commandKey === selectedLayout}
-          tooltip={t(tooltip)}
-          onClick={() => {
-            toolbarItem.commands?.click({ layout: commandKey });
-            modalService.closeModal('gallery_layout');
-          }}
-        />
-      ))}
+      onClick={onClick}
+      setRef={setReferenceElement}
       Icon={SelectedLayoutIcon}
       tooltip={t('GalleryPlugin_Layout_Select_Tooltip')}
     />

@@ -15,10 +15,12 @@ export const toolbarButtonsRenders = {
     return <DeleteButton toolbarItem={toolbarItem} />;
   },
   [PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT]: toolbarItem => {
-    return <NodeAlignmentButton toolbarItem={toolbarItem} />;
+    return (
+      <NodeAlignmentButton toolbarItem={toolbarItem} id={PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT} />
+    );
   },
   [PLUGIN_TOOLBAR_BUTTON_ID.SIZE]: toolbarItem => {
-    return <NodeSizeButton toolbarItem={toolbarItem} />;
+    return <NodeSizeButton toolbarItem={toolbarItem} id={PLUGIN_TOOLBAR_BUTTON_ID.SIZE} />;
   },
   [PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS]: toolbarItem => {
     return <SettingsButton toolbarItem={toolbarItem} />;

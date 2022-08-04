@@ -1,18 +1,40 @@
 import React from 'react';
 import type { ToolbarButton } from 'ricos-types';
-import { PLUGIN_TOOLBAR_BUTTON_ID } from 'wix-rich-content-editor-common';
+import {
+  decorateComponentWithProps,
+  PLUGIN_TOOLBAR_BUTTON_ID,
+} from 'wix-rich-content-editor-common';
 import { GALLERY_TYPE } from './types';
 import { Uploader } from 'wix-rich-content-plugin-commons';
 import { AddMediaIcon } from './icons';
 import { GALLERY_LAYOUTS, layoutRicosData } from './layout-data-provider';
-import { fileInputAccept, galleryModals } from './consts';
+import { fileInputAccept, galleryModals, GALLERY_BUTTONS } from './consts';
 import GallerySettingsModal from './modals/SettingsModal';
 import { GalleryLayoutButton } from './toolbar/GalleryLayoutButton';
 import { TIPTAP_GALLERY_TYPE } from 'ricos-content';
+import {
+  AlignmentPanel,
+  NodeAlignmentButton,
+  NodeSizeButton,
+  SizePanel,
+} from 'wix-rich-content-toolbars-ui';
+import type { PluginContainerData_Width_Type } from 'ricos-schema';
+import GalleryLayoutPanel from './toolbar/GalleryLayoutPanel';
 
 const defaultData = {
   items: [],
   options: layoutRicosData[GALLERY_LAYOUTS.GRID],
+};
+
+const selectedLayoutResolver = {
+  id: 'selectedLayout',
+  resolve: content => {
+    if (Array.isArray(content) && content.length > 0) {
+      return content[0].attrs.options?.layout.type;
+    } else {
+      return undefined;
+    }
+  },
 };
 
 export const getToolbarButtons = (config, services, galleryPluginService): ToolbarButton[] => {
@@ -91,7 +113,7 @@ export const getToolbarButtons = (config, services, galleryPluginService): Toolb
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
-      id: 'galleryLayout',
+      id: GALLERY_BUTTONS.layout,
       dataHook: 'baseToolbarButton_layout',
       command: ({ layout, editorCommands }) => {
         editorCommands
@@ -102,19 +124,49 @@ export const getToolbarButtons = (config, services, galleryPluginService): Toolb
           })
           .run();
       },
-      renderer: toolbarItem => <GalleryLayoutButton toolbarItem={toolbarItem} />,
+      attributes: {
+        layout: selectedLayoutResolver,
+      },
+      modal: {
+        Component: GalleryLayoutPanel,
+        id: GALLERY_BUTTONS.layout,
+      },
+      renderer: toolbarItem => (
+        <GalleryLayoutButton toolbarItem={toolbarItem} id={GALLERY_BUTTONS.layout} />
+      ),
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SIZE,
+      modal: {
+        Component: decorateComponentWithProps(SizePanel, {
+          options: [
+            'SMALL',
+            'CONTENT',
+            'FULL_WIDTH',
+            'ORIGINAL',
+          ] as PluginContainerData_Width_Type[],
+        }),
+        id: GALLERY_BUTTONS.size,
+      },
+      renderer: toolbarItem => (
+        <NodeSizeButton id={GALLERY_BUTTONS.size} toolbarItem={toolbarItem} />
+      ),
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
+      modal: {
+        Component: AlignmentPanel,
+        id: GALLERY_BUTTONS.alignment,
+      },
+      renderer: toolbarItem => (
+        <NodeAlignmentButton toolbarItem={toolbarItem} id={GALLERY_BUTTONS.alignment} />
+      ),
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,

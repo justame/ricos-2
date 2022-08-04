@@ -123,4 +123,6 @@ export const audioModals = {
   replace: 'audioReplaceModal',
 };
 
+export const AUDIO_BUTTONS = { size: 'audioSizeButton', alignment: 'audioAlignmentButton' };
+
 export const fileInputAccept = '.jpg,.png,.gif,.jpeg,.jpe,.jfif,.bmp,.heic,.heif,.tfif,.tif,.webp';

@@ -23,3 +23,8 @@ export const videoModals = {
   replace: 'videoReplaceModal',
   settings: 'videoSettings',
 };
+
+export const VIDEO_BUTTONS = {
+  alignment: 'videoAlignment',
+  size: 'videoSize',
+};

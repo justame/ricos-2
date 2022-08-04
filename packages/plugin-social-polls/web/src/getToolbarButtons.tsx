@@ -2,11 +2,12 @@ import React from 'react';
 import type { ToolbarButton } from 'ricos-types';
 import { PLUGIN_TOOLBAR_BUTTON_ID } from 'wix-rich-content-editor-common';
 import PollSettingsModal from './components/modals/SettingsModal';
-import { pollModals } from './consts';
+import { pollModals, POLL_BUTTONS } from './consts';
 import { TABS } from './components/settings/constants';
 import { PollDesignButton } from './toolbar/PollDesignButton'; //todo export default
 import { TIPTAP_POLL_TYPE } from 'ricos-content';
 import { PollLayoutButton } from './toolbar/PollLayoutButton';
+import LineStylePanel from './toolbar/PollLayoutPanel';
 
 const selectedNodeResolver = {
   id: 'selectedNode',
@@ -36,31 +37,29 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
   const { modals } = services;
   return [
     {
-      id: 'pollLayout',
+      id: POLL_BUTTONS.layout,
       dataHook: 'baseToolbarButton_layout',
       attributes: {
         selectedNode: selectedNodeResolver,
       },
       modal: {
-        Component: PollSettingsModal,
-        id: pollModals.layout,
+        Component: LineStylePanel,
+        id: POLL_BUTTONS.layout,
       },
-      command: ({ layout, editorCommands }) => {
+      command: ({ layout, editorCommands, node }) => {
         editorCommands
           .chain()
           .focus()
           .updateAttributes(TIPTAP_POLL_TYPE, {
             layout: {
-              poll: {
-                type: layout,
-                direction: 'LTR',
-                enableImage: true,
-              },
+              poll: { ...node.attrs.layout.poll, type: layout },
             },
           })
           .run();
       },
-      renderer: toolbarItem => <PollLayoutButton toolbarItem={toolbarItem} />,
+      renderer: toolbarItem => (
+        <PollLayoutButton toolbarItem={toolbarItem} id={POLL_BUTTONS.layout} />
+      ),
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
