@@ -15,7 +15,6 @@ export const EXPERIMENTS = [
   { name: 'useSrcSet', scope: 'ricos' },
   { name: 'normalizePoll', scope: 'ricos' },
   { name: 'optimizeFullScreenModal', scope: 'ricos' },
-  { name: 'useFilePluginAutoDownloadLinkRef', scope: 'ricos' },
   { name: 'enableFilePluginPDFViewer', scope: 'ricos' },
   { name: 'encAutoImageUrls', scope: 'ricos' },
   { name: 'imageFigureCaption', scope: 'ricos' },

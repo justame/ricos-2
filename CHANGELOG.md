@@ -28,6 +28,8 @@
   - [#4313](https://github.com/wix/ricos/pull/4313) Toolbars aggregate
 - `*`
   - [#4319](https://github.com/wix/ricos/pull/4319) insert all plugins with `insertBlockWithBlankLines`
+- `file-upload`
+  - [#4324](https://github.com/wix/ricos/pull/4324) merge `autoDownloadLinkRef` experiment
 
 </details>
 

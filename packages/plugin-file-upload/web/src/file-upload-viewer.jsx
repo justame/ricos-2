@@ -243,13 +243,9 @@ class FileUploadViewer extends PureComponent {
           this.setState({ resolvedFileUrl, resolvingUrl: false }, this.switchReadyIcon);
 
           if (this.downloaderRef.current) {
-            if (this.getExperiments().useFilePluginAutoDownloadLinkRef?.enabled) {
-              this.downloaderRef.current.href = resolvedFileUrl;
-              this.downloaderRef.current.download = name;
-              this.downloaderRef.current.click();
-            } else {
-              this.downloaderRef.current.src = resolvedFileUrl;
-            }
+            this.downloaderRef.current.href = resolvedFileUrl;
+            this.downloaderRef.current.download = name;
+            this.downloaderRef.current.click();
           }
         });
       }
@@ -290,12 +286,10 @@ class FileUploadViewer extends PureComponent {
     const experiments = this.getExperiments();
 
     const loading = experiments.lazyImagesAndIframes?.enabled ? 'lazy' : undefined;
-    return experiments.useFilePluginAutoDownloadLinkRef?.enabled ? (
+    return (
       <a href="#0" ref={this.downloaderRef} style={{ display: 'none' }} target={target}>
         <></>
       </a>
-    ) : (
-      <iframe ref={this.downloaderRef} style={{ display: 'none' }} title="file" loading={loading} />
     );
   }
 
