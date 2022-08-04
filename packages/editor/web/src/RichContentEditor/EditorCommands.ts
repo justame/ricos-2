@@ -46,6 +46,7 @@ import {
   RICOS_TEXT_COLOR_TYPE,
   RICOS_TEXT_HIGHLIGHT_TYPE,
   RICOS_LINK_TYPE,
+  RICOS_ANCHOR_TYPE,
   RICOS_MENTION_TYPE,
   RICOS_FONT_SIZE_TYPE,
   UNSUPPORTED_BLOCKS_TYPE,
@@ -112,6 +113,7 @@ const deleteDecorationsMapFuncs = {
   [RICOS_TEXT_HIGHLIGHT_TYPE]: setHighlightColor,
   [RICOS_FONT_SIZE_TYPE]: setFontSize,
   [RICOS_INDENT_TYPE]: () => {},
+  [RICOS_ANCHOR_TYPE]: () => {},
 };
 
 let savedEditorState;
@@ -295,10 +297,23 @@ export const createEditorCommands = (
 
   const pluginsCommands: {
     insertBlock: EditorCommands['insertBlock'];
+    insertBlockWithBlankLines: EditorCommands['insertBlockWithBlankLines'];
     setBlock: EditorCommands['setBlock'];
     deleteBlock: EditorCommands['deleteBlock'];
   } = {
     insertBlock: (type: string, data, settings) => {
+      const draftType = TO_DRAFT_PLUGIN_TYPE_MAP[type];
+      const { [draftType]: createPluginData } = createPluginsDataMap;
+      const pluginData = createPluginData(data, settings?.isRicosSchema);
+      const { newBlock, newSelection, newEditorState } = createBlock(
+        getEditorState(),
+        pluginData,
+        draftType
+      );
+      setEditorState(EditorState.forceSelection(newEditorState, newSelection));
+      return newBlock.getKey();
+    },
+    insertBlockWithBlankLines: (type: string, data, settings) => {
       const draftType = TO_DRAFT_PLUGIN_TYPE_MAP[type];
       const { [draftType]: createPluginData } = createPluginsDataMap;
       const pluginData = createPluginData(data, settings?.isRicosSchema);

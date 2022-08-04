@@ -29,7 +29,7 @@ declare module '@tiptap/core' {
 export const tiptapExtensions = [
   {
     type: 'node' as const,
-    groups: ['react', 'custom-styles'],
+    groups: ['react', 'custom-styles', 'shortcuts-enabled'],
     reconfigure: (
       config: NodeConfig,
       _extensions: RicosExtension[],

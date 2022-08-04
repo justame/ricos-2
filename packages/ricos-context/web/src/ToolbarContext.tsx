@@ -8,9 +8,20 @@ import type {
   LinkPanelSettings,
   RicosTheme,
   RicosPortal,
+  AddLinkData,
 } from 'ricos-types';
 import type { LinkSettings, ToolbarSettings, RicosCssOverride } from 'ricos-common';
 import { RicosContext } from './RicosContext';
+
+export type LinkPanelData = {
+  linkTypes: { anchor: boolean };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onLinkAdd: (customLinkData: any, saveData: (customLinkData: any) => void) => void;
+  uiSettings: { linkPanel: LinkPanelSettings };
+  linkSettings: LinkSettings | undefined;
+  isMobile: boolean;
+  onAddPluginLink: (data: AddLinkData) => void;
+};
 
 export type ToolbarContextType = {
   contentId: string;
@@ -19,7 +30,7 @@ export type ToolbarContextType = {
   locale: string;
   helpers: Helpers;
   plugins: EditorPlugin[];
-  linkPanelSettings: LinkPanelSettings;
+  linkPanelData: LinkPanelData | undefined;
   linkSettings: LinkSettings;
   experiments: AvailableExperiments;
   toolbarSettings: ToolbarSettings;
@@ -35,7 +46,7 @@ export const ToolbarContext = React.createContext<ToolbarContextType>({
   locale: 'en',
   helpers: {},
   plugins: [],
-  linkPanelSettings: {},
+  linkPanelData: undefined,
   linkSettings: {},
   experiments: {},
   toolbarSettings: {},

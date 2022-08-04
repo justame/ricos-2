@@ -6,6 +6,7 @@ import type { ShortcutDataProvider, ShortcutRegistrar } from './shortcuts';
 import type { AmbientStyles } from './styles';
 import type { IRicosEditor } from './editor';
 import type { IUpdateService, IUploadService } from './uploadServicesTypes';
+import type { IRicosToolbars } from './ricos-toolbars';
 
 export type RicosServices = {
   events: EventRegistrar & EventSubscriptor;
@@ -19,4 +20,5 @@ export type RicosServices = {
   content: any;
   modals: ModalService;
   editor: IRicosEditor;
+  toolbars: IRicosToolbars;
 };

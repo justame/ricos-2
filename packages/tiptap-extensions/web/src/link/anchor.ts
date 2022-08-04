@@ -11,7 +11,7 @@ declare module '@tiptap/core' {
       /**
        * Set an anchor mark
        */
-      setAnchor: (anchor: string) => ReturnType;
+      setAnchor: (data: { anchor: string; defaultName: string }) => ReturnType;
       /**
        * Unset an anchor mark
        */

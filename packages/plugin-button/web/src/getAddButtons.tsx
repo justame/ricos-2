@@ -13,7 +13,7 @@ export const getAddButtons = (config, services, type): AddButton[] => {
       tooltip: config?.insertButtonTooltip || 'ButtonPlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
       command: editorCommands => {
-        editorCommands.insertBlock(type, buttonDataDefaults);
+        editorCommands.insertBlockWithBlankLines(type, buttonDataDefaults);
         return true;
       },
       menuConfig: {

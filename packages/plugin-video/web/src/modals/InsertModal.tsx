@@ -41,7 +41,7 @@ const InsertModal: FC<Props> = ({
       onReplace(video);
     } else {
       const data = convertBlockDataToRicos(VIDEO_TYPE, video);
-      const nodeId = getEditorCommands().insertBlock(VIDEO_TYPE, data);
+      const nodeId = getEditorCommands().insertBlockWithBlankLines(VIDEO_TYPE, data);
       return { newBlock: { key: nodeId } };
     }
   };

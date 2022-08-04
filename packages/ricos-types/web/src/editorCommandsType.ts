@@ -18,6 +18,7 @@ import type {
   RICOS_POLL_TYPE,
   POLL_TYPE,
   RICOS_LINK_TYPE,
+  RICOS_ANCHOR_TYPE,
   RICOS_MENTION_TYPE,
   RICOS_TEXT_HIGHLIGHT_TYPE,
   RICOS_INDENT_TYPE,
@@ -125,7 +126,8 @@ export interface PluginsDataMap {
 export const CUSTOM_LINK = 'custom-link';
 
 export interface DecorationsDataMap {
-  [RICOS_LINK_TYPE]?: LinkData;
+  [RICOS_LINK_TYPE]?: LinkData['link'];
+  [RICOS_ANCHOR_TYPE]?: LinkData['link'] & { defaultName?: string };
   [CUSTOM_LINK]?: LinkData;
   [RICOS_MENTION_TYPE]?: MentionData;
   [RICOS_TEXT_COLOR_TYPE]?: { color?: ColorData['foreground'] };
@@ -188,7 +190,7 @@ export interface EditorCommands {
       isRicosSchema?: boolean;
     }
   ) => string;
-  insertBlockWithBlankLines?: <K extends keyof PluginsDataMap>(
+  insertBlockWithBlankLines: <K extends keyof PluginsDataMap>(
     type: K,
     data?: PluginsDataMap[K],
     settings?: {

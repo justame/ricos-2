@@ -118,7 +118,7 @@ const DesktopPanel = ({
       {options.map(option =>
         optionElement(
           option,
-          (currentSelect['line-height'] ?? currentSelect) === option.commandKey,
+          (currentSelect?.['line-height'] ?? currentSelect) === option.commandKey,
           onChange,
           customPanelOptions?.inline && customPanelOptions.onOpen
         )

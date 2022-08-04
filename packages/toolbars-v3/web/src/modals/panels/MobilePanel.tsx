@@ -51,7 +51,8 @@ const MobilePanel = ({ currentSelect, panelHeader, onChange, onCancel, options, 
       <Separator />
       <div className={styles.mobilePanel_rows}>
         {options.map((option, i) => {
-          const isSelected = (currentSelect['line-height'] ?? currentSelect) === option.commandKey;
+          const isSelected =
+            (currentSelect?.['line-height'] ?? currentSelect) === option.commandKey;
           const showSeparator = i !== options.length - 1;
           return lineHeightElement(option, isSelected, showSeparator);
         })}

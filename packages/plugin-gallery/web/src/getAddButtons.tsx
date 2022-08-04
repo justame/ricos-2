@@ -13,7 +13,7 @@ const defaultData = {
 const handleExternalFileChange =
   (editorCommands, updateService, galleryPluginService) =>
   ({ data }) => {
-    const nodeId = editorCommands.insertBlockWithBlankLines?.(GALLERY_TYPE, defaultData);
+    const nodeId = editorCommands.insertBlockWithBlankLines(GALLERY_TYPE, defaultData);
     if (data instanceof Array) {
       data.forEach(file => {
         setTimeout(() => {
@@ -32,7 +32,7 @@ const handleExternalFileChange =
 
 const handleNativeFileChange =
   (editorCommands, uploadService, uploader, galleryPluginService) => (files: File[]) => {
-    const nodeId = editorCommands.insertBlockWithBlankLines?.(GALLERY_TYPE, defaultData);
+    const nodeId = editorCommands.insertBlockWithBlankLines(GALLERY_TYPE, defaultData);
     files.forEach(file => {
       uploadService.uploadFile(file, nodeId, uploader, GALLERY_TYPE, galleryPluginService);
     });

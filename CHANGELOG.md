@@ -17,7 +17,17 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
 
+- `toolbars-v3`
+  - [#4314](https://github.com/wix/ricos/pull/4314) headings modal breaks with no focus in static toolbar
+
+## :house: Internal
+
+- `toolbars-v3`
+  - [#4313](https://github.com/wix/ricos/pull/4313) Toolbars aggregate
+- `*`
+  - [#4319](https://github.com/wix/ricos/pull/4319) insert all plugins with `insertBlockWithBlankLines`
 
 </details>
 

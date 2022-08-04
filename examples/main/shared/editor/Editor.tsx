@@ -170,7 +170,7 @@ export default class Editor extends PureComponent<ExampleEditorProps> {
     const useStaticTextToolbar = textToolbarType === STATIC_TOOLBAR;
 
     return (
-      <div style={{ height: '100%' }}>
+      <div style={{ height: 'calc(100% - 15px)' }}>
         {this.renderExternalToolbar()}
         <div ref={ref => (this.staticToolbarContainer = ref)} />
         <div className={classNames('editor', styles.editorContainer)}>

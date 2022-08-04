@@ -1,3 +1,4 @@
+import { lazy } from 'react';
 import { createLink } from 'ricos-content/libs/nodeUtils';
 import type { EditorPluginCreator } from 'wix-rich-content-common';
 import { convertRelObjectToString, convertRelStringToObject } from 'wix-rich-content-common';
@@ -8,6 +9,15 @@ import { DEFAULTS } from './defaults';
 import LinkIcon from './LinkIcon';
 import type { LinkPluginEditorConfig } from './types';
 import { LINK_TYPE } from './types';
+import { decorateComponentWithProps } from 'wix-rich-content-editor-common';
+
+const LinkModalController = lazy(() =>
+  import('wix-rich-content-toolbars-modals').then(({ LinkModalController }) => ({
+    default: LinkModalController,
+  }))
+);
+
+const FORMATTING_LINK_MODAL_ID = 'formattingLinkModal';
 
 export const pluginLink: EditorPluginCreator<LinkPluginEditorConfig> = config => {
   const pluginConfig = { ...DEFAULTS.config, ...config };
@@ -54,6 +64,10 @@ export const pluginLink: EditorPluginCreator<LinkPluginEditorConfig> = config =>
             () => {
               editorCommands.chain().focus().unsetAnchor().run();
             },
+        },
+        modal: {
+          id: FORMATTING_LINK_MODAL_ID,
+          Component: decorateComponentWithProps(LinkModalController),
         },
       },
     ],
