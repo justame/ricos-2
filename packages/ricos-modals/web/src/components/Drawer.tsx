@@ -5,6 +5,7 @@ import type { ReactNode } from 'react';
 import type { Modal } from 'ricos-types';
 import styles from '../../statics/styles/drawer.scss';
 import classNames from 'classnames';
+import { FocusManager } from 'wix-rich-content-ui-components';
 
 interface Props {
   children: ReactNode;
@@ -19,15 +20,23 @@ export const Drawer = ({ children, closeModal, modalConfig: { positioning } }: P
 
   return (
     <div onClick={onOverlayClick} className={styles.overlay}>
-      <div
-        onClick={onModalClick}
-        className={classNames(
-          styles.content,
-          placement && styles[placementClassNameMapper[placement]]
-        )}
+      <FocusManager
+        focusTrapOptions={{
+          returnFocusOnDeactivate: false,
+        }}
       >
-        {children}
-      </div>
+        <div
+          // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+          tabIndex={0}
+          onClick={onModalClick}
+          className={classNames(
+            styles.content,
+            placement && styles[placementClassNameMapper[placement]]
+          )}
+        >
+          {children}
+        </div>
+      </FocusManager>
     </div>
   );
 };

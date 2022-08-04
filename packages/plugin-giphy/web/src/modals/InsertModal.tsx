@@ -20,15 +20,20 @@ const GiphyInsertModal: FC<Props> = ({ componentData, giphySdkApiKey, nodeId, mo
   const closeModal = () => {
     modalService.closeModal(modalId);
   };
+  const addBlockWithFocus = insertBlock => setTimeout(() => insertBlock(), 50);
 
   const onGifAdd = gif => {
     const editorCommands = getEditorCommands();
     const data = convertBlockDataToRicos(GIPHY_TYPE, { ...componentData, gif });
-    if (nodeId) {
-      editorCommands?.setBlock(nodeId, GIPHY_TYPE, data);
-    } else {
+    let insertGif = () => {
       editorCommands?.insertBlockWithBlankLines(GIPHY_TYPE, data);
+    };
+    if (nodeId) {
+      insertGif = () => {
+        editorCommands?.setBlock(nodeId, GIPHY_TYPE, data);
+      };
     }
+    addBlockWithFocus(insertGif);
   };
 
   return (

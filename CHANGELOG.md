@@ -30,7 +30,9 @@
 
 - `toolbars-ui`
   - [#4284](https://github.com/wix/ricos/pull/4284) fix dropdown button selection state
-
+- `ricos-modals`
+  - [#4268](https://github.com/wix/ricos/pull/4268) fix insert & settings modals a11y on tiptap
+  
 - `toolbars-v3`
 
   - [#4314](https://github.com/wix/ricos/pull/4314) headings modal breaks with no focus in static toolbar

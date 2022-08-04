@@ -242,7 +242,7 @@ class ImageSettings extends Component {
             useNewSettingsUi={this.useNewSettingsUi}
           />
         ) : this.useNewSettingsUi ? (
-          <SettingsPanelHeader title={this.headerText} onClose={this.revertComponentData} />
+          <SettingsPanelHeader title={this.headerText} onClose={this.onCancel} />
         ) : (
           <h3 className={this.styles.imageSettingsTitle}>{this.headerText}</h3>
         )}

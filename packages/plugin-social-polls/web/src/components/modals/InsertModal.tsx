@@ -14,6 +14,7 @@ const PollsInsertModal: FC<Props> = ({ componentData }) => {
   const { theme, t, isMobile } = useContext(RicosContext);
   const { getEditorCommands } = useContext(EditorContext);
   const modalService = useContext(ModalContext) || {};
+  const addBlockWithFocus = insertBlock => setTimeout(() => insertBlock(), 50);
 
   const closeModal = () => {
     modalService.closeModal(pollModals.insert);
@@ -22,7 +23,8 @@ const PollsInsertModal: FC<Props> = ({ componentData }) => {
   const onPollAdd = poll => {
     const editorCommands = getEditorCommands();
     const data = convertBlockDataToRicos(POLL_TYPE, poll);
-    editorCommands?.insertBlockWithBlankLines(POLL_TYPE, data);
+    const insertPoll = () => editorCommands?.insertBlockWithBlankLines(POLL_TYPE, data);
+    addBlockWithFocus(insertPoll);
     closeModal();
   };
 

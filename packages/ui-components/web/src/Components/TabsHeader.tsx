@@ -30,7 +30,7 @@ const TabsHeader: React.FC<TabsHeaderProps> = ({
     if (focused) {
       headerRef?.current?.focus();
     } else {
-      setTabIndex(-1);
+      !isSelected && setTabIndex(-1);
     }
   }, [focusIndex, isSelected]);
 

@@ -291,11 +291,11 @@ const AudioSettings: React.FC<Props> = ({
             </div>
           )}
         </div>
-        {renderHeader()}
       </div>
       {!isMobile && (
         <SettingsPanelFooter fixed theme={theme} cancel={closeModal} save={onSaveClick} t={t} />
       )}
+      {renderHeader()}
     </div>
   );
 };

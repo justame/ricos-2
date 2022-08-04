@@ -33,15 +33,21 @@ const InsertModal: FC<Props> = ({
     modalService.closeModal(modalId);
   };
 
+  const addBlockWithFocus = insertBlock => setTimeout(() => insertBlock(), 50);
+
   const onConfirm = audio => {
     const data = convertBlockDataToRicos(AUDIO_TYPE, audio);
-    const nodeId = getEditorCommands().insertBlockWithBlankLines(AUDIO_TYPE, data);
+    const insertAudio = () => getEditorCommands().insertBlockWithBlankLines(AUDIO_TYPE, data);
+    const nodeId = addBlockWithFocus(insertAudio);
     return { newBlock: { key: nodeId } };
   };
 
   const onReplace = audio => {
     const data = convertBlockDataToRicos(AUDIO_TYPE, audio);
-    nodeId && getEditorCommands().setBlock(nodeId, AUDIO_TYPE, data);
+    if (nodeId) {
+      const insertAudio = () => getEditorCommands().setBlock(nodeId, AUDIO_TYPE, data);
+      addBlockWithFocus(insertAudio);
+    }
   };
 
   return (

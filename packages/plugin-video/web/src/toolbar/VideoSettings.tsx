@@ -109,6 +109,21 @@ const VideoSettings: React.FC<Props> = ({
         : setIsDownloadEnabled(!isDownloadEnabled),
   };
 
+  const renderHeader = () =>
+    isMobile ? (
+      <SettingsMobileHeader
+        t={t}
+        theme={theme}
+        onCancel={onCancelClick}
+        onSave={onDoneClick}
+        title={useNewSettingsUi && t('VideoModal_MobileHeader')}
+        useNewSettingsUi={useNewSettingsUi}
+      />
+    ) : (
+      experiments?.newSettingsModals?.enabled && (
+        <SettingsPanelHeader title={t('VideoPlugin_Settings_Header')} onClose={onCancelClick} />
+      )
+    );
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const toggleData: Record<string, any>[] = isCustomVideo ? [downloadToggle] : [];
   shouldShowSpoiler && toggleData.push(spoilerToggle);
@@ -120,18 +135,7 @@ const VideoSettings: React.FC<Props> = ({
         [styles.videoSettings_mobile]: isMobile,
       })}
     >
-      {isMobile ? (
-        <SettingsMobileHeader
-          t={t}
-          theme={theme}
-          onCancel={onCancelClick}
-          onSave={onDoneClick}
-          title={useNewSettingsUi && t('VideoModal_MobileHeader')}
-          useNewSettingsUi={useNewSettingsUi}
-        />
-      ) : experiments?.newSettingsModals?.enabled ? (
-        <SettingsPanelHeader title={t('VideoPlugin_Settings_Header')} onClose={onCancelClick} />
-      ) : (
+      {!experiments?.newSettingsModals?.enabled && (
         <>
           <div className={styles.videoSettingsTitle}>{t('VideoPlugin_Settings_Header')}</div>
           <div className={styles.separator} />
@@ -158,6 +162,7 @@ const VideoSettings: React.FC<Props> = ({
       {!isMobile && (
         <SettingsPanelFooter fixed theme={theme} cancel={onCancelClick} save={onDoneClick} t={t} />
       )}
+      {renderHeader()}
     </div>
   );
 };

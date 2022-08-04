@@ -21,15 +21,20 @@ const InsertModal: FC<Props> = ({ componentData, verticalsApi, nodeId, modalId }
   const closeModal = () => {
     modalService.closeModal(modalId);
   };
+  const addBlockWithFocus = insertBlock => setTimeout(() => insertBlock(), 50);
 
   const onConfirm = verticalEmbed => {
     const editorCommands = getEditorCommands();
     const data = convertBlockDataToRicos(VERTICAL_EMBED_TYPE, verticalEmbed);
-    if (nodeId) {
-      editorCommands?.setBlock(nodeId, VERTICAL_EMBED_TYPE, data);
-    } else {
+    let insertVertical = () => {
       editorCommands?.insertBlockWithBlankLines(VERTICAL_EMBED_TYPE, data);
+    };
+    if (nodeId) {
+      insertVertical = () => {
+        editorCommands?.setBlock(nodeId, VERTICAL_EMBED_TYPE, data);
+      };
     }
+    addBlockWithFocus(insertVertical);
     closeModal();
   };
 

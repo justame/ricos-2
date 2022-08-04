@@ -30,9 +30,12 @@ const InsertModal: FC<Props> = ({
     modalService.closeModal(modalId);
   };
 
+  const addBlockWithFocus = insertBlock => setTimeout(() => insertBlock(), 50);
+
   const onReplace = video => {
     const data = convertBlockDataToRicos(VIDEO_TYPE, video);
-    getEditorCommands().setBlock(nodeId as string, VIDEO_TYPE, data);
+    const insertVideo = () => getEditorCommands().setBlock(nodeId as string, VIDEO_TYPE, data);
+    addBlockWithFocus(insertVideo);
     return { newBlock: { key: nodeId } };
   };
 
@@ -41,7 +44,8 @@ const InsertModal: FC<Props> = ({
       onReplace(video);
     } else {
       const data = convertBlockDataToRicos(VIDEO_TYPE, video);
-      const nodeId = getEditorCommands().insertBlockWithBlankLines(VIDEO_TYPE, data);
+      const insertVideo = () => getEditorCommands().insertBlockWithBlankLines(VIDEO_TYPE, data);
+      const nodeId = addBlockWithFocus(insertVideo);
       return { newBlock: { key: nodeId } };
     }
   };
