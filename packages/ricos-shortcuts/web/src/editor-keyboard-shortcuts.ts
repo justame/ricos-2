@@ -1,3 +1,4 @@
+/* eslint-disable brace-style */
 import type {
   EditorCommands,
   EventSource,
@@ -17,8 +18,8 @@ export class ShortcutCollisionError extends Error {}
 const TOPICS: ['ricos.shortcuts.functionality.applied'] = ['ricos.shortcuts.functionality.applied'];
 
 export class EditorKeyboardShortcuts
-  // eslint-disable-next-line prettier/prettier
-  implements Shortcuts, EventSource<['ricos.shortcuts.functionality.applied']> {
+  implements Shortcuts, EventSource<['ricos.shortcuts.functionality.applied']>
+{
   private shortcuts: Shortcut[] = [];
 
   readonly topicsToPublish = TOPICS;
@@ -61,7 +62,7 @@ export class EditorKeyboardShortcuts
               [shortcut.getName()]: (e: KeyboardEvent) => {
                 e.preventDefault();
                 shortcut.getCommand()(commands);
-                publisher.publish(shortcut.getName());
+                publisher.publish({ shortcutName: shortcut.getName() });
               },
             },
           };

@@ -22,6 +22,7 @@ import type {
   Orchestrator,
   RicosServices,
   SubscribeTopicDescriptor,
+  ToolbarType,
   TopicDescriptor,
   TranslationFunction,
 } from 'ricos-types';
@@ -30,10 +31,6 @@ import { Content, RicosToolbars } from 'wix-rich-content-toolbars-v3';
 import { PublisherInitializer, SubscriptorInitializer } from './event-orchestrators';
 import { getHelpersConfig } from './helpers-config';
 import { RicosEditor } from './ricos-editor';
-
-type CallbackNames = keyof BICallbacks;
-type CallbackSignatures = NonNullable<BICallbacks[CallbackNames]>;
-type BICallbackParams = Parameters<CallbackSignatures>;
 
 export class RicosOrchestrator implements Orchestrator {
   private readonly editorProps: RicosEditorProps;
@@ -149,14 +146,14 @@ export class RicosOrchestrator implements Orchestrator {
    * @private
    * @param {TopicDescriptor} topic
    * @param {keyof BICallbacks} name
-   * @param {(data: EventData) => Parameters<typeof Function.call>[2]} eventDataToBICallbackParams
+   * @param {(data: EventData) =>  Parameters<NonNullable<BICallbacks[K]>>} eventDataToBICallbackParams
    * @returns
    * @memberof RicosOrchestrator
    */
-  private subscribeBiCallback(
+  private subscribeBiCallback<K extends keyof BICallbacks>(
     topic: TopicDescriptor,
-    name: CallbackNames,
-    eventDataToBICallbackParams: (data: EventData) => BICallbackParams
+    name: K,
+    eventDataToBICallbackParams: (data: EventData) => Parameters<NonNullable<BICallbacks[K]>>
   ) {
     const callback = this.editorProps._rcProps?.helpers?.[name];
     if (!callback) {
@@ -193,7 +190,8 @@ export class RicosOrchestrator implements Orchestrator {
         ☐  onPluginsPopOverClick
         ☐  onPluginsPopOverTabSwitch
         ✓  onPublish --> this one is handled separately in RicosEditor
-        ☐  onToolbarButtonClick --> formatting/plugin toolbar button click (incudes value)
+        ✓  onToolbarButtonClick --> formatting(inline,static,external) toolbar button click (includes value)
+        ☐  onToolbarButtonClick --> plugin toolbar button click (includes value)
         ☐  onVideoSelected --> ?
    *
    * @private
@@ -216,9 +214,16 @@ export class RicosOrchestrator implements Orchestrator {
     this.subscribeBiCallback(
       'ricos.shortcuts.functionality.applied',
       'onKeyboardShortcutAction',
-      (shortcutName: string) => [{ buttonName: shortcutName, pluginId: '', version, contentId }]
+      ({ shortcutName }) => [{ buttonName: shortcutName, pluginId: '', version, contentId }]
     );
 
+    this.subscribeBiCallback(
+      'ricos.toolbars.functionality.buttonClick',
+      'onToolbarButtonClick',
+      ({ toolbarType, buttonId }: { toolbarType: ToolbarType; buttonId: string }) => [
+        { version, contentId, buttonName: buttonId, type: toolbarType },
+      ]
+    );
     // TODO: complete map
   }
 

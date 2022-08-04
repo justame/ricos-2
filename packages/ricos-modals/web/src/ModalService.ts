@@ -1,3 +1,4 @@
+/* eslint-disable brace-style */
 import type {
   EventSource,
   Modal,
@@ -20,7 +21,8 @@ export class RicosModalService
     EventSource<
       ['ricos.modals.functionality.modalOpened', 'ricos.modals.functionality.modalClosed']
       // eslint-disable-next-line prettier/prettier
-    > {
+    >
+{
   private modals: ((ModalConfig | Modal) & { state: { isOpen: boolean } })[] = [];
 
   constructor() {
@@ -70,7 +72,7 @@ export class RicosModalService
     } else {
       modal.state.isOpen = true;
       Object.keys(config).forEach(key => (modal[key] = config[key]));
-      this.publishers.byTopic('ricos.modals.functionality.modalOpened').publish(id);
+      this.publishers.byTopic('ricos.modals.functionality.modalOpened').publish({ id });
       return true;
     }
   }
@@ -82,7 +84,7 @@ export class RicosModalService
       return false;
     } else {
       this.modals.forEach(modal => modal.id === id && (modal.state.isOpen = false));
-      this.publishers.byTopic('ricos.modals.functionality.modalClosed').publish(id);
+      this.publishers.byTopic('ricos.modals.functionality.modalClosed').publish({ id });
       return true;
     }
   }

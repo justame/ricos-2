@@ -28,7 +28,7 @@ class RicosToolbar implements IRicosToolbar {
   publishSearch(search: string) {
     return this.publishers
       .byTopic('ricos.toolbars.functionality.search')
-      .publish({ toolbarId: this.type, search });
+      .publish({ toolbarType: this.type, search });
   }
 }
 

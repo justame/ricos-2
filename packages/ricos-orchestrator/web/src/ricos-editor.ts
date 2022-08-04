@@ -35,13 +35,15 @@ export class RicosEditor implements IRicosEditor, EventSource<Topics> {
   publishers!: PublisherProvider<Topics>;
 
   publishLoaded() {
-    return this.publishers.byTopic('ricos.editor.instance.loaded').publish('🖖 editor mounted');
+    return this.publishers
+      .byTopic('ricos.editor.instance.loaded')
+      .publish({ msg: '🖖 editor mounted' });
   }
 
   publishFirstEdit() {
     return this.publishers
       .byTopic('ricos.editor.functionality.firstEdit')
-      .publish('📝 first content edit');
+      .publish({ msg: '📝 first content edit' });
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -50,7 +52,9 @@ export class RicosEditor implements IRicosEditor, EventSource<Topics> {
   }
 
   publishContentSaved(): boolean {
-    return this.publishers.byTopic('ricos.editor.content.saved').publish('💾 content saved');
+    return this.publishers
+      .byTopic('ricos.editor.content.saved')
+      .publish({ msg: '💾 content saved' });
   }
 
   get adapter() {

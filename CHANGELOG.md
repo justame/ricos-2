@@ -42,6 +42,7 @@
 
 - `orchestrator`
   - [#4321](https://github.com/wix/ricos/pull/4321) some BI callbacks subscribed to events
+  - [#4321](https://github.com/wix/ricos/pull/4321) button click bi for formatting (inline,static,external,mobile) - no modal buttons yet
 - `toolbars-v3`
   - [#4313](https://github.com/wix/ricos/pull/4313) Toolbars aggregate
   - [#4316](https://github.com/wix/ricos/pull/4316) External, Mobile & Inline Toolbars triggers buttonClick event

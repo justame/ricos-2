@@ -17,7 +17,8 @@ export type SubscribeTopicDescriptor =
  * @export
  * @interface EventData
  */
-export interface EventData {}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type EventData = Record<string, any>;
 
 /**
  * Subscription issued to subscriber
