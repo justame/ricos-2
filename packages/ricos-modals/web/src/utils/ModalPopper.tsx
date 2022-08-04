@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useContext } from 'react';
 import ReactDOM from 'react-dom';
 import { ModalContext, RicosContext } from 'ricos-context';
@@ -7,6 +8,7 @@ import { Fullscreen } from '../components/Fullscreen';
 import { Dialog } from '../components/Dialog';
 import { Toolbar } from '../components/Toolbar';
 import type { Modal } from 'ricos-types';
+import { KEYS_CHARCODE } from 'wix-rich-content-editor-common';
 
 type Props = {
   modalConfig: Modal;
@@ -28,12 +30,19 @@ export const ModalPopper = ({ modalConfig }: Props) => {
     modalService?.closeModal?.(modalConfig.id);
   };
 
+  const onKeyDown = e => {
+    if (e.keyCode === KEYS_CHARCODE.ESCAPE) {
+      closeModal();
+      e.stopPropagation();
+    }
+  };
+
   const ModalLayout = layoutMapper[modalConfig.layout];
 
   const ModalComponent = modalConfig.Component;
 
   return ReactDOM.createPortal(
-    <div dir={languageDir}>
+    <div dir={languageDir} onKeyDown={onKeyDown}>
       <ModalLayout closeModal={closeModal} modalConfig={modalConfig}>
         <ModalComponent {...(modalConfig.componentProps || {})} />
       </ModalLayout>

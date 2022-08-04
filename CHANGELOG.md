@@ -16,15 +16,19 @@
     Changes that have landed in master but are not yet released.
     Click to see more.
   </summary>
+  
+## :house: Internal
 
+- `ricos-modals`
+  - [#4325](https://github.com/wix/ricos/pull/4325) a11y close modals on esc click
+  
 </details>
 
 ## 8.72.19 (Aug 04, 2022)
 
 ## :bug: Bug Fix
 
-- `toolbars-ui/divider`
-
+- `toolbars-ui`
   - [#4284](https://github.com/wix/ricos/pull/4284) fix dropdown button selection state
 
 - `toolbars-v3`
