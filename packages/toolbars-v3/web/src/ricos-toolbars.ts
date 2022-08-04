@@ -1,5 +1,6 @@
 /* eslint-disable brace-style */
-import type { PublisherProvider, IRicosToolbar, IRicosToolbars } from 'ricos-types';
+import { TOOLBARS } from 'wix-rich-content-editor-common';
+import type { PublisherProvider, IRicosToolbar, IRicosToolbars, ToolbarType } from 'ricos-types';
 
 type Topics = ['ricos.toolbars.functionality.buttonClick', 'ricos.toolbars.functionality.search'];
 
@@ -9,25 +10,25 @@ const topics: Topics = [
 ];
 
 class RicosToolbar implements IRicosToolbar {
-  private id: string;
+  readonly type: ToolbarType;
 
   private publishers!: PublisherProvider<Topics>;
 
-  constructor(id: string, publishers: PublisherProvider<Topics>) {
-    this.id = id;
+  constructor(type: ToolbarType, publishers: PublisherProvider<Topics>) {
+    this.type = type;
     this.publishers = publishers;
   }
 
   publishButtonClick(buttonId: string) {
     return this.publishers
       .byTopic('ricos.toolbars.functionality.buttonClick')
-      .publish({ toolbarId: this.id, buttonId });
+      .publish({ toolbarType: this.type, buttonId });
   }
 
   publishSearch(search: string) {
     return this.publishers
       .byTopic('ricos.toolbars.functionality.search')
-      .publish({ toolbarId: this.id, search });
+      .publish({ toolbarId: this.type, search });
   }
 }
 
@@ -36,75 +37,99 @@ export class RicosToolbars implements IRicosToolbars {
 
   publishers!: PublisherProvider<Topics>;
 
-  private staticEvents!: IRicosToolbar;
+  private staticToolbar!: IRicosToolbar;
 
-  private floatingEvents!: RicosToolbar;
+  private inlineToolbar!: RicosToolbar;
 
-  private mobileEvents!: IRicosToolbar;
+  private mobileToolbar!: IRicosToolbar;
 
-  private externalEvents!: IRicosToolbar;
+  private externalToolbar!: IRicosToolbar;
 
-  private sideEvents!: RicosToolbar;
+  private sideToolbar!: RicosToolbar;
 
-  private footerEvents!: RicosToolbar;
+  private footerToolbar!: RicosToolbar;
 
-  private pluginEvents!: RicosToolbar;
+  private pluginToolbar!: RicosToolbar;
 
-  private pluginMenuEvents!: RicosToolbar;
+  private pluginMenuToolbar!: RicosToolbar;
+
+  private linkToolbar!: RicosToolbar;
 
   get static() {
-    if (!this.static) {
-      this.staticEvents = new RicosToolbar('static', this.publishers);
+    if (!this.staticToolbar) {
+      this.staticToolbar = new RicosToolbar(TOOLBARS.STATIC, this.publishers);
     }
-    return this.staticEvents;
+    return this.staticToolbar;
   }
 
-  get floating() {
-    if (!this.floating) {
-      this.floatingEvents = new RicosToolbar('floating', this.publishers);
+  get inline() {
+    if (!this.inlineToolbar) {
+      this.inlineToolbar = new RicosToolbar(TOOLBARS.INLINE, this.publishers);
     }
-    return this.floatingEvents;
+    return this.inlineToolbar;
   }
 
   get mobile() {
-    if (!this.mobile) {
-      this.mobileEvents = new RicosToolbar('mobile', this.publishers);
+    if (!this.mobileToolbar) {
+      this.mobileToolbar = new RicosToolbar(TOOLBARS.MOBILE, this.publishers);
     }
-    return this.mobileEvents;
+    return this.mobileToolbar;
   }
 
   get external() {
-    if (!this.external) {
-      this.externalEvents = new RicosToolbar('external', this.publishers);
+    if (!this.externalToolbar) {
+      this.externalToolbar = new RicosToolbar(TOOLBARS.EXTERNAL, this.publishers);
     }
-    return this.externalEvents;
+    return this.externalToolbar;
   }
 
   get side() {
-    if (!this.side) {
-      this.sideEvents = new RicosToolbar('side', this.publishers);
+    if (!this.sideToolbar) {
+      this.sideToolbar = new RicosToolbar(TOOLBARS.SIDE, this.publishers);
     }
-    return this.sideEvents;
+    return this.sideToolbar;
   }
 
   get footer() {
-    if (!this.footer) {
-      this.footerEvents = new RicosToolbar('footer', this.publishers);
+    if (!this.footerToolbar) {
+      this.footerToolbar = new RicosToolbar(TOOLBARS.FOOTER, this.publishers);
     }
-    return this.footerEvents;
+    return this.footerToolbar;
   }
 
   get plugin() {
-    if (!this.plugin) {
-      this.pluginEvents = new RicosToolbar('plugin', this.publishers);
+    if (!this.pluginToolbar) {
+      this.pluginToolbar = new RicosToolbar(TOOLBARS.PLUGIN, this.publishers);
     }
-    return this.pluginEvents;
+    return this.pluginToolbar;
   }
 
   get pluginMenu() {
-    if (!this.pluginMenu) {
-      this.pluginMenuEvents = new RicosToolbar('pluginMenu', this.publishers);
+    if (!this.pluginMenuToolbar) {
+      this.pluginMenuToolbar = new RicosToolbar(TOOLBARS.PLUGIN_MENU, this.publishers);
     }
-    return this.pluginMenuEvents;
+    return this.pluginMenuToolbar;
+  }
+
+  get link() {
+    if (!this.linkToolbar) {
+      this.linkToolbar = new RicosToolbar(TOOLBARS.LINK, this.publishers);
+    }
+    return this.linkToolbar;
+  }
+
+  byType(type: ToolbarType) {
+    const toolbars = [
+      this.link,
+      this.pluginMenu,
+      this.plugin,
+      this.footer,
+      this.side,
+      this.external,
+      this.mobile,
+      this.inline,
+      this.static,
+    ];
+    return toolbars.filter(toolbar => toolbar.type === type)[0];
   }
 }

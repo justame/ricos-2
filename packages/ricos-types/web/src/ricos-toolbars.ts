@@ -1,9 +1,12 @@
 /* eslint-disable brace-style */
+import type { ToolbarType } from '.';
 import type { EventSource } from './orchestration';
 
 type Topics = ['ricos.toolbars.functionality.buttonClick', 'ricos.toolbars.functionality.search'];
 
 export interface IRicosToolbar {
+  readonly type: ToolbarType;
+
   publishButtonClick(buttonId: string): boolean;
 
   publishSearch(search: string): boolean;
@@ -12,7 +15,7 @@ export interface IRicosToolbar {
 export interface IRicosToolbars extends EventSource<Topics> {
   readonly static: IRicosToolbar;
 
-  readonly floating: IRicosToolbar;
+  readonly inline: IRicosToolbar;
 
   readonly mobile: IRicosToolbar;
 
@@ -25,4 +28,8 @@ export interface IRicosToolbars extends EventSource<Topics> {
   readonly plugin: IRicosToolbar;
 
   readonly pluginMenu: IRicosToolbar;
+
+  readonly link: IRicosToolbar;
+
+  byType(type: ToolbarType): IRicosToolbar;
 }

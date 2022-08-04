@@ -13,7 +13,10 @@ import type { ToolbarType } from './toolbarEnums';
  * @interface FormattingToolbarButton
  */
 export interface FormattingToolbarButton {
-  toToolbarItemConfig(editorCommands: EditorCommands): IToolbarItemConfigTiptap;
+  toToolbarItemConfig(
+    editorCommands: EditorCommands,
+    toolbarType: ToolbarType
+  ): IToolbarItemConfigTiptap;
   toExternalToolbarButtonConfig(
     editorCommands: EditorCommands,
     content: IContent<unknown>
@@ -32,7 +35,7 @@ export interface FormattingToolbarButton {
  */
 export interface FormattingToolbarButtons {
   toToolbarItemsConfig: (
-    ToolbarType: ToolbarType,
+    toolbarType: ToolbarType,
     isMobile: boolean,
     editorCommands: EditorCommands
   ) => IToolbarItemConfigTiptap[];

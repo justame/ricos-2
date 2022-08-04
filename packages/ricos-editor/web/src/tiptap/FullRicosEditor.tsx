@@ -161,6 +161,7 @@ export class FullRicosEditor extends React.Component<Props, State> {
       updateService,
       editor,
       styles,
+      toolbars,
     } = this.orchestrator.getServices();
 
     const languageDir = getLangDir(locale);
@@ -204,6 +205,7 @@ export class FullRicosEditor extends React.Component<Props, State> {
                                   <ToolbarContext.Provider
                                     value={{
                                       ...this.getToolbarContext(),
+                                      toolbars,
                                       portal: this.portalRef.current as RicosPortalType,
                                     }}
                                   >

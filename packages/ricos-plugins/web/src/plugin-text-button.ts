@@ -1,4 +1,5 @@
 import { fromEntries } from 'ricos-content/libs/utils';
+import { TOOLBARS } from 'wix-rich-content-editor-common';
 import type {
   EditorCommands,
   FormattingToolbarButton,
@@ -72,7 +73,10 @@ export class PluginTextButton implements FormattingToolbarButton {
     return fromEntries(resolvedAttributes);
   }
 
-  toToolbarItemConfig(editorCommands: EditorCommands): IToolbarItemConfigTiptap {
+  toToolbarItemConfig(
+    editorCommands: EditorCommands,
+    toolbarType: ToolbarType
+  ): IToolbarItemConfigTiptap {
     return {
       ...this.button,
       presentation: {
@@ -83,6 +87,7 @@ export class PluginTextButton implements FormattingToolbarButton {
       commands: {
         ...this.button.commands,
         click: () => () => {
+          this.services.toolbars.byType(toolbarType).publishButtonClick(this.button.id);
           this.button.command?.(editorCommands);
         },
       },
@@ -101,8 +106,9 @@ export class PluginTextButton implements FormattingToolbarButton {
       toolbars: [],
       getIcon: () => this.button.presentation?.icon,
       getLabel: () => this.button.id,
-      onClick: () =>
-        this.button.modal
+      onClick: () => {
+        this.services.toolbars.external.publishButtonClick(this.button.id);
+        return this.button.modal
           ? modals.isModalOpen(this.button.modal.id)
             ? modals.closeModal(this.button.modal.id)
             : modals.openModal(this.button.modal.id, {
@@ -111,7 +117,8 @@ export class PluginTextButton implements FormattingToolbarButton {
                 },
                 layout: 'dialog',
               })
-          : this.button.command?.(editorCommands),
+          : this.button.command?.(editorCommands);
+      },
       isActive: () => !!attributes.active && !!content.resolve(attributes.active),
       isDisabled: () => false,
       dataHook: this.button.presentation?.dataHook,
@@ -141,7 +148,7 @@ export class PluginTextButtons implements FormattingToolbarButtons {
   ) {
     const toolbarConfig = getToolbarConfig(this.finalToolbarSettings, toolbarType);
     const toolbarItemConfigs = [
-      ...this.buttons.map(b => b.toToolbarItemConfig(editorCommands)),
+      ...this.buttons.map(b => b.toToolbarItemConfig(editorCommands, toolbarType)),
       ...tiptapStaticToolbarConfig,
     ];
     const toolbarItemsConfig = toTiptapToolbarItemsConfig(
@@ -170,7 +177,12 @@ export class PluginTextButtons implements FormattingToolbarButtons {
     ];
 
     return this.buttons
-      .filter(b => !unsupportedTextButtons.includes(b.toToolbarItemConfig(editorCommands).id))
+      .filter(
+        b =>
+          !unsupportedTextButtons.includes(
+            b.toToolbarItemConfig(editorCommands, TOOLBARS.EXTERNAL).id
+          )
+      )
       .reduce((acc, b) => {
         const buttonConfig = b.toExternalToolbarButtonConfig(editorCommands, content);
         return {

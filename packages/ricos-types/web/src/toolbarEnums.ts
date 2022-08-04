@@ -54,6 +54,8 @@ export enum ToolbarType {
   TEXT = 'ALL-TEXT-TOOLBARS',
   SHORTCUT = 'SHORTCUT',
   LINK = 'LINK',
+  EXTERNAL = 'EXTERNAL',
+  PLUGIN_MENU = 'PLUGIN_MENU',
 }
 
 export enum DisplayMode {

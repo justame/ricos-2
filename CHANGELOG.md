@@ -20,6 +20,7 @@
 ## :bug: Bug Fix
 
 - `toolbars-ui/divider`
+
   - [#4284](https://github.com/wix/ricos/pull/4284) fix dropdown button selection state
 
 - `toolbars-v3`
@@ -31,6 +32,7 @@
   - [#4321](https://github.com/wix/ricos/pull/4321) some BI callbacks subscribed to events
 - `toolbars-v3`
   - [#4313](https://github.com/wix/ricos/pull/4313) Toolbars aggregate
+  - [#4316](https://github.com/wix/ricos/pull/4316) External, Mobile & Inline Toolbars triggers buttonClick event
 - `general`
   - [#4319](https://github.com/wix/ricos/pull/4319) insert all plugins with `insertBlockWithBlankLines`
 - `file-upload`

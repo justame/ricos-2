@@ -111,7 +111,8 @@ export class RicosPluginAddButton implements PluginAddButton {
       getIcon: () => this.button.icon,
       getLabel: () => this.button.label || '',
       onClick: () => {
-        this.button.modal
+        this.services.toolbars.external.publishButtonClick(this.button.id);
+        return this.button.modal
           ? modals?.isModalOpen(this.button.modal.id)
             ? modals?.closeModal(this.button.modal.id)
             : modals?.openModal(this.button.modal.id, {

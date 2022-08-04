@@ -4,7 +4,7 @@ import { withToolbarContext } from 'ricos-context';
 import { ToolbarButton } from '../ToolbarButton';
 
 const ToggleButton = ({ toolbarItem, onClick, context, dataHook }: ToolbarItemProps) => {
-  const { isMobile, t } = context || {};
+  const { isMobile } = context || {};
 
   const tooltip = toolbarItem.presentation?.tooltip;
 
