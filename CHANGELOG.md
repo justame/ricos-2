@@ -26,10 +26,12 @@
   - [#4314](https://github.com/wix/ricos/pull/4314) headings modal breaks with no focus in static toolbar
 
 ## :house: Internal
-
+  
+- `orchestrator`
+  - [#4321](https://github.com/wix/ricos/pull/4321) some BI callbacks subscribed to events
 - `toolbars-v3`
   - [#4313](https://github.com/wix/ricos/pull/4313) Toolbars aggregate
-- `*`
+- `general`
   - [#4319](https://github.com/wix/ricos/pull/4319) insert all plugins with `insertBlockWithBlankLines`
 - `file-upload`
   - [#4324](https://github.com/wix/ricos/pull/4324) merge `autoDownloadLinkRef` experiment
