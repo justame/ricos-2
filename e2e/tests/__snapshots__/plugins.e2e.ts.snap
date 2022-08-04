@@ -2231,6 +2231,15 @@ exports[`plugins > social embed > [tiptap] render twitter upload modals #0`] =
     {
       "data": {},
       "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
       "entityRanges": [
         {
           "key": 0,
@@ -2239,7 +2248,7 @@ exports[`plugins > social embed > [tiptap] render twitter upload modals #0`] =
         }
       ],
       "inlineStyleRanges": [],
-      "key": 0,
+      "key": 1,
       "text": " ",
       "type": "atomic"
     },
@@ -2248,7 +2257,7 @@ exports[`plugins > social embed > [tiptap] render twitter upload modals #0`] =
       "depth": 0,
       "entityRanges": [],
       "inlineStyleRanges": [],
-      "key": 1,
+      "key": 2,
       "text": "",
       "type": "unstyled"
     }
@@ -2282,6 +2291,15 @@ exports[`plugins > social embed > [tiptap] render instagram upload modals #0`] =
     {
       "data": {},
       "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
       "entityRanges": [
         {
           "key": 0,
@@ -2290,7 +2308,7 @@ exports[`plugins > social embed > [tiptap] render instagram upload modals #0`] =
         }
       ],
       "inlineStyleRanges": [],
-      "key": 0,
+      "key": 1,
       "text": " ",
       "type": "atomic"
     },
@@ -2299,7 +2317,7 @@ exports[`plugins > social embed > [tiptap] render instagram upload modals #0`] =
       "depth": 0,
       "entityRanges": [],
       "inlineStyleRanges": [],
-      "key": 1,
+      "key": 2,
       "text": "",
       "type": "unstyled"
     }
@@ -5818,6 +5836,15 @@ exports[`plugins > html > [tiptap] add html with src url #0`] =
     {
       "data": {},
       "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 1,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
       "entityRanges": [
         {
           "key": 0,
@@ -5826,7 +5853,7 @@ exports[`plugins > html > [tiptap] add html with src url #0`] =
         }
       ],
       "inlineStyleRanges": [],
-      "key": 1,
+      "key": 2,
       "text": " ",
       "type": "atomic"
     },
@@ -5835,7 +5862,7 @@ exports[`plugins > html > [tiptap] add html with src url #0`] =
       "depth": 0,
       "entityRanges": [],
       "inlineStyleRanges": [],
-      "key": 2,
+      "key": 3,
       "text": "",
       "type": "unstyled"
     }
@@ -7690,6 +7717,33 @@ exports[`plugins > verticals embed > verticals embed modal > [tiptap] render upl
     {
       "data": {},
       "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 1,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 2,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
       "entityRanges": [
         {
           "key": 0,
@@ -7698,7 +7752,7 @@ exports[`plugins > verticals embed > verticals embed modal > [tiptap] render upl
         }
       ],
       "inlineStyleRanges": [],
-      "key": 0,
+      "key": 3,
       "text": " ",
       "type": "atomic"
     },
@@ -7707,7 +7761,25 @@ exports[`plugins > verticals embed > verticals embed modal > [tiptap] render upl
       "depth": 0,
       "entityRanges": [],
       "inlineStyleRanges": [],
-      "key": 1,
+      "key": 4,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 5,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 6,
       "text": "",
       "type": "unstyled"
     }

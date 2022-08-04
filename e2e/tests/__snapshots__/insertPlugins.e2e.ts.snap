@@ -1138,6 +1138,15 @@ exports[`[tiptap] insert plugins tests > [tiptap] side toolbar #0`] =
     {
       "data": {},
       "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
       "entityRanges": [
         {
           "key": 0,
@@ -1146,7 +1155,7 @@ exports[`[tiptap] insert plugins tests > [tiptap] side toolbar #0`] =
         }
       ],
       "inlineStyleRanges": [],
-      "key": 0,
+      "key": 1,
       "text": " ",
       "type": "atomic"
     },
@@ -1155,9 +1164,27 @@ exports[`[tiptap] insert plugins tests > [tiptap] side toolbar #0`] =
       "depth": 0,
       "entityRanges": [],
       "inlineStyleRanges": [],
-      "key": 1,
+      "key": 2,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 3,
       "text": "",
       "type": "code-block"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 4,
+      "text": "",
+      "type": "unstyled"
     },
     {
       "data": {},
@@ -1170,9 +1197,18 @@ exports[`[tiptap] insert plugins tests > [tiptap] side toolbar #0`] =
         }
       ],
       "inlineStyleRanges": [],
-      "key": 2,
+      "key": 5,
       "text": " ",
       "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 6,
+      "text": "",
+      "type": "unstyled"
     },
     {
       "data": {},
@@ -1185,9 +1221,18 @@ exports[`[tiptap] insert plugins tests > [tiptap] side toolbar #0`] =
         }
       ],
       "inlineStyleRanges": [],
-      "key": 3,
+      "key": 7,
       "text": " ",
       "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 8,
+      "text": "",
+      "type": "unstyled"
     },
     {
       "data": {},
@@ -1200,7 +1245,7 @@ exports[`[tiptap] insert plugins tests > [tiptap] side toolbar #0`] =
         }
       ],
       "inlineStyleRanges": [],
-      "key": 4,
+      "key": 9,
       "text": " ",
       "type": "atomic"
     },
@@ -1215,7 +1260,7 @@ exports[`[tiptap] insert plugins tests > [tiptap] side toolbar #0`] =
         }
       ],
       "inlineStyleRanges": [],
-      "key": 5,
+      "key": 10,
       "text": "😄",
       "type": "unstyled"
     }
@@ -1305,6 +1350,15 @@ exports[`[tiptap] insert plugins tests > [tiptap] footer toolbar #0`] =
     {
       "data": {},
       "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
       "entityRanges": [
         {
           "key": 0,
@@ -1313,7 +1367,7 @@ exports[`[tiptap] insert plugins tests > [tiptap] footer toolbar #0`] =
         }
       ],
       "inlineStyleRanges": [],
-      "key": 0,
+      "key": 1,
       "text": " ",
       "type": "atomic"
     },
@@ -1322,9 +1376,27 @@ exports[`[tiptap] insert plugins tests > [tiptap] footer toolbar #0`] =
       "depth": 0,
       "entityRanges": [],
       "inlineStyleRanges": [],
-      "key": 1,
+      "key": 2,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 3,
       "text": "",
       "type": "code-block"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 4,
+      "text": "",
+      "type": "unstyled"
     },
     {
       "data": {},
@@ -1337,9 +1409,18 @@ exports[`[tiptap] insert plugins tests > [tiptap] footer toolbar #0`] =
         }
       ],
       "inlineStyleRanges": [],
-      "key": 2,
+      "key": 5,
       "text": " ",
       "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 6,
+      "text": "",
+      "type": "unstyled"
     },
     {
       "data": {},
@@ -1352,9 +1433,18 @@ exports[`[tiptap] insert plugins tests > [tiptap] footer toolbar #0`] =
         }
       ],
       "inlineStyleRanges": [],
-      "key": 3,
+      "key": 7,
       "text": " ",
       "type": "atomic"
+    },
+    {
+      "data": {},
+      "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 8,
+      "text": "",
+      "type": "unstyled"
     },
     {
       "data": {},
@@ -1367,7 +1457,7 @@ exports[`[tiptap] insert plugins tests > [tiptap] footer toolbar #0`] =
         }
       ],
       "inlineStyleRanges": [],
-      "key": 4,
+      "key": 9,
       "text": " ",
       "type": "atomic"
     },
@@ -1382,7 +1472,7 @@ exports[`[tiptap] insert plugins tests > [tiptap] footer toolbar #0`] =
         }
       ],
       "inlineStyleRanges": [],
-      "key": 5,
+      "key": 10,
       "text": "😄",
       "type": "unstyled"
     }
