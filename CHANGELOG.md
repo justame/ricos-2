@@ -17,6 +17,10 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.72.19 (Aug 04, 2022)
+
 ## :bug: Bug Fix
 
 - `toolbars-ui/divider`
@@ -24,10 +28,14 @@
   - [#4284](https://github.com/wix/ricos/pull/4284) fix dropdown button selection state
 
 - `toolbars-v3`
+
   - [#4314](https://github.com/wix/ricos/pull/4314) headings modal breaks with no focus in static toolbar
 
+- `wix-image`
+  - [#4326](https://github.com/wix/ricos/pull/4326) bump wow image version
+
 ## :house: Internal
-  
+
 - `orchestrator`
   - [#4321](https://github.com/wix/ricos/pull/4321) some BI callbacks subscribed to events
 - `toolbars-v3`
@@ -37,8 +45,6 @@
   - [#4319](https://github.com/wix/ricos/pull/4319) insert all plugins with `insertBlockWithBlankLines`
 - `file-upload`
   - [#4324](https://github.com/wix/ricos/pull/4324) merge `autoDownloadLinkRef` experiment
-
-</details>
 
 ## 8.72.18 (Aug 03, 2022)
 
