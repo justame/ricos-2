@@ -1,6 +1,6 @@
 {
   "name": "wix-rich-content-toolbars-modals",
-  "version": "8.72.18",
+  "version": "8.72.19",
   "author": {
     "name": "Noam Tayri",
     "email": "noamt@wix.com"
@@ -34,19 +34,19 @@
     "test:watchAll": "jest --verbose --watchAll"
   },
   "peerDependencies": {
-    "prop-types": "^15.0.0",
-    "lodash": "^4.0.0",
     "classnames": "^2.0.0",
+    "lodash": "^4.0.0",
+    "prop-types": "^15.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
   "dependencies": {
-    "ricos-context": "8.72.18",
-    "ricos-schema": "8.72.18",
-    "ricos-types": "8.72.18",
-    "wix-rich-content-common": "8.72.18",
-    "ricos-content-query": "8.72.18",
-    "wix-rich-content-ui-components": "8.72.18"
+    "ricos-content-query": "8.72.19",
+    "ricos-context": "8.72.19",
+    "ricos-schema": "8.72.19",
+    "ricos-types": "8.72.19",
+    "wix-rich-content-common": "8.72.19",
+    "wix-rich-content-ui-components": "8.72.19"
   },
   "unpkg": true,
   "publishConfig": {
