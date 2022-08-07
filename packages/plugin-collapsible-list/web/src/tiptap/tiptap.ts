@@ -14,6 +14,8 @@ import {
 } from './component';
 import { defaultCollapsibleItem } from './defaults';
 import { keyboardShortcuts } from './keyboardShortcuts';
+import { collapsibleStateManagerPlugin } from '../consts';
+import { getCollapsibleListItems, setCollapsibleItemsExpandState } from './utils';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -22,6 +24,15 @@ declare module '@tiptap/core' {
        * Add new item to existing collapsible list
        */
       addCollapsibleListItem: (position: string) => ReturnType;
+      setCollapsibleListItemsExpandState: (options: {
+        nodeId: string;
+        expandState: string;
+      }) => ReturnType;
+      setCollapsibleListOptions: (options: {
+        nodeId: string;
+        expandOnlyOne: boolean;
+        expandState: string;
+      }) => ReturnType;
     };
   }
 }
@@ -41,7 +52,7 @@ export const tiptapExtensions = [
     }),
     Component: CollapsibleList,
     name: TIPTAP_COLLAPSIBLE_LIST_TYPE,
-    createExtensionConfig() {
+    createExtensionConfig({ Plugin }) {
       return {
         name: this.name,
         group: 'block',
@@ -59,7 +70,55 @@ export const tiptapExtensions = [
               ({ commands }) => {
                 return commands.insertContentAt(position - 1, defaultCollapsibleItem);
               },
+            setCollapsibleListItemsExpandState:
+              ({ nodeId, expandState }) =>
+              ({ state, commands }) => {
+                const items = getCollapsibleListItems(state, nodeId);
+                setCollapsibleItemsExpandState(items, commands, expandState);
+                return true;
+              },
+            setCollapsibleListOptions:
+              ({ nodeId, expandOnlyOne, expandState }) =>
+              ({ state, view, commands }) => {
+                const items = getCollapsibleListItems(state, nodeId);
+                setCollapsibleItemsExpandState(items, commands, expandState);
+                view.dispatch?.(
+                  state.tr.setMeta('collapsibleState', {
+                    nodeId,
+                    options: { expandOnlyOne },
+                  })
+                );
+                return true;
+              },
           };
+        },
+        addProseMirrorPlugins() {
+          return [
+            new Plugin({
+              key: collapsibleStateManagerPlugin,
+              state: {
+                init() {
+                  return {};
+                },
+                apply(tr, prev) {
+                  const { nodeId, options } = tr.getMeta('collapsibleState') || {};
+                  const { itemId } = tr.getMeta('collepsibleListItemOpen') || {};
+                  if (nodeId && options) {
+                    return {
+                      ...prev,
+                      [nodeId]: options,
+                    };
+                  } else if (itemId) {
+                    return {
+                      ...prev,
+                      openedItemId: itemId,
+                    };
+                  }
+                  return prev;
+                },
+              },
+            }),
+          ];
         },
       };
     },

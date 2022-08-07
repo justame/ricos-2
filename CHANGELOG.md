@@ -31,6 +31,8 @@
 
 - `ricos-modals`
   - [#4325](https://github.com/wix/ricos/pull/4325) a11y close modals on esc click
+- `collapsible-list`
+  - [#4317](https://github.com/wix/ricos/pull/4317) fix settings functionality tiptap
 
 </details>
 

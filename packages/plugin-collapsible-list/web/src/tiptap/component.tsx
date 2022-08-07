@@ -1,4 +1,5 @@
-import React, { useContext, useState } from 'react';
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+import React, { useContext, useState, useEffect } from 'react';
 import type { PluginProps } from 'ricos-types';
 import NewPairButton from '../components/NewPairButton';
 import { mergeStyles } from 'wix-rich-content-common';
@@ -6,10 +7,38 @@ import collapsibleListStyles from '../../statics/styles/collapsible-list-compone
 import collapsibleListItemStyles from '../../statics/styles/collapsible-list-pair.rtlignore.scss';
 import ExpandCollapseButton from '../components/ExpandCollapseButton';
 import { DndIcon } from '../icons';
-import { TIPTAP_COLLAPSIBLE_ITEM_TYPE } from 'ricos-content';
+import { TIPTAP_COLLAPSIBLE_ITEM_TYPE, TIPTAP_COLLAPSIBLE_LIST_TYPE } from 'ricos-content';
 import { findParentNodeClosestToPos, isInCollapsibleList } from './utils';
 import { RicosContext } from 'ricos-context';
 import classNames from 'classnames';
+import { collapsibleStateManagerPlugin, COLLAPSIBLE_EXPAND_STATE } from '../consts';
+
+const findContainerNode = (editor, nodeId) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const collapsibleListNodes: Record<string, any>[] = [];
+  editor.state.doc.descendants((node, _) => {
+    if (node.type.name === TIPTAP_COLLAPSIBLE_LIST_TYPE) {
+      collapsibleListNodes.push(node);
+    }
+  });
+  const parentNode = collapsibleListNodes.find(currNode =>
+    currNode.content.content.some(item => item.attrs.id === nodeId)
+  );
+  // const parentNode = editor.state.doc.content.content
+  //   .filter(currNode => currNode.type.name === 'COLLAPSIBLE_LIST')
+  //   .find(currNode => currNode.content.content.some(item => item.attrs.id === nodeId));
+  return parentNode;
+};
+
+const isInContainer = (parentNode, itemId) => {
+  return parentNode.content.content.some(node => node.attrs.id === itemId);
+};
+
+const TO_RICOS_OPTIONS = {
+  [COLLAPSIBLE_EXPAND_STATE.FIRST]: 'FIRST',
+  [COLLAPSIBLE_EXPAND_STATE.EXPANDED]: 'ALL',
+  [COLLAPSIBLE_EXPAND_STATE.COLLAPSED]: 'NONE',
+};
 
 export const CollapsibleList: React.FC<PluginProps> = ({
   editor,
@@ -35,8 +64,24 @@ export const CollapsibleList: React.FC<PluginProps> = ({
     e.stopPropagation();
     editor.commands.addCollapsibleListItem(pos + node.nodeSize);
   };
+
+  const options = {
+    expandState:
+      TO_RICOS_OPTIONS[(componentData?.config as Record<string, string>)?.expandState] || 'ALL',
+  };
+
+  // To make sure the useEffect runs exactly once.
+  const didMount = 5;
+
+  useEffect(() => {
+    const state = {
+      nodeId: node.attrs.id as string,
+      ...options,
+    };
+    editor.commands.setCollapsibleListItemsExpandState(state);
+  }, [didMount]);
+
   return (
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div
       className={styles[componentData.config?.direction || 'ltr']}
       onMouseDown={preventDeselection}
@@ -45,6 +90,7 @@ export const CollapsibleList: React.FC<PluginProps> = ({
       data-hook="collapsibleListComponent"
     >
       <NodeViewContent className={styles.item} />
+
       {inCollapsibleList && (
         <NewPairButton
           onClick={addNewPair}
@@ -61,14 +107,34 @@ export const CollapsibleListItem: React.FC<PluginProps> = ({
   NodeViewContent,
   updateAttributes,
 }) => {
+  const collapsibleState = collapsibleStateManagerPlugin.getState(editor.state);
+  const { openedItemId } = collapsibleState;
+  const parentNode = findContainerNode(editor, node.attrs.id);
+  const parentId = parentNode?.attrs.id;
+  const { expandOnlyOne } = collapsibleState[parentId] || {};
   const { theme, t } = useContext(RicosContext);
   const styles = mergeStyles({ styles: collapsibleListItemStyles, theme });
   const isExpanded = node.attrs.isExpanded;
   const toggleCollapsibleListBody = () => {
+    if (!isExpanded) {
+      editor.view.dispatch(
+        editor.state.tr.setMeta('collepsibleListItemOpen', { itemId: node.attrs.id })
+      );
+    }
     updateAttributes({ isExpanded: !isExpanded });
   };
   const inCollapsibleList = isInCollapsibleList(editor);
   const [mouseDown, setMouseDown] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (
+      expandOnlyOne &&
+      openedItemId !== node.attrs.id &&
+      isInContainer(parentNode, openedItemId)
+    ) {
+      updateAttributes({ isExpanded: false });
+    }
+  }, [openedItemId]);
 
   return (
     <div className={styles.itemContainer}>

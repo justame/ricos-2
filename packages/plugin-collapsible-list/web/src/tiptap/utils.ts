@@ -22,3 +22,19 @@ export function isInCollapsibleList(editor) {
     node => node.type.name === TIPTAP_COLLAPSIBLE_LIST_TYPE
   );
 }
+
+export function getCollapsibleListItems(state, nodeId) {
+  const node = state.doc.content.content.find(node => node.attrs.id === nodeId);
+  if (node.type.name === TIPTAP_COLLAPSIBLE_LIST_TYPE) {
+    return node.content.content;
+  }
+  return [];
+}
+
+export function setCollapsibleItemsExpandState(items, commands, expandState) {
+  items.forEach((node, index) =>
+    commands.updateNodeAttrsById(node.attrs.id, {
+      isExpanded: expandState === 'ALL' || (index === 0 && expandState === 'FIRST'),
+    })
+  );
+}

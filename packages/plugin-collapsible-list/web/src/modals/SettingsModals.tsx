@@ -14,7 +14,10 @@ interface Props {
 const CollapsibleListSettingsModal: FC<Props> = ({ nodeId }) => {
   const { theme, t, isMobile, experiments, languageDir } = useContext(RicosContext);
   const modalService = useContext(ModalContext) || {};
-  const { getEditorCommands } = useContext(EditorContext);
+  const {
+    adapter: { tiptapEditor },
+    getEditorCommands,
+  } = useContext(EditorContext);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [initialData, setInitialData] = useState<Record<string, any>>();
@@ -42,10 +45,22 @@ const CollapsibleListSettingsModal: FC<Props> = ({ nodeId }) => {
   }, []);
 
   const updateData = data => {
-    getEditorCommands().setBlock(nodeId, COLLAPSIBLE_LIST_TYPE, {
+    const convertedData = {
       ...converters.draftBlockDataToTiptap?.(COLLAPSIBLE_LIST_TYPE, { ...componentData, ...data }),
       id: nodeId,
-    });
+    };
+    if (
+      initialData?.expandOnlyOne !== convertedData.expandOnlyOne ||
+      initialData?.initialExpandedItems !== convertedData.initialExpandedItems
+    ) {
+      const options = {
+        nodeId: convertedData.id,
+        expandOnlyOne: !!convertedData.expandOnlyOne,
+        expandState: convertedData.initialExpandedItems,
+      };
+      tiptapEditor.chain().focus().setCollapsibleListOptions(options);
+    }
+    getEditorCommands().setBlock(nodeId, COLLAPSIBLE_LIST_TYPE, convertedData);
     setComponentData({ ...componentData, ...data });
   };
 
