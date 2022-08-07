@@ -1,6 +1,7 @@
 import type { RicosExtension, RicosExtensionConfig } from 'ricos-types';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { generateId } from 'ricos-content';
+import { browser } from 'wix-rich-content-editor-common';
 
 export const uniqueId: RicosExtension = {
   type: 'extension',
@@ -53,7 +54,13 @@ export const uniqueId: RicosExtension = {
                     ...node.attrs,
                     id,
                   });
-                  marks && tr.ensureMarks(marks);
+
+                  /* this is a patch until we will update to the latest prosemirror-view version
+                    which fix the bug on android that users can't type if the are in a composition mode
+                    */
+                  if (!browser.android) {
+                    marks && tr.ensureMarks(marks);
+                  }
                 }
               });
 

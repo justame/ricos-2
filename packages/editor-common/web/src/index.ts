@@ -1,3 +1,5 @@
+import * as browser from './browser';
+
 /* eslint-disable no-duplicate-imports */
 export * from './Icons';
 
@@ -162,3 +164,4 @@ export {
 
 export { scrollToBlock } from './Utils/scrollToBlock';
 export { default as PLUGIN_TOOLBAR_BUTTON_ID } from './pluginToolbarButtonsIds';
+export { browser };
