@@ -17,21 +17,22 @@ export class Content<T = Node[]> extends EventEmitter implements IContent<T> {
   private resolved = {};
 
   resolve(contentResolver) {
-    if (this.resolved[contentResolver.id]) {
-      return this.resolved[contentResolver.id];
-    } else {
-      this.resolved[contentResolver.id] = contentResolver.resolve(
-        this.content,
-        this.services,
-        this.editor
-      );
-    }
-    return this.resolved[contentResolver.id];
+    //TODO: cache should invalidate when content change and when state of editor change ( stored marks)
+    // if (this.resolved[contentResolver.id]) {
+    //   return this.resolved[contentResolver.id];
+    // } else {
+    //   this.resolved[contentResolver.id] = contentResolver.resolve(
+    //     this.content,
+    //     this.services,
+    //     this.editor
+    //   );
+    // }
+    return contentResolver.resolve(this.content, this.services, this.editor);
   }
 
   //TODO: should be removed
   forceUpdate() {
-    this.emit(Content.EVENTS.contentChangeEvent);
+    this.update(this.content, this.editor);
   }
 
   update(content: T, editor) {

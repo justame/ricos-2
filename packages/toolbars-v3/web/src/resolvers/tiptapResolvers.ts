@@ -297,8 +297,10 @@ export const getLineSpacingAfterSelectionResolver = TiptapContentResolver.create
 
 export const getFontSizeInSelectionResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.GET_FONT_SIZE_IN_SELECTION,
-  (content, { styles, nodeService }: { styles: RicosStyles; nodeService }) => {
+  (content, { styles, nodeService }: { styles: RicosStyles; nodeService }, editor) => {
     let fontSizeInDocumentStyle;
+    let fontSizeInStoredMark;
+    let fontSizeInSelection;
 
     if (Array.isArray(content)) {
       let returnedFontSize = '';
@@ -331,16 +333,35 @@ export const getFontSizeInSelectionResolver = TiptapContentResolver.create(
 
               // eslint-disable-next-line max-depth
               if (decoration.fontSizeData?.value) {
-                fontSizeInDocumentStyle = decoration.colorData?.foreground;
+                fontSizeInDocumentStyle = decoration.fontSizeData?.value;
                 break;
               }
             }
           }
+
           currentFontSize = currentFontSize || fontSizeInDocumentStyle;
+
           if (returnedFontSize !== '' && returnedFontSize !== currentFontSize) return '';
           returnedFontSize = currentFontSize;
         }
+        const storedMark = editor?.state?.storedMarks?.find(mark => {
+          return mark.type.name === Decoration_Type.FONT_SIZE;
+        });
+
+        const markInSelection = editor?.state?.selection?.$from.marks().find(mark => {
+          return mark.type.name === Decoration_Type.FONT_SIZE;
+        });
+
+        if (storedMark) {
+          fontSizeInStoredMark = storedMark.attrs.value;
+        }
+
+        if (markInSelection) {
+          fontSizeInSelection = markInSelection.attrs.value;
+        }
       }
+
+      returnedFontSize = returnedFontSize || fontSizeInStoredMark || fontSizeInSelection;
       return returnedFontSize;
     }
   }

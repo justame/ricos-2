@@ -75,7 +75,7 @@ export const FloatingToolbar = ({
     };
   }, []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     // Call reference with the virtual element inside an effect
     const externalRefNode = getReferenceElement && getReferenceElement(editor.view.nodeDOM(from));
     reference({
@@ -84,7 +84,13 @@ export const FloatingToolbar = ({
         if (rect) {
           return rect;
         }
-        return posToDOMRect(view, from, to);
+
+        const { state, view } = editor;
+        const { from, to } = state.selection;
+
+        const domRect = posToDOMRect(view, from, to);
+
+        return domRect;
       },
     });
   }, [reference, dummyUpdate]);
