@@ -32,6 +32,8 @@
 
 - `ricos-modals`
   - [#4325](https://github.com/wix/ricos/pull/4325) a11y close modals on esc click
+- `ricos-plugins`
+  - [#4331](https://github.com/wix/ricos/pull/4331) translate `pluginAddButton` tooltip
 - `collapsible-list`
   - [#4317](https://github.com/wix/ricos/pull/4317) fix settings functionality tiptap
 - `image`

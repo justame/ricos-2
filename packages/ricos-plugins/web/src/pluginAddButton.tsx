@@ -81,11 +81,12 @@ export class RicosPluginAddButton implements PluginAddButton {
   }
 
   toToolbarItemConfig(): IToolbarItemConfigTiptap {
+    const { t } = this.services;
     return {
       id: this.button.id,
       type: this.button.modal ? 'modal' : 'toggle',
       presentation: {
-        tooltip: this.button.tooltip,
+        tooltip: t(this.button.tooltip),
         icon: this.button.icon,
         dataHook: this.button.dataHook,
       },

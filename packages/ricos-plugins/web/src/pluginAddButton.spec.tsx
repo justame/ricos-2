@@ -7,6 +7,11 @@ import {
   PluginAddButtonCollisionError,
 } from './pluginAddButton';
 import { alwaysVisibleResolver } from 'wix-rich-content-toolbars-v3';
+import type { PluginServices } from './editorPlugins';
+
+const services = {
+  t: jest.fn(),
+} as unknown as PluginServices;
 
 const instagram: AddButton = {
   id: 'instagram',
@@ -102,7 +107,7 @@ describe('Add button', () => {
   });
 
   it('should create toolbar item config correctly', () => {
-    const button = RicosPluginAddButton.of(divider, {} as any);
+    const button = RicosPluginAddButton.of(divider, services);
     const { tooltip, icon, id } = button.getButton();
 
     const expected = {
