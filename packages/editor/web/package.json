@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "wix-rich-content-editor",
-  "version": "8.72.19",
+  "version": "8.72.20",
   "author": {
     "name": "Jonathan Bachman",
     "email": "jonathanb@wix.com"
@@ -54,10 +54,10 @@
     "react-click-outsider": "1.1.1",
     "react-measure": "~2.3.0",
     "uuid": "^3.4.0",
-    "wix-rich-content-common": "8.72.19",
-    "wix-rich-content-editor-common": "8.72.19",
-    "wix-rich-content-plugin-commons": "8.72.19",
-    "wix-rich-content-ui-components": "8.72.19"
+    "wix-rich-content-common": "8.72.20",
+    "wix-rich-content-editor-common": "8.72.20",
+    "wix-rich-content-plugin-commons": "8.72.20",
+    "wix-rich-content-ui-components": "8.72.20"
   },
   "peerDependencies": {
     "@babel/runtime": "^7.17.2",
