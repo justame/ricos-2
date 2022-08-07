@@ -26,14 +26,16 @@ const NodeSizeButton: FC<Props> = ({ toolbarItem, dataHook, id }) => {
   };
 
   const onClick = () => {
-    modalService?.openModal(id, {
-      componentProps: {
-        getSelectedSize,
-        onClick: onSizeClick,
-      },
-      layout: isMobile ? 'drawer' : 'toolbar',
-      positioning: { referenceElement, placement: 'bottom' },
-    });
+    modalService.isModalOpen(id)
+      ? closeModal()
+      : modalService?.openModal(id, {
+          componentProps: {
+            getSelectedSize,
+            onClick: onSizeClick,
+          },
+          layout: isMobile ? 'drawer' : 'toolbar',
+          positioning: { referenceElement, placement: 'bottom' },
+        });
   };
 
   return (

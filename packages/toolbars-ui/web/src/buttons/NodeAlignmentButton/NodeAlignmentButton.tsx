@@ -27,14 +27,16 @@ const NodeAlignmentButton: FC<Props> = ({ toolbarItem, dataHook, id }) => {
   };
 
   const onClick = () => {
-    modalService?.openModal(id, {
-      componentProps: {
-        getSelectedAlignment,
-        onClick: onAlignmentClick,
-      },
-      layout: isMobile ? 'drawer' : 'toolbar',
-      positioning: { referenceElement, placement: 'bottom' },
-    });
+    modalService.isModalOpen(id)
+      ? closeModal()
+      : modalService?.openModal(id, {
+          componentProps: {
+            getSelectedAlignment,
+            onClick: onAlignmentClick,
+          },
+          layout: isMobile ? 'drawer' : 'toolbar',
+          positioning: { referenceElement, placement: 'bottom' },
+        });
   };
 
   return (

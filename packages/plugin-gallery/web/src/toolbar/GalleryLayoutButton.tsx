@@ -29,15 +29,17 @@ export const GalleryLayoutButton: FC<Props> = ({ toolbarItem, dataHook, id }) =>
   };
 
   const onClick = () => {
-    modalService?.openModal(id, {
-      componentProps: {
-        onClick: onLayoutClick,
-        getSelectedLayout,
-        closeModal,
-      },
-      layout: isMobile ? 'drawer' : 'toolbar',
-      positioning: { referenceElement, placement: 'bottom' },
-    });
+    modalService.isModalOpen(id)
+      ? closeModal()
+      : modalService?.openModal(id, {
+          componentProps: {
+            onClick: onLayoutClick,
+            getSelectedLayout,
+            closeModal,
+          },
+          layout: isMobile ? 'drawer' : 'toolbar',
+          positioning: { referenceElement, placement: 'bottom' },
+        });
   };
 
   return (

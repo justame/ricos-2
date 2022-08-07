@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 import type { ReactNode } from 'react';
 import { isEqual } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
@@ -5,6 +6,7 @@ import { usePopper } from 'react-popper';
 import { ModalContext } from 'ricos-context';
 import type { Modal } from 'ricos-types';
 import { ClickOutside } from 'wix-rich-content-editor-common';
+import { FocusManager } from 'wix-rich-content-ui-components';
 
 interface Props {
   children: ReactNode;
@@ -72,14 +74,21 @@ export const Popper = ({ children, modalConfig, closeModal, className }: Props) 
 
   return (
     <ClickOutside onClickOutside={onClickOutside}>
-      <div
-        ref={setModalElement}
-        style={popperStyles.popper}
-        className={className}
-        {...attributes.popper}
+      <FocusManager
+        focusTrapOptions={{
+          returnFocusOnDeactivate: false,
+        }}
       >
-        {children}
-      </div>
+        <div
+          tabIndex={0}
+          ref={setModalElement}
+          style={popperStyles.popper}
+          className={className}
+          {...attributes.popper}
+        >
+          {children}
+        </div>
+      </FocusManager>
     </ClickOutside>
   );
 };

@@ -21,6 +21,8 @@
 
 - `ricos-schema`
   - [#4289](https://github.com/wix/ricos/pull/4289) Tiptap modals UI html height button default values
+- `ricos-modals`
+  - [#4341](https://github.com/wix/ricos/pull/4341) fix ricos modals a111y behavior
 
 ## :bug: Bug Fix
 

@@ -56,16 +56,18 @@ export const PollLayoutButton: FC<Props> = ({ toolbarItem, id, dataHook }) => {
   };
 
   const onClick = () => {
-    modalService?.openModal(id, {
-      componentProps: {
-        getSelectedLayout,
-        onClick: onLayoutClick,
-        onCustomizeButtonClick,
-        closeModal,
-      },
-      layout: isMobile ? 'drawer' : 'toolbar',
-      positioning: { referenceElement, placement: 'bottom' },
-    });
+    modalService.isModalOpen(id)
+      ? closeModal()
+      : modalService?.openModal(id, {
+          componentProps: {
+            getSelectedLayout,
+            onClick: onLayoutClick,
+            onCustomizeButtonClick,
+            closeModal,
+          },
+          layout: isMobile ? 'drawer' : 'toolbar',
+          positioning: { referenceElement, placement: 'bottom' },
+        });
   };
 
   useEffect(() => {

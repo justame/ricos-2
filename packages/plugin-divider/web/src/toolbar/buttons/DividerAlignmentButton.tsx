@@ -33,15 +33,17 @@ export const DividerAlignmentButton: FC<Props> = ({ toolbarItem, dataHook, id })
   };
 
   const onClick = () => {
-    modalService?.openModal(id, {
-      componentProps: {
-        getSelectedAlignment,
-        onClick: onAlignmentClick,
-        closeModal,
-      },
-      layout: isMobile ? 'drawer' : 'toolbar',
-      positioning: { referenceElement, placement: 'bottom' },
-    });
+    modalService.isModalOpen(id)
+      ? closeModal()
+      : modalService?.openModal(id, {
+          componentProps: {
+            getSelectedAlignment,
+            onClick: onAlignmentClick,
+            closeModal,
+          },
+          layout: isMobile ? 'drawer' : 'toolbar',
+          positioning: { referenceElement, placement: 'bottom' },
+        });
   };
 
   return (

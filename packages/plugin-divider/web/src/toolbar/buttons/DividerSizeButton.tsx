@@ -28,15 +28,17 @@ export const DividerSizeButton: FC<Props> = ({ toolbarItem, dataHook, id }) => {
   };
 
   const onClick = () => {
-    modalService?.openModal(id, {
-      componentProps: {
-        getSelectedSize,
-        onClick: onSizeClick,
-        closeModal,
-      },
-      layout: isMobile ? 'drawer' : 'toolbar',
-      positioning: { referenceElement, placement: 'bottom' },
-    });
+    modalService.isModalOpen(id)
+      ? closeModal()
+      : modalService?.openModal(id, {
+          componentProps: {
+            getSelectedSize,
+            onClick: onSizeClick,
+            closeModal,
+          },
+          layout: isMobile ? 'drawer' : 'toolbar',
+          positioning: { referenceElement, placement: 'bottom' },
+        });
   };
 
   return (
