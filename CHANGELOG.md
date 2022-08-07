@@ -17,6 +17,10 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.72.20 (Aug 05, 2022)
+
 ## :house: Internal
 
 - `ricos-schema`
@@ -29,6 +33,8 @@
 - `toolbars-v3`
   - [#4328](https://github.com/wix/ricos/pull/4328) custom heading fonts fixes
   - [#4287](https://github.com/wix/ricos/pull/4287) focus on/off formatting toolbar shortcut (tiptap)
+- `mentions`
+  - [#4329](https://github.com/wix/ricos/pull/4329) add id to schema
 
 ## :house: Internal
 
@@ -42,8 +48,6 @@
   - [#4333](https://github.com/wix/ricos/pull/4333) fix tiptap `wixImage`
 - `tiptap-extensions`
   - [#4335](https://github.com/wix/ricos/pull/4353) `dropcursor` extension theme wiring
-
-</details>
 
 ## 8.72.19 (Aug 04, 2022)
 
