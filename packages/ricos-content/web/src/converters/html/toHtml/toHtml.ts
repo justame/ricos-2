@@ -54,11 +54,14 @@ const createAnchorAttrs = (decoration: Decoration): Record<string, string> => {
 
 // NOTE: Mention's HTML representation is not interactive. Might be fixed in the future
 const createMentionAttrs = (decoration: Decoration): Record<string, string> => {
-  const { name = '', slug = '' } = decoration.mentionData || {};
-  if (!name && !slug) {
+  const { name = '', slug = '', id = '' } = decoration.mentionData || {};
+  if (!name && !slug && !id) {
     return {};
   }
-  return pickBy({ role: 'link', 'data-mention-name': name, 'data-mention-slug': slug }, identity);
+  return pickBy(
+    { role: 'link', 'data-mention-name': name, 'data-mention-slug': slug, 'data-mention-id': id },
+    identity
+  );
 };
 
 // NOTE: Spoiler's HTML representation is not interactive. Might be fixed in the future

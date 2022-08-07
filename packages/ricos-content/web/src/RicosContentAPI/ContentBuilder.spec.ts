@@ -88,6 +88,7 @@ describe('Ricos Content Builder', () => {
                     mentionData: {
                       name: 'rudnitskih+1',
                       slug: '4cdf4cfb-a812-4b87-8815-2bebcfa15f38',
+                      id: '1234',
                     },
                   },
                 ],
@@ -115,6 +116,7 @@ describe('Ricos Content Builder', () => {
               mentionData: {
                 name: 'rudnitskih+1',
                 slug: '4cdf4cfb-a812-4b87-8815-2bebcfa15f38',
+                id: '1234',
               },
             },
           ],

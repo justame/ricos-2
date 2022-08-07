@@ -215,7 +215,8 @@
               "type": "MENTION",
               "attrs": {
                 "name": "amet",
-                "slug": "amet"
+                "slug": "amet",
+                "mentionId": "1234"
               }
             }
           ],

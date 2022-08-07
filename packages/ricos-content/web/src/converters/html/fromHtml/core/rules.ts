@@ -132,8 +132,16 @@ export const colorStyleToTextColor: Rule = [
 export const spanToMention: Rule = [
   and([hasTag('span'), flow(getAttributes, attrs => !!attrs['data-mention-name'])]),
   context => (node: Element) => {
-    const { 'data-mention-name': name, 'data-mention-slug': slug } = getAttributes(node);
-    return context.addDecoration(Decoration_Type.MENTION, { mentionData: { name, slug } }, node);
+    const {
+      'data-mention-name': name,
+      'data-mention-slug': slug,
+      'data-mention-id': id,
+    } = getAttributes(node);
+    return context.addDecoration(
+      Decoration_Type.MENTION,
+      { mentionData: { name, slug, id } },
+      node
+    );
   },
 ];
 

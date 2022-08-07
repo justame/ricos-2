@@ -6,10 +6,11 @@ export const mentionConverter: TiptapMarkConverter = {
   fromTiptap: {
     type: Decoration_Type.MENTION,
     convert: mark => {
-      const { attrs } = mark;
+      const { attrs = {} } = mark;
+      const { mentionId, ...rest } = attrs;
       return {
         type: Decoration_Type.MENTION,
-        mentionData: { ...attrs } as MentionData,
+        mentionData: { ...rest, id: mentionId } as MentionData,
       };
     },
   },
@@ -17,9 +18,10 @@ export const mentionConverter: TiptapMarkConverter = {
     type: Decoration_Type.MENTION,
     convert: decoration => {
       const { mentionData } = decoration;
+      const { id, ...rest } = mentionData || {};
       return {
         type: Decoration_Type.MENTION,
-        attrs: { ...mentionData },
+        attrs: { ...rest, mentionId: id },
       };
     },
   },

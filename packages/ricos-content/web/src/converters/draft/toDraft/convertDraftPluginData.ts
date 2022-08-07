@@ -429,9 +429,10 @@ const convertLinkPreviewData = data => {
 };
 
 const convertMentionData = (data: Partial<MentionData> & { mention }) => {
-  data.mention = { slug: data.slug, name: data.name };
+  data.mention = { slug: data.slug, name: data.name, id: data.id };
   delete data.name;
   delete data.slug;
+  delete data.id;
 };
 
 const convertFileData = (data: FileData & FileComponentData) => {

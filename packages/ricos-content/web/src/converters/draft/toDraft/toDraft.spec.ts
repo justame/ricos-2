@@ -168,6 +168,7 @@ describe('migrate to draft', () => {
     mentionData: {
       name: 'Test One',
       slug: 'testone',
+      id: '1234',
     },
   };
 
@@ -175,6 +176,7 @@ describe('migrate to draft', () => {
     mention: {
       name: 'Test One',
       slug: 'testone',
+      id: '1234',
     },
   };
 

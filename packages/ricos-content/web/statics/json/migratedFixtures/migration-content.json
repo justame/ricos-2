@@ -205,7 +205,8 @@
                 "type": "MENTION",
                 "mentionData": {
                   "name": "amet",
-                  "slug": "amet"
+                  "slug": "amet",
+                  "id": "1234"
                 }
               }
             ]

@@ -553,10 +553,13 @@ const link = {
 
 const mention = {
   type: RICOS_MENTION_TYPE,
-  data1: { mention: MentionData.fromJSON({ name: 'aviv', slug: 'blabla' }), trigger: '@' },
+  data1: {
+    mention: MentionData.fromJSON({ name: 'aviv', slug: 'blabla', id: '1234' }),
+    trigger: '@',
+  },
   selection1: endOfSelection,
   data2: {
-    mention: MentionData.fromJSON({ name: 'chen', slug: 'blibla' }),
+    mention: MentionData.fromJSON({ name: 'chen', slug: 'blibla', id: '5678' }),
     trigger: '@',
   },
   selection2: mentionSelection,
@@ -564,12 +567,14 @@ const mention = {
     mention: {
       name: 'aviv',
       slug: 'blabla',
+      id: '1234',
     },
   },
   expectedData2: {
     mention: {
       name: 'chen',
       slug: 'blibla',
+      id: '5678',
     },
   },
 };

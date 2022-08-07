@@ -426,12 +426,14 @@ const convertLinkPreviewData = (data: {
 };
 
 const convertMentionData = (data: {
-  mention?: { name?: string; slug?: string };
+  mention?: { name?: string; slug?: string; id: string };
   name?: string;
   slug?: string;
+  id?: string;
 }) => {
   data.name = data.mention?.name;
   data.slug = data.mention?.slug;
+  data.id = data.mention?.id;
   delete data.mention;
 };
 

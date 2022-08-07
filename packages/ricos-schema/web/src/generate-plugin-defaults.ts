@@ -178,7 +178,7 @@ const generateDecorationDefaults = () =>
       [Decoration_Type.LINK]: () => LinkData.fromJSON({ link: { url: '', anchor: '', rel: {} } }),
       [Decoration_Type.COLOR]: () => ColorData.fromJSON({}),
       [Decoration_Type.MENTION]: () => ({
-        mentionData: MentionData.fromJSON({ name: '', slug: '' }),
+        mentionData: MentionData.fromJSON({ name: '', slug: '', id: '' }),
       }),
     },
     Object.entries,

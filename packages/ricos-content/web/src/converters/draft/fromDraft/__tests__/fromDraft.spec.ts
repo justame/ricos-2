@@ -178,6 +178,7 @@ describe('migrate from draft', () => {
           mention: {
             name: 'Test One',
             slug: 'testone',
+            id: '1234',
           },
         },
       },
@@ -197,6 +198,7 @@ describe('migrate from draft', () => {
               mentionData: {
                 name: 'Test One',
                 slug: 'testone',
+                id: '1234',
               },
               type: Decoration_Type.MENTION,
             },
