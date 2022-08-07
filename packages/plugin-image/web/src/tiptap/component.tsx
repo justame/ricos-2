@@ -21,7 +21,10 @@ export const Image: React.FC<PluginProps> = ({
   };
   const blockKey = node.attrs.id;
 
-  return (
+  // eslint-disable-next-line dot-notation
+  const shouldRender = !!tempData || componentData.src['file_name'];
+
+  return shouldRender ? (
     <>
       <ImageViewer
         theme={theme}
@@ -41,5 +44,5 @@ export const Image: React.FC<PluginProps> = ({
       {loading && <Loader theme={theme} type={'medium'} percent={loadingPercentage} />}
       {error && <MediaItemErrorMsg error={error} t={t} />}
     </>
-  );
+  ) : null;
 };
