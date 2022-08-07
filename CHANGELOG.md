@@ -16,12 +16,17 @@
     Changes that have landed in master but are not yet released.
     Click to see more.
   </summary>
-  
+
+## :bug: Bug Fix
+
+- `toolbars-v3`
+  - [#4328](https://github.com/wix/ricos/pull/4328) custom heading fonts fixes
+
 ## :house: Internal
 
 - `ricos-modals`
   - [#4325](https://github.com/wix/ricos/pull/4325) a11y close modals on esc click
-  
+
 </details>
 
 ## 8.72.19 (Aug 04, 2022)
@@ -32,7 +37,6 @@
   - [#4284](https://github.com/wix/ricos/pull/4284) fix dropdown button selection state
 - `ricos-modals`
   - [#4268](https://github.com/wix/ricos/pull/4268) fix insert & settings modals a11y on tiptap
-  
 - `toolbars-v3`
 
   - [#4314](https://github.com/wix/ricos/pull/4314) headings modal breaks with no focus in static toolbar

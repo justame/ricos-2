@@ -1,7 +1,10 @@
 @import '~wix-rich-content-common/dist/statics/styles/palette';
 @import '~wix-rich-content-common/dist/statics/styles/mixins';
+@import '~wix-rich-content-common/dist/statics/styles/fonts';
 
 .panel {
+  font-family: $ricos-default-font-family;
+  font-size: 14px;
   display: flex;
   flex-flow: column;
   justify-content: center;
