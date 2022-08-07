@@ -1,5 +1,6 @@
 import { dropCursor } from 'prosemirror-dropcursor';
 import type { RicosExtension } from 'ricos-types';
+import styles from './statics/styles.scss';
 
 export interface DropcursorOptions {
   color: string | undefined;
@@ -19,7 +20,7 @@ export const dropcursor: RicosExtension = {
         return {
           color: 'currentColor',
           width: 1,
-          class: undefined,
+          class: styles.dropcursor,
         };
       },
 

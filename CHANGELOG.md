@@ -36,6 +36,8 @@
   - [#4317](https://github.com/wix/ricos/pull/4317) fix settings functionality tiptap
 - `image`
   - [#4333](https://github.com/wix/ricos/pull/4333) fix tiptap `wixImage`
+- `tiptap-extensions`
+  - [#4335](https://github.com/wix/ricos/pull/4353) `dropcursor` extension theme wiring
 
 </details>
 
