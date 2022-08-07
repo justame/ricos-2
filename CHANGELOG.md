@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :house: Internal
+
+- `ricos-schema`
+  - [#4289](https://github.com/wix/ricos/pull/4289) Tiptap modals UI html height button default values
+
 ## :bug: Bug Fix
 
 - `toolbars-v3`

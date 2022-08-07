@@ -1308,7 +1308,8 @@ exports[`[tiptap] insert plugins tests > [tiptap] side toolbar #0`] =
             "enabled": false
           },
           "textWrap": "wrap",
-          "width": 350
+          "width": 350,
+          "height": 550
         },
         "srcType": "url"
       },
@@ -1520,7 +1521,8 @@ exports[`[tiptap] insert plugins tests > [tiptap] footer toolbar #0`] =
             "enabled": false
           },
           "textWrap": "wrap",
-          "width": 350
+          "width": 350,
+          "height": 550
         },
         "srcType": "url"
       },

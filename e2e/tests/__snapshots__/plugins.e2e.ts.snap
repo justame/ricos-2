@@ -5877,7 +5877,8 @@ exports[`plugins > html > [tiptap] add html with src url #0`] =
             "enabled": false
           },
           "textWrap": "wrap",
-          "width": 350
+          "width": 350,
+          "height": 550
         },
         "src": "https://cdn.bitdegree.org/learn/test-iframe.htm",
         "srcType": "url"
