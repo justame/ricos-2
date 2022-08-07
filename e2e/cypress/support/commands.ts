@@ -500,8 +500,10 @@ const COMMANDS = {
   },
 
   addVideoFromURL: () => {
-    cy.get(`[data-hook*=${VIDEO_PLUGIN.INPUT}]`).type('https://youtu.be/BBu5codsO6Y');
-    cy.get(`[data-hook*=${VIDEO_PLUGIN.ADD}]`).click();
+    cy.get(`[data-hook*=${isTiptap ? VIDEO_PLUGIN.NEW_MODAL_INPUT : VIDEO_PLUGIN.INPUT}]`).type(
+      'https://youtu.be/BBu5codsO6Y'
+    );
+    cy.get(`[data-hook*=${isTiptap ? VIDEO_PLUGIN.NEW_MODAL_ADD : VIDEO_PLUGIN.ADD}]`).click();
     cy.get(`[data-hook=${PLUGIN_COMPONENT.VIDEO}]:first`).parent().click();
   },
 
@@ -523,7 +525,12 @@ const COMMANDS = {
   },
 
   addCustomVideo: () => {
-    cy.get(`[data-hook*=${VIDEO_PLUGIN.CUSTOM}]`).click();
+    if (isTiptap) {
+      cy.get(`[data-hook*=${VIDEO_PLUGIN.NEW_MODAL_CUSTOM}]`).click();
+      cy.get(`[data-hook*=${VIDEO_PLUGIN.NEW_MODAL_CUSTOM_ADD}]`).click();
+    } else {
+      cy.get(`[data-hook*=${VIDEO_PLUGIN.CUSTOM}]`).click();
+    }
     cy.get(`[data-hook=${PLUGIN_COMPONENT.VIDEO}]:first`).parent().click();
   },
 
@@ -651,7 +658,7 @@ const typeAllAtOnce = ($subject: HTMLElement, value: string) => {
 };
 
 const waitForMediaToLoad = (_, count = 2) => {
-  cy.get('[data-loaded=true]', { timeout: 15000 }).should('have.length', count);
+  cy.get('[data-loaded=true]', { timeout: 25000 }).should('have.length', count);
 };
 
 const fireEvent = (element: HTMLElement, event: string, value: string) => {
@@ -842,3 +849,5 @@ function waitForMutations(container: HTMLElement, { timeToWaitForMutation = 400 
 const openSizeDropdown = () => {
   cy.get('[data-hook*=nodeSizeButton]').click({ force: true });
 };
+
+Cypress.Commands.add('openSizeDropdown', openSizeDropdown);

@@ -313,48 +313,37 @@ describe('plugins', () => {
     });
   });
 
-  context('video', () => {
-    beforeEach('load editor', () => {
-      cy.switchToDesktop();
-      cy.loadRicosEditorAndViewer('empty');
-    });
+  [true, false].forEach(useTiptap => {
+    context('video', () => {
+      beforeEach('load editor', () => {
+        cy.switchToDesktop();
+        cy.toggleTiptap(useTiptap);
+        cy.loadRicosEditorAndViewer('empty');
+      });
 
-    it('render upload modal', () => {
-      cy.openVideoUploadModal();
-      cy.percySnapshot();
-    });
+      it(`${getTestPrefix(useTiptap)} add a video from URL`, function () {
+        cy.openVideoUploadModal().addVideoFromURL();
+        cy.openPluginToolbar(PLUGIN_COMPONENT.VIDEO).shrinkPlugin(PLUGIN_COMPONENT.VIDEO);
+        cy.waitForMediaToLoad();
+        cy.percySnapshot(this.test.title);
+      });
 
-    it('add a video from URL', () => {
-      cy.openVideoUploadModal().addVideoFromURL();
-      cy.openPluginToolbar(PLUGIN_COMPONENT.VIDEO).shrinkPlugin(PLUGIN_COMPONENT.VIDEO);
-      cy.focusEditor()
-        .type('{uparrow}') //try to fix bug where sometimes it doesn't type
-        .type('{uparrow}')
-        .type('Will this fix the flakiness?');
-      cy.waitForMediaToLoad();
-      cy.percySnapshot();
-    });
+      it(`${getTestPrefix(useTiptap)} add a custom video`, function () {
+        cy.openVideoUploadModal().addCustomVideo();
+        cy.openPluginToolbar(PLUGIN_COMPONENT.VIDEO).shrinkPlugin(PLUGIN_COMPONENT.VIDEO);
+        cy.waitForMediaToLoad();
+        cy.percySnapshot(this.test.title);
+      });
 
-    it('add a custom video', () => {
-      cy.openVideoUploadModal().addCustomVideo();
-      cy.openPluginToolbar(PLUGIN_COMPONENT.VIDEO).shrinkPlugin(PLUGIN_COMPONENT.VIDEO);
-      cy.focusEditor()
-        .type('{uparrow}') //try to fix bug where sometimes it doesn't type
-        .type('{uparrow}')
-        .type('Will this fix the flakiness?');
-      cy.waitForMediaToLoad();
-      cy.percySnapshot();
-    });
-
-    it('should toggle download option', () => {
-      cy.loadRicosEditorAndViewer('video');
-      cy.openPluginToolbar(PLUGIN_COMPONENT.VIDEO);
-      cy.openSettings();
-      cy.wait(500);
-      cy.percySnapshot('video setting open');
-      cy.get(`[data-hook=${VIDEO_SETTINGS.DOWNLOAD_TOGGLE}]`).click();
-      cy.percySnapshot('video setting - toggle download');
-      cy.get(`[data-hook=${ACTION_BUTTONS.SAVE}]`).click();
+      it(`${getTestPrefix(useTiptap)} should toggle download option`, () => {
+        cy.loadRicosEditorAndViewer('video');
+        cy.openPluginToolbar(PLUGIN_COMPONENT.VIDEO);
+        cy.openSettings();
+        cy.wait(500);
+        cy.get(`[data-hook=${VIDEO_SETTINGS.DOWNLOAD_TOGGLE}]`).click();
+        cy.get(`[data-hook=${ACTION_BUTTONS.SAVE}]`).click();
+        cy.matchContentSnapshot();
+      });
     });
   });
 
@@ -378,19 +367,27 @@ describe('plugins', () => {
     });
   });
 
-  context('giphy', () => {
-    beforeEach('load editor', () => {
-      cy.switchToDesktop();
-    });
+  [true, false].forEach(useTiptap => {
+    context('giphy', () => {
+      beforeEach('load editor', () => {
+        cy.switchToDesktop();
+        cy.toggleTiptap(useTiptap);
+      });
 
-    it('render giphy plugin toolbar', () => {
-      cy.loadRicosEditorAndViewer('giphy');
-      cy.openPluginToolbar(PLUGIN_COMPONENT.GIPHY).clickToolbarButton(
-        PLUGIN_TOOLBAR_BUTTONS.SMALL_CENTER
-      );
-      cy.get(`button[data-hook=${PLUGIN_TOOLBAR_BUTTONS.REPLACE}][tabindex=0]`).click();
-      cy.get(`[data-hook=${GIPHY_PLUGIN.UPLOAD_MODAL}] img`);
-      cy.percySnapshot();
+      it(`${getTestPrefix(useTiptap)} render giphy plugin toolbar`, function () {
+        cy.loadRicosEditorAndViewer('giphy');
+
+        cy.openPluginToolbar(PLUGIN_COMPONENT.GIPHY);
+
+        useTiptap && cy.openSizeDropdown();
+
+        cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.SMALL_CENTER);
+        cy.get(
+          `${useTiptap ? '' : 'button'}[data-hook=${PLUGIN_TOOLBAR_BUTTONS.REPLACE}][tabindex=0]`
+        ).click();
+        cy.get(`[data-hook=${GIPHY_PLUGIN.UPLOAD_MODAL}] img`);
+        cy.percySnapshot(this.test.title);
+      });
     });
   });
 
@@ -411,57 +408,61 @@ describe('plugins', () => {
   // });
   // });
 
-  context('audio', () => {
-    const testAppConfig = {
-      ...usePlugins(plugins.audio),
-      ...usePluginsConfig({
-        audio: {
-          exposeButtons: ['audio', 'soundCloud', 'spotify'],
-        },
-      }),
-    };
+  [true, false].forEach(useTiptap => {
+    context('audio', () => {
+      const testAppConfig = {
+        ...usePlugins(plugins.audio),
+        ...usePluginsConfig({
+          audio: {
+            exposeButtons: ['audio', 'soundCloud', 'spotify'],
+          },
+        }),
+      };
 
-    beforeEach('load editor', () => {
-      cy.switchToDesktop();
-      cy.loadRicosEditorAndViewer('empty', testAppConfig);
-    });
+      beforeEach('load editor', () => {
+        cy.switchToDesktop();
+        cy.toggleTiptap(useTiptap);
+        cy.loadRicosEditorAndViewer('empty', testAppConfig);
+      });
 
-    it('should render custom audio modals', () => {
-      cy.clickOnStaticButton(STATIC_TOOLBAR_BUTTONS.AUDIO);
-      cy.percySnapshot('should render upload tab section');
-      cy.get(`[data-hook=Embed_Tab]`).click();
-      cy.percySnapshot('should render embed section after embed click');
-    });
+      it(`${getTestPrefix(useTiptap)} should add embed audio`, () => {
+        cy.clickOnStaticButton(STATIC_TOOLBAR_BUTTONS.AUDIO);
+        cy.percySnapshot(getTestPrefix(useTiptap) + 'should render upload tab section');
+        cy.get(`[data-hook=Embed_Tab]`).click();
+        cy.get(`[data-hook=${AUDIO_PLUGIN.INPUT}]`).clear().type('spotify.com');
+        cy.get(`[data-hook=${ACTION_BUTTONS.SAVE}]`).click();
+        cy.get('iframe').should('be.visible');
+      });
 
-    it('should render audio player', () => {
-      cy.clickOnStaticButton(STATIC_TOOLBAR_BUTTONS.AUDIO);
-      cy.get(`[data-hook=${AUDIO_PLUGIN.CUSTOM}]`).click().waitForMediaToLoad();
-      cy.percySnapshot('should render custom audio player');
-      cy.get(`button[data-hook=${PLUGIN_TOOLBAR_BUTTONS.REPLACE}]`).click();
-      cy.get(`[data-hook=Embed_Tab]`).click();
-      cy.get(`[data-hook=${AUDIO_PLUGIN.INPUT}]`).clear().type('spotify.com');
-      cy.get(`[data-hook=${ACTION_BUTTONS.SAVE}]`).click();
-      cy.get('iframe').should('be.visible');
-    });
+      it(`${getTestPrefix(useTiptap)} should add custom audio and replace it`, () => {
+        cy.clickOnStaticButton(STATIC_TOOLBAR_BUTTONS.AUDIO);
+        cy.get(`[data-hook=${AUDIO_PLUGIN.CUSTOM}]`).click().waitForMediaToLoad();
+        cy.percySnapshot(getTestPrefix(useTiptap) + 'should render custom audio player');
+        cy.get(`${useTiptap ? '' : 'button'}[data-hook=${PLUGIN_TOOLBAR_BUTTONS.REPLACE}]`).click();
+        cy.get(`[data-hook=Embed_Tab]`).click();
+        cy.get(`[data-hook=${AUDIO_PLUGIN.INPUT}]`).clear().type('spotify.com');
+        cy.get(`[data-hook=${ACTION_BUTTONS.SAVE}]`).click();
+        cy.get('iframe').should('be.visible');
+      });
 
-    it('should render audio settings', () => {
-      cy.loadRicosEditorAndViewer('audio', testAppConfig);
-      cy.openPluginToolbar(PLUGIN_COMPONENT.AUDIO);
-      cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.SETTINGS);
-      cy.get(`[data-hook=audioSettings]`);
-      cy.percySnapshot('should render audio settings');
-      cy.get(`[data-hook=audioSettingsAudioNameInput]`).clear();
-      cy.get(`[data-hook=audioSettingsAuthorNameInput]`).clear();
-      cy.percySnapshot('should render settings with empty inputs');
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.get(`[data-hook=file-input-label]`).click().wait(300);
-      cy.percySnapshot('should render settings with cover image');
-      cy.get(`[data-hook=AudioDownloadToggle]`).click();
-      cy.percySnapshot('should enable audio download');
-      cy.get(`[data-hook=${ACTION_BUTTONS.SAVE}]`).click();
-      cy.get(`[data-hook=audioContextMenu]`).eq(1).click();
-      cy.get(`[data-hook=audioDownloadIcon]`).should('be.visible');
-      cy.percySnapshot('should render audio with enabled download options');
+      it(`${getTestPrefix(useTiptap)} should render audio settings`, () => {
+        cy.loadRicosEditorAndViewer('audio', testAppConfig);
+        cy.openPluginToolbar(PLUGIN_COMPONENT.AUDIO);
+        cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.SETTINGS);
+        cy.get(`[data-hook=audioSettings]`);
+        cy.get(`[data-hook=audioSettingsAudioNameInput]`).clear();
+        cy.get(`[data-hook=audioSettingsAuthorNameInput]`).clear();
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
+        cy.get(`[data-hook=file-input-label]`).click().wait(300);
+        cy.get(`[data-hook=AudioDownloadToggle]`).click();
+        cy.percySnapshot(getTestPrefix(useTiptap) + ' should change settings modal ui');
+        cy.get(`[data-hook=${ACTION_BUTTONS.SAVE}]`).click();
+        cy.get(`[data-hook=audioContextMenu]`).eq(1).click();
+        cy.get(`[data-hook=audioDownloadIcon]`).should('be.visible');
+        cy.percySnapshot(
+          getTestPrefix(useTiptap) + 'should render audio with enabled download options'
+        );
+      });
     });
   });
 });

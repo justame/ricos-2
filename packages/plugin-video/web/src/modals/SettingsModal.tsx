@@ -36,6 +36,8 @@ const VideoSettingsModal: FC<Props> = ({ nodeId }) => {
         TIPTAP_VIDEO_TYPE,
         getEditorCommands().getBlockComponentData(nodeId)
       );
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      componentData && (componentData.isCustomVideo = (componentData.src as any).pathname);
       setInitialData(componentData);
       setComponentData(componentData);
     });

@@ -148,8 +148,12 @@ export const GALLERY_IMAGE_SETTINGS = {
 
 export const VIDEO_PLUGIN = {
   INPUT: 'videoUploadModalInput',
+  NEW_MODAL_INPUT: 'videoMediaUrlModalInput',
   ADD: 'videoUploadModalAddButton',
+  NEW_MODAL_ADD: 'actionButtonSave',
   CUSTOM: 'videoUploadModalCustomVideo',
+  NEW_MODAL_CUSTOM: 'Upload_Tab',
+  NEW_MODAL_CUSTOM_ADD: 'videoUploadModalCustomVideo',
 };
 
 export const AUDIO_PLUGIN = {
