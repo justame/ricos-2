@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 import type { Node } from 'prosemirror-model';
 import type { Content } from 'wix-rich-content-toolbars-v3';
@@ -10,7 +11,12 @@ import {
 import type { ToolbarSettings } from 'ricos-common';
 import type { TextButtons, ToolbarSettingsFunctions } from 'wix-rich-content-common';
 import { firstRight } from 'wix-rich-content-common';
-import { TOOLBARS, mergeToolbarSettings, isiOS } from 'wix-rich-content-editor-common';
+import {
+  TOOLBARS,
+  mergeToolbarSettings,
+  isiOS,
+  KEYS_CHARCODE,
+} from 'wix-rich-content-editor-common';
 import { getDefaultToolbarSettings } from 'wix-rich-content-editor';
 import RicosPortal from '../modals/RicosPortal';
 import type { Selection } from 'prosemirror-state';
@@ -269,6 +275,7 @@ class RicosToolbars extends React.Component<
 
     const shouldCreate = this.getShouldCreate(isMobile, toolbarConfig?.shouldCreate);
 
+    const dataHook = 'static-toolbar';
     const toolbarItemsConfig =
       plugins
         ?.getTextButtons()
@@ -281,13 +288,15 @@ class RicosToolbars extends React.Component<
           className={ricosContext.theme?.parentClass}
           container={htmlContainer}
         >
-          <div toolbar-type="static">{this.renderToolbar(toolbarItemsConfig)}</div>
+          <div data-hook={dataHook} toolbar-type="static">
+            {this.renderToolbar(toolbarItemsConfig)}
+          </div>
         </RicosPortal>
       );
     }
     if (toolbarSettings?.useStaticTextToolbar && shouldCreate) {
       return (
-        <div toolbar-type="static" dir={ricosContext.languageDir}>
+        <div data-hook={dataHook} toolbar-type="static" dir={ricosContext.languageDir}>
           {this.renderToolbar(toolbarItemsConfig)}
         </div>
       );
@@ -358,6 +367,16 @@ class RicosToolbars extends React.Component<
     );
   }
 
+  onKeyDown = e => {
+    if (e.keyCode === KEYS_CHARCODE.ENTER) {
+      e.stopPropagation();
+    } else if (e.keyCode === KEYS_CHARCODE.ESCAPE) {
+      const { editor } = this.props;
+      editor.adapter.focus();
+      e.stopPropagation();
+    }
+  };
+
   render() {
     const { toolbarSettings } = this.props;
     if (!toolbarSettings?.getToolbarSettings) {
@@ -369,7 +388,7 @@ class RicosToolbars extends React.Component<
       return null;
     }
     return (
-      <>
+      <div onKeyDown={this.onKeyDown}>
         {this.renderStaticToolbar(finalToolbarSettings)}
         {this.renderMobileToolbar(finalToolbarSettings)}
         {this.renderFormattingToolbar(finalToolbarSettings)}
@@ -377,7 +396,7 @@ class RicosToolbars extends React.Component<
         {this.renderFooterToolbar(finalToolbarSettings)}
         {this.renderFloatingPluginMenu(finalToolbarSettings)}
         {this.renderLinkToolbar(finalToolbarSettings)}
-      </>
+      </div>
     );
   }
 }

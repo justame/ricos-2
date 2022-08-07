@@ -1,5 +1,5 @@
 /* eslint-disable brace-style */
-import type { ToolbarType } from '.';
+import type { ToolbarType, KeyboardShortcut } from '.';
 import type { EventSource } from './orchestration';
 
 type Topics = ['ricos.toolbars.functionality.buttonClick', 'ricos.toolbars.functionality.search'];
@@ -32,4 +32,6 @@ export interface IRicosToolbars extends EventSource<Topics> {
   readonly link: IRicosToolbar;
 
   byType(type: ToolbarType): IRicosToolbar;
+
+  getShortcuts(): KeyboardShortcut[];
 }

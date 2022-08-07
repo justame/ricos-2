@@ -96,6 +96,7 @@ class ToolbarComponent extends Component<ToolbarProps, Record<string, unknown>> 
                     );
                     return (
                       <div
+                        data-hook="toolbar-v3-visible"
                         onKeyDown={e =>
                           handleCircularFocus({
                             e,

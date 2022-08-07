@@ -76,6 +76,8 @@ export class RicosOrchestrator implements Orchestrator {
 
     this.shortcuts = new EditorKeyboardShortcuts(this.modals);
 
+    this.toolbars.getShortcuts().map(shortcut => this.shortcuts.register(shortcut));
+
     this.content = Content.create<Node[]>([], {
       styles: this.styles,
       nodeService,

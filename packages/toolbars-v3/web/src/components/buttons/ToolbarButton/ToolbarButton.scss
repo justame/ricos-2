@@ -33,10 +33,10 @@
     }
   }
 
-  // &:focus {
-  //   outline: 5px auto Highlight !important;
-  //   outline: 5px auto -webkit-focus-ring-color !important;
-  // }
+  &:focus {
+    outline: 5px auto Highlight !important;
+    outline: 5px auto -webkit-focus-ring-color !important;
+  }
 }
 
 .toggleButton {

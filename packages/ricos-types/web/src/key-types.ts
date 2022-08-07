@@ -47,12 +47,21 @@ export type NavigationKeys =
   | 'End'
   | 'Home'
   | 'PageDown'
-  | 'PageUp';
+  | 'PageUp'
+  | 'Escape';
 
 export const isNavigationKey = (key: string): key is NavigationKeys =>
-  ['ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'End', 'Home', 'PageDown', 'PageUp'].includes(
-    key
-  );
+  [
+    'ArrowDown',
+    'ArrowLeft',
+    'ArrowRight',
+    'ArrowUp',
+    'End',
+    'Home',
+    'PageDown',
+    'PageUp',
+    'Escape',
+  ].includes(key);
 
 export type FunctionKeys =
   | 'F1'

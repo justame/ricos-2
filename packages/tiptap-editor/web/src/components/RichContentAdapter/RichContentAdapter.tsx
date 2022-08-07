@@ -89,7 +89,7 @@ export class RichContentAdapter implements TiptapAdapter {
     return {
       ...this.editorMocks,
       toggleInlineStyle: inlineStyle => {
-        const editorCommand = this.tiptapEditor.chain().focus();
+        const editorCommand = this.tiptapEditor.chain();
         const styleName = `toggle${capitalize(inlineStyle)}`;
         editorCommand[styleName]().run();
       },
@@ -198,7 +198,7 @@ export class RichContentAdapter implements TiptapAdapter {
         };
         if (decorationCommandMap[type]) {
           const { command, args } = decorationCommandMap[type](data);
-          const editorCommand = this.tiptapEditor.chain().focus();
+          const editorCommand = this.tiptapEditor.chain();
           editorCommand[command](args).run();
         } else {
           console.error(`${type} decoration not supported`);
