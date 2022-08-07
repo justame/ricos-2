@@ -16,7 +16,6 @@ declare module '@tiptap/core' {
        * Toggle a paragraph
        */
       setParagraph: () => ReturnType;
-      softNewLine: () => ReturnType;
     };
   }
 }

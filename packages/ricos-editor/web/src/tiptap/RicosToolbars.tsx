@@ -59,7 +59,7 @@ class RicosToolbars extends React.Component<
       return nodes;
     };
     const selectedNodes = getSelectedNodes({ editor });
-    content.update(selectedNodes);
+    content.update(selectedNodes, editor);
   };
 
   shouldRenderStaticFormattingToolbar() {
@@ -111,7 +111,6 @@ class RicosToolbars extends React.Component<
   componentDidMount() {
     const { editor } = this.props;
     const tiptapEditor = editor.adapter.tiptapEditor;
-
     tiptapEditor.on('selectionUpdate', this.onSelectionUpdate);
     tiptapEditor.on('update', this.onSelectionUpdate);
 
@@ -183,6 +182,11 @@ class RicosToolbars extends React.Component<
     const shouldCreate = this.getShouldCreate(ricosContext.isMobile, toolbarConfig?.shouldCreate);
 
     if (!ricosContext.isMobile && shouldCreate && !toolbarSettings?.useStaticTextToolbar) {
+      const toolbarItemsConfig =
+        plugins
+          ?.getTextButtons()
+          .toToolbarItemsConfig(toolbarType, ricosContext.isMobile, editor.getEditorCommands()) ||
+        [];
       return (
         <FloatingToolbar
           editor={tiptapEditor}
@@ -193,13 +197,7 @@ class RicosToolbars extends React.Component<
             this.floatingToolbarChildren(
               'floating-formatting-toolbar',
               tiptapEditor.view.dom.clientWidth,
-              plugins
-                ?.getTextButtons()
-                .toToolbarItemsConfig(
-                  toolbarType,
-                  ricosContext.isMobile,
-                  editor.getEditorCommands()
-                ) || []
+              toolbarItemsConfig
             )
           }
         </FloatingToolbar>

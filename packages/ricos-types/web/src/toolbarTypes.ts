@@ -1,6 +1,7 @@
 import type { Node as TiptapNode } from 'prosemirror-model';
 import type { EditorCommands } from './editorCommandsType';
 import type { ModalConfig } from './modalTypes';
+import type { Editor } from '@tiptap/core';
 
 export type IToolbarItem = {
   id: string;
@@ -23,7 +24,7 @@ export type IToolbarItem = {
 export interface IContentResolver<T> {
   id: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  resolve: (content: T, services?: any) => any;
+  resolve: (content: T, services?: any, editor?: Editor) => any;
 }
 
 export interface TiptapContentResolver {

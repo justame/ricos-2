@@ -60,7 +60,6 @@ export class RicosOrchestrator implements Orchestrator {
   constructor(editorProps: RicosEditorProps, t: TranslationFunction) {
     this.t = t;
     this.editorProps = editorProps;
-
     this.updateService = new UpdateService();
     this.events = new RicosEvents();
     this.toolbars = new RicosToolbars();
@@ -81,7 +80,9 @@ export class RicosOrchestrator implements Orchestrator {
     this.content = Content.create<Node[]>([], {
       styles: this.styles,
       nodeService,
+      editor: null,
     });
+
     this.plugins = new EditorPlugins(
       {
         modals: this.modals,

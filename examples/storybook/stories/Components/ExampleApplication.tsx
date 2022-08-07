@@ -30,7 +30,6 @@ const ExampleApplication: FunctionComponent<{
   const [content, setContent] = useState(initialState);
   const showEditor = useMemo(() => display === 'Both' || display === 'Editor', [display]);
   const showViewer = useMemo(() => display === 'Both' || display === 'Viewer', [display]);
-
   return (
     <Section type={Section.Types.COMPARISON}>
       {showEditor && (

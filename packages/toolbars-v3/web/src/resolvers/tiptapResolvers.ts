@@ -22,7 +22,7 @@ export const isTextInSelection = TiptapContentResolver.create(
 
 export const isTextContainsBoldResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.IS_TEXT_CONTAINS_BOLD,
-  (content, { styles, nodeService }: { styles: RicosStyles; nodeService }) => {
+  (content, { styles, nodeService }: { styles: RicosStyles; nodeService }, editor) => {
     if (Array.isArray(content)) {
       const node = content.find(node => {
         return node.type.name === 'text';
@@ -52,6 +52,10 @@ export const isTextContainsBoldResolver = TiptapContentResolver.create(
       if (!hasInlineNormalWeight && hasBoldDecorationInDocumentStyles) {
         return true;
       }
+
+      if (editor?.isActive(Decoration_Type.BOLD)) {
+        return true;
+      }
     }
 
     return false;
@@ -60,7 +64,7 @@ export const isTextContainsBoldResolver = TiptapContentResolver.create(
 
 export const isTextContainsItalicResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.IS_TEXT_CONTAINS_ITALIC,
-  (content, { styles, nodeService }: { styles: RicosStyles; nodeService }) => {
+  (content, { styles, nodeService }: { styles: RicosStyles; nodeService }, editor) => {
     if (Array.isArray(content)) {
       const node = content.find(node => {
         return node.type.name === 'text';
@@ -88,6 +92,10 @@ export const isTextContainsItalicResolver = TiptapContentResolver.create(
         return false;
       }
 
+      if (editor?.isActive(Decoration_Type.ITALIC)) {
+        return true;
+      }
+
       return hasInlineItalic || hasItalicDecorationInDocumentStyles;
     }
     return false;
@@ -96,11 +104,16 @@ export const isTextContainsItalicResolver = TiptapContentResolver.create(
 
 export const isTextContainsUnderlineResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.IS_TEXT_CONTAINS_UNDERLINE,
-  content => {
+  (content, _services, editor) => {
     if (Array.isArray(content)) {
       const node = content.find(node => {
         return node.type.name === 'text';
       });
+
+      if (editor?.isActive(Decoration_Type.UNDERLINE)) {
+        return true;
+      }
+
       return node?.marks.some(mark => mark.type.name === Decoration_Type.UNDERLINE);
     }
     return false;
@@ -376,7 +389,7 @@ export const isTextContainsAnchorResolver = TiptapContentResolver.create(
 
 export const getTextColorInSelectionResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.GET_TEXT_COLOR_IN_SELECTION,
-  (content, { styles, nodeService }: { styles: RicosStyles; nodeService }) => {
+  (content, { styles, nodeService }: { styles: RicosStyles; nodeService }, editor) => {
     if (Array.isArray(content)) {
       const node = content.find(node => {
         return node.type.name === 'text';
@@ -396,7 +409,31 @@ export const getTextColorInSelectionResolver = TiptapContentResolver.create(
           }
         }
       }
-      return colorMark?.attrs.foreground || textColorInDocumentStyle;
+
+      const storedMark = editor?.state?.storedMarks?.find(mark => {
+        return mark.type.name === Decoration_Type.COLOR && mark.attrs.foreground;
+      });
+
+      const markInSelection = editor?.state?.selection?.$from.marks().find(mark => {
+        return mark.type.name === Decoration_Type.COLOR && mark.attrs.foreground;
+      });
+
+      let colorInStoredMark;
+      let colorInSelection;
+      if (storedMark) {
+        colorInStoredMark = storedMark.attrs.foreground;
+      }
+
+      if (markInSelection) {
+        colorInSelection = markInSelection.attrs.foreground;
+      }
+
+      return (
+        colorMark?.attrs.foreground ||
+        textColorInDocumentStyle ||
+        colorInStoredMark ||
+        colorInSelection
+      );
     }
     return false;
   }
@@ -404,7 +441,7 @@ export const getTextColorInSelectionResolver = TiptapContentResolver.create(
 
 export const getHighlightColorInSelectionResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.GET_HIGHLIGHT_COLOR_IN_SELECTION,
-  (content, { styles, nodeService }: { styles: RicosStyles; nodeService }) => {
+  (content, { styles, nodeService }: { styles: RicosStyles; nodeService }, editor) => {
     if (Array.isArray(content)) {
       const node = content.find(node => {
         return node.type.name === 'text';
@@ -422,8 +459,28 @@ export const getHighlightColorInSelectionResolver = TiptapContentResolver.create
           }
         }
       }
+      const storedMark = editor?.state?.storedMarks?.find(mark => {
+        return mark.type.name === Decoration_Type.COLOR && mark.attrs.background;
+      });
+      const markInSelection = editor?.state?.selection?.$from.marks().find(mark => {
+        return mark.type.name === Decoration_Type.COLOR && mark.attrs.background;
+      });
+
+      let colorInStoredMark, colorInSelection;
+      if (storedMark) {
+        colorInStoredMark = storedMark.attrs.background;
+      }
+
+      if (markInSelection) {
+        colorInSelection = markInSelection.attrs.background;
+      }
       const colorMark = node?.marks.find(mark => mark.type.name === Decoration_Type.COLOR);
-      return colorMark?.attrs.background || highlightColorInDocumentStyle;
+      return (
+        colorMark?.attrs.background ||
+        highlightColorInDocumentStyle ||
+        colorInStoredMark ||
+        colorInSelection
+      );
     }
     return false;
   }

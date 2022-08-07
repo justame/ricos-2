@@ -48,10 +48,15 @@ export class RicosToolbar extends EventEmitter {
     this.emit(RicosToolbar.EVENTS.UPDATED);
   }, 50);
 
+  private handleToolbarItemCommandExecuted = throttle(() => {
+    this.emit(RicosToolbar.EVENTS.UPDATED);
+  }, 50);
+
   private createToolbarItems() {
     this.toolbarItems = this.toolbarItemCreators.map(toolbarItemCreator => {
       const toolbarItem = toolbarItemCreator(this.content, this.editorCommands);
       toolbarItem.on(ToolbarItem.EVENTS.ATTRIBUTES_CHANGED, this.handleToolbarItemChanged);
+      toolbarItem.on(ToolbarItem.EVENTS.COMMAND_EXECUTED, this.handleToolbarItemCommandExecuted);
       return toolbarItem;
     });
   }

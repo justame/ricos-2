@@ -67,6 +67,11 @@ export class ToolbarItem extends EventEmitter {
           commandName,
           args,
         });
+
+        const changedAttributes = this.updateAttributes();
+        if (changedAttributes.length > 0) {
+          this.emit(ToolbarItem.EVENTS.ATTRIBUTES_CHANGED, changedAttributes);
+        }
       };
     });
   }

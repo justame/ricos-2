@@ -321,7 +321,6 @@ class ExampleApp extends PureComponent<ExampleAppProps, ExampleAppState> {
       textWrap,
       showSideBlockComponent,
     } = this.state;
-
     return (
       isEditorShown && (
         <ReflexElement

@@ -7,6 +7,9 @@ export class Content<T = Node[]> extends EventEmitter implements IContent<T> {
     contentChangeEvent: 'contentChange',
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  editor: any;
+
   private constructor(private content: T, private services = {}) {
     super();
   }
@@ -17,13 +20,23 @@ export class Content<T = Node[]> extends EventEmitter implements IContent<T> {
     if (this.resolved[contentResolver.id]) {
       return this.resolved[contentResolver.id];
     } else {
-      this.resolved[contentResolver.id] = contentResolver.resolve(this.content, this.services);
+      this.resolved[contentResolver.id] = contentResolver.resolve(
+        this.content,
+        this.services,
+        this.editor
+      );
     }
     return this.resolved[contentResolver.id];
   }
 
-  update(content: T) {
+  //TODO: should be removed
+  forceUpdate() {
+    this.emit(Content.EVENTS.contentChangeEvent);
+  }
+
+  update(content: T, editor) {
     this.content = content;
+    this.editor = editor;
     this.resolved = {};
     this.emit(Content.EVENTS.contentChangeEvent);
   }
