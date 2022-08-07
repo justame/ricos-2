@@ -6,6 +6,21 @@ import { Decoration_Type } from 'ricos-types';
 import type { RicosStyles } from 'ricos-styles';
 import { isEqual } from 'lodash';
 
+const getDecoration = (editor, decorationType: Decoration_Type, markAttributeKey) => {
+  const storedMark = editor?.state?.storedMarks?.find(mark => {
+    return mark.type.name === decorationType && mark.attrs[markAttributeKey];
+  });
+
+  const markInSelection = editor?.state?.selection?.$from.marks().find(mark => {
+    return mark.type.name === decorationType && mark.attrs[markAttributeKey];
+  });
+
+  return {
+    storedMark,
+    markInSelection,
+  };
+};
+
 export const alwaysVisibleResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.ALWAYS_VISIBLE,
   () => {
@@ -258,11 +273,19 @@ export const isTextStylesMatchDocumentStylesResolver = TiptapContentResolver.cre
 
 export const getLineSpacingInSelectionResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.GET_LINE_SPACING_IN_SELECTION,
-  content => {
+  (content, { styles, nodeService }: { styles: RicosStyles; nodeService }) => {
     if (Array.isArray(content) && content.length > 0) {
-      const lineHeight = content[0].attrs.textStyle?.lineHeight;
-      if (!lineHeight) return undefined;
-      return `${lineHeight}`;
+      const node = content[0];
+      const lineHeight = node.attrs.textStyle?.lineHeight;
+      let documentStyleLineHeight;
+
+      if (node && styles && nodeService) {
+        const textStyle = styles.getTextStyle(nodeService.nodeToRicosNode(node));
+        if (textStyle?.lineHeight) {
+          documentStyleLineHeight = textStyle?.lineHeight;
+        }
+      }
+      return lineHeight || documentStyleLineHeight;
     } else {
       return undefined;
     }
