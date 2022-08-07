@@ -1,6 +1,26 @@
+import React, { lazy, Suspense } from 'react';
 import type { EditorCommands, TiptapEditorPlugin } from 'ricos-types';
 import { RESOLVERS_IDS } from 'wix-rich-content-toolbars-v3/libs/resolvers-ids';
+import { getCurrentTextAlignmentIcon } from 'wix-rich-content-toolbars-modals/libs/getCurrentTextAlignmentIcon';
 import { textAlign } from './extension';
+
+const AlignmentPanelController = lazy(() =>
+  import('wix-rich-content-toolbars-modals').then(({ AlignmentPanelController }) => ({
+    default: AlignmentPanelController,
+  }))
+);
+
+const AlignmentPanelComponent = props => (
+  <Suspense fallback={<div style={{ width: 38 }}>loading</div>}>
+    <AlignmentPanelController {...props} />
+  </Suspense>
+);
+
+const FORMATTING_ALIGNMENT_MODAL_ID = 'formattingAlignmentModal';
+
+const getAlignmentIcon = (editorCommands: EditorCommands): ((props) => JSX.Element) => {
+  return getCurrentTextAlignmentIcon(editorCommands);
+};
 
 export const pluginTextAlignment: TiptapEditorPlugin = {
   type: 'TEXT_ALIGNMENT',
@@ -55,6 +75,7 @@ export const pluginTextAlignment: TiptapEditorPlugin = {
       presentation: {
         dataHook: 'textDropDownButton_Alignment',
         tooltip: 'AlignTextDropdownButton_Tooltip',
+        getIcon: getAlignmentIcon,
       },
       attributes: {
         visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
@@ -66,6 +87,11 @@ export const pluginTextAlignment: TiptapEditorPlugin = {
           alignment => {
             editorCommands.chain().focus().setTextAlign(alignment).run();
           },
+      },
+      modal: {
+        id: FORMATTING_ALIGNMENT_MODAL_ID,
+        Component: AlignmentPanelComponent,
+        layout: 'toolbar',
       },
     },
   ],

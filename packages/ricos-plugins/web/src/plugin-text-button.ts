@@ -104,9 +104,10 @@ export class PluginTextButton implements FormattingToolbarButton {
       type: 'button',
       tooltip: this.getTooltip(),
       toolbars: [],
-      getIcon: () => this.button.presentation?.icon,
+      getIcon: () =>
+        this.button.presentation?.icon || this.button.presentation?.getIcon(editorCommands),
       getLabel: () => this.button.id,
-      onClick: () => {
+      onClick: e => {
         this.services.toolbars.external.publishButtonClick(this.button.id);
         return this.button.modal
           ? modals.isModalOpen(this.button.modal.id)
@@ -115,7 +116,14 @@ export class PluginTextButton implements FormattingToolbarButton {
                 componentProps: {
                   closeModal: () => this.button.modal && modals.closeModal(this.button.modal.id),
                 },
-                layout: 'dialog',
+                positioning:
+                  this.button.modal.layout === 'toolbar'
+                    ? {
+                        placement: 'bottom',
+                        referenceElement: e?.target,
+                      }
+                    : {},
+                layout: this.button.modal.layout || 'dialog',
               })
           : this.button.command?.(editorCommands);
       },
@@ -168,7 +176,6 @@ export class PluginTextButtons implements FormattingToolbarButtons {
     //TODO: support all buttons
     const unsupportedTextButtons = [
       'fontSize',
-      'alignment',
       'title',
       'headings',
       'textColor',

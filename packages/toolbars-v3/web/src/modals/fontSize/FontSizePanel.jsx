@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import styles from '../panels/styles.scss';
-import DesktopPanel from '../panels/DesktopPanel';
+import { DesktopPanel } from 'wix-rich-content-toolbars-modals';
 import classNames from 'classnames';
 import { mergeStyles, GlobalContext } from 'wix-rich-content-common';
 

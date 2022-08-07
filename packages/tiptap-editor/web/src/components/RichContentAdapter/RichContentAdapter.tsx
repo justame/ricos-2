@@ -12,6 +12,7 @@ import {
   NUMBERED_LIST_TYPE,
   RICOS_INDENT_TYPE,
   UNSTYLED,
+  getTextDirection,
 } from 'ricos-content';
 import { tiptapToDraft, fromTiptapNode } from 'ricos-converters';
 import { Decoration_Type, Node_Type } from 'ricos-schema';
@@ -330,7 +331,7 @@ export class RichContentAdapter implements TiptapAdapter {
       setTextAlignment: (alignment: TextAlignment) => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        this.tiptapEditor.commands.setTextAlign(alignment);
+        this.tiptapEditor.chain().focus().setTextAlign(alignment).run();
       },
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -393,6 +394,11 @@ export class RichContentAdapter implements TiptapAdapter {
       let currentTextStyle = 'auto';
       if (textStyles[0]) {
         currentTextStyle = textStyles[0].toLowerCase();
+      }
+      if (currentTextStyle === 'auto') {
+        const selectedFirstNodeText = doc.nodeAt(from - 1)?.textContent;
+        const selectedFirstNodeDirection = getTextDirection(selectedFirstNodeText);
+        currentTextStyle = selectedFirstNodeDirection === 'rtl' ? 'right' : 'left';
       }
       return currentTextStyle as TextAlignment;
     },

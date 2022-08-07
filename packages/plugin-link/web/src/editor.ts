@@ -9,7 +9,6 @@ import { DEFAULTS } from './defaults';
 import LinkIcon from './LinkIcon';
 import type { LinkPluginEditorConfig } from './types';
 import { LINK_TYPE } from './types';
-import { decorateComponentWithProps } from 'wix-rich-content-editor-common';
 
 const LinkModalController = lazy(() =>
   import('wix-rich-content-toolbars-modals').then(({ LinkModalController }) => ({
@@ -67,7 +66,7 @@ export const pluginLink: EditorPluginCreator<LinkPluginEditorConfig> = config =>
         },
         modal: {
           id: FORMATTING_LINK_MODAL_ID,
-          Component: decorateComponentWithProps(LinkModalController),
+          Component: LinkModalController,
         },
       },
     ],

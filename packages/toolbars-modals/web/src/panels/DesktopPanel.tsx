@@ -10,6 +10,7 @@ import { findOsName } from '../utils';
 import { KEYS_CHARCODE } from 'wix-rich-content-editor-common';
 import ArrowIcon from './ArrowIcon';
 import { FocusManager } from 'wix-rich-content-ui-components';
+import type { TranslationFunction } from 'ricos-types';
 
 const DesktopPanel = ({
   currentSelect,
@@ -22,6 +23,17 @@ const DesktopPanel = ({
   t,
   displayIconAndText,
   externalFocus,
+}: {
+  currentSelect?: any;
+  options?: any;
+  onChange?: any;
+  customPanelOptions?: any;
+  customPanelName?: string;
+  theme?: any;
+  sizeFitContent?: boolean;
+  t: TranslationFunction;
+  displayIconAndText?: boolean;
+  externalFocus?: boolean;
 }) => {
   const styles = mergeStyles({ styles: Styles, theme });
   const osName = findOsName();

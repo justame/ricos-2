@@ -27,6 +27,7 @@ export interface ModalConfig {
   Component: ComponentType;
   id: string;
   shortcuts?: KeyboardShortcut[];
+  layout?: Layout;
 }
 
 export type Modal = ModalConfig & {

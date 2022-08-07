@@ -6,9 +6,12 @@ import { ClickOutside } from 'wix-rich-content-editor-common';
 import styles from './AlignmentButton.scss';
 import { DropdownArrowIcon } from '../../../icons';
 import { withToolbarContext } from 'ricos-context';
-import AlignmentPanel from '../../../modals/alignment/AlignmentPanel';
+import {
+  AlignmentPanel,
+  getCurrentTextAlignment,
+  alignmentIconsMap,
+} from 'wix-rich-content-toolbars-modals';
 import { getLangDir } from 'wix-rich-content-common';
-import { getDefaultAlignment, alignmentMap } from './utils';
 import { ToolbarButton } from '../ToolbarButton';
 import { onModalKeyDown } from '../modal-buttons-utils';
 
@@ -17,7 +20,7 @@ const onSave = (data, toolbarItem) => {
 };
 
 const AlignmentButton = ({ toolbarItem, context, dataHook }) => {
-  const { isMobile, t, theme, locale, portal } = context || {};
+  const { isMobile, t, theme, getEditorCommands, locale, portal } = context || {};
   const [isModalOpen, setModalOpen] = useState(false);
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
@@ -41,8 +44,12 @@ const AlignmentButton = ({ toolbarItem, context, dataHook }) => {
     setModalOpen(false);
   };
 
-  const selectedAlignment = toolbarItem.attributes.selectedAlignment || getDefaultAlignment(locale);
-  const SelectedAlignmentIcon = alignmentMap[`${selectedAlignment}`];
+  const editorCommands = getEditorCommands?.();
+
+  const selectedAlignment =
+    toolbarItem.attributes.selectedAlignment || getCurrentTextAlignment(editorCommands);
+
+  const SelectedAlignmentIcon = alignmentIconsMap[`${selectedAlignment}`];
 
   const tooltip = t(toolbarItem.presentation?.tooltip);
   return (

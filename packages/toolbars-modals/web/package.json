@@ -46,7 +46,8 @@
     "ricos-schema": "8.72.19",
     "ricos-types": "8.72.19",
     "wix-rich-content-common": "8.72.19",
-    "wix-rich-content-ui-components": "8.72.19"
+    "wix-rich-content-ui-components": "8.72.19",
+    "wix-rich-content-editor-common": "8.72.19"
   },
   "unpkg": true,
   "publishConfig": {

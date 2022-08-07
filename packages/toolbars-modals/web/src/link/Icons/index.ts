@@ -1,10 +1,4 @@
 // @create-index
-
-export { default as AlignTextCenterIcon } from './AlignTextCenterIcon';
-export { default as AlignJustifyIcon } from './AlignJustifyIcon';
-export { default as AlignLeftIcon } from './AlignLeftIcon';
-export { default as AlignRightIcon } from './AlignRightIcon';
-export { default as DropdownArrowIcon } from './DropdownArrowIcon';
 export { default as ErrorIcon } from './ErrorIcon';
 export { default as LinkIcon } from './LinkIcon';
 export { default as ImageIcon } from './AnchorsThumbnails/ImageIcon';
@@ -22,4 +16,3 @@ export { default as H3Icon } from './AnchorsThumbnails/H3Icon';
 export { default as H4Icon } from './AnchorsThumbnails/H4Icon';
 export { default as H5Icon } from './AnchorsThumbnails/H5Icon';
 export { default as H6Icon } from './AnchorsThumbnails/H6Icon';
-export { default as SearchIcon } from './SearchIcon';

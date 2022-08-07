@@ -4,7 +4,7 @@ import styles from '../panels/styles.scss';
 import MobilePanel from '../panels/MobilePanel';
 import DesktopPanel from '../panels/DesktopPanel';
 import classNames from 'classnames';
-import { alignmentsModalData as alignments } from '../consts';
+import { alignmentsModalData as alignments } from './consts';
 
 const AlignmentPanel = ({ isMobile, t, theme, currentSelect, onSave, closeModal, ...props }) => {
   const panelHeader = t('FormattingToolbar_AlignmentPanelHeader');
