@@ -22,15 +22,21 @@ export class EditorKeyboardShortcuts
 {
   private shortcuts: Shortcut[] = [];
 
+  isDebugMode = false;
+
   readonly topicsToPublish = TOPICS;
 
   publishers!: PublisherProvider<['ricos.shortcuts.functionality.applied']>;
 
-  constructor(modalService: ModalService) {
+  constructor(
+    modalService: ModalService,
+    config: { isDebugMode: boolean } = { isDebugMode: false }
+  ) {
     modalService.register({
       Component: ShortcutsDialog,
       id: 'shortcuts-help',
     });
+    this.isDebugMode = config.isDebugMode;
   }
 
   private hasDuplicate(shortcut: Shortcut) {

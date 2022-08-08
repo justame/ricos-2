@@ -4,7 +4,7 @@ import { isSSR } from 'wix-rich-content-common';
 import type { RicosEditor } from './RicosEditor';
 import RicosEditorWithRef from './RicosEditor';
 import type { RicosEditorRef } from './RicosEditorRef';
-import type { TranslationFunction } from 'ricos-types';
+import type { DebugMode, TranslationFunction } from 'ricos-types';
 
 const FullRicosEditorLazy = React.lazy(
   /* webpackChunkName: "FullRicosEditor" */
@@ -16,8 +16,30 @@ const LocaleResourceProviderLazy = React.lazy(
   () => import('./RicosContext/locale-resource-provider')
 );
 
-const RicosEditorSwitcher = React.forwardRef<RicosEditorRef, RicosEditorProps>((props, ref) => {
+const renderMobileDevTools = () => {
+  // @ts-ignore-next-line
+  if (typeof window !== 'undefined' && !window.__RICOS_DEVTOOLS_MOBILE_HOOK__) {
+    // @ts-ignore-next-line
+    window.__RICOS_DEVTOOLS_MOBILE_HOOK__ = true;
+    const cdnTag = document.createElement('script');
+    cdnTag.src = '//cdn.jsdelivr.net/npm/eruda';
+    cdnTag.onload = () => {
+      // @ts-ignore-next-line
+      eruda.init();
+    };
+    window.document.head.appendChild(cdnTag);
+  }
+};
+
+const RicosEditorSwitcher = React.forwardRef<
+  RicosEditorRef,
+  RicosEditorProps & { debugMode?: DebugMode[] }
+>((props, ref) => {
   const useTiptap = !!props.experiments?.tiptapEditor?.enabled;
+  if ((props.debugMode?.includes('mobile') || props.debugMode?.includes('all')) && props.isMobile) {
+    renderMobileDevTools();
+  }
+
   if (useTiptap) {
     return isSSR() ? (
       <div />
@@ -34,10 +56,12 @@ const RicosEditorSwitcher = React.forwardRef<RicosEditorRef, RicosEditorProps>((
   }
 });
 
-export default forwardRef<RicosEditorRef, RicosEditorProps>((props, ref) => {
-  const newProps = {
-    ...props,
-    ref,
-  };
-  return <RicosEditorSwitcher {...newProps} />;
-});
+export default forwardRef<RicosEditorRef, RicosEditorProps & { debugMode?: DebugMode[] }>(
+  (props, ref) => {
+    const newProps = {
+      ...props,
+      ref,
+    };
+    return <RicosEditorSwitcher {...newProps} />;
+  }
+);

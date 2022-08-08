@@ -1,5 +1,6 @@
 import type {
   AvailableExperiments,
+  DebugMode,
   RicosPortal,
   RicosTheme,
   TextDirection,
@@ -15,4 +16,5 @@ export interface GeneralContext {
   languageDir: TextDirection;
   theme: RicosTheme;
   portal: RicosPortal;
+  debugMode: DebugMode[];
 }

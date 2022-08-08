@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
 import React from 'react';
-import type { RicosTheme, RicosPortal } from 'ricos-types';
+import type { RicosTheme, RicosPortal, DebugMode } from 'ricos-types';
 import type { GeneralContext } from './types';
 
 export const RicosContext = React.createContext<GeneralContext>({
@@ -12,6 +12,7 @@ export const RicosContext = React.createContext<GeneralContext>({
   languageDir: 'ltr',
   theme: {} as RicosTheme,
   portal: null as unknown as RicosPortal,
+  debugMode: [] as DebugMode[],
 });
 
 export const RicosContextProvider = ({
@@ -24,6 +25,7 @@ export const RicosContextProvider = ({
   theme,
   t,
   portal,
+  debugMode = [] as DebugMode[],
 }) => {
   return (
     <RicosContext.Provider
@@ -36,6 +38,7 @@ export const RicosContextProvider = ({
         languageDir,
         theme,
         portal,
+        debugMode,
       }}
     >
       {React.cloneElement(React.Children.only(children))}

@@ -29,7 +29,7 @@ export interface EventLogger {
   log: (metadata: AsyncPublishingMetadata | SyncPublishingMetadata) => void;
 }
 
-export const getEventLogger = (): EventLogger => {
+export const getEventLogger = (isDebugMode: boolean): EventLogger => {
   if (typeof window === 'undefined') {
     return { log: () => {} };
   }
@@ -40,7 +40,7 @@ export const getEventLogger = (): EventLogger => {
         initLogger.then(db => db.log(m));
       },
     };
-  } else if (/eventLogger=console/i.test(window.location.search)) {
+  } else if (/eventLogger=console/i.test(window.location.search) || isDebugMode) {
     return {
       // eslint-disable-next-line no-console
       log: (metadata: SyncPublishingMetadata | AsyncPublishingMetadata) => console.debug(metadata),

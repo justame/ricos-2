@@ -9,14 +9,22 @@ import type {
 } from 'ricos-types';
 import type { RicosEventData } from './event-data';
 import { RicosEvent } from './ricos-event';
+import type { EventLogger } from './ricos-event-logger';
+import { getEventLogger } from './ricos-event-logger';
 
 export class DuplicateEventRegistrationError extends Error {}
 
 export class RicosEvents implements EventRegistrar, EventSubscriptor {
   private events: RicosEvent<RicosEventData>[] = [];
 
+  logger: EventLogger;
+
+  constructor(isDebugMode = false) {
+    this.logger = getEventLogger(isDebugMode);
+  }
+
   register<T extends RicosEventData>(topic: TopicDescriptor): EventPublisher<T> {
-    const event = new RicosEvent<T>(topic);
+    const event = new RicosEvent<T>(topic, this.logger);
     if (this.events.some(e => e.getTopic().equals(event.getTopic()))) {
       throw new DuplicateEventRegistrationError(`Event ${topic} already registered`);
     }

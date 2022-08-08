@@ -26,8 +26,12 @@ const topics: Topics = [
 export class RicosEditor implements IRicosEditor, EventSource<Topics> {
   private tiptapAdapter: TiptapAdapter;
 
-  constructor(editorProps: RicosEditorProps, ricosProps: Omit<RicosServices, 'editor'>) {
-    this.tiptapAdapter = initializeTiptapAdapter(editorProps, ricosProps);
+  constructor(
+    editorProps: RicosEditorProps,
+    services: Omit<RicosServices, 'editor'>,
+    isDebugMode = false
+  ) {
+    this.tiptapAdapter = initializeTiptapAdapter(editorProps, services, isDebugMode);
   }
 
   topicsToPublish = topics;

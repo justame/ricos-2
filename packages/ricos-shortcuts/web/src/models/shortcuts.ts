@@ -100,6 +100,7 @@ export interface Shortcut {
  * @interface Shortcuts
  */
 export interface Shortcuts extends ShortcutRegistrar, ShortcutDataProvider {
+  isDebugMode: boolean;
   /**
    * Filters shortcuts according to predicate
    *

@@ -20,6 +20,7 @@ import type {
   Orchestrator,
   RicosPortal as RicosPortalType,
   TranslationFunction,
+  DebugMode,
 } from 'ricos-types';
 import { getLangDir } from 'wix-rich-content-common';
 import RicosPortal from '../modals/RicosPortal';
@@ -39,6 +40,7 @@ type State = {
 type Props = RicosEditorProps & {
   forwardRef: ForwardedRef<RicosEditorRef>;
   t: TranslationFunction;
+  debugMode?: DebugMode[];
 };
 
 export class FullRicosEditor extends React.Component<Props, State> {
@@ -189,6 +191,7 @@ export class FullRicosEditor extends React.Component<Props, State> {
                 languageDir={languageDir}
                 theme={theme}
                 portal={this.portalRef.current}
+                debugMode={this.props.debugMode}
               >
                 <>
                   <EditorContextProvider editor={editor}>
@@ -244,8 +247,9 @@ export class FullRicosEditor extends React.Component<Props, State> {
   }
 }
 
-export default forwardRef<RicosEditorRef, RicosEditorProps & { t: TranslationFunction }>(
-  (props, ref) => {
-    return <FullRicosEditor {...props} forwardRef={ref} />;
-  }
-);
+export default forwardRef<
+  RicosEditorRef,
+  RicosEditorProps & { t: TranslationFunction; debugMode?: DebugMode[] }
+>((props, ref) => {
+  return <FullRicosEditor {...props} forwardRef={ref} />;
+});

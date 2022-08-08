@@ -39,7 +39,8 @@ const extractExtensions = (
 
 export const initializeTiptapAdapter = (
   ricosEditorProps: RicosEditorProps,
-  services: TiptapAdapterServices
+  services: TiptapAdapterServices,
+  isDebugMode = false
 ) => {
   const content =
     ricosEditorProps.injectedContent || ricosEditorProps.content || getEmptyDraftContent();
@@ -57,7 +58,7 @@ export const initializeTiptapAdapter = (
     injectCSS: true,
   });
 
-  applyDevTools(editor);
+  applyDevTools(editor, isDebugMode);
 
   return new RichContentAdapter(editor, ricosEditorProps, services);
 };

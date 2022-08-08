@@ -13,6 +13,7 @@ import { EditorKeyboardShortcuts } from 'ricos-shortcuts';
 import { RicosStyles } from 'ricos-styles';
 import type {
   BICallbacks,
+  DebugMode,
   EditorPlugin,
   EventData,
   INotifier,
@@ -33,7 +34,7 @@ import { getHelpersConfig } from './helpers-config';
 import { RicosEditor } from './ricos-editor';
 
 export class RicosOrchestrator implements Orchestrator {
-  private readonly editorProps: RicosEditorProps;
+  private readonly editorProps: RicosEditorProps & { debugMode?: DebugMode[] };
 
   private updateService!: IUpdateService;
 
@@ -57,11 +58,13 @@ export class RicosOrchestrator implements Orchestrator {
 
   private readonly editor: RicosEditor;
 
-  constructor(editorProps: RicosEditorProps, t: TranslationFunction) {
+  constructor(editorProps: RicosEditorProps & { debugMode?: DebugMode[] }, t: TranslationFunction) {
     this.t = t;
     this.editorProps = editorProps;
     this.updateService = new UpdateService();
-    this.events = new RicosEvents();
+    this.events = new RicosEvents(
+      (editorProps.debugMode?.includes('events') || editorProps.debugMode?.includes('all')) ?? false
+    );
     this.toolbars = new RicosToolbars();
     this.styles = new RicosStyles();
 
@@ -73,7 +76,11 @@ export class RicosOrchestrator implements Orchestrator {
 
     this.modals = new RicosModalService();
 
-    this.shortcuts = new EditorKeyboardShortcuts(this.modals);
+    this.shortcuts = new EditorKeyboardShortcuts(this.modals, {
+      isDebugMode:
+        (editorProps.debugMode?.includes('shortcuts') || editorProps.debugMode?.includes('all')) ??
+        false,
+    });
 
     this.toolbars.getShortcuts().map(shortcut => this.shortcuts.register(shortcut));
 
@@ -100,18 +107,22 @@ export class RicosOrchestrator implements Orchestrator {
 
     this.initPlugins(commonPlugins, commonPluginConfig);
 
-    this.editor = new RicosEditor(this.editorProps, {
-      events: this.events,
-      styles: this.styles,
-      plugins: this.plugins,
-      updateService: this.updateService,
-      uploadService: this.uploadService,
-      t: this.t,
-      content: this.content,
-      shortcuts: this.shortcuts,
-      modals: this.modals,
-      toolbars: this.toolbars,
-    });
+    this.editor = new RicosEditor(
+      this.editorProps,
+      {
+        events: this.events,
+        styles: this.styles,
+        plugins: this.plugins,
+        updateService: this.updateService,
+        uploadService: this.uploadService,
+        t: this.t,
+        content: this.content,
+        shortcuts: this.shortcuts,
+        modals: this.modals,
+        toolbars: this.toolbars,
+      },
+      this.editorProps.debugMode?.includes('prosemirror') || editorProps.debugMode?.includes('all')
+    );
     this.updateService.setEditorCommands(this.editor.getEditorCommands());
     this.orchestrateEvents();
   }

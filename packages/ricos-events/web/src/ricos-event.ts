@@ -2,15 +2,16 @@ import type { Subscription, TopicDescriptor } from 'ricos-types';
 import type { RicosEventData } from './event-data';
 import type { Event, Subscriber } from './models/event';
 import type { Topic } from './models/topics';
-import { getEventLogger } from './ricos-event-logger';
-import type { AsyncPublishingMetadata, SyncPublishingMetadata } from './ricos-event-logger';
+import type {
+  AsyncPublishingMetadata,
+  EventLogger,
+  SyncPublishingMetadata,
+} from './ricos-event-logger';
 import { RicosTopic } from './topics';
 
 export class EventInitializationError extends Error {}
 
 export class DisposedEventAccessError extends Error {}
-
-const eventLogger = getEventLogger();
 
 export class RicosEvent<T extends RicosEventData> implements Event<RicosEventData> {
   private readonly topic: RicosTopic;
@@ -21,7 +22,10 @@ export class RicosEvent<T extends RicosEventData> implements Event<RicosEventDat
 
   private isActive = true;
 
-  constructor(topicDescriptor: TopicDescriptor) {
+  private logger: EventLogger;
+
+  constructor(topicDescriptor: TopicDescriptor, logger: EventLogger) {
+    this.logger = logger;
     const topic = RicosTopic.fromString(topicDescriptor);
     if (topic.isWildcard()) {
       throw new EventInitializationError(
@@ -83,7 +87,7 @@ export class RicosEvent<T extends RicosEventData> implements Event<RicosEventDat
       isAsync: false,
       processings,
     };
-    eventLogger.log(metadata);
+    this.logger.log(metadata);
     return this.subscribers.length > 0;
   }
 
@@ -104,7 +108,7 @@ export class RicosEvent<T extends RicosEventData> implements Event<RicosEventDat
       timestamp: new Date(),
       isAsync: true,
     };
-    eventLogger.log(metadata);
+    this.logger.log(metadata);
     return this.subscribers.length > 0;
   }
 

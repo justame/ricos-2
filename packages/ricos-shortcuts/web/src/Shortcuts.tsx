@@ -66,7 +66,7 @@ export const Shortcuts: FC<ShortcutsProps> = (props: ShortcutsProps) => {
       configure({
         ignoreTags: [],
         ignoreEventsCondition: () => false,
-        logLevel: 'warn',
+        logLevel: shortcuts.isDebugMode ? 'debug' : 'warn',
       });
     }
   });
