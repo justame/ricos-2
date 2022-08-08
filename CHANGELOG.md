@@ -45,6 +45,8 @@
 - `toolbars-v3`
   - [#4328](https://github.com/wix/ricos/pull/4328) custom heading fonts fixes
   - [#4287](https://github.com/wix/ricos/pull/4287) focus on/off formatting toolbar shortcut (tiptap)
+- `plugin-toolbar`
+  - [#4336](https://github.com/wix/ricos/pull/4336) fix plugin toolbar a11y
 - `mentions`
   - [#4329](https://github.com/wix/ricos/pull/4329) add id to schema
 

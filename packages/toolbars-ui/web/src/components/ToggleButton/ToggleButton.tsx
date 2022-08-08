@@ -1,10 +1,8 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useContext } from 'react';
 import type { FC, ComponentType } from 'react';
-import cx from 'classnames';
-import styles from './toggle-button.scss';
 import { RicosContext } from 'ricos-context';
-import Tooltip from 'wix-rich-content-common/libs/Tooltip';
+import { ToolbarButton } from '../ToolbarButton';
+import styles from './toggle-button.scss';
 
 interface Props {
   Icon: ComponentType;
@@ -27,27 +25,17 @@ const ToggleButton: FC<Props> = ({
 }) => {
   const { isMobile } = useContext(RicosContext) || {};
   return (
-    <Tooltip key={tooltip} content={tooltip} tooltipOffset={{ x: 0, y: -8 }}>
-      <div
-        className={cx(styles.buttonWrapper, {
-          [styles.mobileButtonWrapper]: isMobile,
-          [styles.active]: active,
-          [styles.disabled]: disabled,
-        })}
-        ref={setRef}
-      >
-        <div
-          data-hook={dataHook}
-          onMouseDown={e => e.preventDefault()}
-          className={cx(styles.button, { [styles.mobileButton]: isMobile })}
-          role="button"
-          onClick={onClick}
-          tabIndex={0}
-        >
-          <Icon />
-        </div>
-      </div>
-    </Tooltip>
+    <div className={styles.buttonWrapper} ref={setRef}>
+      <ToolbarButton
+        isMobile={isMobile}
+        active={active}
+        tooltip={tooltip}
+        disabled={disabled}
+        onClick={onClick}
+        icon={() => <Icon />}
+        dataHook={dataHook}
+      />
+    </div>
   );
 };
 

@@ -95,6 +95,7 @@ class PluginsToolbar extends React.Component<
       >
         {() => (
           <div
+            toolbar-type="floating"
             dir={ricosContext.languageDir}
             data-hook={'floating-plugin-toolbar'}
             className={styles.floatingToolbar}

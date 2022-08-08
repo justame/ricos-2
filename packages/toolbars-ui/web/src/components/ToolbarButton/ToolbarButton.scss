@@ -1,0 +1,62 @@
+@import '~wix-rich-content-common/dist/statics/styles/mixins';
+@import '~wix-rich-content-common/dist/statics/styles/palette';
+@import '~wix-rich-content-common/dist/statics/styles/fonts';
+
+.toolbarButtonWrapper {
+  font-family: $ricos-settings-font-family;
+  font-size: 14px;
+  border: 0 none;
+  background: transparent;
+  padding: 4px;
+  cursor: pointer;
+  color: var(--ricos-settings-text-color, #000);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 28px;
+
+  &:hover {
+    background-color: rgba(var(--ricos-settings-action-color-tuple, $fallbackColorTuple), 0.06);
+  }
+
+  &.active {
+    background-color: rgba($action-color-fallback-tuple, 0.1);
+    color: var(--ricos-settings-text-color, $action-color-fallback);
+    fill: var(--ricos-settings-text-color, $action-color-fallback);
+    @include svg-fill;
+  }
+
+  &.disabled {
+    cursor: default;
+    opacity: 0.4;
+  }
+
+  &.mobileToolbarButtonWrapper:not(.active) {
+    &:hover {
+      background-color: unset;
+    }
+  }
+
+  // &:focus {
+  //   outline: 5px auto Highlight !important;
+  //   outline: 5px auto -webkit-focus-ring-color !important;
+  // }
+}
+
+.toolbarButton {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // width: 20px;
+  min-width: 20px;
+  width: max-content;
+  gap: 8px;
+  height: 20px;
+
+  &.mobileToolbarButton {
+    width: 32px;
+    height: 32px;
+  }
+}

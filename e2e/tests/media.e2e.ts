@@ -382,9 +382,7 @@ describe('plugins', () => {
         useTiptap && cy.openSizeDropdown();
 
         cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.SMALL_CENTER);
-        cy.get(
-          `${useTiptap ? '' : 'button'}[data-hook=${PLUGIN_TOOLBAR_BUTTONS.REPLACE}][tabindex=0]`
-        ).click();
+        cy.get(`${useTiptap ? '' : 'button'}[data-hook=${PLUGIN_TOOLBAR_BUTTONS.REPLACE}]`).click();
         cy.get(`[data-hook=${GIPHY_PLUGIN.UPLOAD_MODAL}] img`);
         cy.percySnapshot(this.test.title);
       });

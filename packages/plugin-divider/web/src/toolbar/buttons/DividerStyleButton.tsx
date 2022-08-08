@@ -47,7 +47,7 @@ export const DividerStyleButton: FC<Props> = ({ toolbarItem, dataHook, id }) => 
       dataHook={dataHook}
       onClick={onClick}
       setRef={setReferenceElement}
-      Icon={() => <SelectedStyleIcon width={'37px'} />}
+      Icon={() => <SelectedStyleIcon width={36} />}
       tooltip={t('DividerPlugin_SelectType_Tooltip')}
     />
   );

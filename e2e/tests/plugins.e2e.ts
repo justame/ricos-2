@@ -67,7 +67,7 @@ import { getTestPrefix } from '../cypress/utils';
           `[data-hook="${
             useTiptap ? 'GalleryPlugin_Layout_Slideshow' : 'Slideshow_dropdown_option'
           }"]`
-        ).click();
+        ).click({ force: true });
         cy.wait(100);
 
         cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.SETTINGS);
