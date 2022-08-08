@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :house: Internal
+
+- `gallery`
+  - [#4346](https://github.com/wix/ricos/pull/4346) changling layout doesnt remove focus (tiptap)
+
 </details>
 
 ## 8.72.21 (Aug 08, 2022)

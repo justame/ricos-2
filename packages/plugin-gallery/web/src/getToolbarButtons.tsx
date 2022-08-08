@@ -116,6 +116,9 @@ export const getToolbarButtons = (config, services, galleryPluginService): Toolb
       id: GALLERY_BUTTONS.layout,
       dataHook: 'baseToolbarButton_layout',
       command: ({ layout, editorCommands }) => {
+        const {
+          selection: { anchor: pos },
+        } = editorCommands.state;
         editorCommands
           .chain()
           .focus()
@@ -123,6 +126,7 @@ export const getToolbarButtons = (config, services, galleryPluginService): Toolb
             options: layoutRicosData[layout],
           })
           .run();
+        setTimeout(() => editorCommands.chain().focus().setNodeSelection(pos).run(), 50);
       },
       attributes: {
         layout: selectedLayoutResolver,
