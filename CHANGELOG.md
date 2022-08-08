@@ -19,6 +19,8 @@
 
 ## :house: Internal
 
+- `general`
+  - [#4348](https://github.com/wix/ricos/pull/4348) debug-mode prop added to RicosEditor (tiptap)
 - `gallery`
   - [#4346](https://github.com/wix/ricos/pull/4346) changling layout doesnt remove focus (tiptap)
 
