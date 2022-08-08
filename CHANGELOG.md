@@ -19,6 +19,13 @@
 
 </details>
 
+## 8.72.21 (Aug 08, 2022)
+
+## :bug: Bug Fix
+
+- `toolbars-modals`
+  - [#4345](https://github.com/wix/ricos/pull/4345) libs package.json entry
+
 ## 8.72.20 (Aug 05, 2022)
 
 ## :house: Internal
