@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `toolbars-v3`
+  - [#4350](https://github.com/wix/ricos/pull/4350) fix createToolbar condition
+
 ## :house: Internal
 
 - `general`

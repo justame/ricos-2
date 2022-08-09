@@ -49,7 +49,9 @@ class RicosToolbarComponent extends Component<RicosToolbarProps, RicosToolbarSta
     if (nextProps.editorCommands !== this.props.editorCommands) {
       this.toolbar?.setEditorCommands(nextProps.editorCommands);
     }
-    if (nextProps.toolbarItemsConfig.toString() !== this.props.toolbarItemsConfig.toString()) {
+    if (
+      JSON.stringify(nextProps.toolbarItemsConfig) !== JSON.stringify(this.props.toolbarItemsConfig)
+    ) {
       this.toolbar = this.createToolbar(nextProps.toolbarItemsConfig);
     }
   }
