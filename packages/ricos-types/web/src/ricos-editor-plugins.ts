@@ -55,7 +55,7 @@ export interface RicosEditorPlugin {
    * @returns  {PluginToolbar}
    * @memberof RicosEditorPlugin
    */
-  getToolbar(): PluginToolbar | undefined;
+  getToolbars(): PluginToolbar[] | [];
   /**
    * Determines whether plugin equals to another plugin, based on type
    *

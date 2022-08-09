@@ -82,7 +82,7 @@ export class EditorPlugins implements RicosEditorPlugins {
 
   getVisibleToolbar(selection) {
     const toolbar = this.plugins
-      .map(plugin => plugin.getToolbar())
+      .flatMap(plugin => plugin.getToolbars())
       .filter(toolbar => !!toolbar?.isVisible(selection))?.[0];
     return toolbar;
   }

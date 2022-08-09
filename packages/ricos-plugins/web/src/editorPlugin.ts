@@ -8,6 +8,7 @@ import type {
   LegacyEditorPluginConfig,
   TiptapEditorPlugin,
   RicosServices,
+  ToolbarButton,
 } from 'ricos-types';
 import type { PluginServices } from './editorPlugins';
 import { PluginTextButton } from './plugin-text-button';
@@ -21,7 +22,7 @@ export class EditorPlugin implements RicosEditorPlugin {
 
   private textButtons?: PluginTextButton[];
 
-  private toolbar?: PluginToolbar;
+  private toolbars?: PluginToolbar[];
 
   services: PluginServices;
 
@@ -53,24 +54,28 @@ export class EditorPlugin implements RicosEditorPlugin {
     }
   }
 
-  private getExtensionName(): string {
-    return (this.plugin as TiptapEditorPlugin).tiptapExtensions?.[0]?.name || this.plugin.type;
+  private getExtensionNames(): string[] {
+    return (this.plugin as TiptapEditorPlugin).tiptapExtensions
+      ?.filter(({ type }) => type === 'node')
+      ?.map(({ name }) => name);
   }
 
   private initPluginToolbar() {
     if (this.plugin.toolbar) {
-      this.toolbar = RicosPluginToolbar.of(
-        {
-          buttons: this.plugin.toolbar.getButtons(
-            this.plugin.config,
-            this.services as RicosServices
-          ),
-          isVisible: this.plugin.toolbar.isVisible,
-        },
-        this.getExtensionName(),
-        this.services as RicosServices
+      this.toolbars = this.getExtensionNames()?.map(name =>
+        RicosPluginToolbar.of(
+          {
+            buttons: this.plugin.toolbar?.getButtons(
+              this.plugin.config,
+              this.services as RicosServices
+            ) as ToolbarButton[],
+            isVisible: this.plugin.toolbar?.isVisible,
+          },
+          name,
+          this.services as RicosServices
+        )
       );
-      this.toolbar?.register();
+      this.toolbars?.map(toolbar => toolbar.register());
     }
   }
 
@@ -82,7 +87,7 @@ export class EditorPlugin implements RicosEditorPlugin {
   }
 
   unregister() {
-    this.toolbar?.unregister();
+    this.toolbars?.map(toolbar => toolbar.unregister());
     this.textButtons?.map(b => b.unregister());
     this.addButtons?.map(b => b.unregister());
     this.plugin.shortcuts?.map(shortcut => this.services.shortcuts.unregister(shortcut));
@@ -111,8 +116,8 @@ export class EditorPlugin implements RicosEditorPlugin {
     return this.addButtons || [];
   }
 
-  getToolbar() {
-    return this.toolbar;
+  getToolbars() {
+    return this.toolbars || [];
   }
 
   equals(plugin: RicosEditorPlugin) {
