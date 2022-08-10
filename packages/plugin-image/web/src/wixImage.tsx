@@ -212,6 +212,9 @@ class WixImage extends React.Component<ImageViewerProps & { styles: Record<strin
       seoMode,
     } = this.props;
 
+    console.log('This is the value of seoMode prop that passed to RicosImage:', seoMode); //eslint-disable-line
+    console.log('This is the value of seoMode prop that RicosImage pass to WixImage:', seoMode); //eslint-disable-line
+
     const data = componentData || DEFAULTS;
     let { metadata, config: { alignment, width, size } = {} } = componentData;
     if (!metadata) {
