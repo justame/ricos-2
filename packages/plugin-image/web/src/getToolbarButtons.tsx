@@ -9,7 +9,7 @@ import ImageEditorModal from './modals/ImageEditorModal';
 import { imageModals, IMAGE_BUTTONS } from './consts';
 import { IMAGE_TYPE } from './types';
 import { ImagePluginService } from './toolbar/imagePluginService';
-import { Uploader } from 'wix-rich-content-plugin-commons';
+import { Uploader, selectedNodeResolver } from 'wix-rich-content-plugin-commons';
 import {
   AlignmentPanel,
   DropdownModal,
@@ -158,15 +158,4 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
       id: PLUGIN_TOOLBAR_BUTTON_ID.DELETE,
     },
   ];
-};
-
-const selectedNodeResolver = {
-  id: 'selectedNode',
-  resolve: content => {
-    if (Array.isArray(content) && content.length > 0) {
-      return content[0];
-    } else {
-      return undefined;
-    }
-  },
 };

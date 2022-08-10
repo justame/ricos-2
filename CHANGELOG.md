@@ -30,8 +30,9 @@
   - [#4346](https://github.com/wix/ricos/pull/4346) changling layout doesnt remove focus (tiptap)
 - `link-preview`
   - [#4347](https://github.com/wix/ricos/pull/4347) social-embed toolbar buttons
-
-</details>
+- `plugin-commons`
+  - [#4344](https://github.com/wix/ricos/pull/4344) fix custom `selectedNode` attribute resolver
+  </details>
 
 ## 8.72.21 (Aug 08, 2022)
 

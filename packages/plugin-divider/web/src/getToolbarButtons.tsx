@@ -1,11 +1,7 @@
 import React from 'react';
 import type { ToolbarButton } from 'ricos-types';
-import {
-  decorateComponentWithProps,
-  PLUGIN_TOOLBAR_BUTTON_ID,
-} from 'wix-rich-content-editor-common';
+import { PLUGIN_TOOLBAR_BUTTON_ID } from 'wix-rich-content-editor-common';
 import { AlignmentPanel } from 'wix-rich-content-toolbars-ui';
-import type { PluginContainerData_Alignment } from 'ricos-schema';
 import { DividerAlignmentButton } from './toolbar/buttons/DividerAlignmentButton';
 import { DividerSizeButton } from './toolbar/buttons/DividerSizeButton';
 import { DividerStyleButton } from './toolbar/buttons/DividerStyleButton';
@@ -20,6 +16,7 @@ import {
 } from './const';
 import LineStylePanel from './toolbar/modals/LineStylePanel';
 import DividerSizePanel from './toolbar/modals/DividerSizePanel';
+import { selectedNodeResolver } from 'wix-rich-content-plugin-commons';
 
 const getNodeSizeResolver = {
   id: DIVIDER_SIZE_RESOLVER_ID,
@@ -37,17 +34,6 @@ const getNodeStyleResolver = {
   resolve: content => {
     if (Array.isArray(content) && content.length > 0) {
       return content[0].attrs?.lineStyle;
-    } else {
-      return undefined;
-    }
-  },
-};
-
-const selectedNodeResolver = {
-  id: 'selectedNode',
-  resolve: content => {
-    if (Array.isArray(content) && content.length > 0) {
-      return content[0];
     } else {
       return undefined;
     }

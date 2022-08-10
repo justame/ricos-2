@@ -9,44 +9,9 @@ import {
   isTextContainsOrderedListResolver,
   isTextContainsUnorderedListResolver,
   isTextContainsSpoilerResolver,
-  isImageSelected,
-  isVideoSelected,
-  isGallerySelected,
-  isDividerSelected,
-  isVerticalEmbedSelected,
-  isSocialEmbedSelected,
-  isMapSelected,
-  isGifSelected,
-  isTableSelected,
-  isCollapsibleListSelected,
-  isButtonSelected,
-  isPollsSelected,
-  isHtmlEmbedSelected,
-  isAudioSelected,
-  isFileSelected,
 } from './tiptapResolvers';
 
-import toCamelCase from 'to-camel-case';
 import { Node_Type, Decoration_Type } from 'ricos-schema';
-import type { IContentResolver } from 'ricos-types';
-
-const pluginSelectedResolvers = {
-  [Node_Type.IMAGE]: isImageSelected,
-  [Node_Type.VIDEO]: isVideoSelected,
-  [Node_Type.GALLERY]: isGallerySelected,
-  [Node_Type.FILE]: isFileSelected,
-  [Node_Type.AUDIO]: isAudioSelected,
-  [Node_Type.HTML]: isHtmlEmbedSelected,
-  [Node_Type.POLL]: isPollsSelected,
-  [Node_Type.BUTTON]: isButtonSelected,
-  [Node_Type.COLLAPSIBLE_LIST]: isCollapsibleListSelected,
-  [Node_Type.TABLE]: isTableSelected,
-  [Node_Type.GIF]: isGifSelected,
-  [Node_Type.MAP]: isMapSelected,
-  [Node_Type.EMBED]: isSocialEmbedSelected,
-  [Node_Type.APP_EMBED]: isVerticalEmbedSelected,
-  [Node_Type.DIVIDER]: isDividerSelected,
-};
 
 describe('tiptap resolvers', () => {
   describe('alwaysVisibleResolver', () => {
@@ -232,25 +197,5 @@ describe('tiptap resolvers', () => {
       ];
       expect(isTextContainsSpoilerResolver.resolve(mockContent as TiptapNode[])).toBe(false);
     });
-  });
-
-  describe('Plugin Selected Resolvers', () => {
-    Object.entries(pluginSelectedResolvers).forEach(
-      ([type, isPluginSelectedResolver]: [Node_Type, IContentResolver<TiptapNode[]>]) => {
-        it(`should return true if ${type} is selected`, () => {
-          const mockContentWithPlugin = [{ type: { name: type } }];
-          expect(isPluginSelectedResolver.resolve(mockContentWithPlugin as TiptapNode[])).toBe(
-            true
-          );
-        });
-
-        it(`should return false if ${type} is not selected`, () => {
-          const mockContentWithoutPlugin = [{ type: { name: 'text' } }];
-          expect(isPluginSelectedResolver.resolve(mockContentWithoutPlugin as TiptapNode[])).toBe(
-            false
-          );
-        });
-      }
-    );
   });
 });

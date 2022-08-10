@@ -271,7 +271,7 @@ export type ToolbarButton = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   command?: (args: Record<string, any>) => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  attributes?: Record<string, { id: string; resolve: (content) => any }>;
+  attributes?: Record<string, { id: string; resolve: (content, services, editor) => any }>;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

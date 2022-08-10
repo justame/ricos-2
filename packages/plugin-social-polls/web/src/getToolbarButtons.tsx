@@ -8,17 +8,7 @@ import { PollDesignButton } from './toolbar/PollDesignButton'; //todo export def
 import { TIPTAP_POLL_TYPE } from 'ricos-content';
 import { PollLayoutButton } from './toolbar/PollLayoutButton';
 import LineStylePanel from './toolbar/PollLayoutPanel';
-
-const selectedNodeResolver = {
-  id: 'selectedNode',
-  resolve: content => {
-    if (Array.isArray(content) && content.length > 0) {
-      return content[0];
-    } else {
-      return undefined;
-    }
-  },
-};
+import { selectedNodeResolver } from 'wix-rich-content-plugin-commons';
 
 const getCommandByTab =
   (activeTab, modalService) =>

@@ -5,7 +5,7 @@ import { EditHtmlButton } from './toolbar/EditHtmlButton';
 import { DimensionSliderButton } from './toolbar/DimensionSliderButton';
 import { TIPTAP_HTML_TYPE } from 'ricos-content';
 import { MAX_HEIGHT_INPUT, MIN_WIDTH, MAX_WIDTH, MIN_HEIGHT, MAX_HEIGHT } from './defaults';
-import { HeightIcon, WidthIcon } from 'wix-rich-content-plugin-commons';
+import { HeightIcon, WidthIcon, selectedNodeResolver } from 'wix-rich-content-plugin-commons';
 import { AlignmentPanel, NodeAlignmentButton } from 'wix-rich-content-toolbars-ui';
 import { HTML_BUTTONS } from './consts';
 
@@ -102,16 +102,5 @@ const nodeAttrsInSelectionResolver = {
       return content[0].attrs;
     }
     return false;
-  },
-};
-
-const selectedNodeResolver = {
-  id: 'selectedNode',
-  resolve: content => {
-    if (Array.isArray(content) && content.length > 0) {
-      return content[0];
-    } else {
-      return undefined;
-    }
   },
 };

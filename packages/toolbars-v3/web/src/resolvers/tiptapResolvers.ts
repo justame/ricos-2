@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable fp/no-loops */
 import { TiptapContentResolver } from '../ContentResolver';
 import { RESOLVERS_IDS } from './resolvers-ids';
@@ -532,112 +533,30 @@ export const getHighlightColorInSelectionResolver = TiptapContentResolver.create
 
 export const isNodeContainsLinkOrAnchorResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.IS_NODE_CONTAINS_LINK_OR_ANCHOR,
-  content => {
-    if (Array.isArray(content) && content.length > 0) {
-      return content[0].attrs.link;
+  (_, __, editor) => {
+    const node = (editor?.state?.selection as Record<string, any> | undefined)?.node;
+    if (node) {
+      return node.attrs?.link;
     } else {
       return undefined;
     }
   }
 );
 
-const getPluginSelectedResolver = (resolverId: string, tiptapPluginName: string) =>
-  TiptapContentResolver.create(
-    resolverId,
-    content => content.length === 1 && content[0].type.name === tiptapPluginName
-  );
-
-export const isImageSelected = getPluginSelectedResolver(
-  RESOLVERS_IDS.IS_IMAGE_SELECTED,
-  Node_Type.IMAGE
-);
-
-export const isVideoSelected = getPluginSelectedResolver(
-  RESOLVERS_IDS.IS_VIDEO_SELECTED,
-  Node_Type.VIDEO
-);
-
-export const isGallerySelected = getPluginSelectedResolver(
-  RESOLVERS_IDS.IS_GALLERY_SELECTED,
-  Node_Type.GALLERY
-);
-
-export const isFileSelected = getPluginSelectedResolver(
-  RESOLVERS_IDS.IS_FILE_SELECTED,
-  Node_Type.FILE
-);
-
-export const isAudioSelected = getPluginSelectedResolver(
-  RESOLVERS_IDS.IS_AUDIO_SELECTED,
-  Node_Type.AUDIO
-);
-
-export const isHtmlEmbedSelected = getPluginSelectedResolver(
-  RESOLVERS_IDS.IS_HTML_EMBED_SELECTED,
-  Node_Type.HTML
-);
-
-export const isPollsSelected = getPluginSelectedResolver(
-  RESOLVERS_IDS.IS_POLLS_SELECTED,
-  Node_Type.POLL
-);
-
-export const isButtonSelected = getPluginSelectedResolver(
-  RESOLVERS_IDS.IS_BUTTON_SELECTED,
-  Node_Type.BUTTON
-);
-
-export const isCollapsibleListSelected = getPluginSelectedResolver(
-  RESOLVERS_IDS.IS_COLLAPSIBLE_LIST_SELECTED,
-  Node_Type.COLLAPSIBLE_LIST
-);
-
-export const isTableSelected = getPluginSelectedResolver(
-  RESOLVERS_IDS.IS_TABLE_SELECTED,
-  Node_Type.TABLE
-);
-
-export const isGifSelected = getPluginSelectedResolver(
-  RESOLVERS_IDS.IS_GIF_SELECTED,
-  Node_Type.GIF
-);
-
-export const isMapSelected = getPluginSelectedResolver(
-  RESOLVERS_IDS.IS_MAP_SELECTED,
-  Node_Type.MAP
-);
-
-export const isSocialEmbedSelected = getPluginSelectedResolver(
-  RESOLVERS_IDS.IS_SOCIAL_EMBED_SELECTED,
-  Node_Type.EMBED
-);
-
-export const isVerticalEmbedSelected = getPluginSelectedResolver(
-  RESOLVERS_IDS.IS_VERTICAL_EMBED_SELECTED,
-  Node_Type.APP_EMBED
-);
-
-export const isDividerSelected = getPluginSelectedResolver(
-  RESOLVERS_IDS.IS_DIVIDER_SELECTED,
-  Node_Type.DIVIDER
-);
-
 export const getNodeInSelectionResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.GET_NODE_IN_SELECTION,
-  content => {
-    if (Array.isArray(content) && content.length > 0) {
-      return content[0];
-    } else {
-      return undefined;
-    }
+  (_, __, editor) => {
+    const node = (editor?.state?.selection as Record<string, any> | undefined)?.node;
+    return node;
   }
 );
 
 export const getNodeAlignmentResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.GET_NODE_ALIGNMENT,
-  content => {
-    if (Array.isArray(content) && content.length > 0) {
-      return content[0].attrs?.containerData?.alignment;
+  (_, __, editor) => {
+    const node = (editor?.state?.selection as Record<string, any> | undefined)?.node;
+    if (node) {
+      return node.attrs?.containerData?.alignment;
     } else {
       return undefined;
     }
@@ -646,9 +565,10 @@ export const getNodeAlignmentResolver = TiptapContentResolver.create(
 
 export const getNodeSizeResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.GET_NODE_SIZE,
-  content => {
-    if (Array.isArray(content) && content.length > 0) {
-      return content[0].attrs?.containerData?.width?.size;
+  (_, __, editor) => {
+    const node = (editor?.state?.selection as Record<string, any> | undefined)?.node;
+    if (node) {
+      return node.attrs?.containerData?.width?.size;
     } else {
       return undefined;
     }
@@ -657,36 +577,14 @@ export const getNodeSizeResolver = TiptapContentResolver.create(
 
 export const getNodeLinkDataResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.GET_NODE_LINK_DATA,
-  content => {
-    if (Array.isArray(content) && content.length > 0) {
-      return content[0].attrs?.link;
+  (_, __, editor) => {
+    const node = (editor?.state?.selection as Record<string, any> | undefined)?.node;
+    if (node) {
+      return node.attrs?.link;
     } else {
       return undefined;
     }
   }
-);
-
-const pluginSelectedResolvers = [
-  isImageSelected,
-  isVideoSelected,
-  isGallerySelected,
-  isDividerSelected,
-  isVerticalEmbedSelected,
-  isSocialEmbedSelected,
-  isMapSelected,
-  isGifSelected,
-  isTableSelected,
-  isCollapsibleListSelected,
-  isButtonSelected,
-  isPollsSelected,
-  isHtmlEmbedSelected,
-  isAudioSelected,
-  isFileSelected,
-];
-
-export const isPluginSelectedResolver = TiptapContentResolver.create(
-  RESOLVERS_IDS.IS_PLUGIN_SELECTED,
-  content => pluginSelectedResolvers.some(isPluginSelected => isPluginSelected.resolve(content))
 );
 
 export const getUrlLinkData = TiptapContentResolver.create(

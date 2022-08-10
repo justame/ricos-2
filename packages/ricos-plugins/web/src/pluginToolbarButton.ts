@@ -73,8 +73,8 @@ export class RicosPluginToolbarButton implements PluginToolbarButton {
       },
       attributes: {
         visible: alwaysVisibleResolver,
-        ...attributes,
         ...toolbarItemConfig.attributes,
+        ...attributes,
       },
       commands: command
         ? {

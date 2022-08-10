@@ -6,17 +6,7 @@ import LinkPreviewSettingsModal from './modals/SettingsModal';
 import { LinkPreviewSettingsButton } from './toolbar/SettingsButton';
 import { RemovePreviewButton } from './toolbar/RemovePreviewButton';
 import { TIPTAP_EMBED_TYPE, TIPTAP_LINK_PREVIEW_TYPE } from 'wix-rich-content-common';
-
-const selectedNodeResolver = {
-  id: 'selectedNode',
-  resolve: content => {
-    if (Array.isArray(content) && content.length > 0) {
-      return content[0];
-    } else {
-      return undefined;
-    }
-  },
-};
+import { selectedNodeResolver } from 'wix-rich-content-plugin-commons';
 
 const isLinkPreviewSelectedResolver = {
   id: 'isLinkPreviewSelected',
