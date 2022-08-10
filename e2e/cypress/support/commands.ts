@@ -811,7 +811,9 @@ function setInlineToolbarMenuItem(item: string, selection: [number, number], but
 function addHtmlPlugin(htmlSrc: string, isUrl = false) {
   cy.clickOnStaticButton(HTML_PLUGIN.STATIC_TOOLBAR_BUTTON);
   if (isTiptap) {
-    cy.get(`[data-hook*=floating-plugin-toolbar] [data-hook*=baseToolbarButton_edit]`).click();
+    cy.get(`[data-hook*=floating-plugin-toolbar] [data-hook*=baseToolbarButton_edit]`).click({
+      force: true,
+    });
   }
   if (isUrl) {
     cy.get(`[data-hook*=${HTML_PLUGIN.RADIO_URL}]`).click();

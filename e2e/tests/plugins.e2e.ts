@@ -62,7 +62,7 @@ import { getTestPrefix } from '../cypress/utils';
       )} check spoilers on a gallery in editor and reveal it in viewer`, function () {
         cy.loadRicosEditorAndViewer('gallery', usePlugins(plugins.spoilerPreset));
         cy.get('[data-hook="galleryViewer"]:first').parent().click();
-        cy.get('[data-hook="baseToolbarButton_layout"]').click();
+        cy.get('[data-hook="baseToolbarButton_layout"]').click({ force: true });
         cy.get(
           `[data-hook="${
             useTiptap ? 'GalleryPlugin_Layout_Slideshow' : 'Slideshow_dropdown_option'
