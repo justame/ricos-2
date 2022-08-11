@@ -33,6 +33,7 @@
 ## :house: Internal
 
 - `general`
+  - [#4362](https://github.com/wix/ricos/pull/4364) font size in dropdown for header  (#4362)
   - [#4364](https://github.com/wix/ricos/pull/4364) (fix): UI - toolbar respond faster (#4364)
   - [#4348](https://github.com/wix/ricos/pull/4348) debug-mode prop added to RicosEditor (tiptap)
 - `gallery`
