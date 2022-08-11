@@ -545,9 +545,10 @@ const convertLinkData = (data: { url: string; target?: string; rel?: string } & 
 
 const convertTableData = data => {
   const {
-    config: { colsWidth, rowsHeight, colsMinWidth, rowHeader },
+    config: { colsWidth, rowsHeight, colsMinWidth, rowHeader, colHeader },
   } = data;
   const colsWidthRatio = colsWidth.map(width => parseInt(width, 10));
   data.dimensions = { colsWidthRatio, rowsHeight, colsMinWidth };
-  data.header = rowHeader;
+  data.rowHeader = rowHeader;
+  data.columnHeader = colHeader;
 };

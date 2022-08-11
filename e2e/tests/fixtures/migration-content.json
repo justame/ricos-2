@@ -1696,7 +1696,8 @@
             120,
             120
           ],
-          "rowHeader": true
+          "rowHeader": true,
+          "colHeader": true
         }
       }
     },

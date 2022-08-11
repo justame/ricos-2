@@ -15,6 +15,8 @@ message TableData {
 
   PluginContainerData container_data = 1;
   Dimensions dimensions = 2;
-  google.protobuf.BoolValue header = 3;
+  google.protobuf.BoolValue header = 3; // Deprecated - Changed to rowHeader and columnHeader
+  google.protobuf.BoolValue row_header = 4;
+  google.protobuf.BoolValue column_header = 5;
 }
 

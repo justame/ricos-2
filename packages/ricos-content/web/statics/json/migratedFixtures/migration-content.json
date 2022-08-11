@@ -2307,7 +2307,8 @@
             120
           ]
         },
-        "header": true
+        "rowHeader": true,
+        "columnHeader": true
       }
     },
     {

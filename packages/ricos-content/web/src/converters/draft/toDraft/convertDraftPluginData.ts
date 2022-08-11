@@ -605,6 +605,8 @@ const convertTableData = (
   data: {
     dimensions;
     header;
+    rowHeader;
+    columnHeader;
     config: {
       colsWidth;
       rowsHeight;
@@ -612,6 +614,7 @@ const convertTableData = (
       alignment?;
       rows;
       rowHeader;
+      colHeader;
     };
   },
   nodes
@@ -619,9 +622,18 @@ const convertTableData = (
   const {
     dimensions: { colsWidthRatio, rowsHeight, colsMinWidth },
     header,
+    rowHeader,
+    columnHeader,
   } = data || {};
   const { alignment: _, ...rest } = data.config;
-  data.config = { ...rest, colsWidth: colsWidthRatio, rowsHeight, colsMinWidth, rowHeader: header };
+  data.config = {
+    ...rest,
+    colsWidth: colsWidthRatio,
+    rowsHeight,
+    colsMinWidth,
+    rowHeader: rowHeader || header,
+    colHeader: columnHeader,
+  };
   const rows = {};
   nodes.forEach((row, i) => {
     rows[i] = { columns: {} };
@@ -646,4 +658,6 @@ const convertTableData = (
   data.config.rows = rows;
   delete data.dimensions;
   delete data.header;
+  delete data.rowHeader;
+  delete data.columnHeader;
 };
