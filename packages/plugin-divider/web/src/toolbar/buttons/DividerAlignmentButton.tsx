@@ -21,7 +21,7 @@ export const DividerAlignmentButton: FC<Props> = ({ toolbarItem, dataHook, id })
   const node = toolbarItem.attributes.selectedNode;
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
   const getSelectedAlignment: () => string = () =>
-    node.attrs?.alignment || getDefaultAlignment(languageDir);
+    node?.attrs?.alignment || getDefaultAlignment(languageDir);
   const selectedAlignment = getSelectedAlignment();
   const SelectedAlignmentIcon = alignmentMap[`${selectedAlignment}`];
 

@@ -21,6 +21,8 @@
 
 - `toolbars-v3`
   - [#4350](https://github.com/wix/ricos/pull/4350) fix createToolbar condition
+- `divider`
+  - [#4366](https://github.com/wix/ricos/pull/4366) fix size resolver
 
 ## :house: Internal
 
