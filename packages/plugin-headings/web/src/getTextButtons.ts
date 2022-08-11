@@ -52,9 +52,8 @@ export const getTextButtons = (): FormattingToolbarButtonConfig[] => {
         },
         removeInlineStyles:
           ({ editorCommands }) =>
-          (exclude?: string[]) => {
-            // eslint-disable-next-line no-console
-            console.log('TODO: removeInlineStyles');
+          () => {
+            editorCommands.chain().focus().unsetAllMarks().run();
           },
       },
     },

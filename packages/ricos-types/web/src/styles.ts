@@ -54,7 +54,8 @@ export interface AmbientStyles {
    * @param {RicosTheme} theme
    * @memberof AmbientStyles
    */
-  setTheme(theme: RicosTheme): AmbientStyles;
+  setTheme(theme: RicosTheme, isMobile?: boolean): AmbientStyles;
+
   /**
    * Sets new Document Style
    *

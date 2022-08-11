@@ -340,7 +340,7 @@ export const getFontSizeInSelectionResolver = TiptapContentResolver.create(
             !node?.marks.some(mark => mark.type.name === Decoration_Type.FONT_SIZE)
           ) {
             //TODO: take font size from documentStyle
-            currentFontSize = '16';
+            currentFontSize = '';
           } else {
             const fontSizeMark = node?.marks.find(
               mark => mark.type.name === Decoration_Type.FONT_SIZE

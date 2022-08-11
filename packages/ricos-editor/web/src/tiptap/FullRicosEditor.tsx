@@ -179,6 +179,7 @@ export class FullRicosEditor extends React.Component<Props, State> {
               <RicosStylesRenderer
                 theme={theme || {}}
                 documentStyle={content?.documentStyle || {}}
+                isMobile={!!isMobile}
               />
             </RicosPortal>
             {this.portalRef.current && (
