@@ -47,7 +47,19 @@ export const toolbarButtonsConfig: IPluginToolbarButtonsConfig = {
       setAlignment:
         ({ editorCommands }) =>
         alignment => {
-          editorCommands.chain().focus().setNodeAlignment(alignment).setNodeSize('SMALL').run();
+          editorCommands
+            .chain()
+            .focus()
+            .setNodeAlignment(alignment)
+            .command(({ tr, commands }) => {
+              const $from = tr.selection.$from;
+              const selectedNode = $from.nodeAfter;
+              const shouldUpdateSize =
+                selectedNode?.attrs.containerData?.width?.size !== 'ORIGINAL';
+              shouldUpdateSize && commands.setNodeSize('SMALL');
+              return true;
+            })
+            .run();
         },
     },
   },
