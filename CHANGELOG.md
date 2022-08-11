@@ -17,12 +17,18 @@
     Click to see more.
   </summary>
 
+  </details>
+
+## 8.72.22 (Aug 11, 2022)
+
 ## :bug: Bug Fix
 
 - `toolbars-v3`
   - [#4350](https://github.com/wix/ricos/pull/4350) fix createToolbar condition
 - `divider`
   - [#4366](https://github.com/wix/ricos/pull/4366) fix size resolver
+- `wix-image`
+  - [#4363](https://github.com/wix/ricos/pull/4363) fix aspect ratio for Safari < 15 & remove placeholderTransition on seoMode
 
 ## :house: Internal
 
@@ -34,7 +40,6 @@
   - [#4347](https://github.com/wix/ricos/pull/4347) social-embed toolbar buttons
 - `plugin-commons`
   - [#4344](https://github.com/wix/ricos/pull/4344) fix custom `selectedNode` attribute resolver
-  </details>
 
 ## 8.72.21 (Aug 08, 2022)
 
