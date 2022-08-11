@@ -40,6 +40,31 @@ $opacityTransition: opacity 0.8s ease;
   overflow: hidden;
 }
 
+.imageRatio {
+  width: 100%;
+  aspect-ratio: var(--dim-width) / var(--dim-height);
+
+  @supports not (aspect-ratio: 1 / 1) {
+    //Fix for Safari - aspect-ratio is not supported for Safari < 15
+    position: relative;
+
+    &::before {
+      display: block;
+      content: '';
+      width: 100%;
+      padding-bottom: calc((var(--dim-height) / var(--dim-width)) * 100%);
+    }
+
+    > :first-child {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+  }
+}
+
 .image {
   display: block;
   width: 100%;

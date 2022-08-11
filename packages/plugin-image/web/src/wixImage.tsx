@@ -221,7 +221,7 @@ class WixImage extends React.Component<ImageViewerProps & { styles: Record<strin
       metadata = {};
     }
 
-    const itemClassName = classNames(styles.imageWrapper, className, {
+    const itemClassName = classNames(styles.imageWrapper, styles.imageRatio, className, {
       [styles.pointer]: this.hasExpand() as boolean,
     });
 
@@ -258,6 +258,7 @@ class WixImage extends React.Component<ImageViewerProps & { styles: Record<strin
       width: (data.src?.width || data.width) as number,
       height: (data.src?.height || data.height) as number,
     };
+
     return (
       <div
         data-hook="imageViewer"
@@ -272,11 +273,14 @@ class WixImage extends React.Component<ImageViewerProps & { styles: Record<strin
           aria-label={metadata.alt}
           onClick={this.handleClick}
           onKeyDown={this.onKeyDown}
-          style={{
-            width: '100%',
-            aspectRatio: `${dim.width} /  ${dim.height}`,
-            ...(usePredefinedWidth && { width: IMAGE_FALLBACK_WIDTH + 'px' }),
-          }}
+          style={
+            {
+              '--dim-height': dim.height,
+              '--dim-width': dim.width,
+              ...(usePredefinedWidth && { width: IMAGE_FALLBACK_WIDTH + 'px' }),
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            } as any
+          }
         >
           <Image
             id={imageSrc}
@@ -288,7 +292,10 @@ class WixImage extends React.Component<ImageViewerProps & { styles: Record<strin
             alt={metadata.alt || ''}
             socialAttrs={socialAttrs}
             isSEOBot={!!seoMode}
-            {...(!isEditor && { placeholderTransition: 'blur', shouldUseLQIP: true })}
+            {...(!isEditor && {
+              placeholderTransition: seoMode ? undefined : 'blur',
+              shouldUseLQIP: true,
+            })}
           />
 
           {this.hasExpand() && this.renderExpandIcon()}
