@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState, useLayoutEffect, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import { useFloating, shift, offset, autoUpdate, flip } from '@floating-ui/react-dom';
 import { ClickOutside } from '../Clickoutside/ClickOutside';
@@ -9,7 +9,7 @@ import type { RicosPortal } from 'ricos-types';
 import { posToDOMRect } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
 import type { Selection } from 'prosemirror-state';
-import { debounce } from 'lodash';
+import { throttle } from 'lodash';
 
 export const FloatingToolbar = ({
   editor,
@@ -52,8 +52,8 @@ export const FloatingToolbar = ({
   const forceUpdate = useCallback(() => {
     setForceUpdate(dummyUpdate + Math.random());
   }, []);
-  const debounceRender = useCallback(
-    debounce(() => {
+  const throttleRender = useCallback(
+    throttle(() => {
       forceUpdate();
     }, 300),
     []
@@ -63,15 +63,15 @@ export const FloatingToolbar = ({
     editor.on('selectionUpdate', () => {
       setModalOpen(true);
     });
-    editor.on('selectionUpdate', debounceRender);
+    editor.on('selectionUpdate', throttleRender);
     editor.on('blur', forceUpdate);
-    window.addEventListener('resize', debounceRender);
+    window.addEventListener('resize', throttleRender);
 
     return () => {
-      editor.off('selectionUpdate', debounceRender);
+      editor.off('selectionUpdate', throttleRender);
       editor.off('blur', forceUpdate);
       editor.off('focus', forceUpdate);
-      window.removeEventListener('resize', debounceRender);
+      window.removeEventListener('resize', throttleRender);
     };
   }, []);
 
