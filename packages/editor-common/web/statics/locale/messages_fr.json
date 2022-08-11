@@ -576,7 +576,7 @@
   "ButtonModal_Background_Color": "Arrière-plan",
   "Embed_Vertical_Events_EmptyState_NoResults_Title": "Aucun événement trouvé",
   "EmojiPlugin_InsertButton": "Émoticônes",
-  "IndentButton_Tooltip": "Mettre en retrait",
+  "IndentButton_Tooltip": "Retrait",
   "Poll_PollSettings_Tab_Layout_Section_TextDirection_Header_Tooltip": "Pour les sites dont la langue se lit de droite à gauche, affichez le sondage de droite à gauche.",
   "CollapsibleList_CollapsibleListSettings_Common_Header": "Liste déroulante",
   "DeleteButton_Tooltip": "Supprimer",
