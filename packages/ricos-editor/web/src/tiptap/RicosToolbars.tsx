@@ -366,9 +366,7 @@ class RicosToolbars extends React.Component<
   }
 
   onKeyDown = e => {
-    if (e.keyCode === KEYS_CHARCODE.ENTER) {
-      e.stopPropagation();
-    } else if (e.keyCode === KEYS_CHARCODE.ESCAPE) {
+    if (e.keyCode === KEYS_CHARCODE.ESCAPE) {
       const { editor } = this.props;
       editor.adapter.focus();
       e.stopPropagation();

@@ -199,38 +199,35 @@ export class FullRicosEditor extends React.Component<Props, State> {
                       <ShortcutsContextProvider shortcuts={shortcuts}>
                         <PluginsContextProvider plugins={plugins}>
                           <>
-                            <Shortcuts group="global" root>
-                              <>
-                                <UploadContextProvider
-                                  uploadService={uploadService}
-                                  updateService={updateService}
+                            <>
+                              <UploadContextProvider
+                                uploadService={uploadService}
+                                updateService={updateService}
+                              >
+                                <ToolbarContext.Provider
+                                  value={{
+                                    ...this.getToolbarContext(),
+                                    toolbars,
+                                    portal: this.portalRef.current as RicosPortalType,
+                                  }}
                                 >
-                                  <ToolbarContext.Provider
-                                    value={{
-                                      ...this.getToolbarContext(),
-                                      toolbars,
-                                      portal: this.portalRef.current as RicosPortalType,
-                                    }}
-                                  >
-                                    <>
-                                      <ContentQueryProvider editor={editor.adapter.tiptapEditor}>
-                                        <RicosToolbars
-                                          content={toolbarContent}
-                                          toolbarSettings={toolbarSettings}
-                                          plugins={plugins}
-                                        />
-                                      </ContentQueryProvider>
-
-                                      <ModalRenderer />
-                                    </>
-                                  </ToolbarContext.Provider>
-                                </UploadContextProvider>
-                                <Shortcuts group="formatting">
-                                  <RicosEditor {...this.props} ref={this.props.forwardRef} />
-                                </Shortcuts>
-                                <FooterToolbarPlaceholder />
-                              </>
-                            </Shortcuts>
+                                  <>
+                                    <ContentQueryProvider editor={editor.adapter.tiptapEditor}>
+                                      <RicosToolbars
+                                        content={toolbarContent}
+                                        toolbarSettings={toolbarSettings}
+                                        plugins={plugins}
+                                      />
+                                    </ContentQueryProvider>
+                                  </>
+                                  <ModalRenderer />
+                                </ToolbarContext.Provider>
+                              </UploadContextProvider>
+                              <Shortcuts group="formatting" root>
+                                <RicosEditor {...this.props} ref={this.props.forwardRef} />
+                              </Shortcuts>
+                              <FooterToolbarPlaceholder />
+                            </>
                           </>
                         </PluginsContextProvider>
                       </ShortcutsContextProvider>

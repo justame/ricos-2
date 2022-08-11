@@ -28,6 +28,8 @@ export class EditorKeyboardShortcuts
 
   publishers!: PublisherProvider<['ricos.shortcuts.functionality.applied']>;
 
+  private readonly modalService: ModalService;
+
   constructor(
     modalService: ModalService,
     config: { isDebugMode: boolean } = { isDebugMode: false }
@@ -36,6 +38,7 @@ export class EditorKeyboardShortcuts
       Component: ShortcutsDialog,
       id: 'shortcuts-help',
     });
+    this.modalService = modalService;
     this.isDebugMode = config.isDebugMode;
   }
 
@@ -67,7 +70,7 @@ export class EditorKeyboardShortcuts
               ...handlers,
               [shortcut.getName()]: (e: KeyboardEvent) => {
                 e.preventDefault();
-                shortcut.getCommand()(commands);
+                shortcut.getCommand()(commands, this.modalService);
                 publisher.publish({ shortcutName: shortcut.getName() });
               },
             },

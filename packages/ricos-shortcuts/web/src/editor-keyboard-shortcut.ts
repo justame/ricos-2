@@ -5,6 +5,7 @@ import type {
   TranslationFunction,
   Platform,
   LocalizedDisplayData,
+  ModalService,
 } from 'ricos-types';
 import type { Shortcut } from './models/shortcuts';
 import { Keys } from './keys';
@@ -38,7 +39,7 @@ export class EditorKeyboardShortcut implements Shortcut {
     return this.keys[platform];
   }
 
-  getCommand(): (commands: EditorCommands) => void {
+  getCommand(): (commands: EditorCommands, modalService: ModalService) => void {
     return this.shortcut.command;
   }
 

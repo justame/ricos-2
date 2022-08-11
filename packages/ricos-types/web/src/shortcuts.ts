@@ -1,6 +1,7 @@
 import type { TranslationFunction } from 'i18next';
 import type { EditorCommands } from './editorCommandsType';
 import type { BasicKeyCombination } from './key-types';
+import type { ModalService } from './modalTypes';
 
 export type PlatformDependent<T> = {
   macOs: T;
@@ -62,7 +63,7 @@ export interface KeyboardShortcut {
    *
    * @memberof KeyboardShortcut
    */
-  command: (commands: EditorCommands) => void; // TODO: define return value type
+  command: (commands: EditorCommands, modalService: ModalService) => void; // TODO: define return value type
   /**
    * Enables shortcut
    *

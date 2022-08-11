@@ -326,7 +326,7 @@ const getLinkPanelDropDownConfig = () => {
     // isOpen: true,
     getItems: () => items,
     itemHeight: 40,
-    itemToString: item => item.value,
+    itemToString: item => item?.value,
     formatMenuItem: (item, input) => (
       <div
         style={{

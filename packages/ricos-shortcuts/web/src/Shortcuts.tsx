@@ -1,8 +1,7 @@
 import type { FC, ReactChild } from 'react';
 import React, { useContext, useEffect, useRef } from 'react';
-import { configure, HotKeys } from 'react-hotkeys';
-import { EditorContext, ModalContext, RicosContext, ShortcutsContext } from 'ricos-context';
-import type { KeyboardShortcut, ModalService } from 'ricos-types';
+import { configure, HotKeys, GlobalHotKeys } from 'react-hotkeys';
+import { EditorContext, RicosContext, ShortcutsContext } from 'ricos-context';
 import type { Shortcuts as ShortcutManager } from './models/shortcuts';
 
 export type ShortcutsProps = {
@@ -29,31 +28,9 @@ const useComponentWillMount = (callback: () => void) => {
 };
 
 export const Shortcuts: FC<ShortcutsProps> = (props: ShortcutsProps) => {
-  const modalService: ModalService = useContext(ModalContext);
-
-  const helpShortcut: KeyboardShortcut = {
-    name: 'Keyboard Shortcuts',
-    description: 'Displays available shortcuts',
-    group: 'global',
-    command() {
-      modalService.openModal('shortcuts-help', {
-        positioning: { placement: 'right' },
-        layout: 'drawer',
-      });
-    },
-    keys: {
-      macOs: 'Meta+/',
-      windows: 'Ctrl+/',
-    },
-    enabled: true,
-  };
-
   const { group, root, children } = { ...defaultProps, ...props };
 
   const shortcuts = useContext(ShortcutsContext) as ShortcutManager;
-  if (root && shortcuts.asArray().filter(s => s.getName() === 'Keyboard Shortcuts').length === 0) {
-    shortcuts.register(helpShortcut);
-  }
 
   const { t } = useContext(RicosContext);
   const { getEditorCommands } = useContext(EditorContext);
@@ -76,6 +53,7 @@ export const Shortcuts: FC<ShortcutsProps> = (props: ShortcutsProps) => {
       <HotKeys root={root} handlers={handlers} keyMap={keyMap}>
         {children}
       </HotKeys>
+      {root && <GlobalHotKeys />}
     </>
   );
 };
