@@ -180,11 +180,12 @@ export class RichContentAdapter implements TiptapAdapter {
         doc.nodesBetween(from, to, node => {
           selectedNodes.push(node);
         });
+        const hasSelectionNodes = selectedNodes.length > 0;
         return {
           isFocused: this.tiptapEditor.isFocused,
           isCollapsed: this.tiptapEditor.state.selection.empty,
-          startKey: selectedNodes[0].attrs.id,
-          endKey: selectedNodes[selectedNodes.length - 1].attrs.id,
+          startKey: hasSelectionNodes ? selectedNodes[0].attrs.id : '',
+          endKey: hasSelectionNodes ? selectedNodes[selectedNodes.length - 1].attrs.id : '',
         };
       },
 

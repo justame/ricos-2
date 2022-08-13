@@ -1,7 +1,28 @@
 import type { RicosExtension, RicosExtensionConfig } from 'ricos-types';
-import { Plugin, PluginKey } from 'prosemirror-state';
+import { Plugin, PluginKey, TextSelection } from 'prosemirror-state';
 import { generateId } from 'ricos-content';
 import { browser } from 'wix-rich-content-editor-common';
+
+function minMax(value = 0, min = 0, max = 0): number {
+  return Math.min(Math.max(value, min), max);
+}
+
+/*
+  This fix a bug with Android when using setNodeType in appendTransaction.
+  The bug is that the cursor is not positioned correctly after the transaction
+  so we have to manually set the cursor position.
+*/
+const handleAndroidEnterBug = (tr, pos) => {
+  const { doc } = tr;
+  const { from, to } = { from: pos + 1, to: pos + 1 };
+
+  const minPos = TextSelection.atStart(doc).from;
+  const maxPos = TextSelection.atEnd(doc).to;
+  const resolvedFrom = minMax(from, minPos, maxPos);
+  const resolvedEnd = minMax(to, minPos, maxPos);
+  const selection = TextSelection.create(doc, resolvedFrom, resolvedEnd);
+  tr.setSelection(selection);
+};
 
 export const uniqueId: RicosExtension = {
   type: 'extension',
@@ -49,18 +70,20 @@ export const uniqueId: RicosExtension = {
                 const id = nodeId && !usedIds[nodeId] ? nodeId : generateId();
                 usedIds[id] = true;
                 const shouldUpdate = nodeId !== id;
+
                 if (node.isBlock && shouldUpdate) {
                   tr.setNodeMarkup(pos, undefined, {
                     ...node.attrs,
                     id,
+                    marks,
                   });
 
-                  /* this is a patch until we will update to the latest prosemirror-view version
-                    which fix the bug on android that users can't type if the are in a composition mode
-                    */
-                  if (!browser.android) {
-                    marks && tr.ensureMarks(marks);
+                  //  this should run before ensureMarks becasuse it ressets the marks
+                  if (browser.android) {
+                    handleAndroidEnterBug(tr, pos);
                   }
+
+                  marks && tr.ensureMarks(marks);
                 }
               });
 
