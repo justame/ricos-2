@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `toolbars-v3`
+  - [#4379](https://github.com/wix/ricos/pull/4379) wire add plugin menu plus button
+
 ## :house: Internal
 
 - `social-polls`
