@@ -112,14 +112,16 @@ const AudioUploadModal = props => {
         const { newBlock } = onConfirm({ ...props.componentData });
         blockKey = newBlock.key;
       }
-      setTimeout(() =>
-        uploadService.uploadFile(
-          file,
-          blockKey || props.blockKey,
-          uploader,
-          AUDIO_TYPE,
-          AudioPluginService
-        )
+      setTimeout(
+        () =>
+          uploadService.uploadFile(
+            file,
+            blockKey || props.blockKey,
+            uploader,
+            AUDIO_TYPE,
+            AudioPluginService
+          ),
+        50
       );
     } else {
       handleUploadStart(

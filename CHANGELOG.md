@@ -21,6 +21,8 @@
 
 - `toolbars-v3`
   - [#4379](https://github.com/wix/ricos/pull/4379) wire add plugin menu plus button
+- `audio/video`
+  - [#4377](https://github.com/wix/ricos/pull/4377) fix nodId creation
 
 ## :house: Internal
 
@@ -37,7 +39,6 @@
 
   - [#4351](https://github.com/wix/ricos/pull/4351) opening modals triggers scrolling to top
   - [#4353](https://github.com/wix/ricos/pull/4353) fix mobile keyboard in modal buttons
-
 - `wix-image`
   - [#4373](https://github.com/wix/ricos/pull/4373) log seoMode flag only on SSR or on debug mode
 

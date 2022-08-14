@@ -4,6 +4,7 @@ import { AUDIO_TYPE } from '../types';
 import AudioInsertModal from './AudioInsertModal';
 import { ModalContext, RicosContext, EditorContext, UploadContext } from 'ricos-context';
 import { convertBlockDataToRicos } from 'ricos-content/libs/convertBlockDataToRicos';
+import { generateId } from 'ricos-content';
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   componentData: Record<string, any>;
@@ -37,9 +38,11 @@ const InsertModal: FC<Props> = ({
 
   const onConfirm = audio => {
     const data = convertBlockDataToRicos(AUDIO_TYPE, audio);
-    const insertAudio = () => getEditorCommands().insertBlockWithBlankLines(AUDIO_TYPE, data);
-    const nodeId = addBlockWithFocus(insertAudio);
-    return { newBlock: { key: nodeId } };
+    const id = generateId();
+    const insertAudio = () =>
+      getEditorCommands().insertBlockWithBlankLines(AUDIO_TYPE, { ...data, id });
+    addBlockWithFocus(insertAudio);
+    return { newBlock: { key: id } };
   };
 
   const onReplace = audio => {

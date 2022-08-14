@@ -4,6 +4,7 @@ import { VIDEO_TYPE } from '../types';
 import VideoInsertModal from '../toolbar/NewVideoInsertModal';
 import { ModalContext, RicosContext, EditorContext, UploadContext } from 'ricos-context';
 import { convertBlockDataToRicos } from 'ricos-content/libs/convertBlockDataToRicos';
+import { generateId } from 'ricos-content';
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   componentData: Record<string, any>;
@@ -43,10 +44,12 @@ const InsertModal: FC<Props> = ({
     if (nodeId) {
       onReplace(video);
     } else {
+      const id = generateId();
       const data = convertBlockDataToRicos(VIDEO_TYPE, video);
-      const insertVideo = () => getEditorCommands().insertBlockWithBlankLines(VIDEO_TYPE, data);
-      const nodeId = addBlockWithFocus(insertVideo);
-      return { newBlock: { key: nodeId } };
+      const insertVideo = () =>
+        getEditorCommands().insertBlockWithBlankLines(VIDEO_TYPE, { ...data, id });
+      addBlockWithFocus(insertVideo);
+      return { newBlock: { key: id } };
     }
   };
 

@@ -81,14 +81,16 @@ export default class VideoUploadModal extends Component {
         const { newBlock } = onConfirm({ ...this.props.componentData, isCustomVideo: true });
         this.blockKey = newBlock.key;
       }
-      setTimeout(() =>
-        uploadService.uploadFile(
-          file,
-          this.blockKey || this.props.blockKey,
-          this.Uploader,
-          VIDEO_TYPE,
-          this.VideoPluginService
-        )
+      setTimeout(
+        () =>
+          uploadService.uploadFile(
+            file,
+            this.blockKey || this.props.blockKey,
+            this.Uploader,
+            VIDEO_TYPE,
+            this.VideoPluginService
+          ),
+        50
       );
     } else {
       handleUploadStart(
