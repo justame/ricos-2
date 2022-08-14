@@ -19,7 +19,7 @@ export const PollLayoutButton: FC<Props> = ({ toolbarItem, id, dataHook }) => {
   const { t, isMobile } = useContext(RicosContext) || {};
   const modalService = useContext(ModalContext) || {};
   const node = toolbarItem.attributes.selectedNode;
-  const getSelectedLayout: () => string = () => node.attrs.layout?.poll?.type || 'GRID';
+  const getSelectedLayout: () => string = () => node?.attrs?.layout?.poll?.type || 'GRID';
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
   const closeModal = () => modalService.closeModal(id);
 

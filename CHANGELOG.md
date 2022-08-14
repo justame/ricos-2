@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :house: Internal
+
+- `social-polls`
+  - [#4375](https://github.com/wix/ricos/pull/4375) fix tiptap image uploads
+
   </details>
 
 ## 8.72.23 (Aug 14, 2022)

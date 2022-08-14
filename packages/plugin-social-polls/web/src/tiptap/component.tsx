@@ -14,7 +14,7 @@ export const Poll: React.FC<PluginProps> = ({
 }) => {
   const { theme, t, isMobile, experiments } = useContext(RicosContext);
   const block = { getKey: () => node.attrs.id };
-  const helpers = { handleFileUpload: () => {} };
+  const helpers = { handleFileUpload: settings.handleFileUpload };
   //mocks
   const store = {
     update: (type, data) => updateAttributes(convertBlockDataToRicos(POLL_TYPE, data)),
