@@ -24,7 +24,7 @@ class LinkPanel extends Component {
 
   componentDidMount() {
     this.onChange({ isValid: this.isValidUrl(this.props.linkValues.url) });
-    this.textInput.current?.focus();
+    setTimeout(() => this.textInput.current?.focus(), 0); // setTimeout is needed for popper to place the modal first
     this.textInput.current?.select(); //select the link in case of edit
   }
 

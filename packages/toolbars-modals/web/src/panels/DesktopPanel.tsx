@@ -41,7 +41,7 @@ const DesktopPanel = ({
 
   useEffect(() => {
     const ref = panelRef.current as HTMLDivElement;
-    !externalFocus && ref.focus();
+    !externalFocus && setTimeout(() => ref.focus(), 0); // setTimeout is needed for popper to place the modal first
   }, []);
 
   const optionElement = (option, isSelected, onClick, onHover) => {
@@ -64,7 +64,13 @@ const DesktopPanel = ({
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
         onKeyDown={onKeyDown}
-        onFocus={() => onHover && onHover(option.commandKey)}
+        onFocus={e => {
+          const eventTarget = e.target;
+          onHover &&
+            setTimeout(() => {
+              eventTarget === document.activeElement && onHover(option.commandKey);
+            }, 0);
+        }}
         onMouseOver={onOptionHover}
         key={option.commandKey}
       >
