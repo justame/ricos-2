@@ -34,9 +34,9 @@
 ## 8.72.23 (Aug 14, 2022)
 
 ## :bug: Bug Fix
-
+- `internal`
+  - [#4368](https://github.com/wix/ricos/pull/4368) android enter fix
 - `toolbars-v3`
-
   - [#4351](https://github.com/wix/ricos/pull/4351) opening modals triggers scrolling to top
   - [#4353](https://github.com/wix/ricos/pull/4353) fix mobile keyboard in modal buttons
 - `wix-image`
