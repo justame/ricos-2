@@ -25,7 +25,7 @@
   - [#4377](https://github.com/wix/ricos/pull/4377) fix nodId creation
 
 ## :house: Internal
-
+- [#4383](https://github.com/wix/ricos/pull/4383) (fix): alignment/spacing resets each other
 - `social-polls`
   - [#4375](https://github.com/wix/ricos/pull/4375) fix tiptap image uploads
 
