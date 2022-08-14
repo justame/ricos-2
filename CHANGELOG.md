@@ -17,18 +17,24 @@
     Click to see more.
   </summary>
 
+  </details>
+
+## 8.72.23 (Aug 14, 2022)
+
 ## :bug: Bug Fix
 
 - `toolbars-v3`
+
   - [#4351](https://github.com/wix/ricos/pull/4351) opening modals triggers scrolling to top
   - [#4353](https://github.com/wix/ricos/pull/4353) fix mobile keyboard in modal buttons
+
+- `wix-image`
+  - [#4373](https://github.com/wix/ricos/pull/4373) log seoMode flag only on SSR or on debug mode
 
 ## :house: Internal
 
 - `ricos-common`
   - [#4370](https://github.com/wix/ricos/pull/4370) UploadService events
-
-  </details>
 
 ## 8.72.22 (Aug 11, 2022)
 
@@ -44,7 +50,7 @@
 ## :house: Internal
 
 - `general`
-  - [#4362](https://github.com/wix/ricos/pull/4364) font size in dropdown for header  (#4362)
+  - [#4362](https://github.com/wix/ricos/pull/4364) font size in dropdown for header (#4362)
   - [#4364](https://github.com/wix/ricos/pull/4364) (fix): UI - toolbar respond faster (#4364)
   - [#4348](https://github.com/wix/ricos/pull/4348) debug-mode prop added to RicosEditor (tiptap)
 - `gallery`
