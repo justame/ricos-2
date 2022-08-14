@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { IMAGE_TYPE } from './types';
 import { get, includes, isFunction, uniqueId } from 'lodash';
 import type { ComponentData } from 'ricos-content';
-import { anchorScroll, addAnchorTagToUrl } from 'wix-rich-content-common';
+import { anchorScroll, addAnchorTagToUrl, isSSR } from 'wix-rich-content-common';
 import { Image, initCustomElement } from '@wix/image';
 import { DEFAULTS } from './consts';
 import ExpandIcon from './icons/expand';
@@ -212,8 +212,10 @@ class WixImage extends React.Component<ImageViewerProps & { styles: Record<strin
       seoMode,
     } = this.props;
 
-    console.log('This is the value of seoMode prop that passed to RicosImage:', seoMode); //eslint-disable-line
-    console.log('This is the value of seoMode prop that RicosImage pass to WixImage:', seoMode); //eslint-disable-line
+    if (isSSR() || /debug/i.test(window?.location?.search)) {
+      console.log('This is the value of seoMode prop that passed to RicosImage:', seoMode); //eslint-disable-line
+      console.log('This is the value of seoMode prop that RicosImage pass to WixImage:', seoMode); //eslint-disable-line
+    }
 
     const data = componentData || DEFAULTS;
     let { metadata, config: { alignment, width, size } = {} } = componentData;
