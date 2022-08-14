@@ -17,6 +17,12 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `toolbars-v3`
+  - [#4351](https://github.com/wix/ricos/pull/4351) opening modals triggers scrolling to top
+  - [#4353](https://github.com/wix/ricos/pull/4353) fix mobile keyboard in modal buttons
+
 ## :house: Internal
 
 - `ricos-common`
