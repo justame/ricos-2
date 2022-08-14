@@ -79,7 +79,7 @@ export const lineSpacing: RicosExtension = {
                 return false;
               }
               return types.every(type =>
-                commands.updateAttributes(type, {
+                commands.updateAttributesWithDeepMerge(type, {
                   textStyle: { lineHeight: lineSpacing },
                 })
               );

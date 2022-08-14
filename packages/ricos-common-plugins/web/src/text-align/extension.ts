@@ -97,7 +97,7 @@ export const textAlign: RicosExtension = {
               }
 
               return types.every(type =>
-                commands.updateAttributes(type, {
+                commands.updateAttributesWithDeepMerge(type, {
                   textStyle: { textAlignment },
                 })
               );
@@ -106,7 +106,7 @@ export const textAlign: RicosExtension = {
             () =>
             ({ commands }) =>
               types.every(type =>
-                commands.updateAttributes(type, {
+                commands.updateAttributesWithDeepMerge(type, {
                   textStyle: { textAlignment: this.options.textAlignment },
                 })
               ),
