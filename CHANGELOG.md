@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :house: Internal
+
+- `ricos-common`
+  - [#4370](https://github.com/wix/ricos/pull/4370) UploadService events
+
   </details>
 
 ## 8.72.22 (Aug 11, 2022)
