@@ -15,8 +15,10 @@ import { getLangDir } from 'wix-rich-content-common';
 import { ToolbarButton } from '../ToolbarButton';
 import { onModalKeyDown } from '../modal-buttons-utils';
 
-const onSave = (data, toolbarItem) => {
-  toolbarItem.commands?.setAlignment(data);
+const onSave = (data, toolbarItem, isMobile) => {
+  isMobile
+    ? toolbarItem.commands?.setAlignmentWithoutFocus(data)
+    : toolbarItem.commands?.setAlignment(data);
 };
 
 const AlignmentButton = ({ toolbarItem, context, dataHook }) => {
@@ -73,9 +75,9 @@ const AlignmentButton = ({ toolbarItem, context, dataHook }) => {
         ReactDOM.createPortal(
           <div
             dir={getLangDir(locale)}
-            ref={!isMobile ? setPopperElement : () => null}
+            ref={setPopperElement}
             style={isMobile ? {} : { ...popperStyles.popper }}
-            {...attributes.popper}
+            {...(isMobile ? {} : attributes.popper)}
             className={isMobile ? '' : styles.popperContainer}
           >
             <div
@@ -89,7 +91,7 @@ const AlignmentButton = ({ toolbarItem, context, dataHook }) => {
                 t={t}
                 theme={theme}
                 currentSelect={selectedAlignment}
-                onSave={({ data }) => onSave(data, toolbarItem)}
+                onSave={({ data }) => onSave(data, toolbarItem, isMobile)}
                 closeModal={() => setModalOpen(false)}
               />
             </div>

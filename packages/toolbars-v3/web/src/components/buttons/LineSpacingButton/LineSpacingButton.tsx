@@ -90,9 +90,9 @@ const LineSpacingButton = ({ toolbarItem, context, dataHook }) => {
         ReactDOM.createPortal(
           <div
             dir={getLangDir(locale)}
-            ref={!isMobile ? setPopperElement : () => null}
+            ref={setPopperElement}
             style={isMobile ? {} : { ...popperStyles.popper }}
-            {...attributes.popper}
+            {...(isMobile ? {} : attributes.popper)}
             className={isMobile ? '' : styles.popperContainer}
           >
             <div

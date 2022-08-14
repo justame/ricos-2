@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 import classNames from 'classnames';
-import { CloseIcon } from 'wix-rich-content-ui-components';
+import { CloseIcon, FocusManager } from 'wix-rich-content-ui-components';
 import styles from './styles.scss';
 
 const Separator = () => <div className={styles.separator} />;
@@ -14,7 +14,7 @@ const MobilePanel = ({ currentSelect, panelHeader, onChange, onCancel, options, 
     const dataHook = option.dataHook || 'modal-option';
     return (
       <div>
-        <div
+        <button
           className={classNames(styles.panel_row, {
             [styles.panel_selectedRow]: isSelected,
           })}
@@ -32,32 +32,34 @@ const MobilePanel = ({ currentSelect, panelHeader, onChange, onCancel, options, 
             </div>
             {option.subText && <div className={styles.panel_row_subtext}>{option.subText}</div>}
           </div>
-        </div>
+        </button>
         {showSeparator && <Separator />}
       </div>
     );
   };
 
   return (
-    <div className={styles.mobilePanel}>
-      <div className={styles.mobilePanel_header}>
-        {panelHeader}
-        <CloseIcon
-          className={styles.closeIcon}
-          data-hook="toolbar-modal-close-icon"
-          onClick={onCancel}
-        />
+    <FocusManager>
+      <div className={styles.mobilePanel}>
+        <div className={styles.mobilePanel_header}>
+          {panelHeader}
+          <CloseIcon
+            className={styles.closeIcon}
+            data-hook="toolbar-modal-close-icon"
+            onClick={onCancel}
+          />
+        </div>
+        <Separator />
+        <div className={styles.mobilePanel_rows}>
+          {options.map((option, i) => {
+            const isSelected =
+              (currentSelect?.['line-height'] ?? currentSelect) === option.commandKey;
+            const showSeparator = i !== options.length - 1;
+            return lineHeightElement(option, isSelected, showSeparator);
+          })}
+        </div>
       </div>
-      <Separator />
-      <div className={styles.mobilePanel_rows}>
-        {options.map((option, i) => {
-          const isSelected =
-            (currentSelect?.['line-height'] ?? currentSelect) === option.commandKey;
-          const showSeparator = i !== options.length - 1;
-          return lineHeightElement(option, isSelected, showSeparator);
-        })}
-      </div>
-    </div>
+    </FocusManager>
   );
 };
 

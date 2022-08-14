@@ -87,6 +87,11 @@ export const pluginTextAlignment: TiptapEditorPlugin = {
           alignment => {
             editorCommands.chain().focus().setTextAlign(alignment).run();
           },
+        setAlignmentWithoutFocus:
+          ({ editorCommands }) =>
+          alignment => {
+            editorCommands.chain().setTextAlign(alignment).run();
+          },
       },
       modal: {
         id: FORMATTING_ALIGNMENT_MODAL_ID,
