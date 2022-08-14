@@ -8,9 +8,18 @@ import type {
   IUpdateService,
   IUploadService,
   IUploadObserver,
+  EventSource,
+  PublisherProvider,
 } from 'ricos-types';
+import type { MediaUploadError } from 'wix-rich-content-common';
+import { createUploadEndBIData, createUploadStartBIData } from '../biCallbacks/mediaUploadBI';
 
-export class UploadService implements IUploadService {
+export type UploadTopics = [
+  'ricos.upload.functionality.uploadStarted',
+  'ricos.upload.functionality.uploadFinished'
+];
+
+export class UploadService implements IUploadService, EventSource<UploadTopics> {
   streamReader: ILocalFileReader;
 
   getErrorNotifier!: () => INotifier;
@@ -21,28 +30,25 @@ export class UploadService implements IUploadService {
 
   onInputChange: ((this: HTMLInputElement, event: any) => any) | null;
 
-  BICallbacks?: {
-    onMediaUploadStart?: any;
-    onMediaUploadEnd?: any;
-  };
-
   uploadObserver?: IUploadObserver;
 
   constructor(
     streamReader: ILocalFileReader,
     updateService: IUpdateService,
-    BICallbacks?: {
-      onMediaUploadStart?: any;
-      onMediaUploadEnd?: any;
-    },
     uploadObserver?: IUploadObserver
   ) {
     this.streamReader = streamReader;
     this.updateService = updateService;
     this.onInputChange = null;
-    this.BICallbacks = BICallbacks;
     this.uploadObserver = uploadObserver;
   }
+
+  topicsToPublish: UploadTopics = [
+    'ricos.upload.functionality.uploadStarted',
+    'ricos.upload.functionality.uploadFinished',
+  ];
+
+  publishers!: PublisherProvider<UploadTopics>;
 
   setErrorNotifier(getErrorNotifer: () => INotifier) {
     this.getErrorNotifier = getErrorNotifer;
@@ -86,8 +92,11 @@ export class UploadService implements IUploadService {
         MediaPluginService,
         fileState
       );
-      const uploadBIData = this.BICallbacks?.onMediaUploadStart?.(type, file.size, file.type);
-      let error = null;
+      const uploadStartBiData = createUploadStartBIData(type, file.size, file.type);
+      this.publishers
+        .byTopic('ricos.upload.functionality.uploadStarted')
+        .publish(uploadStartBiData);
+      let error: MediaUploadError | undefined;
       try {
         const uploadedFile = await uploader.upload(file);
         this.updateService.updatePluginData(
@@ -103,7 +112,10 @@ export class UploadService implements IUploadService {
         errorNotifier.notify(e);
         this.updateService.updateErrorState(e, nodeId, type, MediaPluginService, newFileState);
       } finally {
-        this.BICallbacks?.onMediaUploadEnd?.(uploadBIData, error);
+        const uploadFinishedBiData = createUploadEndBIData(uploadStartBiData, error);
+        this.publishers
+          .byTopic('ricos.upload.functionality.uploadFinished')
+          .publish(uploadFinishedBiData);
       }
     } catch (e) {
       errorNotifier.notify({ msg: 'Failed reading file locally' });

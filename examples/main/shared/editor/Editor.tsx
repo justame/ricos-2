@@ -104,6 +104,8 @@ export default class Editor extends PureComponent<ExampleEditorProps> {
       onPluginModalOpened: async params => console.log('onPluginModalOpened', params),
       onMenuLoad: async params => console.log('onMenuLoad', params),
       onInlineToolbarOpen: async params => console.log('onInlineToolbarOpen', params),
+      onMediaUploadStart: async params => console.log('onMediaUploadStart', params),
+      onMediaUploadEnd: async params => console.log('onMediaUploadEnd', params),
       //
       // handleFileUpload: mockImageNativeUploadFunc,
       handleFileSelection: mockImageUploadFunc,

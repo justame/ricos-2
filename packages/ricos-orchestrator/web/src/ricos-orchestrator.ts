@@ -18,7 +18,6 @@ import type {
   EventData,
   INotifier,
   IUpdateService,
-  IUploadService,
   LegacyEditorPluginConfig,
   Orchestrator,
   RicosServices,
@@ -50,7 +49,7 @@ export class RicosOrchestrator implements Orchestrator {
 
   private readonly plugins: EditorPlugins;
 
-  private readonly uploadService: IUploadService;
+  private readonly uploadService: UploadService;
 
   private readonly t: TranslationFunction;
 
@@ -68,11 +67,7 @@ export class RicosOrchestrator implements Orchestrator {
     this.toolbars = new RicosToolbars();
     this.styles = new RicosStyles();
 
-    const { onMediaUploadStart, onMediaUploadEnd } = editorProps._rcProps?.helpers || {};
-    this.uploadService = new UploadService(new StreamReader(), this.updateService, {
-      onMediaUploadStart,
-      onMediaUploadEnd,
-    });
+    this.uploadService = new UploadService(new StreamReader(), this.updateService);
 
     this.modals = new RicosModalService();
 
@@ -134,7 +129,13 @@ export class RicosOrchestrator implements Orchestrator {
   }
 
   private registerEventSources() {
-    const eventSources = [this.shortcuts, this.modals, this.editor, this.toolbars];
+    const eventSources = [
+      this.shortcuts,
+      this.modals,
+      this.editor,
+      this.toolbars,
+      this.uploadService,
+    ];
     eventSources.forEach(source => {
       const initializer = new PublisherInitializer(source.topicsToPublish);
       initializer.initializeMap((t: TopicDescriptor) => this.events.register(t));
@@ -186,24 +187,25 @@ export class RicosOrchestrator implements Orchestrator {
   /**
    *  Maps BI callbacks to events.
    *  Callbacks:
-        ☐  onChangePluginSettings
         ✓  onContentEdited --> first edit
-        ☐  onInlineToolbarOpen --> floating toolbar rendered
         ✓  onKeyboardShortcutAction
-        ☐  onMediaUploadEnd
-        ☐  onMediaUploadStart
-        ☐  onMenuLoad --> add plugin menu rendered
+        ✓  onMediaUploadEnd
+        ✓  onMediaUploadStart
+        ✓  onPublish --> this one is handled separately in RicosEditor
         ✓  onOpenEditorSuccess --> editor mounted
         ☐  onPluginAction
+        ☐  onChangePluginSettings
         ☐  onPluginAdd
         ☐  onPluginAddStep
         ☐  onPluginAddSuccess
         ☐  onPluginChange
         ☐  onPluginDelete
-        ☐  onPluginModalOpened
+        ✓  onPluginModalOpened
         ☐  onPluginsPopOverClick
         ☐  onPluginsPopOverTabSwitch
-        ✓  onPublish --> this one is handled separately in RicosEditor
+        ☐  onMenuLoad --> add plugin menu rendered
+        ☐  onInlineToolbarOpen --> plugin toolbar rendered
+        ☐  onInlineToolbarOpen --> floating toolbar rendered
         ✓  onToolbarButtonClick --> formatting(inline,static,external) toolbar button click (includes value)
         ☐  onToolbarButtonClick --> plugin toolbar button click (includes value)
         ☐  onVideoSelected --> ?
@@ -238,7 +240,50 @@ export class RicosOrchestrator implements Orchestrator {
         { version, contentId, buttonName: buttonId, type: toolbarType },
       ]
     );
-    // TODO: complete map
+    this.subscribeBiCallback(
+      'ricos.modals.functionality.modalOpened',
+      'onPluginModalOpened',
+      ({ id }) => [
+        {
+          version,
+          contentId,
+          pluginId: id,
+          // TODO: rework this
+          entryType: TOOLBARS.INLINE,
+          pluginDetails: {},
+          entryPoint: TOOLBARS.INLINE,
+        },
+      ]
+    );
+
+    this.subscribeBiCallback(
+      'ricos.upload.functionality.uploadStarted',
+      'onMediaUploadStart',
+      ({ correlationId, pluginId, fileSize, mediaType }) => [
+        correlationId,
+        pluginId,
+        fileSize,
+        mediaType,
+        version,
+        contentId,
+      ]
+    );
+
+    this.subscribeBiCallback(
+      'ricos.upload.functionality.uploadFinished',
+      'onMediaUploadEnd',
+      ({ correlationId, pluginId, duration, fileSize, mediaType, isSuccess, errorType }) => [
+        correlationId,
+        pluginId,
+        duration,
+        fileSize,
+        mediaType,
+        isSuccess,
+        errorType,
+        version,
+        contentId,
+      ]
+    );
   }
 
   private orchestrateEvents() {

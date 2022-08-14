@@ -109,11 +109,6 @@ export interface IUploadService {
 
   onInputChange: ((this: HTMLInputElement, event: any) => any) | null;
 
-  BICallbacks?: {
-    onMediaUploadStart?: any;
-    onMediaUploadEnd?: any;
-  };
-
   uploadObserver?: IUploadObserver;
 
   setErrorNotifier: (getErrorNotifier: () => INotifier) => void;

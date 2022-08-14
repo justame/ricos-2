@@ -39,7 +39,7 @@ const errorMap = {
 
 export const createUploadEndBIData = (
   uploadBIData: UploadStartBIData,
-  error: MediaUploadError
+  error?: MediaUploadError
 ): UploadEndBIData => {
   const { correlationId, pluginId, fileSize, mediaType, timeStamp } = uploadBIData;
   const isSuccess = !error;
