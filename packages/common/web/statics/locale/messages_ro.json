@@ -641,6 +641,7 @@
 	"VerticalEmbed_Bookings_Button": "Rezervă acum",
 	"Spoiler_Reveal_Gallery_CTA": "Afișează Galeria",
 	"Poll_Viewer_ShowLess_CTA": "Afișează mai puțin",
+	"VerticalEmbed_Disabled_Button_Tooltip": "Product page will be available once you publish your site.",
 	"Poll_Viewer_VoteCount_Modal_Voters_Anonymous": "+ {{anonNumber}} anonimi",
 	"Poll_Viewer_VoteCount_Modal_Voters_CTA_Follow": "Urmărește",
 	"VerticalEmbed_Products_Button": "Cumpără acum",

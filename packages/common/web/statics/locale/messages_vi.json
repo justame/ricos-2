@@ -641,6 +641,7 @@
 	"VerticalEmbed_Bookings_Button": "Đặt ngay",
 	"Spoiler_Reveal_Gallery_CTA": "Hé lộ bộ sưu tập",
 	"Poll_Viewer_ShowLess_CTA": "Ẩn bớt",
+	"VerticalEmbed_Disabled_Button_Tooltip": "Product page will be available once you publish your site.",
 	"Poll_Viewer_VoteCount_Modal_Voters_Anonymous": "+{{anonNumber}} ẩn danh",
 	"Poll_Viewer_VoteCount_Modal_Voters_CTA_Follow": "Theo dõi",
 	"VerticalEmbed_Products_Button": "Mua ngay",

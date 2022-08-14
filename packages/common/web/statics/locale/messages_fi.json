@@ -641,6 +641,7 @@
 	"VerticalEmbed_Bookings_Button": "Varaa nyt",
 	"Spoiler_Reveal_Gallery_CTA": "Näytä galleria",
 	"Poll_Viewer_ShowLess_CTA": "Näytä vähemmän",
+	"VerticalEmbed_Disabled_Button_Tooltip": "Product page will be available once you publish your site.",
 	"Poll_Viewer_VoteCount_Modal_Voters_Anonymous": "+{{anonNumber}} tuntematonta",
 	"Poll_Viewer_VoteCount_Modal_Voters_CTA_Follow": "Seuraa",
 	"VerticalEmbed_Products_Button": "Osta nyt",

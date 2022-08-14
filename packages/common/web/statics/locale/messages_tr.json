@@ -641,6 +641,7 @@
 	"VerticalEmbed_Bookings_Button": "Yer Ayırt",
 	"Spoiler_Reveal_Gallery_CTA": "Galeriyi Göster",
 	"Poll_Viewer_ShowLess_CTA": "Daha Az Göster",
+	"VerticalEmbed_Disabled_Button_Tooltip": "Product page will be available once you publish your site.",
 	"Poll_Viewer_VoteCount_Modal_Voters_Anonymous": "+{{anonNumber}} anonim",
 	"Poll_Viewer_VoteCount_Modal_Voters_CTA_Follow": "Takip Et",
 	"VerticalEmbed_Products_Button": "Satın Al",

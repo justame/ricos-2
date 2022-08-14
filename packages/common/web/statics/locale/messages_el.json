@@ -641,6 +641,7 @@
 	"VerticalEmbed_Bookings_Button": "Κάντε κράτηση τώρα",
 	"Spoiler_Reveal_Gallery_CTA": "Εμφάνιση της συλλογής",
 	"Poll_Viewer_ShowLess_CTA": "Εμφάνιση λιγοτέρων",
+	"VerticalEmbed_Disabled_Button_Tooltip": "Product page will be available once you publish your site.",
 	"Poll_Viewer_VoteCount_Modal_Voters_Anonymous": "+{{anonNumber}} ανώνυμος",
 	"Poll_Viewer_VoteCount_Modal_Voters_CTA_Follow": "Ακολουθήστε",
 	"VerticalEmbed_Products_Button": "Αγορά τώρα",

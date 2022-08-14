@@ -641,6 +641,7 @@
 	"VerticalEmbed_Bookings_Button": "Book nu",
 	"Spoiler_Reveal_Gallery_CTA": "Afslør galleri",
 	"Poll_Viewer_ShowLess_CTA": "Vis mindre",
+	"VerticalEmbed_Disabled_Button_Tooltip": "Product page will be available once you publish your site.",
 	"Poll_Viewer_VoteCount_Modal_Voters_Anonymous": "+{{anonNumber}} anonym(e)",
 	"Poll_Viewer_VoteCount_Modal_Voters_CTA_Follow": "Følg",
 	"VerticalEmbed_Products_Button": "Køb nu",

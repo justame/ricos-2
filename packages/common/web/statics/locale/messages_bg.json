@@ -641,6 +641,7 @@
 	"VerticalEmbed_Bookings_Button": "Резервирайте сега",
 	"Spoiler_Reveal_Gallery_CTA": "Разкриване на галерията",
 	"Poll_Viewer_ShowLess_CTA": "Покажи по-малко",
+	"VerticalEmbed_Disabled_Button_Tooltip": "Product page will be available once you publish your site.",
 	"Poll_Viewer_VoteCount_Modal_Voters_Anonymous": "+ {{anonNumber}} анонимен",
 	"Poll_Viewer_VoteCount_Modal_Voters_CTA_Follow": "Последвайте",
 	"VerticalEmbed_Products_Button": "Купете сега",

@@ -641,6 +641,7 @@
 	"VerticalEmbed_Bookings_Button": "Rezervovat",
 	"Spoiler_Reveal_Gallery_CTA": "Odkrýt galerii",
 	"Poll_Viewer_ShowLess_CTA": "Zobrazit méně",
+	"VerticalEmbed_Disabled_Button_Tooltip": "Product page will be available once you publish your site.",
 	"Poll_Viewer_VoteCount_Modal_Voters_Anonymous": "+{{anonNumber}} anonymně",
 	"Poll_Viewer_VoteCount_Modal_Voters_CTA_Follow": "Sledovat",
 	"VerticalEmbed_Products_Button": "Koupit",

@@ -641,6 +641,7 @@
 	"VerticalEmbed_Bookings_Button": "Užsakyti",
 	"Spoiler_Reveal_Gallery_CTA": "Atskleisti galeriją",
 	"Poll_Viewer_ShowLess_CTA": "Rodyti mažiau",
+	"VerticalEmbed_Disabled_Button_Tooltip": "Product page will be available once you publish your site.",
 	"Poll_Viewer_VoteCount_Modal_Voters_Anonymous": "+{{anonNumber}} nežinomi (-ų)",
 	"Poll_Viewer_VoteCount_Modal_Voters_CTA_Follow": "Stebėti",
 	"VerticalEmbed_Products_Button": "Pirkti",

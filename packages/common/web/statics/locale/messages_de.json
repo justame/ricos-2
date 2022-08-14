@@ -641,6 +641,7 @@
 	"VerticalEmbed_Bookings_Button": "Jetzt buchen",
 	"Spoiler_Reveal_Gallery_CTA": "Galerie enthüllen",
 	"Poll_Viewer_ShowLess_CTA": "Weniger anzeigen",
+	"VerticalEmbed_Disabled_Button_Tooltip": "Product page will be available once you publish your site.",
 	"Poll_Viewer_VoteCount_Modal_Voters_Anonymous": "+{{anonNumber}} unbekannte",
 	"Poll_Viewer_VoteCount_Modal_Voters_CTA_Follow": "Folgen",
 	"VerticalEmbed_Products_Button": "Jetzt kaufen",
