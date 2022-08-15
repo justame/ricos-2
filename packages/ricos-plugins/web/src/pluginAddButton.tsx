@@ -11,9 +11,21 @@ import type {
   AddPluginMenuConfig,
   ToolbarButtonProps,
   EditorCommands,
+  PluginMenuItem,
+  Layout,
+  Placement,
+  TextDirection,
 } from 'ricos-types';
 import { AddPluginMenu, PLUGIN_MENU_MODAL_ID } from 'wix-rich-content-toolbars-ui';
 import type { PluginServices } from './editorPlugins';
+
+const SECTIONS = {
+  no_section: 'BlockToolbar_Section_NoSections_ShortcutToolbar',
+  basic: 'BlockToolbar_Section_Basic',
+  advanced: 'BlockToolbar_Section_Advanced',
+  embed_wix: 'BlockToolbar_Section_Embed_Wix',
+  embed: 'BlockToolbar_Section_Embed_Anywhere',
+};
 
 export class PluginAddButtonCollisionError extends Error {}
 
@@ -69,7 +81,7 @@ export class RicosPluginAddButton implements PluginAddButton {
   }
 
   getGroup() {
-    return this.button.menuConfig?.group;
+    return this.button.menuConfig?.group || ('no_section' as MenuGroups);
   }
 
   getToolbars(): ToolbarType[] {
@@ -78,6 +90,48 @@ export class RicosPluginAddButton implements PluginAddButton {
 
   equals(button: PluginAddButton): boolean {
     return this.button.id === button.getButton().id;
+  }
+
+  private calcPluginModalLayout(isMobile: boolean): Layout {
+    return isMobile ? 'fullscreen' : 'popover';
+  }
+
+  private calcPluginModalPlacement(isMobile: boolean, languageDir: TextDirection): Placement {
+    return isMobile ? 'bottom' : languageDir === 'ltr' ? 'right-start' : 'left-start';
+  }
+
+  toPluginMenuItem(): PluginMenuItem {
+    const { t } = this.services;
+    return {
+      id: this.button.id,
+      presentation: {
+        dataHook: this.button.dataHook || '',
+        label: t(this.button.label) || '',
+        tooltip: t(this.button.tooltip) || '',
+        icon: this.button.icon,
+      },
+      getClickHandler:
+        (editorCommands: EditorCommands, referenceElement?: HTMLElement | null) => () => {
+          const placement = this.calcPluginModalPlacement(
+            this.services.context.isMobile,
+            this.services.context.languageDir
+          );
+          const layout = this.calcPluginModalLayout(this.services.context.isMobile);
+          this.services.modals.closeModal(PLUGIN_MENU_MODAL_ID);
+          this.button.modal
+            ? this.services.modals.openModal(this.button.modal.id, {
+                positioning: {
+                  referenceElement,
+                  placement,
+                },
+                layout,
+              })
+            : this.button.command(editorCommands);
+
+          this.services.toolbars.pluginMenu.publishButtonClick(this.button.id);
+        },
+      section: SECTIONS[this.getGroup()],
+    };
   }
 
   toToolbarItemConfig(): IToolbarItemConfigTiptap {
@@ -97,7 +151,8 @@ export class RicosPluginAddButton implements PluginAddButton {
         click:
           ({ editorCommands }) =>
           () => {
-            this.getButton().command(editorCommands);
+            this.services.toolbars.pluginMenu.publishButtonClick(this.button.id);
+            this.button.command(editorCommands);
           },
       },
     };

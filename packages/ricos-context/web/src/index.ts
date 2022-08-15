@@ -6,5 +6,5 @@ export * from './ModalContext';
 export * from './ShortcutsContext';
 export * from './StylesContext';
 export * from './PluginsContext';
-export * from './types';
+export { GeneralContext } from 'ricos-types';
 export * from './UploadContext';

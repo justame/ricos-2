@@ -1,11 +1,7 @@
-import type {
-  AvailableExperiments,
-  DebugMode,
-  RicosPortal,
-  RicosTheme,
-  TextDirection,
-  TranslationFunction,
-} from 'ricos-types';
+import type { TranslationFunction, AvailableExperiments, TextDirection } from './commonTypes';
+import type { DebugMode } from './debug-mode';
+import type { RicosPortal } from './RicosTypes';
+import type { RicosTheme } from './themeTypes';
 
 export interface GeneralContext {
   locale: string;

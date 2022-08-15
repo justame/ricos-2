@@ -7,6 +7,7 @@ import type { AmbientStyles } from './styles';
 import type { IRicosEditor } from './editor';
 import type { IUpdateService, IUploadService } from './uploadServicesTypes';
 import type { IRicosToolbars } from './ricos-toolbars';
+import type { GeneralContext } from './context';
 
 export type RicosServices = {
   events: EventRegistrar & EventSubscriptor;
@@ -21,4 +22,5 @@ export type RicosServices = {
   modals: ModalService;
   editor: IRicosEditor;
   toolbars: IRicosToolbars;
+  context: Omit<GeneralContext, 'portal'>;
 };

@@ -1,11 +1,9 @@
 import React, { useContext } from 'react';
+import { EditorContext, RicosContext, UploadContext } from 'ricos-context';
+import type { AddPluginMenuConfig, PluginAddButtons, PluginMenuItem } from 'ricos-types';
 import type { Helpers } from 'wix-rich-content-common';
-import type { AddButton, AddPluginMenuConfig, PluginAddButtons } from 'ricos-types';
-import { AddPluginMenu as AddPluginMenuComponent, SECTIONS } from 'wix-rich-content-editor';
+import { AddPluginMenu as AddPluginMenuComponent } from 'wix-rich-content-editor';
 import PluginMenuButton from './PluginMenuButton';
-import { RicosContext, EditorContext, ModalContext, UploadContext } from 'ricos-context';
-import { PLUGIN_MENU_MODAL_ID } from './consts';
-import { calcPluginModalLayout, calcPluginModalPlacement } from './utils';
 
 interface Props {
   addButtons: PluginAddButtons;
@@ -27,24 +25,22 @@ const AddPluginMenu: React.FC<Props> = ({
   addButtons,
 }) => {
   const { t, theme, languageDir, isMobile } = useContext(RicosContext) || {};
-  const modalService = useContext(ModalContext) || {};
   const { getEditorCommands } = useContext(EditorContext);
   const uploadContext = useContext(UploadContext);
-  const pluginModalLayout = calcPluginModalLayout(isMobile);
-  const pluginModalPlacement = calcPluginModalPlacement(isMobile, languageDir);
 
-  const renderPluginButton = (
-    { icon, label, tooltip, dataHook }: AddButton,
-    onClick: () => void,
-    onButtonVisible: () => void
-  ) => {
+  const renderPluginButton = (menuItem: PluginMenuItem, onButtonVisible: () => void) => {
+    const {
+      presentation: { dataHook = '', label = '', icon = () => null, tooltip = '' } = {},
+      getClickHandler,
+    } = menuItem;
+    const onClick = getClickHandler(getEditorCommands(), referenceElement?.current);
     return (
       <PluginMenuButton
         dataHook={dataHook}
         Icon={icon}
         label={label}
         onClick={onClick}
-        tooltipText={t(tooltip)}
+        tooltipText={tooltip}
         t={t}
         languageDir={languageDir}
         onButtonVisible={onButtonVisible}
@@ -52,28 +48,13 @@ const AddPluginMenu: React.FC<Props> = ({
     );
   };
 
-  const onPluginMenuButtonClick = (button: AddButton) => {
-    const { modal, command } = button;
-    modalService.closeModal(PLUGIN_MENU_MODAL_ID);
-    return modal
-      ? modalService?.openModal(modal.id, {
-          positioning: {
-            referenceElement: referenceElement?.current,
-            placement: pluginModalPlacement,
-          },
-          layout: pluginModalLayout,
-        })
-      : command(getEditorCommands?.());
-  };
-
   const pluginMenuButtons: IPluginMenuButton[] = addButtons.asArray().map(addButton => {
-    const button = addButton.getButton();
-    const onButtonClick = () => onPluginMenuButtonClick(button);
+    const menuItem = addButton.toPluginMenuItem();
     return {
       component: ({ onButtonVisible }: { onButtonVisible: () => void }) =>
-        renderPluginButton(button, onButtonClick, onButtonVisible),
-      name: button.label,
-      section: button.menuConfig?.group && SECTIONS[button.menuConfig?.group],
+        renderPluginButton(menuItem, onButtonVisible),
+      name: menuItem.id,
+      section: menuItem.section,
     };
   });
 

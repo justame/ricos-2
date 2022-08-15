@@ -2,7 +2,11 @@
 import type { ToolbarType, KeyboardShortcut } from '.';
 import type { EventSource } from './orchestration';
 
-type Topics = ['ricos.toolbars.functionality.buttonClick', 'ricos.toolbars.functionality.search'];
+type Topics = [
+  'ricos.toolbars.functionality.buttonClick',
+  'ricos.toolbars.instance.loaded',
+  'ricos.toolbars.functionality.search'
+];
 
 export interface IRicosToolbar {
   readonly type: ToolbarType;
@@ -10,6 +14,8 @@ export interface IRicosToolbar {
   publishButtonClick(buttonId: string): boolean;
 
   publishSearch(search: string): boolean;
+
+  publishInstanceLoaded(): boolean;
 }
 
 export interface IRicosToolbars extends EventSource<Topics> {

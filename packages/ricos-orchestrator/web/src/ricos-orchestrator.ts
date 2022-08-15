@@ -4,7 +4,7 @@ import type { Node } from 'prosemirror-model';
 import type { RicosEditorProps } from 'ricos-common';
 import { StreamReader, UpdateService, UploadService } from 'ricos-common';
 import { commonPluginConfig, commonPlugins } from 'ricos-common-plugins';
-import { Version } from 'ricos-content';
+import type { GeneralContext } from 'ricos-context';
 import { nodeConverter as nodeService } from 'ricos-converters';
 import { RicosEvents } from 'ricos-events';
 import { RicosModalService } from 'ricos-modals';
@@ -12,24 +12,21 @@ import { EditorPlugins } from 'ricos-plugins';
 import { EditorKeyboardShortcuts } from 'ricos-shortcuts';
 import { RicosStyles } from 'ricos-styles';
 import type {
-  BICallbacks,
   DebugMode,
   EditorPlugin,
-  EventData,
   INotifier,
   IUpdateService,
   LegacyEditorPluginConfig,
   Orchestrator,
   RicosServices,
-  SubscribeTopicDescriptor,
-  ToolbarType,
-  TopicDescriptor,
   TranslationFunction,
 } from 'ricos-types';
-import { TOOLBARS } from 'wix-rich-content-editor-common';
+import { getLangDir } from 'wix-rich-content-common';
 import { Content, RicosToolbars } from 'wix-rich-content-toolbars-v3';
-import { PublisherInitializer, SubscriptorInitializer } from './event-orchestrators';
 import { getHelpersConfig } from './helpers-config';
+import { mapBiCallbacksToSubscriptions } from './map-bi-callbacks-to-events';
+import type { RicosEventSource, RicosEventSubscriber } from './orchestrate-events';
+import { registerEventSources, registerEventSubscribers } from './orchestrate-events';
 import { RicosEditor } from './ricos-editor';
 
 export class RicosOrchestrator implements Orchestrator {
@@ -57,14 +54,27 @@ export class RicosOrchestrator implements Orchestrator {
 
   private readonly editor: RicosEditor;
 
+  private readonly context: Omit<GeneralContext, 'portal'>;
+
   constructor(editorProps: RicosEditorProps & { debugMode?: DebugMode[] }, t: TranslationFunction) {
     this.t = t;
     this.editorProps = editorProps;
+
+    this.context = {
+      t,
+      debugMode: editorProps.debugMode || [],
+      isMobile: editorProps.isMobile || false,
+      languageDir: getLangDir(editorProps.locale),
+      theme: editorProps.theme || {},
+      locale: editorProps.locale || 'en',
+      localeContent: editorProps.localeContent || 'en',
+      experiments: editorProps.experiments || {},
+    };
+
     this.updateService = new UpdateService();
     this.events = new RicosEvents(
       (editorProps.debugMode?.includes('events') || editorProps.debugMode?.includes('all')) ?? false
     );
-    this.toolbars = new RicosToolbars();
     this.styles = new RicosStyles();
 
     this.uploadService = new UploadService(new StreamReader(), this.updateService);
@@ -77,6 +87,7 @@ export class RicosOrchestrator implements Orchestrator {
         false,
     });
 
+    this.toolbars = new RicosToolbars();
     this.toolbars.getShortcuts().map(shortcut => this.shortcuts.register(shortcut));
 
     this.content = Content.create<Node[]>([], {
@@ -96,11 +107,12 @@ export class RicosOrchestrator implements Orchestrator {
         content: this.content,
         styles: this.styles,
         toolbars: this.toolbars,
+        context: this.context,
       },
       this.editorProps.toolbarSettings || {}
     );
 
-    this.initPlugins(commonPlugins, commonPluginConfig);
+    this.registerAllPlugins(commonPlugins, commonPluginConfig);
 
     this.editor = new RicosEditor(
       this.editorProps,
@@ -115,6 +127,7 @@ export class RicosOrchestrator implements Orchestrator {
         shortcuts: this.shortcuts,
         modals: this.modals,
         toolbars: this.toolbars,
+        context: this.context,
       },
       this.editorProps.debugMode?.includes('prosemirror') || editorProps.debugMode?.includes('all')
     );
@@ -128,168 +141,16 @@ export class RicosOrchestrator implements Orchestrator {
     this.events.clear();
   }
 
-  private registerEventSources() {
-    const eventSources = [
+  private orchestrateEvents() {
+    registerEventSources(this.events, [
       this.shortcuts,
       this.modals,
-      this.editor,
+      this.editor as unknown as RicosEventSource,
       this.toolbars,
       this.uploadService,
-    ];
-    eventSources.forEach(source => {
-      const initializer = new PublisherInitializer(source.topicsToPublish);
-      initializer.initializeMap((t: TopicDescriptor) => this.events.register(t));
-      source.publishers = initializer;
-    });
-  }
-
-  private registerEventSubscribers() {
-    const eventSubscribers = [this.modals];
-    eventSubscribers.forEach(subscriber => {
-      const initializer = new SubscriptorInitializer(subscriber.topicsToSubscribe);
-      initializer.initializeMap((t: SubscribeTopicDescriptor) => ({
-        subscribe: (handler: (topic: TopicDescriptor, data: EventData) => void) =>
-          this.events.subscribe(t, handler, subscriber.id),
-      }));
-      subscriber.subscriptors = initializer;
-    });
-  }
-
-  /**
-   * Subscribes BI callback by name to proper topic
-   *
-   * @private
-   * @param {TopicDescriptor} topic
-   * @param {keyof BICallbacks} name
-   * @param {(data: EventData) =>  Parameters<NonNullable<BICallbacks[K]>>} eventDataToBICallbackParams
-   * @returns
-   * @memberof RicosOrchestrator
-   */
-  private subscribeBiCallback<K extends keyof BICallbacks>(
-    topic: TopicDescriptor,
-    name: K,
-    eventDataToBICallbackParams: (data: EventData) => Parameters<NonNullable<BICallbacks[K]>>
-  ) {
-    const callback = this.editorProps._rcProps?.helpers?.[name];
-    if (!callback) {
-      return { topic, cancel: () => {} };
-    }
-    return this.events.subscribe(
-      topic,
-      (_topic, data: EventData) => {
-        const params = eventDataToBICallbackParams(data);
-        callback.call(callback, ...params);
-      },
-      `${name} BI callback`
-    );
-  }
-
-  /**
-   *  Maps BI callbacks to events.
-   *  Callbacks:
-        ✓  onContentEdited --> first edit
-        ✓  onKeyboardShortcutAction
-        ✓  onMediaUploadEnd
-        ✓  onMediaUploadStart
-        ✓  onPublish --> this one is handled separately in RicosEditor
-        ✓  onOpenEditorSuccess --> editor mounted
-        ☐  onPluginAction
-        ☐  onChangePluginSettings
-        ☐  onPluginAdd
-        ☐  onPluginAddStep
-        ☐  onPluginAddSuccess
-        ☐  onPluginChange
-        ☐  onPluginDelete
-        ✓  onPluginModalOpened
-        ☐  onPluginsPopOverClick
-        ☐  onPluginsPopOverTabSwitch
-        ☐  onMenuLoad --> add plugin menu rendered
-        ☐  onInlineToolbarOpen --> plugin toolbar rendered
-        ☐  onInlineToolbarOpen --> floating toolbar rendered
-        ✓  onToolbarButtonClick --> formatting(inline,static,external) toolbar button click (includes value)
-        ☐  onToolbarButtonClick --> plugin toolbar button click (includes value)
-        ☐  onVideoSelected --> ?
-   *
-   * @private
-   * @memberof RicosOrchestrator
-   */
-  private mapBiCallbacksToSubscriptions() {
-    const version = Version.currentVersion;
-    const contentId = this.editorProps.content?.ID;
-
-    this.subscribeBiCallback('ricos.editor.instance.loaded', 'onOpenEditorSuccess', () => [
-      version,
-      TOOLBARS.INLINE, // TODO: check meaning
-      contentId,
-    ]);
-
-    this.subscribeBiCallback('ricos.editor.functionality.firstEdit', 'onContentEdited', () => [
-      { version, contentId },
-    ]);
-
-    this.subscribeBiCallback(
-      'ricos.shortcuts.functionality.applied',
-      'onKeyboardShortcutAction',
-      ({ shortcutName }) => [{ buttonName: shortcutName, pluginId: '', version, contentId }]
-    );
-
-    this.subscribeBiCallback(
-      'ricos.toolbars.functionality.buttonClick',
-      'onToolbarButtonClick',
-      ({ toolbarType, buttonId }: { toolbarType: ToolbarType; buttonId: string }) => [
-        { version, contentId, buttonName: buttonId, type: toolbarType },
-      ]
-    );
-    this.subscribeBiCallback(
-      'ricos.modals.functionality.modalOpened',
-      'onPluginModalOpened',
-      ({ id }) => [
-        {
-          version,
-          contentId,
-          pluginId: id,
-          // TODO: rework this
-          entryType: TOOLBARS.INLINE,
-          pluginDetails: {},
-          entryPoint: TOOLBARS.INLINE,
-        },
-      ]
-    );
-
-    this.subscribeBiCallback(
-      'ricos.upload.functionality.uploadStarted',
-      'onMediaUploadStart',
-      ({ correlationId, pluginId, fileSize, mediaType }) => [
-        correlationId,
-        pluginId,
-        fileSize,
-        mediaType,
-        version,
-        contentId,
-      ]
-    );
-
-    this.subscribeBiCallback(
-      'ricos.upload.functionality.uploadFinished',
-      'onMediaUploadEnd',
-      ({ correlationId, pluginId, duration, fileSize, mediaType, isSuccess, errorType }) => [
-        correlationId,
-        pluginId,
-        duration,
-        fileSize,
-        mediaType,
-        isSuccess,
-        errorType,
-        version,
-        contentId,
-      ]
-    );
-  }
-
-  private orchestrateEvents() {
-    this.registerEventSources();
-    this.registerEventSubscribers();
-    this.mapBiCallbacksToSubscriptions();
+    ] as RicosEventSource[]);
+    registerEventSubscribers(this.events, [this.modals as unknown as RicosEventSubscriber]);
+    mapBiCallbacksToSubscriptions(this.editorProps, this.events);
   }
 
   private initUploadService(
@@ -317,10 +178,11 @@ export class RicosOrchestrator implements Orchestrator {
       modals: this.modals,
       editor: this.editor,
       toolbars: this.toolbars,
+      context: this.context,
     };
   }
 
-  private initPlugins(
+  private registerAllPlugins(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     commonPlugins: EditorPlugin<Record<string, any>>[],
     commonPluginConfig: LegacyEditorPluginConfig

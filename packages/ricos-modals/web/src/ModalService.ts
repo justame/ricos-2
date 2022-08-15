@@ -9,19 +9,15 @@ import type {
   SubscriptorProvider,
 } from 'ricos-types';
 
-const TOPICS: ['ricos.modals.functionality.modalOpened', 'ricos.modals.functionality.modalClosed'] =
-  ['ricos.modals.functionality.modalOpened', 'ricos.modals.functionality.modalClosed'];
+type Topics = ['ricos.modals.functionality.modalOpened', 'ricos.modals.functionality.modalClosed'];
+
+const TOPICS: Topics = [
+  'ricos.modals.functionality.modalOpened',
+  'ricos.modals.functionality.modalClosed',
+];
 
 export class RicosModalService
-  implements
-    ModalService,
-    PolicySubscriber<
-      ['ricos.modals.functionality.modalOpened', 'ricos.modals.functionality.modalClosed']
-    >,
-    EventSource<
-      ['ricos.modals.functionality.modalOpened', 'ricos.modals.functionality.modalClosed']
-      // eslint-disable-next-line prettier/prettier
-    >
+  implements ModalService, PolicySubscriber<Topics>, EventSource<Topics>
 {
   private modals: ((ModalConfig | Modal) & { state: { isOpen: boolean } })[] = [];
 

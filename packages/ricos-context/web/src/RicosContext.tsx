@@ -1,7 +1,6 @@
 import type { ComponentType } from 'react';
 import React from 'react';
-import type { RicosTheme, RicosPortal, DebugMode } from 'ricos-types';
-import type { GeneralContext } from './types';
+import type { GeneralContext, RicosTheme, RicosPortal, DebugMode } from 'ricos-types';
 
 export const RicosContext = React.createContext<GeneralContext>({
   locale: 'en',

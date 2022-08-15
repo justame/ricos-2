@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { EditorContext, RicosContext, ModalContext } from 'ricos-context';
 import InsertPluginToolbar from '../../components/InsertPluginToolbar/InsertPluginToolbar';
 import type { AddButton, RicosEditorPlugins } from 'ricos-types';
-import { LAYOUTS, PLACEMENTS } from 'ricos-modals';
 import { PLUGIN_MENU_HORIZONTAL_MODAL_ID } from './consts';
 
 interface Props {
@@ -21,9 +20,9 @@ const AddPluginMenuHorizontal: React.FC<Props> = ({ referenceElement, plugins })
       ? modalService?.openModal(modal.id, {
           positioning: {
             referenceElement: referenceElement?.current,
-            placement: languageDir === 'ltr' ? PLACEMENTS.RIGHT_START : PLACEMENTS.LEFT_START,
+            placement: languageDir === 'ltr' ? 'right-start' : 'left-start',
           },
-          layout: LAYOUTS.POPOVER,
+          layout: 'popover',
         })
       : command(getEditorCommands?.());
   };

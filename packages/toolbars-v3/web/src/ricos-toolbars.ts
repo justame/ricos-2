@@ -8,10 +8,15 @@ import type {
   KeyboardShortcut,
 } from 'ricos-types';
 
-type Topics = ['ricos.toolbars.functionality.buttonClick', 'ricos.toolbars.functionality.search'];
+type Topics = [
+  'ricos.toolbars.functionality.buttonClick',
+  'ricos.toolbars.instance.loaded',
+  'ricos.toolbars.functionality.search'
+];
 
 const topics: Topics = [
   'ricos.toolbars.functionality.buttonClick',
+  'ricos.toolbars.instance.loaded',
   'ricos.toolbars.functionality.search',
 ];
 
@@ -35,6 +40,12 @@ class RicosToolbar implements IRicosToolbar {
     return this.publishers
       .byTopic('ricos.toolbars.functionality.search')
       .publish({ toolbarType: this.type, search });
+  }
+
+  publishInstanceLoaded() {
+    return this.publishers
+      .byTopic('ricos.toolbars.instance.loaded')
+      .publish({ toolbarType: this.type });
   }
 }
 

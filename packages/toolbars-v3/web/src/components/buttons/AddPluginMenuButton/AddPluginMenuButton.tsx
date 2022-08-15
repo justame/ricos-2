@@ -2,7 +2,6 @@
 import React, { useContext } from 'react';
 import styles from './AddPluginMenuButton.scss';
 import { ModalContext } from 'ricos-context';
-import { PLACEMENTS, LAYOUTS } from 'ricos-modals';
 import { PLUGIN_MENU_MODAL_ID } from 'wix-rich-content-toolbars-ui';
 import type { ModalService } from 'ricos-types';
 
@@ -17,8 +16,8 @@ const AddPluginMenuButton = ({ toolbarItem }) => {
         role="button"
         onClick={() => {
           modalService?.openModal(PLUGIN_MENU_MODAL_ID, {
-            positioning: { placement: PLACEMENTS.BOTTOM },
-            layout: LAYOUTS.DRAWER,
+            positioning: { placement: 'bottom' },
+            layout: 'drawer',
           });
         }}
         tabIndex={0}

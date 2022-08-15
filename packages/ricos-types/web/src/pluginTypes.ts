@@ -252,7 +252,7 @@ export type AddButton = {
   tooltip: string;
   toolbars: ToolbarType[];
   dataHook: string;
-  label?: string;
+  label: string;
   modal?: ModalConfig;
   menuConfig?: MenuConfig;
   shortcuts?: KeyboardShortcut[];

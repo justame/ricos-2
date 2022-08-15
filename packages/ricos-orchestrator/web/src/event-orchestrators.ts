@@ -6,6 +6,13 @@ import type {
   TopicDescriptor,
 } from 'ricos-types';
 
+/**
+ * Absrtact mapper of keys K[] to value hash `{ [k: K]: V }` by given V initializer `K --> V`
+ *
+ * @class MapInitializer
+ * @template K key type
+ * @template V value type
+ */
 class MapInitializer<K extends string, V> {
   private map!: { [key: string]: V };
 
@@ -19,7 +26,7 @@ class MapInitializer<K extends string, V> {
     return this.map[key];
   }
 
-  initializeMap(initilaizer: (topic: K) => V): void {
+  initializeMap(initilaizer: (key: K) => V): void {
     this.map = this.keys.reduce(
       (acc, key) => ({
         ...acc,
