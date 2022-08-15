@@ -275,21 +275,40 @@ export const isTextStylesMatchDocumentStylesResolver = TiptapContentResolver.cre
 export const getLineSpacingInSelectionResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.GET_LINE_SPACING_IN_SELECTION,
   (content, { styles, nodeService }: { styles: RicosStyles; nodeService }) => {
-    if (Array.isArray(content) && content.length > 0) {
-      const node = content[0];
-      const lineHeight = node.attrs.textStyle?.lineHeight;
-      let documentStyleLineHeight;
-
-      if (node && styles && nodeService) {
-        const textStyle = styles.getTextStyle(nodeService.nodeToRicosNode(node));
-        if (textStyle?.lineHeight) {
-          documentStyleLineHeight = textStyle?.lineHeight;
-        }
-      }
-      return lineHeight || documentStyleLineHeight;
-    } else {
+    if (!Array.isArray(content)) {
       return undefined;
     }
+
+    const lineHeights: string[] = [];
+    const defaultsLineHeights: string[] = [];
+    content.forEach(node => {
+      if (node && styles && nodeService) {
+        const textStyle = styles.getTextStyle(nodeService.nodeToRicosNode(node));
+
+        if (node.attrs?.textStyle?.lineHeight) {
+          lineHeights.push(node.attrs.textStyle.lineHeight);
+        }
+        if (textStyle?.lineHeight) {
+          defaultsLineHeights.push(textStyle.lineHeight);
+        }
+      }
+    });
+    const uniqueLineHeights = Array.from(
+      new Set(lineHeights.map(lineHeight => lineHeight.toString()))
+    );
+    const uniqueDefaultLineHeights = Array.from(
+      new Set(defaultsLineHeights.map(lineHeight => lineHeight.toString()))
+    );
+
+    if (uniqueLineHeights.length > 1) {
+      return undefined;
+    } else if (uniqueLineHeights.length === 1) {
+      return uniqueLineHeights[0];
+    } else if (uniqueLineHeights.length === 0 && uniqueDefaultLineHeights.length === 1) {
+      return uniqueDefaultLineHeights[0];
+    }
+
+    return undefined;
   }
 );
 
