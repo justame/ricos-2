@@ -37,39 +37,45 @@ const selectedLayoutResolver = {
   },
 };
 
+const isValidIndex = (index?: number): index is number => typeof index === 'number' && index >= 0;
+
 export const getToolbarButtons = (config, services, galleryPluginService): ToolbarButton[] => {
   const { accept = fileInputAccept } = config;
 
-  const handleFileSelection = (uploadService, updateService, node) => {
+  const handleFileSelection = (uploadService, updateService, node, index?: number) => {
     if (config.handleFileSelection) {
       config.handleFileSelection(
         undefined,
         true,
         ({ data }) => {
           const files = Array.isArray(data) ? data : [data];
-          files.forEach(file =>
+          files.forEach((file, currIndex) => {
+            const fileState = isValidIndex(index) ? { itemIndex: index + currIndex } : {};
             updateService.updatePluginData(
               { data: file },
               node.attrs.id,
               GALLERY_TYPE,
-              galleryPluginService
-            )
-          );
+              galleryPluginService,
+              fileState
+            );
+          });
         },
         undefined,
         defaultData
       );
     } else {
       uploadService.selectFiles(fileInputAccept, true, (files: File[]) =>
-        files.forEach(file =>
+        files.forEach((file, currIndex) => {
+          const fileState = isValidIndex(index) ? { itemIndex: index + currIndex } : {};
           uploadService.uploadFile(
             file,
             node.attrs.id,
             new Uploader(config.handleFileUpload),
             GALLERY_TYPE,
-            galleryPluginService
-          )
-        )
+            galleryPluginService,
+            fileState
+          );
+        })
       );
     }
   };
@@ -99,7 +105,8 @@ export const getToolbarButtons = (config, services, galleryPluginService): Toolb
         modals?.openModal(galleryModals.manageMedia, {
           componentProps: {
             nodeId: node.attrs.id,
-            handleFileSelection: () => handleFileSelection(uploadService, updateService, node),
+            handleFileSelection: (index?: number) =>
+              handleFileSelection(uploadService, updateService, node, index),
             handleFileUpload: config.handleFileUpload,
             accept,
             activeTab: 'manage_media',
@@ -185,7 +192,8 @@ export const getToolbarButtons = (config, services, galleryPluginService): Toolb
         modals?.openModal(galleryModals.settings, {
           componentProps: {
             nodeId: node.attrs.id,
-            handleFileSelection: () => handleFileSelection(uploadService, updateService, node),
+            handleFileSelection: (index?: number) =>
+              handleFileSelection(uploadService, updateService, node, index),
             handleFileUpload: config.handleFileUpload,
             accept,
           },

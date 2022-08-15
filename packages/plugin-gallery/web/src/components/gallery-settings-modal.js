@@ -34,9 +34,9 @@ class ManageMediaSection extends Component {
   }
 
   applyItems = items => {
-    const { getData, store, updateData } = this.props;
+    const { componentData: data, store, updateData } = this.props;
     const componentData = {
-      ...getData(),
+      ...data,
       items,
     };
     this.modalsWithEditorCommands
@@ -72,13 +72,12 @@ class ManageMediaSection extends Component {
   };
 
   handleFileSelection = (index, multiple) => {
-    const { helpers, getData, store, experiments = {} } = this.props;
+    const { helpers, componentData, store, experiments = {} } = this.props;
     const deleteBlock = store?.get('deleteBlock');
-    const data = getData();
     const handleFilesAdded = experiments?.tiptapEditor?.enabled
       ? this.handleFilesAddedWithIndex(index)
       : this.handleFilesAdded;
-    helpers?.handleFileSelection?.(index, multiple, handleFilesAdded, deleteBlock, data);
+    helpers?.handleFileSelection?.(index, multiple, handleFilesAdded, deleteBlock, componentData);
   };
 
   handleFilesAdded = (...args) => {
@@ -114,12 +113,12 @@ class ManageMediaSection extends Component {
       accept,
       updateData,
       experiments = {},
-      getData,
+      componentData,
       theme,
     } = this.props;
     const handleFileSelection = helpers?.handleFileSelection;
     const { languageDir, isMobile } = this.context;
-    const data = getData();
+    const { items } = componentData;
 
     return (
       <div
@@ -132,7 +131,7 @@ class ManageMediaSection extends Component {
       >
         <SortableComponent
           theme={theme}
-          items={data.items}
+          items={items}
           onItemsChange={this.applyItems}
           handleFileChange={this.handleFileChange}
           handleFileSelection={
@@ -154,7 +153,7 @@ class ManageMediaSection extends Component {
 }
 
 ManageMediaSection.propTypes = {
-  getData: PropTypes.func.isRequired,
+  componentData: PropTypes.object.isRequired,
   store: PropTypes.object,
   theme: PropTypes.object.isRequired,
   helpers: PropTypes.object.isRequired,
@@ -374,10 +373,9 @@ export class GallerySettingsModal extends Component {
 
   tabsList = () => {
     const mediaSectionProps = {
-      getData: () =>
-        this.modalsWithEditorCommands
-          ? this.props.componentData
-          : this.props.pubsub.get('componentData'),
+      componentData: this.modalsWithEditorCommands
+        ? this.props.componentData
+        : this.props.pubsub.get('componentData'),
       store: this.props.pubsub?.store,
       helpers: this.props.helpers,
       theme: this.props.theme,

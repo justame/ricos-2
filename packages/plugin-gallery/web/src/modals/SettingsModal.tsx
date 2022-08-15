@@ -6,11 +6,10 @@ import { GALLERY_TYPE } from '../types';
 import { galleryModals } from '../consts';
 import { RicosContext, EditorContext, ModalContext } from 'ricos-context';
 import { TIPTAP_GALLERY_TYPE } from 'ricos-content';
-import type { IUpdateService, IUploadService } from 'ricos-types';
 
 interface Props {
   nodeId: string;
-  handleFileSelection: (uploadService: IUploadService, updateService: IUpdateService) => void;
+  handleFileSelection: (index?: number) => void;
   handleFileUpload: (files, updateEntity) => void;
   accept: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -53,6 +52,19 @@ const GallerySettingsModal: FC<Props> = ({
     });
   }, []);
 
+  const addMedia = (index?: number) => {
+    handleFileSelection(index);
+    setTimeout(() => {
+      const data = converters?.tiptapNodeDataToDraft?.(
+        TIPTAP_GALLERY_TYPE,
+        getEditorCommands().getBlockComponentData(nodeId)
+      );
+      if (data) {
+        setComponentData(data);
+      }
+    }, 1000);
+  };
+
   const updateData = data => {
     getEditorCommands().setBlock(nodeId, GALLERY_TYPE, {
       ...converters.draftBlockDataToTiptap?.(GALLERY_TYPE, { ...componentData, ...data }),
@@ -83,7 +95,7 @@ const GallerySettingsModal: FC<Props> = ({
       updateData={updateData}
       onSave={closeModal}
       onCancel={onCancel}
-      handleFileSelection={handleFileSelection}
+      handleFileSelection={addMedia}
       handleFileUpload={handleFileUpload}
       shouldShowSpoiler
       activeTab={activeTab}
