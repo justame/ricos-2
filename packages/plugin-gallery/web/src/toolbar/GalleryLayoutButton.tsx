@@ -1,10 +1,11 @@
 import React, { useContext, useState } from 'react';
-import type { FC, ComponentType } from 'react';
+import type { FC } from 'react';
 import { RicosContext, ModalContext } from 'ricos-context';
 import type { IToolbarItem } from 'ricos-types';
 import { DropdownButton } from 'wix-rich-content-toolbars-ui';
 import { galleryLayoutsData } from './galleryLayoutsData';
 import { GALLERY_LAYOUTS } from '../layout-data-provider';
+import { Grid } from '../icons';
 
 type Props = {
   toolbarItem: IToolbarItem;
@@ -18,9 +19,11 @@ export const GalleryLayoutButton: FC<Props> = ({ toolbarItem, dataHook, id }) =>
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
   const getSelectedLayout = () =>
     (GALLERY_LAYOUTS[toolbarItem?.attributes.layout] || GALLERY_LAYOUTS.GRID) as number;
-  const SelectedLayoutIcon = galleryLayoutsData.find(
+  const selectedLayout = galleryLayoutsData.find(
     ({ commandKey }) => commandKey === getSelectedLayout()
-  )?.icon as ComponentType;
+  );
+  const Icon = selectedLayout?.icon || Grid;
+  const label = selectedLayout?.text || 'GalleryPlugin_Layout_Grid';
 
   const closeModal = () => modalService.closeModal(id);
   const onLayoutClick = layout => {
@@ -47,7 +50,8 @@ export const GalleryLayoutButton: FC<Props> = ({ toolbarItem, dataHook, id }) =>
       dataHook={dataHook}
       onClick={onClick}
       setRef={setReferenceElement}
-      Icon={SelectedLayoutIcon}
+      Icon={Icon}
+      label={t(label)}
       tooltip={t('GalleryPlugin_Layout_Select_Tooltip')}
     />
   );

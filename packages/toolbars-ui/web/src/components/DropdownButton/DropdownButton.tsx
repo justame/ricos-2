@@ -1,20 +1,19 @@
 import React, { useContext } from 'react';
-import type { ComponentType } from 'react';
-import cx from 'classnames';
-import styles from './DropdownButton.scss';
 import { DropdownArrowIcon } from '../../icons';
 import { RicosContext } from 'ricos-context';
 import ToolbarButton from '../ToolbarButton/ToolbarButton';
 
 type Props = {
-  Icon: ComponentType;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Icon: (props?: any) => JSX.Element;
   onClick: () => void;
   tooltip: string;
   dataHook?: string;
+  label?: string;
   setRef: React.Dispatch<React.SetStateAction<HTMLDivElement | null>>;
 };
 
-const DropdownButton: React.FC<Props> = ({ Icon, dataHook, tooltip, onClick, setRef }) => {
+const DropdownButton: React.FC<Props> = ({ Icon, dataHook, tooltip, onClick, label, setRef }) => {
   const { isMobile } = useContext(RicosContext) || {};
 
   return (
@@ -23,14 +22,12 @@ const DropdownButton: React.FC<Props> = ({ Icon, dataHook, tooltip, onClick, set
         isMobile={isMobile}
         tooltip={tooltip}
         onClick={onClick}
-        icon={() => (
-          <div className={styles.dropdownButtonIconWrapper}>
-            <Icon />
-            <DropdownArrowIcon />
-          </div>
-        )}
+        label={label}
+        Icon={Icon}
         dataHook={dataHook}
-      />
+      >
+        <DropdownArrowIcon />
+      </ToolbarButton>
     </div>
   );
 };

@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react';
-import type { FC, ComponentType } from 'react';
+import type { FC } from 'react';
 import { RicosContext, ModalContext } from 'ricos-context';
 import type { IToolbarItem } from 'ricos-types';
 import { DropdownButton } from 'wix-rich-content-toolbars-ui';
 import { dividerSizeData } from './dividerButtonsData';
+import { SizeMediumIcon } from 'wix-rich-content-plugin-commons';
 
 type Props = {
   toolbarItem: IToolbarItem;
@@ -16,10 +17,8 @@ export const DividerSizeButton: FC<Props> = ({ toolbarItem, dataHook, id }) => {
   const modalService = useContext(ModalContext) || {};
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
   const getSelectedSize: () => string = () => toolbarItem?.attributes.nodeSize || 'MEDIUM';
-  const SelectedSizeIcon = dividerSizeData.find(
-    ({ commandKey }) => commandKey === getSelectedSize()
-  )?.icon as ComponentType;
-
+  const selectedSize = dividerSizeData.find(({ commandKey }) => commandKey === getSelectedSize());
+  const Icon = selectedSize?.icon || SizeMediumIcon;
   const closeModal = () => modalService.closeModal(id);
 
   const onSizeClick = size => {
@@ -46,7 +45,7 @@ export const DividerSizeButton: FC<Props> = ({ toolbarItem, dataHook, id }) => {
       dataHook={dataHook}
       onClick={onClick}
       setRef={setReferenceElement}
-      Icon={SelectedSizeIcon}
+      Icon={Icon}
       tooltip={t('ButtonModal_Size_Section')}
     />
   );

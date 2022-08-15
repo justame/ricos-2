@@ -22,21 +22,9 @@ export const PollLayoutButton: FC<Props> = ({ toolbarItem, id, dataHook }) => {
   const getSelectedLayout: () => string = () => node?.attrs?.layout?.poll?.type || 'GRID';
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
   const closeModal = () => modalService.closeModal(id);
-
-  const SelectedLayoutIcon = () => {
-    const currentLayoutData = layoutData.find(
-      ({ commandKey }) => commandKey === getSelectedLayout()
-    );
-    const Icon = currentLayoutData?.icon || LayoutGridIcon;
-    const text =
-      currentLayoutData?.text || 'Poll_PollSettings_Tab_Layout_Section_Answers_Layout_Grid';
-    return (
-      <>
-        <Icon width={'15px'} />
-        <div>{t(text)}</div>
-      </>
-    );
-  };
+  const selectedLayout = layoutData.find(({ commandKey }) => commandKey === getSelectedLayout());
+  const Icon = selectedLayout?.icon || LayoutGridIcon;
+  const label = selectedLayout?.text || 'Poll_PollSettings_Tab_Layout_Section_Answers_Layout_Grid';
 
   const onLayoutClick = layout => {
     toolbarItem.commands?.click({ layout, node });
@@ -83,7 +71,8 @@ export const PollLayoutButton: FC<Props> = ({ toolbarItem, id, dataHook }) => {
       dataHook={dataHook}
       onClick={onClick}
       setRef={setReferenceElement}
-      Icon={SelectedLayoutIcon}
+      Icon={() => <Icon width={15} />}
+      label={t(label)}
       tooltip={t('Poll_PollSettings_Tab_Layout_TabName')}
     />
   );

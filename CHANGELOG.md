@@ -22,13 +22,15 @@
 - `toolbars-v3`
   - [#4384](https://github.com/wix/ricos/pull/4384) (fix): line spacing indicator in list
   - [#4379](https://github.com/wix/ricos/pull/4379) wire add plugin menu plus button
+  - [#4383](https://github.com/wix/ricos/pull/4383) (fix): alignment/spacing resets each other
 - `audio/video`
   - [#4377](https://github.com/wix/ricos/pull/4377) fix nodId creation
 
 ## :house: Internal
-- [#4383](https://github.com/wix/ricos/pull/4383) (fix): alignment/spacing resets each other
 - `social-polls`
   - [#4375](https://github.com/wix/ricos/pull/4375) fix tiptap image uploads
+- `toolbars-ui`
+  - [#4385](https://github.com/wix/ricos/pull/4385) add text & icon support to ToolbarButton
 
   </details>
 

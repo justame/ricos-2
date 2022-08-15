@@ -1,13 +1,15 @@
 import React, { useContext } from 'react';
-import type { FC, ComponentType } from 'react';
+import type { FC } from 'react';
 import { RicosContext } from 'ricos-context';
 import { ToolbarButton } from '../ToolbarButton';
 import styles from './toggle-button.scss';
 
 interface Props {
-  Icon: ComponentType;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Icon: (props?: any) => JSX.Element;
   onClick: (args) => void;
   tooltip: string;
+  label?: string;
   dataHook?: string;
   active?: boolean;
   disabled?: boolean;
@@ -16,6 +18,7 @@ interface Props {
 
 const ToggleButton: FC<Props> = ({
   Icon,
+  label,
   onClick,
   dataHook,
   tooltip,
@@ -32,7 +35,8 @@ const ToggleButton: FC<Props> = ({
         tooltip={tooltip}
         disabled={disabled}
         onClick={onClick}
-        icon={() => <Icon />}
+        Icon={Icon}
+        label={label}
         dataHook={dataHook}
       />
     </div>

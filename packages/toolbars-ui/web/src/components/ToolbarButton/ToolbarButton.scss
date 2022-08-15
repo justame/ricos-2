@@ -60,3 +60,11 @@
     height: 32px;
   }
 }
+
+.iconTextWrapper {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
