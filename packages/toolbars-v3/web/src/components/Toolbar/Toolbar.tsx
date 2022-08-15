@@ -2,6 +2,7 @@
 import React, { Component, createRef } from 'react';
 import type { RefObject } from 'react';
 import { SizeMe } from 'react-sizeme';
+import { isSSR } from 'wix-rich-content-common';
 import cx from 'classnames';
 import type { ToolbarSpec, OverflowedItemsPosition } from '../../types';
 import styles from './Toolbar.scss';
@@ -72,7 +73,8 @@ class ToolbarComponent extends Component<ToolbarProps, Record<string, unknown>> 
     const toolbarButtons = new ToolbarButtons(toolbarButtonArray);
 
     return !isMobile ? (
-      <SizeMe refreshRate={100}>
+      // https://github.com/ctrlplusb/react-sizeme#server-side-rendering
+      <SizeMe refreshRate={100} noPlaceholder={!!isSSR}>
         {({ size }) => {
           if (!size.width) {
             return <div style={{ width: '100%' }}>.</div>;
