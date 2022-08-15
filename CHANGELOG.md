@@ -20,6 +20,7 @@
 ## :bug: Bug Fix
 
 - `toolbars-v3`
+  - [#4386](https://github.com/wix/ricos/pull/4386) ((fix): toolbar static was hidden if container was floating 
   - [#4384](https://github.com/wix/ricos/pull/4384) (fix): line spacing indicator in list
   - [#4379](https://github.com/wix/ricos/pull/4379) wire add plugin menu plus button
   - [#4383](https://github.com/wix/ricos/pull/4383) (fix): alignment/spacing resets each other
