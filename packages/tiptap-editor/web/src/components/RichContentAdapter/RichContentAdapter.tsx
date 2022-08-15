@@ -17,7 +17,7 @@ import {
 import { tiptapToDraft, fromTiptapNode } from 'ricos-converters';
 import { Decoration_Type, Node_Type } from 'ricos-schema';
 import type { Node } from 'ricos-schema';
-import type { TiptapAdapter, EditorContextType, Pubsub } from 'ricos-types';
+import type { TiptapAdapter, EditorContextType, Pubsub, EditorCommands } from 'ricos-types';
 import { ToolbarType } from 'ricos-types';
 import type { RicosCustomStyles, TextAlignment } from 'wix-rich-content-common';
 import {
@@ -34,6 +34,7 @@ import { TO_TIPTAP_TYPE } from '../../consts';
 import { findNodeById } from '../../helpers';
 import { convertInlineStylesToCSS } from '../../helpers/convertInlineStylesToCss';
 import type { TiptapAdapterServices } from '../../initializeTiptapAdapter';
+import toConstantCase from 'to-constant-case';
 
 export class RichContentAdapter implements TiptapAdapter {
   private readonly initialContent: Fragment;
@@ -87,6 +88,30 @@ export class RichContentAdapter implements TiptapAdapter {
   }
 
   getEditorCommands() {
+    const hasInlineStyle: EditorCommands['hasInlineStyle'] = style => {
+      const {
+        state: {
+          doc,
+          selection: { from, to, $from },
+        },
+      } = this.tiptapEditor;
+
+      const marks = {};
+      if (from === to) {
+        $from.nodeBefore?.marks.forEach(({ type: { name } }) => {
+          marks[name] = true;
+        });
+      } else {
+        doc.nodesBetween(from, to, node => {
+          node.marks.forEach(({ type: { name } }) => {
+            marks[name] = true;
+          });
+        });
+      }
+
+      return marks[toConstantCase(style)];
+    };
+
     return {
       ...this.editorMocks,
       toggleInlineStyle: inlineStyle => {
@@ -94,29 +119,7 @@ export class RichContentAdapter implements TiptapAdapter {
         const styleName = `toggle${capitalize(inlineStyle)}`;
         editorCommand[styleName]().run();
       },
-      hasInlineStyle: style => {
-        const {
-          state: {
-            doc,
-            selection: { from, to, $from },
-          },
-        } = this.tiptapEditor;
-
-        const marks = {};
-        if (from === to) {
-          $from.nodeBefore?.marks.forEach(({ type: { name } }) => {
-            marks[name] = true;
-          });
-        } else {
-          doc.nodesBetween(from, to, node => {
-            node.marks.forEach(({ type: { name } }) => {
-              marks[name] = true;
-            });
-          });
-        }
-
-        return marks[style];
-      },
+      hasInlineStyle,
       insertBlock: (pluginType, data) => {
         const type = TO_TIPTAP_TYPE[pluginType];
         let id = '';
@@ -403,7 +406,6 @@ export class RichContentAdapter implements TiptapAdapter {
       }
       return currentTextStyle as TextAlignment;
     },
-    isBlockTypeSelected: () => false,
     isUndoStackEmpty: () => false,
     isRedoStackEmpty: () => false,
     getSelectedData: () => 'blah',
