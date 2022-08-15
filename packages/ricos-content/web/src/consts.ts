@@ -142,6 +142,9 @@ export const TIPTAP_HTML_TYPE = Node_Type.HTML;
 export const TIPTAP_LINK_BUTTON_TYPE = 'LINK_BUTTON';
 export const TIPTAP_ACTION_BUTTON_TYPE = 'ACTION_BUTTON';
 export const TIPTAP_CODE_BLOCK_TYPE = Node_Type.CODE_BLOCK;
+export const TIPTAP_TABLE_TYPE = Node_Type.TABLE;
+export const TIPTAP_TABLE_ROW_TYPE = Node_Type.TABLE_ROW;
+export const TIPTAP_TABLE_CELL_TYPE = Node_Type.TABLE_CELL;
 
 export const RICOS_NODE_TYPE_TO_DATA_FIELD = {
   [Node_Type.BUTTON]: 'buttonData',

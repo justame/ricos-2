@@ -1,0 +1,94 @@
+@import '~wix-rich-content-common/dist/statics/styles/mixins';
+@import '~wix-rich-content-common/dist/statics/styles/palette';
+
+.tableController,
+.colController,
+.rowController {
+  background-color: rgba($primary-text-color-tuple, 0.1);
+  display: inline-block;
+  box-sizing: border-box;
+  cursor: pointer;
+  position: absolute;
+
+  &.selected {
+    background-color: $settings-action-color;
+    border: 1px solid $settings-action-color;
+  }
+}
+
+.colController,
+.rowController {
+  &:hover:not(.selected) {
+    color: $settings-action-color;
+    background-color: rgba($settings-action-color-tuple, 0.2);
+  }
+}
+
+.colController {
+  height: 20px;
+  left: -1px;
+  top: -20px;
+  width: calc(100% + 1px);
+  border-bottom: 1px solid rgba($primary-text-color-tuple, 0.15);
+  border-left: 1px solid rgba($primary-text-color-tuple, 0.15);
+  border-top: 1px solid rgba($primary-text-color-tuple, 0.15);
+  &.last {
+    border-right: 1px solid rgba($primary-text-color-tuple, 0.15);
+    width: calc(100% + 2px);
+  }
+}
+
+.rowController {
+  height: calc(100% + 1px);
+  left: -20px;
+  top: -1px;
+  width: 20px;
+
+  border-left: 1px solid rgba($primary-text-color-tuple, 0.15);
+  border-right: 1px solid rgba($primary-text-color-tuple, 0.15);
+  border-top: 1px solid rgba($primary-text-color-tuple, 0.15);
+  &.last {
+    border-bottom: 1px solid rgba($primary-text-color-tuple, 0.15);
+    height: calc(100% + 2px);
+  }
+}
+
+.tableController {
+  height: 20px;
+  width: 20px;
+  left: -20px;
+  top: -20px;
+  border: 1px solid rgba($primary-text-color-tuple, 0.15);
+}
+
+.colResize {
+  height: 20px;
+  width: 5px;
+  position: absolute;
+  top: -20px;
+  right: 0;
+  cursor: col-resize;
+
+  &:hover {
+    border-right: 1px solid $settings-action-color;
+  }
+}
+
+.rowResize {
+  height: 5px;
+  width: 20px;
+  position: absolute;
+  left: -20px;
+  bottom: 0;
+  cursor: row-resize;
+
+  &:hover {
+    border-bottom: 1px solid $settings-action-color;
+  }
+}
+
+.table-drag-preview {
+  background: rgba(41, 98, 255, 0.2);
+  position: absolute;
+  z-index: 3;
+}

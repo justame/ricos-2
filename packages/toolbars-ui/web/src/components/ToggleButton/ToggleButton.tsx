@@ -8,7 +8,7 @@ interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Icon: (props?: any) => JSX.Element;
   onClick: (args) => void;
-  tooltip: string;
+  tooltip?: string;
   label?: string;
   dataHook?: string;
   active?: boolean;

@@ -40,6 +40,8 @@ import type {
   LINK_BUTTON_TYPE,
   ACTION_BUTTON_TYPE,
   LINK_PREVIEW_TYPE,
+  TABLE_TYPE,
+  RICOS_TABLE_TYPE,
 } from 'ricos-content';
 import type {
   DividerData,
@@ -55,6 +57,7 @@ import type {
   Link,
   ButtonData,
   LinkPreviewData,
+  TableData,
 } from 'ricos-schema';
 import type { MentionData } from './pluginTypes';
 import type { TextAlignment, InlineStyle } from './commonTypes';
@@ -121,6 +124,8 @@ export interface PluginsDataMap {
   [LINK_BUTTON_TYPE]?: ButtonData;
   [ACTION_BUTTON_TYPE]?: ButtonData;
   [LINK_PREVIEW_TYPE]?: LinkPreviewData;
+  [TABLE_TYPE]?: any;
+  [RICOS_TABLE_TYPE]?: any;
 }
 
 export const CUSTOM_LINK = 'custom-link';

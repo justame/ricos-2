@@ -133,8 +133,8 @@ class RenderableNodeExtension extends ReactNodeExtension implements DecoratedNod
   constructor(component: ComponentType, extension: RicosExtension) {
     super(extension);
     this.config = {
-      ...this.config,
       addNodeView: () => pipe(component, createRicosNodeHOC(this.settings), ReactNodeViewRenderer),
+      ...this.config,
     };
   }
 

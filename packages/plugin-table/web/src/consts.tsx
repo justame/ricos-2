@@ -102,3 +102,46 @@ export const ACTION_NAME = {
 export const CELL_MANUAL_MIN_WIDTH = 65;
 export const CELL_AUTO_MIN_WIDTH = 120;
 export const ROW_DEFAULT_HEIGHT = 47;
+
+export const TABLE_BUTTONS = {
+  FORMATTING: 'formatting',
+  VERTICAL_ALIGNMENT: 'cellVerticalAlignment',
+  BACKGROUND_COLOR: 'backgroundColor',
+  ROW_HEADER: 'rowHeader',
+  COLUMN_HEADER: 'columnHeader',
+  BORDER: 'border',
+  CONTEXT: 'context',
+};
+
+export const TABLE_BUTTONS_DATA_HOOKS = {
+  FORMATTING: 'text-style',
+  BACKGROUND_COLOR: 'back-ground-color',
+  VERTICAL_ALIGNMENT: 'VerticalAlignment',
+  BORDER: 'border-color-buttons',
+  CONTEXT: 'context-menu',
+  ROW_HEADER: 'row-header',
+  COLUMN_HEADER: 'col-header',
+};
+
+export const TABLE_BUTTONS_MODALS_ID = {
+  BORDER: 'table-border-modal',
+  VERTICAL_ALIGNMENT: 'table-vertical-alignment-modal',
+  CONTEXT: 'table-context-menu',
+};
+
+export const TABLE_COMMANDS_KEYS = {
+  CLEAR: 'clearCell',
+  DELETE_TABLE: 'deleteTable',
+  DELETE_ROW: 'deleteRow',
+  DELETE_COLUMN: 'deleteColumn',
+  INSERT_ABOVE: 'addRowBefore',
+  INSERT_BELOW: 'addRowAfter',
+  INSERT_LEFT: 'addColumnBefore',
+  INSERT_RIGHT: 'addColumnAfter',
+  MERGE_CELLS: 'mergeCells',
+  SPLIT_CELL: 'splitCell',
+  DISTRIBUTE_ROWS: 'distributeRows',
+  DISTRIBUTE_COLUMNS: 'distributeColumns',
+  SELECT_ROWS: 'selectRow',
+  SELECT_COLUMNS: 'selectColumn',
+};

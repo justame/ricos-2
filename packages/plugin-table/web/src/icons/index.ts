@@ -16,3 +16,4 @@ export { default as BorderOutsideIcon } from './BorderOutsideIcon';
 export { default as ColumnHeader } from './ColumnHeader';
 export { default as RowHeader } from './RowHeader';
 export { default as GoBackIcon } from './GoBackIcon';
+export { default as FormattingIcon } from './FormattingIcon';

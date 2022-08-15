@@ -13,7 +13,7 @@ const DraftHOC = Component => {
       ...props,
       componentData: data,
     };
-    return <Component {...newProps} />;
+    return Component ? <Component {...newProps} /> : null;
   };
 
   Draft.displayName = 'ToDraftHoc';

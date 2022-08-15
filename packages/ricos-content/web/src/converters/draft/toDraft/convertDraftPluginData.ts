@@ -625,7 +625,8 @@ const convertTableData = (
     rowHeader,
     columnHeader,
   } = data || {};
-  const { alignment: _, ...rest } = data.config;
+  const { alignment: _, ...rest } = data.config || {};
+
   data.config = {
     ...rest,
     colsWidth: colsWidthRatio,

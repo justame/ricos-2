@@ -47,6 +47,8 @@ const pluginDataPropByType = {
   [Node_Type.ORDERED_LIST]: 'orderedListData',
   [Node_Type.BULLETED_LIST]: 'bulletedListData',
   [Node_Type.BLOCKQUOTE]: 'blockquoteData',
+  [Node_Type.TABLE]: 'tableData',
+  [Node_Type.TABLE_CELL]: 'tableCellData',
 };
 
 // defaultContent has to include any non-primitive fields to make tiptap refer nested fields
@@ -105,6 +107,8 @@ const defaultContent = {
         expandOnlyOne: false,
       },
     },
+    { type: 'TABLE', tableData: { dimensions: {} } },
+    { type: 'TABLE_CELL', tableCellData: { containerData, cellStyle: {}, borderColors: {} } },
     {
       type: 'ORDERED_LIST',
       orderedListData: {},
