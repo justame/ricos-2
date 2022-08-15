@@ -24,6 +24,7 @@
   - [#4384](https://github.com/wix/ricos/pull/4384) (fix): line spacing indicator in list
   - [#4379](https://github.com/wix/ricos/pull/4379) wire add plugin menu plus button
   - [#4383](https://github.com/wix/ricos/pull/4383) (fix): alignment/spacing resets each other
+  - [#4390](https://github.com/wix/ricos/pull/4390) custom headings panel reset to default
 - `audio/video`
   - [#4377](https://github.com/wix/ricos/pull/4377) fix nodId creation
 - `tiptap-editor`

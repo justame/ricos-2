@@ -55,7 +55,7 @@ class HeadingsPanel extends Component {
         onReset={() => this.onResetType(documentStyleType)}
         onUpdate={() => this.onUpdateHeading(documentStyleType)}
         t={this.props.t}
-        resetEnabled={() => !isEmpty(this.props.documentStyle?.[documentStyleType])}
+        resetEnabled={() => !isEmpty(documentStyle?.[documentStyleType])}
         updateEnabled={() =>
           headerType === currentSelect &&
           hasStyleChanges(currentSelect, currentInlineStyles, documentStyle)

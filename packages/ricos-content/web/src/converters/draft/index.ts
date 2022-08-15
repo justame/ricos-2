@@ -1,4 +1,4 @@
-import { parseDocStyle } from './fromDraft/parse-doc-style';
+import { default as parseDocStyle } from './toDraft/utils/parseDocStyle';
 
 export { fromDraft, ensureRicosContent } from './fromDraft/fromDraft';
 export { convertBlockDataToRicos } from './fromDraft/convertRicosPluginData';
