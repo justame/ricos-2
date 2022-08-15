@@ -20,6 +20,7 @@
 ## :bug: Bug Fix
 
 - `toolbars-v3`
+  - [#4384](https://github.com/wix/ricos/pull/4384) (fix): line spacing indicator in list
   - [#4379](https://github.com/wix/ricos/pull/4379) wire add plugin menu plus button
 - `audio/video`
   - [#4377](https://github.com/wix/ricos/pull/4377) fix nodId creation
