@@ -1,5 +1,6 @@
 /* eslint-disable brace-style */
 import type {
+  EventData,
   EventSource,
   Modal,
   ModalConfig,
@@ -7,6 +8,7 @@ import type {
   PolicySubscriber,
   PublisherProvider,
   SubscriptorProvider,
+  TopicDescriptor,
 } from 'ricos-types';
 
 type Topics = ['ricos.modals.functionality.modalOpened', 'ricos.modals.functionality.modalClosed'];
@@ -101,11 +103,21 @@ export class RicosModalService
   }
 
   public onModalOpened(onOpen: (id: string) => unknown) {
-    return this.subscriptors.byTopic('ricos.modals.functionality.modalOpened').subscribe(onOpen);
+    const subscriber = (_topic: TopicDescriptor, data: EventData) => {
+      onOpen(data.id);
+    };
+    return this.subscriptors
+      .byTopic('ricos.modals.functionality.modalOpened')
+      .subscribe(subscriber);
   }
 
   public onModalClosed(onClose: (id: string) => unknown) {
-    return this.subscriptors.byTopic('ricos.modals.functionality.modalClosed').subscribe(onClose);
+    const subscriber = (_topic: TopicDescriptor, data: EventData) => {
+      onClose(data.id);
+    };
+    return this.subscriptors
+      .byTopic('ricos.modals.functionality.modalClosed')
+      .subscribe(subscriber);
   }
 
   public getModal(id: string) {
