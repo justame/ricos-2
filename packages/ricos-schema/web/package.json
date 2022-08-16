@@ -28,8 +28,8 @@
     "prebuild": "yarn clean",
     "generate": "ts-node --compiler-options={\\\"module\\\":\\\"commonJS\\\"} src/generateSchema.ts",
     "gen-plugin-defaults": "ts-node --compiler-options={\\\"module\\\":\\\"commonJS\\\"} src/generate-plugin-defaults.ts",
-    "buildESM": "tsc",
-    "buildCJS": "tsc --module commonjs --outDir dist/cjs",
+    "buildESM": "tsc --skipLibCheck",
+    "buildCJS": "tsc --skipLibCheck --module commonjs --outDir dist/cjs",
     "build": "yarn generate && yarn gen-plugin-defaults && yarn buildESM && yarn buildCJS",
     "build:dev": "yarn build"
   },
