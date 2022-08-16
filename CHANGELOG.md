@@ -17,6 +17,10 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.72.25 (Aug 17, 2022)
+
 ## :bug: Bug Fix
 
 - `toolbars-v3`
@@ -31,8 +35,6 @@
 - `*`
 
   - [#4397](https://github.com/wix/ricos/pull/4397) remove prosemirror resolutions
-
-    </details>
 
 ## 8.72.24 (Aug 16, 2022)
 

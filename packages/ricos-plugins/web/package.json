@@ -1,6 +1,6 @@
 {
   "name": "ricos-plugins",
-  "version": "8.72.24",
+  "version": "8.72.25",
   "author": {
     "name": "Dana Rish",
     "email": "danari@wix.com"
@@ -35,10 +35,10 @@
   },
   "dependencies": {
     "fp-ts": "^2.11.0",
-    "ricos-context": "8.72.24",
-    "ricos-types": "8.72.24",
-    "wix-rich-content-toolbars-ui": "8.72.24",
-    "wix-rich-content-toolbars-v3": "8.72.24"
+    "ricos-context": "8.72.25",
+    "ricos-types": "8.72.25",
+    "wix-rich-content-toolbars-ui": "8.72.25",
+    "wix-rich-content-toolbars-v3": "8.72.25"
   },
   "peerDependencies": {
     "lodash": "^4.0.0"

@@ -1,6 +1,6 @@
 {
   "name": "wix-rich-content-plugin-table",
-  "version": "8.72.24",
+  "version": "8.72.25",
   "author": {
     "name": "undefined",
     "email": "noamt@wix.com"
@@ -37,18 +37,18 @@
     "test": "jest --verbose"
   },
   "dependencies": {
-    "ricos-context": "8.72.24",
-    "ricos-types": "8.72.24",
-    "wix-react-datasheet": "1.5.7",
-    "wix-rich-content-common": "8.72.24",
-    "wix-rich-content-editor-common": "8.72.24",
-    "wix-rich-content-plugin-commons": "8.72.24",
-    "wix-rich-content-toolbars": "8.72.24",
-    "wix-rich-content-ui-components": "8.72.24",
-    "wix-rich-content-toolbars-ui": "8.72.24",
+    "@tiptap/core": "2.0.0-beta.148",
     "prosemirror-tables": "1.2.5",
     "prosemirror-utils": "0.9.6",
-    "@tiptap/core": "2.0.0-beta.148"
+    "ricos-context": "8.72.25",
+    "ricos-types": "8.72.25",
+    "wix-react-datasheet": "1.5.7",
+    "wix-rich-content-common": "8.72.25",
+    "wix-rich-content-editor-common": "8.72.25",
+    "wix-rich-content-plugin-commons": "8.72.25",
+    "wix-rich-content-toolbars": "8.72.25",
+    "wix-rich-content-toolbars-ui": "8.72.25",
+    "wix-rich-content-ui-components": "8.72.25"
   },
   "peerDependencies": {
     "lodash": "^4.0.0"
