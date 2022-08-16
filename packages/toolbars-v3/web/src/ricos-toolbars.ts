@@ -170,6 +170,11 @@ export class RicosToolbars implements IRicosToolbars {
           `[data-hook='linkPluginToolbar'] [data-hook='toolbar-v3-visible'] a`
         ) as HTMLElement;
         firstLinkToolbarButton?.focus();
+
+        const firstPluginToolbarButton = document.querySelector(
+          `[data-hook='floating-plugin-toolbar'] [data-hook='toolbar-v3-visible'] button`
+        ) as HTMLElement;
+        firstPluginToolbarButton?.focus();
       },
       group: 'global',
       enabled: true,

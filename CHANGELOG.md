@@ -17,6 +17,9 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+- `toolbars-v3`
+  - [#4398](https://github.com/wix/ricos/pull/4398)  (tiptap)
 
   </details>
 
