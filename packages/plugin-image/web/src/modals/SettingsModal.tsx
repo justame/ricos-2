@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import React, { useContext, useEffect, useState } from 'react';
 import type { FC } from 'react';
-import { ModalContext, RicosContext, EditorContext } from 'ricos-context';
+import { ModalContext, RicosContext, EditorContext, PluginsContext } from 'ricos-context';
 import ImageSettings from '../toolbar/image-settings';
 import { IMAGE_TYPE } from '../types';
 import { imageModals } from '../consts';
-import { TIPTAP_IMAGE_TYPE } from 'ricos-content';
+import { TIPTAP_IMAGE_TYPE, SPOILER_TYPE } from 'ricos-content';
 
 interface Props {
   nodeId: string;
@@ -13,6 +13,14 @@ interface Props {
 
 const ImageSettingsModal: FC<Props> = ({ nodeId }) => {
   const { theme, t, isMobile, languageDir, experiments } = useContext(RicosContext);
+
+  const plugins = useContext(PluginsContext);
+  const spoilerPlugin = plugins.asArray().find(plugin => plugin.getType() === SPOILER_TYPE);
+  const shouldShowSpoiler =
+    spoilerPlugin &&
+    (!spoilerPlugin.getConfig().supportedPlugins ||
+      spoilerPlugin.getConfig().supportedPlugins.includes(IMAGE_TYPE));
+
   const modalService = useContext(ModalContext) || {};
   const { getEditorCommands } = useContext(EditorContext);
 
@@ -69,7 +77,7 @@ const ImageSettingsModal: FC<Props> = ({ nodeId }) => {
       languageDir={languageDir}
       onCloseRequested={closeModal}
       updateData={updateData}
-      shouldShowSpoiler
+      shouldShowSpoiler={shouldShowSpoiler}
       onSave={closeModal}
       onCancel={onCancel}
     />

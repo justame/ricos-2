@@ -4,8 +4,8 @@ import type { FC } from 'react';
 import VideoSettings from '../toolbar/VideoSettings';
 import { VIDEO_TYPE } from '../types';
 import { videoModals } from '../constants';
-import { RicosContext, EditorContext, ModalContext } from 'ricos-context';
-import { TIPTAP_VIDEO_TYPE } from 'ricos-content';
+import { RicosContext, EditorContext, ModalContext, PluginsContext } from 'ricos-context';
+import { TIPTAP_VIDEO_TYPE, SPOILER_TYPE } from 'ricos-content';
 
 interface Props {
   nodeId: string;
@@ -15,6 +15,13 @@ const VideoSettingsModal: FC<Props> = ({ nodeId }) => {
   const { theme, t, isMobile, experiments } = useContext(RicosContext);
   const modalService = useContext(ModalContext) || {};
   const { getEditorCommands } = useContext(EditorContext);
+
+  const plugins = useContext(PluginsContext);
+  const spoilerPlugin = plugins.asArray().find(plugin => plugin.getType() === SPOILER_TYPE);
+  const shouldShowSpoiler =
+    spoilerPlugin &&
+    (!spoilerPlugin.getConfig().supportedPlugins ||
+      spoilerPlugin.getConfig().supportedPlugins.includes(VIDEO_TYPE));
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [initialData, setInitialData] = useState<Record<string, any>>();
@@ -71,7 +78,7 @@ const VideoSettingsModal: FC<Props> = ({ nodeId }) => {
       updateData={updateData}
       onSave={closeModal}
       onCancel={onCancel}
-      shouldShowSpoiler
+      shouldShowSpoiler={shouldShowSpoiler}
     />
   ) : null;
 };

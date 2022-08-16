@@ -4,8 +4,8 @@ import type { FC } from 'react';
 import GallerySettings from '../components/gallery-settings-modal';
 import { GALLERY_TYPE } from '../types';
 import { galleryModals } from '../consts';
-import { RicosContext, EditorContext, ModalContext } from 'ricos-context';
-import { TIPTAP_GALLERY_TYPE } from 'ricos-content';
+import { RicosContext, EditorContext, ModalContext, PluginsContext } from 'ricos-context';
+import { TIPTAP_GALLERY_TYPE, SPOILER_TYPE } from 'ricos-content';
 
 interface Props {
   nodeId: string;
@@ -26,6 +26,13 @@ const GallerySettingsModal: FC<Props> = ({
   const { theme, t, isMobile, experiments } = useContext(RicosContext);
   const modalService = useContext(ModalContext) || {};
   const { getEditorCommands } = useContext(EditorContext);
+
+  const plugins = useContext(PluginsContext);
+  const spoilerPlugin = plugins.asArray().find(plugin => plugin.getType() === SPOILER_TYPE);
+  const shouldShowSpoiler =
+    spoilerPlugin &&
+    (!spoilerPlugin.getConfig().supportedPlugins ||
+      spoilerPlugin.getConfig().supportedPlugins.includes(GALLERY_TYPE));
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [initialData, setInitialData] = useState<Record<string, any>>();
@@ -97,7 +104,7 @@ const GallerySettingsModal: FC<Props> = ({
       onCancel={onCancel}
       handleFileSelection={addMedia}
       handleFileUpload={handleFileUpload}
-      shouldShowSpoiler
+      shouldShowSpoiler={shouldShowSpoiler}
       activeTab={activeTab}
     />
   ) : null;
