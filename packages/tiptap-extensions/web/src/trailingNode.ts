@@ -17,7 +17,7 @@ export const trailingNode: RicosExtension = {
       name: this.name,
       addOptions: () => ({
         node: Node_Type.PARAGRAPH,
-        notAfter: [Node_Type.PARAGRAPH],
+        notAfter: [Node_Type.PARAGRAPH, Node_Type.HEADING],
       }),
 
       addProseMirrorPlugins() {
@@ -33,8 +33,7 @@ export const trailingNode: RicosExtension = {
               }
               const endPosition = doc.content.size;
               const type = schema.nodes[this.options.node];
-
-              return tr.insert(endPosition, type.create());
+              return tr.insert(endPosition, type.create()).setMeta('trailingNodeInsertion', true);
             },
           }),
         ];

@@ -78,8 +78,9 @@ export const uniqueId: RicosExtension = {
                     marks,
                   });
 
-                  //  this should run before ensureMarks becasuse it ressets the marks
-                  if (browser.android) {
+                  // this should run before ensureMarks becasuse it ressets the marks
+                  // also ignore tralingNode insertion
+                  if (browser.android && !tr.getMeta('trailingNodeInsertion')) {
                     handleAndroidEnterBug(tr, pos);
                   }
 
