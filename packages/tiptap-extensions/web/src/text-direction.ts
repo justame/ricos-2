@@ -37,9 +37,7 @@ export const textDirection: RicosExtension = {
             attributes: {
               dir: {
                 default: this.options.defaultDirection,
-                parseHTML: element => ({
-                  dir: element.dir || this.options.defaultDirection,
-                }),
+                parseHTML: element => element.dir || this.options.defaultDirection,
                 renderHTML: attributes => ({ dir: attributes.dir }),
               },
             },
