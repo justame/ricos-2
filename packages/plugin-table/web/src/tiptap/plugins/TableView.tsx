@@ -13,7 +13,7 @@ export class TableView implements NodeView {
 
   colgroup: Element;
 
-  contentDOM: Element;
+  contentDOM: HTMLElement;
 
   editor: Editor;
 

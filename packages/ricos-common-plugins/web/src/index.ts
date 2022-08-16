@@ -12,7 +12,7 @@ import { pluginResizable } from './resizable/resizable';
 import { pluginDraggable } from './draggable/draggable';
 
 import { undo, redo, history } from './history-infra';
-import { isTextSelection } from '@tiptap/core';
+import { isTextSelection } from 'wix-rich-content-editor-common';
 import { AllSelection } from 'prosemirror-state';
 import { INDENT_TYPE, UNDO_REDO_TYPE } from 'ricos-content';
 import type { EditorPlugin } from 'ricos-types';

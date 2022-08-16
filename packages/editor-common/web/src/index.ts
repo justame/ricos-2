@@ -22,6 +22,7 @@ export { getToolbarTheme } from './Utils/getToolbarTheme';
 export { getModalStyles, getBottomToolbarModalStyles } from './Utils/getModalStyles';
 export { undo, redo } from './Utils/handleUndoRedoCommands';
 export { getAnchorableBlocks } from './Components/AnchorComponents/anchorUtils';
+export { isTextSelection } from './Utils/tiptap/isTextSelection';
 
 export {
   updateLinkAtCurrentSelection,

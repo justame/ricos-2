@@ -4,6 +4,7 @@ import {
   combineTransactionSteps,
   getChangedRanges,
 } from '@tiptap/core';
+import type { Transaction } from 'prosemirror-state';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import type { MarkType } from 'prosemirror-model';
 import { find, test } from 'linkifyjs';
@@ -30,7 +31,7 @@ export function autolink(options: AutolinkOptions): Plugin {
       }
 
       const { tr } = newState;
-      const transform = combineTransactionSteps(oldState.doc, transactions);
+      const transform = combineTransactionSteps(oldState.doc, [...transactions]);
       const { mapping } = transform;
       const changes = getChangedRanges(transform);
 

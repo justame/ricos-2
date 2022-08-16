@@ -7,14 +7,12 @@ export function createTable(
   rowsCount: number,
   colsCount: number,
   withHeaderRow: boolean,
-  cellContent?: Fragment<Schema> | ProsemirrorNode<Schema>
+  cellContent?: Fragment | ProsemirrorNode
 ): ProsemirrorNode {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const types: Record<string, any> = getTableNodeTypes(schema);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const headerCells: ProsemirrorNode<any>[] = [];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const cells: ProsemirrorNode<any>[] = [];
+  const headerCells: ProsemirrorNode[] = [];
+  const cells: ProsemirrorNode[] = [];
 
   // eslint-disable-next-line fp/no-loops
   for (let index = 0; index < colsCount; index += 1) {

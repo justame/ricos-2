@@ -48,7 +48,8 @@ export function tableEditingPlugin(editor) {
       },
 
       createSelectionBetween(view) {
-        if (tableEditingKey.getState(view.state) !== null) return view.state.selection;
+        if (tableEditingKey.getState(view.state) === null) return null;
+        return view.state.selection;
       },
 
       handleKeyDown: (view, event) => {

@@ -35,7 +35,6 @@
   },
   "dependencies": {
     "fp-ts": "^2.11.0",
-    "prosemirror-model": "1.15.0",
     "ricos-common": "8.72.24",
     "ricos-common-plugins": "8.72.24",
     "ricos-converters": "8.72.24",

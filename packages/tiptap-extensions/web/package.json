@@ -38,8 +38,6 @@
     "@tiptap/react": "2.0.0-beta.98",
     "linkifyjs": "3.0.4",
     "prosemirror-dropcursor": "1.4.0",
-    "prosemirror-state": "^1.3.4",
-    "prosemirror-transform": "^1.3.3",
     "ricos-content": "8.72.24",
     "ricos-converters": "8.72.24",
     "ricos-schema": "8.72.24",

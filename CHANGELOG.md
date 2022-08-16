@@ -26,7 +26,13 @@
 - `ricos-plugins`
   - [#4401](https://github.com/wix/ricos/pull/4401) alignment command does not override custom size
 
-  </details>
+## :house: Internal
+
+- `*`
+
+  - [#4397](https://github.com/wix/ricos/pull/4397) remove prosemirror resolutions
+
+    </details>
 
 ## 8.72.24 (Aug 16, 2022)
 

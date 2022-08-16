@@ -93,7 +93,7 @@ export function handleMouseDown(view, startEvent, editor) {
       if (starting) $head = $anchor;
       else return;
     }
-    const selection = new CellSelection($anchor, $head as ResolvedPos<any>);
+    const selection = new CellSelection($anchor, $head as ResolvedPos);
     if (starting || !view.state.selection.eq(selection)) {
       const tr = view.state.tr.setSelection(selection);
       if (starting) tr.setMeta(key, $anchor.pos);

@@ -8,7 +8,7 @@ import { tiptapExtensions } from './tiptap/tiptap';
 import { getAddButtons } from './getAddButtons';
 import { getToolbarButtons } from './getToolbarButtons';
 import { TIPTAP_TABLE_TYPE } from 'ricos-content';
-import { isTextSelection } from '@tiptap/core';
+import { isTextSelection } from 'wix-rich-content-editor-common';
 
 export const pluginTable: EditorPluginCreator<TablePluginEditorConfig> = config => {
   return {

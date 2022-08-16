@@ -14,7 +14,8 @@ export const controllerPlugin = editor =>
       init: () => {
         return {};
       },
-      apply(tr, prev, oldState, newState) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      apply(tr, prev: any, oldState, newState) {
         const selectedTable = findTable(newState.selection);
         if (!selectedTable) return {};
 

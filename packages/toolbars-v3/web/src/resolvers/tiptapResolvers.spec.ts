@@ -50,9 +50,9 @@ describe('tiptap resolvers', () => {
           text: 'World',
         },
       ];
-      expect(isTextContainsBoldResolver.resolve(mockContentWithoutBold as TiptapNode[], {})).toBe(
-        false
-      );
+      expect(
+        isTextContainsBoldResolver.resolve(mockContentWithoutBold as unknown as TiptapNode[], {})
+      ).toBe(false);
     });
   });
 
@@ -86,7 +86,10 @@ describe('tiptap resolvers', () => {
         },
       ];
       expect(
-        isTextContainsItalicResolver.resolve(mockContentWithoutItalic as TiptapNode[], {})
+        isTextContainsItalicResolver.resolve(
+          mockContentWithoutItalic as unknown as TiptapNode[],
+          {}
+        )
       ).toBe(false);
     });
   });
@@ -101,7 +104,7 @@ describe('tiptap resolvers', () => {
         },
       ];
       expect(
-        isTextContainsUnderlineResolver.resolve(mockContentWithUnderline as TiptapNode[])
+        isTextContainsUnderlineResolver.resolve(mockContentWithUnderline as unknown as TiptapNode[])
       ).toBe(true);
     });
 
@@ -114,7 +117,9 @@ describe('tiptap resolvers', () => {
         },
       ];
       expect(
-        isTextContainsUnderlineResolver.resolve(mockContentWithoutUnderline as TiptapNode[])
+        isTextContainsUnderlineResolver.resolve(
+          mockContentWithoutUnderline as unknown as TiptapNode[]
+        )
       ).toBe(false);
     });
   });
@@ -184,7 +189,9 @@ describe('tiptap resolvers', () => {
           text: 'World',
         },
       ];
-      expect(isTextContainsSpoilerResolver.resolve(mockContent as TiptapNode[])).toBe(true);
+      expect(isTextContainsSpoilerResolver.resolve(mockContent as unknown as TiptapNode[])).toBe(
+        true
+      );
     });
 
     it('should return false if selected text is not spoiler', () => {
@@ -195,7 +202,9 @@ describe('tiptap resolvers', () => {
           text: 'World',
         },
       ];
-      expect(isTextContainsSpoilerResolver.resolve(mockContent as TiptapNode[])).toBe(false);
+      expect(isTextContainsSpoilerResolver.resolve(mockContent as unknown as TiptapNode[])).toBe(
+        false
+      );
     });
   });
 });

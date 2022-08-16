@@ -16,18 +16,16 @@ import {
   mergeToolbarSettings,
   isiOS,
   KEYS_CHARCODE,
+  isTextSelection,
 } from 'wix-rich-content-editor-common';
 import { getDefaultToolbarSettings } from 'wix-rich-content-editor';
 import RicosPortal from '../modals/RicosPortal';
 import type { Selection } from 'prosemirror-state';
 import type { GeneralContext } from 'ricos-context';
 import { withEditorContext, withRicosContext, withPluginsContext } from 'ricos-context';
-import { and } from 'ricos-content';
-import { not } from 'fp-ts/Predicate';
 import PluginsToolbar from '../toolbars/PluginToolbar';
 import { FooterToolbar } from '../toolbars/FooterToolbar';
 import type { RicosEditorPlugins, IToolbarItemConfigTiptap, IRicosEditor } from 'ricos-types';
-import { isTextSelection } from '@tiptap/core';
 
 type RicosToolbarProps = {
   content: Content<Node[]>;
@@ -136,10 +134,8 @@ class RicosToolbars extends React.Component<
     return isCollapsed && isLinkInSelection;
   };
 
-  isFormattingToolbarVisible: (selection: Selection) => boolean = and([
-    isTextSelection,
-    not(this.isSelectionCollapsed),
-  ]);
+  isFormattingToolbarVisible = (selection: Selection) =>
+    !selection.empty && isTextSelection(selection);
 
   isLinkToolbarVisible = (selection: Selection) => this.isLinkInCollapsedSelection(selection);
 
