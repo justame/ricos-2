@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+
+  </details>
+
+## 8.72.24 (Aug 16, 2022)
+
 ## :bug: Bug Fix
 
 - `toolbars-v3`
@@ -37,10 +42,7 @@
 - `social-polls`
   - [#4375](https://github.com/wix/ricos/pull/4375) fix tiptap image uploads
 - `toolbars-ui`
-
   - [#4385](https://github.com/wix/ricos/pull/4385) add text & icon support to ToolbarButton
-
-  </details>
 
 ## 8.72.23 (Aug 14, 2022)
 
