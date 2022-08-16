@@ -23,6 +23,8 @@
   - [#4398](https://github.com/wix/ricos/pull/4398) (tiptap)
 - `plugin-video`
   - [#4400](https://github.com/wix/ricos/pull/4400) close upload modal on custom upload
+- `ricos-plugins`
+  - [#4401](https://github.com/wix/ricos/pull/4401) alignment command does not override custom size
 
   </details>
 

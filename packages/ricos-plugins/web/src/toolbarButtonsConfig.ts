@@ -55,7 +55,8 @@ export const toolbarButtonsConfig: IPluginToolbarButtonsConfig = {
               const $from = tr.selection.$from;
               const selectedNode = $from.nodeAfter;
               const shouldUpdateSize =
-                selectedNode?.attrs.containerData?.width?.size !== 'ORIGINAL';
+                selectedNode?.attrs.containerData?.width?.size !== 'ORIGINAL' &&
+                !selectedNode?.attrs.containerData?.width?.custom;
               shouldUpdateSize && commands.setNodeSize('SMALL');
               return true;
             })
