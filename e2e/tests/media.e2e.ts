@@ -445,13 +445,14 @@ describe('plugins', () => {
 
       it(`${getTestPrefix(useTiptap)} should render audio settings`, () => {
         cy.loadRicosEditorAndViewer('audio', testAppConfig);
+        cy.percySnapshot(getTestPrefix(useTiptap) + ' should render audio with cover image');
         cy.openPluginToolbar(PLUGIN_COMPONENT.AUDIO);
         cy.clickToolbarButton(PLUGIN_TOOLBAR_BUTTONS.SETTINGS);
         cy.get(`[data-hook=audioSettings]`);
         cy.get(`[data-hook=audioSettingsAudioNameInput]`).clear();
         cy.get(`[data-hook=audioSettingsAuthorNameInput]`).clear();
         // eslint-disable-next-line cypress/no-unnecessary-waiting
-        cy.get(`[data-hook=file-input-label]`).click().wait(300);
+        cy.get(`[data-hook=file-input-label]`).should('exist');
         cy.get(`[data-hook=AudioDownloadToggle]`).click();
         cy.percySnapshot(getTestPrefix(useTiptap) + ' should change settings modal ui');
         cy.get(`[data-hook=${ACTION_BUTTONS.SAVE}]`).click();

@@ -14,7 +14,6 @@ import {
   NodeAlignmentButton,
 } from 'wix-rich-content-toolbars-ui';
 import type { PluginContainerData_Width_Type } from 'ricos-schema';
-import { DEFAULTS as defaultData } from './defaults';
 
 const isCustomAudioResolver = {
   id: 'isCustomAudio',
@@ -30,11 +29,6 @@ const isCustomAudioResolver = {
 export const getToolbarButtons = (config, services): ToolbarButton[] => {
   const { getAudioUrl, fetchData } = config || {};
   const { modals } = services;
-
-  const handleFileSelection = config.handleFileSelection
-    ? updateEntity =>
-        config.handleFileSelection(undefined, false, updateEntity, undefined, defaultData)
-    : undefined;
 
   return [
     {
@@ -77,7 +71,7 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
               componentData: node.attrs, //TODO: convert to draft
               nodeId: id,
               getAudioUrl,
-              handleFileSelection,
+              handleFileSelection: config.handleFileSelection,
               handleFileUpload: config.handleFileUpload,
               fetchData,
               embedType: src.url,
@@ -101,7 +95,7 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
         modals?.openModal(audioModals.settings, {
           componentProps: {
             nodeId: node.attrs.id,
-            handleFileSelection,
+            handleFileSelection: config.handleFileSelection,
             handleFileUpload: config.handleFileUpload,
           },
           positioning: { placement: 'right' },

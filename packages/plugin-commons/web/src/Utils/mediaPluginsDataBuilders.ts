@@ -70,14 +70,17 @@ export const dataBuilder = {
     const { html, tempData, ...rest } = componentData;
     const name = data?.name ?? componentData?.name;
     const authorName = data?.authorName ?? componentData?.authorName;
+    const isCoverImageData = data?.file_name;
 
-    return {
-      ...rest,
-      audio: data?.audio,
-      error,
-      name,
-      authorName,
-    };
+    return isCoverImageData
+      ? { ...componentData, coverImage: data }
+      : {
+          ...rest,
+          audio: data?.audio,
+          error,
+          name,
+          authorName,
+        };
   },
   [FILE_UPLOAD_TYPE]: ({ data, error }, componentData) => {
     return { ...componentData, ...data, error, tempData: undefined };
@@ -103,9 +106,11 @@ export const tempDataBuilder = {
     return { src: url, tempData: true };
   },
   [AUDIO_TYPE]: ({ url, file }) => {
-    const audio = { src: { id: url } };
-    const name = file.name.split('.')[0];
-    return { audio, name, tempData: true };
+    if (!file.type.includes('image')) {
+      const audio = { src: { id: url } };
+      const name = file.name.split('.')[0];
+      return { audio, name, tempData: true };
+    }
   },
   [FILE_UPLOAD_TYPE]: ({ file }) => {
     const { name, size } = file;

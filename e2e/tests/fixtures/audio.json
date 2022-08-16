@@ -54,7 +54,12 @@
           },
           "name": "Dear Fear",
           "authorName": "KOTA The Friend",
-          "coverImage": null
+          "coverImage": {
+            "file_name": "8bb438_209feb1fb8944a18b6b619e105746cd0.jpg",
+            "height": 1081,
+            "id": "8bb438_209feb1fb8944a18b6b619e105746cd0.jpg",
+            "width": 1621
+          }
         }
       }
     },

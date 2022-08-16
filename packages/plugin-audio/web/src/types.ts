@@ -25,12 +25,10 @@ export interface AudioPluginViewerConfig extends ViewerPluginConfig {
   [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
-export type handleFileSelectionType = (updateEntity: UpdateEntityFunc<ComponentData[]>) => (
+export type handleFileSelectionType = (
   updateEntity: UpdateEntityFunc<ComponentData[]>,
-  index?: number,
-  multiple?: boolean,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  removeEntity?: any,
+  removeEntity?: any, // eslint-disable-line @typescript-eslint/no-explicit-any
+  fromSettings?: boolean,
   componentData?: ComponentData
 ) => void;
 

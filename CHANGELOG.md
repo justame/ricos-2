@@ -65,6 +65,8 @@
 
 - `toolbars-v3`
   - [#4350](https://github.com/wix/ricos/pull/4350) fix createToolbar condition
+- `audio`
+  - [#4352](https://github.com/wix/ricos/pull/4352) fix audio settings upload
 - `divider`
   - [#4366](https://github.com/wix/ricos/pull/4366) fix size resolver
 - `wix-image`

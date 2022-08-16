@@ -31,7 +31,7 @@ const createInlineButtons: CreateInlineButtons = ({
     ? MOBILE_FULL_SCREEN_CUSTOM_STYLE
     : { ...DesktopFlyOutModalStyles, content: audioModalContentStyles };
   const icon = settings?.toolbar?.icons?.replace || MediaReplaceIcon;
-
+  const { handleFileSelection, handleFileUpload, commonPubsub } = settings;
   const modalStyles = isMobile
     ? getModalStyles({
         customStyles,
@@ -88,6 +88,9 @@ const createInlineButtons: CreateInlineButtons = ({
       mobile: true,
       tooltipTextKey: 'SettingsButton_Tooltip',
       settings,
+      handleFileSelection,
+      handleFileUpload,
+      commonPubsub,
       triggerSettingsBi: true,
       pluginId: AUDIO_TYPE,
     },

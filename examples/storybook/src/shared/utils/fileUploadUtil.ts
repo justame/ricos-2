@@ -115,11 +115,24 @@ export const mockCustomVideoUploadFunc = (
 
 export const mockCustomAudioUploadFunc = (
   updateEntity: UpdateEntityFunc<AudioComponentData>,
-  removeEntity
+  removeEntity,
+  fromSettings?: boolean,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  componentData?: any
 ) => {
   // eslint-disable-next-line no-console
   console.log('consumer wants to upload custom audio');
   const audioToUpload = getAudioToUpload('f0f74f_35a1cdce4973490eac49e74c3244364d');
+
+  if (fromSettings) {
+    return mockImageUploadFunc(
+      undefined,
+      false,
+      updateEntity as UpdateEntityFunc<ImageComponentData[]>,
+      undefined,
+      componentData
+    );
+  }
   setTimeout(() => {
     updateEntity({ data: audioToUpload });
     // eslint-disable-next-line no-console
@@ -151,6 +164,9 @@ export const mockAudioNativeUploadFunc = (
 ) => {
   // eslint-disable-next-line no-console
   console.log('consumer wants to upload custom audio', file);
+  if (file.type.includes('image')) {
+    return mockImageNativeUploadFunc(file, updateEntity as UpdateEntityFunc<ImageComponentData>);
+  }
   const mockAudioIndex = Math.floor(Math.random() * mockAudioData.length);
   const testAudio = mockAudioData[mockAudioIndex];
   const audioToUpload = getAudioToUpload(testAudio.url);

@@ -6307,6 +6307,12 @@ exports[`plugins > audio > [tiptap] should render audio settings #0`] =
           "size": "content",
           "textWrap": "wrap"
         },
+        "coverImage": {
+          "file_name": "8bb438_209feb1fb8944a18b6b619e105746cd0.jpg",
+          "height": 1081,
+          "id": "8bb438_209feb1fb8944a18b6b619e105746cd0.jpg",
+          "width": 1621
+        },
         "disableDownload": false,
         "name": ""
       },
@@ -6488,11 +6494,10 @@ exports[`plugins > audio > [draft] should render audio settings #0`] =
           "textWrap": "wrap"
         },
         "coverImage": {
-          "file_name": "8bb438_1b73a6b067b24175bd087e86613bd00c.jpg",
-          "height": 1000,
-          "id": "8b72558253b2502b401bb46e5599f22a",
-          "original_file_name": "8bb438_1b73a6b067b24175bd087e86613bd00c.jpg",
-          "width": 1920
+          "file_name": "8bb438_209feb1fb8944a18b6b619e105746cd0.jpg",
+          "height": 1081,
+          "id": "8bb438_209feb1fb8944a18b6b619e105746cd0.jpg",
+          "width": 1621
         },
         "disableDownload": false,
         "name": ""

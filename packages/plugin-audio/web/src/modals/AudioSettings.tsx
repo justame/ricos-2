@@ -17,7 +17,7 @@ import {
   SettingsPanelFooter,
 } from 'wix-rich-content-ui-components';
 import Styles from '../../statics/styles/audio-settings.scss';
-import { Uploader } from 'wix-rich-content-plugin-commons';
+import { handleUploadStart, Uploader } from 'wix-rich-content-plugin-commons';
 import type {
   UploadContextType,
   AvailableExperiments,
@@ -34,6 +34,7 @@ export interface Props {
   onCancel?: () => void;
   onSave?: () => void;
   updateData?: (data) => void;
+  getComponentData: () => ComponentData;
   componentData: ComponentData;
   helpers: Helpers;
   pubsub?: Pubsub;
@@ -42,25 +43,27 @@ export interface Props {
   isMobile: boolean;
   experiments: AvailableExperiments;
   blockKey: string;
-  handleFileSelection: handleFileSelectionType;
-  handleFileUpload: handleFileUploadType;
+  handleFileSelection?: handleFileSelectionType;
+  handleFileUpload?: handleFileUploadType;
 }
 
-const AudioSettings: React.FC<Props> = ({
-  onCancel,
-  onSave,
-  updateData,
-  componentData,
-  helpers,
-  pubsub,
-  theme,
-  t,
-  isMobile,
-  experiments,
-  blockKey = componentData?.id,
-  handleFileSelection,
-  handleFileUpload,
-}) => {
+const AudioSettings: React.FC<Props> = props => {
+  const {
+    onCancel,
+    onSave,
+    updateData,
+    componentData,
+    helpers,
+    pubsub,
+    theme,
+    t,
+    isMobile,
+    experiments,
+    handleFileSelection,
+    handleFileUpload,
+    getComponentData,
+    blockKey,
+  } = props;
   const useUploadService = !!experiments?.tiptapEditor?.enabled;
   const { uploadService }: UploadContextType = useUploadService ? useContext(UploadContext) : {};
   const styles = mergeStyles({ styles: Styles, theme });
@@ -123,25 +126,41 @@ const AudioSettings: React.FC<Props> = ({
   };
 
   const onFileSelection = () => {
-    if (handleFileSelection) {
-      handleFileSelection(handleFilesAdded);
-    }
-    if (helpers.handleFileSelection) {
-      const deleteBlock = pubsub?.get('deleteBlock');
-      helpers.handleFileSelection?.(undefined, false, handleFilesAdded, deleteBlock, componentData);
-    }
+    const fromSettings = true;
+    handleFileSelection?.(handleFilesAdded, undefined, fromSettings, componentData);
+  };
+
+  const getOnUploadFinished = () => {
+    return ({ data, error }) => {
+      if (error) {
+        pubsub?.update('componentData', {
+          ...componentData,
+          error,
+        });
+      } else {
+        setCoverImage(data.coverImage);
+      }
+      setIsLoadingImage(false);
+    };
   };
 
   const handleFileChange = async ([file]) => {
     if (uploadService) {
-      const uploader = new Uploader(helpers?.handleFileUpload || handleFileUpload);
+      const uploader = new Uploader(handleFileUpload);
       setIsLoadingImage(true);
       await uploadService.uploadFile(file, blockKey, uploader, AUDIO_TYPE, AudioPluginService);
-      setCoverImage(componentData.coverImage);
+      setCoverImage(getComponentData().coverImage);
       setIsLoadingImage(false);
     } else {
       setIsLoadingImage(true);
-      helpers.handleFileUpload?.(file, handleFilesAdded);
+      handleUploadStart(
+        { ...props, type: AUDIO_TYPE },
+        () => componentData,
+        file,
+        undefined,
+        getOnUploadFinished(),
+        undefined
+      );
     }
   };
 
@@ -251,9 +270,7 @@ const AudioSettings: React.FC<Props> = ({
             <div className={styles.audio_settings_coverImage_wrapper}>
               <SettingsAddItem
                 handleFileChange={handleFileChange}
-                handleFileSelection={
-                  (helpers.handleFileSelection || handleFileSelection) && onFileSelection
-                }
+                handleFileSelection={handleFileSelection && onFileSelection}
                 isMobile={isMobile}
                 uploadMediaLabel={t('AudioPlugin_Settings_CoverImage_Label')}
                 theme={theme}

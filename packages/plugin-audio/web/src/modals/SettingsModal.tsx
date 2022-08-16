@@ -29,6 +29,8 @@ const AudioSettingsModal: FC<Props> = ({ nodeId, handleFileSelection, handleFile
     draftBlockDataToTiptap?: Function;
   }>({});
 
+  const getComponentData = () => getEditorCommands().getBlockComponentData(nodeId);
+
   useEffect(() => {
     import(
       /* webpackChunkName:"ricos-converters" */
@@ -65,6 +67,7 @@ const AudioSettingsModal: FC<Props> = ({ nodeId, handleFileSelection, handleFile
 
   return componentData ? (
     <AudioSettings
+      getComponentData={getComponentData}
       componentData={componentData}
       helpers={{}}
       experiments={experiments}
