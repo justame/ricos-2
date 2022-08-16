@@ -1,6 +1,6 @@
 {
   "name": "wix-rich-content-toolbars-v3",
-  "version": "8.72.23",
+  "version": "8.72.24",
   "author": {
     "name": "Noam Tayri",
     "email": "noamt@wix.com"
@@ -49,18 +49,18 @@
     "react-click-outsider": "1.1.1",
     "react-popper": "2.2.5",
     "react-sizeme": "^3.0.2",
-    "ricos-common": "8.72.23",
-    "ricos-content-query": "8.72.23",
-    "ricos-context": "8.72.23",
-    "ricos-modals": "8.72.23",
-    "ricos-types": "8.72.23",
-    "wix-rich-content-common": "8.72.23",
-    "wix-rich-content-editor": "8.72.23",
-    "wix-rich-content-editor-common": "8.72.23",
-    "wix-rich-content-plugin-commons": "8.72.23",
-    "wix-rich-content-toolbars-modals": "8.72.23",
-    "wix-rich-content-toolbars-ui": "8.72.23",
-    "wix-rich-content-ui-components": "8.72.23"
+    "ricos-common": "8.72.24",
+    "ricos-content-query": "8.72.24",
+    "ricos-context": "8.72.24",
+    "ricos-modals": "8.72.24",
+    "ricos-types": "8.72.24",
+    "wix-rich-content-common": "8.72.24",
+    "wix-rich-content-editor": "8.72.24",
+    "wix-rich-content-editor-common": "8.72.24",
+    "wix-rich-content-plugin-commons": "8.72.24",
+    "wix-rich-content-toolbars-modals": "8.72.24",
+    "wix-rich-content-toolbars-ui": "8.72.24",
+    "wix-rich-content-ui-components": "8.72.24"
   },
   "unpkg": true,
   "publishConfig": {
