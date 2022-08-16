@@ -18,8 +18,11 @@
   </summary>
 
 ## :bug: Bug Fix
+
 - `toolbars-v3`
-  - [#4398](https://github.com/wix/ricos/pull/4398)  (tiptap)
+  - [#4398](https://github.com/wix/ricos/pull/4398) (tiptap)
+- `plugin-video`
+  - [#4400](https://github.com/wix/ricos/pull/4400) close upload modal on custom upload
 
   </details>
 

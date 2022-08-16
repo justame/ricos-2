@@ -125,9 +125,9 @@ export default class VideoUploadModal extends Component {
       });
       if (handleFileSelection) {
         evt.preventDefault();
+        this.closeModal();
         return handleFileSelection(({ data, error }) => {
           this.addVideoComponent({ data, error }, true);
-          this.closeModal();
         });
       }
     };
