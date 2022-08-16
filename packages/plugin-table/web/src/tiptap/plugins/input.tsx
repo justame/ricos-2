@@ -79,14 +79,6 @@ export function handleMouseDown(view, startEvent, editor) {
 
     //should set cell selection
     // eslint-disable-next-line brace-style
-  } else if (!startEvent.shiftKey && startDOMCell && !isCellSelection(view.state.selection)) {
-    const $anchor = cellUnderMouse(view, startEvent);
-    if ($anchor !== null) {
-      const cellState = cellStatesPluginKey.getState(view.state);
-      if (cellState?.editCell?.pos === $anchor.pos) return;
-      editor.view.state.tr.setMeta(key, $anchor.pos);
-      editor.commands.setCellSelection($anchor.pos);
-    }
   } else if (!startDOMCell) {
     // Not in a cell, let the default behavior happen.
     return;

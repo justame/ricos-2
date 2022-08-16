@@ -48,9 +48,13 @@ export const cellStatesPlugin = editor =>
         return false;
       },
 
-      handleDoubleClick: () => {
-        editor.commands.setEditCell();
-        return true;
+      handleDoubleClick: view => {
+        const $anchor = cellAround(view.state.selection.$anchor);
+        if ($anchor !== null) {
+          editor.commands.setEditCell();
+          return true;
+        }
+        return false;
       },
 
       decorations(state) {
