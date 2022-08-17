@@ -17,17 +17,25 @@
     Click to see more.
   </summary>
 
-
-
 </details>
+
+## 8.72.27 (Aug 18, 2022)
+
+## :bug: Bug Fix
+
+- `mentions`
+  - [#4411](https://github.com/wix/ricos/pull/4411) fix id attribute
+- `link-preview`
+  - [#4412](https://github.com/wix/ricos/pull/4412) fix links without preview bug
 
 ## 8.72.26 (Aug 17, 2022)
 
-  ## :bug: Bug Fix
+## :bug: Bug Fix
 
 - `audio/html`
+
   - [#4406](https://github.com/wix/ricos/pull/4406) fix edit plugin-toolbar button (tiptap)
-  
+
   ## :house: Internal
 
 - `audio`
