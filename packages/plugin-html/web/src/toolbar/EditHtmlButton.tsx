@@ -2,8 +2,7 @@ import React, { useContext, useState } from 'react';
 import type { FC } from 'react';
 import { RicosContext, ModalContext } from 'ricos-context';
 import type { IToolbarItem } from 'ricos-types';
-import { ToggleButton } from 'wix-rich-content-toolbars-ui';
-import { EditIcon } from '../icons';
+import { ToggleButton, EditIcon } from 'wix-rich-content-toolbars-ui';
 
 type Props = {
   toolbarItem: IToolbarItem;
@@ -49,6 +48,7 @@ export const EditHtmlButton: FC<Props> = ({ toolbarItem, dataHook }) => {
       <ToggleButton
         dataHook={dataHook}
         Icon={EditIcon}
+        label={t('HtmlPlugin_EditHtml_Tooltip')}
         tooltip={t('HtmlPlugin_EditHtml_Tooltip')}
         onClick={onClick}
       />

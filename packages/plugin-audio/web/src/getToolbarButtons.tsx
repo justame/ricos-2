@@ -14,6 +14,8 @@ import {
   NodeAlignmentButton,
 } from 'wix-rich-content-toolbars-ui';
 import type { PluginContainerData_Width_Type } from 'ricos-schema';
+import { selectedNodeResolver } from 'wix-rich-content-plugin-commons';
+import AudioEditButton from './toolbar/AudioEditButton';
 
 const isCustomAudioResolver = {
   id: 'isCustomAudio',
@@ -31,6 +33,30 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
   const { modals } = services;
 
   return [
+    {
+      id: 'audioSettingsModal',
+      dataHook: 'baseToolbarButton_settings',
+      modal: {
+        Component: AudioSettingsModal,
+        id: audioModals.settings,
+      },
+      attributes: {
+        visible: isCustomAudioResolver,
+        selectedNode: selectedNodeResolver,
+      },
+      command: ({ isMobile, node }) => {
+        modals?.openModal(audioModals.settings, {
+          componentProps: {
+            nodeId: node.attrs.id,
+            handleFileSelection: config.handleFileSelection,
+            handleFileUpload: config.handleFileUpload,
+          },
+          positioning: { placement: 'right' },
+          layout: isMobile ? 'fullscreen' : 'drawer',
+        });
+      },
+      renderer: toolbarItem => <AudioEditButton toolbarItem={toolbarItem} />,
+    },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SIZE,
       modal: {
@@ -80,27 +106,6 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
             layout: isMobile ? 'fullscreen' : 'popover',
           });
         }
-      },
-    },
-    {
-      id: PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS,
-      modal: {
-        Component: AudioSettingsModal,
-        id: audioModals.settings,
-      },
-      attributes: {
-        visible: isCustomAudioResolver,
-      },
-      command: ({ isMobile, node }) => {
-        modals?.openModal(audioModals.settings, {
-          componentProps: {
-            nodeId: node.attrs.id,
-            handleFileSelection: config.handleFileSelection,
-            handleFileUpload: config.handleFileUpload,
-          },
-          positioning: { placement: 'right' },
-          layout: isMobile ? 'fullscreen' : 'drawer',
-        });
       },
     },
     {

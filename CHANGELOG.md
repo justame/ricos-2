@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+  ## :bug: Bug Fix
+
+- `audio/html`
+  - [#4406](https://github.com/wix/ricos/pull/4406) fix edit plugin-toolbar button (tiptap)
+
 </details>
 
 ## 8.72.25 (Aug 17, 2022)

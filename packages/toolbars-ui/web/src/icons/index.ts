@@ -10,3 +10,4 @@ export { default as SizeContentIcon } from './SizeContentIcon';
 export { default as SizeFullWidthIcon } from './SizeFullWidthIcon';
 export { default as SizeOriginalIcon } from './SizeOriginalIcon';
 export { default as SizeSmallIcon } from './SizeSmallIcon';
+export { default as EditIcon } from './EditIcon';
