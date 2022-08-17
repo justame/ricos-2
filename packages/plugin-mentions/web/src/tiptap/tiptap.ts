@@ -69,7 +69,7 @@ export const tiptapExtensions = [
         atom: true,
 
         addAttributes() {
-          return mentionDataDefaults.mentionData;
+          return { ...mentionDataDefaults.mentionData, mentionId: { default: null } };
         },
 
         renderHTML() {
@@ -143,6 +143,7 @@ export const tiptapExtensions = [
                           attrs: {
                             name: attributes.name,
                             slug: attributes.name,
+                            mentionId: attributes.id,
                           },
                         },
                       ],
