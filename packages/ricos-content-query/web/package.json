@@ -1,6 +1,6 @@
 {
   "name": "ricos-content-query",
-  "version": "8.72.26",
+  "version": "8.72.27",
   "author": {
     "name": "Noam Tayri",
     "email": "noamt@wix.com"
@@ -35,9 +35,9 @@
   },
   "dependencies": {
     "fp-ts": "^2.11.0",
-    "ricos-content": "8.72.26",
-    "ricos-converters": "8.72.26",
-    "ricos-schema": "8.72.26"
+    "ricos-content": "8.72.27",
+    "ricos-converters": "8.72.27",
+    "ricos-schema": "8.72.27"
   },
   "unpkg": true,
   "publishConfig": {
