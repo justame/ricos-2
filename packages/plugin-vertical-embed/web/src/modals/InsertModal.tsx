@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import type { FC } from 'react';
 import { convertBlockDataToRicos } from 'ricos-content/libs/convertBlockDataToRicos';
-import { ModalContext, RicosContext, EditorContext } from 'ricos-context';
+import { ModalContext, RicosContext, EditorContext, PluginsEventsContext } from 'ricos-context';
 import VerticalEmbedInsertModal from '../toolbar/VerticalEmbedInsertModal';
 import { VERTICAL_EMBED_TYPE } from '../types';
 
@@ -18,6 +18,8 @@ const InsertModal: FC<Props> = ({ componentData, verticalsApi, nodeId, modalId }
   const { locale, t, isMobile, experiments } = useContext(RicosContext);
   const { getEditorCommands } = useContext(EditorContext);
   const modalService = useContext(ModalContext) || {};
+  const pluginsEvents = useContext(PluginsEventsContext);
+
   const closeModal = () => {
     modalService.closeModal(modalId);
   };
@@ -38,6 +40,10 @@ const InsertModal: FC<Props> = ({ componentData, verticalsApi, nodeId, modalId }
     closeModal();
   };
 
+  const pluginEvents = {
+    onPluginsPopOverClick: data => pluginsEvents.publishPluginPopoverClick(data),
+  };
+
   return (
     <VerticalEmbedInsertModal
       componentData={componentData}
@@ -48,6 +54,7 @@ const InsertModal: FC<Props> = ({ componentData, verticalsApi, nodeId, modalId }
       onConfirm={onConfirm}
       experiments={experiments}
       onCloseRequested={closeModal}
+      helpers={pluginEvents}
     />
   );
 };

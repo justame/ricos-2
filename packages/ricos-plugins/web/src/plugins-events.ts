@@ -4,7 +4,8 @@ type Topics = [
   'ricos.plugins.functionality.pluginAdd',
   'ricos.plugins.functionality.pluginDelete',
   'ricos.plugins.functionality.pluginToolbarButtonClick',
-  'ricos.plugins.functionality.pluginPopoverClick'
+  'ricos.plugins.functionality.pluginPopoverClick',
+  'ricos.plugins.functionality.pluginPopoverTabSwitch'
 ];
 
 const TOPICS: Topics = [
@@ -12,6 +13,7 @@ const TOPICS: Topics = [
   'ricos.plugins.functionality.pluginDelete',
   'ricos.plugins.functionality.pluginToolbarButtonClick',
   'ricos.plugins.functionality.pluginPopoverClick',
+  'ricos.plugins.functionality.pluginPopoverTabSwitch',
 ];
 
 // ☐  onPluginAction
@@ -22,7 +24,7 @@ const TOPICS: Topics = [
 // ☐  onPluginChange
 // ✓  onPluginDelete
 // ✓  onPluginsPopOverClick
-// ☐  onPluginsPopOverTabSwitch
+// ✓  onPluginsPopOverTabSwitch
 // ✓  onToolbarButtonClick --> plugin toolbar button click (includes value)
 // ☐  onVideoSelected --> ?
 
@@ -50,6 +52,12 @@ export class PluginsEvents implements IPluginsEvents {
   publishPluginPopoverClick({ pluginId, buttonName }) {
     return this.publishers
       .byTopic('ricos.plugins.functionality.pluginPopoverClick')
+      .publish({ pluginId, buttonName });
+  }
+
+  publishPluginPopoverTabSwitch({ pluginId, buttonName }) {
+    return this.publishers
+      .byTopic('ricos.plugins.functionality.pluginPopoverTabSwitch')
       .publish({ pluginId, buttonName });
   }
 }

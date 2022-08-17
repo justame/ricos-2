@@ -2,7 +2,13 @@ import React, { useContext } from 'react';
 import type { FC } from 'react';
 import { VIDEO_TYPE } from '../types';
 import VideoInsertModal from '../toolbar/NewVideoInsertModal';
-import { ModalContext, RicosContext, EditorContext, UploadContext } from 'ricos-context';
+import {
+  ModalContext,
+  RicosContext,
+  EditorContext,
+  UploadContext,
+  PluginsEventsContext,
+} from 'ricos-context';
 import { convertBlockDataToRicos } from 'ricos-content/libs/convertBlockDataToRicos';
 import { generateId } from 'ricos-content';
 interface Props {
@@ -26,6 +32,8 @@ const InsertModal: FC<Props> = ({
   const { theme, t, isMobile, languageDir } = useContext(RicosContext);
   const { getEditorCommands } = useContext(EditorContext);
   const modalService = useContext(ModalContext) || {};
+  const pluginsEvents = useContext(PluginsEventsContext);
+
   const { uploadService, updateService } = useContext(UploadContext);
   const closeModal = () => {
     modalService.closeModal(modalId);
@@ -53,6 +61,11 @@ const InsertModal: FC<Props> = ({
     }
   };
 
+  const pluginEvents = {
+    onPluginsPopOverTabSwitch: data => pluginsEvents.publishPluginPopoverTabSwitch(data),
+    onPluginsPopOverClick: data => pluginsEvents.publishPluginPopoverClick(data),
+  };
+
   return (
     <VideoInsertModal
       componentData={componentData}
@@ -65,7 +78,7 @@ const InsertModal: FC<Props> = ({
       onConfirm={!nodeId && onConfirm}
       uploadService={uploadService}
       updateService={updateService}
-      helpers={{}}
+      helpers={pluginEvents}
       handleFileSelection={handleFileSelection}
       handleFileUpload={handleFileUpload}
       blockKey={nodeId}

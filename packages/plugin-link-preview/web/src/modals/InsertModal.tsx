@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import type { FC } from 'react';
 import { convertBlockDataToRicos } from 'ricos-content/libs/convertBlockDataToRicos';
-import { ModalContext, RicosContext, EditorContext } from 'ricos-context';
+import { ModalContext, RicosContext, EditorContext, PluginsEventsContext } from 'ricos-context';
 import SocialEmbedInsertModal from '../toolbar/SocialEmbedInsertModal';
 import { socialModals } from '../consts';
 import { EMBED_TYPE } from 'wix-rich-content-common';
@@ -18,6 +18,7 @@ const InsertModal: FC<Props> = ({ componentData, fetchData, nodeId, socialType }
   const { theme, t, isMobile, languageDir, experiments } = useContext(RicosContext);
   const { getEditorCommands } = useContext(EditorContext);
   const modalService = useContext(ModalContext) || {};
+  const pluginsEvents = useContext(PluginsEventsContext);
   const closeModal = () => {
     modalService.closeModal(socialModals[socialType]);
   };
@@ -32,6 +33,10 @@ const InsertModal: FC<Props> = ({ componentData, fetchData, nodeId, socialType }
     }
   };
 
+  const pluginEvents = {
+    onPluginsPopOverClick: data => pluginsEvents.publishPluginPopoverClick(data),
+  };
+
   return (
     <SocialEmbedInsertModal
       componentData={componentData}
@@ -44,6 +49,7 @@ const InsertModal: FC<Props> = ({ componentData, fetchData, nodeId, socialType }
       fetchData={fetchData}
       socialType={socialType}
       experiments={experiments}
+      helpers={pluginEvents}
     />
   );
 };

@@ -150,4 +150,10 @@ export function mapBiCallbacksToSubscriptions(editorProps: RicosEditorProps, eve
     'onPluginsPopOverClick',
     ({ pluginId, buttonName }) => [{ pluginId, buttonName }]
   );
+
+  subscribeCallback(
+    'ricos.modals.functionality.pluginPopoverTabSwitch',
+    'onPluginsPopOverTabSwitch',
+    ({ pluginId, buttonName }) => [{ pluginId, buttonName }]
+  );
 }

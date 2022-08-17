@@ -16,4 +16,20 @@ export interface IPluginsEvents {
     nodeId: string;
     value?: string;
   }): boolean;
+
+  publishPluginPopoverClick({
+    pluginId,
+    buttonName,
+  }: {
+    pluginId: string;
+    buttonName: string;
+  }): boolean;
+
+  publishPluginPopoverTabSwitch({
+    pluginId,
+    buttonName,
+  }: {
+    pluginId: string;
+    buttonName: string;
+  }): boolean;
 }
