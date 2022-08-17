@@ -175,6 +175,7 @@ export interface EditorCommands {
     data?: DecorationsDataMap[K],
     settings?: {
       isRicosSchema?: boolean;
+      shouldFocus?: boolean;
     }
   ) => void;
   triggerDecoration: <K extends keyof Pick<DecorationsDataMap, typeof RICOS_MENTION_TYPE>>(

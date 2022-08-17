@@ -208,7 +208,7 @@ export class RichContentAdapter implements TiptapAdapter {
         };
       },
 
-      insertDecoration: (type: string, data) => {
+      insertDecoration: (type: string, data, settings) => {
         const decorationCommandMap = {
           [RICOS_LINK_TYPE]: data => ({ command: 'setLink', args: { link: data } }),
           [RICOS_ANCHOR_TYPE]: data => ({ command: 'setAnchor', args: data }),
@@ -223,7 +223,9 @@ export class RichContentAdapter implements TiptapAdapter {
         };
         if (decorationCommandMap[type]) {
           const { command, args } = decorationCommandMap[type](data);
-          const editorCommand = this.tiptapEditor.chain();
+          const editorCommand = settings?.shouldFocus
+            ? this.tiptapEditor.chain().focus()
+            : this.tiptapEditor.chain();
           editorCommand[command](args).run();
         } else {
           console.error(`${type} decoration not supported`);
