@@ -25,11 +25,10 @@ const TitleButton = ({ toolbarItem, context, dataHook }) => {
   const { isMobile, t } = context || {};
   const selectedHeading = toolbarItem.attributes.selectedHeading;
   const currentTitleState = titleStateMap[selectedHeading] || titleStateMap.unstyled;
-
-  const onClick = () => toolbarItem.commands?.setHeading(currentTitleState.action);
+  const onClick = () => toolbarItem.commands?.click({ heading: currentTitleState.action });
   const isActive = currentTitleState.active;
-
   const tooltip = t(toolbarItem.presentation?.tooltip);
+
   return (
     <ToolbarButton
       isMobile={isMobile}

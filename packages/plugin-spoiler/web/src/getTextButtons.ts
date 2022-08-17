@@ -16,7 +16,7 @@ export const getTextButtons = (): FormattingToolbarButtonConfig[] => {
         visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
         active: RESOLVERS_IDS.IS_TEXT_CONTAINS_SPOILER,
       },
-      command: (editorCommands: EditorCommands) => {
+      command: (editorCommands: EditorCommands) => () => {
         editorCommands.toggleInlineStyle('spoiler');
         return true;
       },

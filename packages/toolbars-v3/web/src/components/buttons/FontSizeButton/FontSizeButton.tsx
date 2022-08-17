@@ -50,7 +50,7 @@ const FontSizeButton = ({ toolbarItem, context, dataHook }) => {
             data-hook={dataHook}
             className={styles.fontSizeModalButton}
             role="button"
-            onClick={() => toolbarItem.commands?.click(referenceElement)}
+            onClick={() => toolbarItem.commands?.click({ referenceElement })}
             tabIndex={-1}
           >
             <input

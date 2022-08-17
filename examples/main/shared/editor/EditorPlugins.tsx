@@ -934,9 +934,7 @@ export const config: RichContentEditorProps['config'] = {
           FORMATTING_BUTTONS.HEADINGS,
           '|',
           FORMATTING_BUTTONS.FONT_SIZE,
-          ...textButtons.desktop.filter(
-            b => b !== FORMATTING_BUTTONS.TITLE && b !== FORMATTING_BUTTONS.HEADINGS
-          ),
+          ...textButtons.desktop.filter(b => b !== FORMATTING_BUTTONS.HEADINGS),
         ],
       }),
     },

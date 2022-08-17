@@ -33,7 +33,7 @@ export const pluginUnderline: TiptapEditorPlugin = {
         visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
         active: RESOLVERS_IDS.IS_TEXT_CONTAINS_UNDERLINE,
       },
-      command: (editorCommands: EditorCommands) => {
+      command: (editorCommands: EditorCommands) => () => {
         editorCommands.toggleInlineStyle('underline');
         return true;
       },

@@ -87,23 +87,26 @@ export class PluginTextButton implements FormattingToolbarButton {
       attributes: this.toResolvedAttributes(),
       commands: {
         ...this.button.commands,
-        click: () => referenceElement => {
-          this.services.toolbars.byType(toolbarType).publishButtonClick(this.button.id);
-          return this.button.modal
-            ? modals.isModalOpen(this.button.modal.id)
-              ? modals.closeModal(this.button.modal.id)
-              : modals.openModal(this.button.modal.id, {
-                  componentProps: {
-                    closeModal: () => this.button.modal && modals.closeModal(this.button.modal.id),
-                  },
-                  positioning: {
-                    placement: 'bottom',
-                    referenceElement,
-                  },
-                  layout: 'toolbar',
-                })
-            : this.button.command?.(editorCommands);
-        },
+        click:
+          () =>
+          ({ referenceElement, ...rest }) => {
+            this.services.toolbars.byType(toolbarType).publishButtonClick(this.button.id);
+            return this.button.modal
+              ? modals.isModalOpen(this.button.modal.id)
+                ? modals.closeModal(this.button.modal.id)
+                : modals.openModal(this.button.modal.id, {
+                    componentProps: {
+                      closeModal: () =>
+                        this.button.modal && modals.closeModal(this.button.modal.id),
+                    },
+                    positioning: {
+                      placement: 'bottom',
+                      referenceElement,
+                    },
+                    layout: 'toolbar',
+                  })
+              : this.button.command?.(editorCommands)?.(rest);
+          },
       },
     };
   }

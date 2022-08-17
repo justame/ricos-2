@@ -51,7 +51,7 @@ export const pluginUndoRedo: EditorPluginCreator<UndoRedoPluginEditorConfig> = c
           //TODO:
           // disabled: isUndoStackEmptyResolver,
         },
-        command(editorCommands: EditorCommands) {
+        command: (editorCommands: EditorCommands) => () => {
           editorCommands.undo();
           return true;
         },
@@ -69,7 +69,7 @@ export const pluginUndoRedo: EditorPluginCreator<UndoRedoPluginEditorConfig> = c
           //TODO:
           // disabled: isRedoStackEmptyResolver,
         },
-        command(editorCommands: EditorCommands) {
+        command: (editorCommands: EditorCommands) => () => {
           editorCommands.redo();
           return true;
         },

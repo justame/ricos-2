@@ -29,7 +29,7 @@ const AlignmentButton = ({ toolbarItem, context, dataHook }) => {
       active={isButtonActive}
       tooltip={tooltip}
       onClick={() => {
-        toolbarItem.commands?.click(referenceElement);
+        toolbarItem.commands?.click({ referenceElement });
       }}
       icon={() => (
         <>

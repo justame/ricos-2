@@ -68,26 +68,12 @@ export const getTextButtons = (): FormattingToolbarButtonConfig[] => {
         visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
         selectedHeading: RESOLVERS_IDS.GET_HEADING_IN_SELECTION,
       },
-      commands: {
-        setHeading:
-          ({ editorCommands }) =>
-          heading => {
-            if (heading === 'unstyled') {
-              editorCommands.chain().setParagraph().run();
-            } else {
-              const headingMap = {
-                'header-one': 1,
-                'header-two': 2,
-                'header-three': 3,
-                'header-four': 4,
-                'header-five': 5,
-                'header-six': 6,
-              };
-              const headingLevel = headingMap[heading];
-              editorCommands.chain().toggleHeading({ level: headingLevel }).run();
-            }
-          },
-      },
+      command:
+        editorCommands =>
+        ({ heading }) => {
+          editorCommands.setBlockType(heading);
+          return true;
+        },
     },
   ];
 };

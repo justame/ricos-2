@@ -62,7 +62,8 @@ export type FormattingToolbarButtonConfig = Modify<
   {
     attributes: Record<string, string>;
     commands?: Record<string, TiptapCommand>;
-    command?: (editorCommands: EditorCommands) => boolean;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    command?: (editorCommands: EditorCommands) => (args: Record<string, any>) => boolean;
     modal?: ModalConfig;
   }
 >;
