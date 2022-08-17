@@ -19,6 +19,24 @@
 
 </details>
 
+## 8.72.28 (Aug 18, 2022)
+
+## :bug: Bug Fix
+
+- `font-size`
+  - [#4413](https://github.com/wix/ricos/pull/4413) setFontSizeWithoutFocus missing command
+
+## :house: Internal
+
+- `font-size`
+  - [#4369](https://github.com/wix/ricos/pull/4369) font size modal service registration (font size triggers button click bi)
+- `ricos-common-plugins`
+  - [#4413](https://github.com/wix/ricos/pull/4413) editor command insertDecoration with shouldFocus prop (mobile)
+- `ricos-common-plugins`
+  - [#4418](https://github.com/wix/ricos/pull/4418) title triggers button click bi
+- `text-color`
+  - [#4415](https://github.com/wix/ricos/pull/4415) text color modal in text buttons
+
 ## 8.72.27 (Aug 18, 2022)
 
 ## :bug: Bug Fix
@@ -36,7 +54,7 @@
 
   - [#4406](https://github.com/wix/ricos/pull/4406) fix edit plugin-toolbar button (tiptap)
 
-  ## :house: Internal
+## :house: Internal
 
 - `audio`
   - [#4409](https://github.com/wix/ricos/pull/4409) refactor audioSettings uploads
