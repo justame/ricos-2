@@ -41,6 +41,8 @@ export class RichContentAdapter implements TiptapAdapter {
 
   private readonly shouldRevealConverterErrors: boolean | undefined;
 
+  private readonly services: TiptapAdapterServices;
+
   getToolbarProps: TiptapAdapter['getToolbarProps'];
 
   constructor(
@@ -68,6 +70,7 @@ export class RichContentAdapter implements TiptapAdapter {
         pubsub: {} as Pubsub,
       };
     };
+    this.services = services;
   }
 
   isContentChanged = (): boolean => !this.initialContent.eq(this.tiptapEditor.state.doc.content);
@@ -87,7 +90,7 @@ export class RichContentAdapter implements TiptapAdapter {
     this.tiptapEditor.commands.blur();
   }
 
-  getEditorCommands() {
+  getEditorCommands(): EditorCommands {
     const hasInlineStyle: EditorCommands['hasInlineStyle'] = style => {
       const {
         state: {
@@ -120,7 +123,7 @@ export class RichContentAdapter implements TiptapAdapter {
         editorCommand[styleName]().run();
       },
       hasInlineStyle,
-      insertBlock: (pluginType, data) => {
+      insertBlock: (pluginType: string, data = {}) => {
         const type = TO_TIPTAP_TYPE[pluginType];
         let id = '';
         if (type) {
@@ -128,12 +131,17 @@ export class RichContentAdapter implements TiptapAdapter {
           id = data.id || generateId();
           const attrs = { id, ...flatComponentState(_attrs) };
           this.tiptapEditor.chain().focus().insertContent([{ type, attrs, content }]).run();
+          this.services.pluginsEvents.publishPluginAdd(type);
         } else {
           console.error(`No such plugin type ${pluginType}`);
         }
         return id;
       },
-      insertBlockWithBlankLines: (pluginType, data, settings = { updateSelection: true }) => {
+      insertBlockWithBlankLines: (
+        pluginType: string,
+        data = {},
+        settings = { updateSelection: true }
+      ) => {
         const type = TO_TIPTAP_TYPE[pluginType];
         let id = '';
         if (type) {
@@ -156,6 +164,7 @@ export class RichContentAdapter implements TiptapAdapter {
             ])
             .setNodeSelection(updateSelection ? lastNodePosition + 1 : lastNodePosition + 2)
             .run();
+          this.services.pluginsEvents.publishPluginAdd(type);
         } else {
           console.error(`No such plugin type ${pluginType}`);
         }
@@ -164,12 +173,8 @@ export class RichContentAdapter implements TiptapAdapter {
       deleteBlock: blockKey => {
         return this.tiptapEditor.commands.deleteNode(blockKey);
       },
-      findNodeByKey() {},
       setBlock: (blockKey, pluginType, data) => {
         return this.tiptapEditor.commands.setNodeAttrsById(blockKey, flatComponentState(data));
-      },
-      updateBlock: (blockKey, pluginType, data) => {
-        return this.tiptapEditor.commands.updateNodeAttrsById(blockKey, flatComponentState(data));
       },
       getSelection: () => {
         const {
@@ -192,7 +197,7 @@ export class RichContentAdapter implements TiptapAdapter {
         };
       },
 
-      insertDecoration: (type, data) => {
+      insertDecoration: (type: string, data) => {
         const decorationCommandMap = {
           [RICOS_LINK_TYPE]: data => ({ command: 'setLink', args: { link: data } }),
           [RICOS_ANCHOR_TYPE]: data => ({ command: 'setAnchor', args: data }),
@@ -314,7 +319,7 @@ export class RichContentAdapter implements TiptapAdapter {
           throw new Error(`${type} block type not supported`);
         }
       },
-      deleteDecoration: type => {
+      deleteDecoration: (type: string) => {
         const deleteDecorationCommandMap = {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore

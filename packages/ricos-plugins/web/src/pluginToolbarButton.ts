@@ -1,4 +1,4 @@
-import { toolbarButtonsConfig } from './toolbarButtonsConfig';
+import { getToolbarButtonsConfig } from './toolbarButtonsConfig';
 import { toolbarButtonsRenders } from './toolbarButtonsRenders';
 import { alwaysVisibleResolver } from 'wix-rich-content-toolbars-v3';
 import type {
@@ -60,7 +60,7 @@ export class RicosPluginToolbarButton implements PluginToolbarButton {
   toToolbarItemConfig(): IToolbarItemConfigTiptap {
     const { id, type, icon, tooltip, dataHook, command, attributes = {} } = this.button;
 
-    const toolbarItemConfig = toolbarButtonsConfig[id] || {};
+    const toolbarItemConfig = getToolbarButtonsConfig(this.services.pluginsEvents)[id] || {};
     const { presentation = {}, commands } = toolbarItemConfig;
 
     return {

@@ -8,7 +8,7 @@ import type { GeneralContext } from 'ricos-context';
 import { nodeConverter as nodeService } from 'ricos-converters';
 import { RicosEvents } from 'ricos-events';
 import { RicosModalService } from 'ricos-modals';
-import { EditorPlugins } from 'ricos-plugins';
+import { EditorPlugins, PluginsEvents } from 'ricos-plugins';
 import { EditorKeyboardShortcuts } from 'ricos-shortcuts';
 import { RicosStyles } from 'ricos-styles';
 import type {
@@ -20,6 +20,7 @@ import type {
   Orchestrator,
   RicosServices,
   TranslationFunction,
+  IPluginsEvents,
 } from 'ricos-types';
 import { getLangDir } from 'wix-rich-content-common';
 import { Content, RicosToolbars } from 'wix-rich-content-toolbars-v3';
@@ -37,6 +38,8 @@ export class RicosOrchestrator implements Orchestrator {
   private readonly events: RicosEvents;
 
   private readonly toolbars: RicosToolbars;
+
+  private readonly pluginsEvents: IPluginsEvents;
 
   private readonly modals: RicosModalService;
 
@@ -88,6 +91,7 @@ export class RicosOrchestrator implements Orchestrator {
     });
 
     this.toolbars = new RicosToolbars();
+    this.pluginsEvents = new PluginsEvents();
     this.toolbars.getShortcuts().map(shortcut => this.shortcuts.register(shortcut));
 
     this.content = Content.create<Node[]>([], {
@@ -107,6 +111,7 @@ export class RicosOrchestrator implements Orchestrator {
         content: this.content,
         styles: this.styles,
         toolbars: this.toolbars,
+        pluginsEvents: this.pluginsEvents,
         context: this.context,
       },
       this.editorProps.toolbarSettings || {}
@@ -127,6 +132,7 @@ export class RicosOrchestrator implements Orchestrator {
         shortcuts: this.shortcuts,
         modals: this.modals,
         toolbars: this.toolbars,
+        pluginsEvents: this.pluginsEvents,
         context: this.context,
       },
       this.editorProps.debugMode?.includes('prosemirror') || editorProps.debugMode?.includes('all')
@@ -148,6 +154,7 @@ export class RicosOrchestrator implements Orchestrator {
       this.editor as unknown as RicosEventSource,
       this.toolbars,
       this.uploadService,
+      this.pluginsEvents,
     ] as RicosEventSource[]);
     registerEventSubscribers(this.events, [this.modals as unknown as RicosEventSubscriber]);
     mapBiCallbacksToSubscriptions(this.editorProps, this.events);
@@ -178,6 +185,7 @@ export class RicosOrchestrator implements Orchestrator {
       modals: this.modals,
       editor: this.editor,
       toolbars: this.toolbars,
+      pluginsEvents: this.pluginsEvents,
       context: this.context,
     };
   }

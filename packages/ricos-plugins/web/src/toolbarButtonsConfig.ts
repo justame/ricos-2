@@ -6,7 +6,7 @@ import {
   getNodeLinkDataResolver,
 } from 'wix-rich-content-toolbars-v3';
 import { LinkIcon } from 'wix-rich-content-toolbars-ui';
-import type { IToolbarItemConfigTiptap } from 'ricos-types';
+import type { IToolbarItemConfigTiptap, IPluginsEvents } from 'ricos-types';
 import { PLUGIN_TOOLBAR_BUTTON_ID } from 'wix-rich-content-editor-common';
 import { createLink } from 'ricos-content/libs/nodeUtils';
 import { convertRelObjectToString, convertRelStringToObject } from 'wix-rich-content-common';
@@ -15,7 +15,9 @@ type PluginButtonId = typeof PLUGIN_TOOLBAR_BUTTON_ID[keyof typeof PLUGIN_TOOLBA
 
 type IPluginToolbarButtonsConfig = Record<PluginButtonId, IToolbarItemConfigTiptap>;
 
-export const toolbarButtonsConfig: IPluginToolbarButtonsConfig = {
+export const getToolbarButtonsConfig: (
+  pluginsEvents: IPluginsEvents
+) => IPluginToolbarButtonsConfig = pluginsEvents => ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   delete: {
     id: PLUGIN_TOOLBAR_BUTTON_ID.DELETE,
@@ -30,7 +32,16 @@ export const toolbarButtonsConfig: IPluginToolbarButtonsConfig = {
       delete:
         ({ editorCommands }) =>
         nodeId => {
-          editorCommands.chain().focus().deleteNode(nodeId).run();
+          editorCommands
+            .chain()
+            .focus()
+            .command(({ tr, commands }) => {
+              const $from = tr.selection.$from;
+              const selectedNode = $from.nodeAfter;
+              commands.deleteNode(nodeId);
+              pluginsEvents.publishPluginDelete(selectedNode.type.name);
+            })
+            .run();
         },
     },
   },
@@ -58,6 +69,13 @@ export const toolbarButtonsConfig: IPluginToolbarButtonsConfig = {
                 selectedNode?.attrs.containerData?.width?.size !== 'ORIGINAL' &&
                 !selectedNode?.attrs.containerData?.width?.custom;
               shouldUpdateSize && commands.setNodeSize('SMALL');
+              pluginsEvents.publishPluginToolbarClick({
+                pluginId: selectedNode.type.name,
+                nodeId: selectedNode?.attrs.id,
+                buttonName: 'alignment',
+                value: alignment,
+              });
+
               return true;
             })
             .run();
@@ -77,7 +95,22 @@ export const toolbarButtonsConfig: IPluginToolbarButtonsConfig = {
       setSize:
         ({ editorCommands }) =>
         size => {
-          editorCommands.chain().focus().setNodeSize(size).setNodeAlignment('CENTER').run();
+          editorCommands
+            .chain()
+            .focus()
+            .command(({ tr, commands }) => {
+              commands.setNodeSize(size);
+              const $from = tr.selection.$from;
+              const selectedNode = $from.nodeAfter;
+              pluginsEvents.publishPluginToolbarClick({
+                pluginId: selectedNode.type.name,
+                nodeId: selectedNode?.attrs.id,
+                buttonName: 'size',
+                value: size,
+              });
+            })
+            .setNodeAlignment('CENTER')
+            .run();
         },
     },
   },
@@ -155,4 +188,4 @@ export const toolbarButtonsConfig: IPluginToolbarButtonsConfig = {
     attributes: {},
     commands: {},
   },
-};
+});

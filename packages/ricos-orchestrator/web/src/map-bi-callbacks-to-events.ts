@@ -124,4 +124,30 @@ export function mapBiCallbacksToSubscriptions(editorProps: RicosEditorProps, eve
       contentId,
     ]
   );
+
+  subscribeCallback(
+    'ricos.modals.functionality.pluginAdd',
+    'onPluginAdd',
+    ({ pluginId, entryPoint }) => [pluginId, entryPoint, version, contentId]
+  );
+
+  subscribeCallback(
+    'ricos.modals.functionality.pluginDelete',
+    'onPluginDelete',
+    ({ pluginId, pluginDetails }) => [{ pluginId, pluginDetails, version, contentId }]
+  );
+
+  subscribeCallback(
+    'ricos.modals.functionality.pluginToolbarButtonClick',
+    'onToolbarButtonClick',
+    ({ pluginId, buttonName, value, nodeId, type }) => [
+      { pluginId, buttonName, value, pluginUniqueId: nodeId, type, version, contentId },
+    ]
+  );
+
+  subscribeCallback(
+    'ricos.modals.functionality.pluginPopoverClick',
+    'onPluginsPopOverClick',
+    ({ pluginId, buttonName }) => [{ pluginId, buttonName }]
+  );
 }
