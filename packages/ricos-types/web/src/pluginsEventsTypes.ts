@@ -32,4 +32,14 @@ export interface IPluginsEvents {
     pluginId: string;
     buttonName: string;
   }): boolean;
+
+  publishPluginChangeSettings({
+    pluginId,
+    actionName,
+    value,
+  }: {
+    pluginId: string;
+    actionName: string;
+    value: string;
+  }): boolean;
 }

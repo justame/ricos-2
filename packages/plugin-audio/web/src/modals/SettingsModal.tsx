@@ -5,7 +5,7 @@ import AudioSettings from './AudioSettings';
 import type { handleFileSelectionType, handleFileUploadType } from '../types';
 import { AUDIO_TYPE } from '../types';
 import { audioModals } from '../consts';
-import { RicosContext, EditorContext, ModalContext } from 'ricos-context';
+import { RicosContext, EditorContext, ModalContext, PluginsEventsContext } from 'ricos-context';
 import { TIPTAP_AUDIO_TYPE } from 'ricos-content';
 
 interface Props {
@@ -17,6 +17,7 @@ interface Props {
 const AudioSettingsModal: FC<Props> = ({ nodeId, handleFileSelection, handleFileUpload }) => {
   const { theme, t, isMobile, experiments } = useContext(RicosContext);
   const modalService = useContext(ModalContext) || {};
+  const pluginsEvents = useContext(PluginsEventsContext);
   const { getEditorCommands } = useContext(EditorContext);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -65,11 +66,15 @@ const AudioSettingsModal: FC<Props> = ({ nodeId, handleFileSelection, handleFile
     closeModal();
   };
 
+  const pluginEvents = {
+    onChangePluginSettings: data => pluginsEvents.publishPluginChangeSettings(data),
+  };
+
   return componentData ? (
     <AudioSettings
       getComponentData={getComponentData}
       componentData={componentData}
-      helpers={{}}
+      helpers={pluginEvents}
       experiments={experiments}
       theme={theme}
       t={t}

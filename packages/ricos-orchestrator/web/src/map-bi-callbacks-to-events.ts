@@ -156,4 +156,10 @@ export function mapBiCallbacksToSubscriptions(editorProps: RicosEditorProps, eve
     'onPluginsPopOverTabSwitch',
     ({ pluginId, buttonName }) => [{ pluginId, buttonName }]
   );
+
+  subscribeCallback(
+    'ricos.modals.functionality.pluginChangeSettings',
+    'onChangePluginSettings',
+    ({ pluginId, actionName, value }) => [{ pluginId, actionName, value }]
+  );
 }

@@ -5,7 +5,8 @@ type Topics = [
   'ricos.plugins.functionality.pluginDelete',
   'ricos.plugins.functionality.pluginToolbarButtonClick',
   'ricos.plugins.functionality.pluginPopoverClick',
-  'ricos.plugins.functionality.pluginPopoverTabSwitch'
+  'ricos.plugins.functionality.pluginPopoverTabSwitch',
+  'ricos.plugins.functionality.pluginChangeSettings'
 ];
 
 const TOPICS: Topics = [
@@ -14,10 +15,11 @@ const TOPICS: Topics = [
   'ricos.plugins.functionality.pluginToolbarButtonClick',
   'ricos.plugins.functionality.pluginPopoverClick',
   'ricos.plugins.functionality.pluginPopoverTabSwitch',
+  'ricos.plugins.functionality.pluginChangeSettings',
 ];
 
 // ☐  onPluginAction
-// ☐  onChangePluginSettings
+// ✓  onChangePluginSettings
 // ✓  onPluginAdd
 // ☐  onPluginAddStep
 // ☐  onPluginAddSuccess
@@ -59,5 +61,11 @@ export class PluginsEvents implements IPluginsEvents {
     return this.publishers
       .byTopic('ricos.plugins.functionality.pluginPopoverTabSwitch')
       .publish({ pluginId, buttonName });
+  }
+
+  publishPluginChangeSettings({ pluginId, actionName, value }) {
+    return this.publishers
+      .byTopic('ricos.plugins.functionality.pluginChangeSettings')
+      .publish({ pluginId, actionName, value });
   }
 }
