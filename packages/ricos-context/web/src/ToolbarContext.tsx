@@ -10,6 +10,7 @@ import type {
   RicosPortal,
   AddLinkData,
   IRicosToolbars,
+  Decoration_Type,
 } from 'ricos-types';
 import type { LinkSettings, ToolbarSettings, RicosCssOverride } from 'ricos-common';
 import { RicosContext } from './RicosContext';
@@ -36,9 +37,15 @@ export type ToolbarContextType = {
   experiments: AvailableExperiments;
   toolbarSettings: ToolbarSettings;
   cssOverride: RicosCssOverride;
-  getEditorCommands: () => EditorCommands | void;
+  getEditorCommands: () => EditorCommands;
   portal: RicosPortal;
   toolbars: IRicosToolbars;
+  colorPickerData: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    TEXT_COLOR: Record<string, any>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    TEXT_HIGHLIGHT: Record<string, any>;
+  };
 };
 
 export const ToolbarContext = React.createContext<ToolbarContextType>({
@@ -53,9 +60,10 @@ export const ToolbarContext = React.createContext<ToolbarContextType>({
   experiments: {},
   toolbarSettings: {},
   cssOverride: {},
-  getEditorCommands: () => {},
+  getEditorCommands: () => ({} as EditorCommands),
   portal: null as unknown as RicosPortal,
   toolbars: null as unknown as IRicosToolbars,
+  colorPickerData: {} as unknown as ToolbarContextType['colorPickerData'],
 });
 
 export const withToolbarContext = WrappedComponent => {

@@ -2,6 +2,7 @@ import type { FormattingToolbarButtonConfig, IToolbarItemConfigTiptap } from 'ri
 import { RESOLVERS_IDS } from 'wix-rich-content-toolbars-v3/libs/resolvers-ids';
 import TextColorIcon from './icons/TextColorIcon';
 import TextHighlightIcon from './icons/TextHighlightIcon';
+import { TextColorController } from './TextColorController';
 
 export const getTextColorTextButtons = (): FormattingToolbarButtonConfig[] => {
   return [
@@ -28,6 +29,11 @@ export const getTextColorTextButtons = (): FormattingToolbarButtonConfig[] => {
           () => {
             editorCommands.chain().focus().unsetColor().run();
           },
+      },
+      modal: {
+        id: 'TEXT_COLOR_PICKER',
+        Component: TextColorController,
+        layout: 'toolbar',
       },
     },
   ];

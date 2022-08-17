@@ -23,8 +23,8 @@ const onResetColor = (toolbarItem, setModalOpen) => {
 };
 
 const TextColorButton = ({ toolbarItem, context, dataHook }) => {
-  const { isMobile, t, theme, locale, getEditorCommands, colorPickerData, portal } = context || {};
   if (!context) return null;
+  const { isMobile, t, theme, locale, getEditorCommands, colorPickerData, portal } = context;
   const [isModalOpen, setModalOpen] = useState(false);
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);

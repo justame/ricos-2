@@ -126,19 +126,19 @@ export function mapBiCallbacksToSubscriptions(editorProps: RicosEditorProps, eve
   );
 
   subscribeCallback(
-    'ricos.modals.functionality.pluginAdd',
+    'ricos.plugins.functionality.pluginAdd',
     'onPluginAdd',
     ({ pluginId, entryPoint }) => [pluginId, entryPoint, version, contentId]
   );
 
   subscribeCallback(
-    'ricos.modals.functionality.pluginDelete',
+    'ricos.plugins.functionality.pluginDelete',
     'onPluginDelete',
     ({ pluginId, pluginDetails }) => [{ pluginId, pluginDetails, version, contentId }]
   );
 
   subscribeCallback(
-    'ricos.modals.functionality.pluginToolbarButtonClick',
+    'ricos.plugins.functionality.pluginToolbarButtonClick',
     'onToolbarButtonClick',
     ({ pluginId, buttonName, value, nodeId, type }) => [
       { pluginId, buttonName, value, pluginUniqueId: nodeId, type, version, contentId },
@@ -146,13 +146,13 @@ export function mapBiCallbacksToSubscriptions(editorProps: RicosEditorProps, eve
   );
 
   subscribeCallback(
-    'ricos.modals.functionality.pluginPopoverClick',
+    'ricos.plugins.functionality.pluginPopoverClick',
     'onPluginsPopOverClick',
     ({ pluginId, buttonName }) => [{ pluginId, buttonName }]
   );
 
   subscribeCallback(
-    'ricos.modals.functionality.pluginPopoverTabSwitch',
+    'ricos.plugins.functionality.pluginPopoverTabSwitch',
     'onPluginsPopOverTabSwitch',
     ({ pluginId, buttonName }) => [{ pluginId, buttonName }]
   );

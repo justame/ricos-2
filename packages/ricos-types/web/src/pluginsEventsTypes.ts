@@ -1,9 +1,7 @@
-import type { PluginType } from './pluginTypes';
-
 export interface IPluginsEvents {
-  publishPluginAdd({ pluginId }: { pluginId: PluginType }): boolean;
+  publishPluginAdd({ pluginId }: { pluginId: string }): boolean;
 
-  publishPluginDelete({ pluginId }: { pluginId: PluginType }): boolean;
+  publishPluginDelete({ pluginId }: { pluginId: string }): boolean;
 
   publishPluginToolbarClick({
     pluginId,

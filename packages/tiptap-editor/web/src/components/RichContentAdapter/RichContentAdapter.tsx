@@ -3,6 +3,7 @@ import type { Editor, JSONContent } from '@tiptap/react';
 import { capitalize } from 'lodash';
 import type { Fragment, Node as ProseMirrorNode } from 'prosemirror-model';
 import type { RicosEditorProps } from 'ricos-common';
+import type { ParagraphNode, HeadingNode } from 'ricos-content';
 import {
   BLOCKQUOTE,
   BULLET_LIST_TYPE,
@@ -14,7 +15,6 @@ import {
   UNSTYLED,
   getTextDirection,
 } from 'ricos-content';
-import type { ParagraphNode, HeadingNode } from 'ricos-content';
 import { tiptapToDraft, fromTiptapNode } from 'ricos-converters';
 import { Decoration_Type, Node_Type } from 'ricos-schema';
 import type { Node } from 'ricos-schema';
@@ -22,8 +22,10 @@ import type {
   TiptapAdapter,
   EditorContextType,
   Pubsub,
-  EditorCommands,
   AmbientStyles,
+  ColorType,
+  EditorCommands,
+  IPluginsEvents,
 } from 'ricos-types';
 import { ToolbarType } from 'ricos-types';
 import type { RicosCustomStyles, TextAlignment } from 'wix-rich-content-common';
@@ -49,11 +51,11 @@ export class RichContentAdapter implements TiptapAdapter {
 
   private readonly shouldRevealConverterErrors: boolean | undefined;
 
-  private readonly services: TiptapAdapterServices;
-
   getToolbarProps: TiptapAdapter['getToolbarProps'];
 
   private readonly styles: AmbientStyles;
+
+  private readonly pluginsEvents: IPluginsEvents;
 
   constructor(
     public tiptapEditor: Editor,
@@ -70,7 +72,6 @@ export class RichContentAdapter implements TiptapAdapter {
         type === ToolbarType.INSERT_PLUGIN
           ? services.plugins.getAddButtons()
           : services.plugins.getTextButtons();
-
       return {
         buttons: buttons.toExternalToolbarButtonsConfigs(
           this.getEditorCommands(),
@@ -81,7 +82,43 @@ export class RichContentAdapter implements TiptapAdapter {
       };
     };
     this.styles = services.styles;
-    this.services = services;
+    this.pluginsEvents = services.pluginsEvents;
+  }
+
+  private getSelectedColors(type: 'foreground' | 'background') {
+    const {
+      state: {
+        doc,
+        selection: { from, to },
+      },
+    } = this.tiptapEditor;
+
+    const selectedColors: string[] = [];
+
+    doc.nodesBetween(from, to, (node, pos) => {
+      if (node.type.name === 'text') {
+        const color = node.marks.find(mark => mark.type.name === Decoration_Type.COLOR)?.attrs[
+          type
+        ];
+        if (color) {
+          selectedColors.push(color);
+        } else {
+          const parent = doc.resolve(pos).parent;
+          if (parent.type.name === Node_Type.PARAGRAPH || parent.type.name === Node_Type.HEADING) {
+            const ricosNode = fromTiptapNode({ ...parent.toJSON(), type: parent?.type?.name });
+            const decoration = this.styles.getDecoration(
+              ricosNode as ParagraphNode | HeadingNode,
+              Decoration_Type.COLOR
+            );
+            const colorInStyles = decoration.colorData?.[type];
+            if (colorInStyles) {
+              selectedColors.push(colorInStyles);
+            }
+          }
+        }
+      }
+    });
+    return selectedColors.every(color => color === selectedColors[0]) ? selectedColors[0] : '';
   }
 
   isContentChanged = (): boolean => !this.initialContent.eq(this.tiptapEditor.state.doc.content);
@@ -142,7 +179,7 @@ export class RichContentAdapter implements TiptapAdapter {
           id = data.id || generateId();
           const attrs = { id, ...flatComponentState(_attrs) };
           this.tiptapEditor.chain().focus().insertContent([{ type, attrs, content }]).run();
-          this.services.pluginsEvents.publishPluginAdd(type);
+          this.pluginsEvents.publishPluginAdd({ pluginId: type });
         } else {
           console.error(`No such plugin type ${pluginType}`);
         }
@@ -175,7 +212,7 @@ export class RichContentAdapter implements TiptapAdapter {
             ])
             .setNodeSelection(updateSelection ? lastNodePosition + 1 : lastNodePosition + 2)
             .run();
-          this.services.pluginsEvents.publishPluginAdd(type);
+          this.pluginsEvents.publishPluginAdd({ pluginId: type });
         } else {
           console.error(`No such plugin type ${pluginType}`);
         }
@@ -187,6 +224,9 @@ export class RichContentAdapter implements TiptapAdapter {
       setBlock: (blockKey, pluginType, data) => {
         return this.tiptapEditor.commands.setNodeAttrsById(blockKey, flatComponentState(data));
       },
+      getColor: (colorType: ColorType) =>
+        this.getSelectedColors(colorType === 'ricos-text-color' ? 'foreground' : 'background'),
+
       getSelection: () => {
         const {
           state: {
@@ -227,6 +267,7 @@ export class RichContentAdapter implements TiptapAdapter {
             ? this.tiptapEditor.chain().focus()
             : this.tiptapEditor.chain();
           editorCommand[command](args).run();
+          this.pluginsEvents.publishPluginAdd({ pluginId: type });
         } else {
           console.error(`${type} decoration not supported`);
         }
@@ -387,9 +428,16 @@ export class RichContentAdapter implements TiptapAdapter {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           [RICOS_INDENT_TYPE]: () => this.tiptapEditor.commands.outdent(),
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          [RICOS_TEXT_COLOR_TYPE]: () => this.tiptapEditor.commands.unsetColor(),
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          [RICOS_TEXT_HIGHLIGHT_TYPE]: () => this.tiptapEditor.commands.unsetHighlight(),
         };
         if (deleteDecorationCommandMap[type]) {
           deleteDecorationCommandMap[type]();
+          this.pluginsEvents.publishPluginDelete({ pluginId: type });
         } else {
           console.error(`delete ${type} decoration type not supported`);
         }
@@ -440,7 +488,6 @@ export class RichContentAdapter implements TiptapAdapter {
       anchorableBlocks: [],
       pluginsIncluded: [],
     }),
-    getColor: () => 'unset',
     getTextAlignment: (): TextAlignment => {
       const {
         state: {
