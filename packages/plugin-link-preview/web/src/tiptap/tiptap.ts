@@ -46,9 +46,6 @@ export const urlRegexExact = new RegExp('^' + urlRegex.source + '$', 'gi');
 const isLinkOnlyBlock = ({ parent, nodeBefore }: ResolvedPos): boolean =>
   parent.childCount === 1 && nodeBefore?.text?.search(urlRegexExact) !== -1;
 
-const insertNewLineAbove = (editor: Editor) =>
-  editor.chain().enter().setTextSelection(editor.state.selection.anchor).run();
-
 const addLinkPreview =
   (config: LinkPreviewPluginEditorConfig): KeyboardShortcutCommand =>
   ({ editor }) => {
@@ -65,6 +62,7 @@ const addLinkPreview =
       fetchData &&
       (enableEmbed || enableLinkPreview)
     ) {
+      let isPreviewAdded = false;
       const { target, rel } = linkConfig || {};
       const url = pos.nodeBefore?.text;
       fetchLinkPreview(fetchData, url)
@@ -75,6 +73,7 @@ const addLinkPreview =
             linkPreviewData.fixedUrl
           );
           if (shouldEmbed || shouldAddLinkPreview(linkPreviewData.title, enableLinkPreview)) {
+            isPreviewAdded = true;
             return createLinkPreviewData({ url, target, rel }, linkPreviewData, config).then(
               linkPreviewComponentData => {
                 const convertedLinkPreviewData = convertBlockDataToRicos(
@@ -97,8 +96,8 @@ const addLinkPreview =
             );
           }
         })
-        .finally(() => insertNewLineAbove(editor));
-      return true;
+        .finally(() => {});
+      return isPreviewAdded;
     }
     return false;
   };

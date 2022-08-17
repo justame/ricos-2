@@ -1848,6 +1848,15 @@ exports[`plugins > convert link to preview > with default config > [tiptap] shou
     {
       "data": {},
       "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
       "entityRanges": [
         {
           "key": 0,
@@ -1856,18 +1865,9 @@ exports[`plugins > convert link to preview > with default config > [tiptap] shou
         }
       ],
       "inlineStyleRanges": [],
-      "key": 0,
+      "key": 1,
       "text": " ",
       "type": "atomic"
-    },
-    {
-      "data": {},
-      "depth": 0,
-      "entityRanges": [],
-      "inlineStyleRanges": [],
-      "key": 1,
-      "text": "",
-      "type": "unstyled"
     },
     {
       "data": {},
@@ -1908,6 +1908,15 @@ exports[`plugins > convert link to preview > with default config > [tiptap] shou
     {
       "data": {},
       "depth": 0,
+      "entityRanges": [],
+      "inlineStyleRanges": [],
+      "key": 0,
+      "text": "",
+      "type": "unstyled"
+    },
+    {
+      "data": {},
+      "depth": 0,
       "entityRanges": [
         {
           "key": 0,
@@ -1916,18 +1925,9 @@ exports[`plugins > convert link to preview > with default config > [tiptap] shou
         }
       ],
       "inlineStyleRanges": [],
-      "key": 0,
+      "key": 1,
       "text": " ",
       "type": "atomic"
-    },
-    {
-      "data": {},
-      "depth": 0,
-      "entityRanges": [],
-      "inlineStyleRanges": [],
-      "key": 1,
-      "text": "",
-      "type": "unstyled"
     },
     {
       "data": {},
