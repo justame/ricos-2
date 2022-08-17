@@ -126,8 +126,13 @@ const AudioSettings: React.FC<Props> = props => {
   };
 
   const onFileSelection = () => {
-    const fromSettings = true;
-    handleFileSelection?.(handleFilesAdded, undefined, fromSettings, componentData);
+    if (handleFileSelection && useUploadService) {
+      const fromSettings = true;
+      handleFileSelection?.(handleFilesAdded, undefined, fromSettings, componentData);
+    } else {
+      const deleteBlock = pubsub?.get('deleteBlock');
+      helpers.handleFileSelection?.(undefined, false, handleFilesAdded, deleteBlock, componentData);
+    }
   };
 
   const getOnUploadFinished = () => {
@@ -153,14 +158,18 @@ const AudioSettings: React.FC<Props> = props => {
       setIsLoadingImage(false);
     } else {
       setIsLoadingImage(true);
-      handleUploadStart(
-        { ...props, type: AUDIO_TYPE },
-        () => componentData,
-        file,
-        undefined,
-        getOnUploadFinished(),
-        undefined
-      );
+      if (useUploadService) {
+        handleUploadStart(
+          { ...props, type: AUDIO_TYPE },
+          () => componentData,
+          file,
+          undefined,
+          getOnUploadFinished(),
+          undefined
+        );
+      } else {
+        helpers.handleFileUpload?.(file, handleFilesAdded);
+      }
     }
   };
 
@@ -270,7 +279,9 @@ const AudioSettings: React.FC<Props> = props => {
             <div className={styles.audio_settings_coverImage_wrapper}>
               <SettingsAddItem
                 handleFileChange={handleFileChange}
-                handleFileSelection={handleFileSelection && onFileSelection}
+                handleFileSelection={
+                  (helpers.handleFileSelection || handleFileSelection) && onFileSelection
+                }
                 isMobile={isMobile}
                 uploadMediaLabel={t('AudioPlugin_Settings_CoverImage_Label')}
                 theme={theme}

@@ -21,6 +21,11 @@
 
 - `audio/html`
   - [#4406](https://github.com/wix/ricos/pull/4406) fix edit plugin-toolbar button (tiptap)
+  
+  ## :house: Internal
+
+- `audio`
+  - [#4409](https://github.com/wix/ricos/pull/4409) refactor audioSettings uploads
 
 </details>
 
