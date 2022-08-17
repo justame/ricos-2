@@ -47,7 +47,6 @@ import { TiptapEditorStateTranslator } from './content-conversion/tiptap-editor-
 import { DraftEditablesRepository } from './content-modification/services/draft-editables-repository';
 import { TiptapEditablesRepository } from './content-modification/services/tiptap-editables-repository';
 import { EditorCommandRunner } from './content-modification/command-runner';
-import { TiptapMockToolbar } from './tiptapMockToolbar/TiptapMockToolbar';
 import { convertToolbarContext } from './toolbars/convertToolbarContext';
 import { coreCommands } from './content-modification/commands/core-commands';
 import { Node_Type } from 'ricos-schema';
@@ -593,9 +592,6 @@ export class RicosEditor extends Component<RicosEditorProps, State> implements R
       <Fragment>
         {this.renderToolbars()}
         {tiptapToolbar && this.renderToolbarPortal(tiptapToolbar)}
-        {experiments?.TiptapMockToolbar?.enabled && (
-          <TiptapMockToolbar editor={this.state.activeEditor} />
-        )}
         {
           <RicosTranslate locale={locale} localeResource={localeResource || englishResources}>
             {t => {

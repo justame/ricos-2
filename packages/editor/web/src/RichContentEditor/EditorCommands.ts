@@ -387,7 +387,6 @@ export const createEditorCommands = (
     ...editorState,
     getEditorState: () => getEditorState(),
     focus: () => {},
-    updateBlock: () => {},
     insertText: () => true,
   };
 
