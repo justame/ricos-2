@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import type { FC } from 'react';
 import { RicosContext, ModalContext } from 'ricos-context';
 import type { IToolbarItem } from 'ricos-types';
 import { ToggleButton } from 'wix-rich-content-toolbars-ui';
-import HtmlEditPanel from './HtmlEditPanelTiptap';
 import { EditIcon } from '../icons';
 
 type Props = {
@@ -17,11 +16,6 @@ export const EditHtmlButton: FC<Props> = ({ toolbarItem, dataHook }) => {
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
   const { t } = useContext(RicosContext) || {};
   const modalService = useContext(ModalContext);
-
-  useEffect(() => {
-    !modalService.getModal(HTML_EDIT_MODAL_ID) &&
-      modalService.register({ Component: HtmlEditPanel, id: HTML_EDIT_MODAL_ID });
-  }, []);
 
   const nodeAttrs = toolbarItem.attributes.nodeAttrsInSelection;
 

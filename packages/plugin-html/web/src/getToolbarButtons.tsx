@@ -7,6 +7,7 @@ import { TIPTAP_HTML_TYPE } from 'ricos-content';
 import { MAX_HEIGHT_INPUT, MIN_WIDTH, MAX_WIDTH, MIN_HEIGHT, MAX_HEIGHT } from './defaults';
 import { HeightIcon, WidthIcon, selectedNodeResolver } from 'wix-rich-content-plugin-commons';
 import { AlignmentPanel, NodeAlignmentButton } from 'wix-rich-content-toolbars-ui';
+import HtmlEditPanel from './toolbar/HtmlEditPanelTiptap';
 import { HTML_BUTTONS } from './consts';
 
 export const getToolbarButtons = (config, services): ToolbarButton[] => {
@@ -22,6 +23,10 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
       dataHook: 'baseToolbarButton_edit',
       command: ({ htmlData, editorCommands }) => {
         editorCommands.chain().updateAttributes(TIPTAP_HTML_TYPE, htmlData).run();
+      },
+      modal: {
+        Component: HtmlEditPanel,
+        id: HTML_BUTTONS.edit,
       },
       renderer: toolbarItem => <EditHtmlButton toolbarItem={toolbarItem} />,
       attributes: {
