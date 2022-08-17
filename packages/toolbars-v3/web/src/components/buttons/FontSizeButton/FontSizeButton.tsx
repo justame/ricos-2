@@ -1,21 +1,10 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import { usePopper } from 'react-popper';
-import { ClickOutside } from 'wix-rich-content-editor-common';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import cx from 'classnames';
 import styles from './FontSizeButton.scss';
 import { DropdownArrowIcon } from '../../../icons';
-import { withToolbarContext } from 'ricos-context';
-import FontSizePanel from '../../../modals/fontSize/FontSizePanel';
-import { getLangDir } from 'wix-rich-content-common';
+import { withToolbarContext, ModalContext } from 'ricos-context';
 import Tooltip from 'wix-rich-content-common/libs/Tooltip';
-
-const onSave = (data, toolbarItem, setModalOpen) => {
-  toolbarItem.commands?.setFontSize(data);
-  setModalOpen(false);
-};
 
 const onInputChange = (e, setInputValue, toolbarItem) => {
   const { value } = e.target;
@@ -26,50 +15,42 @@ const onInputChange = (e, setInputValue, toolbarItem) => {
 };
 
 const FontSizeButton = ({ toolbarItem, context, dataHook }) => {
-  const { t, theme, locale, portal, isMobile } = context || {};
-  const [isModalOpen, setModalOpen] = useState(false);
+  const id = 'fontSizeModal';
+  const { t } = context || {};
+  const modalService = useContext(ModalContext) || {};
+  const inputRef = useRef<HTMLInputElement>(null);
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
-  const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
   const [inputValue, setInputValue] = useState<number | string>('');
+  const [isButtonActive, setIsButtonActive] = useState<boolean>(false);
 
   useEffect(() => {
     setInputValue(selectedFontSize);
   }, [toolbarItem.attributes.selectedFontSize]);
 
-  const { styles: popperStyles, attributes } = usePopper(referenceElement, popperElement, {
-    modifiers: [
-      {
-        name: 'offset',
-        options: {
-          offset: [0, 8],
-        },
-      },
-    ],
-  });
-
-  const onClickOutside = e => {
-    const modalRef = popperElement;
-    if (!modalRef || modalRef.contains(e.target as Node)) {
-      return;
-    }
-    setModalOpen(false);
-  };
+  useEffect(() => {
+    modalService.onModalOpened(() => {
+      modalService.isModalOpen(id) && setIsButtonActive(true);
+    });
+    modalService.onModalClosed(() => {
+      !modalService.isModalOpen(id) && setIsButtonActive(false);
+    });
+  }, []);
 
   const selectedFontSize = toolbarItem.attributes.selectedFontSize;
 
   const tooltip = t(toolbarItem.presentation?.tooltip);
   return (
-    <ClickOutside onClickOutside={onClickOutside}>
-      <Tooltip key={tooltip} content={tooltip} tooltipOffset={{ x: 0, y: -8 }}>
+    <Tooltip key={tooltip} content={tooltip} tooltipOffset={{ x: 0, y: -8 }}>
+      <div style={{ boxSizing: 'border-box' }}>
         <div
-          className={cx(styles.fontSizeModalButtonWrapper, isModalOpen ? styles.active : '')}
+          className={cx(styles.fontSizeModalButtonWrapper, isButtonActive ? styles.active : '')}
           ref={setReferenceElement}
         >
           <div
             data-hook={dataHook}
             className={styles.fontSizeModalButton}
             role="button"
-            onClick={() => setModalOpen(!isModalOpen)}
+            onClick={() => toolbarItem.commands?.click(referenceElement)}
             tabIndex={-1}
           >
             <input
@@ -77,32 +58,13 @@ const FontSizeButton = ({ toolbarItem, context, dataHook }) => {
               required
               value={inputValue}
               onChange={e => onInputChange(e, setInputValue, toolbarItem)}
+              ref={inputRef}
             />
             <DropdownArrowIcon />
           </div>
         </div>
-      </Tooltip>
-      {isModalOpen &&
-        ReactDOM.createPortal(
-          <div
-            dir={getLangDir(locale)}
-            ref={!isMobile ? setPopperElement : () => null}
-            style={{ ...popperStyles.popper }}
-            {...attributes.popper}
-            className={isMobile ? '' : styles.popperContainer}
-          >
-            <div data-id="toolbar-modal-button" tabIndex={-1} className={styles.modal}>
-              <FontSizePanel
-                t={t}
-                theme={theme}
-                currentSelect={selectedFontSize}
-                onSave={({ data }) => onSave(data, toolbarItem, setModalOpen)}
-              />
-            </div>
-          </div>,
-          portal
-        )}
-    </ClickOutside>
+      </div>
+    </Tooltip>
   );
 };
 

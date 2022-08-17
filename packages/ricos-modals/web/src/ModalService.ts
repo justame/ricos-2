@@ -59,30 +59,30 @@ export class RicosModalService
     }
   }
 
-  public openModal(id, config) {
-    const modal = this.modals.find(modal => modal.id === id);
+  public openModal(modalId: string, config) {
+    const modal = this.modals.find(modal => modal.id === modalId);
     if (!modal) {
-      console.error(`Fail to open modal: ${id} modal is not register to modal service`);
+      console.error(`Fail to open modal: ${modalId} modal is not register to modal service`);
       return false;
     } else if (modal.state.isOpen) {
-      console.error(`Attempt to open ${id} that's already open`);
+      console.error(`Attempt to open ${modalId} that's already open`);
       return false;
     } else {
       modal.state.isOpen = true;
       Object.keys(config).forEach(key => (modal[key] = config[key]));
-      this.publishers.byTopic('ricos.modals.functionality.modalOpened').publish({ id });
+      this.publishers.byTopic('ricos.modals.functionality.modalOpened').publish({ modalId });
       return true;
     }
   }
 
-  public closeModal(id: string) {
-    const modal = this.modals.find(modal => modal.id === id);
+  public closeModal(modalId: string) {
+    const modal = this.modals.find(modal => modal.id === modalId);
     if (!modal) {
-      console.error(`Fail to close modal: ${id} is not open`);
+      console.error(`Fail to close modal: ${modalId} is not open`);
       return false;
     } else {
-      this.modals.forEach(modal => modal.id === id && (modal.state.isOpen = false));
-      this.publishers.byTopic('ricos.modals.functionality.modalClosed').publish({ id });
+      this.modals.forEach(modal => modal.id === modalId && (modal.state.isOpen = false));
+      this.publishers.byTopic('ricos.modals.functionality.modalClosed').publish({ id: modalId });
       return true;
     }
   }

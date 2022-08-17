@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
-import React, { Component } from 'react';
-import styles from '../panels/styles.scss';
-import { DesktopPanel } from 'wix-rich-content-toolbars-modals';
 import classNames from 'classnames';
-import { mergeStyles, GlobalContext } from 'wix-rich-content-common';
+import React, { Component } from 'react';
+import { mergeStyles } from 'wix-rich-content-common';
+import { DesktopPanel } from 'wix-rich-content-toolbars-modals';
+import styles from '../panels/styles.scss';
 
 const DEFAULT_FONTSIZE_DROPDOWN_OPTIONS = [
   '6',
@@ -23,7 +23,7 @@ const DEFAULT_FONTSIZE_DROPDOWN_OPTIONS = [
   '96',
 ];
 
-class FontSizePanel extends Component {
+export class FontSizePanel extends Component {
   constructor(props) {
     super(props);
     this.styles = mergeStyles({ styles, theme: props.theme });
@@ -70,5 +70,3 @@ class FontSizePanel extends Component {
     );
   }
 }
-
-export default FontSizePanel;

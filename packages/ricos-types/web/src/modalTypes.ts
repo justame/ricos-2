@@ -28,6 +28,7 @@ export interface ModalConfig {
   id: string;
   shortcuts?: KeyboardShortcut[];
   layout?: Layout;
+  autoFocus?: boolean;
 }
 
 export type Modal = ModalConfig & {
@@ -40,8 +41,12 @@ export type Modal = ModalConfig & {
 export interface ModalService {
   openModal: (
     id: string,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    config: { layout: Layout; componentProps?: Record<string, any>; positioning?: ModalPositioning }
+    config: {
+      layout: Layout;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      componentProps?: Record<string, any>;
+      positioning?: ModalPositioning;
+    }
   ) => boolean;
   isModalOpen: (id: string) => boolean;
   register: (modalConfig: ModalConfig) => void;

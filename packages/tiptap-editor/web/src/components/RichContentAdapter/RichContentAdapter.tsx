@@ -14,10 +14,17 @@ import {
   UNSTYLED,
   getTextDirection,
 } from 'ricos-content';
+import type { ParagraphNode, HeadingNode } from 'ricos-content';
 import { tiptapToDraft, fromTiptapNode } from 'ricos-converters';
 import { Decoration_Type, Node_Type } from 'ricos-schema';
 import type { Node } from 'ricos-schema';
-import type { TiptapAdapter, EditorContextType, Pubsub, EditorCommands } from 'ricos-types';
+import type {
+  TiptapAdapter,
+  EditorContextType,
+  Pubsub,
+  EditorCommands,
+  AmbientStyles,
+} from 'ricos-types';
 import { ToolbarType } from 'ricos-types';
 import type { RicosCustomStyles, TextAlignment } from 'wix-rich-content-common';
 import {
@@ -29,6 +36,7 @@ import {
   RICOS_MENTION_TYPE,
   RICOS_TEXT_COLOR_TYPE,
   RICOS_TEXT_HIGHLIGHT_TYPE,
+  RICOS_FONT_SIZE_TYPE,
 } from 'wix-rich-content-common';
 import { TO_TIPTAP_TYPE } from '../../consts';
 import { findNodeById } from '../../helpers';
@@ -44,6 +52,8 @@ export class RichContentAdapter implements TiptapAdapter {
   private readonly services: TiptapAdapterServices;
 
   getToolbarProps: TiptapAdapter['getToolbarProps'];
+
+  private readonly styles: AmbientStyles;
 
   constructor(
     public tiptapEditor: Editor,
@@ -70,6 +80,7 @@ export class RichContentAdapter implements TiptapAdapter {
         pubsub: {} as Pubsub,
       };
     };
+    this.styles = services.styles;
     this.services = services;
   }
 
@@ -205,6 +216,10 @@ export class RichContentAdapter implements TiptapAdapter {
           [RICOS_TEXT_HIGHLIGHT_TYPE]: data => ({ command: 'setHighlight', args: data.color }),
           [RICOS_MENTION_TYPE]: data => ({ command: 'insertMention', args: data.mention }),
           [RICOS_INDENT_TYPE]: () => ({ command: 'indent', args: undefined }),
+          [RICOS_FONT_SIZE_TYPE]: data => ({
+            command: 'setFontSize',
+            args: parseInt(data.fontSize),
+          }),
         };
         if (decorationCommandMap[type]) {
           const { command, args } = decorationCommandMap[type](data);
@@ -213,6 +228,46 @@ export class RichContentAdapter implements TiptapAdapter {
         } else {
           console.error(`${type} decoration not supported`);
         }
+      },
+      getFontSize: () => {
+        const {
+          state: {
+            doc,
+            selection: { from, to },
+          },
+        } = this.tiptapEditor;
+
+        const selectedFontSizes: string[] = [];
+
+        doc.nodesBetween(from, to, (node, pos) => {
+          if (node.type.name === 'text') {
+            const fontSizeMark = node.marks.find(
+              mark => mark.type.name === Decoration_Type.FONT_SIZE
+            );
+            if (fontSizeMark) {
+              selectedFontSizes.push(fontSizeMark?.attrs.value);
+            } else {
+              const parent = doc.resolve(pos).parent;
+              if (
+                parent.type.name === Node_Type.PARAGRAPH ||
+                parent.type.name === Node_Type.HEADING
+              ) {
+                const ricosNode = fromTiptapNode({ ...parent.toJSON(), type: parent?.type?.name });
+                const decoration = this.styles.getDecoration(
+                  ricosNode as ParagraphNode | HeadingNode,
+                  Decoration_Type.FONT_SIZE
+                );
+                if (decoration.fontSizeData?.value) {
+                  const fontSizeInDocumentStyle = decoration.fontSizeData?.value;
+                  selectedFontSizes.push(`${fontSizeInDocumentStyle}`);
+                }
+              }
+            }
+          }
+        });
+        return selectedFontSizes.every(fontSize => fontSize === selectedFontSizes[0])
+          ? selectedFontSizes[0]
+          : '';
       },
       hasLinkInSelection: () => {
         const {
@@ -384,7 +439,6 @@ export class RichContentAdapter implements TiptapAdapter {
       pluginsIncluded: [],
     }),
     getColor: () => 'unset',
-    getFontSize: () => 'big',
     getTextAlignment: (): TextAlignment => {
       const {
         state: {

@@ -19,6 +19,7 @@ export const Popper = ({ children, modalConfig, closeModal, className }: Props) 
   const [modalElement, setModalElement] = useState<HTMLDivElement | null>(null);
   const modalService = useContext(ModalContext) || {};
 
+  const { autoFocus = true } = modalConfig || {};
   const { referenceElement, placement } = modalConfig.positioning || {};
   const popper = usePopper(referenceElement, modalElement, {
     placement,
@@ -72,23 +73,31 @@ export const Popper = ({ children, modalConfig, closeModal, className }: Props) 
     !referenceElement.contains(e.target) && closeModal();
   };
 
+  const popperContent = (
+    <div
+      tabIndex={0}
+      ref={setModalElement}
+      style={popperStyles.popper}
+      className={className}
+      {...attributes.popper}
+    >
+      {children}
+    </div>
+  );
+
   return (
     <ClickOutside onClickOutside={onClickOutside}>
-      <FocusManager
-        focusTrapOptions={{
-          returnFocusOnDeactivate: false,
-        }}
-      >
-        <div
-          tabIndex={0}
-          ref={setModalElement}
-          style={popperStyles.popper}
-          className={className}
-          {...attributes.popper}
+      {autoFocus ? (
+        <FocusManager
+          focusTrapOptions={{
+            returnFocusOnDeactivate: false,
+          }}
         >
-          {children}
-        </div>
-      </FocusManager>
+          {popperContent}
+        </FocusManager>
+      ) : (
+        popperContent
+      )}
     </ClickOutside>
   );
 };

@@ -189,7 +189,6 @@ export class PluginTextButtons implements FormattingToolbarButtons {
   ): Record<string, ToolbarButtonProps> {
     //TODO: support all buttons
     const unsupportedTextButtons = [
-      'fontSize',
       'title',
       'headings',
       'textColor',
