@@ -1,20 +1,8 @@
-import React, { lazy, Suspense } from 'react';
 import type { EditorCommands, TiptapEditorPlugin } from 'ricos-types';
 import { RESOLVERS_IDS } from 'wix-rich-content-toolbars-v3/libs/resolvers-ids';
 import { getCurrentTextAlignmentIcon } from 'wix-rich-content-toolbars-modals/libs/getCurrentTextAlignmentIcon';
 import { textAlign } from './extension';
-
-const AlignmentPanelController = lazy(() =>
-  import('wix-rich-content-toolbars-modals').then(({ AlignmentPanelController }) => ({
-    default: AlignmentPanelController,
-  }))
-);
-
-const AlignmentPanelComponent = props => (
-  <Suspense fallback={<div style={{ width: 38 }}>loading</div>}>
-    <AlignmentPanelController {...props} />
-  </Suspense>
-);
+import AlignmentPanelComponent from './AlignmentPanelComponent';
 
 const FORMATTING_ALIGNMENT_MODAL_ID = 'formattingAlignmentModal';
 
@@ -81,18 +69,7 @@ export const pluginTextAlignment: TiptapEditorPlugin = {
         visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
         selectedAlignment: RESOLVERS_IDS.GET_ALIGNMENT_IN_SELECTION,
       },
-      commands: {
-        setAlignment:
-          ({ editorCommands }) =>
-          alignment => {
-            editorCommands.chain().focus().setTextAlign(alignment).run();
-          },
-        setAlignmentWithoutFocus:
-          ({ editorCommands }) =>
-          alignment => {
-            editorCommands.chain().setTextAlign(alignment).run();
-          },
-      },
+      commands: {},
       modal: {
         id: FORMATTING_ALIGNMENT_MODAL_ID,
         Component: AlignmentPanelComponent,

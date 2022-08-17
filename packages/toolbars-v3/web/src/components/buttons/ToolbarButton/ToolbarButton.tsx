@@ -14,35 +14,30 @@ type ToolbarButtonProps = {
   dataHook?: string;
 };
 
-const ToolbarButton = ({
-  isMobile = false,
-  active,
-  disabled,
-  tooltip,
-  onClick,
-  icon,
-  dataHook,
-}: ToolbarButtonProps) => {
-  const Icon = icon;
+const ToolbarButton = React.forwardRef<HTMLButtonElement | null, ToolbarButtonProps>(
+  ({ isMobile = false, active, disabled, tooltip, onClick, icon, dataHook }, ref) => {
+    const Icon = icon;
 
-  return (
-    <Tooltip key={tooltip} content={tooltip} tooltipOffset={{ x: 0, y: -8 }}>
-      <button
-        className={cx(styles.toggleButtonWrapper, {
-          [styles.mobileToggleButtonWrapper]: isMobile,
-          [styles.active]: active,
-          [styles.disabled]: disabled,
-        })}
-        onClick={onClick}
-        onMouseDown={e => e.preventDefault()}
-        data-hook={dataHook}
-      >
-        <div className={cx(styles.toggleButton, { [styles.mobileToggleButton]: isMobile })}>
-          <Icon />
-        </div>
-      </button>
-    </Tooltip>
-  );
-};
+    return (
+      <Tooltip key={tooltip} content={tooltip} tooltipOffset={{ x: 0, y: -8 }}>
+        <button
+          ref={ref}
+          className={cx(styles.toggleButtonWrapper, {
+            [styles.mobileToggleButtonWrapper]: isMobile,
+            [styles.active]: active,
+            [styles.disabled]: disabled,
+          })}
+          onClick={onClick}
+          onMouseDown={e => e.preventDefault()}
+          data-hook={dataHook}
+        >
+          <div className={cx(styles.toggleButton, { [styles.mobileToggleButton]: isMobile })}>
+            <Icon />
+          </div>
+        </button>
+      </Tooltip>
+    );
+  }
+);
 
 export default ToolbarButton;

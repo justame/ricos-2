@@ -77,6 +77,7 @@ export class PluginTextButton implements FormattingToolbarButton {
     editorCommands: EditorCommands,
     toolbarType: ToolbarType
   ): IToolbarItemConfigTiptap {
+    const { modals } = this.services;
     return {
       ...this.button,
       presentation: {
@@ -86,9 +87,22 @@ export class PluginTextButton implements FormattingToolbarButton {
       attributes: this.toResolvedAttributes(),
       commands: {
         ...this.button.commands,
-        click: () => () => {
+        click: () => referenceElement => {
           this.services.toolbars.byType(toolbarType).publishButtonClick(this.button.id);
-          this.button.command?.(editorCommands);
+          return this.button.modal
+            ? modals.isModalOpen(this.button.modal.id)
+              ? modals.closeModal(this.button.modal.id)
+              : modals.openModal(this.button.modal.id, {
+                  componentProps: {
+                    closeModal: () => this.button.modal && modals.closeModal(this.button.modal.id),
+                  },
+                  positioning: {
+                    placement: 'bottom',
+                    referenceElement,
+                  },
+                  layout: 'toolbar',
+                })
+            : this.button.command?.(editorCommands);
         },
       },
     };
