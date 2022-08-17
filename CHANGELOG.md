@@ -17,6 +17,12 @@
     Click to see more.
   </summary>
 
+
+
+</details>
+
+## 8.72.26 (Aug 17, 2022)
+
   ## :bug: Bug Fix
 
 - `audio/html`
@@ -26,8 +32,6 @@
 
 - `audio`
   - [#4409](https://github.com/wix/ricos/pull/4409) refactor audioSettings uploads
-
-</details>
 
 ## 8.72.25 (Aug 17, 2022)
 
