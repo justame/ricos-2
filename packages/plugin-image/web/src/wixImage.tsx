@@ -4,7 +4,7 @@ import { IMAGE_TYPE } from './types';
 import { get, includes, isFunction, uniqueId } from 'lodash';
 import type { ComponentData } from 'ricos-content';
 import { anchorScroll, addAnchorTagToUrl, isSSR } from 'wix-rich-content-common';
-import { Image, initCustomElement } from '@wix/image';
+import { Image as ImageComp, initCustomElement } from '@wix/image';
 import { DEFAULTS } from './consts';
 import ExpandIcon from './icons/expand';
 import InPluginInput from './InPluginInput';
@@ -42,7 +42,10 @@ const getImageSrc = (
   return src;
 };
 
-class WixImage extends React.Component<ImageViewerProps & { styles: Record<string, string> }> {
+class WixImage extends React.Component<
+  ImageViewerProps & { styles: Record<string, string> },
+  { dimensions: { width; height } }
+> {
   _id: string;
 
   constructor(props) {
@@ -198,6 +201,13 @@ class WixImage extends React.Component<ImageViewerProps & { styles: Record<strin
     );
   };
 
+  getImgSize = imgSrc => {
+    const newImg = new Image();
+    newImg.onload = () =>
+      this.setState({ dimensions: { width: newImg.width, height: newImg.height } });
+    newImg.src = imgSrc;
+  };
+
   // eslint-disable-next-line complexity
   render() {
     const {
@@ -257,9 +267,15 @@ class WixImage extends React.Component<ImageViewerProps & { styles: Record<strin
       !isMobile;
 
     const dim = {
-      width: (data.src?.width || data.width) as number,
-      height: (data.src?.height || data.height) as number,
+      width: (data.src?.width || data.width || this.state?.dimensions.width) as number,
+      height: (data.src?.height || data.height || this.state?.dimensions.height) as number,
     };
+
+    const isDimensionsExists = dim.width && dim.height;
+
+    if (!isDimensionsExists) {
+      this.getImgSize(imageSrc);
+    }
 
     return (
       <div
@@ -284,21 +300,23 @@ class WixImage extends React.Component<ImageViewerProps & { styles: Record<strin
             } as any
           }
         >
-          <Image
-            id={imageSrc}
-            containerId={this._id}
-            displayMode="fill"
-            width={dim.width}
-            height={dim.height}
-            uri={imageSrc}
-            alt={metadata.alt || ''}
-            socialAttrs={socialAttrs}
-            isSEOBot={!!seoMode}
-            {...(!isEditor && {
-              placeholderTransition: seoMode ? undefined : 'blur',
-              shouldUseLQIP: true,
-            })}
-          />
+          {isDimensionsExists && (
+            <ImageComp
+              id={imageSrc}
+              containerId={this._id}
+              displayMode="fill"
+              width={dim.width}
+              height={dim.height}
+              uri={imageSrc}
+              alt={metadata.alt || ''}
+              socialAttrs={socialAttrs}
+              isSEOBot={!!seoMode}
+              {...(!isEditor && {
+                placeholderTransition: seoMode ? undefined : 'blur',
+                shouldUseLQIP: true,
+              })}
+            />
+          )}
 
           {this.hasExpand() && this.renderExpandIcon()}
         </div>
