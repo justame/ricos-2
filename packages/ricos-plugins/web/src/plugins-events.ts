@@ -6,7 +6,9 @@ type Topics = [
   'ricos.plugins.functionality.pluginToolbarButtonClick',
   'ricos.plugins.functionality.pluginPopoverClick',
   'ricos.plugins.functionality.pluginPopoverTabSwitch',
-  'ricos.plugins.functionality.pluginChangeSettings'
+  'ricos.plugins.functionality.pluginPopoverSearch',
+  'ricos.plugins.functionality.pluginChangeSettings',
+  'ricos.plugins.functionality.pluginLinkable'
 ];
 
 const TOPICS: Topics = [
@@ -15,14 +17,16 @@ const TOPICS: Topics = [
   'ricos.plugins.functionality.pluginToolbarButtonClick',
   'ricos.plugins.functionality.pluginPopoverClick',
   'ricos.plugins.functionality.pluginPopoverTabSwitch',
+  'ricos.plugins.functionality.pluginPopoverSearch',
   'ricos.plugins.functionality.pluginChangeSettings',
+  'ricos.plugins.functionality.pluginLinkable',
 ];
 
-// ☐  onPluginAction
+// ✓  onPluginAction --> table left
 // ✓  onChangePluginSettings
-// ✓  onPluginAdd
-// ☐  onPluginAddStep
-// ☐  onPluginAddSuccess
+// ✓  onPluginAdd --> toolbar button click
+// ✓  onPluginAddStep --> modal open
+// ✓  onPluginAddSuccess
 // ☐  onPluginChange
 // ✓  onPluginDelete
 // ✓  onPluginsPopOverClick
@@ -63,9 +67,21 @@ export class PluginsEvents implements IPluginsEvents {
       .publish({ pluginId, buttonName });
   }
 
+  publishPluginPopoverSearch({ pluginId, searchTerm }) {
+    return this.publishers
+      .byTopic('ricos.plugins.functionality.pluginPopoverSearch')
+      .publish({ pluginId, searchTerm });
+  }
+
   publishPluginChangeSettings({ pluginId, actionName, value }) {
     return this.publishers
       .byTopic('ricos.plugins.functionality.pluginChangeSettings')
       .publish({ pluginId, actionName, value });
+  }
+
+  publishPluginLinkable({ pluginId, category, link, nofollow, newTab, anchor }) {
+    return this.publishers
+      .byTopic('ricos.plugins.functionality.pluginLinkable')
+      .publish({ pluginId, category, link, nofollow, newTab, anchor });
   }
 }

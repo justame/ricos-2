@@ -23,8 +23,13 @@ export interface AddPluginLinkParams extends PluginsActionGenericParams {
   };
 }
 
+export interface SearchInsidePluginParams extends PluginsActionGenericParams {
+  searchTerm: string;
+}
+
 export interface GenericParamsMappers {
   addPluginLink: AddPluginLinkParams;
+  searchInsideThePlugin: SearchInsidePluginParams;
 }
 
 interface EventsParamsMappers extends TableEventsParamsMappers, GenericParamsMappers {}

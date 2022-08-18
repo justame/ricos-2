@@ -179,7 +179,7 @@ export class RichContentAdapter implements TiptapAdapter {
           id = data.id || generateId();
           const attrs = { id, ...flatComponentState(_attrs) };
           this.tiptapEditor.chain().focus().insertContent([{ type, attrs, content }]).run();
-          this.pluginsEvents.publishPluginAdd({ pluginId: type });
+          this.pluginsEvents.publishPluginAdd({ pluginId: type, params: { ...attrs } });
         } else {
           console.error(`No such plugin type ${pluginType}`);
         }
@@ -212,7 +212,7 @@ export class RichContentAdapter implements TiptapAdapter {
             ])
             .setNodeSelection(updateSelection ? lastNodePosition + 1 : lastNodePosition + 2)
             .run();
-          this.pluginsEvents.publishPluginAdd({ pluginId: type });
+          this.pluginsEvents.publishPluginAdd({ pluginId: type, params: { ...attrs } });
         } else {
           console.error(`No such plugin type ${pluginType}`);
         }

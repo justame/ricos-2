@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import React, { useContext, useEffect, useState } from 'react';
 import type { FC } from 'react';
-import { ModalContext, RicosContext, EditorContext } from 'ricos-context';
+import { ModalContext, RicosContext, EditorContext, PluginsEventsContext } from 'ricos-context';
 import ButtonSettings from '../toolbar/buttonInputModal';
 import type { LINK_BUTTON_TYPE, ACTION_BUTTON_TYPE, ButtonPluginEditorConfig } from '../types';
 import { Node_Type } from 'wix-rich-content-common';
@@ -17,6 +17,7 @@ const ButtonSettingsModal: FC<Props> = ({ nodeId, settings, type, modalId }) => 
   const { theme, t, isMobile, languageDir, experiments } = useContext(RicosContext);
   const modalService = useContext(ModalContext) || {};
   const { getEditorCommands } = useContext(EditorContext);
+  const pluginsEvents = useContext(PluginsEventsContext);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [initialData, setInitialData] = useState<Record<string, any>>();
@@ -60,10 +61,15 @@ const ButtonSettingsModal: FC<Props> = ({ nodeId, settings, type, modalId }) => 
     closeModal();
   };
 
+  const pluginEvents = {
+    onPluginAction: (_, { plugin_id, params }) =>
+      pluginsEvents.publishPluginLinkable({ pluginId: plugin_id, ...params }),
+  };
+
   return componentData ? (
     <ButtonSettings
       componentData={componentData}
-      helpers={{}}
+      helpers={pluginEvents}
       experiments={experiments}
       theme={theme}
       t={t}

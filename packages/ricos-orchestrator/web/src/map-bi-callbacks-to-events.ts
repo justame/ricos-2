@@ -127,8 +127,8 @@ export function mapBiCallbacksToSubscriptions(editorProps: RicosEditorProps, eve
 
   subscribeCallback(
     'ricos.plugins.functionality.pluginAdd',
-    'onPluginAdd',
-    ({ pluginId, entryPoint }) => [pluginId, entryPoint, version, contentId]
+    'onPluginAddSuccess',
+    ({ pluginId, params, entryPoint }) => [pluginId, entryPoint, params, version, contentId]
   );
 
   subscribeCallback(
@@ -158,8 +158,26 @@ export function mapBiCallbacksToSubscriptions(editorProps: RicosEditorProps, eve
   );
 
   subscribeCallback(
+    'ricos.plugins.functionality.pluginPopoverSearch',
+    'onPluginAction',
+    ({ pluginId, searchTerm }) => ['searchInsideThePlugin', { plugin_id: pluginId, searchTerm }]
+  );
+
+  subscribeCallback(
     'ricos.modals.functionality.pluginChangeSettings',
     'onChangePluginSettings',
     ({ pluginId, actionName, value }) => [{ pluginId, actionName, value }]
+  );
+
+  subscribeCallback(
+    'ricos.modals.functionality.pluginLinkable',
+    'onPluginAction',
+    ({ pluginId, link, nofollow, newTab, anchor }) => [
+      'addPluginLink',
+      {
+        plugin_id: pluginId,
+        params: { category: link ? 'web_address' : 'section', link, nofollow, newTab, anchor },
+      },
+    ]
   );
 }

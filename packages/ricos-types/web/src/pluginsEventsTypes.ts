@@ -1,5 +1,12 @@
 export interface IPluginsEvents {
-  publishPluginAdd({ pluginId }: { pluginId: string }): boolean;
+  publishPluginAdd({
+    pluginId,
+    params,
+  }: {
+    pluginId: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    params?: Record<string, any>;
+  }): boolean;
 
   publishPluginDelete({ pluginId }: { pluginId: string }): boolean;
 
@@ -31,6 +38,14 @@ export interface IPluginsEvents {
     buttonName: string;
   }): boolean;
 
+  publishPluginPopoverSearch({
+    pluginId,
+    searchTerm,
+  }: {
+    pluginId: string;
+    searchTerm: string;
+  }): boolean;
+
   publishPluginChangeSettings({
     pluginId,
     actionName,
@@ -39,5 +54,19 @@ export interface IPluginsEvents {
     pluginId: string;
     actionName: string;
     value: string;
+  }): boolean;
+
+  publishPluginLinkable({
+    pluginId,
+    link,
+    nofollow,
+    newTab,
+    anchor,
+  }: {
+    pluginId: string;
+    link?: string;
+    nofollow?: boolean;
+    newTab?: boolean;
+    anchor?: string;
   }): boolean;
 }

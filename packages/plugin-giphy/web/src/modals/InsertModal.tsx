@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import type { FC } from 'react';
 import { convertBlockDataToRicos } from 'ricos-content/libs/convertBlockDataToRicos';
-import { ModalContext, RicosContext, EditorContext } from 'ricos-context';
+import { ModalContext, RicosContext, EditorContext, PluginsEventsContext } from 'ricos-context';
 import GiphyApiInputModal from '../toolbar/giphyApiInputModal';
 import { GIPHY_TYPE } from '../types';
 
@@ -17,6 +17,7 @@ const GiphyInsertModal: FC<Props> = ({ componentData, giphySdkApiKey, nodeId, mo
   const { theme, t, isMobile, languageDir } = useContext(RicosContext);
   const { getEditorCommands } = useContext(EditorContext);
   const modalService = useContext(ModalContext) || {};
+  const pluginsEvents = useContext(PluginsEventsContext);
   const closeModal = () => {
     modalService.closeModal(modalId);
   };
@@ -36,6 +37,11 @@ const GiphyInsertModal: FC<Props> = ({ componentData, giphySdkApiKey, nodeId, mo
     addBlockWithFocus(insertGif);
   };
 
+  const pluginEvents = {
+    onPluginAction: (_, { searchTerm }) =>
+      pluginsEvents.publishPluginPopoverSearch({ pluginId: GIPHY_TYPE, searchTerm }),
+  };
+
   return (
     <GiphyApiInputModal
       giphySdkApiKey={giphySdkApiKey}
@@ -46,6 +52,7 @@ const GiphyInsertModal: FC<Props> = ({ componentData, giphySdkApiKey, nodeId, mo
       languageDir={languageDir}
       onGifAdd={onGifAdd}
       onCloseRequested={closeModal}
+      helpers={pluginEvents}
     />
   );
 };

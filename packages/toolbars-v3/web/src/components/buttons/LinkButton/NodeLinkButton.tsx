@@ -1,7 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import type { FC } from 'react';
 import { decorateComponentWithProps } from 'wix-rich-content-editor-common';
-import { withToolbarContext, ModalContext, RicosContext } from 'ricos-context';
+import {
+  withToolbarContext,
+  ModalContext,
+  RicosContext,
+  PluginsEventsContext,
+} from 'ricos-context';
 import { withContentQueryContext } from 'ricos-content-query';
 import { ToggleButton } from 'wix-rich-content-toolbars-ui';
 import { LinkModal, getLinkModalProps } from 'wix-rich-content-toolbars-modals';
@@ -22,6 +27,7 @@ const NodeLinkButton: FC<Props> = ({ toolbarItem, context, contentQueryService, 
   const { isMobile, t, theme, experiments } = useContext(RicosContext);
   const { getEditorCommands, linkPanelData } = context || {};
   const modalService = useContext(ModalContext);
+  const pluginsEvents = useContext(PluginsEventsContext);
 
   const [referenceElement, setReferenceElement] = useState();
 
@@ -53,6 +59,13 @@ const NodeLinkButton: FC<Props> = ({ toolbarItem, context, contentQueryService, 
   };
 
   const onDone = ({ data }) => {
+    pluginsEvents.publishPluginLinkable({
+      pluginId: toolbarItem.attributes.selectedNode.type.name,
+      link: data?.url,
+      newTab: data.target === '_blank',
+      nofollow: data.rel,
+    });
+
     if (data.url) {
       toolbarItem.commands?.insertLink(data);
     } else if (data.anchor) {
