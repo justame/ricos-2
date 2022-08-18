@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `toolbars-v3`
+  - [#4420](https://github.com/wix/ricos/pull/4420) wire footer-toolbar icon colors
+
 </details>
 
 ## 8.72.29 (Aug 18, 2022)

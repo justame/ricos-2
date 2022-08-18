@@ -1,4 +1,7 @@
+@import '~wix-rich-content-common/dist/statics/styles/mixins';
+
 .wrapper {
   width: 100%;
   min-width: 500px;
+  @include border-box;
 }

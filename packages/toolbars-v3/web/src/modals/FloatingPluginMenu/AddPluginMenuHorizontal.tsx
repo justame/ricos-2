@@ -3,7 +3,7 @@ import { EditorContext, RicosContext, ModalContext } from 'ricos-context';
 import InsertPluginToolbar from '../../components/InsertPluginToolbar/InsertPluginToolbar';
 import type { AddButton, RicosEditorPlugins } from 'ricos-types';
 import { PLUGIN_MENU_HORIZONTAL_MODAL_ID } from './consts';
-
+import styles from './styles/floating-add-plugin-menu.scss';
 interface Props {
   referenceElement?: React.RefObject<HTMLElement>;
   plugins: RicosEditorPlugins;
@@ -27,7 +27,11 @@ const AddPluginMenuHorizontal: React.FC<Props> = ({ referenceElement, plugins })
       : command(getEditorCommands?.());
   };
 
-  return <InsertPluginToolbar buttons={plugins.getAddButtons()} onButtonClick={onButtonClick} />;
+  return (
+    <div className={styles.addPluginMenu_horizontal_wrapper}>
+      <InsertPluginToolbar buttons={plugins.getAddButtons()} onButtonClick={onButtonClick} />
+    </div>
+  );
 };
 
 export default AddPluginMenuHorizontal;
