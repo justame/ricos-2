@@ -19,6 +19,13 @@
 
 </details>
 
+## 8.72.29 (Aug 18, 2022)
+
+## :bug: Bug Fix
+
+- `wix-image`
+  - [#4416](https://github.com/wix/ricos/pull/4416) fix dimensions for an image file
+
 ## 8.72.28 (Aug 18, 2022)
 
 ## :bug: Bug Fix
