@@ -91,8 +91,9 @@ export class RicosOrchestrator implements Orchestrator {
     });
 
     this.toolbars = new RicosToolbars();
-    this.pluginsEvents = new PluginsEvents();
     this.toolbars.getShortcuts().map(shortcut => this.shortcuts.register(shortcut));
+
+    this.pluginsEvents = new PluginsEvents();
 
     this.content = Content.create<Node[]>([], {
       styles: this.styles,
@@ -103,7 +104,6 @@ export class RicosOrchestrator implements Orchestrator {
     this.plugins = new EditorPlugins(
       {
         modals: this.modals,
-        events: this.events,
         uploadService: this.uploadService,
         updateService: this.updateService,
         shortcuts: this.shortcuts,
@@ -122,7 +122,6 @@ export class RicosOrchestrator implements Orchestrator {
     this.editor = new RicosEditor(
       this.editorProps,
       {
-        events: this.events,
         styles: this.styles,
         plugins: this.plugins,
         updateService: this.updateService,
@@ -138,6 +137,7 @@ export class RicosOrchestrator implements Orchestrator {
       this.editorProps.debugMode?.includes('prosemirror') || editorProps.debugMode?.includes('all')
     );
     this.updateService.setEditorCommands(this.editor.getEditorCommands());
+
     this.orchestrateEvents();
   }
 
@@ -174,7 +174,6 @@ export class RicosOrchestrator implements Orchestrator {
 
   getServices(): RicosServices {
     return {
-      events: this.events,
       styles: this.styles,
       plugins: this.plugins,
       uploadService: this.uploadService,

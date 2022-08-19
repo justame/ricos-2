@@ -11,7 +11,6 @@ import type { GeneralContext } from './context';
 import type { IPluginsEvents } from './pluginsEventsTypes';
 
 export type RicosServices = {
-  events: EventRegistrar & EventSubscriptor;
   styles: AmbientStyles;
   plugins: RicosEditorPlugins;
   uploadService: IUploadService;

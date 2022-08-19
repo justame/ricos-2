@@ -267,7 +267,7 @@ export class RichContentAdapter implements TiptapAdapter {
             ? this.tiptapEditor.chain().focus()
             : this.tiptapEditor.chain();
           editorCommand[command](args).run();
-          this.pluginsEvents.publishPluginAdd({ pluginId: type });
+          this.pluginsEvents.publishPluginAdd({ pluginId: type, params: { ...args } });
         } else {
           console.error(`${type} decoration not supported`);
         }

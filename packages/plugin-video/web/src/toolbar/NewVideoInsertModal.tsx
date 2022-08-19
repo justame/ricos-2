@@ -43,7 +43,7 @@ const VideoInsertModal = props => {
       });
     setActiveTab(tab);
   };
-  const onUrlInputDoubleClick = () => setUrl('https://www.youtube.com/watch?v=vzKryaN44ss');
+  const onUrlInputDoubleClick = () => setUrl('https://www.youtube.com/watch?v=ZVmHVzwOWro');
 
   const onConfirm = () => {
     onPluginsPopOverClick?.({
