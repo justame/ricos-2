@@ -7,11 +7,10 @@
 import { TextSelection, NodeSelection } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import { TableMap, CellSelection } from 'prosemirror-tables';
-import { isCellSelection } from 'prosemirror-utils';
 import styles from './table.scss';
 
 export function drawCellSelection(state) {
-  if (!isCellSelection(state.selection)) return null;
+  if (!state.selection.$headCell) return null;
   const cells: Decoration[] = [];
   state.selection.forEachCell((node, pos) => {
     cells.push(Decoration.node(pos, pos + node.nodeSize, { class: styles.selectedCell }));

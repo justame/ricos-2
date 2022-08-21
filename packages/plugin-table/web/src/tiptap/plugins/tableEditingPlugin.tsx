@@ -1,9 +1,7 @@
-import { Plugin } from 'prosemirror-state';
 import { handlePaste, handleMouseDown } from './input';
 import { drawCellSelection, normalizeSelection } from './cellselection';
 import { fixTables } from 'prosemirror-tables';
 import { isCellSelection } from 'prosemirror-utils';
-import { tableEditingKey } from './pluginsKeys';
 
 // :: () → Plugin
 //
@@ -17,9 +15,10 @@ import { tableEditingKey } from './pluginsKeys';
 // rather broadly, and other plugins, like the gap cursor or the
 // column-width dragging plugin, might want to get a turn first to
 // perform more specific behavior.
-export function tableEditingPlugin(editor) {
+export function tableEditingPlugin(Plugin, PluginKey, editor) {
+  const key = new PluginKey('selectingCells');
   return new Plugin({
-    key: tableEditingKey,
+    key,
 
     // This piece of state is used to remember when a mouse-drag
     // cell-selection is happening, so that it can continue even as
@@ -29,7 +28,7 @@ export function tableEditingPlugin(editor) {
         return null;
       },
       apply(tr, cur) {
-        const set = tr.getMeta(tableEditingKey);
+        const set = tr.getMeta(key);
         if (set !== null && set !== undefined) return set === -1 ? null : set;
         if (cur === null || !tr.docChanged) return cur;
         const { deleted, pos } = tr.mapping.mapResult(cur);
@@ -42,13 +41,13 @@ export function tableEditingPlugin(editor) {
 
       handleDOMEvents: {
         mousedown: (view, event) => {
-          handleMouseDown(view, event, editor);
+          handleMouseDown(view, event, key);
           return false;
         },
       },
 
       createSelectionBetween(view) {
-        if (tableEditingKey.getState(view.state) === null) return null;
+        if (key.getState(view.state) === null) return null;
         return view.state.selection;
       },
 

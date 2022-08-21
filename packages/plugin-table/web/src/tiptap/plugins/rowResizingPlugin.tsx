@@ -1,7 +1,5 @@
-import { Plugin } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import { findParentNodeClosestToPos, findTable } from 'prosemirror-utils';
-import { tableRowResizingPluginKey as key } from './pluginsKeys';
 import styles from './table.scss';
 import { TIPTAP_TABLE_ROW_TYPE, TIPTAP_TABLE_CELL_TYPE } from 'ricos-content';
 import { ResizeState } from './ResizeState';
@@ -12,7 +10,8 @@ import resizeStyles from '../decorations/controllers.scss';
 const handleHeight = 5;
 const rowMinHeight = ROW_DEFAULT_HEIGHT;
 
-export function rowResizingPlugin(editor) {
+export function rowResizingPlugin(Plugin, PluginKey, editor) {
+  const key = new PluginKey('table-row-resizing');
   const plugin = new Plugin({
     key,
     state: {
@@ -28,7 +27,7 @@ export function rowResizingPlugin(editor) {
     props: {
       handleDOMEvents: {
         mousemove(view, event) {
-          findTable(view.state.selection) && handleMouseMove(view, event);
+          findTable(view.state.selection) && handleMouseMove(view, event, key);
           return false;
         },
         mouseleave(view) {
@@ -36,7 +35,7 @@ export function rowResizingPlugin(editor) {
           return false;
         },
         mousedown(view, event) {
-          findTable(view.state.selection) && handleMouseDown(view, event, editor);
+          findTable(view.state.selection) && handleMouseDown(view, event, editor, key);
           return false;
         },
       },
@@ -52,7 +51,7 @@ export function rowResizingPlugin(editor) {
   return plugin;
 }
 
-function handleMouseMove(view, event) {
+function handleMouseMove(view, event, key) {
   const pluginState = key.getState(view.state);
 
   if (!pluginState.dragging) {
@@ -73,7 +72,7 @@ function handleMouseMove(view, event) {
   }
 }
 
-function handleMouseDown(view, event, editor) {
+function handleMouseDown(view, event, editor, key) {
   const pluginState = key.getState(view.state);
   if (pluginState.activeHandle === -1 || pluginState.dragging) return;
   const row = findParentNodeClosestToPos(

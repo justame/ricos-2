@@ -1,13 +1,12 @@
-import { Plugin } from 'prosemirror-state';
 import { findTable } from 'prosemirror-utils';
 import { addRowColDecorations } from '../decorations';
 import { DecorationSet } from 'prosemirror-view';
 import { TableMap } from 'prosemirror-tables';
-import { tableAddRowColPluginKey as pluginKey } from './pluginsKeys';
 
-export const addRowColPlugin = editor =>
-  new Plugin({
-    key: pluginKey,
+export const addRowColPlugin = (Plugin, PluginKey, editor) => {
+  const key = new PluginKey('table-add-row-col');
+  return new Plugin({
+    key,
 
     state: {
       init: () => {
@@ -33,8 +32,9 @@ export const addRowColPlugin = editor =>
 
     props: {
       decorations(state) {
-        const tablePluginState = state && pluginKey.getState(state);
+        const tablePluginState = state && key.getState(state);
         return tablePluginState.decorations;
       },
     },
   });
+};

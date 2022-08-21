@@ -1,15 +1,13 @@
-import { Plugin } from 'prosemirror-state';
 import { cellEditingDecorations } from '../decorations';
 import { DecorationSet } from 'prosemirror-view';
 import { cellAround, isInTable } from 'prosemirror-tables';
 import { isCellSelection } from 'prosemirror-utils';
-import { cellStatesPluginKey as pluginKey } from './pluginsKeys';
 import { TRANSACTION_META_KEYS } from '../consts';
 
-export const cellStatesPlugin = editor =>
-  new Plugin({
-    key: pluginKey,
-
+export const cellStatesPlugin = (Plugin, PluginKey, editor) => {
+  const key = new PluginKey('cell-states');
+  return new Plugin({
+    key,
     state: {
       init: () => {
         return {};
@@ -40,7 +38,7 @@ export const cellStatesPlugin = editor =>
       handleClick: view => {
         const $anchor = cellAround(view.state.selection.$anchor);
         if ($anchor !== null) {
-          const cellState = pluginKey.getState(view.state);
+          const cellState = key.getState(view.state);
           if (cellState?.editCell?.pos === $anchor.pos) return false;
           editor.commands.setCellSelection($anchor.pos);
           return true;
@@ -58,8 +56,9 @@ export const cellStatesPlugin = editor =>
       },
 
       decorations(state) {
-        const tablePluginState = state && pluginKey.getState(state);
+        const tablePluginState = state && key.getState(state);
         return tablePluginState.decorations;
       },
     },
   });
+};

@@ -1,15 +1,13 @@
-import { Plugin } from 'prosemirror-state';
 import { findTable } from 'prosemirror-utils';
 import { controllerDecorations, dragDecorations } from '../decorations';
 import { DecorationSet } from 'prosemirror-view';
 import { TableMap } from 'prosemirror-tables';
-import { tableControllersPluginKey as pluginKey } from './pluginsKeys';
 import { TRANSACTION_META_KEYS } from '../consts';
 
-export const controllerPlugin = editor =>
-  new Plugin({
-    key: pluginKey,
-
+export const controllerPlugin = (Plugin, PluginKey, editor) => {
+  const key = new PluginKey('cell-states');
+  return new Plugin({
+    key,
     state: {
       init: () => {
         return {};
@@ -52,8 +50,9 @@ export const controllerPlugin = editor =>
 
     props: {
       decorations(state) {
-        const tablePluginState = state && pluginKey.getState(state);
+        const tablePluginState = state && key.getState(state);
         return tablePluginState.decorations;
       },
     },
   });
+};

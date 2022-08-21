@@ -17,7 +17,7 @@ export const tableCell = {
     addOptions: () => settings,
   }),
   name: TIPTAP_TABLE_CELL_TYPE,
-  createExtensionConfig() {
+  createExtensionConfig({ Plugin, PluginKey }) {
     return {
       name: this.name,
       tableRole: 'cell',
@@ -104,7 +104,7 @@ export const tableCell = {
         ];
       },
       addProseMirrorPlugins() {
-        return [cellStatesPlugin(this.editor)];
+        return [cellStatesPlugin(Plugin, PluginKey, this.editor)];
       },
     };
   },

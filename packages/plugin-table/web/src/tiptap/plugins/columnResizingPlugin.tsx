@@ -1,12 +1,10 @@
 /* eslint-disable fp/no-loops */
-import { Plugin } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import { TableMap } from 'prosemirror-tables';
 import { getColsWidthRatio } from './TableView';
 import { findTable } from 'prosemirror-utils';
 import styles from './table.scss';
 import { ResizeState } from './ResizeState';
-import { tableColumnResizingPluginKey as key } from './pluginsKeys';
 import { TIPTAP_TABLE_TYPE } from 'ricos-content';
 import { updateColumns, domCellAround, edgeCell, updateHandle, resetHandle } from './resizeUtils';
 import { CELL_MANUAL_MIN_WIDTH } from '../../consts';
@@ -16,7 +14,8 @@ const handleWidth = 6;
 const cellMinWidth = CELL_MANUAL_MIN_WIDTH;
 const lastColumnResizable = true;
 
-export function columnResizingPlugin() {
+export function columnResizingPlugin(Plugin, PluginKey) {
+  const key = new PluginKey('table-column-resizing');
   const plugin = new Plugin({
     key,
     state: {
@@ -32,7 +31,7 @@ export function columnResizingPlugin() {
     props: {
       handleDOMEvents: {
         mousemove(view, event) {
-          findTable(view.state.selection) && handleMouseMove(view, event);
+          findTable(view.state.selection) && handleMouseMove(view, event, key);
           return false;
         },
         mouseleave(view) {
@@ -40,7 +39,7 @@ export function columnResizingPlugin() {
           return false;
         },
         mousedown(view, event) {
-          findTable(view.state.selection) && handleMouseDown(view, event);
+          findTable(view.state.selection) && handleMouseDown(view, event, key);
           return false;
         },
       },
@@ -56,7 +55,7 @@ export function columnResizingPlugin() {
   return plugin;
 }
 
-function handleMouseMove(view, event) {
+function handleMouseMove(view, event, key) {
   const pluginState = key.getState(view.state);
   if (!pluginState.dragging) {
     const target = domCellAround(event.target);
@@ -86,7 +85,7 @@ function handleMouseMove(view, event) {
   }
 }
 
-function handleMouseDown(view, event) {
+function handleMouseDown(view, event, key) {
   const pluginState = key.getState(view.state);
 
   if (pluginState.activeHandle === -1 || pluginState.dragging) return false;

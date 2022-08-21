@@ -79,7 +79,7 @@ export const tableExtension = {
     }),
   }),
   name: TIPTAP_TABLE_TYPE,
-  createExtensionConfig() {
+  createExtensionConfig({ Plugin, PluginKey }) {
     return {
       name: this.name,
       group: 'block',
@@ -99,11 +99,11 @@ export const tableExtension = {
 
       addProseMirrorPlugins() {
         return [
-          controllerPlugin(this.editor),
-          addRowColPlugin(this.editor),
-          columnResizingPlugin(),
-          rowResizingPlugin(this.editor),
-          tableEditingPlugin(this.editor),
+          controllerPlugin(Plugin, PluginKey, this.editor),
+          addRowColPlugin(Plugin, PluginKey, this.editor),
+          columnResizingPlugin(Plugin, PluginKey),
+          rowResizingPlugin(Plugin, PluginKey, this.editor),
+          tableEditingPlugin(Plugin, PluginKey, this.editor),
         ];
       },
 
