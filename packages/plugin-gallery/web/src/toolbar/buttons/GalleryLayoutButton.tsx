@@ -3,9 +3,9 @@ import type { FC } from 'react';
 import { RicosContext, ModalContext } from 'ricos-context';
 import type { IToolbarItem } from 'ricos-types';
 import { DropdownButton } from 'wix-rich-content-toolbars-ui';
-import { galleryLayoutsData } from './galleryLayoutsData';
-import { GALLERY_LAYOUTS } from '../layout-data-provider';
-import { Grid } from '../icons';
+import { galleryLayoutsData } from '../galleryLayoutsData';
+import { GALLERY_LAYOUTS } from '../../layout-data-provider';
+import { GridIconNew as Grid } from '../../icons';
 
 type Props = {
   toolbarItem: IToolbarItem;

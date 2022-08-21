@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `gallery`
+  - [#4378](https://github.com/wix/ricos/pull/4378) fix gallery toolbar buttons
+
 </details>
 
 ## 8.72.31 (Aug 21, 2022)

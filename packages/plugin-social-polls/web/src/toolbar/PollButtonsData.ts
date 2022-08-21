@@ -1,5 +1,4 @@
 import { LayoutGridIconNew, LayoutListIconNew } from '../assets/icons';
-import CustomizeButton from './CustomizeButton';
 
 export const layoutData = [
   {
@@ -13,11 +12,5 @@ export const layoutData = [
     commandKey: 'LIST',
     icon: LayoutListIconNew,
     dataHook: 'poll_list',
-  },
-  {
-    text: 'Poll_Mobile_Editor_Toolbar_Customize',
-    commandKey: 'LAYOUT',
-    dataHook: 'poll_layout',
-    component: CustomizeButton,
   },
 ];

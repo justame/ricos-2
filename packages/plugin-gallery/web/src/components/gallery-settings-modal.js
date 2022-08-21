@@ -574,7 +574,7 @@ export class GallerySettingsModal extends Component {
             (useNewSettingsUi ? (
               <SettingsPanelHeader
                 title={t('GallerySettings_Header')}
-                onClose={this.revertComponentData}
+                onClose={this.modalsWithEditorCommands ? onCancel : this.revertComponentData}
               />
             ) : (
               <div className={styles.gallerySettings_title}>{t('GallerySettings_Header')}</div>

@@ -5,12 +5,11 @@ import {
   PLUGIN_TOOLBAR_BUTTON_ID,
 } from 'wix-rich-content-editor-common';
 import { GALLERY_TYPE } from './types';
-import { Uploader } from 'wix-rich-content-plugin-commons';
-import { AddMediaIcon } from './icons';
+import { selectedNodeResolver, Uploader } from 'wix-rich-content-plugin-commons';
 import { GALLERY_LAYOUTS, layoutRicosData } from './layout-data-provider';
 import { fileInputAccept, galleryModals, GALLERY_BUTTONS } from './consts';
 import GallerySettingsModal from './modals/SettingsModal';
-import { GalleryLayoutButton } from './toolbar/GalleryLayoutButton';
+import { GalleryLayoutButton } from './toolbar/buttons/GalleryLayoutButton';
 import { TIPTAP_GALLERY_TYPE } from 'ricos-content';
 import {
   AlignmentPanel,
@@ -20,6 +19,8 @@ import {
 } from 'wix-rich-content-toolbars-ui';
 import type { PluginContainerData_Width_Type } from 'ricos-schema';
 import GalleryLayoutPanel from './toolbar/GalleryLayoutPanel';
+import GalleryManageMediaButton from './toolbar/buttons/GalleryManageMediaButton';
+import GalleryAddMediaButton from './toolbar/buttons/GalleryAddMediaButton';
 
 const defaultData = {
   items: [],
@@ -84,18 +85,21 @@ export const getToolbarButtons = (config, services, galleryPluginService): Toolb
 
   return [
     {
-      id: PLUGIN_TOOLBAR_BUTTON_ID.REPLACE,
-      icon: AddMediaIcon,
-      tooltip: 'UploadMediaButton_Tooltip',
+      id: GALLERY_BUTTONS.addMedia,
+      dataHook: 'baseToolbarButton_add',
       command: ({ node }) => {
         handleFileSelection(uploadService, updateService, node);
       },
+      attributes: {
+        selectedNode: selectedNodeResolver,
+      },
+      renderer: toolbarItem => <GalleryAddMediaButton toolbarItem={toolbarItem} />,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
-      id: PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS,
+      id: GALLERY_BUTTONS.mangeMedia,
       dataHook: 'baseToolbarButton_manage_media',
       modal: {
         id: galleryModals.manageMedia,
@@ -115,6 +119,10 @@ export const getToolbarButtons = (config, services, galleryPluginService): Toolb
           layout: isMobile ? 'fullscreen' : 'drawer',
         });
       },
+      attributes: {
+        selectedNode: selectedNodeResolver,
+      },
+      renderer: toolbarItem => <GalleryManageMediaButton toolbarItem={toolbarItem} />,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
@@ -137,6 +145,7 @@ export const getToolbarButtons = (config, services, galleryPluginService): Toolb
       },
       attributes: {
         layout: selectedLayoutResolver,
+        selectedNode: selectedNodeResolver,
       },
       modal: {
         Component: GalleryLayoutPanel,
