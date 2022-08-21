@@ -338,7 +338,7 @@ class RicosToolbars extends React.Component<
     if (!isMobile && shouldCreate) {
       return (
         <FloatingAddPluginMenu
-          addPluginMenuConfig={toolbarConfig?.addPluginMenuConfig || {}}
+          addPluginMenuConfig={toolbarConfig?.addPluginMenuConfig}
           plugins={plugins}
         />
       );

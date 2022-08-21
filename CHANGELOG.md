@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `ricos-editor`
+  - [#4428](https://github.com/wix/ricos/pull/4428) remove fallback config from FloatingAddPluginMenu
+
 </details>
 
 ## 8.72.30 (Aug 21, 2022)

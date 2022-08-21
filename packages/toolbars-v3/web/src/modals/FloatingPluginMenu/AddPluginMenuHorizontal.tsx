@@ -28,7 +28,7 @@ const AddPluginMenuHorizontal: React.FC<Props> = ({ referenceElement, plugins })
   };
 
   return (
-    <div className={styles.addPluginMenu_horizontal_wrapper}>
+    <div className={styles.addPluginMenu_horizontal_wrapper} data-hook="addPluginMenuHorizontal">
       <InsertPluginToolbar buttons={plugins.getAddButtons()} onButtonClick={onButtonClick} />
     </div>
   );

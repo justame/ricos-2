@@ -606,7 +606,11 @@ const COMMANDS = {
       .click({
         force: true, //fixes element getting detached from dom and not clicking
       })
-      .get(`[data-hook*=addPluginMenu] [data-hook*=${pluginInsertButtonName}]`)
+      .get(
+        isTiptap
+          ? `[data-hook*=addPluginMenuHorizontal] [data-hook*=${pluginInsertButtonName}]`
+          : `[data-hook*=addPluginMenu] [data-hook*=${pluginInsertButtonName}]`
+      )
       .click({
         force: true, //fixes element getting detached from dom and not clicking
       });
