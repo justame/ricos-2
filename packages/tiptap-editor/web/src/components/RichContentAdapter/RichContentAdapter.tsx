@@ -224,6 +224,9 @@ export class RichContentAdapter implements TiptapAdapter {
       setBlock: (blockKey, pluginType, data) => {
         return this.tiptapEditor.commands.setNodeAttrsById(blockKey, flatComponentState(data));
       },
+      updateBlock: (blockKey, pluginType, data) => {
+        return this.tiptapEditor.commands.updateNodeAttrsById(blockKey, flatComponentState(data));
+      },
       getColor: (colorType: ColorType) =>
         this.getSelectedColors(colorType === 'ricos-text-color' ? 'foreground' : 'background'),
 

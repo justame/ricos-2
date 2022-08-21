@@ -212,6 +212,11 @@ export interface EditorCommands {
       isRicosSchema?: boolean;
     }
   ) => void;
+  updateBlock?: <K extends keyof PluginsDataMap>(
+    blockKey: string,
+    pluginType: K,
+    data: PluginsDataMap[K]
+  ) => boolean;
   deleteBlock: (blockKey: BlockKey) => void;
   undo: () => void;
   redo: () => void;
