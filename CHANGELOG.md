@@ -17,12 +17,20 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.72.31 (Aug 21, 2022)
+
 ## :bug: Bug Fix
 
 - `ricos-editor`
   - [#4428](https://github.com/wix/ricos/pull/4428) remove fallback config from FloatingAddPluginMenu
-
-</details>
+- `ricos-editor`
+  - [#4429](https://github.com/wix/ricos/pull/4429) updateBlock command fix
+- `mentions`
+  - [#4430](https://github.com/wix/ricos/pull/4430) fix mention crash & mismatch transaction error
+- `tiptap-floating-panels`
+  - [#4431](https://github.com/wix/ricos/pull/4431) fix floating panels zIndex
 
 ## 8.72.30 (Aug 21, 2022)
 
