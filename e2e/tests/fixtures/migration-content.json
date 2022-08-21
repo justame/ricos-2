@@ -1166,7 +1166,8 @@
           "alignment": "center",
           "textWrap": "wrap",
           "width": 350,
-          "height": 490
+          "height": 490,
+          "isAdsense": true
         }
       }
     },

@@ -36,7 +36,10 @@ export const getAddButtons = (config, _services): AddButton[] => {
       tooltip: 'AdSensePlugin_InsertButton_Tooltip',
       toolbars: [TOOLBARS.MOBILE, TOOLBARS.FOOTER, TOOLBARS.SIDE],
       command: editorCommands => {
-        editorCommands.insertBlockWithBlankLines(HTML_TYPE, htmlDataDefaults);
+        editorCommands.insertBlockWithBlankLines(HTML_TYPE, {
+          ...htmlDataDefaults,
+          isAdsense: true,
+        });
         return true;
       },
       menuConfig: {

@@ -81,6 +81,8 @@
   - [#4400](https://github.com/wix/ricos/pull/4400) close upload modal on custom upload
 - `ricos-plugins`
   - [#4401](https://github.com/wix/ricos/pull/4401) alignment command does not override custom size
+- `ricos-schema`
+  - [#4403](https://github.com/wix/ricos/pull/4403) support html `isAdsense` property
 
 ## :house: Internal
 

@@ -516,10 +516,12 @@ const convertButtonData = (data: Partial<ButtonData> & { button }) => {
 };
 
 const convertHTMLData = data => {
-  const { html, url, config = {} } = data;
+  const { html, url, config = {}, isAdsense } = data;
   const srcType = html ? 'html' : 'url';
   data.srcType = srcType;
   data.src = html || url;
+  isAdsense && (data.config.isAdsense = isAdsense);
+  isAdsense && delete data.isAdsense;
   delete data[srcType];
   config.size && delete data.config.size;
 };

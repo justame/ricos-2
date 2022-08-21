@@ -491,7 +491,8 @@ const convertButtonData = (
 };
 
 const convertHTMLData = data => {
-  const { src, srcType } = data;
+  const { src, srcType, config } = data;
+  config.isAdsense && (data.isAdsense = config.isAdsense);
   data[srcType] = src;
 };
 

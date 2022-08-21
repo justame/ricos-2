@@ -21,6 +21,9 @@ export const EditHtmlButton: FC<Props> = ({ toolbarItem, dataHook }) => {
   const componentData = {
     srcType: nodeAttrs.html ? 'html' : 'url',
     src: nodeAttrs.html || nodeAttrs.url,
+    config: {
+      isAdsense: nodeAttrs.isAdsense,
+    },
   }; //TODO: use convertor
 
   const updateData = data => {
