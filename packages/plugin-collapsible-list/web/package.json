@@ -1,6 +1,6 @@
 {
   "name": "wix-rich-content-plugin-collapsible-list",
-  "version": "8.72.30",
+  "version": "8.72.31",
   "author": {
     "name": "Aviv Maimon",
     "email": "avivm@wix.com"
@@ -37,13 +37,13 @@
   },
   "dependencies": {
     "react-beautiful-dnd": "13.0.0",
-    "ricos-content": "8.72.30",
-    "ricos-context": "8.72.30",
-    "ricos-types": "8.72.30",
-    "wix-rich-content-common": "8.72.30",
-    "wix-rich-content-editor-common": "8.72.30",
-    "wix-rich-content-plugin-commons": "8.72.30",
-    "wix-rich-content-ui-components": "8.72.30"
+    "ricos-content": "8.72.31",
+    "ricos-context": "8.72.31",
+    "ricos-types": "8.72.31",
+    "wix-rich-content-common": "8.72.31",
+    "wix-rich-content-editor-common": "8.72.31",
+    "wix-rich-content-plugin-commons": "8.72.31",
+    "wix-rich-content-ui-components": "8.72.31"
   },
   "unpkg": true,
   "publishConfig": {
