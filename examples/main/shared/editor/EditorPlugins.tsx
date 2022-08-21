@@ -539,11 +539,11 @@ export const config: RichContentEditorProps['config'] = {
     visibleItemsBeforeOverflow: 5,
     popoverComponent: <div />,
     // eslint-disable-next-line no-console
-    handleDropdownOpen: () => console.log('mentions dropdown opened'),
+    // handleDropdownOpen: () => console.log('mentions dropdown opened'),
     // eslint-disable-next-line no-console
-    onMentionClick: mention => console.log({ mention }),
+    // onMentionClick: mention => console.log({ mention }),
     // eslint-disable-next-line no-console
-    handleDropdownClose: () => console.log('mentions dropdown closed'),
+    // handleDropdownClose: () => console.log('mentions dropdown closed'),
     getMentions: searchQuery =>
       new Promise(resolve =>
         setTimeout(

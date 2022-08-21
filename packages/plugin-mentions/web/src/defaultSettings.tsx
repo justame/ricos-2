@@ -11,9 +11,7 @@ export const DEFAULT_SETTINGS = {
 
   visibleItemsBeforeOverflow: 5,
   popoverComponent: <div />,
-  handleDropdownOpen: () => true,
   onMentionClick: (mention: Mention) => mention,
-  handleDropdownClose: () => true,
   getMentions: (searchQuery: string) =>
     new Promise<Mention[]>(resolve =>
       setTimeout(

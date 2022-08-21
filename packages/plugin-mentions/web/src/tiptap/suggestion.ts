@@ -10,7 +10,6 @@ export default (
     mentionTrigger,
     getMentions,
     visibleItemsBeforeOverflow,
-    popoverComponent,
     handleDropdownOpen,
     handleDropdownClose,
     supportWhitespace = true,
@@ -47,54 +46,67 @@ export default (
 
       return {
         onStart: props => {
-          handleDropdownOpen?.();
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           component = new ReactRenderer(MentionList as any, {
             editor: editor as Editor,
-            props: { ...props, container: popoverComponent },
+            props,
           });
 
           component.element.setAttribute('dir', '');
-
-          popup = tippy('body', {
-            getReferenceClientRect: props.clientRect,
-            appendTo: () => document.body,
-            content: component.element,
-            showOnCreate: true,
-            interactive: true,
-            trigger: 'manual',
-            placement: 'bottom-start',
-          });
+          if (handleDropdownOpen) {
+            handleDropdownOpen();
+          } else {
+            popup = tippy('body', {
+              getReferenceClientRect: props.clientRect,
+              appendTo: () => document.body,
+              content: component.element,
+              showOnCreate: true,
+              interactive: true,
+              trigger: 'manual',
+              placement: 'bottom-start',
+            });
+          }
         },
 
         onUpdate(props) {
           component.updateProps(props);
 
-          popup[0].setProps({
-            getReferenceClientRect: props.clientRect,
-          });
+          if (!handleDropdownOpen) {
+            popup[0].setProps({
+              getReferenceClientRect: props.clientRect,
+            });
+          }
         },
 
         onKeyDown(props) {
           if (props.event.key === 'Escape') {
-            popup[0].hide();
-            handleDropdownClose?.();
-
+            if (handleDropdownClose) {
+              handleDropdownClose();
+            } else {
+              this.onExit();
+            }
             return true;
           }
 
           const { items, query } = component.props;
           if (props.event.key === 'Enter' && shouldEndMentioningProcess(query, items)) {
             this.onExit();
+            return false;
           }
 
-          return component.ref?.onKeyDown(props);
+          if (!handleDropdownClose) {
+            return component.ref?.onKeyDown(props);
+          }
+          return false;
         },
 
         onExit() {
-          popup[0].destroy();
           component.destroy();
-          handleDropdownClose?.();
+          if (handleDropdownClose) {
+            handleDropdownClose();
+          } else {
+            popup[0].destroy();
+          }
         },
       };
     },

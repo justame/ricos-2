@@ -89,7 +89,6 @@ const MentionList = forwardRef((props, ref) => {
 MentionList.propTypes = {
   items: PropTypes.array,
   command: PropTypes.func,
-  container: PropTypes.element,
 };
 
 export default MentionList;
