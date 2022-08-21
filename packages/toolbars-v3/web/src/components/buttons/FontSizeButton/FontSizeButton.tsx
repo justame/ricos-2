@@ -2,24 +2,46 @@
 import cx from 'classnames';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { ModalContext, withToolbarContext } from 'ricos-context';
+import { RICOS_FONT_SIZE_TYPE } from 'wix-rich-content-common';
 import Tooltip from 'wix-rich-content-common/libs/Tooltip';
 import { DropdownArrowIcon } from '../../../icons';
 import styles from './FontSizeButton.scss';
+import type { ToolbarContextType } from 'ricos-context';
+import type { TranslationFunction } from 'ricos-types';
+import type { ToolbarItem } from '../../../ToolbarItemCreator';
+import type { EditorCommands } from 'wix-rich-content-common';
 
-const onInputChange = (e, setInputValue, toolbarItem) => {
+const MAX_FONT_SIZE = 900;
+const MIN_FONT_SIZE = 1;
+
+const onInputChange = (
+  e: React.ChangeEvent<HTMLInputElement>,
+  setInputValue: React.Dispatch<React.SetStateAction<string | number>>,
+  editorCommands: EditorCommands
+) => {
   const { value } = e.target;
   const valueAsNumber = Number.parseInt(value);
   if (!valueAsNumber && value !== '') return;
   setInputValue(value);
-  toolbarItem.commands?.setFontSizeWithoutFocus(value);
+  const fontSize = Math.min(Math.max(MIN_FONT_SIZE, valueAsNumber), MAX_FONT_SIZE);
+  editorCommands.insertDecoration(RICOS_FONT_SIZE_TYPE, { fontSize: `${fontSize}` });
 };
 
-const FontSizeButton = ({ toolbarItem, context, dataHook }) => {
-  const { t } = context || {};
+const FontSizeButton = ({
+  toolbarItem,
+  context,
+  dataHook,
+}: {
+  toolbarItem: ToolbarItem;
+  context: ToolbarContextType & { t: TranslationFunction };
+  dataHook: string;
+}) => {
+  const { t, getEditorCommands } = context || {};
   const modalService = useContext(ModalContext) || {};
   const inputRef = useRef<HTMLInputElement>(null);
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
   const [inputValue, setInputValue] = useState<number | string>('');
+  const editorCommands = getEditorCommands?.();
 
   useEffect(() => {
     setInputValue(selectedFontSize);
@@ -49,7 +71,8 @@ const FontSizeButton = ({ toolbarItem, context, dataHook }) => {
               className={styles.fontSizeModalInputButton}
               required
               value={inputValue}
-              onChange={e => onInputChange(e, setInputValue, toolbarItem)}
+              onChange={e => onInputChange(e, setInputValue, editorCommands)}
+              onClick={() => inputRef.current?.select()}
               ref={inputRef}
             />
             <DropdownArrowIcon />

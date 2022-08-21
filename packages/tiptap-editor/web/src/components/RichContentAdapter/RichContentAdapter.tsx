@@ -291,7 +291,7 @@ export class RichContentAdapter implements TiptapAdapter {
               mark => mark.type.name === Decoration_Type.FONT_SIZE
             );
             if (fontSizeMark) {
-              selectedFontSizes.push(fontSizeMark?.attrs.value);
+              selectedFontSizes.push(`${fontSizeMark?.attrs.value}`);
             } else {
               const parent = doc.resolve(pos).parent;
               if (
