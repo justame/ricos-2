@@ -1,6 +1,6 @@
 {
   "name": "ricos-common-plugins",
-  "version": "8.72.29",
+  "version": "8.72.30",
   "author": {
     "name": "Alex Greenstein",
     "email": "alexgr@wix.com"
@@ -36,12 +36,12 @@
   "dependencies": {
     "@tiptap/core": "2.0.0-beta.148",
     "re-resizable": "^6.9.9",
-    "ricos-content": "8.72.29",
-    "ricos-schema": "8.72.29",
-    "ricos-types": "8.72.29",
+    "ricos-content": "8.72.30",
+    "ricos-schema": "8.72.30",
+    "ricos-types": "8.72.30",
     "rope-sequence": "^1.3.0",
-    "wix-rich-content-toolbars-modals": "8.72.29",
-    "wix-rich-content-toolbars-v3": "8.72.29"
+    "wix-rich-content-toolbars-modals": "8.72.30",
+    "wix-rich-content-toolbars-v3": "8.72.30"
   },
   "peerDependencies": {
     "lodash": "^4.0.0"
