@@ -120,7 +120,7 @@ export const FloatingToolbar = ({
               position: strategy,
               top: y ?? '',
               left: x ?? '',
-              zIndex: 10000,
+              zIndex: 999999,
             }}
           >
             <div data-id="ricos-floating-toolbar" tabIndex={-1}>
