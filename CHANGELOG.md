@@ -17,12 +17,16 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.72.30 (Aug 21, 2022)
+
 ## :bug: Bug Fix
 
 - `toolbars-v3`
   - [#4420](https://github.com/wix/ricos/pull/4420) wire footer-toolbar icon colors
-
-</details>
+- `ricos-schema`
+  - [#4403](https://github.com/wix/ricos/pull/4403) support html `isAdsense` property
 
 ## 8.72.29 (Aug 18, 2022)
 
@@ -81,8 +85,6 @@
   - [#4400](https://github.com/wix/ricos/pull/4400) close upload modal on custom upload
 - `ricos-plugins`
   - [#4401](https://github.com/wix/ricos/pull/4401) alignment command does not override custom size
-- `ricos-schema`
-  - [#4403](https://github.com/wix/ricos/pull/4403) support html `isAdsense` property
 
 ## :house: Internal
 
