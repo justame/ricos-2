@@ -71,7 +71,7 @@ export const PollLayoutButton: FC<Props> = ({ toolbarItem, id, dataHook }) => {
       dataHook={dataHook}
       onClick={onClick}
       setRef={setReferenceElement}
-      Icon={() => <Icon width={15} />}
+      Icon={Icon}
       label={t(label)}
       tooltip={t('Poll_PollSettings_Tab_Layout_TabName')}
     />

@@ -33,7 +33,7 @@ const LineStylePanel: React.FC<Props> = ({
           key={commandKey}
           title={t(text)}
           dataHook={dataHook}
-          prefix={<Icon width={'15px'} />}
+          prefix={<Icon />}
           selected={commandKey === getSelectedLayout()}
           onClick={() => onClick(commandKey)}
           onKeyDown={e => {

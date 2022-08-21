@@ -31,6 +31,8 @@
   - [#4430](https://github.com/wix/ricos/pull/4430) fix mention crash & mismatch transaction error
 - `tiptap-floating-panels`
   - [#4431](https://github.com/wix/ricos/pull/4431) fix floating panels zIndex
+- `gallery/polls/toolbars-ui`
+  - [#4433](https://github.com/wix/ricos/pull/4433) use new plugin toolbar icons
 
 ## 8.72.30 (Aug 21, 2022)
 

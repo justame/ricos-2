@@ -18,3 +18,5 @@ export * from './GradientIcon';
 export * from './LayoutGridIcon';
 export * from './LayoutListIcon';
 export * from './DesignIcon';
+export * from './LayoutGridIconNew';
+export * from './LayoutListIconNew';

@@ -1,20 +1,21 @@
 /* eslint-disable max-len */
 import React from 'react';
 
-const DropdownArrowIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="8" height="6" viewBox="0 0 8 6">
-    <g fill="none" fillRule="evenodd">
-      <g fill="currentColor">
-        <g>
-          <g>
-            <path
-              d="M2.873 1.873L-1.127 5.367 -0.469 6.127 2.873 3.207 6.216 6.127 6.873 5.367z"
-              transform="translate(-439.000000, -84.000000) translate(437.000000, 77.000000) translate(6.000000, 10.000000) rotate(-270.000000) translate(-6.000000, -10.000000) translate(3.500000, 6.000000) translate(2.873490, 4.000000) scale(1, -1) rotate(90.000000) translate(-2.873490, -4.000000)"
-            />
-          </g>
-        </g>
-      </g>
-    </g>
+const DropdownArrowIcon = props => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M12.3535 6.35352L8.35352 10.3535L4.35352 6.35352L5.06052 5.64652L8.35352 8.93952L11.6465 5.64652L12.3535 6.35352Z"
+      fill="black"
+    />
   </svg>
 );
 
