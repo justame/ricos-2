@@ -1,4 +1,10 @@
-import { Mark, markInputRule, markPasteRule, textblockTypeInputRule } from '@tiptap/core';
+import {
+  isMarkActive,
+  Mark,
+  markInputRule,
+  markPasteRule,
+  textblockTypeInputRule,
+} from '@tiptap/core';
 import type { MarkConfig } from '@tiptap/react';
 import { mergeAttributes } from '@tiptap/react';
 import { Plugin, PluginKey } from 'prosemirror-state';
@@ -39,6 +45,7 @@ export class MarkExtension implements IMarkExtension {
     const { addKeyboardShortcuts, ...rest } =
       config ||
       extension.createExtensionConfig({
+        isMarkActive,
         textblockTypeInputRule,
         mergeAttributes,
         markInputRule,

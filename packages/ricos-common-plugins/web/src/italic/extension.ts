@@ -1,6 +1,7 @@
-import { markInputRule, markPasteRule } from '@tiptap/core';
+import type { MarkConfig } from '@tiptap/core';
+import { isMarkActive, markInputRule, markPasteRule } from '@tiptap/core';
 import { Decoration_Type } from 'ricos-schema';
-import type { DOMOutputSpec, RicosExtension } from 'ricos-types';
+import type { DOMOutputSpec, RicosExtension, RicosServices } from 'ricos-types';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -29,8 +30,23 @@ export const underscorePasteRegex = /(?:^|\s)((?:_)((?:[^_]+))(?:_))/g;
 export const italic: RicosExtension = {
   type: 'mark' as const,
   groups: [],
-
   name: Decoration_Type.ITALIC,
+  reconfigure: (config: MarkConfig, _extensions, _props, _settings, services: RicosServices) => ({
+    ...config,
+    addOptions() {
+      return {
+        publishPluginToggleEvent(toggleOn: boolean) {
+          return toggleOn
+            ? services.pluginsEvents.publishPluginAdd({
+                pluginId: Decoration_Type.ITALIC,
+                params: { italicData: true },
+              })
+            : services.pluginsEvents.publishPluginDelete({ pluginId: Decoration_Type.ITALIC });
+        },
+      };
+    },
+  }),
+
   createExtensionConfig() {
     return {
       name: this.name,
@@ -79,8 +95,9 @@ export const italic: RicosExtension = {
             },
           toggleItalic:
             () =>
-            ({ commands }) => {
+            ({ commands, state }) => {
               const italicData = !commands.getStylesDecorationBySelectedNode(this.name)?.italicData;
+              this.options.publishPluginToggleEvent(italicData && !isMarkActive(state, this.name));
               return commands.toggleMark(this.name, {
                 italicData,
               });

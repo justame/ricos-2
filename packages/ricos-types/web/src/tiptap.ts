@@ -6,6 +6,7 @@ import type {
   mergeAttributes as mergeAttributesFn,
   NodeViewRendererProps,
   textblockTypeInputRule as textblockTypeInputRuleFn,
+  isMarkActive as isMarkActiveFn,
 } from '@tiptap/core';
 import { MarkConfig, NodeConfig } from '@tiptap/core';
 import type { Editor, NodeViewContent } from '@tiptap/react';
@@ -125,6 +126,7 @@ export type RicosMarkExtension = {
     services: RicosServices
   ) => MarkConfig;
   createExtensionConfig: ({
+    isMarkActive,
     textblockTypeInputRule,
     mergeAttributes,
     markPasteRule,
@@ -132,6 +134,7 @@ export type RicosMarkExtension = {
     Plugin,
     PluginKey,
   }: {
+    isMarkActive: typeof isMarkActiveFn;
     textblockTypeInputRule: typeof textblockTypeInputRuleFn;
     mergeAttributes: typeof mergeAttributesFn;
     markPasteRule: typeof markPasteRuleFn;

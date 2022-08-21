@@ -3,8 +3,10 @@ import colorDataDefaults from 'ricos-schema/dist/statics/color.defaults.json';
 import type {
   DOMOutputSpec,
   ExtensionProps,
+  MarkConfig,
   RicosExtension,
   RicosExtensionConfig,
+  RicosServices,
 } from 'ricos-types';
 import { Decoration_Type } from 'ricos-schema';
 import { BlockSpoilerComponent } from '..';
@@ -112,7 +114,22 @@ export const tiptapExtensions: RicosExtension[] = [
     type: 'mark' as const,
     groups: [],
     name: Decoration_Type.SPOILER,
-    createExtensionConfig() {
+    reconfigure: (config: MarkConfig, _extensions, _props, _settings, services: RicosServices) => ({
+      ...config,
+      addOptions() {
+        return {
+          publishPluginToggleEvent(toggleOn: boolean) {
+            return toggleOn
+              ? services.pluginsEvents.publishPluginAdd({
+                  pluginId: Decoration_Type.SPOILER,
+                  params: {},
+                })
+              : services.pluginsEvents.publishPluginDelete({ pluginId: Decoration_Type.SPOILER });
+          },
+        };
+      },
+    }),
+    createExtensionConfig({ isMarkActive }) {
       return {
         name: this.name,
         addOptions: () => ({
@@ -143,7 +160,9 @@ export const tiptapExtensions: RicosExtension[] = [
           return {
             toggleSpoiler:
               () =>
-              ({ commands }) => {
+              ({ state, commands }) => {
+                const isActive = isMarkActive(state, this.name);
+                this.options.publishPluginToggleEvent(!isActive);
                 return commands.toggleMark(this.name);
               },
           };

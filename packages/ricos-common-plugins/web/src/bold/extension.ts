@@ -1,6 +1,7 @@
-import { markInputRule, markPasteRule, mergeAttributes } from '@tiptap/core';
+import type { MarkConfig } from '@tiptap/core';
+import { isMarkActive, markInputRule, markPasteRule, mergeAttributes } from '@tiptap/core';
 import { Decoration_Type } from 'ricos-schema';
-import type { DOMOutputSpec, RicosExtension } from 'ricos-types';
+import type { DOMOutputSpec, RicosExtension, RicosServices } from 'ricos-types';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -21,6 +22,9 @@ declare module '@tiptap/core' {
   }
 }
 
+const FONT_WEIGHT_BOLD = 700;
+const FONT_WEIGHT_NORMAL = 400;
+
 export const starInputRegex = /(?:^|\s)((?:\*\*)((?:[^*]+))(?:\*\*))$/;
 export const starPasteRegex = /(?:^|\s)((?:\*\*)((?:[^*]+))(?:\*\*))/g;
 export const underscoreInputRegex = /(?:^|\s)((?:__)((?:[^__]+))(?:__))$/;
@@ -30,6 +34,23 @@ export const bold: RicosExtension = {
   type: 'mark' as const,
   groups: [],
   name: Decoration_Type.BOLD,
+  reconfigure(config: MarkConfig, _extensions, _props, _settings, services: RicosServices) {
+    return {
+      ...config,
+      addOptions() {
+        return {
+          publishPluginToggleEvent(toggleOn: boolean) {
+            return toggleOn
+              ? services.pluginsEvents.publishPluginAdd({
+                  pluginId: Decoration_Type.BOLD,
+                  params: { fontWeightValue: FONT_WEIGHT_BOLD },
+                })
+              : services.pluginsEvents.publishPluginDelete({ pluginId: Decoration_Type.BOLD });
+          },
+        };
+      },
+    };
+  },
   createExtensionConfig() {
     return {
       name: this.name,
@@ -79,11 +100,16 @@ export const bold: RicosExtension = {
             },
           toggleBold:
             () =>
-            ({ commands }) => {
-              const fontWeightValue = commands.getStylesDecorationBySelectedNode(this.name)
-                ?.fontWeightValue
-                ? 400
-                : 700;
+            ({ commands, state }) => {
+              const isToggleOff =
+                commands.getStylesDecorationBySelectedNode(this.name)?.fontWeightValue ===
+                FONT_WEIGHT_BOLD;
+              const fontWeightValue = isToggleOff ? FONT_WEIGHT_NORMAL : FONT_WEIGHT_BOLD;
+
+              this.options.publishPluginToggleEvent(
+                !isToggleOff && !isMarkActive(state, this.name)
+              );
+
               return commands.toggleMark(this.name, {
                 fontWeightValue,
               });
