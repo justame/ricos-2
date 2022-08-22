@@ -17,14 +17,16 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.72.32 (Aug 21, 2022)
+
 ## :bug: Bug Fix
 
 - `ricos-editor`
   - [#4428](https://github.com/wix/ricos/pull/4428) remove fallback config from FloatingAddPluginMenu
 - `modal-service`
   - [#4427](https://github.com/wix/ricos/pull/4427) modals re-renders on content changes
-
-</details>
 
 ## 8.72.31 (Aug 21, 2022)
 
