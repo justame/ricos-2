@@ -571,17 +571,16 @@ export class SortableComponent extends Component {
     const newIndex = Math.min(editedItemIndex, newItems.length - 1);
     const newEditedItem = newItems.length !== 0 ? newItems[newIndex] : { metadata: '', title: '' };
     newEditedItem.selected = true;
-    this.props.onItemsChange(newItems);
     this.setState(
       {
         editedItemIndex: newIndex,
         editedItem: newEditedItem,
-        items: newItems,
       },
       () => {
         if (newItems.length === 0) {
           this.toggleMediaSettings(false);
         }
+        this.props.onItemsChange(newItems);
       }
     );
   };

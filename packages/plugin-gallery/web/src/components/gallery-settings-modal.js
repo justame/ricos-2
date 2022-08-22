@@ -39,7 +39,7 @@ class ManageMediaSection extends Component {
   static getDerivedStateFromProps(props, state) {
     if (
       state.items.length !== props.componentData.items.length ||
-      state.items.some((item, index) => item.url !== props.componentData.items[index])
+      state.items.some((item, index) => item.url !== props.componentData.items[index].url)
     ) {
       return { items: props.componentData.items };
     }
