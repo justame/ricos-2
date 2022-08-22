@@ -36,12 +36,15 @@ const GallerySettingsModal: FC<Props> = ({
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [initialData, setInitialData] = useState<Record<string, any>>();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [componentData, setComponentData] = useState<Record<string, any>>();
   const [converters, setConverters] = useState<{
     tiptapNodeDataToDraft?: Function;
     draftBlockDataToTiptap?: Function;
   }>({});
+
+  const componentData = converters.tiptapNodeDataToDraft?.(
+    TIPTAP_GALLERY_TYPE,
+    getEditorCommands().getBlockComponentData(nodeId)
+  );
 
   useEffect(() => {
     import(
@@ -50,34 +53,20 @@ const GallerySettingsModal: FC<Props> = ({
     ).then(convertersModule => {
       const { draftBlockDataToTiptap, tiptapNodeDataToDraft } = convertersModule;
       setConverters({ tiptapNodeDataToDraft, draftBlockDataToTiptap });
-      const componentData = tiptapNodeDataToDraft(
-        TIPTAP_GALLERY_TYPE,
-        getEditorCommands().getBlockComponentData(nodeId)
+      setInitialData(
+        tiptapNodeDataToDraft(
+          TIPTAP_GALLERY_TYPE,
+          getEditorCommands().getBlockComponentData(nodeId)
+        )
       );
-      setInitialData(componentData);
-      setComponentData(componentData);
     });
   }, []);
-
-  const addMedia = (index?: number) => {
-    handleFileSelection(index);
-    setTimeout(() => {
-      const data = converters?.tiptapNodeDataToDraft?.(
-        TIPTAP_GALLERY_TYPE,
-        getEditorCommands().getBlockComponentData(nodeId)
-      );
-      if (data) {
-        setComponentData(data);
-      }
-    }, 1000);
-  };
 
   const updateData = data => {
     getEditorCommands().setBlock(nodeId, GALLERY_TYPE, {
       ...converters.draftBlockDataToTiptap?.(GALLERY_TYPE, { ...componentData, ...data }),
       id: nodeId,
     });
-    setComponentData({ ...componentData, ...data });
   };
 
   const closeModal = () => {
@@ -102,7 +91,7 @@ const GallerySettingsModal: FC<Props> = ({
       updateData={updateData}
       onSave={closeModal}
       onCancel={onCancel}
-      handleFileSelection={addMedia}
+      handleFileSelection={handleFileSelection}
       handleFileUpload={handleFileUpload}
       shouldShowSpoiler={shouldShowSpoiler}
       activeTab={activeTab}

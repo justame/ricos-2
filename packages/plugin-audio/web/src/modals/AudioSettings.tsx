@@ -34,7 +34,7 @@ export interface Props {
   onCancel?: () => void;
   onSave?: () => void;
   updateData?: (data) => void;
-  getComponentData: () => ComponentData;
+  getComponentData?: () => ComponentData;
   componentData: ComponentData;
   helpers: Helpers;
   pubsub?: Pubsub;
@@ -154,7 +154,7 @@ const AudioSettings: React.FC<Props> = props => {
       const uploader = new Uploader(handleFileUpload);
       setIsLoadingImage(true);
       await uploadService.uploadFile(file, blockKey, uploader, AUDIO_TYPE, AudioPluginService);
-      setCoverImage(getComponentData().coverImage);
+      setCoverImage(getComponentData?.()?.coverImage);
       setIsLoadingImage(false);
     } else {
       setIsLoadingImage(true);

@@ -31,6 +31,18 @@ class ManageMediaSection extends Component {
     this.modalsWithEditorCommands = props.experiments?.tiptapEditor?.enabled;
     this.uploader = new Uploader(this.props.helpers?.handleFileUpload);
     this.mediaPluginService = new GalleryPluginService();
+    this.state = {
+      items: props.componentData.items,
+    };
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (
+      state.items.length !== props.componentData.items.length ||
+      state.items.some((item, index) => item.url !== props.componentData.items[index])
+    ) {
+      return { items: props.componentData.items };
+    }
   }
 
   applyItems = items => {
@@ -39,6 +51,7 @@ class ManageMediaSection extends Component {
       ...data,
       items,
     };
+    this.setState({ items });
     this.modalsWithEditorCommands
       ? updateData(componentData)
       : store.set('componentData', componentData);
@@ -62,8 +75,6 @@ class ManageMediaSection extends Component {
             fileState
           );
         });
-        // TODO: Remove when tiptap is released
-        setTimeout(() => this.forceUpdate());
       } else {
         const handleFilesSelected = this.props.store.getBlockHandler('handleFilesSelected');
         handleFilesSelected(files, itemPos);
@@ -118,7 +129,7 @@ class ManageMediaSection extends Component {
     } = this.props;
     const handleFileSelection = helpers?.handleFileSelection;
     const { languageDir, isMobile } = this.context;
-    const { items } = componentData;
+    const { items } = this.state;
 
     return (
       <div

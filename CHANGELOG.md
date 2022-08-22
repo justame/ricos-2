@@ -19,8 +19,10 @@
 
 ## :bug: Bug Fix
 
-- `gallery`
-  - [#4378](https://github.com/wix/ricos/pull/4378) fix gallery toolbar buttons
+- `ricos-editor`
+  - [#4428](https://github.com/wix/ricos/pull/4428) remove fallback config from FloatingAddPluginMenu
+- `modal-service`
+  - [#4427](https://github.com/wix/ricos/pull/4427) modals re-renders on content changes
 
 </details>
 

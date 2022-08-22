@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import type { FC } from 'react';
 import ReactDOM from 'react-dom';
-import { ModalContext, RicosContext } from 'ricos-context';
+import { ModalContext, RicosContext, EditorContext } from 'ricos-context';
 import { Popover } from '../components/Popover';
 import { Drawer } from '../components/Drawer';
 import { Fullscreen } from '../components/Fullscreen';
@@ -22,9 +23,22 @@ const layoutMapper = {
   toolbar: Toolbar,
 };
 
-export const ModalPopper = ({ modalConfig }: Props) => {
+const useForceUpdate = () => {
+  const [_, setValue] = useState(0);
+  return () => setValue(value => value + 1);
+};
+
+export const ModalPopper: FC<Props> = ({ modalConfig }: Props) => {
+  const forceUpdate = useForceUpdate();
   const modalService = useContext(ModalContext) || {};
+  const {
+    adapter: { tiptapEditor },
+  } = useContext(EditorContext);
   const { languageDir, portal } = useContext(RicosContext);
+
+  useEffect(() => {
+    tiptapEditor.on('update', forceUpdate);
+  }, []);
 
   const closeModal = () => {
     modalService?.closeModal?.(modalConfig.id);
