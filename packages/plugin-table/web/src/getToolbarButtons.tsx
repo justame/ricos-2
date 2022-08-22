@@ -1,7 +1,12 @@
 import React from 'react';
 import type { ToolbarButton } from 'ricos-types';
 import { PLUGIN_TOOLBAR_BUTTON_ID } from 'wix-rich-content-editor-common';
-import { TABLE_BUTTONS, TABLE_BUTTONS_DATA_HOOKS, TABLE_BUTTONS_MODALS_ID } from './consts';
+import {
+  TABLE_BUTTONS,
+  TABLE_BUTTONS_DATA_HOOKS,
+  TABLE_BUTTONS_MODALS_ID,
+  CATEGORY,
+} from './consts';
 import {
   FormattingButton,
   BackgroundColorButton,
@@ -11,8 +16,8 @@ import {
   VerticalAlignmentButton,
 } from './toolbar/buttons';
 import { BorderPanel, ContextPanel, VerticalAlignmentPanel } from './toolbar/modals';
-import { isColumnSelected, isRowSelected } from 'prosemirror-utils';
-import { TIPTAP_TABLE_CELL_TYPE } from 'wix-rich-content-common';
+import { isColumnSelected, isRowSelected, isTableSelected } from 'prosemirror-utils';
+import { TIPTAP_TABLE_CELL_TYPE, TIPTAP_TABLE_TYPE } from 'wix-rich-content-common';
 
 export const getToolbarButtons = (config, services): ToolbarButton[] => {
   return [
@@ -100,9 +105,16 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.DELETE,
+      attributes: {
+        selectedNode: selectedNodeResolver,
+        visible: isTableSelectedResolver,
+      },
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
+      attributes: {
+        visible: isTableSelectedResolver,
+      },
     },
     {
       id: TABLE_BUTTONS.CONTEXT,
@@ -113,6 +125,9 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
       modal: {
         id: TABLE_BUTTONS_MODALS_ID.CONTEXT,
         Component: ContextPanel,
+      },
+      attributes: {
+        selectedCategory: getSelectionCategoryResolver,
       },
       renderer: toolbarItem => <ContextButton toolbarItem={toolbarItem} />,
     },
@@ -153,7 +168,7 @@ const isFirstColumnOrRowSelectedResolver = {
 };
 
 const getCellAlignmentResolver = {
-  id: 'isFirstColumnSelectedResolver',
+  id: 'cellAlignmentResolver',
   resolve: content => {
     if (Array.isArray(content) && content.length > 0) {
       return content.find(node => node.type.name === TIPTAP_TABLE_CELL_TYPE)?.attrs?.cellStyle
@@ -161,5 +176,42 @@ const getCellAlignmentResolver = {
     } else {
       return false;
     }
+  },
+};
+
+const selectedNodeResolver = {
+  id: 'selectedNode',
+  resolve: (_, __, editor) => {
+    const { selection } = editor?.state || {};
+    const node = selection?.$anchor?.path?.find(node => node?.type?.name === TIPTAP_TABLE_TYPE);
+    if (node && isTableSelected(selection)) {
+      return node;
+    } else {
+      return undefined;
+    }
+  },
+};
+
+const isTableSelectedResolver = {
+  id: 'isTableSelected',
+  resolve: (_, __, editor) => {
+    const { selection } = editor?.state || {};
+    return isTableSelected(selection);
+  },
+};
+
+const getSelectionCategoryResolver = {
+  id: 'getSelectedCategory',
+  resolve: (_, __, editor) => {
+    const { selection } = editor?.state || {};
+    const isColSelected = selection.isColSelection?.();
+    const isRowSelected = selection.isRowSelection?.();
+    const isEntireTableSelected = isTableSelected(selection);
+    return (
+      (isEntireTableSelected && CATEGORY.ENTIRE_TABLE) ||
+      (isColSelected && CATEGORY.COLUMN) ||
+      (isRowSelected && CATEGORY.ROW) ||
+      CATEGORY.CELL_BORDER
+    );
   },
 };

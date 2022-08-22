@@ -17,20 +17,23 @@ const ContextButton: FC<Props> = ({ dataHook, toolbarItem }) => {
 
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
 
-  const onColorSelect = (data: { borders?: string; outsideBorders?: string }) => {
+  const onClick = (data: { borders?: string; outsideBorders?: string }) => {
     toolbarItem.commands?.click(data);
     closeModal();
   };
 
   const closeModal = () => modalService.closeModal(TABLE_BUTTONS_MODALS_ID.CONTEXT);
 
+  const category = toolbarItem.attributes?.selectedCategory;
+
   const openBorderPanel = () => {
     const isModalOpen = modalService.isModalOpen(TABLE_BUTTONS_MODALS_ID.CONTEXT);
     !isModalOpen
       ? modalService.openModal(TABLE_BUTTONS_MODALS_ID.CONTEXT, {
           componentProps: {
-            onClick: onColorSelect,
+            onClick,
             closeModal,
+            category,
           },
           layout: isMobile ? 'drawer' : 'toolbar',
           positioning: { referenceElement, placement: 'bottom' },
