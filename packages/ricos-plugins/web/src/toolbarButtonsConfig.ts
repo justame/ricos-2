@@ -171,13 +171,13 @@ export const getToolbarButtonsConfig: (
         ({ editorCommands, attributes: { selectedNode } }) =>
         () => {
           const { link, ...attrs } = selectedNode.attrs;
-          editorCommands.chain().focus().updateAttributes(attrs).run();
+          editorCommands.chain().focus().setNodeAttrsById(attrs.id, attrs).run();
         },
       removeAnchor:
         ({ editorCommands, attributes: { selectedNode } }) =>
         () => {
           const { link, ...attrs } = selectedNode.attrs;
-          editorCommands.chain().focus().updateAttributes(attrs).run();
+          editorCommands.chain().focus().setNodeAttrsById(attrs.id, attrs).run();
         },
     },
   },
