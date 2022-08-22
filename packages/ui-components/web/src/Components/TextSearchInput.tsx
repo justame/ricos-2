@@ -19,7 +19,7 @@ export default class TextSearchInput extends Component<TextSearchInputProps> {
 
   componentDidMount() {
     if (this.input) {
-      this.input.focus();
+      setTimeout(() => this.input?.focus(), 0); // setTimeout is needed for popper to place the modal first
       this.input.setSelectionRange(0, this.input.value.length);
     }
   }

@@ -17,7 +17,7 @@ const DesktopPanel: FC<Props> = ({ options, externalFocus }) => {
 
   useEffect(() => {
     const ref = panelRef.current as HTMLDivElement;
-    !externalFocus && ref.focus();
+    !externalFocus && setTimeout(() => ref.focus(), 0); // setTimeout is needed for popper to place the modal first
   }, []);
 
   const dropDownPanel = (
