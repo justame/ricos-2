@@ -1,8 +1,18 @@
 import type { RicosExtension, RicosExtensionConfig } from 'ricos-types';
 
+type LineSpacings = {
+  'line-height': string;
+  'padding-bottom': string;
+  'padding-top': string;
+};
+
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
     lineSpacing: {
+      /**
+       * Set the text line spacings
+       */
+      setLineSpacings: (lineSpacings: LineSpacings) => ReturnType;
       /**
        * Set the text line spacing
        */
@@ -72,6 +82,25 @@ export const lineSpacing: RicosExtension = {
       },
       addCommands() {
         return {
+          setLineSpacings:
+            lineSpacings =>
+            ({ chain }) => {
+              const {
+                'line-height': stringLineHeight,
+                'padding-bottom': stringPaddingBottom,
+                'padding-top': stringPaddingTop,
+              } = lineSpacings;
+              const lineHeight = parseFloat(stringLineHeight);
+              const paddingBottom = parseFloat(stringPaddingBottom);
+              const paddingTop = parseFloat(stringPaddingTop);
+
+              return chain()
+                .focus()
+                .setLineSpacing(lineHeight)
+                .setLineSpacingBefore(paddingTop)
+                .setLineSpacingAfter(paddingBottom)
+                .run();
+            },
           setLineSpacing:
             (lineSpacing: number) =>
             ({ commands }) => {

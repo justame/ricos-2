@@ -213,7 +213,7 @@ export class PluginTextButtons implements FormattingToolbarButtons {
     content: IContent<unknown>
   ): Record<string, ToolbarButtonProps> {
     //TODO: support all buttons
-    const unsupportedTextButtons = ['title', 'headings', 'textHighlight', 'lineSpacing'];
+    const unsupportedTextButtons = ['title', 'headings', 'textHighlight'];
 
     return this.buttons
       .filter(

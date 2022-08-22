@@ -10,7 +10,6 @@ import type {
   RicosPortal,
   AddLinkData,
   IRicosToolbars,
-  Decoration_Type,
 } from 'ricos-types';
 import type { LinkSettings, ToolbarSettings, RicosCssOverride } from 'ricos-common';
 import { RicosContext } from './RicosContext';
@@ -46,6 +45,7 @@ export type ToolbarContextType = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     TEXT_HIGHLIGHT: Record<string, any>;
   };
+  defaultLineSpacing: { 'line-height'?: string; 'padding-top'?: string; 'padding-bottom'?: string };
 };
 
 export const ToolbarContext = React.createContext<ToolbarContextType>({
@@ -64,6 +64,7 @@ export const ToolbarContext = React.createContext<ToolbarContextType>({
   portal: null as unknown as RicosPortal,
   toolbars: null as unknown as IRicosToolbars,
   colorPickerData: {} as unknown as ToolbarContextType['colorPickerData'],
+  defaultLineSpacing: {},
 });
 
 export const withToolbarContext = WrappedComponent => {

@@ -5,6 +5,7 @@ import type { Fragment, Node as ProseMirrorNode } from 'prosemirror-model';
 import type { RicosEditorProps } from 'ricos-common';
 import type { ParagraphNode, HeadingNode } from 'ricos-content';
 import {
+  RICOS_LINE_SPACING_TYPE,
   BLOCKQUOTE,
   BULLET_LIST_TYPE,
   CODE_BLOCK_TYPE,
@@ -22,10 +23,8 @@ import type {
   TiptapAdapter,
   EditorContextType,
   Pubsub,
-  AmbientStyles,
   ColorType,
   EditorCommands,
-  IPluginsEvents,
 } from 'ricos-types';
 import { ToolbarType } from 'ricos-types';
 import type { RicosCustomStyles, TextAlignment } from 'wix-rich-content-common';
@@ -45,6 +44,8 @@ import { findNodeById } from '../../helpers';
 import { convertInlineStylesToCSS } from '../../helpers/convertInlineStylesToCss';
 import type { TiptapAdapterServices } from '../../initializeTiptapAdapter';
 import toConstantCase from 'to-constant-case';
+import { resolversById } from 'wix-rich-content-toolbars-v3';
+import { RESOLVERS_IDS } from 'wix-rich-content-toolbars-v3/libs/resolvers-ids';
 
 export class RichContentAdapter implements TiptapAdapter {
   private readonly initialContent: Fragment;
@@ -53,9 +54,7 @@ export class RichContentAdapter implements TiptapAdapter {
 
   getToolbarProps: TiptapAdapter['getToolbarProps'];
 
-  private readonly styles: AmbientStyles;
-
-  private readonly pluginsEvents: IPluginsEvents;
+  private readonly services: TiptapAdapterServices;
 
   constructor(
     public tiptapEditor: Editor,
@@ -81,8 +80,7 @@ export class RichContentAdapter implements TiptapAdapter {
         pubsub: {} as Pubsub,
       };
     };
-    this.styles = services.styles;
-    this.pluginsEvents = services.pluginsEvents;
+    this.services = services;
   }
 
   private getSelectedColors(type: 'foreground' | 'background') {
@@ -106,7 +104,7 @@ export class RichContentAdapter implements TiptapAdapter {
           const parent = doc.resolve(pos).parent;
           if (parent.type.name === Node_Type.PARAGRAPH || parent.type.name === Node_Type.HEADING) {
             const ricosNode = fromTiptapNode({ ...parent.toJSON(), type: parent?.type?.name });
-            const decoration = this.styles.getDecoration(
+            const decoration = this.services.styles.getDecoration(
               ricosNode as ParagraphNode | HeadingNode,
               Decoration_Type.COLOR
             );
@@ -179,7 +177,7 @@ export class RichContentAdapter implements TiptapAdapter {
           id = data.id || generateId();
           const attrs = { id, ...flatComponentState(_attrs) };
           this.tiptapEditor.chain().focus().insertContent([{ type, attrs, content }]).run();
-          this.pluginsEvents.publishPluginAdd({ pluginId: type, params: { ...attrs } });
+          this.services.pluginsEvents.publishPluginAdd({ pluginId: type, params: { ...attrs } });
         } else {
           console.error(`No such plugin type ${pluginType}`);
         }
@@ -212,7 +210,7 @@ export class RichContentAdapter implements TiptapAdapter {
             ])
             .setNodeSelection(updateSelection ? lastNodePosition + 1 : lastNodePosition + 2)
             .run();
-          this.pluginsEvents.publishPluginAdd({ pluginId: type, params: { ...attrs } });
+          this.services.pluginsEvents.publishPluginAdd({ pluginId: type, params: { ...attrs } });
         } else {
           console.error(`No such plugin type ${pluginType}`);
         }
@@ -263,6 +261,7 @@ export class RichContentAdapter implements TiptapAdapter {
             command: 'setFontSize',
             args: parseInt(data.fontSize),
           }),
+          [RICOS_LINE_SPACING_TYPE]: data => ({ command: 'setLineSpacings', args: data.data }),
         };
         if (decorationCommandMap[type]) {
           const { command, args } = decorationCommandMap[type](data);
@@ -270,7 +269,7 @@ export class RichContentAdapter implements TiptapAdapter {
             ? this.tiptapEditor.chain().focus()
             : this.tiptapEditor.chain();
           editorCommand[command](args).run();
-          this.pluginsEvents.publishPluginAdd({ pluginId: type, params: { ...args } });
+          this.services.pluginsEvents.publishPluginAdd({ pluginId: type, params: { ...args } });
         } else {
           console.error(`${type} decoration not supported`);
         }
@@ -299,7 +298,7 @@ export class RichContentAdapter implements TiptapAdapter {
                 parent.type.name === Node_Type.HEADING
               ) {
                 const ricosNode = fromTiptapNode({ ...parent.toJSON(), type: parent?.type?.name });
-                const decoration = this.styles.getDecoration(
+                const decoration = this.services.styles.getDecoration(
                   ricosNode as ParagraphNode | HeadingNode,
                   Decoration_Type.FONT_SIZE
                 );
@@ -440,7 +439,7 @@ export class RichContentAdapter implements TiptapAdapter {
         };
         if (deleteDecorationCommandMap[type]) {
           deleteDecorationCommandMap[type]();
-          this.pluginsEvents.publishPluginDelete({ pluginId: type });
+          this.services.pluginsEvents.publishPluginDelete({ pluginId: type });
         } else {
           console.error(`delete ${type} decoration type not supported`);
         }
@@ -529,7 +528,22 @@ export class RichContentAdapter implements TiptapAdapter {
     scrollToBlock: _blockKey => {},
     isBlockInContent: _blockKey => false,
     toggleBlockOverlay: _blockKey => false,
-    getBlockSpacing: () => 5,
+    getBlockSpacing: () => {
+      const lineHeight = this.services.content.resolve(
+        resolversById[RESOLVERS_IDS.GET_LINE_SPACING_IN_SELECTION]
+      );
+      const paddingTop = this.services.content.resolve(
+        resolversById[RESOLVERS_IDS.GET_LINE_SPACING_BEFORE_SELECTION]
+      );
+      const paddingBottom = this.services.content.resolve(
+        resolversById[RESOLVERS_IDS.GET_LINE_SPACING_AFTER_SELECTION]
+      );
+      return {
+        'line-height': lineHeight,
+        'padding-top': paddingTop,
+        'padding-bottom': paddingBottom,
+      };
+    },
     saveEditorState: () => {},
     loadEditorState: () => {},
     saveSelectionState: () => {},

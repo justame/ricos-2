@@ -49,6 +49,7 @@
     "uuid": "^3.4.0",
     "wix-rich-content-common": "8.72.32",
     "wix-rich-content-editor-common": "8.72.32",
+    "wix-rich-content-toolbars-v3": "8.72.32",
     "wix-tiptap-extensions": "8.72.32"
   },
   "jest": {
