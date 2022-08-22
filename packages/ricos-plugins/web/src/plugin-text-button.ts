@@ -124,7 +124,7 @@ export class PluginTextButton implements FormattingToolbarButton {
                       placement: 'bottom',
                       referenceElement,
                     },
-                    layout: 'toolbar',
+                    layout: toolbarType === 'MOBILE' ? 'drawer' : 'toolbar',
                   })
               : this.button.command?.(editorCommands)?.(rest);
           },
