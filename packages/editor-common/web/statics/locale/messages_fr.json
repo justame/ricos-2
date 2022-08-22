@@ -418,7 +418,7 @@
   "FileUploadPlugin_Settings_FullPDFViewer_SubText": "Visitors can easily scroll down through your PDF and zoom in or out. We recommend this layout for mobile.",
   "Poll_Preview_Close_CTA": "Fermer l’aperçu",
   "TitleButton_Tooltip": "Titre",
-  "LinkPanel_Nofollow_Checkbox_Tooltip": "Vous pouvez ajouter un tag nofollow au lien. Les moteurs de recherche ne tiennent pas compte de ce lien dans leur référencement et le classement du sites.",
+  "LinkPanel_Nofollow_Checkbox_Tooltip": "Vous pouvez ajouter un tag nofollow au lien. Les moteurs de recherche ne tiendront pas compte de ce lien pour le classement du site et de son référencement.",
   "TwitterPlugin_InsertButton_Tooltip": "Ajouter un post Twitter",
   "BlockToolbar_Section_Basic": "Basic",
   "EmojiPlugin_PoweredBy_label": "proposé par ",
