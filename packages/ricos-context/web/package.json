@@ -1,6 +1,6 @@
 {
   "name": "ricos-context",
-  "version": "8.72.31",
+  "version": "8.72.32",
   "author": {
     "name": "Alex Greenstein",
     "email": "alexgr@wix.com"
@@ -34,10 +34,10 @@
     "test:watchAll": "jest --verbose --watchAll"
   },
   "dependencies": {
-    "ricos-types": "8.72.31"
+    "ricos-types": "8.72.32"
   },
   "devDependencies": {
-    "ricos-common": "8.72.31"
+    "ricos-common": "8.72.32"
   },
   "unpkg": true,
   "publishConfig": {
