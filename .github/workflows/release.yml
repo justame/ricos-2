@@ -13,7 +13,7 @@ env:
 
 jobs:
   publishPackages:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -32,7 +32,7 @@ jobs:
       - run: npm run build:withoutCache
       - run: npm run release
       - name: send done event
-        run: | 
+        run: |
           curl -X POST https://api.github.com/repos/wix-private/wix-ricos/dispatches \
           -H 'Accept: application/vnd.github.everest-preview+json' \
           -u ${{ secrets.ACCESS_TOKEN }} \

@@ -72,7 +72,7 @@ jobs:
 
   e2e-visual:
     needs: cache-build
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
       matrix:
@@ -140,7 +140,7 @@ jobs:
 
   content-state-tests:
     needs: cache-build
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
       matrix:
@@ -203,7 +203,7 @@ jobs:
 
   lint:
     needs: cache-build
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -241,7 +241,7 @@ jobs:
 
   unit-tests:
     needs: cache-build
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -280,7 +280,7 @@ jobs:
   finalize-percy:
     needs: e2e-visual
     if: always()
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -322,7 +322,7 @@ jobs:
       #   run: npx percy build:wait  --project org/project --commit ${{ env.COMMIT_SHA }}
 
   notify-on-slack:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     needs: [e2e-visual, content-state-tests, lint, unit-tests]
     if: always()
     steps:
