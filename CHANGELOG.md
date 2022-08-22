@@ -17,13 +17,15 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.72.33 (Aug 21, 2022)
+
 ## :bug: Bug Fix
 
 - `ricos-plugins`
   - [#4442](https://github.com/wix/ricos/pull/4442) external formatting toolbar onClick
   - [#4447](https://github.com/wix/ricos/pull/4447) fix link toolbar button config
-
-</details>
 
 ## 8.72.32 (Aug 21, 2022)
 
