@@ -1,11 +1,5 @@
-import { createLink } from 'ricos-content/libs/nodeUtils';
 import type { EditorPluginCreator } from 'wix-rich-content-common';
-import {
-  convertRelObjectToString,
-  convertRelStringToObject,
-  RICOS_LINK_TYPE,
-  RICOS_ANCHOR_TYPE,
-} from 'wix-rich-content-common';
+import { RICOS_LINK_TYPE, RICOS_ANCHOR_TYPE } from 'wix-rich-content-common';
 import { RESOLVERS_IDS } from 'wix-rich-content-toolbars-v3/libs/resolvers-ids';
 import { createLinkData } from './createLinkData';
 import { createLinkPlugin } from './createLinkPlugin';

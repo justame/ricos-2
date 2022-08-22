@@ -1,5 +1,5 @@
 import { fromEntries } from 'ricos-content/libs/utils';
-import { TOOLBARS } from 'wix-rich-content-editor-common';
+import { TOOLBARS, FORMATTING_BUTTONS } from 'wix-rich-content-editor-common';
 import type {
   EditorCommands,
   FormattingToolbarButton,
@@ -19,6 +19,27 @@ import { toTiptapToolbarItemsConfig } from './toolbar-utils/toTiptapToolbarItems
 import { getToolbarConfig } from './toolbar-utils/getToolbarConfig';
 import { initToolbarSettings } from './toolbar-utils/initToolbarSettings';
 import type { PluginServices } from './editorPlugins';
+
+const fromCamelCase = {
+  bold: FORMATTING_BUTTONS.BOLD,
+  italic: FORMATTING_BUTTONS.ITALIC,
+  underline: FORMATTING_BUTTONS.UNDERLINE,
+  title: FORMATTING_BUTTONS.TITLE,
+  blockquote: FORMATTING_BUTTONS.BLOCKQUOTE,
+  alignment: FORMATTING_BUTTONS.ALIGNMENT,
+  orderedList: FORMATTING_BUTTONS.ORDERED_LIST,
+  unorderedList: FORMATTING_BUTTONS.UNORDERED_LIST,
+  fontSize: FORMATTING_BUTTONS.FONT_SIZE,
+  spoiler: FORMATTING_BUTTONS.SPOILER,
+  link: FORMATTING_BUTTONS.LINK,
+  headings: FORMATTING_BUTTONS.HEADINGS,
+  textColor: FORMATTING_BUTTONS.TEXT_COLOR,
+  textHighlight: FORMATTING_BUTTONS.TEXT_HIGHLIGHT,
+  codeBlock: FORMATTING_BUTTONS.CODE_BLOCK,
+  lineSpacing: FORMATTING_BUTTONS.LINE_SPACING,
+  increaseIndent: FORMATTING_BUTTONS.INCREASE_INDENT,
+  decreaseIndent: FORMATTING_BUTTONS.DECREASE_INDENT,
+};
 
 export class PluginTextButton implements FormattingToolbarButton {
   private readonly button: FormattingToolbarButtonConfig;
@@ -117,6 +138,7 @@ export class PluginTextButton implements FormattingToolbarButton {
   ): ToolbarButtonProps {
     const attributes = this.toResolvedAttributes();
     const { modals } = this.services;
+
     return {
       type: 'button',
       tooltip: this.getTooltip(),
@@ -147,7 +169,7 @@ export class PluginTextButton implements FormattingToolbarButton {
       isActive: () => !!attributes.active && !!content.resolve(attributes.active),
       isDisabled: () => false,
       dataHook: this.button.presentation?.dataHook,
-      name: this.button.id,
+      name: fromCamelCase[this.button.id] ?? this.button.id,
     };
   }
 }

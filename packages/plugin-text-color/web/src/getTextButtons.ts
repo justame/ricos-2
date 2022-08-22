@@ -1,4 +1,4 @@
-import type { FormattingToolbarButtonConfig, IToolbarItemConfigTiptap } from 'ricos-types';
+import type { FormattingToolbarButtonConfig } from 'ricos-types';
 import { RESOLVERS_IDS } from 'wix-rich-content-toolbars-v3/libs/resolvers-ids';
 import TextColorIcon from './icons/TextColorIcon';
 import TextHighlightIcon from './icons/TextHighlightIcon';
