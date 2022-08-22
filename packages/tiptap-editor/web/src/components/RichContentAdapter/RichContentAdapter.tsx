@@ -138,27 +138,17 @@ export class RichContentAdapter implements TiptapAdapter {
 
   getEditorCommands(): EditorCommands {
     const hasInlineStyle: EditorCommands['hasInlineStyle'] = style => {
-      const {
-        state: {
-          doc,
-          selection: { from, to, $from },
-        },
-      } = this.tiptapEditor;
-
-      const marks = {};
-      if (from === to) {
-        $from.nodeBefore?.marks.forEach(({ type: { name } }) => {
-          marks[name] = true;
-        });
-      } else {
-        doc.nodesBetween(from, to, node => {
-          node.marks.forEach(({ type: { name } }) => {
-            marks[name] = true;
-          });
-        });
-      }
-
-      return marks[toConstantCase(style)];
+      const resolvedStyles = {
+        bold: this.services.content.resolve(resolversById[RESOLVERS_IDS.IS_TEXT_CONTAINS_BOLD]),
+        italic: this.services.content.resolve(resolversById[RESOLVERS_IDS.IS_TEXT_CONTAINS_ITALIC]),
+        underline: this.services.content.resolve(
+          resolversById[RESOLVERS_IDS.IS_TEXT_CONTAINS_UNDERLINE]
+        ),
+        spoiler: this.services.content.resolve(
+          resolversById[RESOLVERS_IDS.IS_TEXT_CONTAINS_SPOILER]
+        ),
+      };
+      return resolvedStyles[style];
     };
 
     return {
