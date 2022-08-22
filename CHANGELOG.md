@@ -17,7 +17,11 @@
     Click to see more.
   </summary>
 
-</details>
+## :bug: Bug Fix
+
+- `ricos-plugins`
+  - [#4442](https://github.com/wix/ricos/pull/4442) external formatting toolbar onClick
+  </details>
 
 ## 8.72.32 (Aug 21, 2022)
 

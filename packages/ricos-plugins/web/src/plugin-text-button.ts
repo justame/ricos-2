@@ -164,7 +164,7 @@ export class PluginTextButton implements FormattingToolbarButton {
                     : {},
                 layout: this.button.modal.layout || 'dialog',
               })
-          : this.button.command?.(editorCommands);
+          : this.button.command?.(editorCommands)({});
       },
       isActive: () => !!attributes.active && !!content.resolve(attributes.active),
       isDisabled: () => false,
