@@ -283,7 +283,7 @@ class RicosToolbars extends React.Component<
           container={htmlContainer}
         >
           <div data-hook={dataHook} toolbar-type="static">
-            {this.renderToolbar(toolbarItemsConfig)}
+            {this.renderToolbar(toolbarItemsConfig, { maxWidth: htmlContainer.clientWidth })}
           </div>
         </RicosPortal>
       );
