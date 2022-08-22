@@ -10,5 +10,6 @@ export { default as HeadingButtonSwitch } from './HeadingButtonSwitch/HeadingBut
 export { ToggleButton } from './ToggleButton';
 export { default as MoreButton } from './MoreButton/MoreButton';
 export { AddPluginMenuButton } from './AddPluginMenuButton';
-export { default as UrlLinkButton } from './UrlLinkButton/UrlLinkButton';
-export { default as AnchorLinkButton } from './AnchorLinkButton/AnchorLinkButton';
+export { default as UrlLinkButton } from './link-toolbar-buttons/UrlLinkButton/UrlLinkButton';
+export { default as AnchorLinkButton } from './link-toolbar-buttons/AnchorLinkButton/AnchorLinkButton';
+export { default as EditLinkButton } from './link-toolbar-buttons/EditLinkButton/EditLinkButton';

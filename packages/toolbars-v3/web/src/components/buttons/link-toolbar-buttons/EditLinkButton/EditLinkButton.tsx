@@ -3,12 +3,14 @@ import { withToolbarContext, ModalContext } from 'ricos-context';
 import { getLinkModalProps } from 'wix-rich-content-toolbars-modals';
 import { CUSTOM_LINK } from 'wix-rich-content-common';
 import { withContentQueryContext } from 'ricos-content-query';
-import { ToolbarButton } from '../ToolbarButton';
+import { ToolbarButton } from '../../ToolbarButton';
 
-const LinkButton = ({ toolbarItem, context, contentQueryService, dataHook }) => {
+const EditLinkButton = ({ toolbarItem, context, contentQueryService, dataHook }) => {
+  const id = 'formattingLinkModal';
   const { isMobile, t, getEditorCommands, linkPanelData = {}, experiments } = context || {};
   const modalService = useContext(ModalContext) || {};
   const [referenceElement, setReferenceElement] = useState<HTMLButtonElement | null>(null);
+  const [isButtonActive, setIsButtonActive] = useState<boolean>(false);
 
   const editorCommands = getEditorCommands?.();
   const { onLinkAdd, linkSettings = {} } = linkPanelData;
@@ -19,6 +21,18 @@ const LinkButton = ({ toolbarItem, context, contentQueryService, dataHook }) => 
     experiments
   );
 
+  const openModal = () => {
+    modalService.isModalOpen(id)
+      ? modalService.closeModal(id)
+      : modalService?.openModal(id, {
+          componentProps: {
+            closeModal: () => modalService.closeModal(id),
+          },
+          layout: isMobile ? 'drawer' : 'toolbar',
+          positioning: { referenceElement, placement: 'bottom' },
+        });
+  };
+
   const onClick = () => {
     const isCustomLinkHandling = !!onLinkAdd;
     if (isCustomLinkHandling) {
@@ -26,12 +40,19 @@ const LinkButton = ({ toolbarItem, context, contentQueryService, dataHook }) => 
       const callback = data => editorCommands.insertDecoration(CUSTOM_LINK, data);
       onLinkAdd(customLinkData, callback);
     } else {
-      toolbarItem.commands?.click({ referenceElement });
+      openModal();
     }
   };
 
+  modalService.onModalOpened(() => {
+    modalService.isModalOpen(id) && setIsButtonActive(true);
+  });
+  modalService.onModalClosed(() => {
+    !modalService.isModalOpen(id) && setIsButtonActive(false);
+  });
+
   const tooltip = t(toolbarItem.presentation?.tooltip);
-  const isActive = modalService.isModalOpen('formattingLinkModal') || toolbarItem.attributes.active;
+  const isActive = isButtonActive || toolbarItem.attributes.active;
   return (
     <ToolbarButton
       ref={setReferenceElement}
@@ -45,4 +66,4 @@ const LinkButton = ({ toolbarItem, context, contentQueryService, dataHook }) => 
   );
 };
 
-export default withContentQueryContext(withToolbarContext(LinkButton));
+export default withContentQueryContext(withToolbarContext(EditLinkButton));

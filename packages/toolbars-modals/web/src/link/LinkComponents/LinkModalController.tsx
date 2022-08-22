@@ -3,25 +3,44 @@ import LinkModal from './LinkModal';
 import { withToolbarContext } from 'ricos-context';
 import { withContentQueryContext } from 'ricos-content-query';
 import { getLinkModalProps } from '../utils/utils';
-import { RICOS_LINK_TYPE, RICOS_ANCHOR_TYPE } from 'wix-rich-content-common';
-import type { LinkData } from 'ricos-schema';
+import {
+  RICOS_LINK_TYPE,
+  RICOS_ANCHOR_TYPE,
+  convertRelObjectToString,
+  convertRelStringToObject,
+} from 'wix-rich-content-common';
 import type { EditorCommands } from 'wix-rich-content-common';
 import type { DeepPartial } from 'utility-types';
 import type { AddLinkData, TranslationFunction } from 'ricos-types';
 import type { ToolbarContextType } from 'ricos-context';
 import type { ContentQueryService } from 'ricos-content-query';
+import { createLink } from 'ricos-content/libs/nodeUtils';
+
+type LinkDataFromPanel = {
+  isValid?: boolean;
+  rel?: string;
+  sponsored?: boolean;
+  target?: string;
+  url?: string;
+  anchor?: string;
+  defaultName?: string;
+};
 
 const onDone = (
-  data: LinkData['link'] & { defaultName?: string },
+  data: LinkDataFromPanel,
   editorCommands: EditorCommands | void,
   closeModal: () => void
 ) => {
   if (!editorCommands) {
     console.error('No editor commands available');
   } else if (data?.url) {
-    editorCommands.insertDecoration(RICOS_LINK_TYPE, data);
+    const { rel, target, url } = data;
+    const relValue = convertRelObjectToString(convertRelStringToObject(rel));
+    const link = createLink({ url, rel: relValue, target });
+    editorCommands.insertDecoration(RICOS_LINK_TYPE, link);
   } else if (data?.anchor) {
-    editorCommands.insertDecoration(RICOS_ANCHOR_TYPE, data);
+    const anchorData = { anchor: data.anchor, defaultName: data.defaultName };
+    editorCommands.insertDecoration(RICOS_ANCHOR_TYPE, anchorData);
   }
   closeModal();
 };

@@ -12,6 +12,7 @@ import {
   UrlLinkButton,
   AnchorLinkButton,
   HeadingButtonSwitch,
+  EditLinkButton,
 } from './components/buttons';
 import { ToolbarButtonSeparator } from 'wix-rich-content-toolbars-ui';
 
@@ -58,7 +59,7 @@ export const toolbarItemsRenders = {
     );
   },
   editLink: toolbarItem => {
-    return <LinkButton toolbarItem={toolbarItem} />;
+    return <EditLinkButton toolbarItem={toolbarItem} />;
   },
   urlLink: toolbarItem => {
     return <UrlLinkButton toolbarItem={toolbarItem} />;

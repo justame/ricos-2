@@ -132,7 +132,7 @@ export const CUSTOM_LINK = 'custom-link';
 
 export interface DecorationsDataMap {
   [RICOS_LINK_TYPE]?: LinkData['link'];
-  [RICOS_ANCHOR_TYPE]?: LinkData['link'] & { defaultName?: string };
+  [RICOS_ANCHOR_TYPE]?: { anchor: string; defaultName?: string };
   [CUSTOM_LINK]?: LinkData;
   [RICOS_MENTION_TYPE]?: MentionData;
   [RICOS_TEXT_COLOR_TYPE]?: { color?: ColorData['foreground'] };

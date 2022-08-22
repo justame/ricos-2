@@ -8,7 +8,7 @@ const LinkModalController = lazy(() =>
 
 const LinkPanelComponent = props => {
   return (
-    <Suspense fallback={<div>loading</div>}>
+    <Suspense fallback={<div style={{ width: 542, height: 415 }}>loading</div>}>
       <LinkModalController {...props} />
     </Suspense>
   );

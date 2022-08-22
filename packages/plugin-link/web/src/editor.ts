@@ -64,31 +64,7 @@ export const pluginLink: EditorPluginCreator<LinkPluginEditorConfig> = config =>
           visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
           active: RESOLVERS_IDS.IS_TEXT_CONTAINS_LINK_OR_ANCHOR,
         },
-        commands: {
-          insertLink:
-            ({ editorCommands }) =>
-            linkData => {
-              const { rel, target, url } = linkData;
-              const relValue = convertRelObjectToString(convertRelStringToObject(rel));
-              const link = createLink({ url, rel: relValue, target });
-              editorCommands.chain().focus().setLink({ link }).run();
-            },
-          insertAnchor:
-            ({ editorCommands }) =>
-            data => {
-              editorCommands.chain().focus().setAnchor(data).run();
-            },
-          removeLink:
-            ({ editorCommands }) =>
-            () => {
-              editorCommands.chain().focus().unsetLink().run();
-            },
-          removeAnchor:
-            ({ editorCommands }) =>
-            () => {
-              editorCommands.chain().focus().unsetAnchor().run();
-            },
-        },
+        commands: {},
         modal: {
           id: FORMATTING_LINK_MODAL_ID,
           Component: LinkPanelComponent,
