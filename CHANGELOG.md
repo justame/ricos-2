@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `ricos-styles`
+  - [#4458](https://github.com/wix/ricos/pull/4458) bold decoration font weight string parse
+
 </details>
 
 ## 8.72.34 (Aug 23, 2022)

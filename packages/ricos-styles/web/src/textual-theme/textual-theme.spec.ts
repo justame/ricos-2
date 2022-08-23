@@ -42,9 +42,33 @@ describe('Textual Theme', () => {
     });
   });
 
-  it('Should getDecoration Bold match expected', () => {
+  it('Should getDecoration Bold 1 match expected', () => {
     const decoration = new TextualTheme({
       customStyles: { h3: { fontWeight: 700 } },
+    })
+      .getDecoration('headerThree', Decoration_Type.BOLD)
+      .getDecoration();
+    expect(decoration).toStrictEqual({
+      fontWeightValue: 700,
+      type: Decoration_Type.BOLD,
+    });
+  });
+
+  it('Should getDecoration Bold 2 match expected', () => {
+    const decoration = new TextualTheme({
+      customStyles: { h3: { fontWeight: 'normal' } },
+    })
+      .getDecoration('headerThree', Decoration_Type.BOLD)
+      .getDecoration();
+    expect(decoration).toStrictEqual({
+      fontWeightValue: 400,
+      type: Decoration_Type.BOLD,
+    });
+  });
+
+  it('Should getDecoration Bold 3 match expected', () => {
+    const decoration = new TextualTheme({
+      customStyles: { h3: { fontWeight: 'bold' } },
     })
       .getDecoration('headerThree', Decoration_Type.BOLD)
       .getDecoration();

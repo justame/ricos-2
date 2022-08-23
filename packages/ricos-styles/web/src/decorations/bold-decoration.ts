@@ -4,7 +4,15 @@ import type { CustomTextualStyle } from 'ricos-types';
 import { EmptyDecoration } from './empty-decoration';
 import type { TextDecoration } from '../models/decoration';
 
-const DEFAULT_BOLD_WEIGHT = 700;
+const parseFontWeight = (fontWeight: CustomTextualStyle['fontWeight']) => {
+  if (fontWeight === 'bold') {
+    return 700;
+  }
+  if (fontWeight === 'normal') {
+    return 400;
+  }
+  return parseInt(fontWeight as string, 10);
+};
 
 export class BoldDecoration implements TextDecoration {
   type = Decoration_Type.BOLD;
@@ -20,13 +28,13 @@ export class BoldDecoration implements TextDecoration {
       throw new TypeError(`invalid decoration initializer ${decoration}`);
     }
 
-    return new BoldDecoration({ fontWeight: decoration.fontWeightValue || DEFAULT_BOLD_WEIGHT });
+    return new BoldDecoration({ fontWeight: decoration.fontWeightValue });
   }
 
   getDecoration(): Decoration {
     return {
       type: this.type,
-      fontWeightValue: parseInt(this.customStyle.fontWeight as string, 10) || DEFAULT_BOLD_WEIGHT,
+      fontWeightValue: parseFontWeight(this.customStyle.fontWeight),
     };
   }
 

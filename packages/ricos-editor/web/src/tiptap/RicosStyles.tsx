@@ -35,7 +35,7 @@ const RicosStylesRenderer: FC<{
   useEffect(() => {
     if (!isEqual(prevTheme, props.theme)) {
       styles.setTheme(themeWithDefaults);
-      console.log('theme update'); // eslint-disable-line no-console
+      console.log('theme update', themeWithDefaults); // eslint-disable-line no-console
     }
     if (!isEqual(prevDocumentStyle, props.documentStyle)) {
       const richContentDocStyle = parseDocStyle(props.documentStyle);
