@@ -6,7 +6,7 @@ const commonStyles = (followMouse, place, tooltipOffset) => ({
     pointerEvents: 'none',
     transition: 'none',
     fontWeight: '300',
-    zIndex: 670000,
+    zIndex: 1000000,
   },
   arrowStyle: {
     pointerEvents: 'none',
