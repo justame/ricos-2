@@ -1,4 +1,5 @@
-import type { ExtensionProps, RicosExtension, RicosExtensionConfig } from 'ricos-types';
+import type { RicosExtension } from 'ricos-types';
+import { redo, undo, history } from './history-infra';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -18,16 +19,15 @@ export const undoRedo: RicosExtension = {
   type: 'extension' as const,
   groups: [],
   name: 'ricosHistory',
-  reconfigure(
-    config: RicosExtensionConfig,
-    _extensions: RicosExtension[],
-    _ricosProps: ExtensionProps,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    settings: Record<string, any>
-  ) {
-    const { undo, redo, history } = settings;
+  createExtensionConfig() {
     return {
-      ...config,
+      name: this.name,
+
+      priority: 1000,
+      addOptions: () => ({
+        depth: 100,
+        newGroupDelay: 500,
+      }),
       addCommands() {
         return {
           rebase:
@@ -54,22 +54,9 @@ export const undoRedo: RicosExtension = {
             },
         };
       },
-
       addProseMirrorPlugins() {
         return [history(this.options)];
       },
-    };
-  },
-  createExtensionConfig() {
-    return {
-      name: this.name,
-
-      priority: 1000,
-      addOptions: () => ({
-        depth: 100,
-        newGroupDelay: 500,
-      }),
-
       addKeyboardShortcuts() {
         return {
           'Mod-z': () => this.editor.commands.undo(),
