@@ -83,7 +83,8 @@
     "migrateFixtures": "cd scripts && ts-node --compiler-options={\\\"module\\\":\\\"commonJS\\\"} migrateSchema",
     "toPlainText": "cd scripts && ts-node --compiler-options={\\\"module\\\":\\\"commonJS\\\"} toPlainText",
     "link": "lerna link",
-    "cacheBust": "echo `date` > cacheBust"
+    "cacheBust": "echo `date` > cacheBust",
+    "watch:specific": "node ./scripts/watch"
   },
   "ultra": {
     "concurrent": [

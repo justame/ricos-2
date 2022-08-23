@@ -15,6 +15,7 @@ applitools.private.config.js
 tsconfig.tsbuildinfo
 .ultra.cache.json
 .cache
+.watch-packages
 
 #Webstorm
 **/.idea/*
