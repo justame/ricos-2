@@ -1,6 +1,6 @@
 {
   "name": "wix-rich-content-common",
-  "version": "8.72.33",
+  "version": "8.72.34",
   "author": {
     "name": "Jonathan Bachman",
     "email": "jonathanb@wix.com"
@@ -40,8 +40,8 @@
     "jsonschema": "~1.2.4",
     "react-i18next": "^7.0.0",
     "react-portal-tooltip": "^2.4.7",
-    "ricos-content": "8.72.33",
-    "ricos-types": "8.72.33"
+    "ricos-content": "8.72.34",
+    "ricos-types": "8.72.34"
   },
   "unpkg": true,
   "publishConfig": {

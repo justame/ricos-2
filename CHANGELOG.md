@@ -19,6 +19,13 @@
 
 </details>
 
+## 8.72.34 (Aug 23, 2022)
+
+## :bug: Bug Fix
+
+- `ricos-common-plugins`
+  - [#4449](https://github.com/wix/ricos/pull/4449) fix bold & italic toogles (command & bi)
+
 ## 8.72.33 (Aug 21, 2022)
 
 ## :bug: Bug Fix
