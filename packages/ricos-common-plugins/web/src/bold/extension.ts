@@ -1,5 +1,6 @@
 import type { MarkConfig } from '@tiptap/core';
 import { isMarkActive, markInputRule, markPasteRule, mergeAttributes } from '@tiptap/core';
+import type { Decoration } from 'ricos-schema';
 import { Decoration_Type } from 'ricos-schema';
 import type { DOMOutputSpec, RicosExtension, RicosServices } from 'ricos-types';
 
@@ -101,17 +102,25 @@ export const bold: RicosExtension = {
           toggleBold:
             () =>
             ({ commands, state }) => {
-              const isToggleOff =
-                commands.getStylesDecorationBySelectedNode(this.name)?.fontWeightValue ===
-                FONT_WEIGHT_BOLD;
-              const fontWeightValue = isToggleOff ? FONT_WEIGHT_NORMAL : FONT_WEIGHT_BOLD;
+              const decoration: Decoration | undefined = commands.getStylesDecorationBySelectedNode(
+                this.name
+              );
+              const hasBoldWeightInStyle =
+                decoration && decoration.fontWeightValue === FONT_WEIGHT_BOLD;
+              const hasBoldWeightInMark = isMarkActive(state, this.name, { fontWeightValue: 700 });
+              const hasNormalWeightInMark = isMarkActive(state, this.name, {
+                fontWeightValue: 400,
+              });
 
               this.options.publishPluginToggleEvent(
-                !isToggleOff && !isMarkActive(state, this.name)
+                (!hasBoldWeightInMark && !hasBoldWeightInStyle) || hasNormalWeightInMark
               );
 
               return commands.toggleMark(this.name, {
-                fontWeightValue,
+                fontWeightValue:
+                  hasBoldWeightInMark || !hasBoldWeightInStyle
+                    ? FONT_WEIGHT_BOLD
+                    : FONT_WEIGHT_NORMAL,
               });
             },
           unsetBold:

@@ -1,5 +1,4 @@
 import type { TranslationFunction } from './commonTypes';
-import type { EventRegistrar, EventSubscriptor } from './events';
 import type { ModalService } from './modalTypes';
 import type { RicosEditorPlugins } from './ricos-editor-plugins';
 import type { ShortcutDataProvider, ShortcutRegistrar } from './shortcuts';

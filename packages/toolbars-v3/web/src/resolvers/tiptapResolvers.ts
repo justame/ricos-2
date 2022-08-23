@@ -65,11 +65,15 @@ export const isTextContainsBoldResolver = TiptapContentResolver.create(
         return true;
       }
 
-      if (!hasInlineNormalWeight && hasBoldDecorationInDocumentStyles) {
+      if (hasInlineNormalWeight) {
+        return false;
+      }
+
+      if (hasBoldDecorationInDocumentStyles) {
         return true;
       }
 
-      if (editor?.isActive(Decoration_Type.BOLD)) {
+      if (editor?.isActive(Decoration_Type.BOLD, { fontWeightValue: 700 })) {
         return true;
       }
     }
@@ -108,7 +112,7 @@ export const isTextContainsItalicResolver = TiptapContentResolver.create(
         return false;
       }
 
-      if (editor?.isActive(Decoration_Type.ITALIC)) {
+      if (editor?.isActive(Decoration_Type.ITALIC, { italicData: true })) {
         return true;
       }
 
@@ -126,7 +130,7 @@ export const isTextContainsUnderlineResolver = TiptapContentResolver.create(
         return node.type.name === 'text';
       });
 
-      if (editor?.isActive(Decoration_Type.UNDERLINE)) {
+      if (editor?.isActive(Decoration_Type.UNDERLINE, { underlineData: true })) {
         return true;
       }
 

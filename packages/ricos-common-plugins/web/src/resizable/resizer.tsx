@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React from 'react';
 import { Resizable } from 're-resizable';
 import { throttle } from 'lodash';
 import styles from '../statics/styles.scss';

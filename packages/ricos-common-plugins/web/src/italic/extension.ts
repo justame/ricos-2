@@ -1,5 +1,6 @@
 import type { MarkConfig } from '@tiptap/core';
 import { isMarkActive, markInputRule, markPasteRule } from '@tiptap/core';
+import type { Decoration } from 'ricos-schema';
 import { Decoration_Type } from 'ricos-schema';
 import type { DOMOutputSpec, RicosExtension, RicosServices } from 'ricos-types';
 
@@ -96,10 +97,21 @@ export const italic: RicosExtension = {
           toggleItalic:
             () =>
             ({ commands, state }) => {
-              const italicData = !commands.getStylesDecorationBySelectedNode(this.name)?.italicData;
-              this.options.publishPluginToggleEvent(italicData && !isMarkActive(state, this.name));
+              const decoration: Decoration | undefined = commands.getStylesDecorationBySelectedNode(
+                this.name
+              );
+              const hasItalicInStyle = decoration && decoration.italicData === true;
+              const hasItalicInMark = isMarkActive(state, this.name, { italicData: true });
+              const hasNoItalicInMark = isMarkActive(state, this.name, {
+                italicData: false,
+              });
+
+              this.options.publishPluginToggleEvent(
+                (!hasItalicInMark && !hasItalicInStyle) || hasNoItalicInMark
+              );
+
               return commands.toggleMark(this.name, {
-                italicData,
+                italicData: !!(hasItalicInMark || !hasItalicInStyle),
               });
             },
           unsetItalic:
