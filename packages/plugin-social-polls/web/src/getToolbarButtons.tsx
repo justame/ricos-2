@@ -7,7 +7,7 @@ import { TABS } from './components/settings/constants';
 import { PollDesignButton } from './toolbar/PollDesignButton'; //todo export default
 import { TIPTAP_POLL_TYPE } from 'ricos-content';
 import { PollLayoutButton } from './toolbar/PollLayoutButton';
-import LineStylePanel from './toolbar/PollLayoutPanel';
+import PollLayoutPanel from './toolbar/PollLayoutPanel';
 import { selectedNodeResolver } from 'wix-rich-content-plugin-commons';
 
 const getCommandByTab =
@@ -33,7 +33,7 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
         selectedNode: selectedNodeResolver,
       },
       modal: {
-        Component: LineStylePanel,
+        Component: PollLayoutPanel,
         id: POLL_BUTTONS.layout,
       },
       command: ({ layout, editorCommands, node }) => {

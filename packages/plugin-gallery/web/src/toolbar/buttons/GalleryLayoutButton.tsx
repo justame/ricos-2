@@ -17,6 +17,7 @@ export const GalleryLayoutButton: FC<Props> = ({ toolbarItem, dataHook, id }) =>
   const { t, isMobile } = useContext(RicosContext) || {};
   const modalService = useContext(ModalContext);
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
+  const node = toolbarItem?.attributes?.selectedNode;
   const getSelectedLayout = () =>
     (GALLERY_LAYOUTS[toolbarItem?.attributes.layout] || GALLERY_LAYOUTS.GRID) as number;
   const selectedLayout = galleryLayoutsData.find(
@@ -39,6 +40,7 @@ export const GalleryLayoutButton: FC<Props> = ({ toolbarItem, dataHook, id }) =>
             onClick: onLayoutClick,
             getSelectedLayout,
             closeModal,
+            node,
           },
           layout: isMobile ? 'drawer' : 'toolbar',
           positioning: { referenceElement, placement: 'bottom' },

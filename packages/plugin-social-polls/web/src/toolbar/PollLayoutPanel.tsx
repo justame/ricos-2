@@ -10,7 +10,7 @@ type Props = {
   onCustomizeButtonClick: () => void;
 };
 
-const LineStylePanel: React.FC<Props> = ({
+const PollLayoutPanel: React.FC<Props> = ({
   getSelectedLayout,
   onClick,
   onCustomizeButtonClick,
@@ -56,4 +56,4 @@ const LineStylePanel: React.FC<Props> = ({
   return <DropdownModal options={DropdownOptions} />;
 };
 
-export default LineStylePanel;
+export default PollLayoutPanel;

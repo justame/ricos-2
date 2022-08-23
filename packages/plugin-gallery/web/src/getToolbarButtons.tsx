@@ -148,7 +148,12 @@ export const getToolbarButtons = (config, services, galleryPluginService): Toolb
         selectedNode: selectedNodeResolver,
       },
       modal: {
-        Component: GalleryLayoutPanel,
+        Component: decorateComponentWithProps(GalleryLayoutPanel, {
+          handleFileSelection: node => handleFileSelection(uploadService, updateService, node),
+          handleFileUpload: config.handleFileUpload,
+          accept,
+          activeTab: 'advanced_settings',
+        }),
         id: GALLERY_BUTTONS.layout,
       },
       renderer: toolbarItem => (
