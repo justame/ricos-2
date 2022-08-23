@@ -9,6 +9,7 @@ import type {
   TiptapEditorPlugin,
   RicosServices,
   ToolbarButton,
+  RicosEditorPlugins,
 } from 'ricos-types';
 import type { PluginServices } from './editorPlugins';
 import { PluginTextButton } from './plugin-text-button';
@@ -26,7 +27,10 @@ export class EditorPlugin implements RicosEditorPlugin {
 
   services: PluginServices;
 
-  static of(plugin: EditorPluginType, services: PluginServices): EditorPlugin {
+  static of(
+    plugin: EditorPluginType,
+    services: PluginServices & { plugins?: RicosEditorPlugins }
+  ): EditorPlugin {
     return new EditorPlugin(plugin, services);
   }
 

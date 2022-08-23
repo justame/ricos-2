@@ -14,6 +14,7 @@ import {
 } from 'wix-rich-content-toolbars-ui';
 import React from 'react';
 import type { PluginContainerData_Width_Type } from 'ricos-schema';
+import { SPOILER_TYPE, VIDEO_TYPE } from 'ricos-content';
 
 export const getToolbarButtons = (config, services): ToolbarButton[] => {
   const { enableCustomUploadOnMobile, getVideoUrl, handleFileSelection, handleFileUpload } =
@@ -26,6 +27,29 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
     handleFileSelection,
     handleFileUpload,
   };
+
+  const shouldShowSpoiler = () => {
+    const spoilerPlugin = services.plugins
+      .asArray()
+      .find(plugin => plugin.getType() === SPOILER_TYPE);
+    return (
+      spoilerPlugin &&
+      (!spoilerPlugin.getConfig().supportedPlugins ||
+        spoilerPlugin.getConfig().supportedPlugins.includes(VIDEO_TYPE))
+    );
+  };
+
+  const settingsVisibilityResolver = {
+    id: 'IS_VIDEO_SETTINGS_BUTTON_VISIBLE',
+    resolve: content => {
+      if (Array.isArray(content) && content.length > 0) {
+        const isCustomVideo = !!content[0].attrs.video?.src?.id;
+        return shouldShowSpoiler() || isCustomVideo;
+      }
+      return false;
+    },
+  };
+
   return [
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SIZE,
@@ -59,6 +83,9 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
         id: videoModals.settings,
         Component: VideoSettingsModal,
       },
+      attributes: {
+        visible: settingsVisibilityResolver,
+      },
       command: ({ isMobile, node }) => {
         modals?.openModal(videoModals.settings, {
           componentProps: {
@@ -71,6 +98,9 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
+      attributes: {
+        visible: settingsVisibilityResolver,
+      },
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.REPLACE,

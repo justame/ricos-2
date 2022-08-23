@@ -20,7 +20,7 @@ export class PluginCollisionError extends Error {}
 export class EditorPlugins implements RicosEditorPlugins {
   private plugins: RicosEditorPlugin[] = [];
 
-  private services: PluginServices;
+  private services: PluginServices & { plugins?: RicosEditorPlugins };
 
   private toolbarSettings: ToolbarSettings;
 
@@ -32,7 +32,7 @@ export class EditorPlugins implements RicosEditorPlugins {
   }
 
   register(plugin: EditorPluginType) {
-    const candidate = EditorPlugin.of(plugin, this.services);
+    const candidate = EditorPlugin.of(plugin, { ...this.services, plugins: this });
     const duplicate = this.hasDuplicate(candidate);
     if (duplicate) {
       throw new PluginCollisionError(

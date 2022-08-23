@@ -33,6 +33,8 @@
 - `ricos-plugins`
   - [#4442](https://github.com/wix/ricos/pull/4442) external formatting toolbar onClick
   - [#4447](https://github.com/wix/ricos/pull/4447) fix link toolbar button config
+- `video`
+  - [#4448](https://github.com/wix/ricos/pull/4448) resolve settings button visibility when there is no spoiler
 
 ## 8.72.32 (Aug 21, 2022)
 
