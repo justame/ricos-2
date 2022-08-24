@@ -1,12 +1,6 @@
 /* eslint-disable fp/no-loops */
-import {
-  findTable,
-  isColumnSelected,
-  isRowSelected,
-  isTableSelected,
-  getCellsInColumn,
-  getCellsInRow,
-} from 'prosemirror-utils';
+import { findTable, getCellsInColumn, getCellsInRow } from 'prosemirror-utils';
+import { isColumnSelected, isRowSelected, isTableSelected } from '../utilities/is-selected';
 import { TableMap, CellSelection } from 'prosemirror-tables';
 import { Decoration } from 'prosemirror-view';
 import styles from './controllers.scss';

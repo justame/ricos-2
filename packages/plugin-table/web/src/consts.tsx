@@ -79,6 +79,8 @@ export const CATEGORY = {
   COLUMN_HEADER: 'column header',
   CELL_FORMATTING: 'cell formatting',
   RANGE: 'range',
+  ROW_RANGE: 'row range',
+  COLUMN_RANGE: 'column range',
 };
 
 export const ACTION = {

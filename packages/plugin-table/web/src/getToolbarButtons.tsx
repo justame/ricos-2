@@ -16,8 +16,9 @@ import {
   VerticalAlignmentButton,
 } from './toolbar/buttons';
 import { BorderPanel, ContextPanel, VerticalAlignmentPanel } from './toolbar/modals';
-import { isColumnSelected, isRowSelected, isTableSelected } from 'prosemirror-utils';
+import { isColumnSelected, isRowSelected, isTableSelected } from './tiptap/utilities/is-selected';
 import { TIPTAP_TABLE_CELL_TYPE, TIPTAP_TABLE_TYPE } from 'wix-rich-content-common';
+import { getRowsAndColsInSelection } from './tiptap/utilities/getRowsAndColsInSelection';
 
 export const getToolbarButtons = (config, services): ToolbarButton[] => {
   return [
@@ -182,7 +183,7 @@ const getCellAlignmentResolver = {
 const selectedNodeResolver = {
   id: 'selectedNode',
   resolve: (_, __, editor) => {
-    const { selection } = editor?.state || {};
+    const { selection } = editor.state;
     const node = selection?.$anchor?.path?.find(node => node?.type?.name === TIPTAP_TABLE_TYPE);
     if (node && isTableSelected(selection)) {
       return node;
@@ -195,7 +196,7 @@ const selectedNodeResolver = {
 const isTableSelectedResolver = {
   id: 'isTableSelected',
   resolve: (_, __, editor) => {
-    const { selection } = editor?.state || {};
+    const { selection } = editor.state;
     return isTableSelected(selection);
   },
 };
@@ -203,14 +204,21 @@ const isTableSelectedResolver = {
 const getSelectionCategoryResolver = {
   id: 'getSelectedCategory',
   resolve: (_, __, editor) => {
-    const { selection } = editor?.state || {};
+    const { selection } = editor.state;
     const isColSelected = selection.isColSelection?.();
     const isRowSelected = selection.isRowSelection?.();
     const isEntireTableSelected = isTableSelected(selection);
+    const { rows, cols } = getRowsAndColsInSelection(editor.state);
+    const isMultipleRowsSelected = rows.length > 1;
+    const isMultipleColsSelected = cols.length > 1;
+
     return (
       (isEntireTableSelected && CATEGORY.ENTIRE_TABLE) ||
       (isColSelected && CATEGORY.COLUMN) ||
       (isRowSelected && CATEGORY.ROW) ||
+      (isMultipleRowsSelected && isMultipleColsSelected && CATEGORY.RANGE) ||
+      (isMultipleRowsSelected && CATEGORY.ROW_RANGE) ||
+      (isMultipleColsSelected && CATEGORY.COLUMN_RANGE) ||
       CATEGORY.CELL_BORDER
     );
   },

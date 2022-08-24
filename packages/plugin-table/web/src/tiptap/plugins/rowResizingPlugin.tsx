@@ -93,6 +93,7 @@ function handleMouseDown(view, event, editor, key) {
     const pluginState = key.getState(view.state);
     if (pluginState.dragging) {
       view.dispatch(view.state.tr.setMeta(key, { setDragging: null }));
+      updateRowsHeight(view);
     }
   }
   function move(event) {
@@ -106,6 +107,23 @@ function handleMouseDown(view, event, editor, key) {
   window.addEventListener('mousemove', move);
   event.preventDefault();
   return true;
+}
+
+function updateRowsHeight(view) {
+  const table = findTable(view.state.selection);
+  if (table) {
+    const rowsHeight: number[] = [];
+    table.node.content.forEach(node => rowsHeight.push(node.attrs.height));
+    view.dispatch(
+      view.state.tr.setNodeMarkup(table.pos, null, {
+        ...table.node.attrs,
+        dimensions: {
+          ...table.node.attrs.dimensions,
+          rowsHeight,
+        },
+      })
+    );
+  }
 }
 
 function currentRowHeight(view, cellPos, rowAttrs) {

@@ -1,4 +1,4 @@
-import { TIPTAP_TABLE_TYPE, TIPTAP_TABLE_ROW_TYPE, TIPTAP_TABLE_CELL_TYPE } from 'ricos-content';
+import { TIPTAP_TABLE_TYPE, TIPTAP_TABLE_ROW_TYPE } from 'ricos-content';
 import tableDataDefaults from 'ricos-schema/dist/statics/table.defaults.json';
 import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-types';
 import { getExtensionField, callOrReturn } from '@tiptap/core';
@@ -22,13 +22,9 @@ import {
   removeColumnAt,
   removeRowAt,
   addRowAt,
-  findCellClosestToPos,
   findTable,
-  getSelectionRect,
 } from 'prosemirror-utils';
 import {
-  tableEditing,
-  // columnResizing,
   goToNextCell,
   addColumnBefore,
   addColumnAfter,
@@ -42,7 +38,6 @@ import {
   mergeCells,
   splitCell,
   toggleHeader,
-  toggleHeaderCell,
   fixTables,
   CellSelection,
   selectedRect,
@@ -51,6 +46,7 @@ import {
 } from 'prosemirror-tables';
 import { TRANSACTION_META_KEYS } from './consts';
 import { setCellAttr } from './utilities/commands';
+import { getRowsAndColsInSelection } from './utilities/getRowsAndColsInSelection';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -327,10 +323,38 @@ export const tableExtension = {
           setTableRowHeight:
             (height, pos, node) =>
             ({ tr, dispatch }) => {
-              // eslint-disable-next-line no-param-reassign
-              tr = tr.setNodeMarkup(pos, undefined, { ...node.attrs, height });
+              tr.setNodeMarkup(pos, undefined, { ...node.attrs, height });
               dispatch(tr);
             },
+          distributeRows:
+            () =>
+            ({ tr, dispatch, state }) => {
+              const rect = selectedRect(state);
+              const { rows } = getRowsAndColsInSelection(state);
+              const table = rect.table;
+              const totalHeight = [...table.attrs.dimensions.rowsHeight]
+                .splice(rows[0], rows[rows.length - 1])
+                .reduce((curr, acc) => curr + acc, 0);
+              const newHeight = totalHeight / rows.length;
+              const rowsHeight = table.attrs.dimensions.rowsHeight.map((height, index) =>
+                index >= rows[0] && index <= rows[rows.length - 1] ? newHeight : height
+              );
+              table.content.forEach((node, pos, index) => {
+                rows.includes(index) &&
+                  tr.setNodeMarkup(pos + rect.tableStart, undefined, {
+                    ...node.attrs,
+                    height: newHeight,
+                  });
+              });
+              tr.setNodeMarkup(rect.tableStart - 1, undefined, {
+                ...table.attrs,
+                dimensions: { ...table.attrs.dimensions, rowsHeight },
+              });
+              dispatch(tr);
+            },
+          distributeColumns:
+            () =>
+            ({ tr, dispatch, state }) => {},
           setEditCell:
             () =>
             ({ tr, dispatch, state }) => {
