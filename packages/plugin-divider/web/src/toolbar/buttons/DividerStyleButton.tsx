@@ -16,6 +16,7 @@ export const DividerStyleButton: FC<Props> = ({ toolbarItem, dataHook, id }) => 
   const { t, isMobile } = useContext(RicosContext) || {};
   const modalService = useContext(ModalContext) || {};
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
+  const [isButtonActive, setIsButtonActive] = useState(false);
   const getSelectedStyle: () => string = () => toolbarItem?.attributes.nodeStyle || 'SINGLE';
   const SelectedStyleIcon =
     dividerStyleData.find(({ commandKey }) => commandKey === getSelectedStyle())?.icon ||
@@ -42,9 +43,17 @@ export const DividerStyleButton: FC<Props> = ({ toolbarItem, dataHook, id }) => 
         });
   };
 
+  modalService.onModalOpened(() => {
+    modalService.isModalOpen(id) && setIsButtonActive(true);
+  });
+  modalService.onModalClosed(() => {
+    !modalService.isModalOpen(id) && setIsButtonActive(false);
+  });
+
   return (
     <DropdownButton
       dataHook={dataHook}
+      active={isButtonActive}
       onClick={onClick}
       setRef={setReferenceElement}
       Icon={() => <SelectedStyleIcon width={36} />}

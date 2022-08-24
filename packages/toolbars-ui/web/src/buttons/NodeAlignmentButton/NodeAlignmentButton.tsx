@@ -15,6 +15,7 @@ const NodeAlignmentButton: FC<Props> = ({ toolbarItem, dataHook, id }) => {
   const { t, languageDir, isMobile } = useContext(RicosContext) || {};
   const modalService = useContext(ModalContext) || {};
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
+  const [isButtonActive, setIsButtonActive] = useState(false);
   const getSelectedAlignment = () =>
     toolbarItem?.attributes.nodeAlignment || getDefaultAlignment(languageDir);
   const selectedAlignment = getSelectedAlignment();
@@ -39,9 +40,17 @@ const NodeAlignmentButton: FC<Props> = ({ toolbarItem, dataHook, id }) => {
         });
   };
 
+  modalService.onModalOpened(() => {
+    modalService.isModalOpen(id) && setIsButtonActive(true);
+  });
+  modalService.onModalClosed(() => {
+    !modalService.isModalOpen(id) && setIsButtonActive(false);
+  });
+
   return (
     <DropdownButton
       dataHook={dataHook}
+      active={isButtonActive}
       onClick={onClick}
       setRef={setReferenceElement}
       Icon={SelectedAlignmentIcon}

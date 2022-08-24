@@ -14,7 +14,7 @@ const DropdownArrowIcon = props => (
       fillRule="evenodd"
       clipRule="evenodd"
       d="M12.3535 6.35352L8.35352 10.3535L4.35352 6.35352L5.06052 5.64652L8.35352 8.93952L11.6465 5.64652L12.3535 6.35352Z"
-      fill="black"
+      fill="currentColor"
     />
   </svg>
 );

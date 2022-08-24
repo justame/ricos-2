@@ -16,6 +16,7 @@ const BorderButton: FC<Props> = ({ dataHook, toolbarItem }) => {
   const modalService = useContext(ModalContext) || {};
 
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
+  const [isButtonActive, setIsButtonActive] = useState(false);
 
   const isMultipleSelection = true; // TODO: selectedCells.length > 1
 
@@ -40,6 +41,13 @@ const BorderButton: FC<Props> = ({ dataHook, toolbarItem }) => {
       : closeModal();
   };
 
+  modalService.onModalOpened(() => {
+    modalService.isModalOpen(TABLE_BUTTONS_MODALS_ID.BORDER) && setIsButtonActive(true);
+  });
+  modalService.onModalClosed(() => {
+    !modalService.isModalOpen(TABLE_BUTTONS_MODALS_ID.BORDER) && setIsButtonActive(false);
+  });
+
   return !isMultipleSelection ? (
     <ToggleButton
       Icon={BorderIcon}
@@ -50,6 +58,7 @@ const BorderButton: FC<Props> = ({ dataHook, toolbarItem }) => {
   ) : (
     <DropdownButton
       dataHook={dataHook}
+      active={isButtonActive}
       onClick={openBorderPanel}
       setRef={setReferenceElement}
       Icon={BorderIcon}

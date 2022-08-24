@@ -5,7 +5,7 @@ const DashedLineStyle = props => (
     width="126"
     height="1"
     viewBox="0 0 126 1"
-    fill="none"
+    fill="currentColor"
     xmlns="http://www.w3.org/2000/svg"
     {...props}
   >

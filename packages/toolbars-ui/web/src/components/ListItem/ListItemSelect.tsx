@@ -1,5 +1,5 @@
 import React from 'react';
-import type { FC, KeyboardEventHandler } from 'react';
+import type { FC } from 'react';
 import styles from './list-item-select.scss';
 import Tooltip from 'wix-rich-content-common/libs/Tooltip';
 import classNames from 'classnames';

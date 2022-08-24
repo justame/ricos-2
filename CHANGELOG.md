@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `plugin-toolbar`
+  - [#4468](https://github.com/wix/ricos/pull/4468) fix active icon colors
+
 </details>
 
 ## 8.72.36 (Aug 24, 2022)

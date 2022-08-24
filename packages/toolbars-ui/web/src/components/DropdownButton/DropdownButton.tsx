@@ -8,12 +8,21 @@ type Props = {
   Icon: (props?: any) => JSX.Element;
   onClick: () => void;
   tooltip: string;
+  active: boolean;
   dataHook?: string;
   label?: string;
   setRef: React.Dispatch<React.SetStateAction<HTMLDivElement | null>>;
 };
 
-const DropdownButton: React.FC<Props> = ({ Icon, dataHook, tooltip, onClick, label, setRef }) => {
+const DropdownButton: React.FC<Props> = ({
+  Icon,
+  dataHook,
+  tooltip,
+  onClick,
+  label,
+  active,
+  setRef,
+}) => {
   const { isMobile } = useContext(RicosContext) || {};
 
   return (
@@ -23,6 +32,7 @@ const DropdownButton: React.FC<Props> = ({ Icon, dataHook, tooltip, onClick, lab
         tooltip={tooltip}
         onClick={onClick}
         label={label}
+        active={active}
         Icon={Icon}
         dataHook={dataHook}
       >

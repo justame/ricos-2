@@ -21,6 +21,7 @@ export const PollLayoutButton: FC<Props> = ({ toolbarItem, id, dataHook }) => {
   const node = toolbarItem.attributes.selectedNode;
   const getSelectedLayout: () => string = () => node?.attrs?.layout?.poll?.type || 'GRID';
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
+  const [isButtonActive, setIsButtonActive] = useState(false);
   const closeModal = () => modalService.closeModal(id);
   const selectedLayout = layoutData.find(({ commandKey }) => commandKey === getSelectedLayout());
   const Icon = selectedLayout?.icon || LayoutGridIcon;
@@ -66,9 +67,18 @@ export const PollLayoutButton: FC<Props> = ({ toolbarItem, id, dataHook }) => {
       });
   }, []);
 
+  modalService.onModalOpened(() => {
+    modalService.isModalOpen(id) && setIsButtonActive(true);
+  });
+  modalService.onModalClosed(() => {
+    !modalService.isModalOpen(id) && setIsButtonActive(false);
+  });
+
+
   return (
     <DropdownButton
       dataHook={dataHook}
+      active={isButtonActive}
       onClick={onClick}
       setRef={setReferenceElement}
       Icon={Icon}
