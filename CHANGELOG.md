@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :house: Internal
+
+- `storybook`
+  - [#4460](https://github.com/wix/ricos/pull/4460) add tiptap inside container story
+
 </details>
 
 ## 8.72.35 (Aug 24, 2022)
