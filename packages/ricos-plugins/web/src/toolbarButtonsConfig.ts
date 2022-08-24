@@ -160,7 +160,7 @@ export const getToolbarButtonsConfig: (
         },
       insertAnchor:
         ({ editorCommands, attributes: { selectedNode } }) =>
-        anchor => {
+        ({ anchor }) => {
           editorCommands
             .chain()
             .focus()

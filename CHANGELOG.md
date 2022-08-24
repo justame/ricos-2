@@ -24,6 +24,9 @@
 - `divider/image`
   - [#4461](https://github.com/wix/ricos/pull/4461) fix divider size selection state & replaced image toolbar edit icon
 
+- `ricos-plugins`
+  - [#4462](https://github.com/wix/ricos/pull/4462) fix insert anchor command
+
 ## :house: Internal
 
 - `storybook`
