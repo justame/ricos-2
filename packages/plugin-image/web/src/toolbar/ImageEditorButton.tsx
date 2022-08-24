@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
 import type { FC } from 'react';
-import { ToggleButton } from 'wix-rich-content-toolbars-ui';
+import { ToggleButton, EditIcon } from 'wix-rich-content-toolbars-ui';
 import { RicosContext, ModalContext } from 'ricos-context';
-import { EditImageIcon } from '../icons';
 import type { IToolbarItem } from 'ricos-types';
 
 interface Props {
@@ -23,7 +22,7 @@ const ImageEditorButton: FC<Props> = ({ toolbarItem, dataHook }) => {
 
   return (
     <ToggleButton
-      Icon={EditImageIcon}
+      Icon={EditIcon}
       onClick={() => onClick({ modalService, isMobile, nodeId, src })}
       dataHook={dataHook}
       tooltip={t('ImageEditorButton_Tooltip')}

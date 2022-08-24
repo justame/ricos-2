@@ -22,7 +22,7 @@ const getNodeSizeResolver = {
   id: DIVIDER_SIZE_RESOLVER_ID,
   resolve: content => {
     if (Array.isArray(content) && content.length > 0) {
-      return content[0].type === TIPTAP_DIVIDER_TYPE && content[0].attrs?.width;
+      return content[0].type.name === TIPTAP_DIVIDER_TYPE && content[0].attrs?.width;
     } else {
       return undefined;
     }

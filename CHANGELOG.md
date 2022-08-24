@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `divider/image`
+  - [#4461](https://github.com/wix/ricos/pull/4461) fix divider size selection state & replaced image toolbar edit icon
+
 ## :house: Internal
 
 - `storybook`
