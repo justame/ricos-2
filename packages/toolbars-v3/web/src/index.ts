@@ -22,6 +22,8 @@ import {
   isTextContainsUnorderedListResolver,
   isTextInSelection,
   isTextStylesMatchDocumentStylesResolver,
+  isUndoStackEmptyResolver,
+  isRedoStackEmptyResolver,
 } from './resolvers/tiptapResolvers';
 
 export const resolversById = {
@@ -47,6 +49,8 @@ export const resolversById = {
   [RESOLVERS_IDS.GET_FONT_SIZE_IN_SELECTION]: getFontSizeInSelectionResolver,
   [RESOLVERS_IDS.IS_TEXT_CONTAINS_SPOILER]: isTextContainsSpoilerResolver,
   [RESOLVERS_IDS.IS_TEXT_STYLES_MATCH_DOCUMENT_STYLES]: isTextStylesMatchDocumentStylesResolver,
+  [RESOLVERS_IDS.IS_UNDO_STACK_EMPTY]: isUndoStackEmptyResolver,
+  [RESOLVERS_IDS.IS_REDO_STACK_EMPTY]: isRedoStackEmptyResolver,
 };
 
 export { tiptapStaticToolbarConfig } from './toolbarItemConfig/tiptapToolbarItemConfig';

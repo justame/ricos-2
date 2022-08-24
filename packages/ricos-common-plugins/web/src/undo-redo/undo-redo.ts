@@ -41,8 +41,7 @@ export const pluginUndoRedo: TiptapEditorPlugin = {
       },
       attributes: {
         visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
-        //TODO:
-        // disabled: isUndoStackEmptyResolver,
+        disabled: RESOLVERS_IDS.IS_UNDO_STACK_EMPTY,
       },
       command: (editorCommands: EditorCommands) => () => {
         editorCommands.undo();
@@ -59,8 +58,7 @@ export const pluginUndoRedo: TiptapEditorPlugin = {
       },
       attributes: {
         visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
-        //TODO:
-        // disabled: isRedoStackEmptyResolver,
+        disabled: RESOLVERS_IDS.IS_REDO_STACK_EMPTY,
       },
       command: (editorCommands: EditorCommands) => () => {
         editorCommands.redo();

@@ -167,7 +167,7 @@ export class PluginTextButton implements FormattingToolbarButton {
           : this.button.command?.(editorCommands)({});
       },
       isActive: () => !!attributes.active && !!content.resolve(attributes.active),
-      isDisabled: () => false,
+      isDisabled: () => !!attributes.disabled && !!content.resolve(attributes.disabled),
       dataHook: this.button.presentation?.dataHook,
       name: fromCamelCase[this.button.id] ?? this.button.id,
     };

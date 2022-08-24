@@ -507,12 +507,10 @@ export class RichContentAdapter implements TiptapAdapter {
       return currentTextStyle as TextAlignment;
     },
     isBlockTypeSelected: () => false,
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    isUndoStackEmpty: () => !this.tiptapEditor.can().undo(),
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    isRedoStackEmpty: () => !this.tiptapEditor.can().redo(),
+    isUndoStackEmpty: () =>
+      this.services.content.resolve(resolversById[RESOLVERS_IDS.IS_UNDO_STACK_EMPTY]),
+    isRedoStackEmpty: () =>
+      this.services.content.resolve(resolversById[RESOLVERS_IDS.IS_REDO_STACK_EMPTY]),
     getSelectedData: () => 'blah',
     getPluginsList: () => [],
     scrollToBlock: _blockKey => {},

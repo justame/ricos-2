@@ -639,3 +639,21 @@ export const getAnchorLinkData = TiptapContentResolver.create(
     return false;
   }
 );
+
+export const isUndoStackEmptyResolver = TiptapContentResolver.create(
+  RESOLVERS_IDS.IS_UNDO_STACK_EMPTY,
+  (_, __, editor) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    return !editor?.can().undo();
+  }
+);
+
+export const isRedoStackEmptyResolver = TiptapContentResolver.create(
+  RESOLVERS_IDS.IS_REDO_STACK_EMPTY,
+  (_, __, editor) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    return !editor?.can().redo();
+  }
+);
