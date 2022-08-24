@@ -81,6 +81,11 @@ export type TextBlockType =
   | typeof HEADER_BLOCK.FIVE
   | typeof HEADER_BLOCK.SIX;
 
+export type HeadingType = Omit<
+  TextBlockType,
+  typeof NUMBERED_LIST_TYPE | typeof BLOCKQUOTE | typeof CODE_BLOCK_TYPE | typeof BULLET_LIST_TYPE
+>;
+
 type Selection = {
   isFocused?: boolean;
   isCollapsed?: boolean;
@@ -224,6 +229,7 @@ export interface EditorCommands {
   setBlockType: (type: TextBlockType) => void;
   setTextAlignment: (textAlignment: TextAlignment) => void;
   _setSelection: (blockKey: BlockKey, selection: draftSelection) => void;
+  resetDocumentStyleByNodeType: (type) => void;
   updateDocumentStyle: (documentStyle: DocumentStyle) => void;
   clearSelectedBlocksInlineStyles: (exclude?: string[]) => void;
   getWiredFontStyles: (
@@ -239,4 +245,5 @@ export interface EditorCommands {
     blockKey: string
   ) => PluginsDataMap[K] | Record<string, string>;
   insertText: (text: string) => void;
+  getCurrentHeading: () => HeadingType;
 }

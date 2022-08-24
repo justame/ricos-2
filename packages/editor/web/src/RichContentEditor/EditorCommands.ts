@@ -168,6 +168,7 @@ export const createEditorCommands = (
     saveSelectionState: EditorCommands['saveSelectionState'];
     loadSelectionState: EditorCommands['loadSelectionState'];
     getDocumentStyle: EditorCommands['getDocumentStyle'];
+    resetDocumentStyleByNodeType: EditorCommands['resetDocumentStyleByNodeType'];
     updateDocumentStyle: EditorCommands['updateDocumentStyle'];
     getAnchorBlockInlineStyles: EditorCommands['getAnchorBlockInlineStyles'];
     getInlineStylesInSelection: EditorCommands['getInlineStylesInSelection'];
@@ -229,6 +230,7 @@ export const createEditorCommands = (
       );
     },
     getDocumentStyle: () => documentStyleGetter(),
+    resetDocumentStyleByNodeType: type => {},
     updateDocumentStyle: (documentStyle: DocumentStyle) => {
       if (externalEditorProps.updateDocumentStyle) {
         externalEditorProps.updateDocumentStyle(documentStyle);
@@ -388,6 +390,7 @@ export const createEditorCommands = (
     getEditorState: () => getEditorState(),
     focus: () => {},
     insertText: () => true,
+    getCurrentHeading: () => 'unstyled',
   };
 
   return editorCommands;

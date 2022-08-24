@@ -51,7 +51,7 @@
   height: 20px;
 
   &.mobileToggleButton {
-    width: 32px;
+    min-width: 32px;
     height: 32px;
   }
 }

@@ -344,25 +344,31 @@ export class RichContentAdapter implements TiptapAdapter {
         const blockTypeCommandMap = {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
-          [UNSTYLED]: () => this.tiptapEditor.commands.setParagraph(),
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          [HEADER_BLOCK.ONE]: () => this.tiptapEditor.commands.toggleHeading({ level: 1 }),
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          [HEADER_BLOCK.TWO]: () => this.tiptapEditor.commands.toggleHeading({ level: 2 }),
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          [HEADER_BLOCK.THREE]: () => this.tiptapEditor.commands.toggleHeading({ level: 3 }),
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          [HEADER_BLOCK.FOUR]: () => this.tiptapEditor.commands.toggleHeading({ level: 4 }),
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          [HEADER_BLOCK.FIVE]: () => this.tiptapEditor.commands.toggleHeading({ level: 5 }),
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          [HEADER_BLOCK.SIX]: () => this.tiptapEditor.commands.toggleHeading({ level: 6 }),
+          [UNSTYLED]: () => this.tiptapEditor.chain().focus().setParagraph().run(),
+          [HEADER_BLOCK.ONE]: () =>
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            this.tiptapEditor.chain().focus().toggleHeading({ level: 1 }).run(),
+          [HEADER_BLOCK.TWO]: () =>
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            this.tiptapEditor.chain().focus().toggleHeading({ level: 2 }).run(),
+          [HEADER_BLOCK.THREE]: () =>
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            this.tiptapEditor.chain().focus().toggleHeading({ level: 3 }).run(),
+          [HEADER_BLOCK.FOUR]: () =>
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            this.tiptapEditor.chain().focus().toggleHeading({ level: 4 }).run(),
+          [HEADER_BLOCK.FIVE]: () =>
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            this.tiptapEditor.chain().focus().toggleHeading({ level: 5 }).run(),
+          [HEADER_BLOCK.SIX]: () =>
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            this.tiptapEditor.chain().focus().toggleHeading({ level: 6 }).run(),
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           [BLOCKQUOTE]: () => this.tiptapEditor.commands.toggleBlockquote(),
@@ -468,6 +474,25 @@ export class RichContentAdapter implements TiptapAdapter {
           console.error('Failed to find node and return its data');
         }
       },
+
+      resetDocumentStyleByNodeType: nodeType => {
+        this.tiptapEditor
+          .chain()
+          .focus()
+          .unsetAllMarks()
+          .resetDocumentStyleByNodeType(nodeType)
+          .run();
+      },
+      updateDocumentStyle: _documentStyles => {
+        this.tiptapEditor.commands.updateDocumentStyleBySelectedNode();
+      },
+      clearSelectedBlocksInlineStyles: () => {
+        this.tiptapEditor.commands.unsetAllMarks();
+      },
+
+      getCurrentHeading: () => {
+        return this.services.content.resolve(resolversById[RESOLVERS_IDS.GET_HEADING_IN_SELECTION]);
+      },
     };
   }
 
@@ -560,8 +585,6 @@ export class RichContentAdapter implements TiptapAdapter {
       });
       return node ? convertInlineStylesToCSS(node) : {};
     },
-    updateDocumentStyle: () => {},
-    clearSelectedBlocksInlineStyles: () => {},
     getWiredFontStyles: (customStyles?: RicosCustomStyles, isMobile?: boolean) => {
       const fontStyles = {};
       Object.values(DOC_STYLE_TYPES).forEach((docType: string) => {

@@ -12,4 +12,4 @@ packages/ricos-viewer  @danarish4 @lxgreen @oded-soffrin
 packages/ricos-schema   @maimonav @lxgreen @oded-soffrin
 packages/ricos-content   @maimonav @lxgreen @oded-soffrin
 
-packages/toolbars* @noamtwix @justame
+packages/toolbars* @justame

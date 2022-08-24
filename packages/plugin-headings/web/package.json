@@ -41,7 +41,8 @@
     "wix-rich-content-common": "8.72.36",
     "wix-rich-content-editor-common": "8.72.36",
     "wix-rich-content-plugin-commons": "8.72.36",
-    "wix-rich-content-toolbars-v3": "8.72.36"
+    "wix-rich-content-toolbars-v3": "8.72.36",
+    "wix-rich-content-toolbars-modals": "8.72.36"
   },
   "unpkg": true,
   "publishConfig": {

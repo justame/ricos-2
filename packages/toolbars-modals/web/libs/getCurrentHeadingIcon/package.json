@@ -1,0 +1,5 @@
+{
+    "main": "../../dist/lib/getCurrentHeadingIcon.cjs.js",
+    "module": "../../dist/lib/getCurrentHeadingIcon.js",
+    "types": "../../dist/lib/getCurrentHeadingIcon.d.ts"
+}

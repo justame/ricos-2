@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import styles from './customPanelStyles.scss';
-import { MobilePanel } from 'wix-rich-content-toolbars-modals';
-import { DesktopPanel } from 'wix-rich-content-toolbars-modals';
+import { DesktopPanel, MobilePanel } from '../panels';
 import UpdateHeadingPanel from './UpdateHeadingPanel';
 import classNames from 'classnames';
 import { mergeStyles, GlobalContext, DOC_STYLE_TYPES } from 'wix-rich-content-common';
@@ -26,16 +25,9 @@ class HeadingsPanel extends Component {
     return this.props.onSave({ data: type, clickFromKeyboard });
   };
 
-  onUpdateHeading = type => {
-    const { onToolbarButtonClick, documentStyle, currentInlineStyles } = this.props;
-    onToolbarButtonClick?.('Update ' + type);
+  onUpdateHeading = () => {
     this.setState({ openOption: '' });
-    const omitValues = Object.entries(currentInlineStyles)
-      .filter(([key, value]) => !value)
-      .map(([key, value]) => key);
-    return this.props.onChange({
-      [type]: omit({ ...documentStyle?.[type], ...currentInlineStyles }, omitValues),
-    });
+    return this.props.onChange();
   };
 
   onResetType = type => {
@@ -53,7 +45,7 @@ class HeadingsPanel extends Component {
         optionName={this.props.translateHeading(heading, t)}
         onApply={clickFromKeyboard => this.onSaveHeading(headerType, clickFromKeyboard)}
         onReset={() => this.onResetType(documentStyleType)}
-        onUpdate={() => this.onUpdateHeading(documentStyleType)}
+        onUpdate={() => this.onUpdateHeading()}
         t={this.props.t}
         resetEnabled={() => !isEmpty(documentStyle?.[documentStyleType])}
         updateEnabled={() =>

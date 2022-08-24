@@ -39,6 +39,6 @@ export const pluginHeadings: EditorPluginCreator<HeadingsPluginEditorConfig> = c
     ModalsMap,
     shortcuts: [1, 2, 3, 4, 5, 6].map(getShortcut),
     tiptapExtensions,
-    textButtons: getTextButtons(),
+    textButtons: getTextButtons(config),
   } as TiptapEditorPlugin;
 };

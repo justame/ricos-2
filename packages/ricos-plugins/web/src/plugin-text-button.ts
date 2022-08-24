@@ -141,7 +141,8 @@ export class PluginTextButton implements FormattingToolbarButton {
       tooltip: this.getTooltip(),
       toolbars: [],
       getIcon: () =>
-        this.button.presentation?.icon || this.button.presentation?.getIcon(editorCommands),
+        this.button.presentation?.icon ||
+        this.button.presentation?.getIcon(editorCommands, this.services.t),
       getLabel: () => this.button.id,
       onClick: e => {
         this.services.toolbars.external.publishButtonClick(this.button.id);
@@ -206,7 +207,7 @@ export class PluginTextButtons implements FormattingToolbarButtons {
     editorCommands: EditorCommands
   ): Record<string, ToolbarButtonProps> {
     //TODO: support all buttons
-    const unsupportedTextButtons = ['title', 'headings', 'textHighlight'];
+    const unsupportedTextButtons = ['title', 'textHighlight'];
 
     return this.buttons
       .filter(

@@ -63,7 +63,7 @@ class SetDocAttrStep extends Step {
 }
 
 declare module '@tiptap/core' {
-  interface Commands {
+  interface Commands<ReturnType> {
     styles: {
       /**
        * returns decoration object from selected node according to ricos-styles
@@ -74,7 +74,15 @@ declare module '@tiptap/core' {
       /**
        * updates the document style
        */
-      updateDocumentStyle: (documentStyle: DocumentStyle) => Command;
+      updateDocumentStyle: (documentStyle: DocumentStyle) => ReturnType;
+      /**
+       * updates the document style according to the selected node
+       */
+      updateDocumentStyleBySelectedNode: () => ReturnType;
+      /**
+       * reset the document style of a given nodeType
+       */
+      resetDocumentStyleByNodeType: (nodeType: string) => ReturnType;
     };
   }
 }

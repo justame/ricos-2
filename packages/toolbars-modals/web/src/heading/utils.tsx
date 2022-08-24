@@ -1,5 +1,5 @@
 import React from 'react';
-import { hasStyleChanges } from '../../../modals/utils';
+import { hasStyleChanges } from '../utils';
 import styles from './CustomHeadingButton.scss';
 
 export const headingsMap = {

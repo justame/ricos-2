@@ -24,6 +24,11 @@ export type LinkPanelData = {
   onAddPluginLink: (data: AddLinkData) => void;
 };
 
+type HeadingsData = {
+  customHeadings: string[];
+  allowHeadingCustomization: boolean;
+};
+
 export type ToolbarContextType = {
   contentId: string;
   isMobile: boolean;
@@ -32,6 +37,7 @@ export type ToolbarContextType = {
   helpers: Helpers;
   plugins: EditorPlugin[];
   linkPanelData: LinkPanelData | undefined;
+  headingsData: HeadingsData | undefined;
   linkSettings: LinkSettings;
   experiments: AvailableExperiments;
   toolbarSettings: ToolbarSettings;
@@ -56,6 +62,7 @@ export const ToolbarContext = React.createContext<ToolbarContextType>({
   helpers: {},
   plugins: [],
   linkPanelData: undefined,
+  headingsData: undefined,
   linkSettings: {},
   experiments: {},
   toolbarSettings: {},

@@ -1,7 +1,28 @@
-import type { FormattingToolbarButtonConfig } from 'ricos-types';
+import type {
+  FormattingToolbarButtonConfig,
+  EditorCommands,
+  TranslationFunction,
+} from 'ricos-types';
+import type { HeadingsPluginEditorConfig } from './types';
 import { RESOLVERS_IDS } from 'wix-rich-content-toolbars-v3/libs/resolvers-ids';
+import { getCurrentHeadingIcon } from 'wix-rich-content-toolbars-modals/libs/getCurrentHeadingIcon';
+import HeadingPanelComponent from './HeadingsPanelComponent';
 
-export const getTextButtons = (): FormattingToolbarButtonConfig[] => {
+const HEADINGS_MODAL_ID = 'headingsModal';
+
+type GetIconType = (
+  editorCommands: EditorCommands,
+  t: TranslationFunction
+) => (props) => JSX.Element;
+
+const getHeadingsIcon = (isCustomHeadings: boolean): GetIconType => {
+  return getCurrentHeadingIcon(isCustomHeadings);
+};
+
+export const getTextButtons = (
+  config?: HeadingsPluginEditorConfig
+): FormattingToolbarButtonConfig[] => {
+  const isCustomHeadings = !!config?.allowHeadingCustomization;
   return [
     {
       id: 'headings',
@@ -9,52 +30,17 @@ export const getTextButtons = (): FormattingToolbarButtonConfig[] => {
       presentation: {
         dataHook: 'headingsDropdownButton',
         tooltip: 'FormattingToolbar_TextStyleButton_Tooltip',
+        getIcon: getHeadingsIcon(isCustomHeadings),
       },
       attributes: {
         isStylesMatch: RESOLVERS_IDS.IS_TEXT_STYLES_MATCH_DOCUMENT_STYLES,
         visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
         selectedHeading: RESOLVERS_IDS.GET_HEADING_IN_SELECTION,
       },
-      commands: {
-        setHeading:
-          ({ editorCommands }) =>
-          heading => {
-            if (heading === 'unstyled') {
-              editorCommands.chain().focus().setParagraph().run();
-            } else {
-              const headingMap = {
-                'header-one': 1,
-                'header-two': 2,
-                'header-three': 3,
-                'header-four': 4,
-                'header-five': 5,
-                'header-six': 6,
-              };
-              const headingLevel = headingMap[heading];
-              editorCommands.chain().focus().toggleHeading({ level: headingLevel }).run();
-            }
-          },
-        setAndSaveHeading:
-          ({ editorCommands }) =>
-          () => {
-            editorCommands.chain().focus().updateDocumentStyleBySelectedNode().run();
-          },
-
-        resetToDefaultsByNodeType: ({ editorCommands }) => {
-          return nodeType => {
-            return editorCommands
-              .chain()
-              .focus()
-              .unsetAllMarks()
-              .resetDocumentStyleByNodeType(nodeType)
-              .run();
-          };
-        },
-        removeInlineStyles:
-          ({ editorCommands }) =>
-          () => {
-            editorCommands.chain().focus().unsetAllMarks().run();
-          },
+      modal: {
+        id: HEADINGS_MODAL_ID,
+        Component: HeadingPanelComponent(isCustomHeadings ? 230 : 143),
+        layout: 'toolbar',
       },
     },
     {
