@@ -27,7 +27,7 @@ const toParagraphNode =
 
 export const blockquoteConverter: TiptapNodeConverter = {
   toTiptap: {
-    type: Node_Type.BLOCKQUOTE,
+    types: [Node_Type.BLOCKQUOTE],
     convert: (node: BlockquoteNode, visit: (node: ParagraphNode) => TiptapNode[]) => {
       const {
         id,
@@ -52,7 +52,7 @@ export const blockquoteConverter: TiptapNodeConverter = {
     },
   },
   fromTiptap: {
-    type: Node_Type.BLOCKQUOTE,
+    types: [Node_Type.BLOCKQUOTE],
     convert: (node: TiptapNode, visit: (node: TiptapNode) => Node[]) => {
       const { id, style, paragraphId, textStyle, indentation } = node.attrs || {};
       const paragraphNode = toParagraphNode({

@@ -5,7 +5,7 @@ import type { TiptapNodeConverter, TiptapNode } from '../types';
 
 export const fileUploadConverter: TiptapNodeConverter = {
   toTiptap: {
-    type: Node_Type.FILE,
+    types: [Node_Type.FILE],
     convert: (node: FileNode) => ({
       type: Node_Type.FILE,
       attrs: {
@@ -15,7 +15,7 @@ export const fileUploadConverter: TiptapNodeConverter = {
     }),
   },
   fromTiptap: {
-    type: Node_Type.FILE,
+    types: [Node_Type.FILE],
     convert: (node: TiptapNode) => {
       const { id, ...data } = node.attrs || {};
       return {

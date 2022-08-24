@@ -5,7 +5,7 @@ import type { TiptapNodeConverter, TiptapNode } from '../types';
 
 export const mapConverter: TiptapNodeConverter = {
   toTiptap: {
-    type: Node_Type.MAP,
+    types: [Node_Type.MAP],
     convert: (node: MapNode) => ({
       type: Node_Type.MAP,
       attrs: {
@@ -15,7 +15,7 @@ export const mapConverter: TiptapNodeConverter = {
     }),
   },
   fromTiptap: {
-    type: Node_Type.MAP,
+    types: [Node_Type.MAP],
     convert: (node: TiptapNode) => {
       const { id, ...data } = node.attrs || {};
       return {

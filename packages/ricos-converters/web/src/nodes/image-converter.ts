@@ -4,7 +4,7 @@ import type { TiptapNodeConverter, TiptapNode } from '../types';
 
 export const imageConverter: TiptapNodeConverter = {
   toTiptap: {
-    type: Node_Type.IMAGE,
+    types: [Node_Type.IMAGE],
     convert: (node: ImageNode) => ({
       type: Node_Type.IMAGE,
       attrs: {
@@ -14,7 +14,7 @@ export const imageConverter: TiptapNodeConverter = {
     }),
   },
   fromTiptap: {
-    type: Node_Type.IMAGE,
+    types: [Node_Type.IMAGE],
     convert: (node: TiptapNode) => {
       const { id, ...data } = node.attrs || {};
       return {

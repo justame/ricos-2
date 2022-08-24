@@ -6,8 +6,18 @@ import type { TiptapNodeConverter, TiptapNode } from '../types';
 
 export const textConverter: TiptapNodeConverter = {
   toTiptap: {
-    type: Node_Type.TEXT,
+    types: [Node_Type.TEXT],
     convert: (node: TextNode) => {
+      if (node.textData.text === '\n') {
+        return {
+          type: 'hardBreak',
+          text: '\n',
+          marks: [],
+          attrs: {
+            id: '',
+          },
+        };
+      }
       const transforms = new TiptapMarkBidiTransfoms(markConverters).toTiptap();
       return {
         type: 'text',
@@ -20,9 +30,20 @@ export const textConverter: TiptapNodeConverter = {
     },
   },
   fromTiptap: {
-    type: 'text',
+    types: ['hardBreak', 'text'],
     convert: (node: TiptapNode) => {
       const transforms = new TiptapMarkBidiTransfoms(markConverters).fromTiptap();
+      if (node.type === 'hardBreak') {
+        return {
+          type: Node_Type.TEXT,
+          id: '',
+          nodes: [],
+          textData: {
+            text: '\n',
+            decorations: [],
+          },
+        };
+      }
       return {
         type: Node_Type.TEXT,
         id: '',

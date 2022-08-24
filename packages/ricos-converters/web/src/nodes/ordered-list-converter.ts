@@ -5,7 +5,7 @@ import type { TiptapNodeConverter, TiptapNode } from '../types';
 
 export const orderedListConverter: TiptapNodeConverter = {
   toTiptap: {
-    type: Node_Type.ORDERED_LIST,
+    types: [Node_Type.ORDERED_LIST],
     convert: (node: OrderedListNode, visit: (node: OrderedListNode) => TiptapNode[]) => ({
       type: Node_Type.ORDERED_LIST,
       attrs: {
@@ -17,7 +17,7 @@ export const orderedListConverter: TiptapNodeConverter = {
   },
 
   fromTiptap: {
-    type: Node_Type.ORDERED_LIST,
+    types: [Node_Type.ORDERED_LIST],
     convert: (node: TiptapNode, visit: (node: TiptapNode) => OrderedListNode[]) => {
       const { id, ...data } = node.attrs || {};
       return {

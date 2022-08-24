@@ -5,7 +5,7 @@ import type { TiptapNodeConverter, TiptapNode } from '../types';
 
 export const bulletedListConverter: TiptapNodeConverter = {
   toTiptap: {
-    type: Node_Type.BULLETED_LIST,
+    types: [Node_Type.BULLETED_LIST],
     convert: (node: BulletedListNode, visit: (node: BulletedListNode) => TiptapNode[]) => ({
       type: Node_Type.BULLETED_LIST,
       attrs: {
@@ -16,7 +16,7 @@ export const bulletedListConverter: TiptapNodeConverter = {
     }),
   },
   fromTiptap: {
-    type: Node_Type.BULLETED_LIST,
+    types: [Node_Type.BULLETED_LIST],
     convert: (node: TiptapNode, visit: (node: TiptapNode) => ListItemNode[]) => {
       const { attrs = {} } = node;
       const { id, ...data } = attrs;

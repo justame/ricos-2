@@ -5,7 +5,7 @@ import type { TiptapNodeConverter, TiptapNode } from '../types';
 
 export const audioConverter: TiptapNodeConverter = {
   toTiptap: {
-    type: Node_Type.AUDIO,
+    types: [Node_Type.AUDIO],
     convert: (node: AudioNode) => ({
       type: Node_Type.AUDIO,
       attrs: {
@@ -15,7 +15,7 @@ export const audioConverter: TiptapNodeConverter = {
     }),
   },
   fromTiptap: {
-    type: Node_Type.AUDIO,
+    types: [Node_Type.AUDIO],
     convert: (node: TiptapNode) => {
       const { id, ...data } = node.attrs || {};
       return {

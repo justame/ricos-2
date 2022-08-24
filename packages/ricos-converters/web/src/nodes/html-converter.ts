@@ -5,7 +5,7 @@ import type { TiptapNodeConverter, TiptapNode } from '../types';
 
 export const htmlConverter: TiptapNodeConverter = {
   toTiptap: {
-    type: Node_Type.HTML,
+    types: [Node_Type.HTML],
     convert: (node: HtmlNode) => ({
       type: Node_Type.HTML,
       attrs: {
@@ -15,7 +15,7 @@ export const htmlConverter: TiptapNodeConverter = {
     }),
   },
   fromTiptap: {
-    type: Node_Type.HTML,
+    types: [Node_Type.HTML],
     convert: (node: TiptapNode) => {
       const { id, ...data } = node.attrs || {};
       return {

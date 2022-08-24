@@ -14,6 +14,8 @@ const changeTextColor = (title: string, useTiptap, isMobile = false) => {
   cy.updateTextColor();
   cy.percySnapshot(prefix + ' - update color', percyParam);
   if (!title.includes('mobile')) {
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(300);
     cy.setTextStyle(INLINE_TOOLBAR_BUTTONS.COLOR, [20, 5]).resetColor();
     cy.percySnapshot(prefix + ' - final', percyParam);
   }

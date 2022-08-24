@@ -91,14 +91,14 @@ export const fromTiptap = (content: JSONContent): RichContent => {
 };
 
 export const fromTiptapNode = (node: TiptapNode): Node => {
-  const converter = nodeConverters.find(c => c.fromTiptap.type === node.type) || {
+  const converter = nodeConverters.find(c => c.fromTiptap.types.includes(node.type)) || {
     fromTiptap: getUnsupportedFromTiptap(node),
   };
   return converter.fromTiptap.convert(node, tiptapNodeVisitor);
 };
 
 export const toTiptapNode = (node: Node): TiptapNode => {
-  const converter = nodeConverters.find(c => c.toTiptap.type === node.type) || {
+  const converter = nodeConverters.find(c => c.toTiptap.types.includes(node.type)) || {
     toTiptap: getUnsupportedToTiptap(node),
   };
   return converter.toTiptap.convert(node, ricosNodeVisitor);

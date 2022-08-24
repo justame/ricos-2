@@ -5,7 +5,7 @@ import type { TiptapNodeConverter, TiptapNode } from '../types';
 
 export const pollConverter: TiptapNodeConverter = {
   toTiptap: {
-    type: Node_Type.POLL,
+    types: [Node_Type.POLL],
     convert: (node: PollNode) => ({
       type: Node_Type.POLL,
       attrs: {
@@ -15,7 +15,7 @@ export const pollConverter: TiptapNodeConverter = {
     }),
   },
   fromTiptap: {
-    type: Node_Type.POLL,
+    types: [Node_Type.POLL],
     convert: (node: TiptapNode) => {
       const { id, ...data } = node.attrs || {};
       return {

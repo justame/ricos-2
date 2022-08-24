@@ -5,7 +5,7 @@ import type { TiptapNodeConverter, TiptapNode } from '../types';
 
 export const tableRowConverter: TiptapNodeConverter = {
   toTiptap: {
-    type: Node_Type.TABLE_ROW,
+    types: [Node_Type.TABLE_ROW],
     convert: (node: TableRowNode, visit: (node: TableRowNode) => TiptapNode[]) => ({
       type: Node_Type.TABLE_ROW,
       attrs: {
@@ -15,7 +15,7 @@ export const tableRowConverter: TiptapNodeConverter = {
     }),
   },
   fromTiptap: {
-    type: Node_Type.TABLE_ROW,
+    types: [Node_Type.TABLE_ROW],
     convert: (node: TiptapNode, visit: (node: TiptapNode) => Node[]) => {
       const { attrs = {} } = node;
       const { id } = attrs;

@@ -6,7 +6,7 @@ import type { TiptapNodeConverter, TiptapNode } from '../types';
 
 export const paragraphConverter: TiptapNodeConverter = {
   toTiptap: {
-    type: Node_Type.PARAGRAPH,
+    types: [Node_Type.PARAGRAPH],
     convert: (node: ParagraphNode, visit: (node: ParagraphNode) => TiptapNode[]) => {
       const { id, style, paragraphData } = node || {};
       const dir = getTextDirectionFromAlignment(paragraphData?.textStyle?.textAlignment);
@@ -23,7 +23,7 @@ export const paragraphConverter: TiptapNodeConverter = {
     },
   },
   fromTiptap: {
-    type: Node_Type.PARAGRAPH,
+    types: [Node_Type.PARAGRAPH],
     convert: (node: TiptapNode, visit: (node: TiptapNode) => Node[]) => {
       const { id, style, dir: _, ...data } = node.attrs || {};
       return {

@@ -5,7 +5,7 @@ import type { TiptapNodeConverter, TiptapNode } from '../types';
 
 export const headingConverter: TiptapNodeConverter = {
   toTiptap: {
-    type: Node_Type.HEADING,
+    types: [Node_Type.HEADING],
     convert: (node: HeadingNode, visit: (node: HeadingNode) => TiptapNode[]) => {
       const { id, style, headingData } = node || {};
       return {
@@ -20,7 +20,7 @@ export const headingConverter: TiptapNodeConverter = {
     },
   },
   fromTiptap: {
-    type: Node_Type.HEADING,
+    types: [Node_Type.HEADING],
     convert: (node: TiptapNode, visit: (node: TiptapNode) => Node[]) => {
       const { id, style, ...data } = node.attrs || {};
       return {

@@ -15,7 +15,7 @@ import type { TiptapMark, TiptapMarkConverter } from './types';
 export const getUnsupportedDecorationToTiptap = (
   decoration: Decoration
 ): TiptapMarkConverter['toTiptap'] => ({
-  type: decoration.type,
+  types: [decoration.type],
   convert: decoration => {
     const { type, ...data } = decoration;
     return {
@@ -28,7 +28,7 @@ export const getUnsupportedDecorationToTiptap = (
 export const getUnsupportedMarkFromTiptap = (
   mark: TiptapMark
 ): TiptapMarkConverter['fromTiptap'] => ({
-  type: mark.type,
+  types: [mark.type],
   convert: mark => {
     const { type, attrs, ...data } = mark;
     return {

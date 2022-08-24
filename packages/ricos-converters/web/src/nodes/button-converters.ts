@@ -26,22 +26,22 @@ const fromTiptapButtonConvert = (node: TiptapNode): ButtonNode => {
 
 export const linkButtonConverter: TiptapNodeConverter = {
   toTiptap: {
-    type: Node_Type.BUTTON,
+    types: [Node_Type.BUTTON],
     convert: toTiptapButtonConvert,
   },
   fromTiptap: {
-    type: TIPTAP_LINK_BUTTON_TYPE,
+    types: [TIPTAP_LINK_BUTTON_TYPE],
     convert: fromTiptapButtonConvert,
   },
 };
 
 export const actionButtonConverter: TiptapNodeConverter = {
   toTiptap: {
-    type: Node_Type.BUTTON,
+    types: [Node_Type.BUTTON],
     convert: toTiptapButtonConvert,
   },
   fromTiptap: {
-    type: TIPTAP_ACTION_BUTTON_TYPE,
+    types: [TIPTAP_ACTION_BUTTON_TYPE],
     convert: fromTiptapButtonConvert,
   },
 };

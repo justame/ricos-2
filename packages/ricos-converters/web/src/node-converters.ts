@@ -34,7 +34,7 @@ import type { TiptapNode, TiptapNodeConverter } from './types';
 export const getUnsupportedToTiptap = (node: Node): TiptapNodeConverter['toTiptap'] => {
   const dataProp = Object.keys(node).find(p => p.endsWith(`${toCamelCase(node.type)}Data`));
   return {
-    type: node.type,
+    types: [node.type],
     convert: (node: Node, visit: (node: Node) => TiptapNode[]) => {
       const content = visit(node);
       return {
@@ -52,7 +52,7 @@ export const getUnsupportedToTiptap = (node: Node): TiptapNodeConverter['toTipta
 export const getUnsupportedFromTiptap = (node: TiptapNode): TiptapNodeConverter['fromTiptap'] => {
   const { id, ...data } = node.attrs || {};
   return {
-    type: node.type,
+    types: [node.type],
     convert: (node: TiptapNode, visit: (node: TiptapNode) => Node[]) => ({
       type: node.type as Node_Type,
       id,

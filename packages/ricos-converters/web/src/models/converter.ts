@@ -8,7 +8,7 @@ export interface Tree<T extends ConvertableNode> {
 }
 
 export interface Transform<SrcNode extends ConvertableNode, DestNode extends ConvertableNode> {
-  type: SrcNode['type'];
+  types: SrcNode['type'][];
   convert: (node: SrcNode, visit?: (node: SrcNode) => DestNode[]) => DestNode;
 }
 

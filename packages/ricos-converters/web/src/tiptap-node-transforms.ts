@@ -11,7 +11,7 @@ class ToTiptapNodeTransforms implements Transforms<Node, TiptapNode> {
   }
 
   byType(node: Node): Transform<Node, TiptapNode> {
-    return this.transforms.find(tr => tr.type === node.type) || getUnsupportedToTiptap(node);
+    return this.transforms.find(tr => tr.types.includes(node.type)) || getUnsupportedToTiptap(node);
   }
 }
 
@@ -23,7 +23,9 @@ class FromTiptapNodeTransforms implements Transforms<TiptapNode, Node> {
   }
 
   byType(node: Node): Transform<TiptapNode, Node> {
-    return this.transforms.find(tr => tr.type === node.type) || getUnsupportedFromTiptap(node);
+    return (
+      this.transforms.find(tr => tr.types.includes(node.type)) || getUnsupportedFromTiptap(node)
+    );
   }
 }
 

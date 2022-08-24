@@ -10,7 +10,7 @@ import type { TiptapNode, TiptapNodeConverter } from '../types';
 
 export const collapsibleListConverter: TiptapNodeConverter = {
   toTiptap: {
-    type: Node_Type.COLLAPSIBLE_LIST,
+    types: [Node_Type.COLLAPSIBLE_LIST],
     convert: (node: CollapsibleListNode, visit: (node: CollapsibleListNode) => TiptapNode[]) => ({
       type: Node_Type.COLLAPSIBLE_LIST,
       attrs: {
@@ -21,7 +21,7 @@ export const collapsibleListConverter: TiptapNodeConverter = {
     }),
   },
   fromTiptap: {
-    type: Node_Type.COLLAPSIBLE_LIST,
+    types: [Node_Type.COLLAPSIBLE_LIST],
     convert: (node: TiptapNode, visit: (node: TiptapNode) => Node[]) => {
       const { attrs = {} } = node;
       const { id, ...data } = attrs;
@@ -39,7 +39,7 @@ export const collapsibleListConverter: TiptapNodeConverter = {
 
 export const collapsibleItemConverter: TiptapNodeConverter = {
   toTiptap: {
-    type: Node_Type.COLLAPSIBLE_ITEM,
+    types: [Node_Type.COLLAPSIBLE_ITEM],
     convert: (node: CollapsibleItemNode, visit: (node: CollapsibleItemNode) => TiptapNode[]) => ({
       type: Node_Type.COLLAPSIBLE_ITEM,
       attrs: {
@@ -49,7 +49,7 @@ export const collapsibleItemConverter: TiptapNodeConverter = {
     }),
   },
   fromTiptap: {
-    type: Node_Type.COLLAPSIBLE_ITEM,
+    types: [Node_Type.COLLAPSIBLE_ITEM],
     convert: (node: TiptapNode, visit: (node: TiptapNode) => Node[]) => {
       const { attrs = {} } = node;
       const { id } = attrs;
@@ -64,7 +64,7 @@ export const collapsibleItemConverter: TiptapNodeConverter = {
 
 export const collapsibleItemTitleConverter: TiptapNodeConverter = {
   toTiptap: {
-    type: Node_Type.COLLAPSIBLE_ITEM_TITLE,
+    types: [Node_Type.COLLAPSIBLE_ITEM_TITLE],
     convert: (
       node: CollapsibleItemTitleNode,
       visit: (node: CollapsibleItemTitleNode) => TiptapNode[]
@@ -77,7 +77,7 @@ export const collapsibleItemTitleConverter: TiptapNodeConverter = {
     }),
   },
   fromTiptap: {
-    type: Node_Type.COLLAPSIBLE_ITEM_TITLE,
+    types: [Node_Type.COLLAPSIBLE_ITEM_TITLE],
     convert: (node: TiptapNode, visit: (node: TiptapNode) => Node[]) => {
       const { attrs = {} } = node;
       const { id } = attrs;
@@ -92,7 +92,7 @@ export const collapsibleItemTitleConverter: TiptapNodeConverter = {
 
 export const collapsibleItemBodyConverter: TiptapNodeConverter = {
   toTiptap: {
-    type: Node_Type.COLLAPSIBLE_ITEM_BODY,
+    types: [Node_Type.COLLAPSIBLE_ITEM_BODY],
     convert: (
       node: CollapsibleItemBodyNode,
       visit: (node: CollapsibleItemBodyNode) => TiptapNode[]
@@ -105,7 +105,7 @@ export const collapsibleItemBodyConverter: TiptapNodeConverter = {
     }),
   },
   fromTiptap: {
-    type: Node_Type.COLLAPSIBLE_ITEM_BODY,
+    types: [Node_Type.COLLAPSIBLE_ITEM_BODY],
     convert: (node: TiptapNode, visit: (node: TiptapNode) => Node[]) => {
       const { attrs = {} } = node;
       const { id } = attrs;

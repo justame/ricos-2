@@ -12,7 +12,7 @@ class ToTiptapMarkTransforms implements Transforms<Decoration, TiptapMark> {
 
   byType(decoration: Decoration): Transform<Decoration, TiptapMark> {
     return (
-      this.transforms.find(tr => tr.type === decoration.type) ||
+      this.transforms.find(tr => tr.types.includes(decoration.type)) ||
       getUnsupportedDecorationToTiptap(decoration)
     );
   }
@@ -26,7 +26,9 @@ class FromTiptapMarkTransforms implements Transforms<TiptapMark, Decoration> {
   }
 
   byType(mark: TiptapMark): Transform<TiptapMark, Decoration> {
-    return this.transforms.find(tr => tr.type === mark.type) || getUnsupportedMarkFromTiptap(mark);
+    return (
+      this.transforms.find(tr => tr.types.includes(mark.type)) || getUnsupportedMarkFromTiptap(mark)
+    );
   }
 }
 

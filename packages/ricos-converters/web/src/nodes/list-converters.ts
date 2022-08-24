@@ -11,7 +11,7 @@ const getParagraphTextAlignment = (node: ParagraphNode) =>
 
 export const listItemConverter: TiptapNodeConverter = {
   toTiptap: {
-    type: Node_Type.LIST_ITEM,
+    types: [Node_Type.LIST_ITEM],
     convert: (node: ListItemNode, visit: (node: ListItemNode) => TiptapNode[]) => {
       const paragraphNode = node?.nodes?.[0];
       const text = getParagraphText(paragraphNode);
@@ -29,7 +29,7 @@ export const listItemConverter: TiptapNodeConverter = {
     },
   },
   fromTiptap: {
-    type: Node_Type.LIST_ITEM,
+    types: [Node_Type.LIST_ITEM],
     convert: (node: TiptapNode, visit: (node: TiptapNode) => Node[]) => {
       const { attrs = {} } = node;
       const { id } = attrs;

@@ -5,7 +5,7 @@ import type { TiptapNodeConverter, TiptapNode } from '../types';
 
 export const galleryConverter: TiptapNodeConverter = {
   toTiptap: {
-    type: Node_Type.GALLERY,
+    types: [Node_Type.GALLERY],
     convert: (node: GalleryNode) => ({
       type: Node_Type.GALLERY,
       attrs: {
@@ -15,7 +15,7 @@ export const galleryConverter: TiptapNodeConverter = {
     }),
   },
   fromTiptap: {
-    type: Node_Type.GALLERY,
+    types: [Node_Type.GALLERY],
     convert: (node: TiptapNode) => {
       const { id, ...data } = node.attrs || {};
       return {

@@ -5,7 +5,7 @@ import type { TiptapNodeConverter, TiptapNode } from '../types';
 
 export const dividerConverter: TiptapNodeConverter = {
   toTiptap: {
-    type: Node_Type.DIVIDER,
+    types: [Node_Type.DIVIDER],
     convert: (node: DividerNode) => ({
       type: Node_Type.DIVIDER,
       attrs: {
@@ -15,7 +15,7 @@ export const dividerConverter: TiptapNodeConverter = {
     }),
   },
   fromTiptap: {
-    type: Node_Type.DIVIDER,
+    types: [Node_Type.DIVIDER],
     convert: (node: TiptapNode) => {
       const { id, ...data } = node.attrs || {};
       return {

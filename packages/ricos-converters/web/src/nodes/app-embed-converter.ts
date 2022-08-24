@@ -5,7 +5,7 @@ import type { TiptapNodeConverter, TiptapNode } from '../types';
 
 export const appEmbedConverter: TiptapNodeConverter = {
   toTiptap: {
-    type: Node_Type.APP_EMBED,
+    types: [Node_Type.APP_EMBED],
     convert: (node: AppEmbedNode) => ({
       type: Node_Type.APP_EMBED,
       attrs: {
@@ -15,7 +15,7 @@ export const appEmbedConverter: TiptapNodeConverter = {
     }),
   },
   fromTiptap: {
-    type: Node_Type.APP_EMBED,
+    types: [Node_Type.APP_EMBED],
     convert: (node: TiptapNode) => {
       const { id, ...data } = node.attrs || {};
       return {

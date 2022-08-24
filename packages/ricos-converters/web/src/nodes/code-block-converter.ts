@@ -5,7 +5,7 @@ import type { TiptapNodeConverter, TiptapNode } from '../types';
 
 export const codeBlockConverter: TiptapNodeConverter = {
   toTiptap: {
-    type: Node_Type.CODE_BLOCK,
+    types: [Node_Type.CODE_BLOCK],
     convert: (node: CodeBlockNode, visit: (node: CodeBlockNode) => TiptapNode[]) => ({
       type: Node_Type.CODE_BLOCK,
       attrs: {
@@ -16,7 +16,7 @@ export const codeBlockConverter: TiptapNodeConverter = {
     }),
   },
   fromTiptap: {
-    type: Node_Type.CODE_BLOCK,
+    types: [Node_Type.CODE_BLOCK],
     convert: (node: TiptapNode, visit: (node: TiptapNode) => Node[]) => {
       const { id, ...data } = node.attrs || {};
       return {

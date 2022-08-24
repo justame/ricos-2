@@ -4,7 +4,7 @@ import type { TiptapMarkConverter } from '../types';
 
 export const mentionConverter: TiptapMarkConverter = {
   fromTiptap: {
-    type: Decoration_Type.MENTION,
+    types: [Decoration_Type.MENTION],
     convert: mark => {
       const { attrs = {} } = mark;
       const { mentionId, ...rest } = attrs;
@@ -15,7 +15,7 @@ export const mentionConverter: TiptapMarkConverter = {
     },
   },
   toTiptap: {
-    type: Decoration_Type.MENTION,
+    types: [Decoration_Type.MENTION],
     convert: decoration => {
       const { mentionData } = decoration;
       const { id, ...rest } = mentionData || {};

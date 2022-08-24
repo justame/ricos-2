@@ -3,7 +3,7 @@ import type { TiptapMarkConverter } from '../types';
 
 export const linkConverter: TiptapMarkConverter = {
   fromTiptap: {
-    type: Decoration_Type.LINK,
+    types: [Decoration_Type.LINK],
     convert: mark => {
       const { attrs } = mark;
       return {
@@ -13,7 +13,7 @@ export const linkConverter: TiptapMarkConverter = {
     },
   },
   toTiptap: {
-    type: Decoration_Type.LINK,
+    types: [Decoration_Type.LINK],
     convert: decoration => {
       const { linkData } = decoration;
       return {

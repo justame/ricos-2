@@ -16,3 +16,4 @@ export { overlay } from './overlay';
 // TODO: move to link plugin
 export { link } from './link/link';
 export { anchor } from './link/anchor';
+export { hardBreak } from './hard-break';
