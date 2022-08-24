@@ -61,15 +61,16 @@ const NodeLinkButton: FC<Props> = ({ toolbarItem, context, contentQueryService, 
   const onDone = ({ data }) => {
     pluginsEvents.publishPluginLinkable({
       pluginId: toolbarItem.attributes.selectedNode.type.name,
+      nodeId: toolbarItem.attributes.selectedNode.attrs.id,
       link: data?.url,
       newTab: data.target === '_blank',
       nofollow: data.rel,
     });
 
     if (data.url) {
-      toolbarItem.commands?.insertLink(data);
+      toolbarItem.commands?.insertLink({ value: data });
     } else if (data.anchor) {
-      toolbarItem.commands?.insertAnchor(data);
+      toolbarItem.commands?.insertAnchor({ value: data.anchor });
     }
     modalService.closeModal(LINK_MODAL_ID);
   };

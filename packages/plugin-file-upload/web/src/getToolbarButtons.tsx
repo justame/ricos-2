@@ -46,14 +46,14 @@ export const getToolbarButtons = (config, services, filePluginService): ToolbarB
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.REPLACE,
       tooltip: 'FileUploadReplaceButton_tooltip',
-      command: ({ node }) => {
+      command: ({ attributes: { selectedNode } }) => {
         const { updateService, uploadService } = services;
         if (config.handleFileSelection) {
           config.handleFileSelection(({ data }) => {
             const file = Array.isArray(data) ? data[0] : data;
             updateService.updatePluginData(
               { data: file },
-              node.attrs.id,
+              selectedNode.attrs.id,
               FILE_UPLOAD_TYPE,
               filePluginService
             );
@@ -63,7 +63,7 @@ export const getToolbarButtons = (config, services, filePluginService): ToolbarB
           uploadService.selectFiles(accept, false, (files: File[]) =>
             uploadService.uploadFile(
               files[0],
-              node.attrs.id,
+              selectedNode.attrs.id,
               new Uploader(onFileSelected),
               FILE_UPLOAD_TYPE,
               filePluginService

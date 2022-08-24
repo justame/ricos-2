@@ -45,12 +45,12 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
     {
       id: DIVIDER_BUTTONS.style,
       dataHook: DIVIDER_STYLE_BUTTON_DATA_HOOK,
-      command: ({ lineStyle, editorCommands }) => {
+      command: ({ value, editorCommands }) => {
         editorCommands
           .chain()
           .focus()
           .updateAttributes(TIPTAP_DIVIDER_TYPE, {
-            lineStyle,
+            lineStyle: value,
           })
           .run();
       },
@@ -71,12 +71,12 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
     {
       id: DIVIDER_BUTTONS.size,
       dataHook: DIVIDER_SIZE_BUTTON_DATA_HOOK,
-      command: ({ size, editorCommands }) => {
+      command: ({ value, editorCommands }) => {
         editorCommands
           .chain()
           .focus()
           .updateAttributes(TIPTAP_DIVIDER_TYPE, {
-            width: size,
+            width: value,
           })
           .run();
       },
@@ -97,14 +97,14 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
     {
       id: DIVIDER_SIZE_BUTTON_ID,
       dataHook: DIVIDER_BUTTONS.alignment,
-      command: ({ alignment, editorCommands, node }) => {
-        const nodeContainerData = node.attrs?.containerData;
+      command: ({ value, editorCommands, attributes: { selectedNode } }) => {
+        const nodeContainerData = selectedNode.attrs?.containerData;
         editorCommands
           .chain()
           .focus()
           .updateAttributes(TIPTAP_DIVIDER_TYPE, {
-            alignment,
-            containerData: { ...nodeContainerData, alignment },
+            alignment: value,
+            containerData: { ...nodeContainerData, alignment: value },
           })
           .run();
       },

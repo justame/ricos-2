@@ -66,7 +66,7 @@ const AudioSettingsModal: FC<Props> = ({ nodeId, handleFileSelection, handleFile
   };
 
   const pluginEvents = {
-    onChangePluginSettings: data => pluginsEvents.publishPluginChangeSettings(data),
+    onChangePluginSettings: data => pluginsEvents.publishPluginChangeSettings({ ...data, nodeId }),
   };
 
   return componentData ? (

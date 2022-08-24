@@ -87,8 +87,8 @@ export const getToolbarButtons = (config, services, galleryPluginService): Toolb
     {
       id: GALLERY_BUTTONS.addMedia,
       dataHook: 'baseToolbarButton_add',
-      command: ({ node }) => {
-        handleFileSelection(uploadService, updateService, node);
+      command: ({ attributes: { selectedNode } }) => {
+        handleFileSelection(uploadService, updateService, selectedNode);
       },
       attributes: {
         selectedNode: selectedNodeResolver,
@@ -105,12 +105,12 @@ export const getToolbarButtons = (config, services, galleryPluginService): Toolb
         id: galleryModals.manageMedia,
         Component: GallerySettingsModal,
       },
-      command: ({ isMobile, node }) => {
+      command: ({ isMobile, attributes: { selectedNode } }) => {
         modals?.openModal(galleryModals.manageMedia, {
           componentProps: {
-            nodeId: node.attrs.id,
+            nodeId: selectedNode.attrs.id,
             handleFileSelection: (index?: number) =>
-              handleFileSelection(uploadService, updateService, node, index),
+              handleFileSelection(uploadService, updateService, selectedNode, index),
             handleFileUpload: config.handleFileUpload,
             accept,
             activeTab: 'manage_media',
@@ -130,7 +130,7 @@ export const getToolbarButtons = (config, services, galleryPluginService): Toolb
     {
       id: GALLERY_BUTTONS.layout,
       dataHook: 'baseToolbarButton_layout',
-      command: ({ layout, editorCommands }) => {
+      command: ({ value, editorCommands }) => {
         const {
           selection: { anchor: pos },
         } = editorCommands.state;
@@ -138,7 +138,7 @@ export const getToolbarButtons = (config, services, galleryPluginService): Toolb
           .chain()
           .focus()
           .updateAttributes(TIPTAP_GALLERY_TYPE, {
-            options: layoutRicosData[layout],
+            options: layoutRicosData[value],
           })
           .run();
         setTimeout(() => editorCommands.chain().focus().setNodeSelection(pos).run(), 50);
@@ -202,12 +202,12 @@ export const getToolbarButtons = (config, services, galleryPluginService): Toolb
         id: galleryModals.settings,
         Component: GallerySettingsModal,
       },
-      command: ({ isMobile, node }) => {
+      command: ({ isMobile, attributes: { selectedNode } }) => {
         modals?.openModal(galleryModals.settings, {
           componentProps: {
-            nodeId: node.attrs.id,
+            nodeId: selectedNode.attrs.id,
             handleFileSelection: (index?: number) =>
-              handleFileSelection(uploadService, updateService, node, index),
+              handleFileSelection(uploadService, updateService, selectedNode, index),
             handleFileUpload: config.handleFileUpload,
             accept,
           },

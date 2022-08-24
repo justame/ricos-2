@@ -73,15 +73,15 @@ export class PluginsEvents implements IPluginsEvents {
       .publish({ pluginId, searchTerm });
   }
 
-  publishPluginChangeSettings({ pluginId, actionName, value }) {
+  publishPluginChangeSettings({ pluginId, nodeId, actionName, value }) {
     return this.publishers
       .byTopic('ricos.plugins.functionality.pluginChangeSettings')
-      .publish({ pluginId, actionName, value });
+      .publish({ pluginId, nodeId, actionName, value });
   }
 
-  publishPluginLinkable({ pluginId, category, link, nofollow, newTab, anchor }) {
+  publishPluginLinkable({ pluginId, nodeId, category, link, nofollow, newTab, anchor }) {
     return this.publishers
       .byTopic('ricos.plugins.functionality.pluginLinkable')
-      .publish({ pluginId, category, link, nofollow, newTab, anchor });
+      .publish({ pluginId, nodeId, category, link, nofollow, newTab, anchor });
   }
 }

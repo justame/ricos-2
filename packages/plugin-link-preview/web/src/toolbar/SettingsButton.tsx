@@ -13,15 +13,12 @@ type Props = {
 export const LinkPreviewSettingsButton: FC<Props> = ({ toolbarItem, dataHook }) => {
   const { t, isMobile } = useContext(RicosContext) || {};
   const modalService = useContext(ModalContext) || {};
-  const node = toolbarItem.attributes.selectedNode;
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
 
   return (
     <ToggleButton
       Icon={PluginSettingsIcon}
-      onClick={() =>
-        toolbarItem.commands?.click({ modalService, isMobile, node, referenceElement })
-      }
+      onClick={() => toolbarItem.commands?.click({ modalService, isMobile, referenceElement })}
       dataHook={dataHook}
       tooltip={t('LinkPreview_Settings_Tooltip')}
       setRef={setReferenceElement}

@@ -22,8 +22,8 @@ export const DividerSizeButton: FC<Props> = ({ toolbarItem, dataHook, id }) => {
   const Icon = selectedSize?.icon || SizeMediumIcon;
   const closeModal = () => modalService.closeModal(id);
 
-  const onSizeClick = size => {
-    toolbarItem.commands?.click({ size });
+  const onSizeClick = value => {
+    toolbarItem.commands?.click({ value });
     closeModal();
   };
 

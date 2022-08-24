@@ -6,18 +6,16 @@ import {
   getNodeLinkDataResolver,
 } from 'wix-rich-content-toolbars-v3';
 import { LinkIcon } from 'wix-rich-content-toolbars-ui';
-import type { IToolbarItemConfigTiptap, IPluginsEvents } from 'ricos-types';
+import type { PluginToolbarButtonConfig } from 'ricos-types';
 import { PLUGIN_TOOLBAR_BUTTON_ID } from 'wix-rich-content-editor-common';
 import { createLink } from 'ricos-content/libs/nodeUtils';
 import { convertRelObjectToString, convertRelStringToObject } from 'wix-rich-content-common';
 
 type PluginButtonId = typeof PLUGIN_TOOLBAR_BUTTON_ID[keyof typeof PLUGIN_TOOLBAR_BUTTON_ID];
 
-type IPluginToolbarButtonsConfig = Record<PluginButtonId, IToolbarItemConfigTiptap>;
+type IPluginToolbarButtonsConfig = Record<PluginButtonId, PluginToolbarButtonConfig>;
 
-export const getToolbarButtonsConfig: (
-  pluginsEvents: IPluginsEvents
-) => IPluginToolbarButtonsConfig = pluginsEvents => ({
+export const toolbarButtonsConfig: IPluginToolbarButtonsConfig = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   delete: {
     id: PLUGIN_TOOLBAR_BUTTON_ID.DELETE,
@@ -29,20 +27,9 @@ export const getToolbarButtonsConfig: (
       dataHook: 'blockButton_delete',
     },
     commands: {
-      delete:
-        ({ editorCommands }) =>
-        nodeId => {
-          editorCommands
-            .chain()
-            .focus()
-            .command(({ tr, commands }) => {
-              const $from = tr.selection.$from;
-              const selectedNode = $from.nodeAfter;
-              commands.deleteNode(nodeId);
-              pluginsEvents.publishPluginDelete(selectedNode.type.name);
-            })
-            .run();
-        },
+      delete: ({ editorCommands, attributes: { selectedNode } }) => {
+        editorCommands.chain().focus().deleteNode(selectedNode.attrs.id).run();
+      },
     },
   },
   alignment: {
@@ -55,31 +42,21 @@ export const getToolbarButtonsConfig: (
       dataHook: 'nodeAlignmentButton',
     },
     commands: {
-      setAlignment:
-        ({ editorCommands }) =>
-        alignment => {
-          editorCommands
-            .chain()
-            .focus()
-            .setNodeAlignment(alignment)
-            .command(({ tr, commands }) => {
-              const $from = tr.selection.$from;
-              const selectedNode = $from.nodeAfter;
-              const shouldUpdateSize =
-                selectedNode?.attrs.containerData?.width?.size !== 'ORIGINAL' &&
-                !selectedNode?.attrs.containerData?.width?.custom;
-              shouldUpdateSize && commands.setNodeSize('SMALL');
-              pluginsEvents.publishPluginToolbarClick({
-                pluginId: selectedNode.type.name,
-                nodeId: selectedNode?.attrs.id,
-                buttonName: 'alignment',
-                value: alignment,
-              });
+      setAlignment: ({ editorCommands, node, value }) => {
+        editorCommands
+          .chain()
+          .focus()
+          .setNodeAlignment(value)
+          .command(({ commands }) => {
+            const shouldUpdateSize =
+              node?.attrs.containerData?.width?.size !== 'ORIGINAL' &&
+              !node?.attrs.containerData?.width?.custom;
+            shouldUpdateSize && commands.setNodeSize('SMALL');
 
-              return true;
-            })
-            .run();
-        },
+            return true;
+          })
+          .run();
+      },
     },
   },
   size: {
@@ -92,26 +69,9 @@ export const getToolbarButtonsConfig: (
       dataHook: 'nodeSizeButton',
     },
     commands: {
-      setSize:
-        ({ editorCommands }) =>
-        size => {
-          editorCommands
-            .chain()
-            .focus()
-            .command(({ tr, commands }) => {
-              commands.setNodeSize(size);
-              const $from = tr.selection.$from;
-              const selectedNode = $from.nodeAfter;
-              pluginsEvents.publishPluginToolbarClick({
-                pluginId: selectedNode.type.name,
-                nodeId: selectedNode?.attrs.id,
-                buttonName: 'size',
-                value: size,
-              });
-            })
-            .setNodeAlignment('CENTER')
-            .run();
-        },
+      setSize: ({ editorCommands, value }) => {
+        editorCommands.chain().focus().setNodeSize(value).setNodeAlignment('CENTER').run();
+      },
     },
   },
   settings: {
@@ -150,35 +110,27 @@ export const getToolbarButtonsConfig: (
       linkData: getNodeLinkDataResolver,
     },
     commands: {
-      insertLink:
-        ({ editorCommands, attributes: { selectedNode } }) =>
-        linkData => {
-          const { rel, target, url } = linkData;
-          const relValue = convertRelObjectToString(convertRelStringToObject(rel));
-          const link = createLink({ url, rel: relValue, target });
-          editorCommands.chain().focus().updateAttributes(selectedNode.type.name, { link }).run();
-        },
-      insertAnchor:
-        ({ editorCommands, attributes: { selectedNode } }) =>
-        ({ anchor }) => {
-          editorCommands
-            .chain()
-            .focus()
-            .updateAttributes(selectedNode.type.name, { link: { anchor, target: 'SELF' } })
-            .run();
-        },
-      removeLink:
-        ({ editorCommands, attributes: { selectedNode } }) =>
-        () => {
-          const { link, ...attrs } = selectedNode.attrs;
-          editorCommands.chain().focus().setNodeAttrsById(attrs.id, attrs).run();
-        },
-      removeAnchor:
-        ({ editorCommands, attributes: { selectedNode } }) =>
-        () => {
-          const { link, ...attrs } = selectedNode.attrs;
-          editorCommands.chain().focus().setNodeAttrsById(attrs.id, attrs).run();
-        },
+      insertLink: ({ editorCommands, attributes: { selectedNode }, value }) => {
+        const { rel, target, url } = value;
+        const relValue = convertRelObjectToString(convertRelStringToObject(rel));
+        const link = createLink({ url, rel: relValue, target });
+        editorCommands.chain().focus().updateAttributes(selectedNode.type.name, { link }).run();
+      },
+      insertAnchor: ({ editorCommands, attributes: { selectedNode }, value }) => {
+        editorCommands
+          .chain()
+          .focus()
+          .updateAttributes(selectedNode.type.name, { link: { anchor: value, target: 'SELF' } })
+          .run();
+      },
+      removeLink: ({ editorCommands, attributes: { selectedNode } }) => {
+        const { link, ...attrs } = selectedNode.attrs;
+        editorCommands.chain().focus().setNodeAttrsById(attrs.id, attrs).run();
+      },
+      removeAnchor: ({ editorCommands, attributes: { selectedNode } }) => {
+        const { link, ...attrs } = selectedNode.attrs;
+        editorCommands.chain().focus().setNodeAttrsById(attrs.id, attrs).run();
+      },
     },
   },
   separator: {
@@ -188,4 +140,4 @@ export const getToolbarButtonsConfig: (
     attributes: {},
     commands: {},
   },
-});
+};

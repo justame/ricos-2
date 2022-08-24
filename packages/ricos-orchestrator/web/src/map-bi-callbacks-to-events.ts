@@ -166,16 +166,17 @@ export function mapBiCallbacksToSubscriptions(editorProps: RicosEditorProps, eve
   subscribeCallback(
     'ricos.plugins.functionality.pluginChangeSettings',
     'onChangePluginSettings',
-    ({ pluginId, actionName, value }) => [{ pluginId, actionName, value }]
+    ({ pluginId, nodeId, actionName, value }) => [{ pluginId, nodeId, actionName, value }]
   );
 
   subscribeCallback(
     'ricos.plugins.functionality.pluginLinkable',
     'onPluginAction',
-    ({ pluginId, link, nofollow, newTab, anchor }) => [
+    ({ pluginId, nodeId, link, nofollow, newTab, anchor }) => [
       'addPluginLink',
       {
         plugin_id: pluginId,
+        nodeId,
         params: { category: link ? 'web_address' : 'section', link, nofollow, newTab, anchor },
       },
     ]

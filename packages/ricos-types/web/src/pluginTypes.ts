@@ -92,7 +92,11 @@ import type {
 import type { EditorCommands } from './editorCommandsType';
 import type { ModalConfig } from './modalTypes';
 import type { ToolbarType } from './toolbarEnums';
-import type { FormattingToolbarButtonConfig, IToolbarItem } from './toolbarTypes';
+import type {
+  FormattingToolbarButtonConfig,
+  IToolbarItem,
+  ToolbarItemAttributes,
+} from './toolbarTypes';
 import type { RicosServices } from './services';
 import type { EditorPlugin as DraftEditorPlugin, PluginFunctions } from 'draft-js-plugins-editor';
 import type { KeyboardShortcut } from './shortcuts';
@@ -268,8 +272,13 @@ export type ToolbarButton = {
   icon?: ComponentType;
   tooltip?: string;
   dataHook?: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  command?: (args: Record<string, any>) => void;
+  command?: (args: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+    editorCommands;
+    attributes;
+    value?;
+  }) => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   attributes?: Record<string, { id: string; resolve: (content, services, editor) => any }>;
 };

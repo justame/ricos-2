@@ -28,7 +28,7 @@ export const PollLayoutButton: FC<Props> = ({ toolbarItem, id, dataHook }) => {
   const label = selectedLayout?.text || 'Poll_PollSettings_Tab_Layout_Section_Answers_Layout_Grid';
 
   const onLayoutClick = layout => {
-    toolbarItem.commands?.click({ layout, node });
+    toolbarItem.commands?.click({ value: layout });
     closeModal();
   };
 

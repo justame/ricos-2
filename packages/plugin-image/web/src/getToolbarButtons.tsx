@@ -69,10 +69,10 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
         id: imageModals.imageEditor,
       },
       dataHook: 'imageToolbarButton_image_editor',
-      command: ({ nodeId, src }) => {
+      command: ({ src, attributes: { selectedNode } }) => {
         modals?.openModal(imageModals.imageEditor, {
           componentProps: {
-            nodeId,
+            nodeId: selectedNode.attrs.id,
             src,
             handleFileUpload: config.handleFileUpload,
           },
@@ -107,10 +107,10 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
         Component: ImageSettingsModal,
         id: imageModals.settings,
       },
-      command: ({ isMobile, node }) => {
+      command: ({ isMobile, attributes: { selectedNode } }) => {
         modals?.openModal(imageModals.settings, {
           componentProps: {
-            nodeId: node.attrs.id,
+            nodeId: selectedNode.attrs.id,
           },
           positioning: { placement: 'right' },
           layout: isMobile ? 'fullscreen' : 'drawer',
@@ -123,7 +123,7 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.REPLACE,
       tooltip: 'ReplaceImageButton_Tooltip',
-      command: ({ node }) => {
+      command: ({ attributes: { selectedNode } }) => {
         if (config.handleFileSelection) {
           config.handleFileSelection(
             undefined,
@@ -132,7 +132,7 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
               const file = Array.isArray(data) ? data[0] : data;
               updateService.updatePluginData(
                 { data: file },
-                node.attrs.id,
+                selectedNode.attrs.id,
                 IMAGE_TYPE,
                 imagePluginService
               );
@@ -145,7 +145,7 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
           uploadService.selectFiles(accept, false, (files: File[]) =>
             uploadService.uploadFile(
               files[0],
-              node.attrs.id,
+              selectedNode.attrs.id,
               new Uploader(handleFileUpload),
               IMAGE_TYPE,
               imagePluginService

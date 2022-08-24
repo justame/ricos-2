@@ -29,7 +29,7 @@ export const GalleryLayoutButton: FC<Props> = ({ toolbarItem, dataHook, id }) =>
 
   const closeModal = () => modalService.closeModal(id);
   const onLayoutClick = layout => {
-    toolbarItem.commands?.click({ layout });
+    toolbarItem.commands?.click({ value: layout });
     closeModal();
   };
 

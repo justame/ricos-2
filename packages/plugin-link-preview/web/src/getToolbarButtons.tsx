@@ -25,8 +25,11 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
     {
       id: 'removePreview',
       dataHook: 'baseToolbarButton_replaceToLink',
-      command: ({ editorCommands, node }) => {
-        const link = node.type.name === TIPTAP_EMBED_TYPE ? node.attrs.src : node.attrs.link.url;
+      command: ({ editorCommands, attributes: { selectedNode } }) => {
+        const link =
+          selectedNode.type.name === TIPTAP_EMBED_TYPE
+            ? selectedNode.attrs.src
+            : selectedNode.attrs.link.url;
         editorCommands
           .chain()
           .focus()
@@ -45,13 +48,13 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
         Component: LinkPreviewSettingsModal,
         id: linkPreviewModals.settings,
       },
-      command: ({ isMobile, node, referenceElement }) => {
+      command: ({ isMobile, referenceElement, attributes: { selectedNode } }) => {
         const isModalOpen = modals.isModalOpen(linkPreviewModals.settings);
         isModalOpen
           ? modals.closeModal(linkPreviewModals.settings)
           : modals?.openModal(linkPreviewModals.settings, {
               componentProps: {
-                nodeId: node.attrs.id,
+                nodeId: selectedNode.attrs.id,
                 uiSettings: { linkPanel: config.linkPanelSettings },
               },
               positioning: { placement: 'bottom', referenceElement },

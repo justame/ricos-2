@@ -16,13 +16,13 @@ export const EditHtmlButton: FC<Props> = ({ toolbarItem, dataHook }) => {
   const { t } = useContext(RicosContext) || {};
   const modalService = useContext(ModalContext);
 
-  const nodeAttrs = toolbarItem.attributes.nodeAttrsInSelection;
+  const node = toolbarItem.attributes.selectedNode;
 
   const componentData = {
-    srcType: nodeAttrs.html ? 'html' : 'url',
-    src: nodeAttrs.html || nodeAttrs.url,
+    srcType: node?.attrs?.html ? 'html' : 'url',
+    src: node?.attrs?.html || node?.attrs?.url,
     config: {
-      isAdsense: nodeAttrs.isAdsense,
+      isAdsense: node?.attrs?.isAdsense,
     },
   }; //TODO: use convertor
 

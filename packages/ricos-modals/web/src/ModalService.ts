@@ -11,6 +11,8 @@ import type {
   TopicDescriptor,
 } from 'ricos-types';
 
+const generateKey = () => Math.random().toString(36).substr(2, 9);
+
 type Topics = ['ricos.modals.functionality.modalOpened', 'ricos.modals.functionality.modalClosed'];
 
 const TOPICS: Topics = [
@@ -21,7 +23,8 @@ const TOPICS: Topics = [
 export class RicosModalService
   implements ModalService, PolicySubscriber<Topics>, EventSource<Topics>
 {
-  private modals: ((ModalConfig | Modal) & { state: { isOpen: boolean } })[] = [];
+  private modals: ((ModalConfig | Modal) & { state: { isOpen: boolean; sessionId?: string } })[] =
+    [];
 
   constructor() {
     this.modals = [];
@@ -69,8 +72,11 @@ export class RicosModalService
       return false;
     } else {
       modal.state.isOpen = true;
+      modal.state.sessionId = generateKey();
       Object.keys(config).forEach(key => (modal[key] = config[key]));
-      this.publishers.byTopic('ricos.modals.functionality.modalOpened').publish({ modalId });
+      this.publishers
+        .byTopic('ricos.modals.functionality.modalOpened')
+        .publish({ modalId, sessionId: modal.state.sessionId });
       return true;
     }
   }
@@ -82,7 +88,9 @@ export class RicosModalService
       return false;
     } else {
       this.modals.forEach(modal => modal.id === modalId && (modal.state.isOpen = false));
-      this.publishers.byTopic('ricos.modals.functionality.modalClosed').publish({ id: modalId });
+      this.publishers
+        .byTopic('ricos.modals.functionality.modalClosed')
+        .publish({ id: modalId, sessionId: modal.state.sessionId });
       return true;
     }
   }

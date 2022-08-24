@@ -13,13 +13,11 @@ interface Props {
 const DeleteButton: FC<Props> = ({ toolbarItem, dataHook }) => {
   const { t } = useContext(RicosContext) || {};
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const node = (toolbarItem.attributes as Record<string, any>).selectedNode;
 
-  const nodeId = node?.attrs.id;
   return (
     <ToggleButton
       Icon={TrashIcon}
-      onClick={() => toolbarItem.commands.delete(nodeId)}
+      onClick={() => toolbarItem.commands.delete()}
       dataHook={dataHook}
       tooltip={t('DeleteButton_Tooltip')}
     />

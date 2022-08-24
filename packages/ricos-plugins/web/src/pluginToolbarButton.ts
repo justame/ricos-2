@@ -1,6 +1,6 @@
-import { getToolbarButtonsConfig } from './toolbarButtonsConfig';
+import { toolbarButtonsConfig } from './toolbarButtonsConfig';
 import { toolbarButtonsRenders } from './toolbarButtonsRenders';
-import { alwaysVisibleResolver } from 'wix-rich-content-toolbars-v3';
+import { alwaysVisibleResolver, getNodeInSelectionResolver } from 'wix-rich-content-toolbars-v3';
 import type {
   PluginToolbarButton,
   ToolbarButton,
@@ -60,8 +60,18 @@ export class RicosPluginToolbarButton implements PluginToolbarButton {
   toToolbarItemConfig(): IToolbarItemConfigTiptap {
     const { id, type, icon, tooltip, dataHook, command, attributes = {} } = this.button;
 
-    const toolbarItemConfig = getToolbarButtonsConfig(this.services.pluginsEvents)[id] || {};
+    const toolbarItemConfig = toolbarButtonsConfig[id] || {};
     const { presentation = {}, commands } = toolbarItemConfig;
+
+    const publishPluginToolbarClick = (args, node) => {
+      const { value } = args || {};
+      this.services.pluginsEvents.publishPluginToolbarClick({
+        pluginId: node.type.name,
+        nodeId: node.attrs.id,
+        buttonName: this.button.id,
+        value,
+      });
+    };
 
     return {
       id,
@@ -73,18 +83,33 @@ export class RicosPluginToolbarButton implements PluginToolbarButton {
       },
       attributes: {
         visible: alwaysVisibleResolver,
+        selectedNode: getNodeInSelectionResolver,
         ...toolbarItemConfig.attributes,
         ...attributes,
       },
       commands: command
         ? {
             click:
-              ({ editorCommands }) =>
+              ({ editorCommands, attributes }) =>
               args => {
-                command({ ...this.services, editorCommands, ...args });
+                const node = attributes.selectedNode;
+                command({ ...this.services, editorCommands, attributes, ...args });
+                publishPluginToolbarClick(args, node);
               },
           }
-        : { ...commands },
+        : Object.keys(commands).reduce((acc, key) => {
+            const command = commands[key];
+            return {
+              ...acc,
+              [key]:
+                ({ editorCommands, attributes }) =>
+                args => {
+                  const node = attributes.selectedNode;
+                  command({ ...this.services, editorCommands, attributes, ...args });
+                  publishPluginToolbarClick(args, node);
+                },
+            };
+          }, {}),
     };
   }
 

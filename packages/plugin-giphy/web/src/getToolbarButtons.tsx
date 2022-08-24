@@ -53,7 +53,7 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
         Component: decorateComponentWithProps(InsertModal, { modalId: gifModals.replace }),
         id: gifModals.replace,
       },
-      command: ({ isMobile, node, referenceElement }) => {
+      command: ({ isMobile, referenceElement, attributes: { selectedNode } }) => {
         const { modals } = services;
         if (modals?.isModalOpen(gifModals.replace)) {
           modals.closeModal(gifModals.replace);
@@ -61,8 +61,8 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
           modals?.openModal(gifModals.replace, {
             componentProps: {
               giphySdkApiKey: config?.giphySdkApiKey,
-              componentData: node.attrs, //TODO: convert to draft
-              nodeId: node.attrs.id,
+              componentData: selectedNode.attrs, //TODO: convert to draft
+              nodeId: selectedNode.attrs.id,
             },
             positioning: { placement: 'bottom', referenceElement },
             layout: isMobile ? 'fullscreen' : 'popover',

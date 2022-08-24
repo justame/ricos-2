@@ -12,12 +12,11 @@ type Props = {
 
 export const RemovePreviewButton: FC<Props> = ({ toolbarItem, dataHook }) => {
   const { t } = useContext(RicosContext) || {};
-  const node = toolbarItem.attributes.selectedNode;
 
   return (
     <ToggleButton
       Icon={RemovePreviewIcon}
-      onClick={() => toolbarItem.commands?.click({ node })}
+      onClick={() => toolbarItem.commands?.click()}
       dataHook={dataHook}
       tooltip={t('LinkPreview_RemovePreview_Tooltip')}
     />

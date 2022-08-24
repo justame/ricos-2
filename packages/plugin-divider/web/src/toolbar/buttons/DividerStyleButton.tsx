@@ -25,7 +25,7 @@ export const DividerStyleButton: FC<Props> = ({ toolbarItem, dataHook, id }) => 
   const closeModal = () => modalService.closeModal(id);
 
   const onStyleClick = lineStyle => {
-    toolbarItem.commands?.click({ lineStyle });
+    toolbarItem.commands?.click({ value: lineStyle });
     closeModal();
   };
 

@@ -14,8 +14,7 @@ const ReplaceButton: FC<Props> = ({ toolbarItem, dataHook }) => {
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
   const { t, isMobile } = useContext(RicosContext) || {};
 
-  const onClick = () => toolbarItem.commands.click({ node, referenceElement, isMobile });
-  const node = toolbarItem.attributes.selectedNode;
+  const onClick = () => toolbarItem.commands.click({ referenceElement, isMobile });
 
   return (
     <ToggleButton

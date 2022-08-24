@@ -12,10 +12,10 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
         Component: CollapsibleListSettings,
         id: collapsibleModals.settings,
       },
-      command: ({ isMobile, node }) => {
+      command: ({ isMobile, attributes: { selectedNode } }) => {
         services.modals.openModal(collapsibleModals.settings, {
           componentProps: {
-            nodeId: node.attrs.id,
+            nodeId: selectedNode.attrs.id,
           },
           positioning: { placement: 'right' },
           layout: isMobile ? 'fullscreen' : 'drawer',

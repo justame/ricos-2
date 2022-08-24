@@ -30,7 +30,7 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
       },
       renderer: toolbarItem => <EditHtmlButton toolbarItem={toolbarItem} />,
       attributes: {
-        nodeAttrsInSelection: nodeAttrsInSelectionResolver,
+        selectedNode: selectedNodeResolver,
       },
     },
     {
@@ -98,14 +98,4 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
       id: PLUGIN_TOOLBAR_BUTTON_ID.DELETE,
     },
   ];
-};
-
-const nodeAttrsInSelectionResolver = {
-  id: 'nodeAttrsInSelection',
-  resolve: content => {
-    if (Array.isArray(content) && content.length > 0) {
-      return content[0].attrs;
-    }
-    return false;
-  },
 };

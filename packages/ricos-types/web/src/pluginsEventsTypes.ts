@@ -48,22 +48,26 @@ export interface IPluginsEvents {
 
   publishPluginChangeSettings({
     pluginId,
+    nodeId,
     actionName,
     value,
   }: {
     pluginId: string;
+    nodeId: string;
     actionName: string;
     value: string;
   }): boolean;
 
   publishPluginLinkable({
     pluginId,
+    nodeId,
     link,
     nofollow,
     newTab,
     anchor,
   }: {
     pluginId: string;
+    nodeId: string;
     link?: string;
     nofollow?: boolean;
     newTab?: boolean;

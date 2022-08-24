@@ -48,12 +48,33 @@ export type TiptapCommand = ({
   editorCommands: any;
 }) => (args) => void;
 
+export type ToolbarItemAttributes = Record<string, IContentResolver<TiptapNode[]>>;
+
 export type IToolbarItemConfigTiptap = Modify<
   IToolbarItem,
   {
     // TODO: use RESOLVERS_IDS type instead of string
-    attributes: Record<string, IContentResolver<TiptapNode[]>>;
+    attributes: ToolbarItemAttributes;
     commands: Record<string, TiptapCommand>;
+  }
+>;
+
+export type PluginToolbarButtonConfig = Modify<
+  IToolbarItem,
+  {
+    // TODO: use RESOLVERS_IDS type instead of string
+    attributes: ToolbarItemAttributes;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    commands: Record<
+      string,
+      (args: {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        [key: string]: any;
+        editorCommands;
+        attributes;
+        value?;
+      }) => void
+    >;
   }
 >;
 

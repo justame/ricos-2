@@ -10,19 +10,6 @@ import { PollLayoutButton } from './toolbar/PollLayoutButton';
 import PollLayoutPanel from './toolbar/PollLayoutPanel';
 import { selectedNodeResolver } from 'wix-rich-content-plugin-commons';
 
-const getCommandByTab =
-  (activeTab, modalService) =>
-  ({ isMobile, node }) => {
-    modalService?.openModal(pollModals.settings, {
-      componentProps: {
-        nodeId: node.attrs.id,
-        activeTab,
-      },
-      positioning: { placement: 'right' },
-      layout: isMobile ? 'fullscreen' : 'drawer',
-    });
-  };
-
 export const getToolbarButtons = (config, services): ToolbarButton[] => {
   const { modals } = services;
   return [
@@ -36,13 +23,13 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
         Component: PollLayoutPanel,
         id: POLL_BUTTONS.layout,
       },
-      command: ({ layout, editorCommands, node }) => {
+      command: ({ value, editorCommands, attributes: { selectedNode } }) => {
         editorCommands
           .chain()
           .focus()
           .updateAttributes(TIPTAP_POLL_TYPE, {
             layout: {
-              poll: { ...node.attrs.layout.poll, type: layout },
+              poll: { ...selectedNode.attrs.layout.poll, type: value },
             },
           })
           .run();
@@ -61,7 +48,16 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
         Component: PollSettingsModal,
         id: pollModals.design,
       },
-      command: getCommandByTab(TABS.DESIGN, modals),
+      command: ({ isMobile, attributes: { selectedNode } }) => {
+        modals?.openModal(pollModals.settings, {
+          componentProps: {
+            nodeId: selectedNode.attrs.id,
+            activeTab: TABS.DESIGN,
+          },
+          positioning: { placement: 'right' },
+          layout: isMobile ? 'fullscreen' : 'drawer',
+        });
+      },
       attributes: {
         selectedNode: selectedNodeResolver,
       },
@@ -76,7 +72,16 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
         Component: PollSettingsModal,
         id: pollModals.settings,
       },
-      command: getCommandByTab(TABS.SETTINGS, modals),
+      command: ({ isMobile, attributes: { selectedNode } }) => {
+        modals?.openModal(pollModals.settings, {
+          componentProps: {
+            nodeId: selectedNode.attrs.id,
+            activeTab: TABS.SETTINGS,
+          },
+          positioning: { placement: 'right' },
+          layout: isMobile ? 'fullscreen' : 'drawer',
+        });
+      },
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,

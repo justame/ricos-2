@@ -86,10 +86,10 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
       attributes: {
         visible: settingsVisibilityResolver,
       },
-      command: ({ isMobile, node }) => {
+      command: ({ isMobile, attributes: { selectedNode } }) => {
         modals?.openModal(videoModals.settings, {
           componentProps: {
-            nodeId: node.attrs.id,
+            nodeId: selectedNode.attrs.id,
           },
           positioning: { placement: 'right' },
           layout: isMobile ? 'fullscreen' : 'drawer',
@@ -108,11 +108,11 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
         Component: decorateComponentWithProps(InsertModal, { modalId: videoModals.replace }),
         id: videoModals.replace,
       },
-      command: ({ isMobile, node, referenceElement }) => {
+      command: ({ isMobile, referenceElement, attributes: { selectedNode } }) => {
         const {
           video: { src },
           id,
-        } = node.attrs;
+        } = selectedNode.attrs;
         if (modals?.isModalOpen(videoModals.replace)) {
           modals.closeModal(videoModals.replace);
         } else {

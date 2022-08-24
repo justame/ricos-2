@@ -13,12 +13,11 @@ interface Props {
 const SettingsButton: FC<Props> = ({ toolbarItem, dataHook }) => {
   const { isMobile, t } = useContext(RicosContext) || {};
   const onClick = toolbarItem.commands.click;
-  const node = toolbarItem.attributes.selectedNode;
 
   return (
     <ToggleButton
       Icon={SettingsIcon}
-      onClick={() => onClick({ isMobile, node })}
+      onClick={() => onClick({ isMobile })}
       dataHook={dataHook}
       tooltip={t('SettingsButton_Tooltip')}
     />

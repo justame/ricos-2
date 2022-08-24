@@ -12,8 +12,7 @@ type Props = {
 
 const GalleryAddMediaButton: FC<Props> = ({ toolbarItem, dataHook }) => {
   const { t, isMobile } = useContext(RicosContext) || {};
-  const node = toolbarItem.attributes.selectedNode;
-  const onClick = () => toolbarItem.commands.click({ node, isMobile });
+  const onClick = () => toolbarItem.commands.click({ isMobile });
 
   return (
     <ToggleButton

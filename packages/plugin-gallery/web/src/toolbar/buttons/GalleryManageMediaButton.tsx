@@ -13,13 +13,12 @@ interface Props {
 const GalleryManageMediaButton: FC<Props> = ({ toolbarItem, dataHook }) => {
   const { isMobile, t } = useContext(RicosContext) || {};
   const onClick = toolbarItem.commands.click;
-  const node = toolbarItem.attributes.selectedNode;
 
   return (
     <ToggleButton
       Icon={ManageMediaNewIcon}
       label={t('GallerySettings_Toolbar_Button_MangeMedia')}
-      onClick={() => onClick({ isMobile, node })}
+      onClick={() => onClick({ isMobile })}
       dataHook={dataHook}
       tooltip={t('ManageMediaButton_Tooltip')}
     />

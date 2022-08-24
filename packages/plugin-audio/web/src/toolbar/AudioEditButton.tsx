@@ -12,7 +12,6 @@ type Props = {
 const AudioEditButton: FC<Props> = ({ toolbarItem, dataHook }) => {
   const { isMobile, t } = useContext(RicosContext) || {};
   const onClick = toolbarItem.commands.click;
-  const node = toolbarItem.attributes.selectedNode;
 
   return (
     <ToggleButton
@@ -20,7 +19,7 @@ const AudioEditButton: FC<Props> = ({ toolbarItem, dataHook }) => {
       Icon={EditIcon}
       label={t('AudioPlugin_Toolbar_Edit_Label')}
       tooltip={t('AudioPlugin_Toolbar_Edit_Label')}
-      onClick={() => onClick({ isMobile, node })}
+      onClick={() => onClick({ isMobile })}
     />
   );
 };

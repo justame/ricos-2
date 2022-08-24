@@ -63,7 +63,7 @@ const ButtonSettingsModal: FC<Props> = ({ nodeId, settings, type, modalId }) => 
 
   const pluginEvents = {
     onPluginAction: (_, { plugin_id, params }) =>
-      pluginsEvents.publishPluginLinkable({ pluginId: plugin_id, ...params }),
+      pluginsEvents.publishPluginLinkable({ pluginId: plugin_id, nodeId, ...params }),
   };
 
   return componentData ? (

@@ -29,7 +29,7 @@ export const DividerAlignmentButton: FC<Props> = ({ toolbarItem, dataHook, id })
   const closeModal = () => modalService.closeModal(id);
 
   const onAlignmentClick = alignment => {
-    toolbarItem.commands?.click({ alignment, node });
+    toolbarItem.commands?.click({ value: alignment });
     closeModal();
   };
 

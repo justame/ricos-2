@@ -22,7 +22,7 @@ const NodeSizeButton: FC<Props> = ({ toolbarItem, dataHook, id }) => {
   const closeModal = () => modalService.closeModal(id);
 
   const onSizeClick = size => {
-    toolbarItem.commands?.setSize(size);
+    toolbarItem.commands?.setSize({ value: size });
     closeModal();
   };
 

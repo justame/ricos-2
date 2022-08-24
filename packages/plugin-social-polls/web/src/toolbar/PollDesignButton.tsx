@@ -12,12 +12,11 @@ type Props = {
 
 export const PollDesignButton: FC<Props> = ({ toolbarItem, dataHook }) => {
   const { t, isMobile } = useContext(RicosContext) || {};
-  const node = toolbarItem.attributes.selectedNode;
 
   return (
     <ToggleButton
       Icon={DesignIcon}
-      onClick={() => toolbarItem.commands?.click({ isMobile, node })}
+      onClick={() => toolbarItem.commands?.click({ isMobile })}
       dataHook={dataHook}
       tooltip={t('Poll_PollSettings_Tab_Design_TabName')}
     />

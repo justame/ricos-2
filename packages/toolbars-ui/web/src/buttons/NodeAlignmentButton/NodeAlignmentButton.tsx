@@ -23,7 +23,7 @@ const NodeAlignmentButton: FC<Props> = ({ toolbarItem, dataHook, id }) => {
   const closeModal = () => modalService.closeModal(id);
 
   const onAlignmentClick = alignment => {
-    toolbarItem.commands?.setAlignment(alignment);
+    toolbarItem.commands?.setAlignment({ value: alignment });
     closeModal();
   };
 

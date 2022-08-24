@@ -52,7 +52,7 @@ export const DimensionSliderButton: FC<Props> = ({
         custom: value,
       },
     };
-    toolbarItem.commands?.click({ data: { ...componentData, containerData } });
+    toolbarItem.commands?.click({ value, data: { ...componentData, containerData } });
   };
 
   const onClick = () => {

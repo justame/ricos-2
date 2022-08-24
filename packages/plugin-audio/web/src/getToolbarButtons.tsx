@@ -44,10 +44,10 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
         visible: isCustomAudioResolver,
         selectedNode: selectedNodeResolver,
       },
-      command: ({ isMobile, node }) => {
+      command: ({ isMobile, attributes: { selectedNode } }) => {
         modals?.openModal(audioModals.settings, {
           componentProps: {
-            nodeId: node.attrs.id,
+            nodeId: selectedNode.attrs.id,
             handleFileSelection: config.handleFileSelection,
             handleFileUpload: config.handleFileUpload,
           },
@@ -83,18 +83,17 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
         Component: decorateComponentWithProps(InsertModal, { modalId: audioModals.replace }),
         id: audioModals.replace,
       },
-
-      command: ({ isMobile, node, referenceElement }) => {
+      command: ({ isMobile, referenceElement, attributes: { selectedNode } }) => {
         const {
           audio: { src },
           id,
-        } = node.attrs;
+        } = selectedNode.attrs;
         if (modals.isModalOpen(audioModals.replace)) {
           modals.closeModal(audioModals.replace);
         } else {
           modals.openModal(audioModals.replace, {
             componentProps: {
-              componentData: node.attrs, //TODO: convert to draft
+              componentData: selectedNode.attrs, //TODO: convert to draft
               nodeId: id,
               getAudioUrl,
               handleFileSelection: config.handleFileSelection,
