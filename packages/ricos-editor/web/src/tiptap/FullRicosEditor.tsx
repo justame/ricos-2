@@ -230,7 +230,7 @@ export class FullRicosEditor extends React.Component<Props, State> {
                                 <Shortcuts group="formatting" root>
                                   <RicosEditor {...this.props} ref={this.props.forwardRef} />
                                 </Shortcuts>
-                                <FooterToolbarPlaceholder />
+                                <FooterToolbarPlaceholder toolbarSettings={toolbarSettings} />
                               </>
                             </>
                           </PluginsEventsContextProvider>
