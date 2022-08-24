@@ -17,7 +17,9 @@
     Click to see more.
   </summary>
 
-## :bug: Bug Fix
+</details>
+
+## 8.72.36 (Aug 24, 2022)
 
 - `divider/image`
   - [#4461](https://github.com/wix/ricos/pull/4461) fix divider size selection state & replaced image toolbar edit icon
@@ -26,8 +28,8 @@
 
 - `storybook`
   - [#4460](https://github.com/wix/ricos/pull/4460) add tiptap inside container story
-
-</details>
+- `ricos-plugins`
+  - [#4456](https://github.com/wix/ricos/pull/4456) external buttons modals open according to layout (drawer/popover/dialog)
 
 ## 8.72.35 (Aug 24, 2022)
 
