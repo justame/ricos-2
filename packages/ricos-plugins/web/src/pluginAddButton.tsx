@@ -159,20 +159,24 @@ export class RicosPluginAddButton implements PluginAddButton {
   }
 
   toExternalToolbarButtonConfig(editorCommands: EditorCommands): ToolbarButtonProps {
-    const { modals, t } = this.services;
+    const { modals, context, t } = this.services;
     return {
       type: 'button',
       tooltip: t(this.button.tooltip),
       toolbars: this.button.toolbars,
       getIcon: () => this.button.icon,
       getLabel: () => this.button.label || '',
-      onClick: () => {
+      onClick: e => {
         this.services.toolbars.external.publishButtonClick(this.button.id);
         return this.button.modal
           ? modals?.isModalOpen(this.button.modal.id)
             ? modals?.closeModal(this.button.modal.id)
             : modals?.openModal(this.button.modal.id, {
-                layout: 'dialog',
+                positioning: {
+                  placement: 'bottom',
+                  referenceElement: e?.target,
+                },
+                layout: context.isMobile ? 'drawer' : e?.target ? 'popover' : 'dialog',
               })
           : this.button.command(editorCommands);
       },

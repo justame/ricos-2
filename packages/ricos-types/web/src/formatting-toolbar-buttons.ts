@@ -1,5 +1,4 @@
 import type { ToolbarButtonProps } from './buttonTypes';
-import type { IContent } from './content';
 import type { EditorCommands } from './editorCommandsType';
 import type { IToolbarItemConfigTiptap } from './toolbarTypes';
 import type { ToolbarType } from './toolbarEnums';
@@ -17,10 +16,7 @@ export interface FormattingToolbarButton {
     editorCommands: EditorCommands,
     toolbarType: ToolbarType
   ): IToolbarItemConfigTiptap;
-  toExternalToolbarButtonConfig(
-    editorCommands: EditorCommands,
-    content: IContent<unknown>
-  ): ToolbarButtonProps;
+  toExternalToolbarButtonConfig(editorCommands: EditorCommands): ToolbarButtonProps;
 }
 
 /**
@@ -41,7 +37,6 @@ export interface FormattingToolbarButtons {
   ) => IToolbarItemConfigTiptap[];
 
   toExternalToolbarButtonsConfigs(
-    editorCommands: EditorCommands,
-    content: IContent<unknown>
+    editorCommands: EditorCommands
   ): Record<string, ToolbarButtonProps>;
 }

@@ -98,7 +98,7 @@ export class PluginTextButton implements FormattingToolbarButton {
     editorCommands: EditorCommands,
     toolbarType: ToolbarType
   ): IToolbarItemConfigTiptap {
-    const { modals } = this.services;
+    const { modals, context } = this.services;
     return {
       ...this.button,
       presentation: {
@@ -124,7 +124,7 @@ export class PluginTextButton implements FormattingToolbarButton {
                       placement: 'bottom',
                       referenceElement,
                     },
-                    layout: toolbarType === 'MOBILE' ? 'drawer' : 'toolbar',
+                    layout: context.isMobile ? 'drawer' : referenceElement ? 'toolbar' : 'dialog',
                   })
               : this.button.command?.(editorCommands)?.(rest);
           },
@@ -132,12 +132,9 @@ export class PluginTextButton implements FormattingToolbarButton {
     };
   }
 
-  toExternalToolbarButtonConfig(
-    editorCommands: EditorCommands,
-    content: IContent<unknown>
-  ): ToolbarButtonProps {
+  toExternalToolbarButtonConfig(editorCommands: EditorCommands): ToolbarButtonProps {
     const attributes = this.toResolvedAttributes();
-    const { modals } = this.services;
+    const { modals, content, context } = this.services;
 
     return {
       type: 'button',
@@ -155,14 +152,11 @@ export class PluginTextButton implements FormattingToolbarButton {
                 componentProps: {
                   closeModal: () => this.button.modal && modals.closeModal(this.button.modal.id),
                 },
-                positioning:
-                  this.button.modal.layout === 'toolbar'
-                    ? {
-                        placement: 'bottom',
-                        referenceElement: e?.target,
-                      }
-                    : {},
-                layout: this.button.modal.layout || 'dialog',
+                positioning: {
+                  placement: 'bottom',
+                  referenceElement: e?.target,
+                },
+                layout: context.isMobile ? 'drawer' : e?.target ? 'toolbar' : 'dialog',
               })
           : this.button.command?.(editorCommands)({});
       },
@@ -209,8 +203,7 @@ export class PluginTextButtons implements FormattingToolbarButtons {
   }
 
   toExternalToolbarButtonsConfigs(
-    editorCommands: EditorCommands,
-    content: IContent<unknown>
+    editorCommands: EditorCommands
   ): Record<string, ToolbarButtonProps> {
     //TODO: support all buttons
     const unsupportedTextButtons = ['title', 'headings', 'textHighlight'];
@@ -223,7 +216,7 @@ export class PluginTextButtons implements FormattingToolbarButtons {
           )
       )
       .reduce((acc, b) => {
-        const buttonConfig = b.toExternalToolbarButtonConfig(editorCommands, content);
+        const buttonConfig = b.toExternalToolbarButtonConfig(editorCommands);
         return {
           ...acc,
           [buttonConfig.getLabel?.() || '']: buttonConfig,

@@ -33,7 +33,6 @@ export const getTextColorTextButtons = (): FormattingToolbarButtonConfig[] => {
       modal: {
         id: 'TEXT_COLOR_PICKER',
         Component: TextColorController,
-        layout: 'toolbar',
       },
     },
   ];

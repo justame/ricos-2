@@ -72,7 +72,6 @@ export const pluginTextAlignment: TiptapEditorPlugin = {
       modal: {
         id: FORMATTING_ALIGNMENT_MODAL_ID,
         Component: AlignmentPanelComponent,
-        layout: 'toolbar',
       },
     },
   ],

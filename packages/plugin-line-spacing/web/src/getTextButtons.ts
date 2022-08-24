@@ -21,7 +21,6 @@ export const getTextButtons = (): FormattingToolbarButtonConfig[] => {
       modal: {
         id: FORMATTING_LINE_SPACING_MODAL_ID,
         Component: LineSpacingPanelComponent,
-        layout: 'toolbar',
       },
     },
   ];

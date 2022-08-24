@@ -32,7 +32,6 @@ export const pluginFontSize: TiptapEditorPlugin = {
       modal: {
         id: FONT_SIZE_MODAL_ID,
         Component: FontSizePanelComponent,
-        layout: 'toolbar',
         autoFocus: false,
       },
     },

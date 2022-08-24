@@ -43,7 +43,6 @@ import { TO_TIPTAP_TYPE } from '../../consts';
 import { findNodeById } from '../../helpers';
 import { convertInlineStylesToCSS } from '../../helpers/convertInlineStylesToCss';
 import type { TiptapAdapterServices } from '../../initializeTiptapAdapter';
-import toConstantCase from 'to-constant-case';
 import { resolversById } from 'wix-rich-content-toolbars-v3';
 import { RESOLVERS_IDS } from 'wix-rich-content-toolbars-v3/libs/resolvers-ids';
 
@@ -72,10 +71,7 @@ export class RichContentAdapter implements TiptapAdapter {
           ? services.plugins.getAddButtons()
           : services.plugins.getTextButtons();
       return {
-        buttons: buttons.toExternalToolbarButtonsConfigs(
-          this.getEditorCommands(),
-          services.content
-        ),
+        buttons: buttons.toExternalToolbarButtonsConfigs(this.getEditorCommands()),
         context: {} as EditorContextType,
         pubsub: {} as Pubsub,
       };
