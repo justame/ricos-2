@@ -29,6 +29,7 @@ const ButtonSettingsModal: FC<Props> = ({ nodeId, settings, type, modalId }) => 
   }>({});
 
   useEffect(() => {
+    settings.themeData = { colors: theme.palette };
     import(
       /* webpackChunkName:"ricos-converters" */
       'ricos-converters'
