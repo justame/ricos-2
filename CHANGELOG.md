@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `ricos-editor`
+  - [#4490](https://github.com/wix/ricos/pull/4490) footer toolbar modal buttons close modal on double click
+
 </details>
 
 ## 8.72.37 (Aug 25, 2022)

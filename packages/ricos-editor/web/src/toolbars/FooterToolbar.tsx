@@ -11,15 +11,18 @@ export const FooterToolbar: FC = () => {
   const { getEditorCommands } = useContext(EditorContext);
 
   const onButtonClick = ({ modal, command }: AddButton, event: Event) => {
-    return modal
-      ? modalService?.openModal(modal.id, {
-          positioning: {
-            placement: 'bottom',
-            referenceElement: event.target,
-          },
-          layout: 'popover',
-        })
-      : command(getEditorCommands?.());
+    if (modal && modalService) {
+      return modalService.isModalOpen(modal.id)
+        ? modalService.closeModal(modal.id)
+        : modalService.openModal(modal.id, {
+            positioning: {
+              placement: 'bottom',
+              referenceElement: event.target,
+            },
+            layout: 'popover',
+          });
+    }
+    return command(getEditorCommands?.());
   };
 
   return (
