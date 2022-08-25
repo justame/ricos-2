@@ -1,0 +1,7 @@
+@import '~wix-rich-content-common/dist/statics/styles/fonts';
+@import '~wix-rich-content-common/dist/statics/styles/palette';
+
+.container {
+  color: $settings-text-color;
+  font-family: $ricos-settings-font-family;
+}

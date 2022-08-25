@@ -10,6 +10,7 @@ import { Dialog } from '../components/Dialog';
 import { Toolbar } from '../components/Toolbar';
 import type { Modal } from 'ricos-types';
 import { KEYS_CHARCODE } from 'wix-rich-content-editor-common';
+import styles from '../../statics/styles/popper.scss';
 
 type Props = {
   modalConfig: Modal;
@@ -56,7 +57,7 @@ export const ModalPopper: FC<Props> = ({ modalConfig }: Props) => {
   const ModalComponent = modalConfig.Component;
 
   return ReactDOM.createPortal(
-    <div dir={languageDir} onKeyDown={onKeyDown}>
+    <div dir={languageDir} onKeyDown={onKeyDown} className={styles.container}>
       <ModalLayout closeModal={closeModal} modalConfig={modalConfig}>
         <ModalComponent {...(modalConfig.componentProps || {})} />
       </ModalLayout>
