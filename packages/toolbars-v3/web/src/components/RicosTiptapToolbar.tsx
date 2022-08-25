@@ -5,7 +5,7 @@ import type { RicosToolbar } from '../RicosToolbar';
 import { toolbarItemsRenders } from '../toolbarItemsRenders';
 import RicosToolbarComponent from './RicosToolbarComponent';
 import type { Node } from 'prosemirror-model';
-import type { IToolbarItemConfigTiptap } from 'ricos-types';
+import type { IToolbarItemConfigTiptap, IOnRequestToCloseMoreItemsModal } from 'ricos-types';
 
 interface RicosTiptapToolbarProps {
   content: Content<Node[]>;
@@ -15,10 +15,19 @@ interface RicosTiptapToolbarProps {
   onLoad?: (toolbar: RicosToolbar) => void;
   isMobile: boolean;
   maxWidth?: number;
+  onRequestToCloseMoreItemsModal: IOnRequestToCloseMoreItemsModal;
 }
 
 export default function RicosTiptapToolbarComponent(props: RicosTiptapToolbarProps) {
-  const { isMobile = false, maxWidth, onLoad, editorCommands, content, toolbarItemsConfig } = props;
+  const {
+    isMobile = false,
+    maxWidth,
+    onLoad,
+    editorCommands,
+    content,
+    toolbarItemsConfig,
+    onRequestToCloseMoreItemsModal,
+  } = props;
 
   return (
     <RicosToolbarComponent
@@ -29,6 +38,7 @@ export default function RicosTiptapToolbarComponent(props: RicosTiptapToolbarPro
       onLoad={onLoad}
       editorCommands={editorCommands}
       content={content}
+      onRequestToCloseMoreItemsModal={onRequestToCloseMoreItemsModal}
     />
   );
 }

@@ -39,3 +39,4 @@ export * from './ricos-toolbars';
 export * from './debug-mode';
 export * from './context';
 export * from './pluginsEventsTypes';
+export * from './toolbar';

@@ -1,6 +1,6 @@
 import type { Node } from 'prosemirror-model';
 import React, { useContext } from 'react';
-import { EditorContext } from 'ricos-context';
+import { ModalContext, EditorContext } from 'ricos-context';
 import RicosToolbarComponent from '../RicosToolbarComponent';
 import { Content } from '../../Content';
 import ToggleButton from '../buttons/ToggleButton/ToggleButton';
@@ -33,6 +33,8 @@ const InsertPluginToolbar: React.FC<Props> = ({
     };
   }, {});
 
+  const modalService = useContext(ModalContext);
+
   return (
     <div className={styles.wrapper}>
       <RicosToolbarComponent
@@ -42,6 +44,15 @@ const InsertPluginToolbar: React.FC<Props> = ({
         editorCommands={getEditorCommands?.()}
         isMobile={false}
         overflowedItemsPosition={overflowedItemsPosition}
+        onRequestToCloseMoreItemsModal={reason => {
+          if (reason === 'clickOutside') {
+            const openModals = modalService.getOpenModals();
+            if (openModals.length > 0) {
+              return false;
+            }
+          }
+          return true;
+        }}
       />
     </div>
   );

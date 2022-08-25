@@ -12,6 +12,7 @@ import { ClickOutside } from '../Clickoutside/ClickOutside';
 import { MoreButton } from '../buttons';
 import { ToolbarButton, ToolbarButtons } from '../../models';
 import { handleCircularFocus } from './utils';
+import type { IOnRequestToCloseMoreItemsModal, ICloseMoreItemsModalReason } from 'ricos-types';
 
 type ToolbarProps = {
   toolbar: RicosToolbar;
@@ -20,6 +21,7 @@ type ToolbarProps = {
   isMobile: boolean;
   maxWidth?: number;
   overflowedItemsPosition?: OverflowedItemsPosition;
+  onRequestToCloseMoreItemsModal?: IOnRequestToCloseMoreItemsModal;
 };
 
 const visibleOnlySpec: ToolbarSpec = attributes => attributes.visible === true;
@@ -46,13 +48,31 @@ class ToolbarComponent extends Component<ToolbarProps, Record<string, unknown>> 
     });
   }
 
+  onCloseMoreItemsModal = (reason: ICloseMoreItemsModalReason) => {
+    const { onRequestToCloseMoreItemsModal } = this.props;
+
+    if (onRequestToCloseMoreItemsModal) {
+      const shouldClose = onRequestToCloseMoreItemsModal(reason);
+
+      this.setState({ showMore: !shouldClose });
+    } else {
+      this.setState({ showMore: false });
+    }
+  };
+
   onClickOutside = () => {
-    this.setState({ showMore: false });
+    if (this.state.showMore) {
+      this.onCloseMoreItemsModal('clickOutside');
+    }
   };
 
   toggleMoreItems = () => {
     const { showMore } = this.state;
-    this.setState({ showMore: !showMore });
+    if (!showMore === false) {
+      this.onCloseMoreItemsModal('toggleButtonClick');
+    } else {
+      this.setState({ showMore: true });
+    }
   };
 
   render() {

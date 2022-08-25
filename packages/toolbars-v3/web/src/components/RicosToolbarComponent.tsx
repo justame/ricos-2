@@ -5,7 +5,7 @@ import type { Content } from '../Content';
 import { RicosToolbar } from '../RicosToolbar';
 import { ToolbarItemCreator } from '../ToolbarItemCreator';
 import type { Node } from 'prosemirror-model';
-import type { IToolbarItemConfigTiptap } from 'ricos-types';
+import type { IToolbarItemConfigTiptap, IOnRequestToCloseMoreItemsModal } from 'ricos-types';
 import type { OverflowedItemsPosition } from '../types';
 
 interface RicosToolbarProps {
@@ -19,6 +19,7 @@ interface RicosToolbarProps {
   // eslint-disable-next-line @typescript-eslint/ban-types
   toolbarItemsRenders: Record<string, Function>;
   overflowedItemsPosition?: OverflowedItemsPosition;
+  onRequestToCloseMoreItemsModal?: IOnRequestToCloseMoreItemsModal;
 }
 interface RicosToolbarState {}
 
@@ -57,7 +58,13 @@ class RicosToolbarComponent extends Component<RicosToolbarProps, RicosToolbarSta
   }
 
   render() {
-    const { isMobile = false, maxWidth, toolbarItemsRenders, overflowedItemsPosition } = this.props;
+    const {
+      isMobile = false,
+      maxWidth,
+      toolbarItemsRenders,
+      overflowedItemsPosition,
+      onRequestToCloseMoreItemsModal,
+    } = this.props;
     return (
       <div>
         <div>
@@ -68,6 +75,7 @@ class RicosToolbarComponent extends Component<RicosToolbarProps, RicosToolbarSta
               isMobile={isMobile}
               maxWidth={maxWidth}
               overflowedItemsPosition={overflowedItemsPosition}
+              onRequestToCloseMoreItemsModal={onRequestToCloseMoreItemsModal}
             />
           )}
         </div>

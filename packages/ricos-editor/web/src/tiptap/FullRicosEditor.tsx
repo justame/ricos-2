@@ -244,6 +244,7 @@ export class FullRicosEditor extends React.Component<Props, State> {
                                           content={toolbarContent}
                                           toolbarSettings={toolbarSettings}
                                           plugins={plugins}
+                                          modalService={modals}
                                         />
                                       </ContentQueryProvider>
                                     </>

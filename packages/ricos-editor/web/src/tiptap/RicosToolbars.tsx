@@ -25,12 +25,18 @@ import type { GeneralContext } from 'ricos-context';
 import { withEditorContext, withRicosContext, withPluginsContext } from 'ricos-context';
 import PluginsToolbar from '../toolbars/PluginToolbar';
 import { FooterToolbar } from '../toolbars/FooterToolbar';
-import type { RicosEditorPlugins, IToolbarItemConfigTiptap, IRicosEditor } from 'ricos-types';
+import type {
+  RicosEditorPlugins,
+  IToolbarItemConfigTiptap,
+  IRicosEditor,
+  ModalService,
+} from 'ricos-types';
 
 type RicosToolbarProps = {
   content: Content<Node[]>;
   toolbarSettings?: ToolbarSettings;
   plugins: RicosEditorPlugins;
+  modalService: ModalService;
 };
 
 type RicosToolbarState = {
@@ -346,7 +352,7 @@ class RicosToolbars extends React.Component<
   };
 
   renderToolbar(toolbarItemsConfig, options = {} as { maxWidth: number }) {
-    const { content, editor, ricosContext } = this.props;
+    const { content, editor, ricosContext, modalService } = this.props;
     const { maxWidth } = options;
     const tiptapEditor = editor.adapter.tiptapEditor;
 
@@ -357,6 +363,15 @@ class RicosToolbars extends React.Component<
         editorCommands={tiptapEditor}
         toolbarItemsConfig={toolbarItemsConfig}
         maxWidth={maxWidth}
+        onRequestToCloseMoreItemsModal={reason => {
+          if (reason === 'clickOutside') {
+            const openModals = modalService.getOpenModals();
+            if (openModals.length > 0) {
+              return false;
+            }
+          }
+          return true;
+        }}
       />
     );
   }
