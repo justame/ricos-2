@@ -21,6 +21,8 @@
 
 - `plugin-toolbar`
   - [#4468](https://github.com/wix/ricos/pull/4468) fix active icon colors
+- `spoiler`
+  - [#4467](https://github.com/wix/ricos/pull/4467) fix default description on tiptap
 
 </details>
 

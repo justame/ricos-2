@@ -46,6 +46,9 @@ const SpoilerHoc = Component => {
           editor.view.dispatch(transaction);
         }
       };
+
+      const pluginType = node.type.name[0] + node.type.name.toLowerCase().slice(1);
+
       return (
         <BlockSpoilerComponent
           componentData={componentData}
@@ -53,7 +56,7 @@ const SpoilerHoc = Component => {
           isMobile={isMobile}
           isEditableText
           t={t}
-          pluginType="Image"
+          pluginType={pluginType}
           handleDescriptionChange={handleDescriptionChange}
           handleButtonContentChange={handleButtonContentChange}
           setFocusToBlock={setFocusToBlock}

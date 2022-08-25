@@ -357,7 +357,7 @@
 	"ImageEditorButton_Tooltip": "이미지 변경",
 	"ImagePlugin_Settings_ImageCanBeDownloaded_Tooltip": "이미지에서 마우스 오른쪽 버튼을 클릭한 다음 '다른 이름으로 이미지 저장'을 선택하면 이미지를 다운로드할 수 있습니다.",
 	"TablePlugin_Toolbar_ContextMenu_InsertAbove_Button": "위에 셀 1개 삽입",
-	"Shortcut_Toolbar_ViewAll_Blocks": "추가",
+	"Shortcut_Toolbar_ViewAll_Blocks": "작업 더보기",
 	"VideoUploadModal_CustomVideoClickText": "동영상 업로드",
 	"Poll_PollSettings_Tab_Layout_Section_Answers_Image": "각 답변별 이미지 추가하기",
 	"LinkTo_Modal_Section_Item_Video": "동영상",
