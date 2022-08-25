@@ -207,7 +207,7 @@ export class PluginTextButtons implements FormattingToolbarButtons {
     editorCommands: EditorCommands
   ): Record<string, ToolbarButtonProps> {
     //TODO: support all buttons
-    const unsupportedTextButtons = ['title', 'textHighlight'];
+    const unsupportedTextButtons = ['title'];
 
     return this.buttons
       .filter(

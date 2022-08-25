@@ -4,8 +4,7 @@ export { default as LineSpacingButton } from './LineSpacingButton/LineSpacingBut
 export { default as FontSizeButton } from './FontSizeButton/FontSizeButton';
 export { default as LinkButton } from './LinkButton/LinkButton';
 export { default as NodeLinkButton } from './LinkButton/NodeLinkButton';
-export { default as TextColorButton } from './TextColorButton/TextColorButton';
-export { default as HighlightColorButton } from './HighlightColorButton/HighlightColorButton';
+export { TextColorButton, HighlightColorButton } from './TextColorButton/TextColorButton';
 export { default as HeadingButtonSwitch } from './HeadingButtonSwitch/HeadingButtonSwitch';
 export { ToggleButton } from './ToggleButton';
 export { default as MoreButton } from './MoreButton/MoreButton';
