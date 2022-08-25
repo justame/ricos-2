@@ -45,6 +45,8 @@
   - [#4483](https://github.com/wix/ricos/pull/4483) fix defaults on tiptap
 - `divider`
   - [#4487](https://github.com/wix/ricos/pull/4487) fix disabled button & fullWidth when aligned
+- `audio`
+  - [#4489](https://github.com/wix/ricos/pull/4489) add tags on upload
 
 ## 8.72.36 (Aug 24, 2022)
 

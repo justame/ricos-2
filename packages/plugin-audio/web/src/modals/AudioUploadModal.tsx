@@ -108,9 +108,13 @@ const AudioUploadModal = props => {
     const tags = await getAudioTags(file);
     if (uploadService) {
       const uploader = new Uploader(props?.handleFileUpload);
+      const componentDataWithTags = { ...props.componentData, ...tags };
       if (onConfirm && !blockKey) {
-        const { newBlock } = onConfirm({ ...props.componentData });
+        const { newBlock } = onConfirm(componentDataWithTags);
         blockKey = newBlock.key;
+      }
+      if (onReplace) {
+        onReplace(componentDataWithTags);
       }
       setTimeout(
         () =>
