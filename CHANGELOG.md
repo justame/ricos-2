@@ -26,6 +26,8 @@
 - `collapsible-list`
   - [#4465](https://github.com/wix/ricos/pull/4465) prevent dropping list items outside of lists (editor crash fix)
   - [#4478](https://github.com/wix/ricos/pull/4478) fix tiptap list dimensions and overflow
+- `toolbars-ui`
+  - [#4473](https://github.com/wix/ricos/pull/4473) fix pluginMenuButton gap
 
 </details>
 
