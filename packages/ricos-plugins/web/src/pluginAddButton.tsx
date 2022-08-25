@@ -176,7 +176,7 @@ export class RicosPluginAddButton implements PluginAddButton {
                   placement: 'bottom',
                   referenceElement: e?.target,
                 },
-                layout: context.isMobile ? 'drawer' : e?.target ? 'popover' : 'dialog',
+                layout: context.isMobile ? 'fullscreen' : e?.target ? 'popover' : 'dialog',
               })
           : this.button.command(editorCommands);
       },
