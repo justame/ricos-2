@@ -30,6 +30,8 @@
   - [#4473](https://github.com/wix/ricos/pull/4473) fix pluginMenuButton gap
 - `ricos-plugins`
   - [#4482](https://github.com/wix/ricos/pull/4482) fix external formatting toolbar buttons obj name
+- `divider`
+  - [#4483](https://github.com/wix/ricos/pull/4483) fix defaults on tiptap
 
 </details>
 
