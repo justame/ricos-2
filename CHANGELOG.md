@@ -21,6 +21,8 @@
 
 - `ricos-editor`
   - [#4490](https://github.com/wix/ricos/pull/4490) footer toolbar modal buttons close modal on double click
+- `gallery`
+  - [#4491](https://github.com/wix/ricos/pull/4491) fix layout selector modal selected state
 
 </details>
 

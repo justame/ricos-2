@@ -19,8 +19,11 @@ export const GalleryLayoutButton: FC<Props> = ({ toolbarItem, dataHook, id }) =>
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
   const [isButtonActive, setIsButtonActive] = useState(false);
   const node = toolbarItem?.attributes?.selectedNode;
-  const getSelectedLayout = () =>
-    (GALLERY_LAYOUTS[toolbarItem?.attributes.layout] || GALLERY_LAYOUTS.GRID) as number;
+  const getSelectedLayout = () => {
+    const galleryLayout = GALLERY_LAYOUTS[toolbarItem?.attributes.layout];
+    return typeof galleryLayout === 'number' ? galleryLayout : (GALLERY_LAYOUTS.GRID as number);
+  };
+
   const selectedLayout = galleryLayoutsData.find(
     ({ commandKey }) => commandKey === getSelectedLayout()
   );
