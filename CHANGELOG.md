@@ -28,6 +28,8 @@
   - [#4478](https://github.com/wix/ricos/pull/4478) fix tiptap list dimensions and overflow
 - `toolbars-ui`
   - [#4473](https://github.com/wix/ricos/pull/4473) fix pluginMenuButton gap
+- `toolbars-ui`
+  - [#4481](https://github.com/wix/ricos/pull/4481) fix plugin toolbar icon sizes
 - `ricos-plugins`
   - [#4482](https://github.com/wix/ricos/pull/4482) fix external formatting toolbar buttons obj name
 - `divider`

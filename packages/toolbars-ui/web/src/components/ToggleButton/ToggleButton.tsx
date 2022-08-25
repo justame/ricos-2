@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import type { FC } from 'react';
 import { RicosContext } from 'ricos-context';
 import { ToolbarButton } from '../ToolbarButton';
-import styles from './toggle-button.scss';
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -28,7 +27,7 @@ const ToggleButton: FC<Props> = ({
 }) => {
   const { isMobile } = useContext(RicosContext) || {};
   return (
-    <div className={styles.buttonWrapper} ref={setRef}>
+    <div ref={setRef}>
       <ToolbarButton
         isMobile={isMobile}
         active={active}
