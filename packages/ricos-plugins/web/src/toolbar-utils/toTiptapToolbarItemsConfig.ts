@@ -2,6 +2,19 @@ import { camelCase } from 'lodash';
 import type { IToolbarItemConfigTiptap, ToolbarSettingsFunctions, ToolbarType } from 'ricos-types';
 import { isiOS } from './isiOS';
 
+const cleanTitleIfNeeded = (
+  tiptapToolbarItemsConfig: IToolbarItemConfigTiptap[]
+): IToolbarItemConfigTiptap[] => {
+  if (
+    tiptapToolbarItemsConfig.some(button => button.id === 'headings') &&
+    tiptapToolbarItemsConfig.some(button => button.id === 'title')
+  ) {
+    return tiptapToolbarItemsConfig.filter(button => button.id !== 'title');
+  } else {
+    return tiptapToolbarItemsConfig;
+  }
+};
+
 export function toTiptapToolbarItemsConfig(
   toolbarConfig: ToolbarSettingsFunctions | undefined,
   tiptapToolbarConfig: IToolbarItemConfigTiptap[],
@@ -44,5 +57,7 @@ export function toTiptapToolbarItemsConfig(
       tiptapToolbarItemsConfig.push(buttonConfig);
     }
   });
-  return tiptapToolbarItemsConfig;
+
+  const finalTiptapToolbarItemsConfig = cleanTitleIfNeeded(tiptapToolbarItemsConfig);
+  return finalTiptapToolbarItemsConfig;
 }
