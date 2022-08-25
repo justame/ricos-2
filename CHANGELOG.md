@@ -25,6 +25,7 @@
   - [#4467](https://github.com/wix/ricos/pull/4467) fix default description on tiptap
 - `collapsible-list`
   - [#4465](https://github.com/wix/ricos/pull/4465) prevent dropping list items outside of lists (editor crash fix)
+  - [#4478](https://github.com/wix/ricos/pull/4478) fix tiptap list dimensions and overflow
 
 </details>
 

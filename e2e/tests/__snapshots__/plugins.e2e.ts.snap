@@ -6315,8 +6315,8 @@ exports[`plugins > spoiler > [tiptap] check spoilers on a gallery in editor and 
           "alignment": "center",
           "size": "content",
           "spoiler": {
-            "buttonContent": "Reveal Image - In Plugin Editin",
-            "description": "This image contains a spoiler - In Plugin Editing",
+            "buttonContent": "Reveal Gallery - In Plugin Editin",
+            "description": "This gallery contains a spoiler - In Plugin Editing",
             "enabled": true
           },
           "textWrap": "wrap"

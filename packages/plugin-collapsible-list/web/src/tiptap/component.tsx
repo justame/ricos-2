@@ -66,7 +66,10 @@ export const CollapsibleList: React.FC<PluginProps> = ({
 
   return (
     <div
-      className={styles[componentData.config?.direction || 'ltr']}
+      className={classNames(
+        styles[componentData.config?.direction || 'ltr'],
+        styles.listDimensions
+      )}
       onMouseDown={preventDeselection}
       // onFocus={this.onFocus}
       // tabIndex="0"
@@ -151,7 +154,7 @@ export const CollapsibleListItem: React.FC<PluginProps> = ({
           }
         />
       </div>
-      <NodeViewContent />
+      <NodeViewContent className={collapsibleListItemStyles.innerEditor} />
     </div>
   );
 };
@@ -159,7 +162,7 @@ export const CollapsibleListItem: React.FC<PluginProps> = ({
 export const CollapsibleListItemTitle: React.FC<PluginProps> = ({ NodeViewContent }) => {
   return (
     <div className={collapsibleListItemStyles.titleContainer}>
-      <NodeViewContent contenteditable="true" />
+      <NodeViewContent contenteditable="true" className={collapsibleListItemStyles.innerEditor} />
     </div>
   );
 };
@@ -178,7 +181,7 @@ export const CollapsibleListItemBody: React.FC<PluginProps> = ({
   )?.node?.attrs?.isExpanded;
   return isShown ? (
     <div className={collapsibleListItemStyles.titleContainer}>
-      <NodeViewContent contenteditable="true" />
+      <NodeViewContent contenteditable="true" className={collapsibleListItemStyles.innerEditor} />
     </div>
   ) : null;
 };
