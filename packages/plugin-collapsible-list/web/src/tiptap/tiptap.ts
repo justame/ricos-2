@@ -16,6 +16,7 @@ import { defaultCollapsibleItem } from './defaults';
 import { keyboardShortcuts } from './keyboardShortcuts';
 import { collapsibleStateManagerPlugin } from '../consts';
 import { getCollapsibleListItems, setCollapsibleItemsExpandState } from './utils';
+import { dropHandlerPlugin } from './dropHandlerPlugin';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -85,7 +86,7 @@ export const tiptapExtensions = [
                 view.dispatch?.(
                   state.tr.setMeta('collapsibleState', {
                     nodeId,
-                    options: { expandOnlyOne },
+                    options: { expandOnlyOne, expandState },
                   })
                 );
                 return true;
@@ -137,7 +138,7 @@ export const tiptapExtensions = [
     }),
     Component: CollapsibleListItem,
     name: TIPTAP_COLLAPSIBLE_ITEM_TYPE,
-    createExtensionConfig() {
+    createExtensionConfig({ Plugin }) {
       return {
         name: this.name,
         group: TIPTAP_COLLAPSIBLE_ITEM_TYPE,
@@ -146,6 +147,9 @@ export const tiptapExtensions = [
         addAttributes: () => ({
           isExpanded: { default: true },
         }),
+        addProseMirrorPlugins() {
+          return [dropHandlerPlugin(this.editor, Plugin)];
+        },
       };
     },
   },

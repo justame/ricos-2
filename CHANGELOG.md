@@ -23,6 +23,8 @@
   - [#4468](https://github.com/wix/ricos/pull/4468) fix active icon colors
 - `spoiler`
   - [#4467](https://github.com/wix/ricos/pull/4467) fix default description on tiptap
+- `collapsible-list`
+  - [#4465](https://github.com/wix/ricos/pull/4465) prevent dropping list items outside of lists (editor crash fix)
 
 </details>
 
@@ -30,7 +32,6 @@
 
 - `divider/image`
   - [#4461](https://github.com/wix/ricos/pull/4461) fix divider size selection state & replaced image toolbar edit icon
-
 - `ricos-plugins`
   - [#4462](https://github.com/wix/ricos/pull/4462) fix insert anchor command
 

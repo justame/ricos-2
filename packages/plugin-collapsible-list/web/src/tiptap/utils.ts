@@ -32,9 +32,26 @@ export function getCollapsibleListItems(state, nodeId) {
 }
 
 export function setCollapsibleItemsExpandState(items, commands, expandState) {
-  items.forEach((node, index) =>
-    commands.updateNodeAttrsById(node.attrs.id, {
-      isExpanded: expandState === 'ALL' || (index === 0 && expandState === 'FIRST'),
-    })
-  );
+  items.forEach((node, index) => {
+    const isExpanded = !!node.attrs.isExpanded;
+    if (isExpanded !== (expandState === 'ALL' || (index === 0 && expandState === 'FIRST'))) {
+      commands.updateNodeAttrsById(node.attrs.id, {
+        isExpanded: !isExpanded,
+      });
+    }
+  });
 }
+
+export const findContainerNode = (editor, nodeId) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const collapsibleListNodes: Record<string, any>[] = [];
+  editor.state.doc.descendants((node, _) => {
+    if (node.type.name === TIPTAP_COLLAPSIBLE_LIST_TYPE) {
+      collapsibleListNodes.push(node);
+    }
+  });
+  const parentNode = collapsibleListNodes.find(currNode =>
+    currNode.content.content.some(item => item.attrs.id === nodeId)
+  );
+  return parentNode;
+};
