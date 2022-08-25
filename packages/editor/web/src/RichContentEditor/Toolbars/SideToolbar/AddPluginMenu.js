@@ -30,10 +30,12 @@ export default class AddPluginMenu extends Component {
   }
 
   triggerBi = debounce(() => {
-    const { t, helpers, isMoreMenu } = this.props;
+    const { t, helpers, isMoreMenu, getPluginsByTag } = this.props;
     helpers.onPluginAction?.('searchForPlugin', {
       searchTerm: this.state.value,
-      pluginsDetails: getPluginsIdForTag(this.state.value.toLowerCase(), t).join(', '),
+      pluginsDetails: getPluginsByTag
+        ? getPluginsByTag(this.state.value.toLowerCase()).name
+        : getPluginsIdForTag(this.state.value.toLowerCase(), t).join(', '),
       entry_point: isMoreMenu ? 'footerToolbar' : 'sideToolbar',
     });
   }, 200);
@@ -57,6 +59,7 @@ export default class AddPluginMenu extends Component {
       isMobile,
       toolbarName,
       searchablePlugins,
+      getPluginsByTag,
     } = this.props;
     const smallPlusIcon = addPluginMenuConfig?.tablePluginMenu;
     const { showSearch, wrapperClassName, pluginsClassName, horizontalMenu } = this;
@@ -94,6 +97,7 @@ export default class AddPluginMenu extends Component {
             isMobile={isMobile}
             toolbarName={toolbarName}
             searchablePlugins={searchablePlugins}
+            getPluginsByTag={getPluginsByTag}
           />
         </div>
       </div>
@@ -116,4 +120,5 @@ AddPluginMenu.propTypes = {
   searchablePlugins: PropTypes.array,
   helpers: PropTypes.object,
   isMoreMenu: PropTypes.bool,
+  getPluginsByTag: PropTypes.func,
 };

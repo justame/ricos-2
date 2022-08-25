@@ -19,11 +19,13 @@ const PluginMenuPluginsSection = ({
   pluginMenuButtonRef,
   toolbarName,
   theme = {},
-  isMobile,
   searchablePlugins,
+  getPluginsByTag,
 }) => {
   const styles = mergeStyles({ styles: Styles, theme });
-  const pluginsForTag = searchTag && getPluginsForTag(searchTag.toLowerCase(), t);
+  const pluginsForTag =
+    searchTag &&
+    (getPluginsByTag ? getPluginsByTag(searchTag) : getPluginsForTag(searchTag.toLowerCase(), t));
   const filteredPluginsBySearchTag = (pluginsArray = []) =>
     pluginsArray.filter(({ name }) => pluginsForTag.includes(name));
   const pluginsToDisplay = !searchTag
@@ -105,6 +107,7 @@ PluginMenuPluginsSection.propTypes = {
   t: PropTypes.func,
   theme: PropTypes.object,
   toolbarName: PropTypes.any,
+  getPluginsByTag: PropTypes.func,
 };
 
 export default PluginMenuPluginsSection;

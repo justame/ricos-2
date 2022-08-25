@@ -228,6 +228,15 @@ export class RicosPluginAddButtons implements PluginAddButtons {
     );
   }
 
+  byTag(tag) {
+    const { t } = this.services;
+    return this.buttons.filter(button =>
+      t(button.getTags() || '')
+        .toLowerCase()
+        .includes(tag.toLowerCase())
+    );
+  }
+
   register(button: AddButton) {
     const candidate = RicosPluginAddButton.of(button, this.services);
     const duplicate = this.hasDuplicate(candidate);

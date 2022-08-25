@@ -50,6 +50,8 @@ export interface PluginAddButtons {
 
   byGroup: (group: MenuGroups) => PluginAddButtons;
 
+  byTag: (tag: string) => PluginAddButton[];
+
   register: (button: AddButton) => void;
 
   unregister: (button: AddButton) => void;
