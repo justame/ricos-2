@@ -3,7 +3,7 @@ import type { ModalService } from './modalTypes';
 import type { RicosEditorPlugins } from './ricos-editor-plugins';
 import type { ShortcutDataProvider, ShortcutRegistrar } from './shortcuts';
 import type { AmbientStyles } from './styles';
-import type { IRicosEditor } from './editor';
+import type { EditorEventSource, IRicosEditor, UploadObserver } from './editor';
 import type { IUpdateService, IUploadService } from './uploadServicesTypes';
 import type { IRicosToolbars } from './ricos-toolbars';
 import type { GeneralContext } from './context';
@@ -19,7 +19,7 @@ export type RicosServices = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   content: any;
   modals: ModalService;
-  editor: IRicosEditor;
+  editor: IRicosEditor & UploadObserver & EditorEventSource;
   toolbars: IRicosToolbars;
   pluginsEvents: IPluginsEvents;
   context: Omit<GeneralContext, 'portal'>;

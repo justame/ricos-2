@@ -8,31 +8,32 @@ import {
   EditorContextProvider,
   ModalContextProvider,
   PluginsContextProvider,
+  PluginsEventsContextProvider,
   RicosContextProvider,
   ShortcutsContextProvider,
   StylesContextProvider,
   ToolbarContext,
   UploadContextProvider,
-  PluginsEventsContextProvider,
 } from 'ricos-context';
 import { ModalRenderer } from 'ricos-modals';
+import { RicosOrchestrator } from 'ricos-orchestrator';
 import { Shortcuts } from 'ricos-shortcuts';
 import type {
+  DebugMode,
+  DraftContent,
   Orchestrator,
   RicosPortal as RicosPortalType,
   TranslationFunction,
-  DebugMode,
 } from 'ricos-types';
 import { getLangDir } from 'wix-rich-content-common';
+import s from '../../statics/styles/editor-styles.scss';
 import RicosPortal from '../modals/RicosPortal';
 import type { RicosEditorRef } from '../RicosEditorRef';
 import { convertToolbarContext } from '../toolbars/convertToolbarContext';
+import { FooterToolbarPlaceholder } from '../toolbars/FooterToolbarPlaceholder';
 import RicosEditor from './RicosEditor';
 import RicosStylesRenderer from './RicosStyles';
 import RicosToolbars from './RicosToolbars';
-import { RicosOrchestrator } from 'ricos-orchestrator';
-import s from '../../statics/styles/editor-styles.scss';
-import { FooterToolbarPlaceholder } from '../toolbars/FooterToolbarPlaceholder';
 
 type State = {
   error: string;
@@ -55,6 +56,8 @@ export class FullRicosEditor extends React.Component<Props, State> {
   inputRef: React.RefObject<HTMLInputElement>;
 
   orchestrator: Orchestrator;
+
+  private isBusy = false;
 
   constructor(props: Props) {
     super(props);
@@ -151,9 +154,29 @@ export class FullRicosEditor extends React.Component<Props, State> {
     }
   }
 
+  private onChange = (content: DraftContent) => {
+    this.props.onChange?.(content);
+    this.onBusyChange();
+  };
+
+  private onBusyChange = () => {
+    const { onBusyChange } = this.props;
+    const isBusy = this.hasActiveUploads();
+    if (this.isBusy !== isBusy) {
+      this.isBusy = isBusy;
+      onBusyChange?.(isBusy);
+    }
+  };
+
+  private hasActiveUploads(): boolean {
+    return this.orchestrator.getServices().editor.hasActiveUploads();
+  }
+
   private renderEditor() {
     const { t, isMobile, experiments, locale, localeContent, theme, toolbarSettings, content } =
       this.props;
+
+    const { onChange: _, ...restProps } = this.props;
 
     const {
       plugins,
@@ -228,7 +251,11 @@ export class FullRicosEditor extends React.Component<Props, State> {
                                   </ToolbarContext.Provider>
                                 </UploadContextProvider>
                                 <Shortcuts group="formatting" root>
-                                  <RicosEditor {...this.props} ref={this.props.forwardRef} />
+                                  <RicosEditor
+                                    onChange={this.onChange}
+                                    {...restProps}
+                                    ref={this.props.forwardRef}
+                                  />
                                 </Shortcuts>
                                 <FooterToolbarPlaceholder toolbarSettings={toolbarSettings} />
                               </>

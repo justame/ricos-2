@@ -6,7 +6,14 @@ import { isContentStateEmpty, Version } from 'ricos-content';
 import type { GeneralContext } from 'ricos-context';
 import { EditorContextConsumer, RicosContextConsumer } from 'ricos-context';
 import { Node_Type } from 'ricos-schema';
-import type { EditorStyleClasses, HtmlAttributes, IRicosEditor, TiptapAdapter } from 'ricos-types';
+import type {
+  EditorEventSource,
+  EditorStyleClasses,
+  HtmlAttributes,
+  IRicosEditor,
+  TiptapAdapter,
+  UploadObserver,
+} from 'ricos-types';
 import { getEmptyDraftContent } from 'wix-rich-content-editor-common';
 import {
   EditorEvents,
@@ -27,7 +34,7 @@ type RicosEditorState = {
 
 type Props = RicosEditorProps & {
   ricosContext: GeneralContext;
-  editor: IRicosEditor;
+  editor: IRicosEditor & EditorEventSource & UploadObserver;
 };
 
 class RicosEditor extends React.Component<Props, RicosEditorState> implements RicosEditorRef {
@@ -221,7 +228,7 @@ const RicosEditorWithForwardRef = forwardRef<RicosEditorRef, RicosEditorProps>((
   <RicosContextConsumer>
     {(ricosContext: GeneralContext) => (
       <EditorContextConsumer>
-        {(editor: IRicosEditor) => (
+        {(editor: IRicosEditor & UploadObserver & EditorEventSource) => (
           <EditorEventsContext.Consumer>
             {editorEvents => (
               <RicosEditor

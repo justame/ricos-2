@@ -245,7 +245,7 @@ export class RichContentAdapter implements TiptapAdapter {
           [RICOS_INDENT_TYPE]: () => ({ command: 'indent', args: undefined }),
           [RICOS_FONT_SIZE_TYPE]: data => ({
             command: 'setFontSize',
-            args: parseInt(data.fontSize),
+            args: parseInt(data.fontSize, 10),
           }),
           [RICOS_LINE_SPACING_TYPE]: data => ({ command: 'setLineSpacings', args: data.data }),
         };

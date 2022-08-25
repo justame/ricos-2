@@ -7,7 +7,6 @@ import type {
   IMediaPluginService,
   IUpdateService,
   IUploadService,
-  IUploadObserver,
   EventSource,
   PublisherProvider,
 } from 'ricos-types';
@@ -30,17 +29,10 @@ export class UploadService implements IUploadService, EventSource<UploadTopics> 
 
   onInputChange: ((this: HTMLInputElement, event: any) => any) | null;
 
-  uploadObserver?: IUploadObserver;
-
-  constructor(
-    streamReader: ILocalFileReader,
-    updateService: IUpdateService,
-    uploadObserver?: IUploadObserver
-  ) {
+  constructor(streamReader: ILocalFileReader, updateService: IUpdateService) {
     this.streamReader = streamReader;
     this.updateService = updateService;
     this.onInputChange = null;
-    this.uploadObserver = uploadObserver;
   }
 
   topicsToPublish: UploadTopics = [
@@ -80,7 +72,6 @@ export class UploadService implements IUploadService, EventSource<UploadTopics> 
     MediaPluginService: IMediaPluginService,
     fileState?: Record<string, string | number>
   ) {
-    this.uploadObserver?.update({ key: 0 });
     const errorNotifier = this.getErrorNotifier();
     try {
       const url = await this.streamReader.read(file);
@@ -120,6 +111,5 @@ export class UploadService implements IUploadService, EventSource<UploadTopics> 
     } catch (e) {
       errorNotifier.notify({ msg: 'Failed reading file locally' });
     }
-    this.uploadObserver?.update({ key: 1 });
   }
 }

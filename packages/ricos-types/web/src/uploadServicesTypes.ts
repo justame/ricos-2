@@ -26,10 +26,6 @@ export interface INotifier {
   notify: (message: IMessage) => void;
 }
 
-export interface IUploadObserver {
-  update: (message: IUploadProgessMessage) => void;
-}
-
 export type UploadedData = {
   data?: ImageComponentData | VideoComponentData | FileComponentData;
   error?: IMessage;
@@ -108,8 +104,6 @@ export interface IUploadService {
   getHiddenInputElement: () => HTMLInputElement;
 
   onInputChange: ((this: HTMLInputElement, event: any) => any) | null;
-
-  uploadObserver?: IUploadObserver;
 
   setErrorNotifier: (getErrorNotifier: () => INotifier) => void;
 

@@ -145,6 +145,7 @@ export class RicosOrchestrator implements Orchestrator {
     this.plugins.destroy();
     this.modals.destroy();
     this.events.clear();
+    this.editor.finalizeUploadObserver();
   }
 
   private orchestrateEvents() {
@@ -156,8 +157,12 @@ export class RicosOrchestrator implements Orchestrator {
       this.uploadService,
       this.pluginsEvents,
     ] as RicosEventSource[]);
-    registerEventSubscribers(this.events, [this.modals as unknown as RicosEventSubscriber]);
+    registerEventSubscribers(this.events, [
+      this.modals as unknown as RicosEventSubscriber,
+      this.editor as unknown as RicosEventSubscriber,
+    ]);
     mapBiCallbacksToSubscriptions(this.editorProps, this.events);
+    this.editor.initializeUploadObserver();
   }
 
   private initUploadService(
