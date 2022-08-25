@@ -107,7 +107,7 @@ export const getAddButtons = (config, services): AddButton[] => {
 
       command: editorCommands => true,
       modal: {
-        id: socialModals.Tiktok,
+        id: socialModals.TikTok,
         Component: decorateComponentWithProps(InsertModal, {
           fetchData,
           socialType: 'TikTok',
