@@ -17,6 +17,10 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.72.37 (Aug 25, 2022)
+
 ## :bug: Bug Fix
 
 - `plugin-toolbar`
@@ -34,8 +38,6 @@
   - [#4482](https://github.com/wix/ricos/pull/4482) fix external formatting toolbar buttons obj name
 - `divider`
   - [#4483](https://github.com/wix/ricos/pull/4483) fix defaults on tiptap
-
-</details>
 
 ## 8.72.36 (Aug 24, 2022)
 
