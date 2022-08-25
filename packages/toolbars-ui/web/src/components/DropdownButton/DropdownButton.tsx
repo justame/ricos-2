@@ -9,6 +9,7 @@ type Props = {
   onClick: () => void;
   tooltip: string;
   active: boolean;
+  disabled?: boolean;
   dataHook?: string;
   label?: string;
   setRef: React.Dispatch<React.SetStateAction<HTMLDivElement | null>>;
@@ -22,6 +23,7 @@ const DropdownButton: React.FC<Props> = ({
   label,
   active,
   setRef,
+  disabled,
 }) => {
   const { isMobile } = useContext(RicosContext) || {};
 
@@ -33,6 +35,7 @@ const DropdownButton: React.FC<Props> = ({
         onClick={onClick}
         label={label}
         active={active}
+        disabled={disabled}
         Icon={Icon}
         dataHook={dataHook}
       >

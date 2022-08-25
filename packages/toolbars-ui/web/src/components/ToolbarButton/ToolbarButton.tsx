@@ -37,7 +37,7 @@ const ToolbarButton = ({
           [styles.active]: active,
           [styles.disabled]: disabled,
         })}
-        onClick={onClick}
+        onClick={!disabled ? onClick : undefined}
         onMouseDown={e => e.preventDefault()}
         data-hook={dataHook}
       >

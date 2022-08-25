@@ -4,6 +4,7 @@ import { RicosContext, ModalContext } from 'ricos-context';
 import type { IToolbarItem } from 'ricos-types';
 import { DropdownButton } from 'wix-rich-content-toolbars-ui';
 import { alignmentMap } from './dividerButtonsData';
+import { DividerData_Width } from 'ricos-schema';
 
 const getDefaultAlignment = langDir => {
   return langDir === 'rtl' ? 'RIGHT' : 'LEFT';
@@ -25,6 +26,7 @@ export const DividerAlignmentButton: FC<Props> = ({ toolbarItem, dataHook, id })
     node?.attrs?.alignment || getDefaultAlignment(languageDir);
   const selectedAlignment = getSelectedAlignment();
   const SelectedAlignmentIcon = alignmentMap[`${selectedAlignment}`];
+  const isButtonDisabled = node?.attrs?.width === DividerData_Width.LARGE;
 
   const closeModal = () => modalService.closeModal(id);
 
@@ -59,6 +61,7 @@ export const DividerAlignmentButton: FC<Props> = ({ toolbarItem, dataHook, id })
       dataHook={dataHook}
       active={isButtonActive}
       onClick={onClick}
+      disabled={isButtonDisabled}
       setRef={setReferenceElement}
       Icon={SelectedAlignmentIcon}
       tooltip={t('TextAlignmentButton_Tooltip')}

@@ -17,6 +17,7 @@ import {
 import LineStylePanel from './toolbar/modals/LineStylePanel';
 import DividerSizePanel from './toolbar/modals/DividerSizePanel';
 import { selectedNodeResolver } from 'wix-rich-content-plugin-commons';
+import { DividerData_Alignment, DividerData_Width } from 'ricos-schema';
 
 const getNodeSizeResolver = {
   id: DIVIDER_SIZE_RESOLVER_ID,
@@ -71,14 +72,17 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
     {
       id: DIVIDER_BUTTONS.size,
       dataHook: DIVIDER_SIZE_BUTTON_DATA_HOOK,
-      command: ({ value, editorCommands }) => {
-        editorCommands
-          .chain()
-          .focus()
-          .updateAttributes(TIPTAP_DIVIDER_TYPE, {
-            width: value,
-          })
-          .run();
+      command: ({ value, editorCommands, attributes: { selectedNode } }) => {
+        const nodeContainerData = selectedNode.attrs?.containerData;
+        const isFullWidth = value === DividerData_Width.LARGE;
+        const newAttributes = isFullWidth
+          ? {
+              width: value,
+              alignment: DividerData_Alignment.CENTER,
+              containerData: { ...nodeContainerData, alignment: DividerData_Alignment.CENTER },
+            }
+          : { width: value };
+        editorCommands.chain().focus().updateAttributes(TIPTAP_DIVIDER_TYPE, newAttributes).run();
       },
       modal: {
         Component: DividerSizePanel,
@@ -86,6 +90,7 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
       },
       attributes: {
         nodeSize: getNodeSizeResolver,
+        selectedNode: selectedNodeResolver,
       },
       renderer: toolbarItem => (
         <DividerSizeButton toolbarItem={toolbarItem} id={DIVIDER_BUTTONS.size} />
