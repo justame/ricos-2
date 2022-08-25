@@ -3,6 +3,7 @@
 @import '~wix-rich-content-common/dist/statics/styles/fonts';
 
 .desktopPanel {
+  font-family: $ricos-settings-font-family;
   display: flex;
   flex-direction: column;
   align-items: flex-start;

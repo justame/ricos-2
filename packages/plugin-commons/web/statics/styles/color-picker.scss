@@ -4,6 +4,7 @@
 @import '~wix-rich-content-common/dist/statics/styles/palette';
 
 .colorPicker {
+  font-family: $ricos-settings-font-family;
   position: relative;
   margin: 0;
 }
