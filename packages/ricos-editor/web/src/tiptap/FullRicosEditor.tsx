@@ -223,46 +223,47 @@ export class FullRicosEditor extends React.Component<Props, State> {
                   <EditorContextProvider editor={editor}>
                     <ModalContextProvider modalService={modals}>
                       <ShortcutsContextProvider shortcuts={shortcuts}>
-                        <PluginsContextProvider plugins={plugins}>
-                          <PluginsEventsContextProvider pluginsEvents={pluginsEvents}>
-                            <>
+                        <>
+                          <PluginsContextProvider plugins={plugins}>
+                            <PluginsEventsContextProvider pluginsEvents={pluginsEvents}>
                               <>
-                                <UploadContextProvider
-                                  uploadService={uploadService}
-                                  updateService={updateService}
-                                >
-                                  <ToolbarContext.Provider
-                                    value={{
-                                      ...this.getToolbarContext(),
-                                      toolbars,
-                                      portal: this.portalRef.current as RicosPortalType,
-                                    }}
+                                <>
+                                  <UploadContextProvider
+                                    uploadService={uploadService}
+                                    updateService={updateService}
                                   >
-                                    <>
-                                      <ContentQueryProvider editor={editor.adapter.tiptapEditor}>
-                                        <RicosToolbars
-                                          content={toolbarContent}
-                                          toolbarSettings={toolbarSettings}
-                                          plugins={plugins}
-                                          modalService={modals}
-                                        />
-                                      </ContentQueryProvider>
-                                    </>
-                                    <ModalRenderer />
-                                  </ToolbarContext.Provider>
-                                </UploadContextProvider>
-                                <Shortcuts group="formatting" root>
+                                    <ToolbarContext.Provider
+                                      value={{
+                                        ...this.getToolbarContext(),
+                                        toolbars,
+                                        portal: this.portalRef.current as RicosPortalType,
+                                      }}
+                                    >
+                                      <>
+                                        <ContentQueryProvider editor={editor.adapter.tiptapEditor}>
+                                          <RicosToolbars
+                                            content={toolbarContent}
+                                            toolbarSettings={toolbarSettings}
+                                            plugins={plugins}
+                                            modalService={modals}
+                                          />
+                                        </ContentQueryProvider>
+                                      </>
+                                      <ModalRenderer />
+                                    </ToolbarContext.Provider>
+                                  </UploadContextProvider>
                                   <RicosEditor
                                     onChange={this.onChange}
                                     {...restProps}
                                     ref={this.props.forwardRef}
                                   />
-                                </Shortcuts>
-                                <FooterToolbarPlaceholder toolbarSettings={toolbarSettings} />
+                                  <FooterToolbarPlaceholder toolbarSettings={toolbarSettings} />
+                                </>
                               </>
-                            </>
-                          </PluginsEventsContextProvider>
-                        </PluginsContextProvider>
+                            </PluginsEventsContextProvider>
+                          </PluginsContextProvider>
+                          <Shortcuts group="formatting" root />
+                        </>
                       </ShortcutsContextProvider>
                     </ModalContextProvider>
                   </EditorContextProvider>

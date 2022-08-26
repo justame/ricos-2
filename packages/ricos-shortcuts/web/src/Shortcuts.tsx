@@ -1,13 +1,12 @@
-import type { FC, ReactChild } from 'react';
+import type { FC } from 'react';
 import React, { useContext, useEffect, useRef } from 'react';
-import { configure, HotKeys, GlobalHotKeys } from 'react-hotkeys';
+import { configure, GlobalHotKeys } from 'react-hotkeys';
 import { EditorContext, RicosContext, ShortcutsContext } from 'ricos-context';
 import type { Shortcuts as ShortcutManager } from './models/shortcuts';
 
 export type ShortcutsProps = {
   group: string;
   root?: boolean;
-  children: ReactChild;
 };
 
 const defaultProps = {
@@ -28,7 +27,7 @@ const useComponentWillMount = (callback: () => void) => {
 };
 
 export const Shortcuts: FC<ShortcutsProps> = (props: ShortcutsProps) => {
-  const { group, root, children } = { ...defaultProps, ...props };
+  const { group, root } = { ...defaultProps, ...props };
 
   const shortcuts = useContext(ShortcutsContext) as ShortcutManager;
 
@@ -48,12 +47,5 @@ export const Shortcuts: FC<ShortcutsProps> = (props: ShortcutsProps) => {
     }
   });
 
-  return (
-    <>
-      <HotKeys root={root} handlers={handlers} keyMap={keyMap}>
-        {children}
-      </HotKeys>
-      {root && <GlobalHotKeys />}
-    </>
-  );
+  return <GlobalHotKeys handlers={handlers} keyMap={keyMap} />;
 };
