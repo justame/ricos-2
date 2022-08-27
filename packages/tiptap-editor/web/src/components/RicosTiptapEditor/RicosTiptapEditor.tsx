@@ -10,6 +10,7 @@ import { RicosContext } from 'ricos-context';
 import { useForceUpdate } from '../../lib/useForceUpdate';
 import '../../statics/styles/tiptap-editor-styles.scss';
 import type { RicosTiptapEditorProps } from '../../types';
+import { Fragment } from 'prosemirror-model';
 
 // TODO: maybe should move it to utils ?
 const getSelectedNodes = ({ editor }) => {

@@ -3,24 +3,10 @@
 import { TiptapContentResolver } from '../ContentResolver';
 import { RESOLVERS_IDS } from './resolvers-ids';
 import { Node_Type } from 'ricos-schema';
+import type { IEditorQuery } from 'ricos-types';
 import { Decoration_Type } from 'ricos-types';
 import type { RicosStyles } from 'ricos-styles';
-import { isEqual } from 'lodash';
-
-const getDecoration = (editor, decorationType: Decoration_Type, markAttributeKey) => {
-  const storedMark = editor?.state?.storedMarks?.find(mark => {
-    return mark.type.name === decorationType && mark.attrs[markAttributeKey];
-  });
-
-  const markInSelection = editor?.state?.selection?.$from.marks().find(mark => {
-    return mark.type.name === decorationType && mark.attrs[markAttributeKey];
-  });
-
-  return {
-    storedMark,
-    markInSelection,
-  };
-};
+import { isEqual, uniq } from 'lodash';
 
 export const alwaysVisibleResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.ALWAYS_VISIBLE,
@@ -38,47 +24,11 @@ export const isTextInSelection = TiptapContentResolver.create(
 
 export const isTextContainsBoldResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.IS_TEXT_CONTAINS_BOLD,
-  (content, { styles, nodeService }: { styles: RicosStyles; nodeService }, editor) => {
-    if (Array.isArray(content)) {
-      const node = content.find(node => {
-        return node.type.name === 'text';
-      });
-      let hasBoldDecorationInDocumentStyles = false;
-      if (node && styles && nodeService) {
-        hasBoldDecorationInDocumentStyles = !!content.find(node => {
-          const decoration = styles.getDecoration(
-            nodeService.nodeToRicosNode(node),
-            Decoration_Type.BOLD
-          );
-          return decoration.fontWeightValue === 700;
-        });
-      }
-      const hasInlineBold = node?.marks.some(mark => {
-        return mark.type.name === Decoration_Type.BOLD && mark.attrs.fontWeightValue === 700;
-      });
+  (content, { getEditorQuery }: { styles: RicosStyles; nodeService; getEditorQuery: any }) => {
+    const editorQuery: IEditorQuery = getEditorQuery();
 
-      const hasInlineNormalWeight = node?.marks.some(mark => {
-        return mark.type.name === Decoration_Type.BOLD && mark.attrs.fontWeightValue === 400;
-      });
-
-      if (hasInlineBold) {
-        return true;
-      }
-
-      if (hasInlineNormalWeight) {
-        return false;
-      }
-
-      if (hasBoldDecorationInDocumentStyles) {
-        return true;
-      }
-
-      if (editor?.isActive(Decoration_Type.BOLD, { fontWeightValue: 700 })) {
-        return true;
-      }
-    }
-
-    return false;
+    const decorations = editorQuery.coreQuery.activeDecorationsByType(Decoration_Type.BOLD);
+    return decorations.length > 0 && decorations.every(item => item?.fontWeightValue === 700);
   }
 );
 
@@ -195,14 +145,13 @@ export const isTextContainsSpoilerResolver = TiptapContentResolver.create(
 
 export const getAlignmentInSelectionResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.GET_ALIGNMENT_IN_SELECTION,
-  content => {
-    if (Array.isArray(content) && content.length > 0) {
-      const textAlignment = content[0].attrs.textStyle?.textAlignment;
-      if (!textAlignment || textAlignment === 'AUTO') return undefined;
-      return textAlignment.toLowerCase();
-    } else {
-      return undefined;
+  (content, { getEditorQuery }) => {
+    const editorQuery: IEditorQuery = getEditorQuery();
+    const activeTextStyles = editorQuery.coreQuery.activeTextStyles('textAlignment');
+    if (activeTextStyles.length > 0 && uniq(activeTextStyles).length === 1) {
+      activeTextStyles[0];
     }
+    return undefined;
   }
 );
 
@@ -278,41 +227,20 @@ export const isTextStylesMatchDocumentStylesResolver = TiptapContentResolver.cre
 
 export const getLineSpacingInSelectionResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.GET_LINE_SPACING_IN_SELECTION,
-  (content, { styles, nodeService }: { styles: RicosStyles; nodeService }) => {
-    if (!Array.isArray(content)) {
-      return undefined;
+  (content, { getEditorQuery }: { styles: RicosStyles; nodeService; getEditorQuery: any }) => {
+    const editorQuery: IEditorQuery = getEditorQuery();
+    const activeTextStyles = editorQuery.coreQuery.activeTextStyles('lineHeight');
+
+    if (
+      activeTextStyles.length > 0 &&
+      activeTextStyles.every((lineHeight, _index, arr) => {
+        return lineHeight === arr[0];
+      })
+    ) {
+      return activeTextStyles[0].toString();
+    } else {
+      return '';
     }
-
-    const lineHeights: string[] = [];
-    const defaultsLineHeights: string[] = [];
-    content.forEach(node => {
-      if (node && styles && nodeService) {
-        const textStyle = styles.getTextStyle(nodeService.nodeToRicosNode(node));
-
-        if (node.attrs?.textStyle?.lineHeight) {
-          lineHeights.push(node.attrs.textStyle.lineHeight);
-        }
-        if (textStyle?.lineHeight) {
-          defaultsLineHeights.push(textStyle.lineHeight);
-        }
-      }
-    });
-    const uniqueLineHeights = Array.from(
-      new Set(lineHeights.map(lineHeight => lineHeight.toString()))
-    );
-    const uniqueDefaultLineHeights = Array.from(
-      new Set(defaultsLineHeights.map(lineHeight => lineHeight.toString()))
-    );
-
-    if (uniqueLineHeights.length > 1) {
-      return undefined;
-    } else if (uniqueLineHeights.length === 1) {
-      return uniqueLineHeights[0];
-    } else if (uniqueLineHeights.length === 0 && uniqueDefaultLineHeights.length === 1) {
-      return uniqueDefaultLineHeights[0];
-    }
-
-    return undefined;
   }
 );
 

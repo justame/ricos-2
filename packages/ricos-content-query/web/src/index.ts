@@ -1,3 +1,5 @@
+export { EditorQuery } from './editor-query';
+
 export { ContentQueryProvider } from './ContentQueryProvider';
 export { ContentQueryContext } from './ContentQueryContext';
 export { withContentQueryContext } from './withContentQueryContext';

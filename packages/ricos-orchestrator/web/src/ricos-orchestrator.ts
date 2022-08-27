@@ -4,6 +4,7 @@ import type { Node } from 'prosemirror-model';
 import type { RicosEditorProps } from 'ricos-common';
 import { StreamReader, UpdateService, UploadService } from 'ricos-common';
 import { commonPluginConfig, commonPlugins } from 'ricos-common-plugins';
+import { EditorQuery } from 'ricos-content-query';
 import type { GeneralContext } from 'ricos-context';
 import { nodeConverter as nodeService } from 'ricos-converters';
 import { RicosEvents } from 'ricos-events';
@@ -22,7 +23,7 @@ import type {
   TranslationFunction,
   IPluginsEvents,
 } from 'ricos-types';
-import { getLangDir } from 'wix-rich-content-common';
+import { getLangDir, isSSR } from 'wix-rich-content-common';
 import { Content, RicosToolbars } from 'wix-rich-content-toolbars-v3';
 import { getHelpersConfig } from './helpers-config';
 import { mapBiCallbacksToSubscriptions } from './map-bi-callbacks-to-events';
@@ -56,6 +57,8 @@ export class RicosOrchestrator implements Orchestrator {
   private readonly content: Content;
 
   private readonly editor: RicosEditor;
+
+  private readonly editorQuery: EditorQuery;
 
   private readonly context: Omit<GeneralContext, 'portal'>;
 
@@ -95,9 +98,14 @@ export class RicosOrchestrator implements Orchestrator {
 
     this.pluginsEvents = new PluginsEvents();
 
+    const getEditorQuery = (): EditorQuery => {
+      return this.editorQuery;
+    };
+
     this.content = Content.create<Node[]>([], {
       styles: this.styles,
       nodeService,
+      getEditorQuery,
       editor: null,
     });
 
@@ -136,9 +144,17 @@ export class RicosOrchestrator implements Orchestrator {
       },
       this.editorProps.debugMode?.includes('prosemirror') || editorProps.debugMode?.includes('all')
     );
+
     this.updateService.setEditorCommands(this.editor.getEditorCommands());
 
     this.orchestrateEvents();
+
+    this.editorQuery = new EditorQuery(this.editor.adapter.tiptapEditor, this.styles);
+
+    if (!isSSR()) {
+      //@ts-ignore
+      window.editorQuery = this.editorQuery;
+    }
   }
 
   finalize() {
