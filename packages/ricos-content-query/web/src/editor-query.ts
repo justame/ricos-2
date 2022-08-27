@@ -88,6 +88,7 @@ export class EditorQuery implements IEditorQuery {
 
       const activeDecorations = allDecorations
         .filter(decoration => !!decoration)
+        .filter(decoration => decoration?.type === decorationType)
         .filter(decoration => {
           return objectIncludes(decoration as Decoration, attrs || {}, { strict: false });
         });
