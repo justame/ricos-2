@@ -8,9 +8,9 @@ import { tiptapToDraft } from 'ricos-converters';
 import { RicosTiptapContext } from '../../context';
 import { RicosContext } from 'ricos-context';
 import { useForceUpdate } from '../../lib/useForceUpdate';
-import '../../statics/styles/tiptap-editor-styles.scss';
+import styles from '../../statics/styles/tiptap-editor-styles.scss';
 import type { RicosTiptapEditorProps } from '../../types';
-import { Fragment } from 'prosemirror-model';
+import cx from 'classnames';
 
 // TODO: maybe should move it to utils ?
 const getSelectedNodes = ({ editor }) => {
@@ -73,7 +73,12 @@ export const RicosTiptapEditor: FunctionComponent<RicosTiptapEditorProps> = ({
         },
       }}
     >
-      <div dir={getLangDir(locale)} className={containerClassName} {...htmlAttributes}>
+      <div
+        data-hook="ricos-tiptap-editor"
+        dir={getLangDir(locale)}
+        className={cx(containerClassName, styles.ricosTiptapEditor)}
+        {...htmlAttributes}
+      >
         <EditorContent editor={editor} className={editorClassName} />
       </div>
     </RicosTiptapContext.Provider>

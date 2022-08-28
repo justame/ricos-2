@@ -17,11 +17,13 @@
 
   .editor {
     box-sizing: border-box;
+
     *,
     *:before,
     *:after {
       box-sizing: inherit;
     }
+
     input {
       box-sizing: border-box;
     }
@@ -69,4 +71,5 @@
 
 .fullRicosEditor {
   position: relative;
+  height: 100%;
 }

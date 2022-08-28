@@ -52,6 +52,9 @@
     "wix-rich-content-toolbars-v3": "8.72.37",
     "wix-tiptap-extensions": "8.72.37"
   },
+  "peerDependencies": {
+    "classnames": "^2.0.0"
+  },
   "jest": {
     "globals": {
       "NODE_ENV": "test"
