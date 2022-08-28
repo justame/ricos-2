@@ -1,6 +1,6 @@
 {
   "name": "ricos-content-query",
-  "version": "8.72.37",
+  "version": "8.72.38",
   "author": {
     "name": "Noam Tayri",
     "email": "noamt@wix.com"
@@ -34,14 +34,14 @@
     "test:watchAll": "jest --verbose --watchAll"
   },
   "dependencies": {
-    "fp-ts": "^2.11.0",
-    "ricos-content": "8.72.37",
-    "ricos-converters": "8.72.37",
-    "ricos-schema": "8.72.37",
-    "ricos-styles": "8.72.37",
-    "ricos-types": "8.72.37",
     "@tiptap/core": "2.0.0-beta.148",
-    "lodash": "^4.0.0"
+    "fp-ts": "^2.11.0",
+    "lodash": "^4.0.0",
+    "ricos-content": "8.72.38",
+    "ricos-converters": "8.72.38",
+    "ricos-schema": "8.72.38",
+    "ricos-styles": "8.72.38",
+    "ricos-types": "8.72.38"
   },
   "unpkg": true,
   "publishConfig": {
