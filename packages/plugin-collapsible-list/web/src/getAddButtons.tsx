@@ -21,6 +21,7 @@ export const getAddButtons = (config, services): AddButton[] => {
       },
       menuConfig: {
         tags: 'CollapsibleList_plugin_search_tags',
+        group: 'advanced',
       },
     },
   ];

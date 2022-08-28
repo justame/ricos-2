@@ -27,6 +27,7 @@ export const getAddButtons = (config, services): AddButton[] => {
       },
       menuConfig: {
         tags: 'Table_plugin_search_tags',
+        group: 'advanced',
       },
     },
   ];

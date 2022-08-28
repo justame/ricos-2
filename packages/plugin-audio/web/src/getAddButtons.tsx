@@ -48,7 +48,6 @@ export const getAddButtons = (config, services): AddButton[] => {
       },
       menuConfig: {
         tags: 'Audio_plugin_search_tags',
-        group: 'embed',
       },
     },
     [audioButtonsTypes.soundCloud]: {

@@ -48,7 +48,6 @@ export const getAddButtons = (config, services): AddButton[] => {
       },
       menuConfig: {
         tags: 'Video_plugin_search_tags',
-        group: 'embed',
       },
     },
     [videoButtonsTypes.youTube]: {
