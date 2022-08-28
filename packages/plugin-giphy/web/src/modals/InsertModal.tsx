@@ -4,6 +4,7 @@ import { convertBlockDataToRicos } from 'ricos-content/libs/convertBlockDataToRi
 import { ModalContext, RicosContext, EditorContext, PluginsEventsContext } from 'ricos-context';
 import GiphyApiInputModal from '../toolbar/giphyApiInputModal';
 import { GIPHY_TYPE } from '../types';
+import styles from '../../statics/styles/giphy-api-input-modal.scss';
 
 interface Props {
   giphySdkApiKey: string;
@@ -43,17 +44,19 @@ const GiphyInsertModal: FC<Props> = ({ componentData, giphySdkApiKey, nodeId, mo
   };
 
   return (
-    <GiphyApiInputModal
-      giphySdkApiKey={giphySdkApiKey}
-      componentData={componentData}
-      theme={theme}
-      t={t}
-      isMobile={isMobile}
-      languageDir={languageDir}
-      onGifAdd={onGifAdd}
-      onCloseRequested={closeModal}
-      helpers={pluginEvents}
-    />
+    <div className={styles.modalWrapper}>
+      <GiphyApiInputModal
+        giphySdkApiKey={giphySdkApiKey}
+        componentData={componentData}
+        theme={theme}
+        t={t}
+        isMobile={isMobile}
+        languageDir={languageDir}
+        onGifAdd={onGifAdd}
+        onCloseRequested={closeModal}
+        helpers={pluginEvents}
+      />
+    </div>
   );
 };
 
