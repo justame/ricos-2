@@ -68,10 +68,6 @@ export class TreeNodeQuery implements ITreeNodeQuery {
     return this.toNode().type;
   }
 
-  byIndex(index) {
-    return this.children[index];
-  }
-
   /**
    * It converts a Tiptap node to a Prosemirror node
    * @returns A Node object.

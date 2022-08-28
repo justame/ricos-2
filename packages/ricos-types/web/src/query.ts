@@ -69,8 +69,6 @@ export interface ITreeNodeQuery<T = Node> {
 
   isText(): boolean;
 
-  byIndex(index: number): ITreeNodeQuery | null;
-
   type(): string;
 
   toNode(): T;
