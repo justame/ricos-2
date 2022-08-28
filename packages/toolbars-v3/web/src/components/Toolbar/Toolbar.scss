@@ -40,6 +40,7 @@
   width: 100%;
   min-width: 100%;
   overflow: scroll;
+
   &::-webkit-scrollbar {
     display: none;
   }
@@ -53,9 +54,14 @@
 }
 
 .showMoreAbove {
-  position: relative !important;
   width: min-content;
 }
+
+.moreButtonTop {
+  bottom: 30px;
+  top: auto;
+}
+
 
 .moreItems {
   font-family: $ricos-settings-font-family;
@@ -80,4 +86,8 @@
   top: 40px;
   height: 40px;
   padding: 0 4px;
+}
+
+.toolbarVisible {
+  position: relative;
 }

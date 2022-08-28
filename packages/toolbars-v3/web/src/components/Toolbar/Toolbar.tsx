@@ -102,6 +102,7 @@ class ToolbarComponent extends Component<ToolbarProps, Record<string, unknown>> 
 
           const width = maxWidth || size.width;
           const showMoreAbove = overflowedItemsPosition === 'top';
+
           return (
             <div dir="ltr" data-hook="toolbar-v3" className={styles.toolbar}>
               <ClickOutside onClickOutside={this.onClickOutside} wrapper="div">
@@ -109,7 +110,11 @@ class ToolbarComponent extends Component<ToolbarProps, Record<string, unknown>> 
                   {({ visibleButtons, overflowedButtons }) => {
                     const overflowedButtonsRenders = showMore && overflowedButtons && (
                       <div
-                        className={cx(styles.moreItems, { [styles.showMoreAbove]: showMoreAbove })}
+                        className={cx(
+                          styles.moreItems,
+                          overflowedItemsPosition === 'top' ? styles.moreButtonTop : '',
+                          { [styles.showMoreAbove]: showMoreAbove }
+                        )}
                       >
                         <div className={styles.overflowedItems}>
                           {overflowedButtons.getButtonsElementsWithDataHook()}
@@ -118,6 +123,7 @@ class ToolbarComponent extends Component<ToolbarProps, Record<string, unknown>> 
                     );
                     return (
                       <div
+                        className={styles.toolbarVisible}
                         data-hook="toolbar-v3-visible"
                         onKeyDown={e =>
                           handleCircularFocus({
