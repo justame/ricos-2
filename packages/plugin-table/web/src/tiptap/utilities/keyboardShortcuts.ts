@@ -72,7 +72,7 @@ function handleTab(axis, dir) {
     const $head = currentCell && nextCell(currentCell, axis, dir);
     if ($head) {
       return maybeSetSelection(state, view.dispatch, new CellSelection($head));
-    } else return true;
+    } else return false;
   };
 }
 
