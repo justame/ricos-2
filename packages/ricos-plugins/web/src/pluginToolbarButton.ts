@@ -61,16 +61,17 @@ export class RicosPluginToolbarButton implements PluginToolbarButton {
     const { id, type, icon, tooltip, dataHook, command, attributes = {} } = this.button;
 
     const toolbarItemConfig = toolbarButtonsConfig[id] || {};
-    const { presentation = {}, commands } = toolbarItemConfig;
+    const { presentation = {}, commands = {} } = toolbarItemConfig;
 
     const publishPluginToolbarClick = (args, node) => {
       const { value } = args || {};
-      this.services.pluginsEvents.publishPluginToolbarClick({
-        pluginId: node.type.name,
-        nodeId: node.attrs.id,
-        buttonName: this.button.id,
-        value,
-      });
+      node && //temporary fix for table! (table hasn't node as attrs)
+        this.services.pluginsEvents.publishPluginToolbarClick({
+          pluginId: node.type.name,
+          nodeId: node.attrs.id,
+          buttonName: this.button.id,
+          value,
+        });
     };
 
     return {

@@ -205,21 +205,23 @@ const getSelectionCategoryResolver = {
   id: 'getSelectedCategory',
   resolve: (_, __, editor) => {
     const { selection } = editor.state;
-    const isColSelected = selection.isColSelection?.();
-    const isRowSelected = selection.isRowSelection?.();
-    const isEntireTableSelected = isTableSelected(selection);
-    const { rows, cols } = getRowsAndColsInSelection(editor.state);
-    const isMultipleRowsSelected = rows.length > 1;
-    const isMultipleColsSelected = cols.length > 1;
+    if (selection.$headCell) {
+      const isColSelected = selection.isColSelection?.();
+      const isRowSelected = selection.isRowSelection?.();
+      const isEntireTableSelected = isTableSelected(selection);
+      const { rows, cols } = getRowsAndColsInSelection(editor.state);
+      const isMultipleRowsSelected = rows.length > 1;
+      const isMultipleColsSelected = cols.length > 1;
 
-    return (
-      (isEntireTableSelected && CATEGORY.ENTIRE_TABLE) ||
-      (isColSelected && CATEGORY.COLUMN) ||
-      (isRowSelected && CATEGORY.ROW) ||
-      (isMultipleRowsSelected && isMultipleColsSelected && CATEGORY.RANGE) ||
-      (isMultipleRowsSelected && CATEGORY.ROW_RANGE) ||
-      (isMultipleColsSelected && CATEGORY.COLUMN_RANGE) ||
-      CATEGORY.CELL_BORDER
-    );
+      return (
+        (isEntireTableSelected && CATEGORY.ENTIRE_TABLE) ||
+        (isColSelected && CATEGORY.COLUMN) ||
+        (isRowSelected && CATEGORY.ROW) ||
+        (isMultipleRowsSelected && isMultipleColsSelected && CATEGORY.RANGE) ||
+        (isMultipleRowsSelected && CATEGORY.ROW_RANGE) ||
+        (isMultipleColsSelected && CATEGORY.COLUMN_RANGE) ||
+        CATEGORY.CELL_BORDER
+      );
+    } else return undefined;
   },
 };

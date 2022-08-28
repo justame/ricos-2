@@ -47,6 +47,7 @@ import {
 import { TRANSACTION_META_KEYS } from './consts';
 import { setCellAttr } from './utilities/commands';
 import { getRowsAndColsInSelection } from './utilities/getRowsAndColsInSelection';
+import { getTotalWidthInSelection } from './utilities/getTotalWidthInSelection';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -354,7 +355,24 @@ export const tableExtension = {
             },
           distributeColumns:
             () =>
-            ({ tr, dispatch, state }) => {},
+            ({ tr, dispatch, state, view }) => {
+              const rect = selectedRect(state);
+              const { cols } = getRowsAndColsInSelection(state);
+              const totalWidth = getTotalWidthInSelection(view);
+              const rowNum = rect.map.height;
+              const colNum = rect.map.width;
+              const rowsIndexes = Array(rowNum).fill(0);
+              rowsIndexes.forEach((_, row) =>
+                cols.forEach(col => {
+                  const mapIndex = row * colNum + col;
+                  tr.setNodeMarkup(rect.tableStart + rect.map.map[mapIndex], null, {
+                    colwidth: [totalWidth / cols.length],
+                  });
+                })
+              );
+
+              dispatch(tr);
+            },
           setEditCell:
             () =>
             ({ tr, dispatch, state }) => {
