@@ -1,13 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import type { AddButton, ToolbarType } from 'ricos-types';
-import {
-  RicosPluginAddButton,
-  RicosPluginAddButtons,
-  PluginAddButtonCollisionError,
-} from './pluginAddButton';
+import { RicosPluginAddButton, PluginAddButtonCollisionError } from './pluginAddButton';
 import { alwaysVisibleResolver } from 'wix-rich-content-toolbars-v3';
 import type { PluginServices } from './editorPlugins';
+import { RicosPluginAddButtons } from './plugin-add-buttons';
 
 const services = {
   t: jest.fn(),

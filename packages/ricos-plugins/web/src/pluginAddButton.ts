@@ -1,24 +1,22 @@
-import React from 'react';
-import { alwaysVisibleResolver } from 'wix-rich-content-toolbars-v3';
 import type {
-  MenuGroups,
   AddButton,
-  ToolbarType,
-  PluginButton,
-  PluginAddButton,
-  PluginAddButtons,
-  IToolbarItemConfigTiptap,
-  AddPluginMenuConfig,
-  ToolbarButtonProps,
   EditorCommands,
-  PluginMenuItem,
+  IToolbarItemConfigTiptap,
   Layout,
+  MenuGroups,
   Placement,
+  PluginAddButton,
+  PluginButton,
+  PluginMenuItem,
   TextDirection,
+  ToolbarButtonProps,
+  ToolbarType,
 } from 'ricos-types';
-import { AddPluginMenu, PLUGIN_MENU_MODAL_ID } from 'wix-rich-content-toolbars-ui';
+import { PLUGIN_MENU_MODAL_ID } from 'wix-rich-content-toolbars-ui';
+import { alwaysVisibleResolver } from 'wix-rich-content-toolbars-v3';
 import type { PluginServices } from './editorPlugins';
 
+// TODO: copied from RCE, should be moved to ricos-types
 const SECTIONS = {
   no_section: 'BlockToolbar_Section_NoSections_ShortcutToolbar',
   basic: 'BlockToolbar_Section_Basic',
@@ -26,6 +24,9 @@ const SECTIONS = {
   embed_wix: 'BlockToolbar_Section_Embed_Wix',
   embed: 'BlockToolbar_Section_Embed_Anywhere',
 };
+
+// TODO: copied from toolbars-v3, should be moved to ricos-types
+const PLUGIN_MENU_HORIZONTAL_MODAL_ID = 'pluginMenuHorizontal';
 
 export class PluginAddButtonCollisionError extends Error {}
 
@@ -92,15 +93,19 @@ export class RicosPluginAddButton implements PluginAddButton {
     return this.button.id === button.getButton().id;
   }
 
-  private calcPluginModalLayout(isMobile: boolean): Layout {
+  private calculateLayout(isMobile: boolean): Layout {
     return isMobile ? 'fullscreen' : 'popover';
   }
 
-  private calcPluginModalPlacement(isMobile: boolean, languageDir: TextDirection): Placement {
+  private calculatePlacement(isMobile: boolean, languageDir: TextDirection): Placement {
     return isMobile ? 'bottom' : languageDir === 'ltr' ? 'right-start' : 'left-start';
   }
 
-  toPluginMenuItem(): PluginMenuItem {
+  private getPluginMenuItem(
+    layout: Layout,
+    placement: Placement,
+    sideEffect: () => void
+  ): PluginMenuItem {
     const { t } = this.services;
     return {
       id: this.button.id,
@@ -110,14 +115,11 @@ export class RicosPluginAddButton implements PluginAddButton {
         tooltip: t(this.button.tooltip) || '',
         icon: this.button.icon,
       },
+      attributes: {
+        visible: alwaysVisibleResolver,
+      },
       getClickHandler:
         (editorCommands: EditorCommands, referenceElement?: HTMLElement | null) => () => {
-          const placement = this.calcPluginModalPlacement(
-            this.services.context.isMobile,
-            this.services.context.languageDir
-          );
-          const layout = this.calcPluginModalLayout(this.services.context.isMobile);
-          this.services.modals.closeModal(PLUGIN_MENU_MODAL_ID);
           this.button.modal
             ? this.services.modals.openModal(this.button.modal.id, {
                 positioning: {
@@ -128,10 +130,38 @@ export class RicosPluginAddButton implements PluginAddButton {
               })
             : this.button.command(editorCommands);
 
-          this.services.toolbars.pluginMenu.publishButtonClick(this.button.id);
+          sideEffect();
         },
       section: SECTIONS[this.getGroup()],
     };
+  }
+
+  toPluginMenuItem(): PluginMenuItem {
+    return this.getPluginMenuItem(
+      this.calculateLayout(this.services.context.isMobile),
+      this.calculatePlacement(this.services.context.isMobile, this.services.context.languageDir),
+      () => {
+        this.services.toolbars.pluginMenu.publishButtonClick(this.button.id);
+        this.services.modals.closeModal(PLUGIN_MENU_MODAL_ID);
+      }
+    );
+  }
+
+  toFooterToolbarItem(): PluginMenuItem {
+    return this.getPluginMenuItem('popover', 'bottom', () => {
+      this.services.toolbars.pluginMenu.publishButtonClick(this.button.id);
+    });
+  }
+
+  toHorizontalMenuItem(): PluginMenuItem {
+    return this.getPluginMenuItem(
+      'popover',
+      this.calculatePlacement(false, this.services.context.languageDir),
+      () => {
+        this.services.toolbars.pluginMenu.publishButtonClick(this.button.id);
+        this.services.modals.closeModal(PLUGIN_MENU_HORIZONTAL_MODAL_ID);
+      }
+    );
   }
 
   toToolbarItemConfig(): IToolbarItemConfigTiptap {
@@ -193,94 +223,5 @@ export class RicosPluginAddButton implements PluginAddButton {
       component: this.button.icon,
       blockType: 'node',
     };
-  }
-}
-
-export class RicosPluginAddButtons implements PluginAddButtons {
-  buttons: PluginAddButton[] = [];
-
-  services: PluginServices;
-
-  constructor(buttons: PluginAddButton[] = [], services: PluginServices) {
-    this.buttons = buttons;
-    this.services = services;
-  }
-
-  private hasDuplicate(candidate: PluginAddButton) {
-    return this.buttons.find(b => b.equals(candidate));
-  }
-
-  asArray() {
-    return this.buttons;
-  }
-
-  byGroup(group: MenuGroups) {
-    return new RicosPluginAddButtons(
-      this.buttons.filter(button => button.getGroup() === group),
-      this.services
-    );
-  }
-
-  byToolbar(toolbar: ToolbarType) {
-    return new RicosPluginAddButtons(
-      this.buttons.filter(button => button.getToolbars().includes(toolbar)),
-      this.services
-    );
-  }
-
-  byTag(tag) {
-    const { t } = this.services;
-    return this.buttons.filter(button =>
-      t(button.getTags() || '')
-        .toLowerCase()
-        .includes(tag.toLowerCase())
-    );
-  }
-
-  register(button: AddButton) {
-    const candidate = RicosPluginAddButton.of(button, this.services);
-    const duplicate = this.hasDuplicate(candidate);
-    if (duplicate) {
-      throw new PluginAddButtonCollisionError(
-        `the plugin add button ${candidate.getButton().id} conflicts with ${
-          duplicate.getButton().id
-        }`
-      );
-    }
-    this.buttons.push(candidate);
-  }
-
-  unregister(button: AddButton) {
-    const candidate = RicosPluginAddButton.of(button, this.services);
-    this.buttons = this.buttons.filter(b => !b.equals(candidate));
-  }
-
-  toToolbarButtonsConfig() {
-    return this.buttons.map(b => b.toToolbarItemConfig());
-  }
-
-  registerPluginMenuModal(config?: AddPluginMenuConfig) {
-    this.services.modals?.register({
-      id: PLUGIN_MENU_MODAL_ID,
-      Component: props => (
-        <AddPluginMenu addButtons={this} addPluginMenuConfig={config} {...props} />
-      ),
-    });
-  }
-
-  toToolbarItemsConfigs(): IToolbarItemConfigTiptap[] {
-    return this.buttons.map(b => b.toToolbarItemConfig());
-  }
-
-  toExternalToolbarButtonsConfigs(
-    editorCommands: EditorCommands
-  ): Record<string, ToolbarButtonProps> {
-    return this.buttons.reduce((acc, b) => {
-      const buttonConfig = b.toExternalToolbarButtonConfig(editorCommands);
-      return {
-        ...acc,
-        [buttonConfig.getLabel?.() || '']: buttonConfig,
-      };
-    }, {});
   }
 }

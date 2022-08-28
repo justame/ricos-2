@@ -1,17 +1,17 @@
 import type { Node } from 'prosemirror-model';
 import React, { useContext } from 'react';
-import { ModalContext, EditorContext } from 'ricos-context';
-import RicosToolbarComponent from '../RicosToolbarComponent';
+import { EditorContext, ModalContext } from 'ricos-context';
+import type { PluginAddButton, PluginAddButtons } from 'ricos-types';
 import { Content } from '../../Content';
-import ToggleButton from '../buttons/ToggleButton/ToggleButton';
-import styles from './insert-plugin-toolbar.scss';
-import type { AddButton, PluginAddButtons } from 'ricos-types';
 import type { OverflowedItemsPosition } from '../../types';
+import ToggleButton from '../buttons/ToggleButton/ToggleButton';
+import RicosToolbarComponent from '../RicosToolbarComponent';
+import styles from './insert-plugin-toolbar.scss';
 
 interface Props {
   buttons: PluginAddButtons;
   referenceElement?: React.RefObject<HTMLElement>;
-  onButtonClick: (button: AddButton, e: Event) => void;
+  onButtonClick: (button: PluginAddButton, e: Event) => void;
   overflowedItemsPosition?: OverflowedItemsPosition;
 }
 
@@ -28,7 +28,7 @@ const InsertPluginToolbar: React.FC<Props> = ({
     return {
       ...result,
       [button.id]: toolbarItem => (
-        <ToggleButton toolbarItem={toolbarItem} onClick={e => onButtonClick(button, e)} />
+        <ToggleButton toolbarItem={toolbarItem} onClick={e => onButtonClick(addButton, e)} />
       ),
     };
   }, {});

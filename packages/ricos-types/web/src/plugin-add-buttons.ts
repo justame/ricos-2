@@ -14,6 +14,7 @@ export type PluginMenuItem = {
     dataHook: string;
     tooltip: string;
   };
+  attributes: IToolbarItemConfigTiptap['attributes'];
   getClickHandler: (
     editorCommands: EditorCommands,
     referenceElement?: HTMLElement | null
@@ -36,6 +37,10 @@ export interface PluginAddButton {
 
   toPluginMenuItem: () => PluginMenuItem;
 
+  toFooterToolbarItem: () => PluginMenuItem;
+
+  toHorizontalMenuItem: () => PluginMenuItem;
+
   getToolbars: () => ToolbarType[];
 
   toToolbarButtonSettings: () => PluginButton;
@@ -56,11 +61,9 @@ export interface PluginAddButtons {
 
   unregister: (button: AddButton) => void;
 
-  toToolbarButtonsConfig: () => IToolbarItemConfigTiptap[];
-
   registerPluginMenuModal: (config?: AddPluginMenuConfig) => void;
 
-  toToolbarItemsConfigs(): IToolbarItemConfigTiptap[];
+  toToolbarButtonsConfig: () => IToolbarItemConfigTiptap[];
 
   toExternalToolbarButtonsConfigs(
     editorCommands: EditorCommands

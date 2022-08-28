@@ -1,28 +1,17 @@
-import React, { useContext } from 'react';
 import type { FC } from 'react';
+import React, { useContext } from 'react';
+import { EditorContext, PluginsContext } from 'ricos-context';
+import type { PluginAddButton } from 'ricos-types';
 import { InsertPluginToolbar } from 'wix-rich-content-toolbars-v3';
-import type { AddButton } from 'ricos-types';
-import { ModalContext, EditorContext, PluginsContext } from 'ricos-context';
 import styles from '../../statics/styles/footer-toolbar.scss';
 
 export const FooterToolbar: FC = () => {
   const plugins = useContext(PluginsContext);
-  const modalService = useContext(ModalContext);
   const { getEditorCommands } = useContext(EditorContext);
 
-  const onButtonClick = ({ modal, command }: AddButton, event: Event) => {
-    if (modal && modalService) {
-      return modalService.isModalOpen(modal.id)
-        ? modalService.closeModal(modal.id)
-        : modalService.openModal(modal.id, {
-            positioning: {
-              placement: 'bottom',
-              referenceElement: event.target,
-            },
-            layout: 'popover',
-          });
-    }
-    return command(getEditorCommands?.());
+  const onButtonClick = (addButton: PluginAddButton, event: Event) => {
+    const footerToolbarItem = addButton.toFooterToolbarItem();
+    return footerToolbarItem.getClickHandler(getEditorCommands?.(), event.target as HTMLElement)();
   };
 
   return (

@@ -9,7 +9,7 @@ import type {
 } from 'ricos-types';
 import type { PluginTextButton } from './plugin-text-button';
 import { PluginTextButtons } from './plugin-text-button';
-import { RicosPluginAddButtons } from './pluginAddButton';
+import { RicosPluginAddButtons } from './plugin-add-buttons';
 import { mergeConfig } from './mergeConfig';
 import { EditorPlugin } from './editorPlugin';
 
