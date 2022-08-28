@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import type { FC } from 'react';
-import SliderModal from './SliderModal';
 import type { IToolbarItem } from 'ricos-types';
 import { RicosContext, ModalContext, EditorContext } from 'ricos-context';
 import { ToggleButton } from 'wix-rich-content-toolbars-ui';
+import { HTML_BUTTONS } from '../consts';
 
 interface Props {
   toolbarItem: IToolbarItem;
@@ -15,8 +15,6 @@ interface Props {
   dataHook?: string;
 }
 
-const HTML_DIMENSION_MODAL_ID = 'htmlDimensionModal';
-
 export const DimensionSliderButton: FC<Props> = ({
   toolbarItem,
   dimension,
@@ -24,13 +22,8 @@ export const DimensionSliderButton: FC<Props> = ({
   ...props
 }) => {
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
-  const { t, isMobile } = useContext(RicosContext) || {};
+  const { t } = useContext(RicosContext) || {};
   const modalService = useContext(ModalContext);
-  const id = `${HTML_DIMENSION_MODAL_ID}_${dimension.toUpperCase()}`;
-
-  useEffect(() => {
-    !modalService.getModal(id) && modalService.register({ Component: SliderModal, id });
-  }, []);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { icon, tooltip } = toolbarItem.presentation as Record<string, any>;
@@ -56,17 +49,17 @@ export const DimensionSliderButton: FC<Props> = ({
   };
 
   const onClick = () => {
-    if (modalService?.isModalOpen(id)) {
-      modalService.closeModal(id);
+    if (modalService?.isModalOpen(HTML_BUTTONS[dimension])) {
+      modalService.closeModal(HTML_BUTTONS[dimension]);
     } else {
-      modalService.openModal(id, {
+      modalService.openModal(HTML_BUTTONS[dimension], {
         componentProps: {
           ...props,
           getValue,
           onChange,
-          close: () => modalService.closeModal(id),
+          close: () => modalService.closeModal(HTML_BUTTONS[dimension]),
         },
-        layout: isMobile ? 'drawer' : 'popover',
+        layout: 'popover',
         positioning: { referenceElement, placement: 'bottom' },
       });
     }

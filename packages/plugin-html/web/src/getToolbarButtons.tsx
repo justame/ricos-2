@@ -8,6 +8,7 @@ import { MAX_HEIGHT_INPUT, MIN_WIDTH, MAX_WIDTH, MIN_HEIGHT, MAX_HEIGHT } from '
 import { HeightIcon, WidthIcon, selectedNodeResolver } from 'wix-rich-content-plugin-commons';
 import { AlignmentPanel, NodeAlignmentButton } from 'wix-rich-content-toolbars-ui';
 import HtmlEditPanel from './toolbar/HtmlEditPanelTiptap';
+import SliderModal from './toolbar/SliderModal';
 import { HTML_BUTTONS } from './consts';
 
 export const getToolbarButtons = (config, services): ToolbarButton[] => {
@@ -41,6 +42,10 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
       command: ({ data, editorCommands }) => {
         editorCommands.chain().updateAttributes(TIPTAP_HTML_TYPE, data).run();
       },
+      modal: {
+        Component: SliderModal,
+        id: HTML_BUTTONS.width,
+      },
       icon: WidthIcon,
       tooltip: 'ChangeDimensions_Width_Tooltip',
       dataHook: 'html_custom_width_slider',
@@ -61,6 +66,10 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
       id: 'htmlHeight',
       command: ({ data, editorCommands }) => {
         editorCommands.chain().updateAttributes(TIPTAP_HTML_TYPE, data).run();
+      },
+      modal: {
+        Component: SliderModal,
+        id: HTML_BUTTONS.height,
       },
       icon: HeightIcon,
       tooltip: 'ChangeDimensions_Height_Tooltip',
