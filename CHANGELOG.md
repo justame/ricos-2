@@ -17,6 +17,10 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `ricos-modals`
+  - [#4512](https://github.com/wix/ricos/pull/4512) fix fullscreen modal css
 
 </details>
 
