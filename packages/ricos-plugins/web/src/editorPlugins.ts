@@ -13,7 +13,7 @@ import { RicosPluginAddButtons } from './plugin-add-buttons';
 import { mergeConfig } from './mergeConfig';
 import { EditorPlugin } from './editorPlugin';
 
-export type PluginServices = Omit<RicosServices, 'plugins' | 'editor'>;
+export type PluginServices = Omit<RicosServices, 'plugins' | 'editor' | 'zIndexService'>;
 
 export class PluginCollisionError extends Error {}
 

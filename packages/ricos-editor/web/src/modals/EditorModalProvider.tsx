@@ -1,6 +1,13 @@
 import { merge } from 'lodash';
-import type { FunctionComponent, ReactElement } from 'react';
-import React, { Children, Component, Fragment, Suspense } from 'react';
+import type { ReactElement } from 'react';
+import React, {
+  FunctionComponent,
+  useContext,
+  Children,
+  Component,
+  Fragment,
+  Suspense,
+} from 'react';
 import ReactDOM from 'react-dom';
 import type { ModalSettings } from 'ricos-common';
 import type {
@@ -11,6 +18,7 @@ import type {
 } from 'wix-rich-content-common';
 import mergeModalStyles from './mergeModalStyles';
 import RicosPortal from './RicosPortal';
+import { ZIndexContext } from 'ricos-context';
 
 interface Props {
   children: ReactElement;

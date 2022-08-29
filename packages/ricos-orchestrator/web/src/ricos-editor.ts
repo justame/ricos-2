@@ -58,7 +58,7 @@ export class RicosEditor
 
   constructor(
     editorProps: RicosEditorProps,
-    services: Omit<RicosServices, 'editor'>,
+    services: Omit<RicosServices, 'editor' | 'zIndexService'>,
     isDebugMode = false
   ) {
     this.tiptapAdapter = initializeTiptapAdapter(editorProps, services, isDebugMode);

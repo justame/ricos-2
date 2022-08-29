@@ -8,6 +8,7 @@ import type { IUpdateService, IUploadService } from './uploadServicesTypes';
 import type { IRicosToolbars } from './ricos-toolbars';
 import type { GeneralContext } from './context';
 import type { IPluginsEvents } from './pluginsEventsTypes';
+import type { IZIndexService } from './z-index-layers';
 
 export type RicosServices = {
   styles: AmbientStyles;
@@ -23,4 +24,5 @@ export type RicosServices = {
   toolbars: IRicosToolbars;
   pluginsEvents: IPluginsEvents;
   context: Omit<GeneralContext, 'portal'>;
+  zIndexService: IZIndexService;
 };

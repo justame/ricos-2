@@ -19,19 +19,12 @@
 
 ## :bug: Bug Fix
 
-- `ricos-modals`
-  - [#4512](https://github.com/wix/ricos/pull/4512) fix fullscreen modal css
-
-</details>
-
-## 8.72.38 (Aug 25, 2022)
-
-## :bug: Bug Fix
-
 - `ricos-editor`
   - [#4490](https://github.com/wix/ricos/pull/4490) footer toolbar modal buttons close modal on double click
 - `gallery`
   - [#4491](https://github.com/wix/ricos/pull/4491) fix layout selector modal selected state
+
+</details>
 
 ## 8.72.37 (Aug 25, 2022)
 

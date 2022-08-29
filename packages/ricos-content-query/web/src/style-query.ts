@@ -75,11 +75,9 @@ export class StylesQuery implements IStylesQuery {
     node: ITreeNodeQuery,
     textStylePropery: string
   ): Partial<TextStyle> | undefined {
-    if (node.isText()) {
-      const parent = node.closest(node => node.isTextBlock());
-      if (parent) {
-        return this.getTextBlockStyle(parent)?.[textStylePropery];
-      }
+    const parent = node.closest(node => node.isTextBlock());
+    if (parent) {
+      return this.getTextBlockStyle(parent)?.[textStylePropery];
     }
   }
 

@@ -17,12 +17,14 @@ export const FloatingToolbar = ({
   isVisible,
   children,
   getReferenceElement,
+  zIndex = 1,
 }: {
   editor: Editor;
   portal: RicosPortal;
   isVisible: (selection: Selection) => boolean;
   children: any;
   getReferenceElement?: (selectedDomNode) => HTMLElement | null;
+  zIndex?: number;
 }) => {
   const { state, view } = editor;
   const { from, to } = state.selection;
@@ -120,7 +122,7 @@ export const FloatingToolbar = ({
               position: strategy,
               top: y ?? '',
               left: x ?? '',
-              zIndex: 999999,
+              zIndex,
             }}
           >
             <div data-id="ricos-floating-toolbar" tabIndex={-1}>

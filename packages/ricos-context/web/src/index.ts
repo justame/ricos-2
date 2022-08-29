@@ -8,4 +8,5 @@ export * from './StylesContext';
 export * from './PluginsContext';
 export * from './UploadContext';
 export * from './PluginsEventsContext';
+export * from './ZIndexContext';
 export { GeneralContext } from 'ricos-types';

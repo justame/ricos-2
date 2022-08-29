@@ -11,6 +11,7 @@ interface Props {
   container?: HTMLElement;
   children?: ReactNode;
   languageDir?: TextDirection;
+  zIndex?: number;
 }
 
 const RicosPortal = forwardRef<HTMLDivElement, Props>((props, ref) => {
@@ -18,7 +19,7 @@ const RicosPortal = forwardRef<HTMLDivElement, Props>((props, ref) => {
     <div
       dir={props?.languageDir}
       ref={ref}
-      data-id="ricos-portal"
+      data-hook="ricos-portal"
       className={classNames(props?.className, styles.container)}
     >
       {props?.children}

@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React from 'react';
+import React, { useContext } from 'react';
 import type { Node } from 'prosemirror-model';
 import type { Content } from 'wix-rich-content-toolbars-v3';
 import {
@@ -22,7 +22,12 @@ import { getDefaultToolbarSettings } from 'wix-rich-content-editor';
 import RicosPortal from '../modals/RicosPortal';
 import type { Selection } from 'prosemirror-state';
 import type { GeneralContext } from 'ricos-context';
-import { withEditorContext, withRicosContext, withPluginsContext } from 'ricos-context';
+import {
+  ZIndexContext,
+  withEditorContext,
+  withRicosContext,
+  withPluginsContext,
+} from 'ricos-context';
 import PluginsToolbar from '../toolbars/PluginToolbar';
 import { FooterToolbar } from '../toolbars/FooterToolbar';
 import type {
@@ -190,19 +195,24 @@ class RicosToolbars extends React.Component<
           .toToolbarItemsConfig(toolbarType, ricosContext.isMobile, editor.getEditorCommands()) ||
         [];
       return (
-        <FloatingToolbar
-          editor={tiptapEditor}
-          portal={ricosContext.portal}
-          isVisible={this.isFormattingToolbarVisible}
-        >
-          {() =>
-            this.floatingToolbarChildren(
-              'floating-formatting-toolbar',
-              tiptapEditor.view.dom.clientWidth,
-              toolbarItemsConfig
-            )
-          }
-        </FloatingToolbar>
+        <ZIndexContext.Consumer>
+          {zIndexService => (
+            <FloatingToolbar
+              editor={tiptapEditor}
+              portal={ricosContext.portal}
+              isVisible={this.isFormattingToolbarVisible}
+              zIndex={zIndexService.getZIndex('TOOLBAR')}
+            >
+              {() =>
+                this.floatingToolbarChildren(
+                  'floating-formatting-toolbar',
+                  tiptapEditor.view.dom.clientWidth,
+                  toolbarItemsConfig
+                )
+              }
+            </FloatingToolbar>
+          )}
+        </ZIndexContext.Consumer>
       );
     } else {
       return null;
@@ -220,19 +230,24 @@ class RicosToolbars extends React.Component<
 
     if (shouldCreate) {
       return (
-        <FloatingToolbar
-          editor={tiptapEditor}
-          portal={ricosContext.portal}
-          isVisible={this.isLinkToolbarVisible}
-        >
-          {() =>
-            this.floatingToolbarChildren(
-              'linkPluginToolbar',
-              tiptapEditor.view.dom.clientWidth,
-              linkToolbarItemConfig
-            )
-          }
-        </FloatingToolbar>
+        <ZIndexContext.Consumer>
+          {zIndexService => (
+            <FloatingToolbar
+              editor={tiptapEditor}
+              portal={ricosContext.portal}
+              isVisible={this.isLinkToolbarVisible}
+              zIndex={zIndexService.getZIndex('TOOLBAR')}
+            >
+              {() =>
+                this.floatingToolbarChildren(
+                  'linkPluginToolbar',
+                  tiptapEditor.view.dom.clientWidth,
+                  linkToolbarItemConfig
+                )
+              }
+            </FloatingToolbar>
+          )}
+        </ZIndexContext.Consumer>
       );
     } else {
       return null;

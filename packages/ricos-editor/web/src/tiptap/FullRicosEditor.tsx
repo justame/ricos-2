@@ -14,6 +14,7 @@ import {
   StylesContextProvider,
   ToolbarContext,
   UploadContextProvider,
+  ZIndexContextProvider,
 } from 'ricos-context';
 import { ModalRenderer } from 'ricos-modals';
 import { RicosOrchestrator } from 'ricos-orchestrator';
@@ -189,90 +190,96 @@ export class FullRicosEditor extends React.Component<Props, State> {
       styles,
       toolbars,
       pluginsEvents,
+      zIndexService,
     } = this.orchestrator.getServices();
 
     const languageDir = getLangDir(locale);
+
     return (
       <div data-hook="fullRicosEditor" className={s.fullRicosEditor}>
-        <StylesContextProvider styles={styles}>
-          <>
-            <RicosPortal
-              languageDir={languageDir}
-              ref={this.portalRef}
-              className={theme?.parentClass}
-            >
-              <RicosStylesRenderer
-                theme={theme || {}}
-                documentStyle={content?.documentStyle || {}}
-                isMobile={!!isMobile}
-              />
-            </RicosPortal>
-            {this.portalRef.current && (
-              <RicosContextProvider
-                t={t}
-                isMobile={isMobile}
-                experiments={experiments}
-                locale={locale}
-                localeContent={localeContent}
+        <ZIndexContextProvider zIndexService={zIndexService}>
+          <StylesContextProvider styles={styles}>
+            <>
+              <RicosPortal
                 languageDir={languageDir}
-                theme={theme}
-                portal={this.portalRef.current}
-                debugMode={this.props.debugMode}
+                ref={this.portalRef}
+                className={theme?.parentClass}
               >
-                <>
-                  <EditorContextProvider editor={editor}>
-                    <ModalContextProvider modalService={modals}>
-                      <ShortcutsContextProvider shortcuts={shortcuts}>
-                        <>
-                          <PluginsContextProvider plugins={plugins}>
-                            <PluginsEventsContextProvider pluginsEvents={pluginsEvents}>
-                              <>
+                <RicosStylesRenderer
+                  theme={theme || {}}
+                  documentStyle={content?.documentStyle || {}}
+                  isMobile={!!isMobile}
+                />
+              </RicosPortal>
+              {this.portalRef.current && (
+                <RicosContextProvider
+                  t={t}
+                  isMobile={isMobile}
+                  experiments={experiments}
+                  locale={locale}
+                  localeContent={localeContent}
+                  languageDir={languageDir}
+                  theme={theme}
+                  portal={this.portalRef.current}
+                  debugMode={this.props.debugMode}
+                >
+                  <>
+                    <EditorContextProvider editor={editor}>
+                      <ModalContextProvider modalService={modals}>
+                        <ShortcutsContextProvider shortcuts={shortcuts}>
+                          <>
+                            <PluginsContextProvider plugins={plugins}>
+                              <PluginsEventsContextProvider pluginsEvents={pluginsEvents}>
                                 <>
-                                  <UploadContextProvider
-                                    uploadService={uploadService}
-                                    updateService={updateService}
-                                  >
-                                    <ToolbarContext.Provider
-                                      value={{
-                                        ...this.getToolbarContext(),
-                                        toolbars,
-                                        portal: this.portalRef.current as RicosPortalType,
-                                      }}
+                                  <>
+                                    <UploadContextProvider
+                                      uploadService={uploadService}
+                                      updateService={updateService}
                                     >
-                                      <>
-                                        <ContentQueryProvider editor={editor.adapter.tiptapEditor}>
-                                          <RicosToolbars
-                                            content={toolbarContent}
-                                            toolbarSettings={toolbarSettings}
-                                            plugins={plugins}
-                                            modalService={modals}
-                                          />
-                                        </ContentQueryProvider>
-                                      </>
-                                      <ModalRenderer />
-                                    </ToolbarContext.Provider>
-                                  </UploadContextProvider>
-                                  <RicosEditor
-                                    onChange={this.onChange}
-                                    {...restProps}
-                                    ref={this.props.forwardRef}
-                                  />
-                                  <FooterToolbarPlaceholder toolbarSettings={toolbarSettings} />
+                                      <ToolbarContext.Provider
+                                        value={{
+                                          ...this.getToolbarContext(),
+                                          toolbars,
+                                          portal: this.portalRef.current as RicosPortalType,
+                                        }}
+                                      >
+                                        <>
+                                          <ContentQueryProvider
+                                            editor={editor.adapter.tiptapEditor}
+                                          >
+                                            <RicosToolbars
+                                              content={toolbarContent}
+                                              toolbarSettings={toolbarSettings}
+                                              plugins={plugins}
+                                              modalService={modals}
+                                            />
+                                          </ContentQueryProvider>
+                                        </>
+                                        <ModalRenderer />
+                                      </ToolbarContext.Provider>
+                                    </UploadContextProvider>
+                                    <RicosEditor
+                                      onChange={this.onChange}
+                                      {...restProps}
+                                      ref={this.props.forwardRef}
+                                    />
+                                    <FooterToolbarPlaceholder toolbarSettings={toolbarSettings} />
+                                  </>
                                 </>
-                              </>
-                            </PluginsEventsContextProvider>
-                          </PluginsContextProvider>
-                          <Shortcuts group="formatting" root />
-                        </>
-                      </ShortcutsContextProvider>
-                    </ModalContextProvider>
-                  </EditorContextProvider>
-                  {this.renderUploadServiceElements(languageDir)}
-                </>
-              </RicosContextProvider>
-            )}
-          </>
-        </StylesContextProvider>
+                              </PluginsEventsContextProvider>
+                            </PluginsContextProvider>
+                            <Shortcuts group="formatting" root />
+                          </>
+                        </ShortcutsContextProvider>
+                      </ModalContextProvider>
+                    </EditorContextProvider>
+                    {this.renderUploadServiceElements(languageDir)}
+                  </>
+                </RicosContextProvider>
+              )}
+            </>
+          </StylesContextProvider>
+        </ZIndexContextProvider>
       </div>
     );
   }

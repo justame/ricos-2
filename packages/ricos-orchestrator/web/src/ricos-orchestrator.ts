@@ -11,7 +11,7 @@ import { RicosEvents } from 'ricos-events';
 import { RicosModalService } from 'ricos-modals';
 import { EditorPlugins, PluginsEvents } from 'ricos-plugins';
 import { EditorKeyboardShortcuts } from 'ricos-shortcuts';
-import { RicosStyles } from 'ricos-styles';
+import { ZIndexService, RicosStyles } from 'ricos-styles';
 import type {
   DebugMode,
   EditorPlugin,
@@ -61,6 +61,8 @@ export class RicosOrchestrator implements Orchestrator {
   private readonly editorQuery: EditorQuery;
 
   private readonly context: Omit<GeneralContext, 'portal'>;
+
+  private readonly zIndexService: ZIndexService;
 
   constructor(editorProps: RicosEditorProps & { debugMode?: DebugMode[] }, t: TranslationFunction) {
     this.t = t;
@@ -151,9 +153,13 @@ export class RicosOrchestrator implements Orchestrator {
 
     this.editorQuery = new EditorQuery(this.editor.adapter.tiptapEditor, this.styles);
 
+    this.zIndexService = new ZIndexService();
+
     if (!isSSR()) {
       //@ts-ignore
       window.editorQuery = this.editorQuery;
+      //@ts-ignore
+      window.ricosOrchestrator = this;
     }
   }
 
@@ -207,6 +213,7 @@ export class RicosOrchestrator implements Orchestrator {
       toolbars: this.toolbars,
       pluginsEvents: this.pluginsEvents,
       context: this.context,
+      zIndexService: this.zIndexService,
     };
   }
 

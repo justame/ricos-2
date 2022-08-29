@@ -41,3 +41,4 @@ export * from './context';
 export * from './pluginsEventsTypes';
 export * from './toolbar';
 export * from './query';
+export * from './z-index-layers';
