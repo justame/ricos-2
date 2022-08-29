@@ -5,6 +5,7 @@
   position: absolute;
   z-index: 2;
   margin-top: var(--ricos-custom-footer-toolbar-margin-top, 60px);
+  width: 100%;
   svg {
     fill: var(--ricos-settings-icons-color, var(--ricos-text-color));
     color: var(--ricos-settings-icons-color, var(--ricos-text-color));

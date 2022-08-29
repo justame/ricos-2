@@ -66,20 +66,16 @@ class RicosToolbarComponent extends Component<RicosToolbarProps, RicosToolbarSta
       onRequestToCloseMoreItemsModal,
     } = this.props;
     return (
-      <div>
-        <div>
-          {this.toolbar && (
-            <ToolbarComponent
-              toolbar={this.toolbar}
-              toolbarItemsRenders={toolbarItemsRenders}
-              isMobile={isMobile}
-              maxWidth={maxWidth}
-              overflowedItemsPosition={overflowedItemsPosition}
-              onRequestToCloseMoreItemsModal={onRequestToCloseMoreItemsModal}
-            />
-          )}
-        </div>
-      </div>
+      this.toolbar && (
+        <ToolbarComponent
+          toolbar={this.toolbar}
+          toolbarItemsRenders={toolbarItemsRenders}
+          isMobile={isMobile}
+          maxWidth={maxWidth}
+          overflowedItemsPosition={overflowedItemsPosition}
+          onRequestToCloseMoreItemsModal={onRequestToCloseMoreItemsModal}
+        />
+      )
     );
   }
 }

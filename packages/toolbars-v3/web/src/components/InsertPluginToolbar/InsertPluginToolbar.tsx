@@ -20,7 +20,9 @@ const InsertPluginToolbar: React.FC<Props> = ({
   onButtonClick,
   overflowedItemsPosition,
 }) => {
-  const { getEditorCommands } = useContext(EditorContext);
+  const { getEditorCommands, adapter } = useContext(EditorContext);
+  const modalService = useContext(ModalContext);
+
   const content = Content.create<Node[]>([]);
 
   const renderers = buttons.asArray().reduce((result, addButton) => {
@@ -33,11 +35,12 @@ const InsertPluginToolbar: React.FC<Props> = ({
     };
   }, {});
 
-  const modalService = useContext(ModalContext);
+  const maxWidth = adapter.tiptapEditor.view.dom.clientWidth;
 
   return (
     <div className={styles.wrapper}>
       <RicosToolbarComponent
+        maxWidth={maxWidth}
         toolbarItemsConfig={buttons.toToolbarButtonsConfig()}
         toolbarItemsRenders={renderers}
         content={content}

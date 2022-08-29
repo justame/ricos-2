@@ -6,6 +6,7 @@
 }
 .addPluginMenu_horizontal_wrapper {
   padding: 4px;
+  max-width: fit-content;
 }
 
 .floatingAddPluginMenu_plus_button {
@@ -24,9 +25,4 @@
     color: $settings-action-color;
     fill: $settings-action-color;
   }
-}
-
-.floating_add_plugin_menu_hor {
-  width: 100%;
-  min-width: 500px;
 }
