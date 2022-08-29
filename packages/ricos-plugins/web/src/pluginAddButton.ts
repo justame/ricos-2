@@ -149,7 +149,7 @@ export class RicosPluginAddButton implements PluginAddButton {
 
   toFooterToolbarItem(): PluginMenuItem {
     return this.getPluginMenuItem('popover', 'bottom', () => {
-      this.services.toolbars.pluginMenu.publishButtonClick(this.button.id);
+      this.services.toolbars.footer.publishButtonClick(this.button.id);
     });
   }
 
