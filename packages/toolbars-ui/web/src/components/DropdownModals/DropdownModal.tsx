@@ -1,6 +1,6 @@
 import React from 'react';
 import type { ReactElement } from 'react';
-import { DropdownPanel } from '../DropdownPanel';
+import DesktopPanel from '../DropdownPanel/DesktopPanel';
 import styles from './DropdownModal.scss';
 
 type Props = {
@@ -11,7 +11,7 @@ const DropdownModal: React.FC<Props> = ({ options }) => {
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div tabIndex={-1} className={styles.modal}>
-      <DropdownPanel options={options} />
+      <DesktopPanel options={options} />
     </div>
   );
 };
