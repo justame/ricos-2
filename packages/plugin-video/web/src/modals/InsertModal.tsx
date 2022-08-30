@@ -28,6 +28,7 @@ const InsertModal: FC<Props> = ({
   componentData,
   handleFileSelection,
   handleFileUpload,
+  enableCustomUploadOnMobile,
 }) => {
   const { theme, t, isMobile, languageDir } = useContext(RicosContext);
   const { getEditorCommands } = useContext(EditorContext);
@@ -81,6 +82,7 @@ const InsertModal: FC<Props> = ({
       helpers={pluginEvents}
       handleFileSelection={handleFileSelection}
       handleFileUpload={handleFileUpload}
+      enableCustomUploadOnMobile={enableCustomUploadOnMobile}
       blockKey={nodeId}
     />
   );

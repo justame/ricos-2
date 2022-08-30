@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `video`
+  - [#4525](https://github.com/wix/ricos/pull/4525) add missing enableCustomUploadOnMobile prop
+
 </details>
 
 ## 8.72.41 (Aug 30, 2022)
