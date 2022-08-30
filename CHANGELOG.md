@@ -17,17 +17,20 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.72.42 (Aug 30, 2022)
+
 ## :bug: Bug Fix
 
+- `mention`
+  - [#4529](https://github.com/wix/ricos/pull/4529) fix backspace bug
+- `mention`
+  - [#4526](https://github.com/wix/ricos/pull/4526) fix triggerDecoration command
 - `ricos-plugins`
   - [#4524](https://github.com/wix/ricos/pull/4524) fix size, alignment & separator buttons visibility on mobile
-
-## :bug: Bug Fix
-
 - `video`
   - [#4525](https://github.com/wix/ricos/pull/4525) add missing enableCustomUploadOnMobile prop
-
-</details>
 
 ## 8.72.41 (Aug 30, 2022)
 
