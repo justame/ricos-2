@@ -5,6 +5,7 @@ import { ModalContext, RicosContext, EditorContext } from 'ricos-context';
 import { POLL_TYPE } from '../../types';
 import { pollModals } from '../../consts';
 import { PollPresetSelector } from '../settings/preset-selector/PollPresetSelector.jsx';
+import styles from '../../../statics/styles/poll.scss';
 
 interface Props {
   componentData: Record<string, unknown>;
@@ -29,14 +30,16 @@ const PollsInsertModal: FC<Props> = ({ componentData }) => {
   };
 
   return (
-    <PollPresetSelector
-      componentData={componentData}
-      theme={theme}
-      t={t}
-      isMobile={isMobile}
-      onPollAdd={onPollAdd}
-      closeModal={closeModal}
-    />
+    <div className={styles.insertModalWrapper}>
+      <PollPresetSelector
+        componentData={componentData}
+        theme={theme}
+        t={t}
+        isMobile={isMobile}
+        onPollAdd={onPollAdd}
+        closeModal={closeModal}
+      />
+    </div>
   );
 };
 

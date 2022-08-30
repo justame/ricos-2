@@ -29,5 +29,7 @@ $TITLE_HEIGHT_MOBILE: 50px;
 }
 
 .modalWrapper {
-  width: 280px;
+  @media only screen and (min-width: 940px) {
+    width: 280px;
+  }
 }
