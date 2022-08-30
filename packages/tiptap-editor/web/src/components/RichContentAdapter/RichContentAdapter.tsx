@@ -493,6 +493,20 @@ export class RichContentAdapter implements TiptapAdapter {
       getCurrentHeading: () => {
         return this.services.content.resolve(resolversById[RESOLVERS_IDS.GET_HEADING_IN_SELECTION]);
       },
+      triggerDecoration: type => {
+        const triggerDecorationsMap = {
+          [RICOS_MENTION_TYPE]: () =>
+            this.tiptapEditor
+              .chain()
+              .focus()
+              .command(({ tr }) => {
+                tr.insertText(' @');
+                return true;
+              })
+              .run(),
+        };
+        triggerDecorationsMap[type]?.();
+      },
     };
   }
 
@@ -557,7 +571,6 @@ export class RichContentAdapter implements TiptapAdapter {
     loadEditorState: () => {},
     saveSelectionState: () => {},
     loadSelectionState: () => {},
-    triggerDecoration: () => {},
     setBlockType: () => {},
     _setSelection: () => {},
     getDocumentStyle: () => undefined,
