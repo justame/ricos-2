@@ -16,6 +16,7 @@ export { default as spoiler } from './Spoiler';
 export { default as table } from './Table';
 export { default as verticalEmbed } from './VerticalEmbed';
 export { default as video } from './Video';
+export { default as mention } from './Mention';
 
 export default {
   title: 'Plugins',

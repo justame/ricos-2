@@ -1,0 +1,45 @@
+.editorContainer {
+  width: 100%;
+  padding: 20px;
+  border: 1px solid;
+}
+
+.externalToolbar {
+  width: 80%;
+  height: 24px;
+  border: 1px solid red;
+  display: flex;
+
+  .button {
+    margin-left: 5px;
+    cursor: pointer;
+  }
+
+  .separator {
+    width: 1px;
+    height: 100%;
+    background-color: red;
+    margin-left: 4px;
+  }
+}
+
+.suggestions {
+  position: fixed;
+  width: 100%;
+  height: 200px;
+  background-color: white;
+  overflow: auto;
+
+  .item {
+    display: flex;
+    cursor: pointer;
+    padding: 5px;
+
+    .avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+  }
+}
