@@ -2,7 +2,12 @@ import React from 'react';
 import type { Node } from 'prosemirror-model';
 import type { Content } from 'wix-rich-content-toolbars-v3';
 import { RicosToolbarComponent, FloatingToolbar } from 'wix-rich-content-toolbars-v3';
-import { withRicosContext, withEditorContext, withPluginsContext } from 'ricos-context';
+import {
+  withRicosContext,
+  withEditorContext,
+  withPluginsContext,
+  ZIndexContext,
+} from 'ricos-context';
 import type { GeneralContext } from 'ricos-context';
 import styles from '../../statics/styles/plugin-toolbar.scss';
 import type { IRicosEditor, RicosEditorPlugins } from 'ricos-types';
@@ -79,31 +84,36 @@ class PluginsToolbar extends React.Component<
     const isVisible = () => !!plugins?.getVisibleToolbar(tiptapEditor.state.selection);
 
     return (
-      <FloatingToolbar
-        editor={tiptapEditor}
-        portal={ricosContext.portal}
-        isVisible={isVisible}
-        getReferenceElement={selectedDOM => {
-          if (selectedDOM) {
-            return selectedDOM?.querySelector?.('[data-hook=ricos-node]')
-              ?.firstChild as HTMLElement;
-          } else if (this.isNestedNodeInSelection()) {
-            return this.getNestedNodeContainerElement();
-          }
-          return null;
-        }}
-      >
-        {() => (
-          <div
-            toolbar-type="floating"
-            dir={ricosContext.languageDir}
-            data-hook={'floating-plugin-toolbar'}
-            className={styles.floatingToolbar}
+      <ZIndexContext.Consumer>
+        {zIndexService => (
+          <FloatingToolbar
+            editor={tiptapEditor}
+            portal={ricosContext.portal}
+            isVisible={isVisible}
+            zIndex={zIndexService.getZIndex('TOOLBAR')}
+            getReferenceElement={selectedDOM => {
+              if (selectedDOM) {
+                return selectedDOM?.querySelector?.('[data-hook=ricos-node]')
+                  ?.firstChild as HTMLElement;
+              } else if (this.isNestedNodeInSelection()) {
+                return this.getNestedNodeContainerElement();
+              }
+              return null;
+            }}
           >
-            {this.renderPluginToolbar()}
-          </div>
+            {() => (
+              <div
+                toolbar-type="floating"
+                dir={ricosContext.languageDir}
+                data-hook={'floating-plugin-toolbar'}
+                className={styles.floatingToolbar}
+              >
+                {this.renderPluginToolbar()}
+              </div>
+            )}
+          </FloatingToolbar>
         )}
-      </FloatingToolbar>
+      </ZIndexContext.Consumer>
     );
   }
 }
