@@ -80,11 +80,7 @@ export default (
 
         onKeyDown(props) {
           if (props.event.key === 'Escape') {
-            if (handleDropdownClose) {
-              handleDropdownClose();
-            } else {
-              this.onExit();
-            }
+            this.onExit();
             return true;
           }
 
@@ -101,7 +97,7 @@ export default (
         },
 
         onExit() {
-          component.destroy();
+          component?.destroy?.();
           if (handleDropdownClose) {
             handleDropdownClose();
           } else {
