@@ -38,7 +38,7 @@ const findMention = (editor, char) => {
 export const tiptapExtensions = [
   {
     type: 'mark' as const,
-    groups: [],
+    groups: ['shortcuts-enabled'],
     name: Decoration_Type.MENTION,
     reconfigure: (
       config: MarkConfig,
@@ -79,7 +79,7 @@ export const tiptapExtensions = [
         addKeyboardShortcuts() {
           return {
             Backspace: () =>
-              this.editor.commands.command(({ tr, state }) => {
+              this.editor.commands.command(({ dispatch, tr, state }) => {
                 let isMention = false;
                 const { selection } = state;
                 const { empty, anchor } = selection;
@@ -89,15 +89,9 @@ export const tiptapExtensions = [
                 }
 
                 state.doc.nodesBetween(anchor - 1, anchor, (node, pos) => {
-                  if (node.type.name === this.name) {
+                  if (node.text === this.options.settings.mentionTrigger) {
                     isMention = true;
-                    tr.insertText(
-                      this.options.settings.mentionTrigger || '',
-                      pos,
-                      pos + node.nodeSize
-                    );
-
-                    return false;
+                    dispatch(tr.replaceWith(pos, pos + 1, ''));
                   }
                 });
 
