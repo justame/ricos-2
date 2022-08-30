@@ -17,7 +17,6 @@ import {
   NodeSizeButton,
   SizePanel,
 } from 'wix-rich-content-toolbars-ui';
-import type { PluginContainerData_Width_Type } from 'ricos-schema';
 import GalleryLayoutPanel from './toolbar/GalleryLayoutPanel';
 import GalleryManageMediaButton from './toolbar/buttons/GalleryManageMediaButton';
 import GalleryAddMediaButton from './toolbar/buttons/GalleryAddMediaButton';
@@ -166,14 +165,7 @@ export const getToolbarButtons = (config, services, galleryPluginService): Toolb
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SIZE,
       modal: {
-        Component: decorateComponentWithProps(SizePanel, {
-          options: [
-            'SMALL',
-            'CONTENT',
-            'FULL_WIDTH',
-            'ORIGINAL',
-          ] as PluginContainerData_Width_Type[],
-        }),
+        Component: SizePanel,
         id: GALLERY_BUTTONS.size,
       },
       renderer: toolbarItem => (
