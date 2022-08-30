@@ -19,6 +19,17 @@
 
 </details>
 
+## 8.72.41 (Aug 30, 2022)
+
+## :bug: Bug Fix
+
+- `mention`
+  - [#4523](https://github.com/wix/ricos/pull/4523) fix handleMentionClose callback
+- `tiptap-style-extension`
+  - [#4520](https://github.com/wix/ricos/pull/4520) fix original size
+- `tiptap-textWrap`
+  - [#4513](https://github.com/wix/ricos/pull/4513) consider textWrap api
+
 ## 8.72.40 (Aug 29, 2022)
 
 ## :bug: Bug Fix
