@@ -52,7 +52,7 @@ const pluginDataPropByType = {
 };
 
 // defaultContent has to include any non-primitive fields to make tiptap refer nested fields
-const containerData = { spoiler: {}, height: {}, width: {} };
+const containerData = { spoiler: {}, height: {}, width: {}, textWrap: true };
 const defaultContent = {
   nodes: [
     { type: 'APP_EMBED', appEmbedData: { eventData: {}, bookingData: {} } },
@@ -66,7 +66,7 @@ const defaultContent = {
       },
     },
     { type: 'CODE_BLOCK', codeBlockData: { textStyle: {} } },
-    { type: 'DIVIDER', dividerData: { containerData } },
+    { type: 'DIVIDER', dividerData: { containerData: { ...containerData, textWrap: false } } },
     { type: 'EMBED', embedData: { containerData, oembed: {} } },
     { type: 'FILE', fileData: { containerData, src: {} } },
     { type: 'GIF', gifData: { containerData } },

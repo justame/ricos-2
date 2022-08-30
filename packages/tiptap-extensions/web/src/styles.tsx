@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { camelCase, upperFirst } from 'lodash';
 import type { CSSProperties } from 'react';
 import React from 'react';
-import type { RicosExtension, RicosExtensionConfig } from 'ricos-types';
+import type { ExtensionProps, RicosExtension, RicosExtensionConfig } from 'ricos-types';
 import type { RichContentTheme } from 'wix-rich-content-common';
 import generalRTLIgnoredStyles from 'wix-rich-content-common/dist/statics/styles/general.rtlignore.scss';
 import generalStyles from 'wix-rich-content-editor-common/dist/statics/styles/general.scss';
@@ -34,11 +34,10 @@ export const getFocusClassName = (styles, theme: RichContentTheme = {}, isFocuse
 };
 
 export const getTextWrapClassName = (styles, theme: RichContentTheme = {}, textWrap) => {
-  if (!textWrap) {
-    return '';
+  if (textWrap === false) {
+    return classNames(styles.textWrapNowrap, theme.textWrapNowrap);
   }
-  const key = `textWrap${upperFirst(camelCase(textWrap))}`;
-  return classNames(styles[key], theme[key]);
+  return '';
 };
 
 export const getPluginContainerClassName = (styles, theme: RichContentTheme = {}, isMobile) => {
@@ -48,10 +47,10 @@ export const getPluginContainerClassName = (styles, theme: RichContentTheme = {}
   });
 };
 
-export const getComponentStyles = ({ componentData, theme, isFocused, isMobile }) => {
+export const getComponentStyles = ({ componentData, theme, isFocused, isMobile, isTextWrap }) => {
   const alignment = componentData?.containerData?.alignment;
   const size = componentData?.containerData?.width?.size;
-  const textWrap = componentData?.containerData?.textWrap;
+  const textWrap = isTextWrap && componentData?.containerData?.textWrap;
   return {
     alignmentClassName: getAlignmentClassName(stylesWithRTL, alignment, theme),
     sizeClassName: getSizeClassName(stylesWithRTL, size, theme),
@@ -61,7 +60,7 @@ export const getComponentStyles = ({ componentData, theme, isFocused, isMobile }
   };
 };
 
-const StylesHOC = Component => {
+const getStylesHOC = (isTextWrap: boolean) => Component => {
   const Styles = props => {
     const { context, componentData, selected, node, editor } = props;
     const nodeId = node.attrs.id;
@@ -76,6 +75,7 @@ const StylesHOC = Component => {
       theme,
       isFocused,
       isMobile,
+      isTextWrap,
     });
 
     const customWidth = componentData?.containerData?.width?.custom;
@@ -98,16 +98,21 @@ export const styles: RicosExtension = {
   type: 'extension' as const,
   groups: [],
   name: 'style',
-  reconfigure: (config: RicosExtensionConfig, extensions: RicosExtension[]) => ({
+  reconfigure: (
+    config: RicosExtensionConfig,
+    extensions: RicosExtension[],
+    ricosProps: ExtensionProps
+  ) => ({
     ...config,
-    addOptions: () => ({}),
-    addNodeHoc: () => ({
-      nodeTypes: extensions
-        .filter(extension => !extension.groups.includes('custom-styles'))
-        .map(({ name }) => name),
-      priority: 100,
-      nodeHoc: StylesHOC,
-    }),
+    addNodeHoc() {
+      return {
+        nodeTypes: extensions
+          .filter(extension => !extension.groups.includes('custom-styles'))
+          .map(({ name }) => name),
+        priority: 100,
+        nodeHoc: getStylesHOC(ricosProps.isTextWrap ?? true),
+      };
+    },
   }),
   createExtensionConfig() {
     return {
