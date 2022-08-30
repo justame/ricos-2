@@ -9,3 +9,8 @@ export const selectedNodeResolver = {
     }
   },
 };
+
+export const getVisibleOnlyOnDesktopResolver = isMobile => ({
+  id: 'VISIBLE_ONLY_ON_DESKTOP',
+  resolve: () => !isMobile,
+});

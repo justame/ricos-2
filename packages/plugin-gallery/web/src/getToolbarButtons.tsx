@@ -5,7 +5,11 @@ import {
   PLUGIN_TOOLBAR_BUTTON_ID,
 } from 'wix-rich-content-editor-common';
 import { GALLERY_TYPE } from './types';
-import { selectedNodeResolver, Uploader } from 'wix-rich-content-plugin-commons';
+import {
+  selectedNodeResolver,
+  Uploader,
+  getVisibleOnlyOnDesktopResolver,
+} from 'wix-rich-content-plugin-commons';
 import { GALLERY_LAYOUTS, layoutRicosData } from './layout-data-provider';
 import { fileInputAccept, galleryModals, GALLERY_BUTTONS } from './consts';
 import GallerySettingsModal from './modals/SettingsModal';
@@ -41,6 +45,9 @@ const isValidIndex = (index?: number): index is number => typeof index === 'numb
 
 export const getToolbarButtons = (config, services, galleryPluginService): ToolbarButton[] => {
   const { accept = fileInputAccept } = config;
+  const {
+    context: { isMobile },
+  } = services;
 
   const handleFileSelection = (uploadService, updateService, node, index?: number) => {
     if (config.handleFileSelection) {
@@ -174,6 +181,9 @@ export const getToolbarButtons = (config, services, galleryPluginService): Toolb
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
+      attributes: {
+        visible: getVisibleOnlyOnDesktopResolver(isMobile),
+      },
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
@@ -187,6 +197,9 @@ export const getToolbarButtons = (config, services, galleryPluginService): Toolb
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
+      attributes: {
+        visible: getVisibleOnlyOnDesktopResolver(isMobile),
+      },
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS,

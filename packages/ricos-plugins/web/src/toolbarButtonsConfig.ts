@@ -13,9 +13,11 @@ import { convertRelObjectToString, convertRelStringToObject } from 'wix-rich-con
 
 type PluginButtonId = typeof PLUGIN_TOOLBAR_BUTTON_ID[keyof typeof PLUGIN_TOOLBAR_BUTTON_ID];
 
-type IPluginToolbarButtonsConfig = Record<PluginButtonId, PluginToolbarButtonConfig>;
+type IPluginToolbarButtonsConfig = (props: {
+  isMobile: boolean;
+}) => Record<PluginButtonId, PluginToolbarButtonConfig>;
 
-export const toolbarButtonsConfig: IPluginToolbarButtonsConfig = {
+export const toolbarButtonsConfig: IPluginToolbarButtonsConfig = ({ isMobile }) => ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   delete: {
     id: PLUGIN_TOOLBAR_BUTTON_ID.DELETE,
@@ -37,6 +39,10 @@ export const toolbarButtonsConfig: IPluginToolbarButtonsConfig = {
     type: 'modal',
     attributes: {
       nodeAlignment: getNodeAlignmentResolver,
+      visible: {
+        id: 'IS_ALIGNMENT_BUTTON_VISIBLE',
+        resolve: () => !isMobile,
+      },
     },
     presentation: {
       dataHook: 'nodeAlignmentButton',
@@ -64,6 +70,10 @@ export const toolbarButtonsConfig: IPluginToolbarButtonsConfig = {
     type: 'modal',
     attributes: {
       nodeSize: getNodeSizeResolver,
+      visible: {
+        id: 'IS_SIZE_BUTTON_VISIBLE',
+        resolve: () => !isMobile,
+      },
     },
     presentation: {
       dataHook: 'nodeSizeButton',
@@ -140,4 +150,4 @@ export const toolbarButtonsConfig: IPluginToolbarButtonsConfig = {
     attributes: {},
     commands: {},
   },
-};
+});

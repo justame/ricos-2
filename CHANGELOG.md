@@ -19,6 +19,11 @@
 
 ## :bug: Bug Fix
 
+- `ricos-plugins`
+  - [#4524](https://github.com/wix/ricos/pull/4524) fix size, alignment & separator buttons visibility on mobile
+
+## :bug: Bug Fix
+
 - `video`
   - [#4525](https://github.com/wix/ricos/pull/4525) add missing enableCustomUploadOnMobile prop
 

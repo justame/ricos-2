@@ -14,7 +14,10 @@ import {
   NodeAlignmentButton,
 } from 'wix-rich-content-toolbars-ui';
 import type { PluginContainerData_Width_Type } from 'ricos-schema';
-import { selectedNodeResolver } from 'wix-rich-content-plugin-commons';
+import {
+  selectedNodeResolver,
+  getVisibleOnlyOnDesktopResolver,
+} from 'wix-rich-content-plugin-commons';
 import AudioEditButton from './toolbar/AudioEditButton';
 
 const isCustomAudioResolver = {
@@ -30,7 +33,10 @@ const isCustomAudioResolver = {
 
 export const getToolbarButtons = (config, services): ToolbarButton[] => {
   const { getAudioUrl, fetchData } = config || {};
-  const { modals } = services;
+  const {
+    modals,
+    context: { isMobile },
+  } = services;
 
   return [
     {
@@ -58,6 +64,9 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
       renderer: toolbarItem => <AudioEditButton toolbarItem={toolbarItem} />,
     },
     {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
+    },
+    {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SIZE,
       modal: {
         Component: decorateComponentWithProps(SizePanel, {
@@ -68,6 +77,12 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
       renderer: toolbarItem => <NodeSizeButton id={AUDIO_BUTTONS.size} toolbarItem={toolbarItem} />,
     },
     {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
+      attributes: {
+        visible: getVisibleOnlyOnDesktopResolver(isMobile),
+      },
+    },
+    {
       id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
       modal: {
         Component: AlignmentPanel,
@@ -76,6 +91,12 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
       renderer: toolbarItem => (
         <NodeAlignmentButton toolbarItem={toolbarItem} id={AUDIO_BUTTONS.alignment} />
       ),
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
+      attributes: {
+        visible: getVisibleOnlyOnDesktopResolver(isMobile),
+      },
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.REPLACE,
@@ -106,6 +127,9 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
           });
         }
       },
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.DELETE,

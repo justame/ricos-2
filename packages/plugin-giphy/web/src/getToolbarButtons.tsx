@@ -13,8 +13,13 @@ import {
   SizePanel,
 } from 'wix-rich-content-toolbars-ui';
 import type { PluginContainerData_Width_Type } from 'ricos-schema';
+import { getVisibleOnlyOnDesktopResolver } from 'wix-rich-content-plugin-commons';
 
 export const getToolbarButtons = (config, services): ToolbarButton[] => {
+  const {
+    context: { isMobile },
+  } = services;
+
   return [
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SIZE,
@@ -33,6 +38,9 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
+      attributes: {
+        visible: getVisibleOnlyOnDesktopResolver(isMobile),
+      },
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
@@ -46,6 +54,9 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
+      attributes: {
+        visible: getVisibleOnlyOnDesktopResolver(isMobile),
+      },
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.REPLACE,
@@ -69,6 +80,9 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
           });
         }
       },
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.DELETE,

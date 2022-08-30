@@ -15,12 +15,16 @@ import {
 import React from 'react';
 import type { PluginContainerData_Width_Type } from 'ricos-schema';
 import { SPOILER_TYPE, VIDEO_TYPE } from 'ricos-content';
+import { getVisibleOnlyOnDesktopResolver } from 'wix-rich-content-plugin-commons';
 
 export const getToolbarButtons = (config, services): ToolbarButton[] => {
   const { enableCustomUploadOnMobile, getVideoUrl, handleFileSelection, handleFileUpload } =
     config || {};
 
-  const { modals } = services;
+  const {
+    modals,
+    context: { isMobile },
+  } = services;
   const modalBaseProps = {
     enableCustomUploadOnMobile,
     getVideoUrl,
@@ -63,6 +67,9 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
+      attributes: {
+        visible: getVisibleOnlyOnDesktopResolver(isMobile),
+      },
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
@@ -76,6 +83,9 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
+      attributes: {
+        visible: getVisibleOnlyOnDesktopResolver(isMobile),
+      },
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS,
@@ -127,6 +137,9 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
           });
         }
       },
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.DELETE,

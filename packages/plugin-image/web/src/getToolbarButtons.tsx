@@ -9,15 +9,18 @@ import ImageEditorModal from './modals/ImageEditorModal';
 import { imageModals, IMAGE_BUTTONS } from './consts';
 import { IMAGE_TYPE } from './types';
 import { ImagePluginService } from './toolbar/imagePluginService';
-import { Uploader, selectedNodeResolver } from 'wix-rich-content-plugin-commons';
+import {
+  Uploader,
+  selectedNodeResolver,
+  getVisibleOnlyOnDesktopResolver,
+} from 'wix-rich-content-plugin-commons';
 import {
   AlignmentPanel,
-  DropdownModal,
   NodeAlignmentButton,
   NodeSizeButton,
   SizePanel,
 } from 'wix-rich-content-toolbars-ui';
-import type { PluginContainerData_Alignment, PluginContainerData_Width_Type } from 'ricos-schema';
+import type { PluginContainerData_Width_Type } from 'ricos-schema';
 import ImageEditorButton from './toolbar/ImageEditorButton';
 
 const imagePluginService = new ImagePluginService();
@@ -25,7 +28,13 @@ const imagePluginService = new ImagePluginService();
 const IMAGE_EDITOR_BUTTON_ID = 'IMAGE_EDITOR_BUTTON';
 
 export const getToolbarButtons = (config, services): ToolbarButton[] => {
-  const { modals, uploadService, updateService } = services;
+  const {
+    modals,
+    uploadService,
+    updateService,
+    context: { isMobile },
+  } = services;
+
   return [
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SIZE,
@@ -44,6 +53,9 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
+      attributes: {
+        visible: getVisibleOnlyOnDesktopResolver(isMobile),
+      },
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
@@ -57,6 +69,9 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
+      attributes: {
+        visible: getVisibleOnlyOnDesktopResolver(isMobile),
+      },
     },
     {
       id: IMAGE_EDITOR_BUTTON_ID,
@@ -100,6 +115,9 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.LINK,
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS,
@@ -153,6 +171,9 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
           );
         }
       },
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.DELETE,

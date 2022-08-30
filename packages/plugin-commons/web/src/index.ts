@@ -37,4 +37,4 @@ export { getSelectionStyles } from 'wix-rich-content-editor-common';
 
 export { Uploader } from './Utils/Uploader';
 
-export { selectedNodeResolver } from './Utils/contentResolvers';
+export { selectedNodeResolver, getVisibleOnlyOnDesktopResolver } from './Utils/contentResolvers';

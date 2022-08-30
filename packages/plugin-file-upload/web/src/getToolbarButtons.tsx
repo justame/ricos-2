@@ -5,7 +5,7 @@ import {
   PLUGIN_TOOLBAR_BUTTON_ID,
 } from 'wix-rich-content-editor-common';
 import { FILE_UPLOAD_TYPE } from './types';
-import { Uploader } from 'wix-rich-content-plugin-commons';
+import { Uploader, getVisibleOnlyOnDesktopResolver } from 'wix-rich-content-plugin-commons';
 import {
   AlignmentPanel,
   NodeAlignmentButton,
@@ -16,6 +16,10 @@ import type { PluginContainerData_Width_Type } from 'ricos-schema';
 import { FILE_BUTTONS } from './consts';
 
 export const getToolbarButtons = (config, services, filePluginService): ToolbarButton[] => {
+  const {
+    context: { isMobile },
+  } = services;
+
   return [
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SIZE,
@@ -29,6 +33,9 @@ export const getToolbarButtons = (config, services, filePluginService): ToolbarB
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
+      attributes: {
+        visible: getVisibleOnlyOnDesktopResolver(isMobile),
+      },
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
@@ -42,6 +49,9 @@ export const getToolbarButtons = (config, services, filePluginService): ToolbarB
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
+      attributes: {
+        visible: getVisibleOnlyOnDesktopResolver(isMobile),
+      },
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.REPLACE,
@@ -71,6 +81,9 @@ export const getToolbarButtons = (config, services, filePluginService): ToolbarB
           );
         }
       },
+    },
+    {
+      id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.DELETE,
