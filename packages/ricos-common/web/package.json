@@ -1,6 +1,6 @@
 {
   "name": "ricos-common",
-  "version": "8.72.40",
+  "version": "8.72.41",
   "author": {
     "name": "Matan Harsat",
     "email": "matanha@wix.com"
@@ -38,13 +38,13 @@
   },
   "dependencies": {
     "ts-is-present": "^1.1.1",
-    "wix-rich-content-common": "8.72.40",
-    "wix-rich-content-editor": "8.72.40",
-    "wix-rich-content-preview": "8.72.40",
-    "wix-rich-content-viewer": "8.72.40"
+    "wix-rich-content-common": "8.72.41",
+    "wix-rich-content-editor": "8.72.41",
+    "wix-rich-content-preview": "8.72.41",
+    "wix-rich-content-viewer": "8.72.41"
   },
   "devDependencies": {
-    "ricos-types": "8.72.40"
+    "ricos-types": "8.72.41"
   },
   "jest": {
     "globals": {
