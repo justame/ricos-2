@@ -6,6 +6,7 @@ import type { ExtensionProps, RicosExtension, RicosExtensionConfig } from 'ricos
 import type { RichContentTheme } from 'wix-rich-content-common';
 import generalRTLIgnoredStyles from 'wix-rich-content-common/dist/statics/styles/general.rtlignore.scss';
 import generalStyles from 'wix-rich-content-editor-common/dist/statics/styles/general.scss';
+import { Node_Type } from 'ricos-schema';
 
 const stylesWithRTL = { ...generalStyles, ...generalRTLIgnoredStyles };
 export const getAlignmentClassName = (styles, alignment, theme: RichContentTheme = {}) => {
@@ -60,9 +61,14 @@ export const getComponentStyles = ({ componentData, theme, isFocused, isMobile, 
   };
 };
 
+const originalSizeMapper = {
+  [Node_Type.IMAGE]: componentData => componentData.image.width,
+  [Node_Type.GIF]: componentData => componentData.width,
+};
+
 const getStylesHOC = (isTextWrap: boolean) => Component => {
   const Styles = props => {
-    const { context, componentData, selected, node, editor } = props;
+    const { context, componentData, node, editor } = props;
     const nodeId = node.attrs.id;
     const { isMobile, theme } = context;
     const { selection } = editor.state;
@@ -79,8 +85,12 @@ const getStylesHOC = (isTextWrap: boolean) => Component => {
     });
 
     const customWidth = componentData?.containerData?.width?.custom;
+    const originalWidth =
+      componentData?.containerData?.width?.size === 'ORIGINAL' &&
+      originalSizeMapper[node.type.name]?.(componentData);
+    const width = customWidth || originalWidth;
     const style: CSSProperties = {
-      width: customWidth && `${customWidth}px`,
+      width: width && `${width}px`,
     };
 
     return (
