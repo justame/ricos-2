@@ -17,8 +17,23 @@
     Click to see more.
   </summary>
 
-
 </details>
+
+## 8.72.45 (Sep 1, 2022)
+
+## :bug: Bug Fix
+
+- `tiptap-extensions`
+  - [#4501](https://github.com/wix/ricos/pull/4501) remove attrs & marks after update doc style
+- `text-color`
+  - [#4501](https://github.com/wix/ricos/pull/4501) text/highlight color close modal
+
+## :house: Internal
+
+- `ricos-editor`
+  - [#4537](https://github.com/wix/ricos/pull/4537) remove footer placeholder when should create false
+- `ricos-styles`
+  - [#4536](https://github.com/wix/ricos/pull/4536) theme & document style update event
 
 ## 8.72.44 (Aug 31, 2022)
 
