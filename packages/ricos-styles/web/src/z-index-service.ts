@@ -1,39 +1,34 @@
 import type { IZindexLayer, IZindexLayers, IZIndexService } from 'ricos-types';
 
+const BASE_ZINDEX = {
+  mobile: 100000, // due forum mobile dialog zindex
+  desktop: 5000, //photo sutdio zindex - 6000, MM zindex - 10000
+};
 export class ZIndexService implements IZIndexService {
-  static DEFAULT_LAYERS_BASE_ZINDEX: IZindexLayers = {
-    TOOLBAR: 100,
-    POPUP: 200,
-    DRAWER: 300,
-    DIALOG: 300,
-    TOOLTIP: 400,
-    NOTIFICATION: 500,
-  };
-
   zindexLayers: IZindexLayers;
 
-  constructor(zIndexLayers?: Partial<IZindexLayers>) {
-    this.zindexLayers = ZIndexService.DEFAULT_LAYERS_BASE_ZINDEX;
-    if (zIndexLayers) {
-      this.zindexLayers = {
-        ...ZIndexService.DEFAULT_LAYERS_BASE_ZINDEX,
-        ...zIndexLayers,
-      };
-    }
+  constructor(isMobile: boolean) {
+    this.zindexLayers = this.getBaseZIndexLayers(
+      isMobile ? BASE_ZINDEX.mobile : BASE_ZINDEX.desktop
+    );
+  }
+
+  setDefaultZIndex(baseZIndex: number) {
+    this.zindexLayers = this.getBaseZIndexLayers(baseZIndex);
   }
 
   getZIndex(layer: IZindexLayer): number {
     return this.zindexLayers[layer];
   }
-}
 
-// WixData
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const WixData = {
-  TOOLBAR: ZIndexService.DEFAULT_LAYERS_BASE_ZINDEX.TOOLBAR + 5000,
-  POPUP: ZIndexService.DEFAULT_LAYERS_BASE_ZINDEX.POPUP + 5000,
-  DRAWER: ZIndexService.DEFAULT_LAYERS_BASE_ZINDEX.DRAWER + 5000,
-  DIALOG: ZIndexService.DEFAULT_LAYERS_BASE_ZINDEX.DIALOG + 5000,
-  TOOLTIP: ZIndexService.DEFAULT_LAYERS_BASE_ZINDEX.TOOLTIP + 5000,
-  NOTIFICATION: ZIndexService.DEFAULT_LAYERS_BASE_ZINDEX.NOTIFICATION + 5000,
-};
+  getBaseZIndexLayers(baseZIndex: number): IZindexLayers {
+    return {
+      TOOLBAR: 100 + baseZIndex,
+      POPUP: 200 + baseZIndex,
+      DRAWER: 300 + baseZIndex,
+      DIALOG: 300 + baseZIndex,
+      TOOLTIP: 400 + baseZIndex,
+      NOTIFICATION: 500 + baseZIndex,
+    };
+  }
+}
