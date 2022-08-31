@@ -34,7 +34,7 @@ export const FooterToolbarPlaceholder: FC<Props> = ({ toolbarSettings }) => {
   };
 
   useEffect(() => {
-    const shouldCreate = !isMobile || !!getFooterToolbarSettings()?.shouldCreate?.()?.desktop;
+    const shouldCreate = !isMobile && !!getFooterToolbarSettings()?.shouldCreate?.()?.desktop;
     setShouldCreate(shouldCreate);
   }, []);
 
