@@ -7,6 +7,7 @@ import type {
   NodeStyle,
   DocumentStyle,
 } from 'ricos-schema';
+import type { Subscription } from './events';
 import type { RicosTheme } from './themeTypes';
 
 /**
@@ -20,6 +21,9 @@ import type { RicosTheme } from './themeTypes';
  * @interface AmbientStyles
  */
 export interface AmbientStyles {
+  onThemeUpdate(callback: (theme: RicosTheme) => void): Subscription;
+
+  onDocumentStyleUpdate(callback: (documentStyle: DocumentStyle) => void): Subscription;
   /**
    * Extracts given decoration settings for specific node type from the current Document Style and Theme conjunction
    *

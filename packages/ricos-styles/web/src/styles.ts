@@ -5,7 +5,13 @@ import type {
   DocumentStyle as RichContentDocumentStyle,
   Decoration,
 } from 'ricos-schema';
-import type { RicosTheme } from 'ricos-types';
+import type {
+  PolicySubscriber,
+  RicosTheme,
+  EventSource,
+  SubscriptorProvider,
+  PublisherProvider,
+} from 'ricos-types';
 import DocumentStyle from './document-style/document-style';
 import type { Styles } from './models/styles';
 import TextualTheme from './textual-theme/textual-theme';
@@ -15,14 +21,42 @@ import { parseDocStyle } from 'ricos-content/libs/converters';
 
 export type TextNodeContainer = ParagraphNode | HeadingNode | BlockquoteNode | CodeBlockNode;
 
-export class RicosStyles implements Styles {
-  private theme!: TextualTheme;
+type Topics = [
+  'ricos.styles.functionality.themeUpdate',
+  'ricos.styles.functionality.documentStyleUpdate'
+];
 
-  private documentStyle!: DocumentStyle;
+const TOPICS: Topics = [
+  'ricos.styles.functionality.themeUpdate',
+  'ricos.styles.functionality.documentStyleUpdate',
+];
+
+export class RicosStyles implements Styles, PolicySubscriber<Topics>, EventSource<Topics> {
+  private theme: TextualTheme = new TextualTheme({});
+
+  private documentStyle: DocumentStyle = new DocumentStyle({});
+
+  id = 'ricos-styles';
+
+  topicsToPublish = TOPICS;
+
+  topicsToSubscribe = TOPICS;
+
+  publishers!: PublisherProvider<Topics>;
+
+  subscriptors!: SubscriptorProvider<Topics>;
 
   toStyleTags(): ReactElement[] {
     return [this.theme.toStyleTag(), this.documentStyle.toStyleTag()];
   }
+
+  onThemeUpdate = (callback: (theme: RicosTheme) => void) =>
+    this.subscriptors?.byTopic('ricos.styles.functionality.themeUpdate').subscribe(callback);
+
+  onDocumentStyleUpdate = (callback: (documentStyle: RichContentDocumentStyle) => void) =>
+    this.subscriptors
+      ?.byTopic('ricos.styles.functionality.documentStyleUpdate')
+      .subscribe(callback);
 
   getDecoration(node: TextNodeContainer, decorationType: Decoration_Type) {
     if (
@@ -63,6 +97,7 @@ export class RicosStyles implements Styles {
 
   setTheme(theme: RicosTheme) {
     this.theme = new TextualTheme(theme);
+    this.publishers?.byTopic('ricos.styles.functionality.themeUpdate').publish(theme);
     return this;
   }
 
@@ -72,6 +107,9 @@ export class RicosStyles implements Styles {
 
   setDocumentStyle(documentStyle: RichContentDocumentStyle) {
     this.documentStyle = new DocumentStyle(documentStyle);
+    this.publishers
+      ?.byTopic('ricos.styles.functionality.documentStyleUpdate')
+      .publish(documentStyle);
     return this;
   }
 

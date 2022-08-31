@@ -192,11 +192,13 @@ export class RicosOrchestrator implements Orchestrator {
       this.toolbars,
       this.uploadService,
       this.pluginsEvents,
+      this.styles,
     ] as RicosEventSource[]);
     registerEventSources(this.privateEvents, [this.commandEvents as unknown as RicosEventSource]);
     registerEventSubscribers(this.events, [
       this.modals as unknown as RicosEventSubscriber,
       this.editor as unknown as RicosEventSubscriber,
+      this.styles as unknown as RicosEventSubscriber,
     ]);
     mapBiCallbacksToSubscriptions(this.editorProps, this.events);
     this.editor.initializeUploadObserver();

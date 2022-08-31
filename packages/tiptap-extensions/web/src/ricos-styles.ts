@@ -4,8 +4,7 @@ import type { ExtensionProps, RicosExtension, RicosServices } from 'ricos-types'
 import { DocumentStyle as RicosDocumentStyle } from 'ricos-styles';
 import { fromTiptapNode } from 'ricos-converters';
 import type { ParagraphNode, HeadingNode } from 'ricos-content';
-import { getMarksBetween } from '@tiptap/core';
-import type { Command, CommandProps, ExtensionConfig } from '@tiptap/core';
+import type { CommandProps, ExtensionConfig } from '@tiptap/core';
 
 const { Step, StepResult } = require('prosemirror-transform');
 
@@ -133,7 +132,7 @@ export const ricosStyles: RicosExtension = {
             },
           updateDocumentStyleBySelectedNode:
             () =>
-            ({ state, editor, chain }) => {
+            ({ state, chain }) => {
               const { from, to } = state.selection;
               let node, proseNode;
 
@@ -186,6 +185,7 @@ export const ricosStyles: RicosExtension = {
                 .toContent();
 
               state.tr.step(new SetDocAttrStep('documentStyle', updatedDocumentStyle));
+              this.options.styles.setDocumentStyle(updatedDocumentStyle);
               return true;
             },
           updateDocumentStyle:
@@ -195,6 +195,7 @@ export const ricosStyles: RicosExtension = {
                 .mergeWith(documentStyle)
                 .toContent();
               state.tr.step(new SetDocAttrStep('documentStyle', updatedDocumentStyle));
+              this.options.styles.setDocumentStyle(updatedDocumentStyle);
               return true;
             },
         };
