@@ -17,14 +17,17 @@
     Click to see more.
   </summary>
 
+
+</details>
+
+## 8.72.44 (Aug 31, 2022)
+
 ## :bug: Bug Fix
 
 - `ricos-plugins/toolbars-ui`
   - [#4533](https://github.com/wix/ricos/pull/4533) fix a11y outline indicator
 - `theme`
   - [#4534](https://github.com/wix/ricos/pull/4534) fix bizMgr disabled button theme
-
-</details>
 
 ## 8.72.43 (Aug 31, 2022)
 
