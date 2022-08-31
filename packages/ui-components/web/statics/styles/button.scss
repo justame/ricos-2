@@ -41,7 +41,7 @@
   &:disabled {
     @extend %disabled;
     cursor: auto;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--ricos-settings-buttons-text-color, rgba(255, 255, 255, 0.6));
     border: none;
   }
 

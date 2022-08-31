@@ -21,6 +21,8 @@
 
 - `ricos-plugins/toolbars-ui`
   - [#4533](https://github.com/wix/ricos/pull/4533) fix a11y outline indicator
+- `theme`
+  - [#4534](https://github.com/wix/ricos/pull/4534) fix bizMgr disabled button theme
 
 </details>
 

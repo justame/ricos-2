@@ -51,7 +51,7 @@ export const withWixStyle: WithStyle = theme =>
           backgroundColor: '#D6E6FE',
         },
         disabled: {
-          backgroundColor: '#00062480',
+          backgroundColor: '#0006244d',
         },
         hover: {
           color: '#33385380',
