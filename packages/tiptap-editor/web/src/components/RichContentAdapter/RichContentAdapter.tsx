@@ -124,6 +124,8 @@ export class RichContentAdapter implements TiptapAdapter {
   getDraftContent = () =>
     tiptapToDraft(this.tiptapEditor.getJSON() as JSONContent, this.shouldRevealConverterErrors);
 
+  getDocumentStyle = () => this.tiptapEditor?.getJSON()?.attrs?.documentStyle || {};
+
   focus() {
     this.tiptapEditor.commands.focus();
   }

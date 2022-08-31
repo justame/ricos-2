@@ -3,6 +3,7 @@ import { Decoration_Type } from 'ricos-schema';
 import type { CustomTextualStyle } from 'ricos-types';
 import { EmptyDecoration } from './empty-decoration';
 import type { TextDecoration } from '../models/decoration';
+import { pickBy } from 'lodash';
 
 export class ColorDecoration implements TextDecoration {
   type = Decoration_Type.COLOR;
@@ -19,7 +20,8 @@ export class ColorDecoration implements TextDecoration {
     }
 
     const { foreground: color, background: backgroundColor } = decoration.colorData || {};
-    return new ColorDecoration({ color, backgroundColor });
+    const customStyle = pickBy({ color, backgroundColor });
+    return new ColorDecoration(customStyle);
   }
 
   getDecoration(): Decoration {

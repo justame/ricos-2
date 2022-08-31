@@ -62,6 +62,34 @@ describe('Styles', () => {
     });
   });
 
+  it('Should getDecoration match document style & theme decoration ', () => {
+    const documentStyle = {
+      headerOne: {
+        decorations: [{ type: Decoration_Type.COLOR, colorData: { foreground: '#414141' } }],
+      },
+    };
+    const theme: RicosTheme = {
+      palette: {
+        bgColor: '#888888',
+      },
+    };
+    const styles = new RicosStyles().setTheme(theme).setDocumentStyle(documentStyle);
+    const headingNode = {
+      type: Node_Type.HEADING,
+      headingData: { level: 1 },
+      id: '',
+      nodes: [],
+    } as HeadingNode;
+    const decoration = styles.getDecoration(headingNode, Decoration_Type.COLOR);
+    expect(decoration).toEqual({
+      colorData: {
+        foreground: '#414141',
+        background: '#888888',
+      },
+      type: 'COLOR',
+    });
+  });
+
   it('Should initialize styles with empty documentStyle & theme', () => {
     const documentStyle = {};
     const theme: RicosTheme = {};

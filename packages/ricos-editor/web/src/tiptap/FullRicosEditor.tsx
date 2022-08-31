@@ -174,8 +174,7 @@ export class FullRicosEditor extends React.Component<Props, State> {
   }
 
   private renderEditor() {
-    const { t, isMobile, experiments, locale, localeContent, theme, toolbarSettings, content } =
-      this.props;
+    const { t, isMobile, experiments, locale, localeContent, theme, toolbarSettings } = this.props;
 
     const { onChange: _, ...restProps } = this.props;
 
@@ -207,7 +206,7 @@ export class FullRicosEditor extends React.Component<Props, State> {
               >
                 <RicosStylesRenderer
                   theme={theme || {}}
-                  documentStyle={content?.documentStyle || {}}
+                  documentStyle={editor.adapter.getDocumentStyle()}
                   isMobile={!!isMobile}
                 />
               </RicosPortal>

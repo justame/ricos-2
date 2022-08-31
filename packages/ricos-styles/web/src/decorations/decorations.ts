@@ -40,7 +40,7 @@ export class Decorations implements TextDecorations {
       [s => !!s.fontWeight, s => BoldDecoration.fromCustomStyle(s)],
       [s => !!s.fontSize, s => FontSizeDecoration.fromCustomStyle(s)],
       [s => !!s.fontStyle, s => ItalicDecoration.fromCustomStyle(s)],
-      [s => !!s.color, s => ColorDecoration.fromCustomStyle(s)],
+      [s => !!s.color || !!s.backgroundColor, s => ColorDecoration.fromCustomStyle(s)],
     ]);
   }
 

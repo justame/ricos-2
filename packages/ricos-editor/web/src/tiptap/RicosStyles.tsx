@@ -2,8 +2,7 @@ import { isEqual, merge } from 'lodash';
 import type { FC } from 'react';
 import React, { useContext, useEffect, useRef } from 'react';
 import type { RicosTheme } from 'ricos-common';
-import type { DocumentStyle } from 'ricos-content';
-import { parseDocStyle } from 'ricos-content/libs/parse-doc-style';
+import type { DocumentStyle } from 'ricos-schema';
 import { StylesContext } from 'ricos-context';
 import { THEME_DEFAULTS } from './theme-defaults';
 
@@ -30,7 +29,7 @@ const RicosStylesRenderer: FC<{
     themeWithDefaults = merge({}, THEME_DEFAULTS.desktop, props.theme);
   }
 
-  styles.setTheme(themeWithDefaults).setDocumentStyle(parseDocStyle(props.documentStyle) || {});
+  styles.setTheme(themeWithDefaults).setDocumentStyle(props.documentStyle);
 
   useEffect(() => {
     if (!isEqual(prevTheme, props.theme)) {
@@ -38,9 +37,8 @@ const RicosStylesRenderer: FC<{
       console.log('theme update', themeWithDefaults); // eslint-disable-line no-console
     }
     if (!isEqual(prevDocumentStyle, props.documentStyle)) {
-      const richContentDocStyle = parseDocStyle(props.documentStyle);
-      styles.setDocumentStyle(richContentDocStyle || {});
-      console.log('doc style update', richContentDocStyle, props.documentStyle); // eslint-disable-line no-console
+      styles.setDocumentStyle(props.documentStyle);
+      console.log('doc style update', props.documentStyle); // eslint-disable-line no-console
     }
   });
 

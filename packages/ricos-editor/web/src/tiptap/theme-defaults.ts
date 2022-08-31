@@ -1,74 +1,77 @@
 // reference for values is in consts.scss in common package
-import type { RicosCustomStyles } from 'ricos-types';
+import type { RicosTheme } from 'ricos-types';
 
-const defaultThemeValues = { fontWeight: 'normal', fontStyle: 'normal', lineHeight: '1.5' };
+const defaultCustomStyle = { fontWeight: 'normal', fontStyle: 'normal', lineHeight: '1.5' };
+const defaultPalette = { bgColor: '#ffffff', textColor: '#000000' };
 
 export const THEME_DEFAULTS: {
-  desktop: { customStyles: RicosCustomStyles };
-  mobile: { customStyles: RicosCustomStyles };
+  desktop: RicosTheme;
+  mobile: RicosTheme;
 } = {
   desktop: {
     customStyles: {
       p: {
-        ...defaultThemeValues,
+        ...defaultCustomStyle,
         fontSize: '16px',
       },
       h1: {
-        ...defaultThemeValues,
+        ...defaultCustomStyle,
         fontSize: '80px',
       },
       h2: {
-        ...defaultThemeValues,
+        ...defaultCustomStyle,
         fontSize: '28px',
       },
       h3: {
-        ...defaultThemeValues,
+        ...defaultCustomStyle,
         fontSize: '24px',
       },
       h4: {
-        ...defaultThemeValues,
+        ...defaultCustomStyle,
         fontSize: '20px',
       },
       h5: {
-        ...defaultThemeValues,
+        ...defaultCustomStyle,
         fontSize: '18px',
       },
       h6: {
-        ...defaultThemeValues,
+        ...defaultCustomStyle,
         fontSize: '16px',
       },
     },
+    palette: defaultPalette,
   },
   mobile: {
     customStyles: {
       p: {
-        ...defaultThemeValues,
+        ...defaultCustomStyle,
         fontSize: '16px',
       },
       h1: {
-        ...defaultThemeValues,
+        ...defaultCustomStyle,
         fontSize: '32px',
       },
       h2: {
-        ...defaultThemeValues,
+        ...defaultCustomStyle,
         fontSize: '24px',
       },
       h3: {
-        ...defaultThemeValues,
+        ...defaultCustomStyle,
         fontSize: '20px',
       },
       h4: {
-        ...defaultThemeValues,
+        ...defaultCustomStyle,
         fontSize: '20px',
       },
       h5: {
-        ...defaultThemeValues,
+        ...defaultCustomStyle,
         fontSize: '16px',
       },
       h6: {
-        ...defaultThemeValues,
+        ...defaultCustomStyle,
         fontSize: '14px',
       },
     },
+    palette: defaultPalette,
   },
 };

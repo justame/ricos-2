@@ -22,6 +22,7 @@ import type {
 } from './pluginTypes';
 import type { TranslationFunction } from './commonTypes';
 import type { LinkSettings, RicosEditorAPI, RicosServices, TextAlignment } from '.';
+import type { DocumentStyle } from 'ricos-schema';
 
 export type PluginProps = NodeViewRendererProps & {
   settings: LegacyEditorPluginConfig;
@@ -206,5 +207,6 @@ export interface TiptapAdapter {
   blur: RicosEditorAPI['blur'];
   tiptapEditor: Editor;
   getDraftContent: () => DraftContent;
+  getDocumentStyle: () => DocumentStyle;
   isContentChanged: () => boolean;
 }
