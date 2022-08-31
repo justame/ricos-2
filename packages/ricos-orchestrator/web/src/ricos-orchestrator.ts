@@ -15,13 +15,14 @@ import { ZIndexService, RicosStyles } from 'ricos-styles';
 import type {
   DebugMode,
   EditorPlugin,
+  EventRegistrar,
   INotifier,
   IUpdateService,
   LegacyEditorPluginConfig,
   Orchestrator,
   RicosServices,
+  TopicDescriptor,
   TranslationFunction,
-  IPluginsEvents,
 } from 'ricos-types';
 import { getLangDir, isSSR } from 'wix-rich-content-common';
 import { Content, RicosToolbars } from 'wix-rich-content-toolbars-v3';
@@ -38,9 +39,13 @@ export class RicosOrchestrator implements Orchestrator {
 
   private readonly events: RicosEvents;
 
+  private readonly privateEvents: EventRegistrar;
+
   private readonly toolbars: RicosToolbars;
 
-  private readonly pluginsEvents: IPluginsEvents;
+  private readonly pluginsEvents: PluginsEvents;
+
+  private readonly commandEvents: PluginsEvents;
 
   private readonly modals: RicosModalService;
 
@@ -83,6 +88,13 @@ export class RicosOrchestrator implements Orchestrator {
     this.events = new RicosEvents(
       (editorProps.debugMode?.includes('events') || editorProps.debugMode?.includes('all')) ?? false
     );
+
+    this.privateEvents = {
+      register: (topic: TopicDescriptor) =>
+        this.events.register(topic.replace(/^ricos\./, 'private.') as TopicDescriptor),
+      getAllTopics: () => this.events.getAllTopics(),
+    };
+
     this.styles = new RicosStyles();
 
     this.uploadService = new UploadService(new StreamReader(), this.updateService);
@@ -99,6 +111,7 @@ export class RicosOrchestrator implements Orchestrator {
     this.toolbars.getShortcuts().map(shortcut => this.shortcuts.register(shortcut));
 
     this.pluginsEvents = new PluginsEvents();
+    this.commandEvents = new PluginsEvents();
 
     const getEditorQuery = (): EditorQuery => {
       return this.editorQuery;
@@ -141,7 +154,8 @@ export class RicosOrchestrator implements Orchestrator {
         shortcuts: this.shortcuts,
         modals: this.modals,
         toolbars: this.toolbars,
-        pluginsEvents: this.pluginsEvents,
+        // Note: editor gets a different instance of pluginEvents, so we control them separately
+        pluginsEvents: this.commandEvents,
         context: this.context,
       },
       this.editorProps.debugMode?.includes('prosemirror') || editorProps.debugMode?.includes('all')
@@ -179,6 +193,7 @@ export class RicosOrchestrator implements Orchestrator {
       this.uploadService,
       this.pluginsEvents,
     ] as RicosEventSource[]);
+    registerEventSources(this.privateEvents, [this.commandEvents as unknown as RicosEventSource]);
     registerEventSubscribers(this.events, [
       this.modals as unknown as RicosEventSubscriber,
       this.editor as unknown as RicosEventSubscriber,

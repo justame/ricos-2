@@ -35,7 +35,7 @@ const TOPICS: Topics = [
 // ☐  onVideoSelected --> ?
 
 export class PluginsEvents implements IPluginsEvents {
-  private publishers!: PublisherProvider<Topics>;
+  publishers!: PublisherProvider<Topics>;
 
   topicsToPublish = TOPICS;
 

@@ -74,7 +74,7 @@ export function mapBiCallbacksToSubscriptions(editorProps: RicosEditorProps, eve
   subscribeCallback(
     'ricos.shortcuts.functionality.applied',
     'onKeyboardShortcutAction',
-    ({ shortcutName }) => [{ buttonName: shortcutName, pluginId: '', version, contentId }]
+    ({ shortcutName }) => [{ buttonName: shortcutName, pluginId: shortcutName, version, contentId }]
   );
 
   subscribeCallback(

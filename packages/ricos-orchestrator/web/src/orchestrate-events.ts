@@ -1,5 +1,10 @@
-import type { RicosEvents } from 'ricos-events';
-import type { EventData, SubscribeTopicDescriptor, TopicDescriptor } from 'ricos-types';
+import type {
+  EventData,
+  EventRegistrar,
+  EventSubscriptor,
+  SubscribeTopicDescriptor,
+  TopicDescriptor,
+} from 'ricos-types';
 import { PublisherInitializer, SubscriptorInitializer } from './event-orchestrators';
 
 export type RicosEventSource = {
@@ -12,7 +17,7 @@ export type RicosEventSubscriber = {
   topicsToSubscribe: SubscribeTopicDescriptor[];
   subscriptors: SubscriptorInitializer;
 };
-export function registerEventSources(events: RicosEvents, eventSources: RicosEventSource[]) {
+export function registerEventSources(events: EventRegistrar, eventSources: RicosEventSource[]) {
   eventSources.forEach(source => {
     const initializer = new PublisherInitializer(source.topicsToPublish);
     initializer.initializeMap((t: TopicDescriptor) => events.register(t));
@@ -21,7 +26,7 @@ export function registerEventSources(events: RicosEvents, eventSources: RicosEve
 }
 
 export function registerEventSubscribers(
-  events: RicosEvents,
+  events: EventSubscriptor,
   eventSubscribers: RicosEventSubscriber[]
 ) {
   eventSubscribers.forEach(subscriber => {
