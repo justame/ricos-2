@@ -6321,10 +6321,10 @@
     "@babel/runtime" "^7.0.0"
     tslib "^2.0.0"
 
-"@wix/image@1.34.0":
-  version "1.34.0"
-  resolved "https://registry.yarnpkg.com/@wix/image/-/image-1.34.0.tgz#26b51a266dcc1abd7391133ab60f6e3ff5811dc6"
-  integrity sha512-kVm9ghpERUl6YADmvPY/KxD9mmGXxjmhGjyfqMu7UrtSqLgdS/dbDuslxhAf38kilvDvBT+I8QDdxwFXSV1WAA==
+"@wix/image@1.40.0":
+  version "1.40.0"
+  resolved "https://registry.yarnpkg.com/@wix/image/-/image-1.40.0.tgz#d21b8634e42013d909c72a4ae9ffa4e65610794f"
+  integrity sha512-GRj1lwh+679BeAwFXrQqdbKGFv44pvVlsNSF6eTPXUdQ/TQKosAto/b45+l2xprySW1HvCvedS+zydPl8QGrUA==
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@wix/image-kit" "^1.22.0"
