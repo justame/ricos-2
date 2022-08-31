@@ -1,6 +1,7 @@
 import type { PublisherProvider, IPluginsEvents } from 'ricos-types';
 
 type Topics = [
+  'ricos.plugins.functionality.pluginAddSuccess',
   'ricos.plugins.functionality.pluginAdd',
   'ricos.plugins.functionality.pluginDelete',
   'ricos.plugins.functionality.pluginToolbarButtonClick',
@@ -12,6 +13,7 @@ type Topics = [
 ];
 
 const TOPICS: Topics = [
+  'ricos.plugins.functionality.pluginAddSuccess',
   'ricos.plugins.functionality.pluginAdd',
   'ricos.plugins.functionality.pluginDelete',
   'ricos.plugins.functionality.pluginToolbarButtonClick',
@@ -39,8 +41,16 @@ export class PluginsEvents implements IPluginsEvents {
 
   topicsToPublish = TOPICS;
 
-  publishPluginAdd({ pluginId }) {
-    return this.publishers.byTopic('ricos.plugins.functionality.pluginAdd').publish({ pluginId });
+  publishPluginAddSuccess({ pluginId }) {
+    return this.publishers
+      .byTopic('ricos.plugins.functionality.pluginAddSuccess')
+      .publish({ pluginId });
+  }
+
+  publishPluginAdd({ pluginId, entryPoint }) {
+    return this.publishers
+      .byTopic('ricos.plugins.functionality.pluginAdd')
+      .publish({ pluginId, entryPoint });
   }
 
   publishPluginDelete({ pluginId }) {

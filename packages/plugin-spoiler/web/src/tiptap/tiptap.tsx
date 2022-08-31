@@ -123,7 +123,7 @@ export const tiptapExtensions: RicosExtension[] = [
         return {
           publishPluginToggleEvent(toggleOn: boolean) {
             return toggleOn
-              ? services.pluginsEvents.publishPluginAdd({
+              ? services.pluginsEvents.publishPluginAddSuccess({
                   pluginId: Decoration_Type.SPOILER,
                   params: {},
                 })

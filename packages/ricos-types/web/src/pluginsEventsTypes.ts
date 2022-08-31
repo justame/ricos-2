@@ -1,11 +1,20 @@
 export interface IPluginsEvents {
-  publishPluginAdd({
+  publishPluginAddSuccess({
     pluginId,
     params,
   }: {
     pluginId: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     params?: Record<string, any>;
+  }): boolean;
+
+  publishPluginAdd({
+    pluginId,
+    entryPoint,
+  }: {
+    pluginId: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    entryPoint: string;
   }): boolean;
 
   publishPluginDelete({ pluginId }: { pluginId: string }): boolean;

@@ -126,9 +126,15 @@ export function mapBiCallbacksToSubscriptions(editorProps: RicosEditorProps, eve
   );
 
   subscribeCallback(
-    'ricos.plugins.functionality.pluginAdd',
+    'ricos.plugins.functionality.pluginAddSuccess',
     'onPluginAddSuccess',
     ({ pluginId, params, entryPoint }) => [pluginId, entryPoint, params, version, contentId]
+  );
+
+  subscribeCallback(
+    'ricos.plugins.functionality.pluginAdd',
+    'onPluginAdd',
+    ({ pluginId, entryPoint }) => [pluginId, entryPoint, version, contentId]
   );
 
   subscribeCallback(

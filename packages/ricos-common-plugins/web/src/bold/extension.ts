@@ -42,7 +42,7 @@ export const bold: RicosExtension = {
         return {
           publishPluginToggleEvent(toggleOn: boolean) {
             return toggleOn
-              ? services.pluginsEvents.publishPluginAdd({
+              ? services.pluginsEvents.publishPluginAddSuccess({
                   pluginId: Decoration_Type.BOLD,
                   params: { fontWeightValue: FONT_WEIGHT_BOLD },
                 })

@@ -38,7 +38,7 @@ export const italic: RicosExtension = {
       return {
         publishPluginToggleEvent(toggleOn: boolean) {
           return toggleOn
-            ? services.pluginsEvents.publishPluginAdd({
+            ? services.pluginsEvents.publishPluginAddSuccess({
                 pluginId: Decoration_Type.ITALIC,
                 params: { italicData: true },
               })

@@ -12,6 +12,7 @@ import type {
   ToolbarButtonProps,
   ToolbarType,
 } from 'ricos-types';
+import { TOOLBARS } from 'wix-rich-content-editor-common';
 import { PLUGIN_MENU_MODAL_ID } from 'wix-rich-content-toolbars-ui';
 import { alwaysVisibleResolver } from 'wix-rich-content-toolbars-v3';
 import type { PluginServices } from './editorPlugins';
@@ -142,6 +143,10 @@ export class RicosPluginAddButton implements PluginAddButton {
       this.calculatePlacement(this.services.context.isMobile, this.services.context.languageDir),
       () => {
         this.services.toolbars.pluginMenu.publishButtonClick(this.button.id);
+        this.services.pluginsEvents.publishPluginAdd({
+          pluginId: this.button.id,
+          entryPoint: TOOLBARS.PLUGIN_MENU,
+        });
         this.services.modals.closeModal(PLUGIN_MENU_MODAL_ID);
       }
     );
@@ -150,6 +155,10 @@ export class RicosPluginAddButton implements PluginAddButton {
   toFooterToolbarItem(): PluginMenuItem {
     return this.getPluginMenuItem('popover', 'bottom', () => {
       this.services.toolbars.footer.publishButtonClick(this.button.id);
+      this.services.pluginsEvents.publishPluginAdd({
+        pluginId: this.button.id,
+        entryPoint: TOOLBARS.FOOTER,
+      });
     });
   }
 
@@ -159,6 +168,10 @@ export class RicosPluginAddButton implements PluginAddButton {
       this.calculatePlacement(false, this.services.context.languageDir),
       () => {
         this.services.toolbars.pluginMenu.publishButtonClick(this.button.id);
+        this.services.pluginsEvents.publishPluginAdd({
+          pluginId: this.button.id,
+          entryPoint: TOOLBARS.PLUGIN_MENU,
+        });
         this.services.modals.closeModal(PLUGIN_MENU_HORIZONTAL_MODAL_ID);
       }
     );
@@ -182,6 +195,10 @@ export class RicosPluginAddButton implements PluginAddButton {
           ({ editorCommands }) =>
           () => {
             this.services.toolbars.pluginMenu.publishButtonClick(this.button.id);
+            this.services.pluginsEvents.publishPluginAdd({
+              pluginId: this.button.id,
+              entryPoint: TOOLBARS.PLUGIN_MENU,
+            });
             this.button.command(editorCommands);
           },
       },
@@ -198,6 +215,10 @@ export class RicosPluginAddButton implements PluginAddButton {
       getLabel: () => this.button.label || '',
       onClick: e => {
         this.services.toolbars.external.publishButtonClick(this.button.id);
+        this.services.pluginsEvents.publishPluginAdd({
+          pluginId: this.button.id,
+          entryPoint: TOOLBARS.EXTERNAL,
+        });
         return this.button.modal
           ? modals?.isModalOpen(this.button.modal.id)
             ? modals?.closeModal(this.button.modal.id)

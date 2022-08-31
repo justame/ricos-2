@@ -165,7 +165,10 @@ export class RichContentAdapter implements TiptapAdapter {
           id = data.id || generateId();
           const attrs = { id, ...flatComponentState(_attrs) };
           this.tiptapEditor.chain().focus().insertContent([{ type, attrs, content }]).run();
-          this.services.pluginsEvents.publishPluginAdd({ pluginId: type, params: { ...attrs } });
+          this.services.pluginsEvents.publishPluginAddSuccess({
+            pluginId: type,
+            params: { ...attrs },
+          });
         } else {
           console.error(`No such plugin type ${pluginType}`);
         }
@@ -198,7 +201,10 @@ export class RichContentAdapter implements TiptapAdapter {
             ])
             .setNodeSelection(updateSelection ? lastNodePosition + 1 : lastNodePosition + 2)
             .run();
-          this.services.pluginsEvents.publishPluginAdd({ pluginId: type, params: { ...attrs } });
+          this.services.pluginsEvents.publishPluginAddSuccess({
+            pluginId: type,
+            params: { ...attrs },
+          });
         } else {
           console.error(`No such plugin type ${pluginType}`);
         }
@@ -257,7 +263,10 @@ export class RichContentAdapter implements TiptapAdapter {
             ? this.tiptapEditor.chain().focus()
             : this.tiptapEditor.chain();
           editorCommand[command](args).run();
-          this.services.pluginsEvents.publishPluginAdd({ pluginId: type, params: { ...args } });
+          this.services.pluginsEvents.publishPluginAddSuccess({
+            pluginId: type,
+            params: { ...args },
+          });
         } else {
           console.error(`${type} decoration not supported`);
         }
