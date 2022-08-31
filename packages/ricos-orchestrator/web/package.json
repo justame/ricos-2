@@ -1,6 +1,6 @@
 {
   "name": "ricos-orchestrator",
-  "version": "8.72.43",
+  "version": "8.72.44",
   "author": {
     "name": "Alex Greenstein",
     "email": "alexgr@wix.com"
@@ -35,17 +35,17 @@
   },
   "dependencies": {
     "fp-ts": "^2.11.0",
-    "ricos-common": "8.72.43",
-    "ricos-common-plugins": "8.72.43",
-    "ricos-converters": "8.72.43",
-    "ricos-events": "8.72.43",
-    "ricos-modals": "8.72.43",
-    "ricos-plugins": "8.72.43",
-    "ricos-shortcuts": "8.72.43",
-    "ricos-styles": "8.72.43",
-    "ricos-types": "8.72.43",
-    "wix-rich-content-toolbars-v3": "8.72.43",
-    "wix-tiptap-editor": "8.72.43"
+    "ricos-common": "8.72.44",
+    "ricos-common-plugins": "8.72.44",
+    "ricos-converters": "8.72.44",
+    "ricos-events": "8.72.44",
+    "ricos-modals": "8.72.44",
+    "ricos-plugins": "8.72.44",
+    "ricos-shortcuts": "8.72.44",
+    "ricos-styles": "8.72.44",
+    "ricos-types": "8.72.44",
+    "wix-rich-content-toolbars-v3": "8.72.44",
+    "wix-tiptap-editor": "8.72.44"
   },
   "unpkg": true,
   "publishConfig": {
