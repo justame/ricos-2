@@ -19,6 +19,13 @@
 
 </details>
 
+## 8.72.43 (Aug 31, 2022)
+
+## :house: Internal
+
+- `image`
+  - [#4532](https://github.com/wix/ricos/pull/4532) @wix/image upgrade 1.40.0
+
 ## 8.72.42 (Aug 30, 2022)
 
 ## :bug: Bug Fix

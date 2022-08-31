@@ -1,6 +1,6 @@
 {
   "name": "ricos-styles",
-  "version": "8.72.42",
+  "version": "8.72.43",
   "author": {
     "name": "Aviv Maimon",
     "email": "avivm@wix.com"
@@ -35,10 +35,10 @@
   },
   "dependencies": {
     "fp-ts": "^2.11.0",
-    "ricos-common": "8.72.42",
-    "ricos-content": "8.72.42",
-    "ricos-schema": "8.72.42",
-    "ricos-types": "8.72.42"
+    "ricos-common": "8.72.43",
+    "ricos-content": "8.72.43",
+    "ricos-schema": "8.72.43",
+    "ricos-types": "8.72.43"
   },
   "peerDependencies": {
     "lodash": "^4.0.0"
