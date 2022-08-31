@@ -85,7 +85,9 @@ const configs = {
       createMapPlugin,
     ],
   },
-  headings: { allowHeadingCustomization: true },
+  headings: {
+    allowHeadingCustomization: true,
+  },
 };
 
 const plugins = [
@@ -266,7 +268,10 @@ class EditorWrapper extends React.Component<Props> {
           onChange={(...args) => {
             onChange?.(...args, this.editor);
           }}
-          experiments={{ tiptapEditor: { enabled: true }, ...experiments }}
+          experiments={{
+            tiptapEditor: { enabled: true },
+            ...experiments,
+          }}
           _rcProps={rcProps}
           onAtomicBlockFocus={d => console.log('onAtomicBlockFocus', d)} // eslint-disable-line
           commands={commands}

@@ -5,7 +5,7 @@ import { getLangDir } from 'wix-rich-content-common';
 import { ColorPicker } from 'wix-rich-content-plugin-commons';
 import { colorPicker, extractPalette } from './TextColorPicker';
 
-type Props = { type: 'ricos-text-color' | 'ricos-text-highlight' };
+type Props = { type: 'ricos-text-color' | 'ricos-text-highlight'; closeModal: () => void };
 
 const getConfigKey = (
   type: 'ricos-text-color' | 'ricos-text-highlight'
@@ -15,7 +15,7 @@ const getConfigKey = (
     'ricos-text-highlight': 'TEXT_HIGHLIGHT' as const,
   }[type]);
 
-export const TextColorController: FC<Props> = ({ type }) => {
+export const TextColorController: FC<Props> = ({ type, closeModal }) => {
   const {
     isMobile,
     theme,
@@ -30,11 +30,13 @@ export const TextColorController: FC<Props> = ({ type }) => {
   const currentColor = getEditorCommands()?.getColor(type);
   const onChange = ({ color }) => {
     getEditorCommands()?.insertDecoration(type, { color });
+    closeModal();
   };
   const onCustomColorAdded = ({ color }) => onColorAdded(color);
 
   const onResetColor = () => {
     getEditorCommands()?.deleteDecoration(type);
+    closeModal();
   };
 
   const { t } = useContext(RicosContext);

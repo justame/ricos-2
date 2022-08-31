@@ -1,14 +1,24 @@
-import type { Node, Decoration_Type, Decoration, DocumentStyle } from 'ricos-schema';
-import { Node_Type } from 'ricos-schema';
+import type { Node, Decoration, DocumentStyle } from 'ricos-schema';
+import { Node_Type, Decoration_Type } from 'ricos-schema';
 import type { ExtensionProps, RicosExtension, RicosServices } from 'ricos-types';
 import { DocumentStyle as RicosDocumentStyle } from 'ricos-styles';
 import { fromTiptapNode } from 'ricos-converters';
 import type { ParagraphNode, HeadingNode } from 'ricos-content';
+import { getMarksBetween } from '@tiptap/core';
 import type { CommandProps, ExtensionConfig } from '@tiptap/core';
+import type { Node as ProseMirrorNode } from 'prosemirror-model';
+import { omit } from 'lodash';
 
 const { Step, StepResult } = require('prosemirror-transform');
 
 const STEP_TYPE = 'setDocAttr';
+
+const DOCUMENT_STYLES_MARKS = [
+  Decoration_Type.BOLD,
+  Decoration_Type.ITALIC,
+  Decoration_Type.COLOR,
+  Decoration_Type.FONT_SIZE,
+] as string[];
 
 // adapted from https://discuss.prosemirror.net/t/changing-doc-attrs/784
 class SetDocAttrStep extends Step {
@@ -78,6 +88,14 @@ declare module '@tiptap/core' {
        * updates the document style according to the selected node
        */
       updateDocumentStyleBySelectedNode: () => ReturnType;
+      /**
+       * remove all marks that are defined in the document style (bold, italic, color, font size)
+       */
+      unsetAllDocumentStyleMarksByNode: (node: ProseMirrorNode) => ReturnType;
+      /**
+       * remove all attibutes that are defined in the document style (paddingTop,paddingBottom,lineHeight)
+       */
+      unsetAllDocumentStyleAttrsByNode: (node: ProseMirrorNode, pos: number) => ReturnType;
       /**
        * reset the document style of a given nodeType
        */
@@ -151,9 +169,10 @@ export const ricosStyles: RicosExtension = {
                   .focus()
                   .updateDocumentStyle(documentStyleEntity.toContent())
                   .command(({ state, commands }) => {
-                    state.doc.descendants(node => {
+                    state.doc.descendants((node, pos) => {
                       if (node.isTextblock && node.type.name === proseNode.type.name) {
-                        commands.unsetAllMarksByNode(node);
+                        commands.unsetAllDocumentStyleMarksByNode(node);
+                        commands.unsetAllDocumentStyleAttrsByNode(node, pos);
                       }
                     });
                     return true;
@@ -162,20 +181,28 @@ export const ricosStyles: RicosExtension = {
                   .run();
               }
             },
-
-          unsetAllMarksByNode:
-            node =>
-            ({ editor, tr }) => {
+          unsetAllDocumentStyleMarksByNode:
+            (node: ProseMirrorNode) =>
+            ({ editor, tr, state }) => {
               const nodeElement = document.body.querySelector(`[data-ricos-id="${node.attrs.id}"]`);
               if (nodeElement) {
                 const start = editor.view.posAtDOM(nodeElement);
-                const end = start + node.nodeSize;
+                const end = start + node.content.size;
 
-                try {
-                  tr.removeMark(start, end);
-                } catch (e) {}
-                return true;
+                getMarksBetween(start, end, state.doc).forEach(markRang => {
+                  if (DOCUMENT_STYLES_MARKS.includes(markRang.mark.type.name)) {
+                    tr.removeMark(start, end, markRang.mark);
+                  }
+                });
               }
+              return true;
+            },
+          unsetAllDocumentStyleAttrsByNode:
+            (node: ProseMirrorNode, pos: number) =>
+            ({ tr }) => {
+              const attrs = omit(node.attrs, ['style', 'textStyle.lineHeight']);
+              tr.setNodeMarkup(pos, undefined, attrs);
+              return true;
             },
           resetDocumentStyleByNodeType:
             nodeType =>
