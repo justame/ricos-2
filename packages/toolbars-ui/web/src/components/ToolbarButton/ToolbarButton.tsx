@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
-import type { ReactElement, ReactNode } from 'react';
 import cx from 'classnames';
 import styles from './ToolbarButton.scss';
 import Tooltip from 'wix-rich-content-common/libs/Tooltip';
@@ -15,7 +14,6 @@ type ToolbarButtonProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Icon: (props?: any) => JSX.Element;
   dataHook?: string;
-  children?: ReactElement | ReactNode;
 };
 
 const ToolbarButton = ({
@@ -27,7 +25,6 @@ const ToolbarButton = ({
   Icon,
   dataHook,
   label,
-  children,
 }: ToolbarButtonProps) => {
   return (
     <Tooltip key={tooltip} content={tooltip} tooltipOffset={{ x: 0, y: -8 }}>
@@ -44,7 +41,6 @@ const ToolbarButton = ({
         <div className={cx(styles.iconTextWrapper, { [styles.mobileToolbarButton]: isMobile })}>
           <Icon />
           {label && <div>{label}</div>}
-          {children && children}
         </div>
       </button>
     </Tooltip>

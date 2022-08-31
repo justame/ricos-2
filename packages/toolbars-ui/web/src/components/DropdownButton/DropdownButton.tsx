@@ -26,6 +26,13 @@ const DropdownButton: React.FC<Props> = ({
   disabled,
 }) => {
   const { isMobile } = useContext(RicosContext) || {};
+  const DropdownIcon = () => (
+    <>
+      <Icon />
+      {label}
+      <DropdownArrowIcon />
+    </>
+  );
 
   return (
     <div ref={setRef}>
@@ -33,14 +40,11 @@ const DropdownButton: React.FC<Props> = ({
         isMobile={isMobile}
         tooltip={tooltip}
         onClick={onClick}
-        label={label}
         active={active}
         disabled={disabled}
-        Icon={Icon}
+        Icon={DropdownIcon}
         dataHook={dataHook}
-      >
-        <DropdownArrowIcon />
-      </ToolbarButton>
+      />
     </div>
   );
 };

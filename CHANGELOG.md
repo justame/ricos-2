@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `ricos-plugins/toolbars-ui`
+  - [#4533](https://github.com/wix/ricos/pull/4533) fix a11y outline indicator
+
 </details>
 
 ## 8.72.43 (Aug 31, 2022)
