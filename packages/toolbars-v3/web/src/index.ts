@@ -24,6 +24,7 @@ import {
   isTextStylesMatchDocumentStylesResolver,
   isUndoStackEmptyResolver,
   isRedoStackEmptyResolver,
+  isNodeSelected,
 } from './resolvers/tiptapResolvers';
 
 export const resolversById = {
@@ -51,6 +52,7 @@ export const resolversById = {
   [RESOLVERS_IDS.IS_TEXT_STYLES_MATCH_DOCUMENT_STYLES]: isTextStylesMatchDocumentStylesResolver,
   [RESOLVERS_IDS.IS_UNDO_STACK_EMPTY]: isUndoStackEmptyResolver,
   [RESOLVERS_IDS.IS_REDO_STACK_EMPTY]: isRedoStackEmptyResolver,
+  [RESOLVERS_IDS.IS_NODE_SELECTED]: isNodeSelected,
 };
 
 export { tiptapStaticToolbarConfig } from './toolbarItemConfig/tiptapToolbarItemConfig';

@@ -63,6 +63,7 @@ export const pluginFontSize: TiptapEditorPlugin = {
       attributes: {
         visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
         selectedFontSize: RESOLVERS_IDS.GET_FONT_SIZE_IN_SELECTION,
+        disabled: RESOLVERS_IDS.IS_NODE_SELECTED,
       },
       modal: {
         id: FONT_SIZE_MODAL_ID,

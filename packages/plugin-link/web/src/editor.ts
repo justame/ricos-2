@@ -57,6 +57,7 @@ export const pluginLink: EditorPluginCreator<LinkPluginEditorConfig> = config =>
         attributes: {
           visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
           active: RESOLVERS_IDS.IS_TEXT_CONTAINS_LINK_OR_ANCHOR,
+          disabled: RESOLVERS_IDS.IS_NODE_SELECTED,
         },
         commands: {},
         modal: {

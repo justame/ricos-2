@@ -21,11 +21,11 @@ const ToolbarButton = React.forwardRef<HTMLButtonElement | null, ToolbarButtonPr
     return (
       <Tooltip key={tooltip} content={tooltip} tooltipOffset={{ x: 0, y: -8 }}>
         <button
+          disabled={disabled}
           ref={ref}
           className={cx(styles.toggleButtonWrapper, {
             [styles.mobileToggleButtonWrapper]: isMobile,
             [styles.active]: active,
-            [styles.disabled]: disabled,
           })}
           onClick={onClick}
           onMouseDown={e => e.preventDefault()}

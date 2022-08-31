@@ -20,6 +20,7 @@ export const getTextButtons = (): FormattingToolbarButtonConfig[] => {
       attributes: {
         visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
         active: RESOLVERS_IDS.IS_TEXT_CONTAINS_CODE_BLOCK,
+        disabled: RESOLVERS_IDS.IS_NODE_SELECTED,
       },
       command: (editorCommands: EditorCommands) => () => {
         editorCommands.setBlockType(CODE_BLOCK_TYPE);

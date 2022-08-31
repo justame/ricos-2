@@ -35,6 +35,7 @@ const LinkButton = ({ toolbarItem, context, contentQueryService, dataHook }) => 
   return (
     <ToolbarButton
       ref={setReferenceElement}
+      disabled={toolbarItem.attributes.disabled}
       isMobile={isMobile}
       active={isActive}
       tooltip={tooltip}

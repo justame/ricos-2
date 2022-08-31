@@ -49,34 +49,34 @@ const FontSizeButton = ({
 
   const selectedFontSize = toolbarItem.attributes.selectedFontSize;
 
+  const disabled = toolbarItem.attributes.disabled;
   const tooltip = t(toolbarItem.presentation?.tooltip);
   return (
     <Tooltip key={tooltip} content={tooltip} tooltipOffset={{ x: 0, y: -8 }}>
-      <div style={{ boxSizing: 'border-box' }}>
+      <div
+        className={cx(
+          styles.fontSizeModalButtonWrapper,
+          modalService.isModalOpen('fontSizeModal') ? styles.active : '',
+          { [styles.disabled]: disabled }
+        )}
+        ref={setReferenceElement}
+      >
         <div
-          className={cx(
-            styles.fontSizeModalButtonWrapper,
-            modalService.isModalOpen('fontSizeModal') ? styles.active : ''
-          )}
-          ref={setReferenceElement}
+          data-hook={dataHook}
+          className={styles.fontSizeModalButton}
+          role="button"
+          onClick={() => toolbarItem.commands?.click({ referenceElement })}
+          tabIndex={-1}
         >
-          <div
-            data-hook={dataHook}
-            className={styles.fontSizeModalButton}
-            role="button"
-            onClick={() => toolbarItem.commands?.click({ referenceElement })}
-            tabIndex={-1}
-          >
-            <input
-              className={styles.fontSizeModalInputButton}
-              required
-              value={inputValue}
-              onChange={e => onInputChange(e, setInputValue, editorCommands)}
-              onClick={() => inputRef.current?.select()}
-              ref={inputRef}
-            />
-            <DropdownArrowIcon />
-          </div>
+          <input
+            className={styles.fontSizeModalInputButton}
+            required
+            value={inputValue}
+            onChange={e => onInputChange(e, setInputValue, editorCommands)}
+            onClick={() => inputRef.current?.select()}
+            ref={inputRef}
+          />
+          <DropdownArrowIcon />
         </div>
       </div>
     </Tooltip>

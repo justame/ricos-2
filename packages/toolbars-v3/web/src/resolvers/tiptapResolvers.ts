@@ -494,6 +494,14 @@ export const isNodeContainsLinkOrAnchorResolver = TiptapContentResolver.create(
   }
 );
 
+export const isNodeSelected = TiptapContentResolver.create(
+  RESOLVERS_IDS.IS_NODE_SELECTED,
+  (_, __, editor) => {
+    const node = (editor?.state?.selection as Record<string, any> | undefined)?.node;
+    return !!node;
+  }
+);
+
 export const getNodeInSelectionResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.GET_NODE_IN_SELECTION,
   (_, __, editor) => {

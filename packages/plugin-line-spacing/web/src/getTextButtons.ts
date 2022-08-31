@@ -17,6 +17,7 @@ export const getTextButtons = (): FormattingToolbarButtonConfig[] => {
       },
       attributes: {
         visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
+        disabled: RESOLVERS_IDS.IS_NODE_SELECTED,
       },
       modal: {
         id: FORMATTING_LINE_SPACING_MODAL_ID,

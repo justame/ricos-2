@@ -68,6 +68,7 @@ export const pluginTextAlignment: TiptapEditorPlugin = {
       attributes: {
         visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
         selectedAlignment: RESOLVERS_IDS.GET_ALIGNMENT_IN_SELECTION,
+        disabled: RESOLVERS_IDS.IS_NODE_SELECTED,
       },
       modal: {
         id: FORMATTING_ALIGNMENT_MODAL_ID,

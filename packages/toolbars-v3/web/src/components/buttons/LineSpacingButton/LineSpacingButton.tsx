@@ -13,6 +13,7 @@ const LineSpacingButton = ({ toolbarItem, context, dataHook }) => {
   return (
     <ToolbarButton
       ref={setReferenceElement}
+      disabled={toolbarItem.attributes.disabled}
       isMobile={isMobile}
       active={modalService.isModalOpen('formattingLineSpacingModal')}
       tooltip={tooltip}

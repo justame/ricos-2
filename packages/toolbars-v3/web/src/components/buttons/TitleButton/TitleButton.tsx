@@ -32,6 +32,7 @@ const TitleButton = ({ toolbarItem, context, dataHook }) => {
   return (
     <ToolbarButton
       isMobile={isMobile}
+      disabled={toolbarItem.attributes.disabled}
       active={isActive}
       tooltip={tooltip}
       onClick={onClick}

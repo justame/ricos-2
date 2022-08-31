@@ -11,7 +11,7 @@
   cursor: pointer;
   color: var(--ricos-settings-text-color, #000);
 
-  &:hover {
+  &:hover:not([disabled]):not(.active) {
     background-color: rgba(var(--ricos-settings-action-color-tuple, $fallbackColorTuple), 0.06);
   }
 
@@ -22,7 +22,7 @@
     @include svg-fill;
   }
 
-  &.disabled {
+  &:disabled {
     cursor: default;
     opacity: 0.4;
   }

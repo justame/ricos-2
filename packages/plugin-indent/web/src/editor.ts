@@ -47,6 +47,7 @@ export const pluginIndent: EditorPluginCreator<IndentPluginEditorConfig> = confi
         },
         attributes: {
           visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
+          disabled: RESOLVERS_IDS.IS_NODE_SELECTED,
         },
         command: (editorCommands: EditorCommands) => () => {
           editorCommands.insertDecoration(RICOS_INDENT_TYPE);
@@ -63,6 +64,7 @@ export const pluginIndent: EditorPluginCreator<IndentPluginEditorConfig> = confi
         },
         attributes: {
           visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
+          disabled: RESOLVERS_IDS.IS_NODE_SELECTED,
         },
         command: (editorCommands: EditorCommands) => () => {
           editorCommands.deleteDecoration(RICOS_INDENT_TYPE);

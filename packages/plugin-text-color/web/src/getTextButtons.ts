@@ -18,6 +18,7 @@ export const getTextColorTextButtons = (): FormattingToolbarButtonConfig[] => {
       attributes: {
         visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
         selectedTextColor: RESOLVERS_IDS.GET_TEXT_COLOR_IN_SELECTION,
+        disabled: RESOLVERS_IDS.IS_NODE_SELECTED,
       },
       commands: {
         setTextColor:
@@ -53,6 +54,7 @@ export const getTextHighlightTextButtons = (): FormattingToolbarButtonConfig[] =
       attributes: {
         visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
         selectedHighlightColor: RESOLVERS_IDS.GET_HIGHLIGHT_COLOR_IN_SELECTION,
+        disabled: RESOLVERS_IDS.IS_NODE_SELECTED,
       },
       commands: {
         setHighlightColor:

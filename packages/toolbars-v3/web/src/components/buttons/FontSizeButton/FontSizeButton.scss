@@ -18,6 +18,12 @@
     border: 1px solid rgba($fallbackColorTuple, 1);
     padding: 3px;
   }
+
+  &.disabled {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.4;
+  }
 }
 
 .fontSizeModalButton {

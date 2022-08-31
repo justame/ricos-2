@@ -36,6 +36,7 @@ export const getTextButtons = (
         isStylesMatch: RESOLVERS_IDS.IS_TEXT_STYLES_MATCH_DOCUMENT_STYLES,
         visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
         selectedHeading: RESOLVERS_IDS.GET_HEADING_IN_SELECTION,
+        disabled: RESOLVERS_IDS.IS_NODE_SELECTED,
       },
       modal: {
         id: HEADINGS_MODAL_ID,
@@ -53,6 +54,7 @@ export const getTextButtons = (
       attributes: {
         visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
         selectedHeading: RESOLVERS_IDS.GET_HEADING_IN_SELECTION,
+        disabled: RESOLVERS_IDS.IS_NODE_SELECTED,
       },
       command:
         editorCommands =>

@@ -32,6 +32,7 @@ export const pluginItalic: TiptapEditorPlugin = {
       attributes: {
         visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
         active: RESOLVERS_IDS.IS_TEXT_CONTAINS_ITALIC,
+        disabled: RESOLVERS_IDS.IS_NODE_SELECTED,
       },
       command: (editorCommands: EditorCommands) => () => {
         editorCommands.toggleInlineStyle('italic');

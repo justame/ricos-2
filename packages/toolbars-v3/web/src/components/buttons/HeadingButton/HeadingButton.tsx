@@ -16,6 +16,7 @@ const HeadingButton = ({ toolbarItem, context, dataHook }) => {
   return (
     <ToolbarButton
       ref={setReferenceElement}
+      disabled={toolbarItem.attributes.disabled}
       isMobile={isMobile}
       active={modalService.isModalOpen('formattingAlignmentModal')}
       tooltip={tooltip}

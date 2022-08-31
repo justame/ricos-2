@@ -14,6 +14,7 @@ const getColorButton =
     return (
       <ToolbarButton
         ref={setReferenceElement}
+        disabled={toolbarItem.attributes.disabled}
         isMobile={isMobile}
         tooltip={tooltip}
         onClick={() => toolbarItem.commands?.click({ referenceElement })}
