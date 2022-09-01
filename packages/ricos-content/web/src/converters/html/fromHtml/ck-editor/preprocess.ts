@@ -122,7 +122,7 @@ const cleanInvalidVideos: AstRule = [
 ];
 
 const wrapTextUnderLi: AstRule = [
-  and([hasTag('li'), or([hasChild(isText), hasChild(hasTag('a'))])]),
+  and([hasTag('li'), or([hasChild(isText), hasChild(oneOf(['a', 'u', 'em', 'strong']))])]),
   (node: Element) => ({
     ...node,
     childNodes: partitionBy<ContentNode>(

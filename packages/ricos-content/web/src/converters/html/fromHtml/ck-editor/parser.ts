@@ -31,6 +31,8 @@ import {
   lToList,
   pToParagraph,
   textToText,
+  backgroundStyleToTextHighlight,
+  colorStyleToTextColor,
 } from '../core/rules';
 import { aToCustomLink } from './aToCustomLink';
 import type { Rule } from '../core/models';
@@ -57,12 +59,14 @@ const traverseSpan: Rule = [
     not(hasStyleFor('font-weight')),
     not(hasStyleFor('font-style')),
     not(hasStyleFor('text-decoration')),
+    not(hasStyleFor('color')),
+    not(hasStyleFor('background-color')),
   ]),
   identityRule[1],
 ];
 
 const fontStyleToItalic: Rule = [
-  and([hasTag('span'), hasStyleRule({ 'font-style': 'italic' })]),
+  or([hasTag('em'), and([hasTag('span'), hasStyleRule({ 'font-style': 'italic' })])]),
   ({ addDecoration }) =>
     (el: Element) =>
       addDecoration(Decoration_Type.ITALIC, {}, el),
@@ -76,7 +80,7 @@ const fontWeightToBold: Rule = [
 ];
 
 const textDecorationToUnderline: Rule = [
-  and([hasTag('span'), hasStyleRule({ 'text-decoration': 'underline' })]),
+  or([hasTag('u'), and([hasTag('span'), hasStyleRule({ 'text-decoration': 'underline' })])]),
   ({ addDecoration }) =>
     (el: Element) =>
       addDecoration(Decoration_Type.UNDERLINE, {}, el),
@@ -235,6 +239,8 @@ export default flow(
     aToCustomLink,
     fontWeightToBold,
     fontStyleToItalic,
+    colorStyleToTextColor,
+    backgroundStyleToTextHighlight,
     textDecorationToUnderline,
     iframeToAlignedYoutubeVideo,
     iframeToAlignedVimeoVideo,
