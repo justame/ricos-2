@@ -4,6 +4,7 @@
   .ProseMirror {
     // TODO: reset all editor-related styles
     text-align: initial;
+    height: inherit;
 
     &:focus-visible {
       outline: none;
@@ -28,10 +29,6 @@
 
 .ricosTiptapEditor {
   height: 100%;
-
-  .ProseMirror {
-    height: 100%;
-  }
 
   @include phone {
     padding: 18px;
