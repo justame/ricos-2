@@ -16,6 +16,11 @@
     Changes that have landed in master but are not yet released.
     Click to see more.
   </summary>
+  
+  ## :bug: Bug Fix
+  
+  - `ricos-content`
+    -[#4540](https://github.com/wix/ricos/pull/4540) CKEditor/parser adds color rules, supports `u`, `em`
 
 </details>
 
