@@ -19,6 +19,13 @@
 
 </details>
 
+## 8.72.48 (Sep 1, 2022)
+
+## :bug: Bug Fix
+
+- `ricos-editor`
+  - [#4545](https://github.com/wix/ricos/pull/4545) fix prosemirror height
+
 ## 8.72.47 (Sep 1, 2022)
 
 ## :bug: Bug Fix
