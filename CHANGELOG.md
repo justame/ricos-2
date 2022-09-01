@@ -17,12 +17,18 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.72.47 (Sep 1, 2022)
+
 ## :bug: Bug Fix
 
 - `divider`
   - [#4539](https://github.com/wix/ricos/pull/4539) fix DoubleLine icon color and height
-
-</details>
+- `text-color`
+  - [#4543](https://github.com/wix/ricos/pull/4543) text/highlight color current color
+- `line-spacing`
+  - [#4544](https://github.com/wix/ricos/pull/4544) line spacing indicator
 
 ## 8.72.46 (Sep 1, 2022)
 
