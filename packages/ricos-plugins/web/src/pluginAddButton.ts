@@ -212,7 +212,7 @@ export class RicosPluginAddButton implements PluginAddButton {
       tooltip: t(this.button.tooltip),
       toolbars: this.button.toolbars,
       getIcon: () => this.button.icon,
-      getLabel: () => this.button.label || '',
+      getLabel: () => t(this.button.label || ''),
       onClick: e => {
         this.services.toolbars.external.publishButtonClick(this.button.id);
         this.services.pluginsEvents.publishPluginAdd({
