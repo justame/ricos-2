@@ -19,6 +19,13 @@
 
 </details>
 
+## 8.72.49 (Sep 1, 2022)
+
+## :bug: Bug Fix
+
+- `ricos-plugins`
+  - [#4546](https://github.com/wix/ricos/pull/4546) external plugins label translation
+
 ## 8.72.48 (Sep 1, 2022)
 
 ## :bug: Bug Fix
