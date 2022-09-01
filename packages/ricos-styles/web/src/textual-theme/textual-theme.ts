@@ -35,4 +35,8 @@ export default class RicosTextualTheme implements TextualTheme {
   toStyleTag() {
     return themeStrategy({ ricosTheme: this.theme }).html;
   }
+
+  getColors() {
+    return themeStrategy({ ricosTheme: this.theme }).themeData.colors;
+  }
 }

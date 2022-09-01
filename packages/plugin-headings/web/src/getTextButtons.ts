@@ -41,7 +41,6 @@ export const getTextButtons = (
       modal: {
         id: HEADINGS_MODAL_ID,
         Component: HeadingPanelComponent(isCustomHeadings ? 230 : 143),
-        layout: 'toolbar',
       },
     },
     {

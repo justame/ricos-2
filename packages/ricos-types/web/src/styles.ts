@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react';
-import type { ParagraphNode, HeadingNode } from 'ricos-content';
+import type { RichTextNode } from 'ricos-content';
 import type {
   Decoration_Type,
   Decoration,
@@ -28,30 +28,30 @@ export interface AmbientStyles {
    * Extracts given decoration settings for specific node type from the current Document Style and Theme conjunction
    *
    *
-   * @param {TextNodeType} type
+   * @param {RichTextNode} type
    * @param {Decoration_Type} decoration type
    * @returns  {Decoration}
    * @memberof AmbientStyles
    */
-  getDecoration(type: ParagraphNode | HeadingNode, decoration: Decoration_Type): Decoration;
+  getDecoration(type: RichTextNode, decoration: Decoration_Type): Decoration;
   /**
    * Extracts given text style (line height) settings for specific node type from the current Document Style and Theme conjunction
    *
    *
-   * @param {TextNodeType} type
+   * @param {RichTextNode} type
    * @returns  {Omit<TextStyle, 'textAlignment'>}
    * @memberof AmbientStyles
    */
-  getTextStyle(type: ParagraphNode | HeadingNode): Omit<TextStyle, 'textAlignment'>;
+  getTextStyle(type: RichTextNode): Omit<TextStyle, 'textAlignment'>;
   /**
    * Extracts given node style (margins) settings for specific node type from the current Document Style and Theme conjunction
    *
    *
-   * @param {TextNodeType} type
+   * @param {RichTextNode} type
    * @returns  {NodeStyle}
    * @memberof AmbientStyles
    */
-  getNodeStyle(type: ParagraphNode | HeadingNode): NodeStyle;
+  getNodeStyle(type: RichTextNode): NodeStyle;
   /**
    * Sets new theme
    *

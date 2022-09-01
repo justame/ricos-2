@@ -428,7 +428,8 @@ export const getTextColorInSelectionResolver = TiptapContentResolver.create(
         colorMark?.attrs.foreground ||
         textColorInDocumentStyle ||
         colorInStoredMark ||
-        colorInSelection
+        colorInSelection ||
+        styles.getTheme().getColors()?.textColor
       );
     }
     return false;
@@ -475,7 +476,8 @@ export const getHighlightColorInSelectionResolver = TiptapContentResolver.create
         colorMark?.attrs.background ||
         highlightColorInDocumentStyle ||
         colorInStoredMark ||
-        colorInSelection
+        colorInSelection ||
+        styles.getTheme().getColors()?.bgColor
       );
     }
     return false;

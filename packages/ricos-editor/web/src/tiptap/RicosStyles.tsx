@@ -1,10 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import type { FC } from 'react';
 import type { RicosTheme } from 'ricos-common';
 import type { DocumentStyle } from 'ricos-schema';
 import { StylesContext } from 'ricos-context';
 import { THEME_DEFAULTS } from './theme-defaults';
-import { merge } from 'lodash';
+import { merge, isEqual } from 'lodash';
+
+function usePrevious(value) {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+}
 
 const useForceUpdate = () => {
   const [_, setValue] = useState(0);
@@ -17,6 +25,8 @@ const RicosStylesRenderer: FC<{
   isMobile: boolean;
 }> = props => {
   const styles = useContext(StylesContext);
+  const prevTheme = usePrevious(props.theme);
+  const prevDocumentStyle = usePrevious(props.documentStyle);
   const forceUpdate = useForceUpdate();
 
   let themeWithDefaults;
@@ -38,6 +48,17 @@ const RicosStylesRenderer: FC<{
       themeSubscription.cancel();
     };
   }, []);
+
+  useEffect(() => {
+    if (prevTheme && !isEqual(prevTheme, props.theme)) {
+      styles.setTheme(themeWithDefaults);
+      console.log('theme update', themeWithDefaults); // eslint-disable-line no-console
+    }
+    if (prevDocumentStyle && !isEqual(prevDocumentStyle, props.documentStyle)) {
+      styles.setDocumentStyle(props.documentStyle);
+      console.log('doc style update', props.documentStyle); // eslint-disable-line no-console
+    }
+  });
 
   return <>{styles.toStyleTags().map((tag, i) => React.cloneElement(tag, { key: i }))}</>;
 };

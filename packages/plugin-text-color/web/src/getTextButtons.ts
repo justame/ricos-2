@@ -1,4 +1,4 @@
-import type { FormattingToolbarButtonConfig } from 'ricos-types';
+import type { EditorCommands, FormattingToolbarButtonConfig } from 'ricos-types';
 import { decorateComponentWithProps } from 'wix-rich-content-editor-common';
 import { RESOLVERS_IDS } from 'wix-rich-content-toolbars-v3/libs/resolvers-ids';
 import TextColorIcon from './icons/TextColorIcon';
@@ -13,7 +13,10 @@ export const getTextColorTextButtons = (): FormattingToolbarButtonConfig[] => {
       presentation: {
         dataHook: 'TextColorButton',
         tooltip: 'TextColorButton_Tooltip',
-        icon: TextColorIcon,
+        getIcon(editorCommands: EditorCommands) {
+          const color = editorCommands.getColor('ricos-text-color');
+          return () => TextColorIcon({ color });
+        },
       },
       attributes: {
         visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
@@ -35,7 +38,6 @@ export const getTextColorTextButtons = (): FormattingToolbarButtonConfig[] => {
       modal: {
         id: 'TEXT_COLOR_PICKER',
         Component: decorateComponentWithProps(TextColorController, { type: 'ricos-text-color' }),
-        layout: 'toolbar',
       },
     },
   ];
@@ -49,7 +51,10 @@ export const getTextHighlightTextButtons = (): FormattingToolbarButtonConfig[] =
       presentation: {
         dataHook: 'TextHighlightButton',
         tooltip: 'TextHighlightButton_Tooltip',
-        icon: TextHighlightIcon,
+        getIcon(editorCommands: EditorCommands) {
+          const color = editorCommands.getColor('ricos-text-highlight');
+          return () => TextHighlightIcon({ color });
+        },
       },
       attributes: {
         visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
@@ -73,7 +78,6 @@ export const getTextHighlightTextButtons = (): FormattingToolbarButtonConfig[] =
         Component: decorateComponentWithProps(TextColorController, {
           type: 'ricos-text-highlight',
         }),
-        layout: 'toolbar',
       },
     },
   ];

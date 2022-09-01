@@ -4,7 +4,7 @@ import type {
   DocumentStyle as RichContentDocumentStyle,
   TextNodeStyle,
 } from 'ricos-schema';
-import type { AmbientStyles } from 'ricos-types';
+import type { AmbientStyles, PaletteColors } from 'ricos-types';
 import type { TextDecoration } from './decoration';
 
 export type TextNodeType = keyof Required<RichContentDocumentStyle>;
@@ -32,6 +32,13 @@ export interface TextualTheme {
    * @memberof TextualTheme
    */
   toStyleTag(): ReactElement;
+  /**
+   * Returns palette colors for the current theme
+   *
+   * @returns  {PaletteColors}
+   * @memberof TextualTheme
+   */
+  getColors(): PaletteColors | undefined;
 }
 
 /**

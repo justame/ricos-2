@@ -3,7 +3,7 @@ import type { Editor, JSONContent } from '@tiptap/react';
 import { capitalize } from 'lodash';
 import type { Fragment, Node as ProseMirrorNode } from 'prosemirror-model';
 import type { RicosEditorProps } from 'ricos-common';
-import type { ParagraphNode, HeadingNode } from 'ricos-content';
+import type { RichTextNode } from 'ricos-content';
 import {
   RICOS_LINE_SPACING_TYPE,
   BLOCKQUOTE,
@@ -77,42 +77,6 @@ export class RichContentAdapter implements TiptapAdapter {
       };
     };
     this.services = services;
-  }
-
-  private getSelectedColors(type: 'foreground' | 'background') {
-    const {
-      state: {
-        doc,
-        selection: { from, to },
-      },
-    } = this.tiptapEditor;
-
-    const selectedColors: string[] = [];
-
-    doc.nodesBetween(from, to, (node, pos) => {
-      if (node.type.name === 'text') {
-        const color = node.marks.find(mark => mark.type.name === Decoration_Type.COLOR)?.attrs[
-          type
-        ];
-        if (color) {
-          selectedColors.push(color);
-        } else {
-          const parent = doc.resolve(pos).parent;
-          if (parent.type.name === Node_Type.PARAGRAPH || parent.type.name === Node_Type.HEADING) {
-            const ricosNode = fromTiptapNode({ ...parent.toJSON(), type: parent?.type?.name });
-            const decoration = this.services.styles.getDecoration(
-              ricosNode as ParagraphNode | HeadingNode,
-              Decoration_Type.COLOR
-            );
-            const colorInStyles = decoration.colorData?.[type];
-            if (colorInStyles) {
-              selectedColors.push(colorInStyles);
-            }
-          }
-        }
-      }
-    });
-    return selectedColors.every(color => color === selectedColors[0]) ? selectedColors[0] : '';
   }
 
   isContentChanged = (): boolean => !this.initialContent.eq(this.tiptapEditor.state.doc.content);
@@ -220,8 +184,15 @@ export class RichContentAdapter implements TiptapAdapter {
         return this.tiptapEditor.commands.updateNodeAttrsById(blockKey, flatComponentState(data));
       },
       getColor: (colorType: ColorType) =>
-        this.getSelectedColors(colorType === 'ricos-text-color' ? 'foreground' : 'background'),
-
+        this.services.content.resolve(
+          resolversById[
+            RESOLVERS_IDS[
+              colorType === 'ricos-text-color'
+                ? 'GET_TEXT_COLOR_IN_SELECTION'
+                : 'GET_HIGHLIGHT_COLOR_IN_SELECTION'
+            ]
+          ]
+        ),
       getSelection: () => {
         const {
           state: {
@@ -290,19 +261,14 @@ export class RichContentAdapter implements TiptapAdapter {
               selectedFontSizes.push(`${fontSizeMark?.attrs.value}`);
             } else {
               const parent = doc.resolve(pos).parent;
-              if (
-                parent.type.name === Node_Type.PARAGRAPH ||
-                parent.type.name === Node_Type.HEADING
-              ) {
-                const ricosNode = fromTiptapNode({ ...parent.toJSON(), type: parent?.type?.name });
-                const decoration = this.services.styles.getDecoration(
-                  ricosNode as ParagraphNode | HeadingNode,
-                  Decoration_Type.FONT_SIZE
-                );
-                if (decoration.fontSizeData?.value) {
-                  const fontSizeInDocumentStyle = decoration.fontSizeData?.value;
-                  selectedFontSizes.push(`${fontSizeInDocumentStyle}`);
-                }
+              const ricosNode = fromTiptapNode({ ...parent.toJSON(), type: parent?.type?.name });
+              const decoration = this.services.styles.getDecoration(
+                ricosNode as RichTextNode,
+                Decoration_Type.FONT_SIZE
+              );
+              if (decoration.fontSizeData?.value) {
+                const fontSizeInDocumentStyle = decoration.fontSizeData?.value;
+                selectedFontSizes.push(`${fontSizeInDocumentStyle}`);
               }
             }
           }
