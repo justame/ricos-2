@@ -17,12 +17,14 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.72.46 (Sep 1, 2022)
+
 ## :bug: Bug Fix
 
 - `tiptap-editor`
   - [#4522](https://github.com/wix/ricos/pull/4522) editor missing padding in mobile + remove image sizing handles on mobile
-
-</details>
 
 ## 8.72.45 (Sep 1, 2022)
 
