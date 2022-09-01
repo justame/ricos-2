@@ -19,6 +19,13 @@
 
 </details>
 
+## 8.72.50 (Sep 2, 2022)
+
+## :bug: Bug Fix
+
+- `ricos-plugins`
+  - [#4547](https://github.com/wix/ricos/pull/4547) external buttons names
+
 ## 8.72.49 (Sep 1, 2022)
 
 ## :bug: Bug Fix
