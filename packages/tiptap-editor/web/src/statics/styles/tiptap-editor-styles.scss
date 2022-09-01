@@ -32,4 +32,8 @@
   .ProseMirror {
     height: 100%;
   }
+
+  @include phone {
+    padding: 18px;
+  }
 }

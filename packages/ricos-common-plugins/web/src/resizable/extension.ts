@@ -1,4 +1,10 @@
-import type { ExtensionProps, RicosExtension, RicosExtensionConfig } from 'ricos-types';
+import type {
+  RicosServices,
+  ExtensionProps,
+  RicosExtension,
+  RicosExtensionConfig,
+} from 'ricos-types';
+import { Node_Type } from 'ricos-schema';
 import Resizer from './resizer';
 
 export const resizable: RicosExtension = {
@@ -8,9 +14,12 @@ export const resizable: RicosExtension = {
   reconfigure(
     config: RicosExtensionConfig,
     extensions: RicosExtension[],
-    _ricosProps: ExtensionProps
+    _ricosProps: ExtensionProps,
+    _settings: Record<string, unknown>,
+    services: RicosServices
   ) {
     const types = extensions
+      .filter(extension => !(services.context.isMobile && extension.name === Node_Type.IMAGE))
       .filter(extension => extension.groups.includes('resizable'))
       .map(({ name }) => name);
 

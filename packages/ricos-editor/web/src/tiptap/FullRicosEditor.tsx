@@ -195,7 +195,8 @@ export class FullRicosEditor extends React.Component<Props, State> {
     const languageDir = getLangDir(locale);
 
     return (
-      <div data-hook="fullRicosEditor" className={s.fullRicosEditor}>
+      //dir="" is for mobile editor's padding (css selector) -- do not remove/modify it
+      <div dir="" data-hook="fullRicosEditor" className={s.fullRicosEditor}>
         <ZIndexContextProvider zIndexService={zIndexService}>
           <StylesContextProvider styles={styles}>
             <>
