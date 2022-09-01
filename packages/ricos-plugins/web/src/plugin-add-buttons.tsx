@@ -109,7 +109,7 @@ export class RicosPluginAddButtons implements PluginAddButtons {
       const buttonConfig = b.toExternalToolbarButtonConfig(editorCommands);
       return {
         ...acc,
-        [buttonConfig.getLabel?.() || '']: buttonConfig,
+        [buttonConfig.name || '']: buttonConfig,
       };
     }, {});
   }

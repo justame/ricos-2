@@ -134,7 +134,8 @@ export class PluginTextButton implements FormattingToolbarButton {
 
   toExternalToolbarButtonConfig(editorCommands: EditorCommands): ToolbarButtonProps {
     const attributes = this.toResolvedAttributes();
-    const { modals, content, context } = this.services;
+    const { modals, content, context, t } = this.services;
+    const name = fromCamelCase[this.button.id] ?? this.button.id;
 
     return {
       type: 'button',
@@ -143,9 +144,9 @@ export class PluginTextButton implements FormattingToolbarButton {
       getIcon: () =>
         this.button.presentation?.icon ||
         this.button.presentation?.getIcon(editorCommands, this.services.t),
-      getLabel: () => this.button.id,
+      getLabel: () => t(name),
       onClick: e => {
-        this.services.toolbars.external.publishButtonClick(this.button.id);
+        this.services.toolbars.external.publishButtonClick(name);
         return this.button.modal
           ? modals.isModalOpen(this.button.modal.id)
             ? modals.closeModal(this.button.modal.id)
@@ -164,7 +165,7 @@ export class PluginTextButton implements FormattingToolbarButton {
       isActive: () => !!attributes.active && !!content.resolve(attributes.active),
       isDisabled: () => !!attributes.disabled && !!content.resolve(attributes.disabled),
       dataHook: this.button.presentation?.dataHook,
-      name: fromCamelCase[this.button.id] ?? this.button.id,
+      name,
     };
   }
 }
