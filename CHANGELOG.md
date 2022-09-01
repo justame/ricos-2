@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `divider`
+  - [#4539](https://github.com/wix/ricos/pull/4539) fix DoubleLine icon color and height
+
 </details>
 
 ## 8.72.46 (Sep 1, 2022)
