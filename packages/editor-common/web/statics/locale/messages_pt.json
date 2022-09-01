@@ -446,7 +446,7 @@
   "UploadFile_Error_WMP_General": "Não foi possível fazer upload do arquivo. Verifique sua conexão com a Internet e tente novamente.",
   "EmbedURL_Placeholder": "Cole um URL",
   "Poll_PollSettings_Tab_Design_Section_Background_Gradient_Pick": "Escolha um estilo de gradiente",
-  "Embed_Vertical_Events_EmptyState_NoItems_Description": "Não há eventos programados no momento.",
+  "Embed_Vertical_Events_EmptyState_NoItems_Description": "Não há eventos agendados no momento.",
   "AlignTextLeftButton_Tooltip": "Alinhar para Esquerda",
   "MapSettings_MapOption_Show_Zoom_Label": "Mostrar zoom",
   "MapPluginButton_Settings_Tooltip": "Configurações do Mapa",
