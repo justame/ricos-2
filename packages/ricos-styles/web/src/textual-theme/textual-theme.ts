@@ -37,6 +37,6 @@ export default class RicosTextualTheme implements TextualTheme {
   }
 
   getColors() {
-    return themeStrategy({ ricosTheme: this.theme }).themeData.colors;
+    return themeStrategy({ ricosTheme: this.theme }).themeData.colors || {};
   }
 }

@@ -2,6 +2,7 @@ import type { Decoration_Type, Decoration, TextStyle } from 'ricos-schema';
 import type { RicosStyles } from 'ricos-styles';
 import { isEmpty, camelCase } from 'lodash';
 import type { IStylesQuery, ITreeNodeQuery } from 'ricos-types';
+import type { RichTextNode } from 'ricos-content';
 
 export class StylesQuery implements IStylesQuery {
   // eslint-disable-next-line no-useless-constructor
@@ -57,16 +58,14 @@ export class StylesQuery implements IStylesQuery {
     }
 
     const dataProperty = `${camelCase(ricosNode.type)}Data`;
-    const textStyleInline = ricosNode?.[dataProperty]?.textStyle;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const textStyle = this.styles.getTextStyle(ricosNode as any);
-    return textStyleInline || textStyle;
+    const textStyleInline: Partial<TextStyle> = ricosNode?.[dataProperty]?.textStyle;
+    const textStyle: Partial<TextStyle> = this.styles.getTextStyle(ricosNode as RichTextNode);
+    return { ...textStyle, ...textStyleInline };
   }
 
   /**
-   * "If the node is a text node, return the text style property of the closest text block parent."
+   * "return the text style property of the closest text block parent."
    *
-   * The function is a bit more complicated than that, but that's the gist of it
    * @param {ITreeNodeQuery} node - ITreeNodeQuery - The node you want to get the style from.
    * @param {string} textStylePropery - The property of the text style you want to get.
    * @returns The computed text style of the node.
@@ -75,9 +74,9 @@ export class StylesQuery implements IStylesQuery {
     node: ITreeNodeQuery,
     textStylePropery: string
   ): Partial<TextStyle> | undefined {
-    const parent = node.closest(node => node.isTextBlock());
-    if (parent) {
-      return this.getTextBlockStyle(parent)?.[textStylePropery];
+    const textBlockNode = node.closest(node => node.isTextBlock());
+    if (textBlockNode) {
+      return this.getTextBlockStyle(textBlockNode)?.[textStylePropery];
     }
   }
 

@@ -38,7 +38,7 @@ export interface TextualTheme {
    * @returns  {PaletteColors}
    * @memberof TextualTheme
    */
-  getColors(): PaletteColors | undefined;
+  getColors(): PaletteColors;
 }
 
 /**

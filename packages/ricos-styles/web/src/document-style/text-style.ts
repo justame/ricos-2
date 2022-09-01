@@ -1,12 +1,13 @@
 import type { TextStyle as TextStyleRichContent } from 'ricos-schema';
 import type { CustomTextualStyle } from 'ricos-types';
 import type { TextStyle } from '../models/text-style';
+import { pickBy } from 'lodash';
 
 export class RicosTextStyle implements TextStyle {
   textStyle: Omit<TextStyleRichContent, 'textAlignment'>;
 
   private constructor(textStyle: Omit<TextStyleRichContent, 'textAlignment'>) {
-    this.textStyle = textStyle;
+    this.textStyle = pickBy(textStyle);
   }
 
   static of(textStyle: Omit<TextStyleRichContent, 'textAlignment'>): RicosTextStyle {

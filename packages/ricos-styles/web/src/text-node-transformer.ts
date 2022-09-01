@@ -1,4 +1,4 @@
-import type { TextNodeContainer } from './styles';
+import type { RichTextNode } from 'ricos-content';
 import type { Decoration, DocumentStyle, NodeStyle, TextStyle } from 'ricos-schema';
 import { Decorations } from './decorations';
 import { Node_Type } from 'ricos-schema';
@@ -24,13 +24,13 @@ const nodeTypeToNodeDataKey: Record<string, string> = {
   [Node_Type.CODE_BLOCK]: 'codeBlockData',
 };
 
-const getTextNodes = (node: TextNodeContainer) =>
+const getTextNodes = (node: RichTextNode) =>
   node.type === Node_Type.BLOCKQUOTE ? node.nodes[0].nodes : node.nodes;
 
 export class TextNodeTransformer {
-  private node: TextNodeContainer;
+  private node: RichTextNode;
 
-  constructor(node: TextNodeContainer) {
+  constructor(node: RichTextNode) {
     this.node = node;
   }
 

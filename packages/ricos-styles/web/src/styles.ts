@@ -16,10 +16,8 @@ import DocumentStyle from './document-style/document-style';
 import type { Styles } from './models/styles';
 import TextualTheme from './textual-theme/textual-theme';
 import { TextNodeTransformer } from './text-node-transformer';
-import type { ParagraphNode, HeadingNode, BlockquoteNode, CodeBlockNode } from 'ricos-content';
+import type { RichTextNode } from 'ricos-content';
 import { parseDocStyle } from 'ricos-content/libs/converters';
-
-export type TextNodeContainer = ParagraphNode | HeadingNode | BlockquoteNode | CodeBlockNode;
 
 type Topics = [
   'ricos.styles.functionality.themeUpdate',
@@ -58,7 +56,7 @@ export class RicosStyles implements Styles, PolicySubscriber<Topics>, EventSourc
       ?.byTopic('ricos.styles.functionality.documentStyleUpdate')
       .subscribe(callback);
 
-  getDecoration(node: TextNodeContainer, decorationType: Decoration_Type) {
+  getDecoration(node: RichTextNode, decorationType: Decoration_Type) {
     if (
       ![
         Node_Type.PARAGRAPH,
@@ -77,14 +75,14 @@ export class RicosStyles implements Styles, PolicySubscriber<Topics>, EventSourc
     return themeDecoration.overrideWith(documentStyleDecoration).getDecoration();
   }
 
-  getTextStyle(node: TextNodeContainer) {
+  getTextStyle(node: RichTextNode) {
     const nodeType = new TextNodeTransformer(node).getDocumentStyleKey();
     const documentStyleTextStyle = this.documentStyle.getTextStyle(nodeType);
     const themeTextStyle = this.theme.getTextStyle(nodeType);
     return themeTextStyle.overrideWith(documentStyleTextStyle.getTextStyle()).getTextStyle();
   }
 
-  getNodeStyle(node: TextNodeContainer) {
+  getNodeStyle(node: RichTextNode) {
     const nodeType = new TextNodeTransformer(node).getDocumentStyleKey();
     const documentStyleNodeStyle = this.documentStyle.getNodeStyle(nodeType);
     const themeTextStyle = this.theme.getNodeStyle(nodeType);
