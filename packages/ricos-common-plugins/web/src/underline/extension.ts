@@ -1,7 +1,6 @@
-import type { MarkConfig } from '@tiptap/core';
-import { isMarkActive, mergeAttributes } from '@tiptap/core';
+import { mergeAttributes } from '@tiptap/core';
 import { Decoration_Type } from 'ricos-schema';
-import type { DOMOutputSpec, RicosExtension, RicosServices } from 'ricos-types';
+import type { DOMOutputSpec, RicosExtension } from 'ricos-types';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -26,23 +25,6 @@ export const underline: RicosExtension = {
   type: 'mark' as const,
   groups: [],
   name: Decoration_Type.UNDERLINE,
-  reconfigure(config: MarkConfig, _extensions, _props, _settings, services: RicosServices) {
-    return {
-      ...config,
-      addOptions() {
-        return {
-          publishPluginToggleEvent(toggleOn: boolean) {
-            return toggleOn
-              ? services.pluginsEvents.publishPluginAddSuccess({
-                  pluginId: Decoration_Type.UNDERLINE,
-                  params: {},
-                })
-              : services.pluginsEvents.publishPluginDelete({ pluginId: Decoration_Type.UNDERLINE });
-          },
-        };
-      },
-    };
-  },
   createExtensionConfig() {
     return {
       name: this.name,
@@ -82,10 +64,7 @@ export const underline: RicosExtension = {
             },
           toggleUnderline:
             () =>
-            ({ state, commands }) => {
-              const isActive = isMarkActive(state, this.name);
-              this.options.publishPluginToggleEvent(!isActive);
-
+            ({ commands }) => {
               return commands.toggleMark(this.name);
             },
           unsetUnderline:

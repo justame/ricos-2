@@ -1,16 +1,14 @@
+import { NodeSelection } from 'prosemirror-state';
 import React from 'react';
+import { Decoration_Type } from 'ricos-schema';
 import colorDataDefaults from 'ricos-schema/dist/statics/color.defaults.json';
 import type {
   DOMOutputSpec,
   ExtensionProps,
-  MarkConfig,
   RicosExtension,
   RicosExtensionConfig,
-  RicosServices,
 } from 'ricos-types';
-import { Decoration_Type } from 'ricos-schema';
 import { BlockSpoilerComponent } from '..';
-import { NodeSelection } from 'prosemirror-state';
 
 const SPOILER_STYLE = 'blur(0.25em)';
 
@@ -117,21 +115,6 @@ export const tiptapExtensions: RicosExtension[] = [
     type: 'mark' as const,
     groups: [],
     name: Decoration_Type.SPOILER,
-    reconfigure: (config: MarkConfig, _extensions, _props, _settings, services: RicosServices) => ({
-      ...config,
-      addOptions() {
-        return {
-          publishPluginToggleEvent(toggleOn: boolean) {
-            return toggleOn
-              ? services.pluginsEvents.publishPluginAddSuccess({
-                  pluginId: Decoration_Type.SPOILER,
-                  params: {},
-                })
-              : services.pluginsEvents.publishPluginDelete({ pluginId: Decoration_Type.SPOILER });
-          },
-        };
-      },
-    }),
     createExtensionConfig({ isMarkActive }) {
       return {
         name: this.name,
@@ -163,9 +146,7 @@ export const tiptapExtensions: RicosExtension[] = [
           return {
             toggleSpoiler:
               () =>
-              ({ state, commands }) => {
-                const isActive = isMarkActive(state, this.name);
-                this.options.publishPluginToggleEvent(!isActive);
+              ({ commands }) => {
                 return commands.toggleMark(this.name);
               },
           };

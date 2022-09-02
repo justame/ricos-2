@@ -1,8 +1,7 @@
-import type { MarkConfig } from '@tiptap/core';
 import { isMarkActive, markInputRule, markPasteRule, mergeAttributes } from '@tiptap/core';
 import type { Decoration } from 'ricos-schema';
 import { Decoration_Type } from 'ricos-schema';
-import type { DOMOutputSpec, RicosExtension, RicosServices } from 'ricos-types';
+import type { DOMOutputSpec, RicosExtension } from 'ricos-types';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -35,23 +34,6 @@ export const bold: RicosExtension = {
   type: 'mark' as const,
   groups: [],
   name: Decoration_Type.BOLD,
-  reconfigure(config: MarkConfig, _extensions, _props, _settings, services: RicosServices) {
-    return {
-      ...config,
-      addOptions() {
-        return {
-          publishPluginToggleEvent(toggleOn: boolean) {
-            return toggleOn
-              ? services.pluginsEvents.publishPluginAddSuccess({
-                  pluginId: Decoration_Type.BOLD,
-                  params: { fontWeightValue: FONT_WEIGHT_BOLD },
-                })
-              : services.pluginsEvents.publishPluginDelete({ pluginId: Decoration_Type.BOLD });
-          },
-        };
-      },
-    };
-  },
   createExtensionConfig() {
     return {
       name: this.name,
@@ -63,7 +45,7 @@ export const bold: RicosExtension = {
 
       addAttributes() {
         return {
-          fontWeightValue: { default: 700 },
+          fontWeightValue: { default: FONT_WEIGHT_BOLD },
         };
       },
 
@@ -107,14 +89,9 @@ export const bold: RicosExtension = {
               );
               const hasBoldWeightInStyle =
                 decoration && decoration.fontWeightValue === FONT_WEIGHT_BOLD;
-              const hasBoldWeightInMark = isMarkActive(state, this.name, { fontWeightValue: 700 });
-              const hasNormalWeightInMark = isMarkActive(state, this.name, {
-                fontWeightValue: 400,
+              const hasBoldWeightInMark = isMarkActive(state, this.name, {
+                fontWeightValue: FONT_WEIGHT_BOLD,
               });
-
-              this.options.publishPluginToggleEvent(
-                (!hasBoldWeightInMark && !hasBoldWeightInStyle) || hasNormalWeightInMark
-              );
 
               return commands.toggleMark(this.name, {
                 fontWeightValue:

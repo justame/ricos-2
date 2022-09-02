@@ -50,7 +50,7 @@ export const uniqueId: RicosExtension = {
   createExtensionConfig() {
     return {
       name: this.name,
-      priority: 1,
+      priority: 2, // should be before contentDiff
       addProseMirrorPlugins() {
         return [
           new Plugin({
@@ -77,8 +77,9 @@ export const uniqueId: RicosExtension = {
                     id,
                     marks,
                   });
+                  tr.setMeta('unique-id', true); // do not remove this meta, it's used in content-diff
 
-                  // this should run before ensureMarks becasuse it ressets the marks
+                  // this should run before ensureMarks becasuse it resets the marks
                   // also ignore tralingNode insertion
                   if (browser.android && !tr.getMeta('trailingNodeInsertion')) {
                     handleAndroidEnterBug(tr, pos);

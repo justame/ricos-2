@@ -11,17 +11,15 @@ import { RicosEvents } from 'ricos-events';
 import { RicosModalService } from 'ricos-modals';
 import { EditorPlugins, PluginsEvents } from 'ricos-plugins';
 import { EditorKeyboardShortcuts } from 'ricos-shortcuts';
-import { ZIndexService, RicosStyles } from 'ricos-styles';
+import { RicosStyles, ZIndexService } from 'ricos-styles';
 import type {
   DebugMode,
   EditorPlugin,
-  EventRegistrar,
   INotifier,
   IUpdateService,
   LegacyEditorPluginConfig,
   Orchestrator,
   RicosServices,
-  TopicDescriptor,
   TranslationFunction,
 } from 'ricos-types';
 import { getLangDir, isSSR } from 'wix-rich-content-common';
@@ -39,13 +37,9 @@ export class RicosOrchestrator implements Orchestrator {
 
   private readonly events: RicosEvents;
 
-  private readonly privateEvents: EventRegistrar;
-
   private readonly toolbars: RicosToolbars;
 
   private readonly pluginsEvents: PluginsEvents;
-
-  private readonly commandEvents: PluginsEvents;
 
   private readonly modals: RicosModalService;
 
@@ -89,12 +83,6 @@ export class RicosOrchestrator implements Orchestrator {
       (editorProps.debugMode?.includes('events') || editorProps.debugMode?.includes('all')) ?? false
     );
 
-    this.privateEvents = {
-      register: (topic: TopicDescriptor) =>
-        this.events.register(topic.replace(/^ricos\./, 'private.') as TopicDescriptor),
-      getAllTopics: () => this.events.getAllTopics(),
-    };
-
     this.styles = new RicosStyles();
 
     this.uploadService = new UploadService(new StreamReader(), this.updateService);
@@ -111,7 +99,6 @@ export class RicosOrchestrator implements Orchestrator {
     this.toolbars.getShortcuts().map(shortcut => this.shortcuts.register(shortcut));
 
     this.pluginsEvents = new PluginsEvents();
-    this.commandEvents = new PluginsEvents();
 
     const getEditorQuery = (): EditorQuery => {
       return this.editorQuery;
@@ -154,16 +141,13 @@ export class RicosOrchestrator implements Orchestrator {
         shortcuts: this.shortcuts,
         modals: this.modals,
         toolbars: this.toolbars,
-        // Note: editor gets a different instance of pluginEvents, so we control them separately
-        pluginsEvents: this.commandEvents,
+        pluginsEvents: this.pluginsEvents,
         context: this.context,
       },
       this.editorProps.debugMode?.includes('prosemirror') || editorProps.debugMode?.includes('all')
     );
 
     this.updateService.setEditorCommands(this.editor.getEditorCommands());
-
-    this.orchestrateEvents();
 
     this.editorQuery = new EditorQuery(this.editor.adapter.tiptapEditor, this.styles);
 
@@ -175,6 +159,9 @@ export class RicosOrchestrator implements Orchestrator {
       //@ts-ignore
       window.ricosOrchestrator = this;
     }
+
+    // NOTE: this should be the last line of constructor!
+    this.orchestrateEvents();
   }
 
   finalize() {
@@ -184,6 +171,7 @@ export class RicosOrchestrator implements Orchestrator {
     this.editor.finalizeUploadObserver();
   }
 
+  // NOTE: it is crucual to keep the event registration/subsciption order to ensure their correct workflow
   private orchestrateEvents() {
     registerEventSources(this.events, [
       this.shortcuts,
@@ -194,7 +182,6 @@ export class RicosOrchestrator implements Orchestrator {
       this.pluginsEvents,
       this.styles,
     ] as RicosEventSource[]);
-    registerEventSources(this.privateEvents, [this.commandEvents as unknown as RicosEventSource]);
     registerEventSubscribers(this.events, [
       this.modals as unknown as RicosEventSubscriber,
       this.editor as unknown as RicosEventSubscriber,

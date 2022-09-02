@@ -17,3 +17,4 @@ export { overlay } from './overlay';
 export { link } from './link/link';
 export { anchor } from './link/anchor';
 export { hardBreak } from './hard-break';
+export { contentDiff } from './content-diff';

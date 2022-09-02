@@ -17,6 +17,7 @@ import {
   anchor,
   dropcursor,
   hardBreak,
+  contentDiff,
 } from 'wix-tiptap-extensions';
 
 export const coreConfigs = [
@@ -38,4 +39,5 @@ export const coreConfigs = [
   anchor,
   dropcursor,
   hardBreak,
+  contentDiff,
 ];
