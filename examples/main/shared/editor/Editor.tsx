@@ -178,6 +178,7 @@ export default class Editor extends PureComponent<ExampleEditorProps> {
         <div className={classNames('editor', styles.editorContainer)}>
           <RicosEditor
             ref={ref => (this.editor = ref)}
+            // debugMode={['extensions']}
             onError={e => console.error(e)}
             onChange={onRicosEditorChange}
             content={contentState}

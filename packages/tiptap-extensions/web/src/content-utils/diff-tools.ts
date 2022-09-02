@@ -1,163 +1,92 @@
-import type { Mark, Node, Slice } from 'prosemirror-model';
-import type { Decoration_Type, Node_Type } from 'ricos-schema';
+import type { Fragment, Node } from 'prosemirror-model';
+import type { Transaction } from 'prosemirror-state';
+import type { TextStyle } from 'ricos-schema';
+import { TextStyle_TextAlignment } from 'ricos-schema';
+import type { ContentDiff } from './content-change';
+import { ContentChange } from './content-change';
+import { Range } from './range';
 
-type ContentDiffType = Node_Type | Decoration_Type | 'text';
+/*
+ * A content change can be thought as an old range replaced with a new range.
+ */
+export const getDiffRanges = (
+  baseline: Fragment,
+  changes: Fragment
+): { oldRange: Range; newRange: Range } => {
+  const from = baseline.findDiffStart(changes);
+  const to = baseline.findDiffEnd(changes);
 
-export type ContentDiff = {
-  change: 'insert' | 'delete' | 'replace';
-  type: ContentDiffType;
-  data?: Record<string, unknown>;
+  // console.debug('RAW RANGE', from, to); // eslint-disable-line no-console
+
+  // identical fragments
+  if (from === null || to === null) {
+    return { newRange: Range.empty, oldRange: Range.empty };
+  }
+
+  // 2 or more duplicate symbols typed bug?
+  if (from > to.a || from > to.b) {
+    return { newRange: new Range(from, to.a), oldRange: new Range(from, to.b) };
+  }
+
+  return { newRange: new Range(from, to.b), oldRange: new Range(from, to.a) };
 };
 
-/**
- * Represents a content change as replacement of slices.
- *
- * @export
- * @class ContentChange
+export const isIgnoredTransaction = (transaction: Transaction): boolean =>
+  ['unique-id', 'trailingNodeInsertion'].some(key => transaction.getMeta(key));
+
+/*
+ * Returns content slices from the old and new state, according to the old and new ranges.
  */
-export class ContentChange {
-  private oldSlice: SliceTraits;
+export const getContentChange = (
+  baseline: Node,
+  changes: Node,
+  { oldRange, newRange }: { oldRange: Range; newRange: Range }
+): ContentChange => {
+  const oldSlice = baseline.slice(oldRange.from, oldRange.to);
+  const newSlice = changes.slice(newRange.from, newRange.to);
 
-  private newSlice: SliceTraits;
+  return new ContentChange(oldSlice, newSlice);
+};
 
-  constructor(oldSlice: Slice, newSlice: Slice) {
-    this.oldSlice = new SliceTraits(oldSlice);
-    this.newSlice = new SliceTraits(newSlice);
-  }
+export const isParagraphReplacement = (paragraphChanges: ContentDiff[]) =>
+  paragraphChanges.length === 2 &&
+  paragraphChanges[0].change === 'delete' &&
+  paragraphChanges[1].change === 'insert' &&
+  paragraphChanges[0].data?.id === paragraphChanges[1].data?.id;
 
-  private isInsertion(): boolean {
-    return this.oldSlice.isEmpty() && !this.newSlice.isEmpty();
-  }
-
-  private isDeletion(): boolean {
-    return !this.oldSlice.isEmpty() && this.newSlice.isEmpty();
-  }
-
-  private isReplacement(): boolean {
-    return !this.isInsertion() && !this.isDeletion();
-  }
-
-  private isTextChange(): boolean {
-    return (
-      (this.isDeletion() && this.oldSlice.hasTextOnly()) ||
-      (this.isInsertion() && this.newSlice.hasTextOnly()) ||
-      (this.isReplacement() && this.oldSlice.hasTextOnly() && this.newSlice.hasTextOnly())
-    );
-  }
-
-  private isMarkChange(): boolean {
-    return this.isReplacement() && (this.oldSlice.hasMarks() || this.newSlice.hasMarks());
-  }
-
-  private getMarkDiffs(): ContentDiff[] {
-    const oldMarks = this.oldSlice.getMarks();
-    const newMarks = this.newSlice.getMarks();
-    const diffs: ContentDiff[] = [];
-    oldMarks.forEach(mark => {
-      if (!newMarks.has(mark)) {
-        diffs.push({ change: 'delete', type: mark.type.name as ContentDiffType });
+// TODO: makee this part of the ContentChange class
+export const reportTextStyleDiff = (
+  paragraphChanges: ContentDiff[],
+  onPluginAdded: (pluginId: string, params: Record<string, unknown>) => boolean,
+  onPluginDeleted: (pluginId: string) => boolean
+) => {
+  if (isParagraphReplacement(paragraphChanges)) {
+    if (
+      (paragraphChanges[0].data?.textStyle as TextStyle).textAlignment !==
+      (paragraphChanges[1].data?.textStyle as TextStyle).textAlignment
+    ) {
+      if (
+        (paragraphChanges[1].data?.textStyle as TextStyle).textAlignment !==
+        TextStyle_TextAlignment.AUTO
+      ) {
+        onPluginAdded('textAlignment', {
+          textAlignment: (paragraphChanges[1].data?.textStyle as TextStyle).textAlignment,
+        });
+      } else {
+        onPluginDeleted('textAlignment');
       }
-    });
-    newMarks.forEach((mark: Mark) => {
-      if (!oldMarks.has(mark)) {
-        diffs.push({ change: 'insert', type: mark.type.name as ContentDiffType, data: mark.attrs });
-      }
-    });
-    return diffs;
-  }
-
-  private getNodeDiffs(): ContentDiff[] {
-    const oldNodes = this.oldSlice.getNodes();
-    const newNodes = this.newSlice.getNodes();
-    const diffs: ContentDiff[] = [];
-    oldNodes.forEach((node: Node) => {
-      if (!newNodes.has(node)) {
-        diffs.push({ change: 'delete', type: node.type.name as ContentDiffType, data: node.attrs });
-      }
-    });
-    newNodes.forEach((node: Node) => {
-      if (!oldNodes.has(node)) {
-        diffs.push({ change: 'insert', type: node.type.name as ContentDiffType, data: node.attrs });
-      }
-    });
-    return diffs;
-  }
-
-  getDiff(): ContentDiff[] {
-    if (this.isTextChange()) {
-      return [
-        {
-          change: this.isReplacement() ? 'replace' : this.isInsertion() ? 'insert' : 'delete',
-          type: 'text',
-        },
-      ];
     }
-    if (this.isMarkChange()) {
-      return this.getMarkDiffs();
-    }
-
-    // TODO: implement node attribute change as well
-
-    return this.getNodeDiffs();
-  }
-
-  toJSON() {
-    return {
-      old: this.oldSlice.toJSON(),
-      new: this.newSlice.toJSON(),
-    };
-  }
-}
-
-/**
- * Wraps prosemirror/model Slice to provide additional traits
- *
- * @class SliceTraits
- */
-class SliceTraits {
-  constructor(public slice: Slice) {
-    this.slice = slice;
-  }
-
-  isEmpty(): boolean {
-    return !this.slice || this.slice.size === 0;
-  }
-
-  getMarks(): Set<Mark> {
-    return new Set(this.slice?.content.firstChild?.marks || []);
-  }
-
-  getNodes(): Set<Node> {
-    const nodes: Node[] = [];
-    this.slice?.content.descendants((node: Node) => {
-      if (!node.isText) {
-        nodes.push(node);
+    if (
+      (paragraphChanges[0].data?.textStyle as TextStyle).lineHeight !==
+      (paragraphChanges[1].data?.textStyle as TextStyle).lineHeight
+    ) {
+      if ((paragraphChanges[1].data?.textStyle as TextStyle).lineHeight) {
+        onPluginAdded('lineHeight', {
+          lineHeight: (paragraphChanges[1].data?.textStyle as TextStyle).lineHeight,
+        });
+      } else {
+        onPluginDeleted('lineHeight');
       }
-      // TODO: should return false for nested nodes?
-      return true;
-    });
-    return new Set(nodes);
+    }
   }
-
-  toJSON() {
-    return this.slice?.toJSON() || {};
-  }
-
-  hasTextOnly(): boolean {
-    return (
-      !!this.slice &&
-      this.slice.content.childCount === 1 &&
-      !!this.slice.content.firstChild?.isText &&
-      this.slice.content.firstChild?.marks.length === 0
-    );
-  }
-
-  hasMarks(): boolean {
-    return (
-      !!this.slice &&
-      this.slice.content.childCount === 1 &&
-      !!this.slice.content.firstChild?.isText &&
-      this.slice.content.firstChild?.marks.length > 0
-    );
-  }
-}
+};
