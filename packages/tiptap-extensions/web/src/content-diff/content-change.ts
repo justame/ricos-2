@@ -1,7 +1,7 @@
 import type { Slice, Mark, Node } from 'prosemirror-model';
 import type { Node_Type, Decoration_Type } from 'ricos-schema';
 
-type ContentDiffType = Node_Type | Decoration_Type | 'text';
+export type ContentDiffType = Node_Type | Decoration_Type | 'text';
 
 export type ContentDiff = {
   change: 'insert' | 'delete' | 'replace';

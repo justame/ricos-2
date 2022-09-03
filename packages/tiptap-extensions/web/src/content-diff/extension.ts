@@ -6,14 +6,16 @@ import type {
   RicosExtensionConfig,
   RicosServices,
 } from 'ricos-types';
-import { Node_Type } from 'ricos-types';
-import type { ContentChange } from './content-utils/content-change';
+import type { ContentChange } from './content-change';
+import type { LinkNodeData } from './diff-tools';
 import {
   getContentChange,
   getDiffRanges,
   isIgnoredTransaction,
+  reportGenericDiff,
+  reportLinkDiff,
   reportTextStyleDiff,
-} from './content-utils/diff-tools';
+} from './diff-tools';
 
 /*
  * used for diff analysis. Does not fiter anything.
@@ -22,7 +24,8 @@ const reportDiff =
   (
     log: (message: string, ...args: any[]) => void,
     onPluginAdded: (pluginId: string, params: Record<string, unknown>) => boolean,
-    onPluginDeleted: (pluginId: string) => boolean
+    onPluginDeleted: (pluginId: string) => boolean,
+    onLinkAdded: (linkData: LinkNodeData) => boolean
   ) =>
   (transaction: Transaction, state: EditorState): true => {
     // timeout to avoid performance issues -- this is acceptable for event publshing
@@ -55,18 +58,9 @@ const reportDiff =
       const diffs = contentChanges.getDiff();
       log('CONTENT DIFF', diffs);
 
-      diffs
-        .filter(diff => diff.type !== Node_Type.PARAGRAPH && diff.type !== 'text')
-        .forEach(({ type, change, data }) => {
-          if (change === 'insert') {
-            onPluginAdded(type, data || {});
-          } else if (change === 'delete') {
-            onPluginDeleted(type);
-          }
-        });
-
-      const paragraphChanges = diffs.filter(diff => diff.type === Node_Type.PARAGRAPH);
-      reportTextStyleDiff(paragraphChanges, onPluginAdded, onPluginDeleted);
+      reportGenericDiff(diffs, onPluginAdded, onPluginDeleted);
+      reportLinkDiff(diffs, onLinkAdded, onPluginDeleted);
+      reportTextStyleDiff(diffs, onPluginAdded, onPluginDeleted);
     }, 0);
 
     return true;
@@ -98,6 +92,9 @@ export const contentDiff: RicosExtension = {
           publishPluginDelete(pluginId: string, _params: Record<string, unknown>) {
             return services.pluginsEvents.publishPluginDelete({ pluginId });
           },
+          publishPluginLinkable(data: LinkNodeData) {
+            return services.pluginsEvents.publishPluginLinkable(data);
+          },
         };
       },
     };
@@ -113,7 +110,8 @@ export const contentDiff: RicosExtension = {
             filterTransaction: reportDiff(
               this.options.logger,
               this.options.publishPluginAddSuccess,
-              this.options.publishPluginDelete
+              this.options.publishPluginDelete,
+              this.options.publishPluginLinkable
             ),
           }),
         ];

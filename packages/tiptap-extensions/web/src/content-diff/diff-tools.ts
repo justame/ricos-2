@@ -1,10 +1,20 @@
 import type { Fragment, Node } from 'prosemirror-model';
 import type { Transaction } from 'prosemirror-state';
-import type { TextStyle } from 'ricos-schema';
-import { TextStyle_TextAlignment } from 'ricos-schema';
-import type { ContentDiff } from './content-change';
+import type { Link, TextStyle } from 'ricos-schema';
+import { Decoration_Type, Link_Target, Node_Type, TextStyle_TextAlignment } from 'ricos-schema';
+import type { ContentDiff, ContentDiffType } from './content-change';
 import { ContentChange } from './content-change';
 import { Range } from './range';
+
+export type LinkNodeData = {
+  pluginId: ContentDiffType;
+  link?: string;
+  newTab?: boolean;
+  rel?: string;
+  nofollow?: boolean;
+  anchor?: string;
+  nodeId: string;
+};
 
 /*
  * A content change can be thought as an old range replaced with a new range.
@@ -54,12 +64,28 @@ export const isParagraphReplacement = (paragraphChanges: ContentDiff[]) =>
   paragraphChanges[1].change === 'insert' &&
   paragraphChanges[0].data?.id === paragraphChanges[1].data?.id;
 
-// TODO: makee this part of the ContentChange class
+export const reportGenericDiff = (
+  diffs: ContentDiff[],
+  onPluginAdded: (pluginId: string, params: Record<string, unknown>) => boolean,
+  onPluginDeleted: (pluginId: string) => boolean
+) =>
+  diffs
+    .filter(diff => diff.type !== Node_Type.PARAGRAPH && diff.type !== 'text')
+    .filter(diff => diff.type !== Decoration_Type.LINK && diff.type !== Decoration_Type.ANCHOR)
+    .forEach(({ type, change, data }) => {
+      if (change === 'insert') {
+        onPluginAdded(type, data || {});
+      } else if (change === 'delete') {
+        onPluginDeleted(type);
+      }
+    });
+
 export const reportTextStyleDiff = (
-  paragraphChanges: ContentDiff[],
+  diffs: ContentDiff[],
   onPluginAdded: (pluginId: string, params: Record<string, unknown>) => boolean,
   onPluginDeleted: (pluginId: string) => boolean
 ) => {
+  const paragraphChanges = diffs.filter(diff => diff.type === Node_Type.PARAGRAPH);
   if (isParagraphReplacement(paragraphChanges)) {
     if (
       (paragraphChanges[0].data?.textStyle as TextStyle).textAlignment !==
@@ -90,3 +116,27 @@ export const reportTextStyleDiff = (
     }
   }
 };
+
+export const reportLinkDiff = (
+  diffs: ContentDiff[],
+  onLinkAdded: (data: LinkNodeData) => boolean,
+  onPluginDeleted: (pluginId: string) => boolean
+) =>
+  diffs
+    .filter(diff => diff.type === Decoration_Type.LINK || diff.type === Decoration_Type.ANCHOR)
+    .forEach(({ change, data, type }) => {
+      if (change === 'insert') {
+        const link = (data?.link || {}) as Link;
+        const linkData: LinkNodeData = {
+          anchor: data?.anchor as string | undefined,
+          link: link.url,
+          nofollow: link.rel?.nofollow,
+          newTab: link.target === Link_Target.BLANK,
+          pluginId: type,
+          nodeId: '',
+        };
+        onLinkAdded(linkData);
+      } else if (change === 'delete') {
+        onPluginDeleted(type);
+      }
+    });
