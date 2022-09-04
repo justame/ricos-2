@@ -1,3 +1,4 @@
+import { not } from 'fp-ts/Predicate';
 import type { Fragment, Node } from 'prosemirror-model';
 import type { Transaction } from 'prosemirror-state';
 import type { Link, TextStyle } from 'ricos-schema';
@@ -70,7 +71,7 @@ export const reportGenericDiff = (
   onPluginDeleted: (pluginId: string) => boolean
 ) =>
   diffs
-    .filter(diff => diff.type !== Node_Type.PARAGRAPH && diff.type !== 'text')
+    .filter(not(hasIgnoredType))
     .filter(diff => diff.type !== Decoration_Type.LINK && diff.type !== Decoration_Type.ANCHOR)
     .forEach(({ type, change, data }) => {
       if (change === 'insert') {
@@ -79,6 +80,19 @@ export const reportGenericDiff = (
         onPluginDeleted(type);
       }
     });
+
+// TODO: this filter should move to upper level
+const hasIgnoredType = (diff: ContentDiff) =>
+  [
+    Node_Type.PARAGRAPH,
+    'text',
+    Node_Type.LIST_ITEM,
+    Node_Type.COLLAPSIBLE_ITEM,
+    Node_Type.COLLAPSIBLE_ITEM_BODY,
+    Node_Type.COLLAPSIBLE_ITEM_TITLE,
+    Node_Type.TABLE_ROW,
+    Node_Type.TABLE_CELL,
+  ].includes(diff.type);
 
 export const reportTextStyleDiff = (
   diffs: ContentDiff[],
