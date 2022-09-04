@@ -1,5 +1,5 @@
 import type { EditorPluginCreator } from 'wix-rich-content-common';
-import { RICOS_LINK_TYPE, RICOS_ANCHOR_TYPE } from 'wix-rich-content-common';
+import { Decoration_Type, RICOS_LINK_TYPE, RICOS_ANCHOR_TYPE } from 'wix-rich-content-common';
 import { RESOLVERS_IDS } from 'wix-rich-content-toolbars-v3/libs/resolvers-ids';
 import { createLinkData } from './createLinkData';
 import { createLinkPlugin } from './createLinkPlugin';
@@ -9,7 +9,7 @@ import type { LinkPluginEditorConfig } from './types';
 import { LINK_TYPE } from './types';
 import LinkPanelComponent from './LinkPanelComponent';
 
-const FORMATTING_LINK_MODAL_ID = 'formattingLinkModal';
+const FORMATTING_LINK_MODAL_ID = `${Decoration_Type.LINK}.modal`;
 
 export const pluginLink: EditorPluginCreator<LinkPluginEditorConfig> = config => {
   const pluginConfig = { ...DEFAULTS.config, ...config };
@@ -21,7 +21,7 @@ export const pluginLink: EditorPluginCreator<LinkPluginEditorConfig> = config =>
     createPluginData: createLinkData,
     shortcuts: [
       {
-        name: 'link',
+        name: Decoration_Type.LINK,
         description: 'Link',
         group: 'formatting',
         keys: {
@@ -47,7 +47,7 @@ export const pluginLink: EditorPluginCreator<LinkPluginEditorConfig> = config =>
     ],
     textButtons: [
       {
-        id: 'link',
+        id: Decoration_Type.LINK,
         type: 'modal',
         presentation: {
           dataHook: 'LinkButton',

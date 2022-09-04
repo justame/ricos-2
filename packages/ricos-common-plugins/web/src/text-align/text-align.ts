@@ -4,7 +4,7 @@ import { getCurrentTextAlignmentIcon } from 'wix-rich-content-toolbars-modals/li
 import { textAlign } from './extension';
 import AlignmentPanelComponent from './AlignmentPanelComponent';
 
-const FORMATTING_ALIGNMENT_MODAL_ID = 'formattingAlignmentModal';
+const FORMATTING_ALIGNMENT_MODAL_ID = 'TextAlignment.modal';
 
 const getAlignmentIcon = (editorCommands: EditorCommands): ((props) => JSX.Element) => {
   return getCurrentTextAlignmentIcon(editorCommands);
@@ -16,7 +16,7 @@ export const pluginTextAlignment: TiptapEditorPlugin = {
   tiptapExtensions: [textAlign],
   shortcuts: [
     {
-      name: 'align-left',
+      name: 'TextAlignment.LEFT',
       description: 'Align text to the left',
       keys: { macOs: 'Meta+Shift+L', windows: 'Ctrl+Shift+L' },
       command(editorCommands: EditorCommands) {
@@ -26,7 +26,7 @@ export const pluginTextAlignment: TiptapEditorPlugin = {
       enabled: true,
     },
     {
-      name: 'align-center',
+      name: 'TextAlignment.CENTER',
       description: 'Align text to the center',
       keys: { macOs: 'Meta+Shift+E', windows: 'Ctrl+Shift+E' },
       command(editorCommands: EditorCommands) {
@@ -36,7 +36,7 @@ export const pluginTextAlignment: TiptapEditorPlugin = {
       enabled: true,
     },
     {
-      name: 'align-right',
+      name: 'TextAlignment.RIGHT',
       description: 'Align text to the right',
       keys: { macOs: 'Meta+Shift+R', windows: 'Ctrl+Shift+R' },
       command(editorCommands: EditorCommands) {
@@ -46,7 +46,7 @@ export const pluginTextAlignment: TiptapEditorPlugin = {
       enabled: true,
     },
     {
-      name: 'align-justify',
+      name: 'TextAlignment.JUSTIFY',
       description: 'Justify text',
       keys: { macOs: 'Meta+Shift+J', windows: 'Ctrl+Shift+J' },
       command(editorCommands: EditorCommands) {
@@ -58,7 +58,7 @@ export const pluginTextAlignment: TiptapEditorPlugin = {
   ],
   textButtons: [
     {
-      id: 'alignment',
+      id: 'ALIGNMENT',
       type: 'modal',
       presentation: {
         dataHook: 'textDropDownButton_Alignment',

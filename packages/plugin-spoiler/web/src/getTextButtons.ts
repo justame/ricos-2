@@ -1,11 +1,12 @@
 import type { EditorCommands, FormattingToolbarButtonConfig } from 'ricos-types';
+import { Decoration_Type } from 'ricos-types';
 import { RESOLVERS_IDS } from 'wix-rich-content-toolbars-v3/libs/resolvers-ids';
 import SpoilerTextButtonIcon from './icons/SpoilerTextButtonIcon';
 
 export const getTextButtons = (): FormattingToolbarButtonConfig[] => {
   return [
     {
-      id: 'spoiler',
+      id: Decoration_Type.SPOILER,
       type: 'toggle',
       presentation: {
         dataHook: 'textSpoilerButton',

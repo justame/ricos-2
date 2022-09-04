@@ -4,6 +4,7 @@ import {
   TOOLBARS,
 } from 'wix-rich-content-editor-common';
 import type { AddButton } from 'ricos-types';
+import { Node_Type } from 'ricos-types';
 import { EventIcon, ProductIcon, BookingIcon } from './icons';
 import { verticalEmbedModals } from './constants';
 import InsertModal from './modals/InsertModal';
@@ -12,7 +13,7 @@ export const getAddButtons = (config, services): AddButton[] => {
   const { exposeEmbedButtons = [] } = config || {};
   const buttonsMap: Record<string, AddButton> = {
     event: {
-      id: 'event',
+      id: `${Node_Type.APP_EMBED}.event`,
       label: INSERT_PLUGIN_BUTTONS.EVENTS,
       dataHook: INSERT_PLUGIN_BUTTONS.EVENTS,
       icon: EventIcon,
@@ -33,7 +34,7 @@ export const getAddButtons = (config, services): AddButton[] => {
       },
     },
     booking: {
-      id: 'booking',
+      id: `${Node_Type.APP_EMBED}.booking`,
       label: INSERT_PLUGIN_BUTTONS.BOOKINGS,
       dataHook: INSERT_PLUGIN_BUTTONS.BOOKINGS,
       icon: BookingIcon,
@@ -54,7 +55,7 @@ export const getAddButtons = (config, services): AddButton[] => {
       },
     },
     product: {
-      id: 'product',
+      id: `${Node_Type.APP_EMBED}.product`,
       label: INSERT_PLUGIN_BUTTONS.STORES,
       dataHook: INSERT_PLUGIN_BUTTONS.STORES,
       icon: ProductIcon,

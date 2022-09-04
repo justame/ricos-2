@@ -1,4 +1,5 @@
 import type { ModalStyles } from 'wix-rich-content-common';
+import { Node_Type } from 'wix-rich-content-common';
 
 const commonDesktopModalStyles: React.CSSProperties = {
   width: '362px',
@@ -106,13 +107,13 @@ export const CELL_AUTO_MIN_WIDTH = 120;
 export const ROW_DEFAULT_HEIGHT = 47;
 
 export const TABLE_BUTTONS = {
-  FORMATTING: 'formatting',
-  VERTICAL_ALIGNMENT: 'cellVerticalAlignment',
-  BACKGROUND_COLOR: 'backgroundColor',
-  ROW_HEADER: 'rowHeader',
-  COLUMN_HEADER: 'columnHeader',
-  BORDER: 'border',
-  CONTEXT: 'context',
+  FORMATTING: `${Node_Type.TABLE}.formatting`,
+  VERTICAL_ALIGNMENT: `${Node_Type.TABLE}.verticalAlignment`,
+  BACKGROUND_COLOR: `${Node_Type.TABLE}.backgroundColor`,
+  ROW_HEADER: `${Node_Type.TABLE}.rowHeader`,
+  COLUMN_HEADER: `${Node_Type.TABLE}.columnHeader`,
+  BORDER: `${Node_Type.TABLE}.border`,
+  CONTEXT: `${Node_Type.TABLE}.contextMenu`,
 };
 
 export const TABLE_BUTTONS_DATA_HOOKS = {
@@ -126,9 +127,9 @@ export const TABLE_BUTTONS_DATA_HOOKS = {
 };
 
 export const TABLE_BUTTONS_MODALS_ID = {
-  BORDER: 'table-border-modal',
-  VERTICAL_ALIGNMENT: 'table-vertical-alignment-modal',
-  CONTEXT: 'table-context-menu',
+  BORDER: `${Node_Type.TABLE}.border`,
+  VERTICAL_ALIGNMENT: `${Node_Type.TABLE}.verticalAlignment`,
+  CONTEXT: `${Node_Type.TABLE}.contextMenu`,
 };
 
 export const TABLE_COMMANDS_KEYS = {

@@ -7,6 +7,7 @@ import {
 } from 'wix-rich-content-editor-common';
 import InsertModal from './modals/InsertModal';
 import type { AddButton } from 'ricos-types';
+import { Node_Type } from 'ricos-types';
 import { videoButtonsTypes } from './types';
 import { videoModals } from './constants';
 import { compact } from 'lodash';
@@ -30,7 +31,7 @@ export const getAddButtons = (config, services): AddButton[] => {
 
   const buttonsMap: Record<string, AddButton> = {
     [videoButtonsTypes.video]: {
-      id: 'video',
+      id: `${Node_Type.VIDEO}.video`,
       label: INSERT_PLUGIN_BUTTONS.VIDEO,
       dataHook: INSERT_PLUGIN_BUTTONS.VIDEO,
       icon: VideoInsertPluginIcon,
@@ -51,7 +52,7 @@ export const getAddButtons = (config, services): AddButton[] => {
       },
     },
     [videoButtonsTypes.youTube]: {
-      id: 'youtube',
+      id: `${Node_Type.VIDEO}.youTube`,
       label: INSERT_PLUGIN_BUTTONS.YOUTUBE,
       dataHook: INSERT_PLUGIN_BUTTONS.YOUTUBE,
       icon: YoutubeIcon,

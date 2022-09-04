@@ -16,7 +16,7 @@ const AlignmentButton = ({ toolbarItem, context, dataHook }) => {
       ref={setReferenceElement}
       disabled={toolbarItem.attributes.disabled}
       isMobile={isMobile}
-      active={modalService.isModalOpen('formattingAlignmentModal')}
+      active={modalService.isModalOpen('TextAlignment.modal')}
       tooltip={tooltip}
       onClick={() => {
         toolbarItem.commands?.click({ referenceElement });

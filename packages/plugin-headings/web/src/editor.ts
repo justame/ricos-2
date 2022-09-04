@@ -1,4 +1,5 @@
 import type { EditorCommands, KeyboardShortcut, TiptapEditorPlugin } from 'ricos-types';
+import { Node_Type } from 'ricos-types';
 import type { EditorPluginCreator } from 'wix-rich-content-common';
 import { HEADER_BLOCK } from 'wix-rich-content-common';
 import { createHeadingsPlugin } from './createHeadingsPlugin';
@@ -20,7 +21,7 @@ const headerBlockByLevel = [
 
 const getShortcut = (level: 1 | 2 | 3 | 4 | 5 | 6): KeyboardShortcut =>
   ({
-    name: `heading${level}`,
+    name: `${Node_Type.HEADING}.${level}`,
     description: `Toggles H${level} style to current node`,
     keys: { macOs: `Meta+Alt+${level}`, windows: `Ctrl+Alt+${level}` },
     command(editorCommands: EditorCommands) {

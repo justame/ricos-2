@@ -3,6 +3,7 @@ import { DropdownArrowIcon } from '../../../icons';
 import { ModalContext, withToolbarContext } from 'ricos-context';
 import { getCustomHeadingsLabel } from 'wix-rich-content-toolbars-modals';
 import { ToolbarButton } from '../ToolbarButton';
+import { Node_Type } from 'ricos-schema';
 
 const CustomHeadingButton = ({ toolbarItem, context, dataHook }) => {
   const { isMobile, t, getEditorCommands } = context || {};
@@ -20,7 +21,7 @@ const CustomHeadingButton = ({ toolbarItem, context, dataHook }) => {
       ref={setReferenceElement}
       disabled={toolbarItem.attributes.disabled}
       isMobile={isMobile}
-      active={modalService.isModalOpen('formattingAlignmentModal')}
+      active={modalService.isModalOpen(`${Node_Type.HEADING}.modal`)}
       tooltip={tooltip}
       onClick={() => toolbarItem.commands?.click({ referenceElement })}
       icon={() => (

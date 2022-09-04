@@ -5,6 +5,7 @@ import {
   TOOLBARS,
 } from 'wix-rich-content-editor-common';
 import type { AddButton } from 'ricos-types';
+import { Node_Type } from 'ricos-types';
 import { DEFAULT_COMPONENT_DATA, MEMBER_ROLES } from './defaults';
 import InsertModal from './components/modals/InsertModal';
 import { POLL_TYPE } from './types';
@@ -17,7 +18,7 @@ export const getAddButtons = (config, services): AddButton[] => {
   });
   return [
     {
-      id: 'polls',
+      id: Node_Type.POLL,
       label: INSERT_PLUGIN_BUTTONS.POLLS,
       dataHook: INSERT_PLUGIN_BUTTONS.POLLS,
       icon: InsertPluginIcon,

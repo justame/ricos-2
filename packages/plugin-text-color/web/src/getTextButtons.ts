@@ -1,4 +1,5 @@
 import type { EditorCommands, FormattingToolbarButtonConfig } from 'ricos-types';
+import { Decoration_Type } from 'ricos-types';
 import { decorateComponentWithProps } from 'wix-rich-content-editor-common';
 import { RESOLVERS_IDS } from 'wix-rich-content-toolbars-v3/libs/resolvers-ids';
 import TextColorIcon from './icons/TextColorIcon';
@@ -8,7 +9,7 @@ import { TextColorController } from './TextColorController';
 export const getTextColorTextButtons = (): FormattingToolbarButtonConfig[] => {
   return [
     {
-      id: 'textColor',
+      id: `${Decoration_Type.COLOR}.foreground`,
       type: 'modal',
       presentation: {
         dataHook: 'TextColorButton',
@@ -36,7 +37,7 @@ export const getTextColorTextButtons = (): FormattingToolbarButtonConfig[] => {
           },
       },
       modal: {
-        id: 'TEXT_COLOR_PICKER',
+        id: `${Decoration_Type.COLOR}.foreground.picker`,
         Component: decorateComponentWithProps(TextColorController, { type: 'ricos-text-color' }),
       },
     },
@@ -46,7 +47,7 @@ export const getTextColorTextButtons = (): FormattingToolbarButtonConfig[] => {
 export const getTextHighlightTextButtons = (): FormattingToolbarButtonConfig[] => {
   return [
     {
-      id: 'textHighlight',
+      id: `${Decoration_Type.COLOR}.background`,
       type: 'modal',
       presentation: {
         dataHook: 'TextHighlightButton',
@@ -74,7 +75,7 @@ export const getTextHighlightTextButtons = (): FormattingToolbarButtonConfig[] =
           },
       },
       modal: {
-        id: 'TEXT_HIGHLIGHT_PICKER',
+        id: `${Decoration_Type.COLOR}.background.picker`,
         Component: decorateComponentWithProps(TextColorController, {
           type: 'ricos-text-highlight',
         }),

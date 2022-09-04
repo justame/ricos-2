@@ -8,6 +8,7 @@ import {
 } from 'wix-rich-content-editor-common';
 import InsertModal from './modals/InsertModal';
 import type { AddButton } from 'ricos-types';
+import { Node_Type } from 'ricos-types';
 import { audioButtonsTypes } from './types';
 import { audioModals } from './consts';
 import { compact } from 'lodash';
@@ -31,7 +32,7 @@ export const getAddButtons = (config, services): AddButton[] => {
 
   const buttonsMap: Record<string, AddButton> = {
     [audioButtonsTypes.audio]: {
-      id: 'audio',
+      id: `${Node_Type.AUDIO}.audio`,
       label: INSERT_PLUGIN_BUTTONS.AUDIO,
       dataHook: INSERT_PLUGIN_BUTTONS.AUDIO,
       icon: AudioInsertPluginIcon,
@@ -51,7 +52,7 @@ export const getAddButtons = (config, services): AddButton[] => {
       },
     },
     [audioButtonsTypes.soundCloud]: {
-      id: 'soundcloud',
+      id: `${Node_Type.AUDIO}.soundCloud`,
       label: INSERT_PLUGIN_BUTTONS.SOUND_CLOUD,
       dataHook: INSERT_PLUGIN_BUTTONS.SOUND_CLOUD,
       icon: SoundCloudIcon,
@@ -73,7 +74,7 @@ export const getAddButtons = (config, services): AddButton[] => {
       },
     },
     [audioButtonsTypes.spotify]: {
-      id: 'spotify',
+      id: `${Node_Type.AUDIO}.spotify`,
       label: INSERT_PLUGIN_BUTTONS.SPOTIFY,
       dataHook: INSERT_PLUGIN_BUTTONS.SPOTIFY,
       icon: SpotifyIcon,

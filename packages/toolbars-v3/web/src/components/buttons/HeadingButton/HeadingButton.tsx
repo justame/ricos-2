@@ -3,6 +3,7 @@ import { DropdownArrowIcon } from '../../../icons';
 import { withToolbarContext, ModalContext } from 'ricos-context';
 import { translateHeading, headingsMap } from 'wix-rich-content-toolbars-modals';
 import { ToolbarButton } from '../ToolbarButton';
+import { Node_Type } from 'ricos-schema';
 
 const HeadingButton = ({ toolbarItem, context, dataHook }) => {
   const { isMobile, t } = context || {};
@@ -18,7 +19,7 @@ const HeadingButton = ({ toolbarItem, context, dataHook }) => {
       ref={setReferenceElement}
       disabled={toolbarItem.attributes.disabled}
       isMobile={isMobile}
-      active={modalService.isModalOpen('formattingAlignmentModal')}
+      active={modalService.isModalOpen(`${Node_Type.HEADING}.modal`)}
       tooltip={tooltip}
       onClick={() => toolbarItem.commands?.click({ referenceElement })}
       icon={() => (

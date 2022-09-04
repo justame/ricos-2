@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import type { FC } from 'react';
 import { RicosContext, ModalContext } from 'ricos-context';
 import type { IToolbarItem } from 'ricos-types';
+import { Node_Type } from 'ricos-types';
 import { ToggleButton, EditIcon } from 'wix-rich-content-toolbars-ui';
 
 type Props = {
@@ -9,7 +10,7 @@ type Props = {
   dataHook?: string;
 };
 
-const HTML_EDIT_MODAL_ID = 'htmlEditModal';
+const HTML_EDIT_MODAL_ID = `${Node_Type.HTML}.edit`;
 
 export const EditHtmlButton: FC<Props> = ({ toolbarItem, dataHook }) => {
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);

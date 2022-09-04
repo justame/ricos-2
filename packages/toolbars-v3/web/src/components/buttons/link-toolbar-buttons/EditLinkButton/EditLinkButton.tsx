@@ -1,12 +1,12 @@
 import React, { useState, useContext } from 'react';
 import { withToolbarContext, ModalContext } from 'ricos-context';
 import { getLinkModalProps } from 'wix-rich-content-toolbars-modals';
-import { CUSTOM_LINK } from 'wix-rich-content-common';
+import { CUSTOM_LINK, Decoration_Type } from 'wix-rich-content-common';
 import { withContentQueryContext } from 'ricos-content-query';
 import { ToolbarButton } from '../../ToolbarButton';
 
 const EditLinkButton = ({ toolbarItem, context, contentQueryService, dataHook }) => {
-  const id = 'formattingLinkModal';
+  const id = `${Decoration_Type.LINK}.modal`;
   const { isMobile, t, getEditorCommands, linkPanelData = {}, experiments } = context || {};
   const modalService = useContext(ModalContext) || {};
   const [referenceElement, setReferenceElement] = useState<HTMLButtonElement | null>(null);

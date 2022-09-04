@@ -1,4 +1,5 @@
 import type { ModalStyles } from 'wix-rich-content-common';
+import { Node_Type } from 'wix-rich-content-common';
 
 export const PAGE_SIZE = 25;
 export const WAIT_INTERVAL = 300;
@@ -59,11 +60,11 @@ export const EXTERNAL_POPUP_STYLES: ModalStyles = Object.freeze({
 });
 
 export const gifModals = {
-  insert: 'gifInsertModal',
-  replace: 'gifReplaceModal',
+  insert: `${Node_Type.GIF}.insert`,
+  replace: `${Node_Type.GIF}.replace`,
 };
 
 export const GIF_BUTTONS = {
-  alignment: 'gifAlignment',
-  size: 'gifSize',
+  alignment: `${Node_Type.GIF}.alignment`,
+  size: `${Node_Type.GIF}.size`,
 };

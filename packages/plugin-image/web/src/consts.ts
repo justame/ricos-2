@@ -1,3 +1,5 @@
+import { Node_Type } from 'ricos-schema';
+
 export const DEFAULTS = Object.freeze({
   config: {
     alignment: 'center',
@@ -22,11 +24,11 @@ export const SEO_IMAGE_WIDTH = 1000;
 export const DIVIDER = 'divider';
 
 export const imageModals = {
-  settings: 'imageSettings',
-  imageEditor: 'imageEditor',
+  settings: `${Node_Type.IMAGE}.settings`,
+  imageEditor: `${Node_Type.IMAGE}.imageEditor`,
 };
 
 export const IMAGE_BUTTONS = {
-  size: 'imageSize',
-  alignment: 'imageAlignment',
+  size: `${Node_Type.IMAGE}.size`,
+  alignment: `${Node_Type.IMAGE}.alignment`,
 };

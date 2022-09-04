@@ -15,20 +15,22 @@ import {
   EditLinkButton,
 } from './components/buttons';
 import { ToolbarButtonSeparator } from 'wix-rich-content-toolbars-ui';
+import { Decoration_Type, Node_Type } from 'ricos-types';
+import { INDENT_TYPE } from 'wix-rich-content-common';
 
 const toggleRenders = [
-  'undo',
-  'redo',
-  'bold',
-  'italic',
-  'underline',
-  'blockquote',
-  'codeBlock',
-  'orderedList',
-  'unorderedList',
-  'spoiler',
-  'increaseIndent',
-  'decreaseIndent',
+  'UNDO',
+  'REDO',
+  Decoration_Type.BOLD,
+  Decoration_Type.ITALIC,
+  Decoration_Type.UNDERLINE,
+  Node_Type.BLOCKQUOTE,
+  Node_Type.CODE_BLOCK,
+  Node_Type.ORDERED_LIST,
+  Node_Type.BULLETED_LIST,
+  Decoration_Type.SPOILER,
+  `${INDENT_TYPE}.increase`,
+  `${INDENT_TYPE}.decrease`,
 ].reduce((acc, t) => {
   return {
     ...acc,
@@ -70,28 +72,28 @@ export const toolbarItemsRenders = {
   separator: () => {
     return <ToolbarButtonSeparator />;
   },
-  alignment: toolbarItem => {
+  ALIGNMENT: toolbarItem => {
     return <AlignmentButton toolbarItem={toolbarItem} />;
   },
-  title: toolbarItem => {
+  [`${Node_Type.HEADING}.title`]: toolbarItem => {
     return <TitleButton toolbarItem={toolbarItem} />;
   },
-  headings: toolbarItem => {
+  [`${Node_Type.HEADING}.dropdown`]: toolbarItem => {
     return <HeadingButtonSwitch toolbarItem={toolbarItem} />;
   },
-  lineSpacing: toolbarItem => {
+  LINE_SPACING: toolbarItem => {
     return <LineSpacingButton toolbarItem={toolbarItem} />;
   },
-  fontSize: toolbarItem => {
+  [Decoration_Type.FONT_SIZE]: toolbarItem => {
     return <FontSizeButton toolbarItem={toolbarItem} />;
   },
-  link: toolbarItem => {
+  [Decoration_Type.LINK]: toolbarItem => {
     return <LinkButton toolbarItem={toolbarItem} />;
   },
-  textColor: toolbarItem => {
+  [`${Decoration_Type.COLOR}.foreground`]: toolbarItem => {
     return <TextColorButton toolbarItem={toolbarItem} />;
   },
-  textHighlight: toolbarItem => {
+  [`${Decoration_Type.COLOR}.background`]: toolbarItem => {
     return <HighlightColorButton toolbarItem={toolbarItem} />;
   },
   delete: toolbarItem => {

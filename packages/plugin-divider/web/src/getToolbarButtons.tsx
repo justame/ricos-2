@@ -12,7 +12,7 @@ import {
   DIVIDER_SIZE_BUTTON_DATA_HOOK,
   DIVIDER_STYLE_BUTTON_DATA_HOOK,
   DIVIDER_BUTTONS,
-  DIVIDER_SIZE_BUTTON_ID,
+  DIVIDER_ALIGNMENT_BUTTON_DATA_HOOK,
 } from './const';
 import LineStylePanel from './toolbar/modals/LineStylePanel';
 import DividerSizePanel from './toolbar/modals/DividerSizePanel';
@@ -100,8 +100,8 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
-      id: DIVIDER_SIZE_BUTTON_ID,
-      dataHook: DIVIDER_BUTTONS.alignment,
+      id: DIVIDER_BUTTONS.alignment,
+      dataHook: DIVIDER_ALIGNMENT_BUTTON_DATA_HOOK,
       command: ({ value, editorCommands, attributes: { selectedNode } }) => {
         const nodeContainerData = selectedNode.attrs?.containerData;
         editorCommands

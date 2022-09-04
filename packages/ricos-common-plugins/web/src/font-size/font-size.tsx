@@ -6,7 +6,7 @@ import { RESOLVERS_IDS } from 'wix-rich-content-toolbars-v3/libs/resolvers-ids';
 import { fontSize } from './extension';
 import FontSizePanelComponent from './FontSizePanelComponent';
 
-const FONT_SIZE_MODAL_ID = 'fontSizeModal';
+const FONT_SIZE_MODAL_ID = `${Decoration_Type.FONT_SIZE}.modal`;
 
 const getFontSize = (editorCommands: EditorCommands): ((props) => JSX.Element) => {
   const currentFontSize = editorCommands.getFontSize() || '';
@@ -19,7 +19,7 @@ export const pluginFontSize: TiptapEditorPlugin = {
   tiptapExtensions: [fontSize],
   shortcuts: [
     {
-      name: 'increaseFontSize',
+      name: `${Decoration_Type.FONT_SIZE}.increase`,
       description: 'Increases size of selected text',
       keys: { macOs: 'Meta+Alt+.', windows: 'Ctrl+Alt+.' },
       command(editorCommands: EditorCommands) {
@@ -35,7 +35,7 @@ export const pluginFontSize: TiptapEditorPlugin = {
       enabled: true,
     },
     {
-      name: 'decreaseFontSize',
+      name: `${Decoration_Type.FONT_SIZE}.decrease`,
       description: 'Decreases size of selected text',
       keys: { macOs: 'Meta+Alt+,', windows: 'Ctrl+Alt+,' },
       command(editorCommands: EditorCommands) {
@@ -53,7 +53,7 @@ export const pluginFontSize: TiptapEditorPlugin = {
   ],
   textButtons: [
     {
-      id: 'fontSize',
+      id: Decoration_Type.FONT_SIZE,
       type: 'modal',
       presentation: {
         dataHook: 'customFontSizeButton',

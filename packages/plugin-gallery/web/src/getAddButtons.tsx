@@ -1,6 +1,7 @@
 import { InsertPluginIcon } from './icons';
 import { INSERT_PLUGIN_BUTTONS, TOOLBARS } from 'wix-rich-content-editor-common';
 import type { AddButton } from 'ricos-types';
+import { Node_Type } from 'ricos-types';
 import { GALLERY_TYPE } from './types';
 import { Uploader } from 'wix-rich-content-plugin-commons';
 import { GALLERY_LAYOUTS, layoutRicosData } from './layout-data-provider';
@@ -41,7 +42,7 @@ const handleNativeFileChange =
 export const getAddButtons = (config, services, galleryPluginService): AddButton[] => {
   return [
     {
-      id: 'gallery',
+      id: Node_Type.GALLERY,
       label: INSERT_PLUGIN_BUTTONS.GALLERY,
       dataHook: INSERT_PLUGIN_BUTTONS.GALLERY,
       icon: InsertPluginIcon,

@@ -10,7 +10,7 @@ export const pluginUndoRedo: TiptapEditorPlugin = {
   tiptapExtensions: [undoRedo],
   shortcuts: [
     {
-      name: 'undo',
+      name: 'UNDO',
       description: 'Undoes the last action',
       keys: { macOs: 'Meta+Z', windows: 'Ctrl+Z' },
       command(editorCommands: EditorCommands) {
@@ -20,7 +20,7 @@ export const pluginUndoRedo: TiptapEditorPlugin = {
       enabled: true,
     },
     {
-      name: 'redo',
+      name: 'REDO',
       description: 'Redoes the last action',
       keys: { macOs: 'Meta+Shift+Z', windows: 'Ctrl+Shift+Z' },
       command(editorCommands: EditorCommands) {
@@ -32,7 +32,7 @@ export const pluginUndoRedo: TiptapEditorPlugin = {
   ],
   textButtons: [
     {
-      id: 'undo',
+      id: 'UNDO',
       type: 'toggle',
       presentation: {
         dataHook: 'textInlineStyleButton_UNDO',
@@ -49,7 +49,7 @@ export const pluginUndoRedo: TiptapEditorPlugin = {
       },
     },
     {
-      id: 'redo',
+      id: 'REDO',
       type: 'toggle',
       presentation: {
         dataHook: 'textInlineStyleButton_REDO',

@@ -1,5 +1,6 @@
 import React from 'react';
 import type { ToolbarButton } from 'ricos-types';
+import { Node_Type } from 'ricos-types';
 import { linkPreviewModals } from './consts';
 import { PLUGIN_TOOLBAR_BUTTON_ID } from 'wix-rich-content-editor-common';
 import LinkPreviewSettingsModal from './modals/SettingsModal';
@@ -23,7 +24,7 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
   const { modals } = services;
   return [
     {
-      id: 'removePreview',
+      id: `${Node_Type.LINK_PREVIEW}.replace`,
       dataHook: 'baseToolbarButton_replaceToLink',
       command: ({ editorCommands, attributes: { selectedNode } }) => {
         const link =
@@ -42,7 +43,7 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
       renderer: toolbarItem => <RemovePreviewButton toolbarItem={toolbarItem} />,
     },
     {
-      id: 'linkPreviewSettings',
+      id: linkPreviewModals.settings,
       dataHook: 'LinkButton',
       modal: {
         Component: LinkPreviewSettingsModal,

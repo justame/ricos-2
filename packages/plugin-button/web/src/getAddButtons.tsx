@@ -1,12 +1,13 @@
 import { InsertPluginIcon } from './icons';
 import { INSERT_PLUGIN_BUTTONS, TOOLBARS } from 'wix-rich-content-editor-common';
 import type { AddButton } from 'ricos-types';
+import { Node_Type } from 'ricos-types';
 import buttonDataDefaults from 'ricos-schema/dist/statics/button.defaults.json';
 
 export const getAddButtons = (config, services, type): AddButton[] => {
   return [
     {
-      id: 'button',
+      id: Node_Type.BUTTON,
       label: INSERT_PLUGIN_BUTTONS.BUTTON,
       dataHook: INSERT_PLUGIN_BUTTONS.BUTTON,
       icon: InsertPluginIcon,

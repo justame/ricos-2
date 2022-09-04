@@ -5,6 +5,7 @@ import { DEFAULTS } from './defaults';
 import type { EditorPluginCreator } from 'wix-rich-content-common';
 import { tiptapExtensions } from './tiptap';
 import type { EditorCommands, TiptapEditorPlugin } from 'ricos-types';
+import { Node_Type } from 'ricos-types';
 import { getAddButtons } from './getAddButtons';
 import { getTextButtons } from './getTextButtons';
 
@@ -17,7 +18,7 @@ export const pluginCodeBlock: EditorPluginCreator<CodeBlockPluginEditorConfig> =
     ModalsMap: {},
     shortcuts: [
       {
-        name: 'codeBlock',
+        name: Node_Type.CODE_BLOCK,
         description: 'Toggles code style of selected text',
         keys: { macOs: 'Meta+Shift+C', windows: 'Ctrl+Shift+C' },
         command(editorCommands: EditorCommands) {

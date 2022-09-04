@@ -1,3 +1,5 @@
+import { Node_Type } from 'ricos-schema';
+
 export const REMOVE_LINK_PREVIEW = 'remove-link-preview';
 
 export enum LinkPreviewProviders {
@@ -18,13 +20,13 @@ export const modalContentStyles: React.CSSProperties = {
 };
 
 export const socialModals = {
-  instagram: 'instagramInsertModal',
-  facebook: 'facebookInsertModal',
-  tiktok: 'tiktokInsertModal',
-  twitter: 'twitterInsertModal',
-  pinterest: 'pinterestInsertModal',
+  instagram: `${Node_Type.LINK_PREVIEW}.instagram`,
+  facebook: `${Node_Type.LINK_PREVIEW}.facebook`,
+  tiktok: `${Node_Type.LINK_PREVIEW}.tiktok`,
+  twitter: `${Node_Type.LINK_PREVIEW}.twitter`,
+  pinterest: `${Node_Type.LINK_PREVIEW}.pinterest`,
 };
 
 export const linkPreviewModals = {
-  settings: 'settings',
+  settings: `${Node_Type.LINK_PREVIEW}.settings`,
 };

@@ -40,7 +40,7 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
 
   return [
     {
-      id: 'audioSettingsModal',
+      id: audioModals.settings,
       dataHook: 'baseToolbarButton_settings',
       modal: {
         Component: AudioSettingsModal,

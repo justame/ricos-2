@@ -20,7 +20,7 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
   } = config || {};
   return [
     {
-      id: 'editHtml',
+      id: HTML_BUTTONS.edit,
       dataHook: 'baseToolbarButton_edit',
       command: ({ htmlData, editorCommands }) => {
         editorCommands.chain().updateAttributes(TIPTAP_HTML_TYPE, htmlData).run();
@@ -38,7 +38,7 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
-      id: 'htmlWidth',
+      id: HTML_BUTTONS.width,
       command: ({ data, editorCommands }) => {
         editorCommands.chain().updateAttributes(TIPTAP_HTML_TYPE, data).run();
       },
@@ -63,7 +63,7 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
       },
     },
     {
-      id: 'htmlHeight',
+      id: HTML_BUTTONS.height,
       command: ({ data, editorCommands }) => {
         editorCommands.chain().updateAttributes(TIPTAP_HTML_TYPE, data).run();
       },

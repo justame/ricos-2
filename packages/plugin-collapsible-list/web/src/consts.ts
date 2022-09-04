@@ -1,7 +1,8 @@
 import { PluginKey } from 'prosemirror-state';
+import { Node_Type } from 'ricos-types';
 
 export const collapsibleModals = {
-  settings: 'collapsibleSettings',
+  settings: `${Node_Type.COLLAPSIBLE_LIST}.settings`,
 };
 
 export const collapsibleStateManagerPlugin = new PluginKey('collapsibleStateManager');

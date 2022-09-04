@@ -5,13 +5,14 @@ import {
   TOOLBARS,
 } from 'wix-rich-content-editor-common';
 import type { AddButton } from 'ricos-types';
+import { Node_Type } from 'ricos-types';
 import { DEFAULTS, gifModals } from './constants';
 import InsertModal from './modals/InsertModal';
 
 export const getAddButtons = (config, services): AddButton[] => {
   return [
     {
-      id: 'gif',
+      id: Node_Type.GIF,
       label: INSERT_PLUGIN_BUTTONS.GIF,
       dataHook: INSERT_PLUGIN_BUTTONS.GIF,
       icon: InsertPluginIcon,

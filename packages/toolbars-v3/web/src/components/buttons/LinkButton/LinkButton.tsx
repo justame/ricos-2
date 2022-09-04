@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { withToolbarContext, ModalContext } from 'ricos-context';
 import { getLinkModalProps } from 'wix-rich-content-toolbars-modals';
-import { CUSTOM_LINK } from 'wix-rich-content-common';
+import { CUSTOM_LINK, Decoration_Type } from 'wix-rich-content-common';
 import { withContentQueryContext } from 'ricos-content-query';
 import { ToolbarButton } from '../ToolbarButton';
 
@@ -31,7 +31,8 @@ const LinkButton = ({ toolbarItem, context, contentQueryService, dataHook }) => 
   };
 
   const tooltip = t(toolbarItem.presentation?.tooltip);
-  const isActive = modalService.isModalOpen('formattingLinkModal') || toolbarItem.attributes.active;
+  const isActive =
+    modalService.isModalOpen(`${Decoration_Type.LINK}.modal`) || toolbarItem.attributes.active;
   return (
     <ToolbarButton
       ref={setReferenceElement}

@@ -42,7 +42,7 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
     },
     {
-      id: 'pollDesign',
+      id: pollModals.design,
       dataHook: 'baseToolbarButton_design',
       modal: {
         Component: PollSettingsModal,

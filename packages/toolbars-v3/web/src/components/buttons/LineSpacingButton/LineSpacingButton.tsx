@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { DropdownArrowIcon } from '../../../icons';
 import { withToolbarContext, ModalContext } from 'ricos-context';
 import { ToolbarButton } from '../ToolbarButton';
+import { LINE_SPACING_TYPE } from 'wix-rich-content-common';
 
 const LineSpacingButton = ({ toolbarItem, context, dataHook }) => {
   const { isMobile, t } = context || {};
@@ -15,7 +16,7 @@ const LineSpacingButton = ({ toolbarItem, context, dataHook }) => {
       ref={setReferenceElement}
       disabled={toolbarItem.attributes.disabled}
       isMobile={isMobile}
-      active={modalService.isModalOpen('formattingLineSpacingModal')}
+      active={modalService.isModalOpen(`${LINE_SPACING_TYPE}.modal`)}
       tooltip={tooltip}
       onClick={() => toolbarItem.commands?.click({ referenceElement })}
       icon={() => (

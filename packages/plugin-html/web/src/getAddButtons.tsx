@@ -1,6 +1,7 @@
 import { compact } from 'lodash';
 import htmlDataDefaults from 'ricos-schema/dist/statics/html.defaults.json';
 import type { AddButton } from 'ricos-types';
+import { Node_Type } from 'ricos-types';
 import { INSERT_PLUGIN_BUTTONS, TOOLBARS } from 'wix-rich-content-editor-common';
 import { htmlButtonsTypes } from './defaults';
 import { AdsenseIcon, InsertPluginIcon } from './icons';
@@ -14,7 +15,7 @@ export const getAddButtons = (config, _services): AddButton[] => {
   }
   const buttonsMap: Record<string, AddButton> = {
     [htmlButtonsTypes.html]: {
-      id: 'html',
+      id: `${Node_Type.HTML}.html`,
       label: INSERT_PLUGIN_BUTTONS.HTML,
       dataHook: INSERT_PLUGIN_BUTTONS.HTML,
       icon: InsertPluginIcon,
@@ -29,7 +30,7 @@ export const getAddButtons = (config, _services): AddButton[] => {
       },
     },
     [htmlButtonsTypes.adsense]: {
-      id: 'adsense',
+      id: `${Node_Type.HTML}.adsense`,
       label: INSERT_PLUGIN_BUTTONS.ADSENSE,
       dataHook: INSERT_PLUGIN_BUTTONS.ADSENSE,
       icon: AdsenseIcon,

@@ -10,7 +10,7 @@ export const pluginUnderline: TiptapEditorPlugin = {
   tiptapExtensions: [underline],
   shortcuts: [
     {
-      name: 'underline',
+      name: Decoration_Type.UNDERLINE,
       description: 'Toggles underline style of selected text',
       keys: { macOs: 'Meta+U', windows: 'Ctrl+U' },
       command(editorCommands: EditorCommands) {
@@ -22,7 +22,7 @@ export const pluginUnderline: TiptapEditorPlugin = {
   ],
   textButtons: [
     {
-      id: 'underline',
+      id: Decoration_Type.UNDERLINE,
       type: 'toggle',
       presentation: {
         dataHook: 'textInlineStyleButton_Underline',

@@ -10,7 +10,7 @@ export const pluginOrderedList: TiptapEditorPlugin = {
   config: {},
   shortcuts: [
     {
-      name: 'orderedList',
+      name: Node_Type.ORDERED_LIST,
       description: 'Toggles ordered list to current node',
       keys: { macOs: 'Meta+Shift+7', windows: 'Ctrl+Shift+7' },
       command(editorCommands: EditorCommands) {
@@ -23,7 +23,7 @@ export const pluginOrderedList: TiptapEditorPlugin = {
   tiptapExtensions: [orderedList],
   textButtons: [
     {
-      id: 'orderedList',
+      id: Node_Type.ORDERED_LIST,
       type: 'toggle',
       presentation: {
         dataHook: 'textBlockStyleButton_Numberedlist',

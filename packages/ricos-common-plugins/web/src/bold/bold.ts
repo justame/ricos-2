@@ -10,7 +10,7 @@ export const pluginBold: TiptapEditorPlugin = {
   tiptapExtensions: [bold],
   shortcuts: [
     {
-      name: 'bold',
+      name: Decoration_Type.BOLD,
       description: 'Toggles bold style of selected text',
       keys: { macOs: 'Meta+B', windows: 'Ctrl+B' },
       command(editorCommands: EditorCommands) {
@@ -23,7 +23,7 @@ export const pluginBold: TiptapEditorPlugin = {
 
   textButtons: [
     {
-      id: 'bold',
+      id: Decoration_Type.BOLD,
       type: 'toggle',
       presentation: {
         dataHook: 'textInlineStyleButton_Bold',

@@ -1,10 +1,12 @@
+import { Node_Type } from 'ricos-schema';
+
 export const pollModals = {
-  insert: 'pollInsertModal',
-  settings: 'pollSettings',
-  design: 'pollDesign',
-  layout: 'pollLayout',
+  insert: `${Node_Type.POLL}.insert`,
+  settings: `${Node_Type.POLL}.settings`,
+  design: `${Node_Type.POLL}.design`,
+  layout: `${Node_Type.POLL}.layout`,
 };
 
 export const POLL_BUTTONS = {
-  layout: 'pollLayout',
+  layout: `${Node_Type.POLL}.layout`,
 };

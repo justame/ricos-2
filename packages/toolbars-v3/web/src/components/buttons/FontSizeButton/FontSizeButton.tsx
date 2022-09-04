@@ -8,6 +8,7 @@ import { DropdownArrowIcon } from '../../../icons';
 import styles from './FontSizeButton.scss';
 import type { ToolbarContextType } from 'ricos-context';
 import type { TranslationFunction } from 'ricos-types';
+import { Decoration_Type } from 'ricos-types';
 import type { ToolbarItem } from '../../../ToolbarItemCreator';
 import type { EditorCommands } from 'wix-rich-content-common';
 
@@ -56,7 +57,7 @@ const FontSizeButton = ({
       <div
         className={cx(
           styles.fontSizeModalButtonWrapper,
-          modalService.isModalOpen('fontSizeModal') ? styles.active : '',
+          modalService.isModalOpen(`${Decoration_Type.FONT_SIZE}.modal`) ? styles.active : '',
           { [styles.disabled]: disabled }
         )}
         ref={setReferenceElement}

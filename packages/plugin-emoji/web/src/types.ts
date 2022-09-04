@@ -3,7 +3,7 @@ import type { EditorPluginConfig, ViewerPluginConfig } from 'wix-rich-content-co
 export const EMOJI_TYPE = 'wix-draft-plugin-emoji';
 
 export const emojiModals = {
-  insert: 'emojiModal',
+  insert: `${EMOJI_TYPE}.insert`,
 };
 
 export interface EmojiPluginEditorConfig extends EditorPluginConfig {

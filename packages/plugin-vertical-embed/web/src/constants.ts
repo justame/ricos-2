@@ -1,3 +1,5 @@
+import { Node_Type } from 'ricos-types';
+
 export const verticalEmbedProviders = { event: 'event', booking: 'booking', product: 'product' };
 
 export const contentTypeMap = {
@@ -17,8 +19,8 @@ export const modalContentStyles: React.CSSProperties = {
 };
 
 export const verticalEmbedModals = {
-  insertBooking: 'bookingInsertModal',
-  insertProduct: 'productInsertModal',
-  insertEvent: 'eventInsertModal',
-  replace: 'verticalEmbedReplaceModal',
+  insertBooking: `${Node_Type.APP_EMBED}.insertBooking`,
+  insertProduct: `${Node_Type.APP_EMBED}.insertProduct`,
+  insertEvent: `${Node_Type.APP_EMBED}.insertEvent`,
+  replace: `${Node_Type.APP_EMBED}.replace`,
 };

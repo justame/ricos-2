@@ -1,12 +1,13 @@
 import InsertPluginIcon from './icons/CodeBlockIcon';
 import { INSERT_PLUGIN_BUTTONS, TOOLBARS } from 'wix-rich-content-editor-common';
 import type { AddButton } from 'ricos-types';
+import { Node_Type } from 'ricos-types';
 import { CODE_BLOCK_TYPE } from './types';
 
 export const getAddButtons = (config, services): AddButton[] => {
   return [
     {
-      id: 'code-block',
+      id: Node_Type.CODE_BLOCK,
       icon: InsertPluginIcon,
       label: INSERT_PLUGIN_BUTTONS.CODE_BLOCK,
       dataHook: INSERT_PLUGIN_BUTTONS.CODE_BLOCK,

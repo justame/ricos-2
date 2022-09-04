@@ -1,14 +1,15 @@
 import type { FormattingToolbarButtonConfig } from 'ricos-types';
+import { LINE_SPACING_TYPE } from './types';
 import { RESOLVERS_IDS } from 'wix-rich-content-toolbars-v3/libs/resolvers-ids';
 import LineSpacingIcon from './icons/toolbars-v3/LineSpacingIcon';
 import LineSpacingPanelComponent from './LineSpacingPanelComponent';
 
-const FORMATTING_LINE_SPACING_MODAL_ID = 'formattingLineSpacingModal';
+const FORMATTING_LINE_SPACING_MODAL_ID = `${LINE_SPACING_TYPE}.modal`;
 
 export const getTextButtons = (): FormattingToolbarButtonConfig[] => {
   return [
     {
-      id: 'lineSpacing',
+      id: 'LINE_SPACING',
       type: 'modal',
       presentation: {
         dataHook: 'LineSpacingButton',

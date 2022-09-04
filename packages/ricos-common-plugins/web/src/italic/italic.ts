@@ -10,7 +10,7 @@ export const pluginItalic: TiptapEditorPlugin = {
   tiptapExtensions: [italic],
   shortcuts: [
     {
-      name: 'italic',
+      name: Decoration_Type.ITALIC,
       description: 'Toggles italic style of selected text',
       keys: { macOs: 'Meta+I', windows: 'Ctrl+I' },
       command(editorCommands: EditorCommands) {
@@ -22,7 +22,7 @@ export const pluginItalic: TiptapEditorPlugin = {
   ],
   textButtons: [
     {
-      id: 'italic',
+      id: Decoration_Type.ITALIC,
       type: 'toggle',
       presentation: {
         dataHook: 'textInlineStyleButton_Italic',

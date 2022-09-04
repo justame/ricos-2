@@ -11,7 +11,7 @@ export const pluginBlockquote: TiptapEditorPlugin = {
   tiptapExtensions: [blockquote],
   shortcuts: [
     {
-      name: 'blockquote',
+      name: Node_Type.BLOCKQUOTE,
       description: 'Toggles quote to current node',
       keys: { macOs: 'Meta+Shift+9', windows: 'Ctrl+Shift+9' },
       command(editorCommands: EditorCommands) {
@@ -23,7 +23,7 @@ export const pluginBlockquote: TiptapEditorPlugin = {
   ],
   textButtons: [
     {
-      id: 'blockquote',
+      id: Node_Type.BLOCKQUOTE,
       type: 'toggle',
       presentation: {
         dataHook: 'textBlockStyleButton_Quote',

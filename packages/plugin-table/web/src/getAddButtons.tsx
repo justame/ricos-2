@@ -6,13 +6,14 @@ import {
 } from 'wix-rich-content-editor-common';
 import InsertModal from './modals/InsertModal';
 import type { AddButton } from 'ricos-types';
+import { Node_Type } from 'ricos-types';
 import { getDefaultsSettings } from './tableUtil';
 import { tableModals } from './types';
 
 export const getAddButtons = (config, services): AddButton[] => {
   return [
     {
-      id: 'table',
+      id: Node_Type.TABLE,
       label: INSERT_PLUGIN_BUTTONS.TABLE,
       dataHook: INSERT_PLUGIN_BUTTONS.TABLE,
       icon: InsertPluginIcon,

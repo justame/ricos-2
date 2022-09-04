@@ -1,18 +1,14 @@
 import React from 'react';
-import type { ToolbarButton, IToolbarItem } from 'ricos-types';
+import type { PluginContainerData_Width_Type } from 'ricos-schema';
+import type { IToolbarItem, ToolbarButton } from 'ricos-types';
 import {
-  PLUGIN_TOOLBAR_BUTTON_ID,
   decorateComponentWithProps,
+  PLUGIN_TOOLBAR_BUTTON_ID,
 } from 'wix-rich-content-editor-common';
-import ImageSettingsModal from './modals/SettingsModal';
-import ImageEditorModal from './modals/ImageEditorModal';
-import { imageModals, IMAGE_BUTTONS } from './consts';
-import { IMAGE_TYPE } from './types';
-import { ImagePluginService } from './toolbar/imagePluginService';
 import {
-  Uploader,
-  selectedNodeResolver,
   getVisibleOnlyOnDesktopResolver,
+  selectedNodeResolver,
+  Uploader,
 } from 'wix-rich-content-plugin-commons';
 import {
   AlignmentPanel,
@@ -20,12 +16,14 @@ import {
   NodeSizeButton,
   SizePanel,
 } from 'wix-rich-content-toolbars-ui';
-import type { PluginContainerData_Width_Type } from 'ricos-schema';
+import { imageModals, IMAGE_BUTTONS } from './consts';
+import ImageEditorModal from './modals/ImageEditorModal';
+import ImageSettingsModal from './modals/SettingsModal';
 import ImageEditorButton from './toolbar/ImageEditorButton';
+import { ImagePluginService } from './toolbar/imagePluginService';
+import { IMAGE_TYPE } from './types';
 
 const imagePluginService = new ImagePluginService();
-
-const IMAGE_EDITOR_BUTTON_ID = 'IMAGE_EDITOR_BUTTON';
 
 export const getToolbarButtons = (config, services): ToolbarButton[] => {
   const {
@@ -74,7 +72,7 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
       },
     },
     {
-      id: IMAGE_EDITOR_BUTTON_ID,
+      id: imageModals.imageEditor,
       modal: {
         Component: decorateComponentWithProps(ImageEditorModal, {
           imagePluginService,

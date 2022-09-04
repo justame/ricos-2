@@ -1,4 +1,6 @@
+import { Node_Type } from 'ricos-types';
+
 export const FILE_BUTTONS = {
-  alignment: 'fileAlignment',
-  size: 'fileSize',
+  alignment: `${Node_Type.FILE}.alignment`,
+  size: `${Node_Type.FILE}.size`,
 };

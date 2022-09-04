@@ -11,7 +11,7 @@ export const pluginBulletedList: TiptapEditorPlugin = {
   tiptapExtensions: [bulletedList],
   shortcuts: [
     {
-      name: 'unorderedList',
+      name: Node_Type.BULLETED_LIST,
       description: 'Toggles bulleted list to current node',
       keys: { macOs: 'Meta+Shift+8', windows: 'Ctrl+Shift+8' },
       command(editorCommands: EditorCommands) {
@@ -23,7 +23,7 @@ export const pluginBulletedList: TiptapEditorPlugin = {
   ],
   textButtons: [
     {
-      id: 'unorderedList',
+      id: Node_Type.BULLETED_LIST,
       type: 'toggle',
       presentation: {
         dataHook: 'textBlockStyleButton_Bulletedlist',

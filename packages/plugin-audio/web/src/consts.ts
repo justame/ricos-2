@@ -1,3 +1,5 @@
+import { Node_Type } from 'ricos-types';
+
 const modalContentStyles: React.CSSProperties = {
   width: 363,
   padding: 20,
@@ -115,14 +117,17 @@ export const AUDIO_TYPES: { custom: 'File Upload'; spotify: 'Spotify'; soundClou
 export const audioFileTypes = '.mp3,.pcm,.wav,.aiff,.aif,.aac,.ogg,.wma,.m4a,.flac';
 
 export const audioModals = {
-  insert: 'audioInsertModal',
-  settings: 'audioSettings',
-  insertAudio: 'audioInsertModal',
-  insertSoundCloud: 'soundCloudInsertModal',
-  insertSpotify: 'spotifyInsertModal',
-  replace: 'audioReplaceModal',
+  insert: `${Node_Type.AUDIO}.insert`,
+  settings: `${Node_Type.AUDIO}.settings`,
+  insertAudio: `${Node_Type.AUDIO}.insertAudio`,
+  insertSoundCloud: `${Node_Type.AUDIO}.insertSoundCloud`,
+  insertSpotify: `${Node_Type.AUDIO}.insertSpotify`,
+  replace: `${Node_Type.AUDIO}.replace`,
 };
 
-export const AUDIO_BUTTONS = { size: 'audioSizeButton', alignment: 'audioAlignmentButton' };
+export const AUDIO_BUTTONS = {
+  size: `${Node_Type.AUDIO}.size`,
+  alignment: `${Node_Type.AUDIO}.alignment`,
+};
 
 export const fileInputAccept = '.jpg,.png,.gif,.jpeg,.jpe,.jfif,.bmp,.heic,.heif,.tfif,.tif,.webp';

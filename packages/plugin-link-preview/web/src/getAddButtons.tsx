@@ -6,6 +6,7 @@ import {
 } from 'wix-rich-content-editor-common';
 import InsertModal from './modals/InsertModal';
 import type { AddButton } from 'ricos-types';
+import { Node_Type } from 'ricos-types';
 import { socialModals } from './consts';
 import { compact } from 'lodash';
 
@@ -14,7 +15,7 @@ export const getAddButtons = (config, services): AddButton[] => {
 
   const buttonsMap: Record<string, AddButton> = {
     Instagram: {
-      id: 'instagram',
+      id: `${Node_Type.LINK_PREVIEW}.instagram`,
       label: INSERT_PLUGIN_BUTTONS.INSTAGRAM,
       dataHook: INSERT_PLUGIN_BUTTONS.INSTAGRAM,
       icon: InstagramIcon,
@@ -35,7 +36,7 @@ export const getAddButtons = (config, services): AddButton[] => {
       },
     },
     Twitter: {
-      id: 'twitter',
+      id: `${Node_Type.LINK_PREVIEW}.twitter`,
       label: INSERT_PLUGIN_BUTTONS.TWITTER,
       dataHook: INSERT_PLUGIN_BUTTONS.TWITTER,
       icon: TwitterIcon,
@@ -56,7 +57,7 @@ export const getAddButtons = (config, services): AddButton[] => {
       },
     },
     Pinterest: {
-      id: 'pinterest',
+      id: `${Node_Type.LINK_PREVIEW}.pinterest`,
       label: INSERT_PLUGIN_BUTTONS.PINTEREST,
       dataHook: INSERT_PLUGIN_BUTTONS.PINTEREST,
       icon: PinterestIcon,
@@ -77,7 +78,7 @@ export const getAddButtons = (config, services): AddButton[] => {
       },
     },
     Facebook: {
-      id: 'facebook',
+      id: `${Node_Type.LINK_PREVIEW}.facebook`,
       label: INSERT_PLUGIN_BUTTONS.FACEBOOK,
       dataHook: INSERT_PLUGIN_BUTTONS.FACEBOOK,
       icon: FacebookIcon,
@@ -98,7 +99,7 @@ export const getAddButtons = (config, services): AddButton[] => {
       },
     },
     TikTok: {
-      id: 'tiktok',
+      id: `${Node_Type.LINK_PREVIEW}.tiktok`,
       label: INSERT_PLUGIN_BUTTONS.TIKTOK,
       dataHook: INSERT_PLUGIN_BUTTONS.TIKTOK,
       icon: TikTokIcon,

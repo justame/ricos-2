@@ -1,3 +1,4 @@
+import { Node_Type } from 'ricos-schema';
 import { LINK_BUTTON_TYPE, ACTION_BUTTON_TYPE } from './types';
 
 /* eslint-disable camelcase */
@@ -20,10 +21,10 @@ export const DEFAULT_CONFIG = {
 };
 
 export const BUTTON_BUTTONS = {
-  alignment: 'buttonAlignment',
+  alignment: `${Node_Type.BUTTON}.alignment`,
 };
 
 export const buttonsModals = {
-  [ACTION_BUTTON_TYPE]: 'actionButtonSettingsModal',
-  [LINK_BUTTON_TYPE]: 'linkButtonSettingsModal',
+  [ACTION_BUTTON_TYPE]: `${Node_Type.BUTTON}.actionButtonSettings`,
+  [LINK_BUTTON_TYPE]: `${Node_Type.BUTTON}.linkButtonSettings`,
 };

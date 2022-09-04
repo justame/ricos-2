@@ -3,12 +3,13 @@ import type {
   EditorCommands,
   TranslationFunction,
 } from 'ricos-types';
+import { Node_Type } from 'ricos-types';
 import type { HeadingsPluginEditorConfig } from './types';
 import { RESOLVERS_IDS } from 'wix-rich-content-toolbars-v3/libs/resolvers-ids';
 import { getCurrentHeadingIcon } from 'wix-rich-content-toolbars-modals/libs/getCurrentHeadingIcon';
 import HeadingPanelComponent from './HeadingsPanelComponent';
 
-const HEADINGS_MODAL_ID = 'headingsModal';
+const HEADINGS_MODAL_ID = `${Node_Type.HEADING}.modal`;
 
 type GetIconType = (
   editorCommands: EditorCommands,
@@ -25,7 +26,7 @@ export const getTextButtons = (
   const isCustomHeadings = !!config?.allowHeadingCustomization;
   return [
     {
-      id: 'headings',
+      id: `${Node_Type.HEADING}.dropdown`,
       type: 'modal',
       presentation: {
         dataHook: 'headingsDropdownButton',
@@ -44,7 +45,7 @@ export const getTextButtons = (
       },
     },
     {
-      id: 'title',
+      id: `${Node_Type.HEADING}.title`,
       type: 'toggle',
       presentation: {
         dataHook: 'textBlockStyleButton_Title',

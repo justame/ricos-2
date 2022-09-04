@@ -1,13 +1,14 @@
 import { InsertPluginIcon } from './icons';
 import { INSERT_PLUGIN_BUTTONS, TOOLBARS } from 'wix-rich-content-editor-common';
 import type { AddButton } from 'ricos-types';
+import { Node_Type } from 'ricos-types';
 import { defaultCollapsibleItem } from './tiptap/defaults';
 import { COLLAPSIBLE_LIST_TYPE } from './types';
 
 export const getAddButtons = (config, services): AddButton[] => {
   return [
     {
-      id: 'collapsibleList',
+      id: Node_Type.COLLAPSIBLE_LIST,
       icon: InsertPluginIcon,
       label: INSERT_PLUGIN_BUTTONS.COLLAPSIBLE_LIST,
       dataHook: INSERT_PLUGIN_BUTTONS.COLLAPSIBLE_LIST,

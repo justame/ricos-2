@@ -7,7 +7,7 @@ export const pluginParagraph: TiptapEditorPlugin = {
   type: Node_Type.PARAGRAPH,
   shortcuts: [
     {
-      name: 'paragraph',
+      name: Node_Type.PARAGRAPH,
       description: 'Toggles paragraph to current node',
       keys: { macOs: 'Meta+Alt+0', windows: 'Ctrl+Alt+0' },
       command(editorCommands: EditorCommands) {
