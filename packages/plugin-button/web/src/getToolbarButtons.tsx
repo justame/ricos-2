@@ -4,11 +4,16 @@ import {
   PLUGIN_TOOLBAR_BUTTON_ID,
   decorateComponentWithProps,
 } from 'wix-rich-content-editor-common';
+import { getVisibleOnlyOnDesktopResolver } from 'wix-rich-content-plugin-commons';
 import { AlignmentPanel, NodeAlignmentButton } from 'wix-rich-content-toolbars-ui';
 import { buttonsModals, BUTTON_BUTTONS } from './constants';
 import ButtonSettingsModal from './modals/SettingsModal';
 
 export const getToolbarButtons = (config, services, type): ToolbarButton[] => {
+  const {
+    context: { isMobile },
+  } = services;
+
   return [
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.ALIGNMENT,
@@ -22,6 +27,9 @@ export const getToolbarButtons = (config, services, type): ToolbarButton[] => {
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
+      attributes: {
+        visible: getVisibleOnlyOnDesktopResolver(isMobile),
+      },
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SETTINGS,

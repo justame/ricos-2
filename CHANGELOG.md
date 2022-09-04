@@ -20,7 +20,9 @@
   ## :bug: Bug Fix
   
   - `ricos-content`
-    -[#4540](https://github.com/wix/ricos/pull/4540) CKEditor/parser adds color rules, supports `u`, `em`
+    -[#4540](https://github.com/wix/ricos/pull/4540) CKEditor/parser adds color rules, supports `u`, `em`  
+  - `button/divider`
+    -[#4557](https://github.com/wix/ricos/pull/4557) fix plugin toolbar buttons visibility on mobile
 
 </details>
 

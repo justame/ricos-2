@@ -16,7 +16,10 @@ import {
 } from './const';
 import LineStylePanel from './toolbar/modals/LineStylePanel';
 import DividerSizePanel from './toolbar/modals/DividerSizePanel';
-import { selectedNodeResolver } from 'wix-rich-content-plugin-commons';
+import {
+  getVisibleOnlyOnDesktopResolver,
+  selectedNodeResolver,
+} from 'wix-rich-content-plugin-commons';
 import { DividerData_Alignment, DividerData_Width } from 'ricos-schema';
 
 const getNodeSizeResolver = {
@@ -42,6 +45,10 @@ const getNodeStyleResolver = {
 };
 
 export const getToolbarButtons = (config, services): ToolbarButton[] => {
+  const {
+    context: { isMobile },
+  } = services;
+
   return [
     {
       id: DIVIDER_BUTTONS.style,
@@ -91,6 +98,7 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
       attributes: {
         nodeSize: getNodeSizeResolver,
         selectedNode: selectedNodeResolver,
+        visible: getVisibleOnlyOnDesktopResolver(isMobile),
       },
       renderer: toolbarItem => (
         <DividerSizeButton toolbarItem={toolbarItem} id={DIVIDER_BUTTONS.size} />
@@ -98,6 +106,9 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
+      attributes: {
+        visible: getVisibleOnlyOnDesktopResolver(isMobile),
+      },
     },
     {
       id: DIVIDER_BUTTONS.alignment,
@@ -119,6 +130,7 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
       },
       attributes: {
         selectedNode: selectedNodeResolver,
+        visible: getVisibleOnlyOnDesktopResolver(isMobile),
       },
       renderer: toolbarItem => (
         <DividerAlignmentButton id={DIVIDER_BUTTONS.alignment} toolbarItem={toolbarItem} />
@@ -126,6 +138,9 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
+      attributes: {
+        visible: getVisibleOnlyOnDesktopResolver(isMobile),
+      },
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.DELETE,
