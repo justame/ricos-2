@@ -26,7 +26,6 @@ const VerticalAlignmentButton: FC<Props> = ({ dataHook, toolbarItem }) => {
   const modalService = useContext(ModalContext) || {};
 
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
-  const [isButtonActive, setIsButtonActive] = useState(false);
 
   const verticalAlignment = toolbarItem.attributes.cellAlignment || 'TOP';
   const Icon = iconsMap[verticalAlignment];
@@ -53,18 +52,10 @@ const VerticalAlignmentButton: FC<Props> = ({ dataHook, toolbarItem }) => {
       : closeModal();
   };
 
-  modalService.onModalOpened(() => {
-    modalService.isModalOpen(TABLE_BUTTONS_MODALS_ID.VERTICAL_ALIGNMENT) && setIsButtonActive(true);
-  });
-  modalService.onModalClosed(() => {
-    !modalService.isModalOpen(TABLE_BUTTONS_MODALS_ID.VERTICAL_ALIGNMENT) &&
-      setIsButtonActive(false);
-  });
-
   return (
     <DropdownButton
       dataHook={dataHook}
-      active={isButtonActive}
+      active={modalService.isModalOpen(TABLE_BUTTONS_MODALS_ID.VERTICAL_ALIGNMENT)}
       onClick={openVerticalAlignmentPanel}
       setRef={setReferenceElement}
       Icon={Icon}

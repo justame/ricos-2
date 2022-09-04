@@ -17,7 +17,6 @@ export const DividerSizeButton: FC<Props> = ({ toolbarItem, dataHook, id }) => {
   const { isMobile, t } = useContext(RicosContext) || {};
   const modalService = useContext(ModalContext) || {};
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
-  const [isButtonActive, setIsButtonActive] = useState(false);
   const getSelectedSize: () => string = () =>
     toolbarItem?.attributes.nodeSize || DividerData_Width.LARGE;
   const selectedSize = dividerSizeData.find(({ commandKey }) => commandKey === getSelectedSize());
@@ -43,17 +42,10 @@ export const DividerSizeButton: FC<Props> = ({ toolbarItem, dataHook, id }) => {
         });
   };
 
-  modalService.onModalOpened(() => {
-    modalService.isModalOpen(id) && setIsButtonActive(true);
-  });
-  modalService.onModalClosed(() => {
-    !modalService.isModalOpen(id) && setIsButtonActive(false);
-  });
-
   return (
     <DropdownButton
       dataHook={dataHook}
-      active={isButtonActive}
+      active={modalService.isModalOpen(id)}
       onClick={onClick}
       setRef={setReferenceElement}
       Icon={Icon}

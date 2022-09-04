@@ -21,7 +21,6 @@ export const DividerAlignmentButton: FC<Props> = ({ toolbarItem, dataHook, id })
   const modalService = useContext(ModalContext) || {};
   const node = toolbarItem.attributes.selectedNode;
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
-  const [isButtonActive, setIsButtonActive] = useState(false);
   const getSelectedAlignment: () => string = () =>
     node?.attrs?.alignment || getDefaultAlignment(languageDir);
   const selectedAlignment = getSelectedAlignment();
@@ -49,17 +48,10 @@ export const DividerAlignmentButton: FC<Props> = ({ toolbarItem, dataHook, id })
         });
   };
 
-  modalService.onModalOpened(() => {
-    modalService.isModalOpen(id) && setIsButtonActive(true);
-  });
-  modalService.onModalClosed(() => {
-    !modalService.isModalOpen(id) && setIsButtonActive(false);
-  });
-
   return (
     <DropdownButton
       dataHook={dataHook}
-      active={isButtonActive}
+      active={modalService.isModalOpen(id)}
       onClick={onClick}
       disabled={isButtonDisabled}
       setRef={setReferenceElement}

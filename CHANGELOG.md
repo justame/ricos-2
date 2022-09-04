@@ -17,7 +17,11 @@
     Click to see more.
   </summary>
   
-  
+## :nail_care: Polish
+
+- `plugin-toolbar` 
+  -[#4559](https://github.com/wix/ricos/pull/4559) refactor plugin toolbar active button
+
 </details>
 
 ## 8.72.51 (Sep 4, 2022)

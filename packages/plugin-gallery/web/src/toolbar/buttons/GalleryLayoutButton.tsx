@@ -17,7 +17,6 @@ export const GalleryLayoutButton: FC<Props> = ({ toolbarItem, dataHook, id }) =>
   const { t, isMobile } = useContext(RicosContext) || {};
   const modalService = useContext(ModalContext);
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
-  const [isButtonActive, setIsButtonActive] = useState(false);
   const node = toolbarItem?.attributes?.selectedNode;
   const getSelectedLayout = () => {
     const galleryLayout = GALLERY_LAYOUTS[toolbarItem?.attributes.layout];
@@ -51,17 +50,10 @@ export const GalleryLayoutButton: FC<Props> = ({ toolbarItem, dataHook, id }) =>
         });
   };
 
-  modalService.onModalOpened(() => {
-    modalService.isModalOpen(id) && setIsButtonActive(true);
-  });
-  modalService.onModalClosed(() => {
-    !modalService.isModalOpen(id) && setIsButtonActive(false);
-  });
-
   return (
     <DropdownButton
       dataHook={dataHook}
-      active={isButtonActive}
+      active={modalService.isModalOpen(id)}
       onClick={onClick}
       setRef={setReferenceElement}
       Icon={Icon}
