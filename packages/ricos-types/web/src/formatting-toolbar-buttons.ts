@@ -37,6 +37,7 @@ export interface FormattingToolbarButtons {
   ) => IToolbarItemConfigTiptap[];
 
   toExternalToolbarButtonsConfigs(
-    editorCommands: EditorCommands
+    editorCommands: EditorCommands,
+    isMobile: boolean
   ): Record<string, ToolbarButtonProps>;
 }

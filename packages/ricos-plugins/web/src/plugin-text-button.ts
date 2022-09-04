@@ -14,7 +14,10 @@ import type {
 } from 'ricos-types';
 import { resolversById, tiptapStaticToolbarConfig } from 'wix-rich-content-toolbars-v3';
 import { cleanSeparators } from './toolbar-utils/cleanSeparators';
-import { toTiptapToolbarItemsConfig } from './toolbar-utils/toTiptapToolbarItemsConfig';
+import {
+  toTiptapToolbarItemsConfig,
+  toExternalToolbarItemsConfig,
+} from './toolbar-utils/toToolbarItemsConfig';
 import { getToolbarConfig } from './toolbar-utils/getToolbarConfig';
 import { initToolbarSettings } from './toolbar-utils/initToolbarSettings';
 import { Decoration_Type, Node_Type } from 'ricos-schema';
@@ -72,6 +75,10 @@ export class PluginTextButton implements FormattingToolbarButton {
           this.keyCombinationText ? `(${this.keyCombinationText})` : ''
         }`
       : '';
+  }
+
+  getButtonId() {
+    return this.button.id;
   }
 
   register() {
@@ -205,18 +212,26 @@ export class PluginTextButtons implements FormattingToolbarButtons {
   }
 
   toExternalToolbarButtonsConfigs(
-    editorCommands: EditorCommands
+    editorCommands: EditorCommands,
+    isMobile: boolean
   ): Record<string, ToolbarButtonProps> {
     //TODO: support all buttons
-    const unsupportedTextButtons = [`${Node_Type.HEADING}.title`];
+    const unsupportedTextButtons = [`${Node_Type.HEADING}.HEADING.title`];
 
-    return this.buttons
-      .filter(
-        b =>
-          !unsupportedTextButtons.includes(
-            b.toToolbarItemConfig(editorCommands, TOOLBARS.EXTERNAL).id
-          )
-      )
+    const toolbarType = TOOLBARS.FORMATTING;
+    const toolbarConfig = getToolbarConfig(this.finalToolbarSettings, toolbarType);
+
+    const buttonsType = isMobile ? 'mobile' : 'desktop';
+
+    const externalToolbarItemsConfig = toExternalToolbarItemsConfig(
+      toolbarConfig,
+      this.buttons,
+      toolbarType,
+      buttonsType
+    );
+
+    return externalToolbarItemsConfig
+      .filter(b => !unsupportedTextButtons.includes(b.getButtonId()))
       .reduce((acc, b) => {
         const buttonConfig = b.toExternalToolbarButtonConfig(editorCommands);
         return {

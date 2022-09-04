@@ -71,7 +71,10 @@ export class RichContentAdapter implements TiptapAdapter {
           ? services.plugins.getAddButtons()
           : services.plugins.getTextButtons();
       return {
-        buttons: buttons.toExternalToolbarButtonsConfigs(this.getEditorCommands()),
+        buttons: buttons.toExternalToolbarButtonsConfigs(
+          this.getEditorCommands(),
+          services.context.isMobile
+        ),
         context: {} as EditorContextType,
         pubsub: {} as Pubsub,
       };

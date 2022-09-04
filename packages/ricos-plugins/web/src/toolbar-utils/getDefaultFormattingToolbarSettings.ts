@@ -32,6 +32,23 @@ export function getDefaultFormattingToolbarSettings(
 
   return [
     {
+      name: ToolbarType.FORMATTING,
+      shouldCreate: () => ({
+        desktop: false,
+        mobile: {
+          android: false,
+          ios: false,
+        },
+      }),
+      getButtons: () => ({
+        desktop: textButtons?.desktop,
+        mobile: {
+          android: textButtons?.mobile,
+          ios: textButtons?.mobile,
+        },
+      }),
+    },
+    {
       name: ToolbarType.MOBILE,
       shouldCreate: () => ({
         desktop: false,
@@ -52,13 +69,6 @@ export function getDefaultFormattingToolbarSettings(
           },
         };
       },
-      // getTextPluginButtons: () => ({
-      //   desktop: {},
-      //   mobile: {
-      //     ios: pluginTextButtons,
-      //     android: pluginTextButtons,
-      //   },
-      // }),
       getVisibilityFn: () => ({
         desktop: () => false,
         mobile: {
@@ -66,7 +76,6 @@ export function getDefaultFormattingToolbarSettings(
           android: () => true,
         },
       }),
-      // getInstance: createMobileToolbar,
     },
     {
       name: ToolbarType.STATIC,
@@ -87,13 +96,6 @@ export function getDefaultFormattingToolbarSettings(
           android: [],
         },
       }),
-      // getTextPluginButtons: () => ({
-      //   desktop: pluginTextButtons,
-      //   mobile: {
-      //     ios: {},
-      //     android: {},
-      //   },
-      // }),
       getVisibilityFn: () => ({
         desktop: () => true,
         mobile: {
@@ -101,7 +103,6 @@ export function getDefaultFormattingToolbarSettings(
           android: () => false,
         },
       }),
-      // getInstance: createStaticTextToolbar,
     },
     {
       name: ToolbarType.INLINE,
@@ -122,21 +123,6 @@ export function getDefaultFormattingToolbarSettings(
           android: [],
         },
       }),
-      // getTextPluginButtons: () => ({
-      //   desktop: pluginTextButtons,
-      //   mobile: {
-      //     ios: pluginTextButtons,
-      //     android: {},
-      //   },
-      // }),
-      // getVisibilityFn: () => ({
-      //   desktop: defaultInlineToolbarVisibilityFn,
-      //   mobile: {
-      //     ios: defaultInlineToolbarVisibilityFn,
-      //     android: defaultInlineToolbarVisibilityFn,
-      //   },
-      // }),
-      // getInstance: createInlineTextToolbar,
     },
   ];
 }

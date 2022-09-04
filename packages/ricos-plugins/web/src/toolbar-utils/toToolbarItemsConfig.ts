@@ -1,6 +1,7 @@
 import type { IToolbarItemConfigTiptap, ToolbarSettingsFunctions, ToolbarType } from 'ricos-types';
 import { Decoration_Type, Node_Type } from 'ricos-types';
 import { isiOS } from './isiOS';
+import type { PluginTextButton } from '../plugin-text-button';
 import toConstantCase from 'to-constant-case';
 
 const cleanTitleIfNeeded = (
@@ -54,17 +55,10 @@ const toSchemaBasedId = (formattingButtonId: string): string => {
   return id;
 };
 
-export function toTiptapToolbarItemsConfig(
-  toolbarConfig: ToolbarSettingsFunctions | undefined,
-  tiptapToolbarConfig: IToolbarItemConfigTiptap[],
-  toolbarType: ToolbarType,
+function getButtonsListFromConfig(
+  toolbarConfig: ToolbarSettingsFunctions,
   buttonsType: 'desktop' | 'mobile'
 ) {
-  if (!toolbarConfig) {
-    console.error(`${toolbarType} doesn't exists`);
-    return [];
-  }
-
   const buttonsPerType = toolbarConfig.getButtons?.();
 
   let buttons;
@@ -78,16 +72,34 @@ export function toTiptapToolbarItemsConfig(
     buttons = [];
   }
 
-  const buttonsList = buttons.map(button => {
-    let buttonName = '';
+  return buttons;
+}
 
-    if (button === '|') {
-      buttonName = 'separator';
-    } else {
-      buttonName = toConstantCase(button);
-    }
-    return buttonName;
-  });
+function mapButtonsFromConfig(formattingConfigButtonId: string) {
+  let buttonName = '';
+
+  if (formattingConfigButtonId === '|') {
+    buttonName = 'separator';
+  } else {
+    buttonName = toConstantCase(formattingConfigButtonId);
+  }
+  return buttonName;
+}
+
+export function toTiptapToolbarItemsConfig(
+  toolbarConfig: ToolbarSettingsFunctions | undefined,
+  tiptapToolbarConfig: IToolbarItemConfigTiptap[],
+  toolbarType: ToolbarType,
+  buttonsType: 'desktop' | 'mobile'
+) {
+  if (!toolbarConfig) {
+    console.error(`${toolbarType} doesn't exists`);
+    return [];
+  }
+
+  const buttonsListFromConfig = getButtonsListFromConfig(toolbarConfig, buttonsType);
+
+  const buttonsList = buttonsListFromConfig.map(mapButtonsFromConfig);
 
   const tiptapToolbarItemsConfig: IToolbarItemConfigTiptap[] = [];
   buttonsList.map(toSchemaBasedId).forEach(button => {
@@ -99,4 +111,30 @@ export function toTiptapToolbarItemsConfig(
 
   const finalTiptapToolbarItemsConfig = cleanTitleIfNeeded(tiptapToolbarItemsConfig);
   return finalTiptapToolbarItemsConfig;
+}
+
+export function toExternalToolbarItemsConfig(
+  toolbarConfig: ToolbarSettingsFunctions | undefined,
+  pluginTextButtons: PluginTextButton[],
+  toolbarType: ToolbarType,
+  buttonsType: 'desktop' | 'mobile'
+) {
+  if (!toolbarConfig) {
+    console.error(`${toolbarType} doesn't exists`);
+    return [];
+  }
+
+  const buttonsListFromConfig = getButtonsListFromConfig(toolbarConfig, buttonsType);
+
+  const buttonsList = buttonsListFromConfig.map(mapButtonsFromConfig);
+
+  const externalToolbarItemsConfig: PluginTextButton[] = [];
+  buttonsList.map(toSchemaBasedId).forEach(button => {
+    const buttonConfig = pluginTextButtons.find(b => b.getButtonId() === button);
+    if (buttonConfig) {
+      externalToolbarItemsConfig.push(buttonConfig);
+    }
+  });
+
+  return externalToolbarItemsConfig;
 }
