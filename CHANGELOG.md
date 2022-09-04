@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
   
+## :bug: Bug Fix
+
+- `ricos-modals` 
+  -[#4562](https://github.com/wix/ricos/pull/4562) fix popover and toolbar modal height
+
 ## :nail_care: Polish
 
 - `plugin-toolbar` 
