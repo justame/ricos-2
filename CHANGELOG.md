@@ -17,14 +17,20 @@
     Click to see more.
   </summary>
   
-  ## :bug: Bug Fix
   
-  - `ricos-content`
-    -[#4540](https://github.com/wix/ricos/pull/4540) CKEditor/parser adds color rules, supports `u`, `em`  
-  - `button/divider`
-    -[#4557](https://github.com/wix/ricos/pull/4557) fix plugin toolbar buttons visibility on mobile
-
 </details>
+
+## 8.72.51 (Sep 4, 2022)
+
+## :nail_care: Polish
+
+- `editor`
+  - [#4550](https://github.com/wix/ricos/pull/4550) support external container scrolling element
+
+## :bug: Bug Fix
+
+- `ricos-content` -[#4540](https://github.com/wix/ricos/pull/4540) CKEditor/parser adds color rules, supports `u`, `em`
+- `button/divider` -[#4557](https://github.com/wix/ricos/pull/4557) fix plugin toolbar buttons visibility on mobile
 
 ## 8.72.50 (Sep 2, 2022)
 
