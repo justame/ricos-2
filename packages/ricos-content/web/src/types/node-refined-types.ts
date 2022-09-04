@@ -136,7 +136,8 @@ export type RichContentNodeWithContainerData =
   | LinkPreviewNode
   | MapNode
   | VideoNode
-  | AudioNode;
+  | AudioNode
+  | PollNode;
 
 // Top-level nodes
 export type RichContentNode = RichTextNode | ListNode | RichContentNodeWithContainerData;
