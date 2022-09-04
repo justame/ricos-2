@@ -8,7 +8,6 @@ import type {
   IToolbarItemConfigTiptap,
   ToolbarButtonProps,
   ToolbarSettings,
-  IContent,
   Platform,
   ToolbarType,
   ToolbarSettingsFunctions,
@@ -18,27 +17,28 @@ import { cleanSeparators } from './toolbar-utils/cleanSeparators';
 import { toTiptapToolbarItemsConfig } from './toolbar-utils/toTiptapToolbarItemsConfig';
 import { getToolbarConfig } from './toolbar-utils/getToolbarConfig';
 import { initToolbarSettings } from './toolbar-utils/initToolbarSettings';
+import { Decoration_Type, Node_Type } from 'ricos-schema';
 import type { PluginServices } from './editorPlugins';
 
-const fromCamelCase = {
-  bold: FORMATTING_BUTTONS.BOLD,
-  italic: FORMATTING_BUTTONS.ITALIC,
-  underline: FORMATTING_BUTTONS.UNDERLINE,
-  title: FORMATTING_BUTTONS.TITLE,
-  blockquote: FORMATTING_BUTTONS.BLOCKQUOTE,
-  alignment: FORMATTING_BUTTONS.ALIGNMENT,
-  orderedList: FORMATTING_BUTTONS.ORDERED_LIST,
-  unorderedList: FORMATTING_BUTTONS.UNORDERED_LIST,
-  fontSize: FORMATTING_BUTTONS.FONT_SIZE,
-  spoiler: FORMATTING_BUTTONS.SPOILER,
-  link: FORMATTING_BUTTONS.LINK,
-  headings: FORMATTING_BUTTONS.HEADINGS,
-  textColor: FORMATTING_BUTTONS.TEXT_COLOR,
-  textHighlight: FORMATTING_BUTTONS.TEXT_HIGHLIGHT,
-  codeBlock: FORMATTING_BUTTONS.CODE_BLOCK,
-  lineSpacing: FORMATTING_BUTTONS.LINE_SPACING,
-  increaseIndent: FORMATTING_BUTTONS.INCREASE_INDENT,
-  decreaseIndent: FORMATTING_BUTTONS.DECREASE_INDENT,
+const toExternalType = {
+  [Decoration_Type.BOLD]: FORMATTING_BUTTONS.BOLD,
+  [Decoration_Type.ITALIC]: FORMATTING_BUTTONS.ITALIC,
+  [Decoration_Type.UNDERLINE]: FORMATTING_BUTTONS.UNDERLINE,
+  [`${Node_Type.HEADING}.title`]: FORMATTING_BUTTONS.TITLE,
+  [Node_Type.BLOCKQUOTE]: FORMATTING_BUTTONS.BLOCKQUOTE,
+  ALIGNMENT: FORMATTING_BUTTONS.ALIGNMENT,
+  [Node_Type.ORDERED_LIST]: FORMATTING_BUTTONS.ORDERED_LIST,
+  [Node_Type.BULLETED_LIST]: FORMATTING_BUTTONS.UNORDERED_LIST,
+  [Decoration_Type.FONT_SIZE]: FORMATTING_BUTTONS.FONT_SIZE,
+  [Decoration_Type.SPOILER]: FORMATTING_BUTTONS.SPOILER,
+  [Decoration_Type.LINK]: FORMATTING_BUTTONS.LINK,
+  [`${Node_Type.HEADING}.dropdown`]: FORMATTING_BUTTONS.HEADINGS,
+  [`${Decoration_Type.COLOR}.foreground`]: FORMATTING_BUTTONS.TEXT_COLOR,
+  [`${Decoration_Type.COLOR}.background`]: FORMATTING_BUTTONS.TEXT_HIGHLIGHT,
+  [Node_Type.CODE_BLOCK]: FORMATTING_BUTTONS.CODE_BLOCK,
+  LINE_SPACING: FORMATTING_BUTTONS.LINE_SPACING,
+  [`INDENT.increase`]: FORMATTING_BUTTONS.INCREASE_INDENT,
+  [`INDENT.decrease`]: FORMATTING_BUTTONS.DECREASE_INDENT,
 };
 
 export class PluginTextButton implements FormattingToolbarButton {
@@ -135,7 +135,7 @@ export class PluginTextButton implements FormattingToolbarButton {
   toExternalToolbarButtonConfig(editorCommands: EditorCommands): ToolbarButtonProps {
     const attributes = this.toResolvedAttributes();
     const { modals, content, context, t } = this.services;
-    const name = fromCamelCase[this.button.id] ?? this.button.id;
+    const name = toExternalType[this.button.id] ?? this.button.id;
 
     return {
       type: 'button',
@@ -146,7 +146,7 @@ export class PluginTextButton implements FormattingToolbarButton {
         this.button.presentation?.getIcon(editorCommands, this.services.t),
       getLabel: () => t(name),
       onClick: e => {
-        this.services.toolbars.external.publishButtonClick(name);
+        this.services.toolbars.external.publishButtonClick(this.button.id);
         return this.button.modal
           ? modals.isModalOpen(this.button.modal.id)
             ? modals.closeModal(this.button.modal.id)
@@ -208,7 +208,7 @@ export class PluginTextButtons implements FormattingToolbarButtons {
     editorCommands: EditorCommands
   ): Record<string, ToolbarButtonProps> {
     //TODO: support all buttons
-    const unsupportedTextButtons = ['title'];
+    const unsupportedTextButtons = [`${Node_Type.HEADING}.title`];
 
     return this.buttons
       .filter(

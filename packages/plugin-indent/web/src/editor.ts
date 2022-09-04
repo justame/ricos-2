@@ -16,7 +16,7 @@ export const pluginIndent: EditorPluginCreator<IndentPluginEditorConfig> = confi
     createPlugin: createIndentPlugin,
     shortcuts: [
       {
-        name: `${INDENT_TYPE}.increase`,
+        name: `INDENT.increase`,
         description: 'Indents the current node',
         keys: { macOs: 'Meta+]', windows: 'Ctrl+]' },
         command(editorCommands: EditorCommands) {
@@ -26,7 +26,7 @@ export const pluginIndent: EditorPluginCreator<IndentPluginEditorConfig> = confi
         enabled: true,
       },
       {
-        name: `${INDENT_TYPE}.decrease`,
+        name: `INDENT.decrease`,
         description: 'Unindents the current node',
         keys: { macOs: 'Meta+[', windows: 'Ctrl+[' },
         command(editorCommands: EditorCommands) {
@@ -38,7 +38,7 @@ export const pluginIndent: EditorPluginCreator<IndentPluginEditorConfig> = confi
     ],
     textButtons: [
       {
-        id: `${INDENT_TYPE}.increase`,
+        id: `INDENT.increase`,
         type: 'toggle',
         presentation: {
           dataHook: 'increaseIndentButton',
@@ -55,7 +55,7 @@ export const pluginIndent: EditorPluginCreator<IndentPluginEditorConfig> = confi
         },
       },
       {
-        id: `${INDENT_TYPE}.decrease`,
+        id: `INDENT.decrease`,
         type: 'toggle',
         presentation: {
           dataHook: 'decreaseIndentButton',

@@ -1,7 +1,6 @@
 import type { IToolbarItemConfigTiptap, ToolbarSettingsFunctions, ToolbarType } from 'ricos-types';
 import { Decoration_Type, Node_Type } from 'ricos-types';
 import { isiOS } from './isiOS';
-import { INDENT_TYPE } from 'ricos-content';
 import toConstantCase from 'to-constant-case';
 
 const cleanTitleIfNeeded = (
@@ -39,8 +38,8 @@ const toSchemaBasedId = (formattingButtonId: string): string => {
     TITLE: `${Node_Type.HEADING}.title`,
     HEADINGS: `${Node_Type.HEADING}.dropdown`,
     UNORDERED_LIST: Node_Type.BULLETED_LIST,
-    INCREASE_INDENT: `${INDENT_TYPE}.increase`,
-    DECREASE_INDENT: `${INDENT_TYPE}.decrease`,
+    INCREASE_INDENT: `INDENT.increase`,
+    DECREASE_INDENT: `INDENT.decrease`,
     TEXT_COLOR: `${Decoration_Type.COLOR}.foreground`,
     TEXT_HIGHLIGHT: `${Decoration_Type.COLOR}.background`,
     ADD_PLUGIN: 'addPlugin',

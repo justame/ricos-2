@@ -16,7 +16,6 @@ import {
 } from './components/buttons';
 import { ToolbarButtonSeparator } from 'wix-rich-content-toolbars-ui';
 import { Decoration_Type, Node_Type } from 'ricos-types';
-import { INDENT_TYPE } from 'wix-rich-content-common';
 
 const toggleRenders = [
   'UNDO',
@@ -29,8 +28,8 @@ const toggleRenders = [
   Node_Type.ORDERED_LIST,
   Node_Type.BULLETED_LIST,
   Decoration_Type.SPOILER,
-  `${INDENT_TYPE}.increase`,
-  `${INDENT_TYPE}.decrease`,
+  `INDENT.increase`,
+  `INDENT.decrease`,
 ].reduce((acc, t) => {
   return {
     ...acc,
