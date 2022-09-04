@@ -216,7 +216,7 @@ export class PluginTextButtons implements FormattingToolbarButtons {
     isMobile: boolean
   ): Record<string, ToolbarButtonProps> {
     //TODO: support all buttons
-    const unsupportedTextButtons = [`${Node_Type.HEADING}.HEADING.title`];
+    const unsupportedTextButtons = [`${Node_Type.HEADING}.title`];
 
     const toolbarType = TOOLBARS.FORMATTING;
     const toolbarConfig = getToolbarConfig(this.finalToolbarSettings, toolbarType);
