@@ -13,4 +13,5 @@ export interface GeneralContext {
   theme: RicosTheme;
   portal: RicosPortal;
   debugMode: DebugMode[];
+  editorExternalContainer?: HTMLElement | (() => HTMLElement);
 }

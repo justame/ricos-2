@@ -221,6 +221,7 @@ interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   experiments?: Record<string, any>;
   modalSettings?: { container: HTMLElement };
+  container?: HTMLElement | (() => HTMLElement);
 }
 
 class EditorWrapper extends React.Component<Props> {
@@ -251,6 +252,7 @@ class EditorWrapper extends React.Component<Props> {
       rcProps = {},
       experiments,
       modalSettings,
+      container,
     } = this.props;
 
     return (
@@ -276,6 +278,7 @@ class EditorWrapper extends React.Component<Props> {
           onAtomicBlockFocus={d => console.log('onAtomicBlockFocus', d)} // eslint-disable-line
           commands={commands}
           modalSettings={modalSettings}
+          container={container}
         >
           <RichContentEditor
             onFocus={onFocus}

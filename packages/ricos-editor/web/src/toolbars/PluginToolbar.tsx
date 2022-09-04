@@ -91,6 +91,7 @@ class PluginsToolbar extends React.Component<
             portal={ricosContext.portal}
             isVisible={isVisible}
             zIndex={zIndexService.getZIndex('TOOLBAR')}
+            boundary={ricosContext.editorExternalContainer}
             getReferenceElement={selectedDOM => {
               if (selectedDOM) {
                 return selectedDOM?.querySelector?.('[data-hook=ricos-node]')

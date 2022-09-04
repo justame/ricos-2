@@ -76,6 +76,7 @@ export class RicosOrchestrator implements Orchestrator {
       locale: editorProps.locale || 'en',
       localeContent: editorProps.localeContent || 'en',
       experiments: editorProps.experiments || {},
+      editorExternalContainer: editorProps.container,
     };
 
     this.updateService = new UpdateService();

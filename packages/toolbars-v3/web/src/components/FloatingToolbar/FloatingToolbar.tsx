@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState, useCallback } from 'react';
 import ReactDOM from 'react-dom';
-import { useFloating, shift, offset, autoUpdate, flip } from '@floating-ui/react-dom';
+import { useFloating, shift, offset, autoUpdate, flip, hide } from '@floating-ui/react-dom';
 import { ClickOutside } from '../Clickoutside/ClickOutside';
 import type { RicosPortal } from 'ricos-types';
 
@@ -18,6 +18,7 @@ export const FloatingToolbar = ({
   children,
   getReferenceElement,
   zIndex = 1,
+  boundary,
 }: {
   editor: Editor;
   portal: RicosPortal;
@@ -25,6 +26,7 @@ export const FloatingToolbar = ({
   children: any;
   getReferenceElement?: (selectedDomNode) => HTMLElement | null;
   zIndex?: number;
+  boundary?: HTMLElement | (() => HTMLElement);
 }) => {
   const { state, view } = editor;
   const { from, to } = state.selection;
@@ -32,16 +34,19 @@ export const FloatingToolbar = ({
   const [dummyUpdate, setForceUpdate] = useState<number>(1);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
 
-  const { x, y, reference, floating, strategy } = useFloating({
+  const _boundary =
+    (typeof boundary === 'function' ? boundary() : boundary) || editor.view.dom || undefined;
+  const { x, y, reference, floating, strategy, middlewareData } = useFloating({
     placement: 'top',
     middleware: [
       flip({
-        boundary: editor.view.dom || undefined,
+        boundary: _boundary,
       }),
       shift({
         padding: 10,
-        boundary: editor.view.dom || undefined,
+        boundary: _boundary,
       }),
+      hide({ boundary: _boundary }),
       offset(8),
     ],
 
@@ -123,6 +128,7 @@ export const FloatingToolbar = ({
               top: y ?? '',
               left: x ?? '',
               zIndex,
+              visibility: middlewareData.hide?.referenceHidden ? 'hidden' : 'visible',
             }}
           >
             <div data-id="ricos-floating-toolbar" tabIndex={-1}>

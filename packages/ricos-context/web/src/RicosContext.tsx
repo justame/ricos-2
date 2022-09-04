@@ -24,6 +24,7 @@ export const RicosContextProvider = ({
   theme,
   t,
   portal,
+  editorExternalContainer,
   debugMode = [] as DebugMode[],
 }) => {
   return (
@@ -38,6 +39,7 @@ export const RicosContextProvider = ({
         theme,
         portal,
         debugMode,
+        editorExternalContainer,
       }}
     >
       {React.cloneElement(React.Children.only(children))}

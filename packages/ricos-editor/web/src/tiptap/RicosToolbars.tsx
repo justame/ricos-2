@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useContext } from 'react';
+import React from 'react';
 import type { Node } from 'prosemirror-model';
 import type { Content } from 'wix-rich-content-toolbars-v3';
 import {
@@ -202,6 +202,7 @@ class RicosToolbars extends React.Component<
               portal={ricosContext.portal}
               isVisible={this.isFormattingToolbarVisible}
               zIndex={zIndexService.getZIndex('TOOLBAR')}
+              boundary={ricosContext.editorExternalContainer}
             >
               {() =>
                 this.floatingToolbarChildren(
@@ -237,6 +238,7 @@ class RicosToolbars extends React.Component<
               portal={ricosContext.portal}
               isVisible={this.isLinkToolbarVisible}
               zIndex={zIndexService.getZIndex('TOOLBAR')}
+              boundary={ricosContext.editorExternalContainer}
             >
               {() =>
                 this.floatingToolbarChildren(

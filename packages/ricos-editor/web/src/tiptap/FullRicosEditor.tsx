@@ -222,6 +222,7 @@ export class FullRicosEditor extends React.Component<Props, State> {
                   theme={theme}
                   portal={this.portalRef.current}
                   debugMode={this.props.debugMode}
+                  editorExternalContainer={this.props.container}
                 >
                   <>
                     <EditorContextProvider editor={editor}>
