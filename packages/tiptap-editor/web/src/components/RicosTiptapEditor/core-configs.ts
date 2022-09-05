@@ -39,5 +39,5 @@ export const coreConfigs = [
   anchor,
   dropcursor,
   hardBreak,
-  contentDiff,
+  ...(!/skipContentDiff/i.test(window.location.search) ? [contentDiff] : []),
 ];
