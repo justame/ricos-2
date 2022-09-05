@@ -17,6 +17,10 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.72.54 (Sep 5, 2022)
+
 ## :bug: Bug Fix
 
 - `ricos-editor`
@@ -25,8 +29,6 @@
   - [#4570](https://github.com/wix/ricos/pull/4570) remove edit image button on mobile tiptap
 - `collapsible-list`
   - [#4572](https://github.com/wix/ricos/pull/4572) collapsible list default direction by `languageDir` on tiptap
-
-</details>
 
 ## 8.72.53 (Sep 5, 2022)
 
