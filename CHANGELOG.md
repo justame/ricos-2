@@ -19,6 +19,13 @@
 
 </details>
 
+## 8.72.55 (Sep 05, 2022)
+
+## :house: Internal
+
+- `tiptap-extensions`
+  - skipContentDiff key added (#4577)
+
 ## 8.72.54 (Sep 5, 2022)
 
 ## :bug: Bug Fix
@@ -936,3 +943,4 @@
   - [#4021](https://github.com/wix/ricos/pull/4021) tiptap converters for single node
 - `ricos-converters`
   - [#4065](https://github.com/wix/ricos/pull/4065) added missing tiptap converters
+
