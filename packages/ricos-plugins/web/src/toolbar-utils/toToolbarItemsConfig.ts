@@ -8,10 +8,10 @@ const cleanTitleIfNeeded = (
   tiptapToolbarItemsConfig: IToolbarItemConfigTiptap[]
 ): IToolbarItemConfigTiptap[] => {
   if (
-    tiptapToolbarItemsConfig.some(button => button.id === 'headings') &&
-    tiptapToolbarItemsConfig.some(button => button.id === 'title')
+    tiptapToolbarItemsConfig.some(button => button.id === `${Node_Type.HEADING}.dropdown`) &&
+    tiptapToolbarItemsConfig.some(button => button.id === `${Node_Type.HEADING}.title`)
   ) {
-    return tiptapToolbarItemsConfig.filter(button => button.id !== 'title');
+    return tiptapToolbarItemsConfig.filter(button => button.id !== `${Node_Type.HEADING}.title`);
   } else {
     return tiptapToolbarItemsConfig;
   }
