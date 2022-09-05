@@ -50,7 +50,7 @@ const toSchemaBasedId = (formattingButtonId: string): string => {
   }
   const id = specificMapping[formattingButtonId];
   if (!id) {
-    throw new Error(`toSchemaBasedId: unknown formattingButtonId: ${formattingButtonId}`);
+    console.error(`toSchemaBasedId: unknown formattingButtonId: ${formattingButtonId}`);
   }
   return id;
 };
