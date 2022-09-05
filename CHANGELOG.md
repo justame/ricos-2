@@ -16,18 +16,23 @@
     Changes that have landed in master but are not yet released.
     Click to see more.
   </summary>
-  
+
+
+</details>
+
+## 8.72.52 (Sep 5, 2022)
+
+## :house: Internal
+
+- `wix-image` -[#4566](https://github.com/wix/ricos/pull/4566) @wix/image upgrade 1.42.0
+
 ## :bug: Bug Fix
 
-- `ricos-modals` 
-  -[#4562](https://github.com/wix/ricos/pull/4562) fix popover and toolbar modal height
+- `ricos-modals` -[#4562](https://github.com/wix/ricos/pull/4562) fix popover and toolbar modal height
 
 ## :nail_care: Polish
 
-- `plugin-toolbar` 
-  -[#4559](https://github.com/wix/ricos/pull/4559) refactor plugin toolbar active button
-
-</details>
+- `plugin-toolbar` -[#4559](https://github.com/wix/ricos/pull/4559) refactor plugin toolbar active button
 
 ## 8.72.51 (Sep 4, 2022)
 
