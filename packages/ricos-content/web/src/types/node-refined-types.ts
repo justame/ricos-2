@@ -198,7 +198,7 @@ type Leaf = Omit<Node, 'nodes'> & {
   nodes: never[];
 };
 
-const isLeaf = (node: Node): node is Leaf => node.nodes === [];
+const isLeaf = (node: Node): node is Leaf => node.nodes.length === 0;
 
 export type DividerNode = Identified &
   Styled &
