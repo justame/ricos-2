@@ -1,6 +1,6 @@
 {
   "name": "wix-rich-content-preview",
-  "version": "8.72.54",
+  "version": "8.72.55",
   "author": {
     "name": "Alex Greenstein",
     "email": "alexgr@wix.com"
@@ -46,9 +46,9 @@
   },
   "dependencies": {
     "react-measure": "~2.3.0",
-    "ricos-content": "8.72.54",
-    "wix-rich-content-common": "8.72.54",
-    "wix-rich-content-viewer": "8.72.54"
+    "ricos-content": "8.72.55",
+    "wix-rich-content-common": "8.72.55",
+    "wix-rich-content-viewer": "8.72.55"
   },
   "peerDependencies": {
     "@babel/runtime": "^7.17.2",
