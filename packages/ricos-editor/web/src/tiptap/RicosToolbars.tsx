@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
+import ReactDOM from 'react-dom';
 import type { Node } from 'prosemirror-model';
 import type { Content } from 'wix-rich-content-toolbars-v3';
 import {
@@ -42,6 +43,8 @@ type RicosToolbarProps = {
   toolbarSettings?: ToolbarSettings;
   plugins: RicosEditorPlugins;
   modalService: ModalService;
+  topToolbarsRef: React.RefObject<HTMLDivElement>;
+  bottomToolbarsRef: React.RefObject<HTMLDivElement>;
 };
 
 type RicosToolbarState = {
@@ -257,14 +260,14 @@ class RicosToolbars extends React.Component<
   }
 
   renderMobileToolbar(finaltoolbarSettings: ToolbarSettingsFunctions[]) {
-    const { ricosContext, plugins, editor } = this.props;
+    const { ricosContext, plugins, editor, topToolbarsRef } = this.props;
 
     const toolbarType = TOOLBARS.MOBILE;
     const toolbarConfig = this.getToolbarConfig(finaltoolbarSettings, toolbarType);
     const shouldCreate = this.getShouldCreate(ricosContext.isMobile, toolbarConfig?.shouldCreate);
 
-    if (ricosContext.isMobile && shouldCreate) {
-      return (
+    if (ricosContext.isMobile && topToolbarsRef.current && shouldCreate) {
+      return ReactDOM.createPortal(
         <div data-hook="mobileToolbar" dir={ricosContext.languageDir}>
           {this.renderToolbar(
             plugins
@@ -275,7 +278,8 @@ class RicosToolbars extends React.Component<
                 editor.getEditorCommands()
               ) || []
           )}
-        </div>
+        </div>,
+        topToolbarsRef.current
       );
     } else {
       return null;
@@ -337,14 +341,14 @@ class RicosToolbars extends React.Component<
   };
 
   renderFooterToolbar = (finaltoolbarSettings: ToolbarSettingsFunctions[]) => {
-    const { ricosContext } = this.props;
+    const { ricosContext, bottomToolbarsRef } = this.props;
     const toolbarType = TOOLBARS.FOOTER;
     const toolbarConfig = this.getToolbarConfig(finaltoolbarSettings, toolbarType);
 
     const shouldCreate = this.getShouldCreate(ricosContext.isMobile, toolbarConfig?.shouldCreate);
 
-    if (!ricosContext.isMobile && shouldCreate) {
-      return <FooterToolbar />;
+    if (!ricosContext.isMobile && bottomToolbarsRef.current && shouldCreate) {
+      return ReactDOM.createPortal(<FooterToolbar />, bottomToolbarsRef.current);
     }
   };
 
@@ -352,18 +356,20 @@ class RicosToolbars extends React.Component<
     const {
       ricosContext: { isMobile },
       plugins,
+      topToolbarsRef,
     } = this.props;
     const toolbarType = TOOLBARS.SIDE;
     const toolbarConfig = this.getToolbarConfig(finaltoolbarSettings, toolbarType);
 
     const shouldCreate = this.getShouldCreate(isMobile, toolbarConfig?.shouldCreate);
 
-    if (!isMobile && shouldCreate) {
-      return (
+    if (!isMobile && topToolbarsRef.current && shouldCreate) {
+      return ReactDOM.createPortal(
         <FloatingAddPluginMenu
           addPluginMenuConfig={toolbarConfig?.addPluginMenuConfig}
           plugins={plugins}
-        />
+        />,
+        topToolbarsRef.current
       );
     }
   };

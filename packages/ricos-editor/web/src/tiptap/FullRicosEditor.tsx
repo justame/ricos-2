@@ -31,7 +31,6 @@ import s from '../../statics/styles/editor-styles.scss';
 import RicosPortal from '../modals/RicosPortal';
 import type { RicosEditorRef } from '../RicosEditorRef';
 import { convertToolbarContext } from '../toolbars/convertToolbarContext';
-import { FooterToolbarPlaceholder } from '../toolbars/FooterToolbarPlaceholder';
 import RicosEditor from './RicosEditor';
 import RicosStylesRenderer from './RicosStyles';
 import RicosToolbars from './RicosToolbars';
@@ -51,6 +50,10 @@ export class FullRicosEditor extends React.Component<Props, State> {
 
   portalRef: RefObject<RicosPortalType>;
 
+  topToolbarsRef: RefObject<HTMLDivElement>;
+
+  bottomToolbarsRef: RefObject<HTMLDivElement>;
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   errorNotifier: React.RefObject<any>;
 
@@ -63,6 +66,8 @@ export class FullRicosEditor extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.portalRef = createRef<RicosPortalType>();
+    this.topToolbarsRef = createRef<HTMLDivElement>();
+    this.bottomToolbarsRef = createRef<HTMLDivElement>();
     this.errorNotifier = React.createRef();
     this.inputRef = React.createRef();
     this.orchestrator = new RicosOrchestrator(props, props.t);
@@ -233,6 +238,13 @@ export class FullRicosEditor extends React.Component<Props, State> {
                               <PluginsEventsContextProvider pluginsEvents={pluginsEvents}>
                                 <>
                                   <>
+                                    <div ref={this.topToolbarsRef} />
+                                    <RicosEditor
+                                      onChange={this.onChange}
+                                      {...restProps}
+                                      ref={this.props.forwardRef}
+                                    />
+                                    <div ref={this.bottomToolbarsRef} />
                                     <UploadContextProvider
                                       uploadService={uploadService}
                                       updateService={updateService}
@@ -253,18 +265,14 @@ export class FullRicosEditor extends React.Component<Props, State> {
                                               toolbarSettings={toolbarSettings}
                                               plugins={plugins}
                                               modalService={modals}
+                                              topToolbarsRef={this.topToolbarsRef}
+                                              bottomToolbarsRef={this.bottomToolbarsRef}
                                             />
                                           </ContentQueryProvider>
                                         </>
                                         <ModalRenderer />
                                       </ToolbarContext.Provider>
                                     </UploadContextProvider>
-                                    <RicosEditor
-                                      onChange={this.onChange}
-                                      {...restProps}
-                                      ref={this.props.forwardRef}
-                                    />
-                                    <FooterToolbarPlaceholder toolbarSettings={toolbarSettings} />
                                   </>
                                 </>
                               </PluginsEventsContextProvider>

@@ -5,6 +5,7 @@
     // TODO: reset all editor-related styles
     text-align: initial;
     height: inherit;
+    flex: 1;
 
     &:focus-visible {
       outline: none;
@@ -29,6 +30,9 @@
 
 .ricosTiptapEditor {
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 
   @include phone {
     padding: 18px;
