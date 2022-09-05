@@ -7,7 +7,17 @@ export class RicosTextStyle implements TextStyle {
   textStyle: Omit<TextStyleRichContent, 'textAlignment'>;
 
   private constructor(textStyle: Omit<TextStyleRichContent, 'textAlignment'>) {
-    this.textStyle = pickBy(textStyle);
+    this.textStyle = this.preprocess(textStyle);
+  }
+
+  private preprocess(textStyle: Omit<TextStyleRichContent, 'textAlignment'>) {
+    let lineHeight = textStyle.lineHeight;
+    if (lineHeight && !Number(lineHeight)) {
+      if (lineHeight.includes('px') || lineHeight.includes('em')) {
+        lineHeight = lineHeight.slice(0, lineHeight.length - 2);
+      }
+    }
+    return pickBy({ ...textStyle, lineHeight });
   }
 
   static of(textStyle: Omit<TextStyleRichContent, 'textAlignment'>): RicosTextStyle {
