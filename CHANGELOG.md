@@ -17,6 +17,9 @@
     Click to see more.
   </summary>
 
+- `image`
+  - [#4570](https://github.com/wix/ricos/pull/4570) remove edit image button on mobile tiptap
+
 </details>
 
 ## 8.72.53 (Sep 5, 2022)

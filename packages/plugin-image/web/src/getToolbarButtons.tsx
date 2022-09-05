@@ -95,20 +95,14 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
       },
       renderer: (toolbarItem: IToolbarItem) => <ImageEditorButton toolbarItem={toolbarItem} />,
       attributes: {
-        visible: {
-          id: 'IS_IMAGE_EDIT_BUTTON_VISIBLE',
-          resolve: () => !!config.imageEditorWixSettings,
-        },
+        visible: getIsEditImageVisibleResolver(config, isMobile),
         selectedNode: selectedNodeResolver,
       },
     },
     {
       id: PLUGIN_TOOLBAR_BUTTON_ID.SEPARATOR,
       attributes: {
-        visible: {
-          id: 'IS_IMAGE_EDIT_BUTTON_VISIBLE',
-          resolve: () => !!config.imageEditorWixSettings,
-        },
+        visible: getIsEditImageVisibleResolver(config, isMobile),
       },
     },
     {
@@ -178,3 +172,8 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
     },
   ];
 };
+
+const getIsEditImageVisibleResolver = (config, isMobile) => ({
+  id: 'IS_IMAGE_EDIT_BUTTON_VISIBLE',
+  resolve: () => !!config.imageEditorWixSettings && !isMobile,
+});
