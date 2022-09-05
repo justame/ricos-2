@@ -17,6 +17,10 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `gallery`
+  - [#4568](https://github.com/wix/ricos/pull/4568) fix video upload and loading state tiptap
 
 </details>
 
@@ -24,15 +28,18 @@
 
 ## :house: Internal
 
-- `wix-image` -[#4566](https://github.com/wix/ricos/pull/4566) @wix/image upgrade 1.42.0
+- `wix-image`
+  - [#4566](https://github.com/wix/ricos/pull/4566) @wix/image upgrade 1.42.0
 
 ## :bug: Bug Fix
 
-- `ricos-modals` -[#4562](https://github.com/wix/ricos/pull/4562) fix popover and toolbar modal height
+- `ricos-modals`
+  - [#4562](https://github.com/wix/ricos/pull/4562) fix popover and toolbar modal height
 
 ## :nail_care: Polish
 
-- `plugin-toolbar` -[#4559](https://github.com/wix/ricos/pull/4559) refactor plugin toolbar active button
+- `plugin-toolbar`
+  - [#4559](https://github.com/wix/ricos/pull/4559) refactor plugin toolbar active button
 
 ## 8.72.51 (Sep 4, 2022)
 
@@ -43,8 +50,10 @@
 
 ## :bug: Bug Fix
 
-- `ricos-content` -[#4540](https://github.com/wix/ricos/pull/4540) CKEditor/parser adds color rules, supports `u`, `em`
-- `button/divider` -[#4557](https://github.com/wix/ricos/pull/4557) fix plugin toolbar buttons visibility on mobile
+- `ricos-content`
+  - [#4540](https://github.com/wix/ricos/pull/4540) CKEditor/parser adds color rules, supports `u`, `em`
+- `button/divider`
+  - [#4557](https://github.com/wix/ricos/pull/4557) fix plugin toolbar buttons visibility on mobile
 
 ## 8.72.50 (Sep 2, 2022)
 

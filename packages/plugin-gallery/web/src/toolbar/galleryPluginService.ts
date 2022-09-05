@@ -11,13 +11,13 @@ const GALLERY_FILE_TYPES = {
   VIDEO: 'video',
 };
 
-// const getGalleryFileType = type => {
-//   return type.match('image/*')
-//     ? GALLERY_FILE_TYPES.IMAGE
-//     : type.match('video/*')
-//     ? GALLERY_FILE_TYPES.VIDEO
-//     : '';
-// };
+const getGalleryFileType = type => {
+  return type.match('image/*')
+    ? GALLERY_FILE_TYPES.IMAGE
+    : type.match('video/*')
+    ? GALLERY_FILE_TYPES.VIDEO
+    : '';
+};
 
 const galleryImageBuilder = (img: ImageComponentData) => {
   return {
@@ -37,14 +37,16 @@ const galleryVideoBuilder = (video: VideoComponentData) => {
   } = video;
   return {
     video: {
-      src: { url: video.pathname },
-      height: video.height || height,
-      width: video.width || width,
-    },
-    thumbnail: {
-      src: { url },
-      width,
-      height,
+      media: {
+        src: { url: video.pathname },
+        height: video.height || height,
+        width: video.width || width,
+      },
+      thumbnail: {
+        src: { url },
+        width,
+        height,
+      },
     },
   };
 };
@@ -68,14 +70,14 @@ export class GalleryPluginService implements IMediaPluginService {
     fileState?: Record<string, string | number>
   ) {
     // TODO: Remove comment when PG empty URL bug is fixed.
-    // const fileType = getGalleryFileType(file.type);
-    // const galleryItem = { url: '', type: fileType };
-    // const itemIndex = fileState?.itemIndex || componentData.items.length;
-    // const newComponentData = setItemInGallery(galleryItem, componentData, itemIndex);
+    const fileType = getGalleryFileType(file.type);
+    const galleryItem = { [fileType]: { media: { src: { url: '' } } } };
+    const itemIndex = fileState?.itemIndex || componentData.items.length;
+    const newComponentData = setItemInGallery(galleryItem, componentData, itemIndex);
     return {
-      componentData,
+      componentData: newComponentData,
       componentState: { loading: true },
-      fileState,
+      fileState: { ...fileState, itemIndex },
     };
   }
 
