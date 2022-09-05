@@ -17,12 +17,18 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.72.53 (Sep 5, 2022)
+
 ## :bug: Bug Fix
 
 - `gallery`
   - [#4568](https://github.com/wix/ricos/pull/4568) fix video upload and loading state tiptap
-
-</details>
+- `ricos-styles`
+  - [#4567](https://github.com/wix/ricos/pull/4567) preprocess text style (line-height)
+- `ricos-editor`
+  - [#4558](https://github.com/wix/ricos/pull/4558) editor height with toolbars positions (footer)
 
 ## 8.72.52 (Sep 5, 2022)
 
