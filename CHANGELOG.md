@@ -21,9 +21,10 @@
 
 - `ricos-editor`
   - [#4541](https://github.com/wix/ricos/pull/4541) add missing locale prop
-
 - `image`
   - [#4570](https://github.com/wix/ricos/pull/4570) remove edit image button on mobile tiptap
+- `collapsible-list`
+  - [#4572](https://github.com/wix/ricos/pull/4572) collapsible list default direction by `languageDir` on tiptap
 
 </details>
 

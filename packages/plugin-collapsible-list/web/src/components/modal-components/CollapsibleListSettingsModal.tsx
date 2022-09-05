@@ -97,7 +97,7 @@ class CollapsibleListSettingsModal extends Component<Props> {
   };
 
   renderSettings = () => {
-    const { isMobile, theme, t, experiments = {} } = this.props;
+    const { isMobile, theme, t, experiments = {}, languageDir } = this.props;
 
     return (
       <div
@@ -112,6 +112,7 @@ class CollapsibleListSettingsModal extends Component<Props> {
           isMobile={isMobile}
           t={t}
           experiments={experiments}
+          languageDir={languageDir}
         />
       </div>
     );

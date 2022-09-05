@@ -115,7 +115,7 @@ class CollapsibleListSettings extends Component {
             },
           ]}
           renderItem={this.renderOption}
-          value={getDataManager().getDirection()}
+          value={getDataManager().getDirection() || this.props.languageDir}
           onChange={getDataManager().changeDirection}
           className={classNames(this.styles.direction_selector, {
             [styles.direction_selector_newUi]: this.useNewSettingsUi,
@@ -148,6 +148,7 @@ CollapsibleListSettings.propTypes = {
   t: PropTypes.func.isRequired,
   isMobile: PropTypes.bool,
   experiments: PropTypes.object,
+  languageDir: PropTypes.string,
 };
 
 export default CollapsibleListSettings;

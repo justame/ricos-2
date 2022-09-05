@@ -30,7 +30,7 @@ export const CollapsibleList: React.FC<PluginProps> = ({
   componentData,
   getPos,
 }) => {
-  const { theme, t } = useContext(RicosContext);
+  const { theme, t, languageDir } = useContext(RicosContext);
   const styles = mergeStyles({ styles: collapsibleListStyles, theme });
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const pos = (getPos as any)();
@@ -64,12 +64,11 @@ export const CollapsibleList: React.FC<PluginProps> = ({
     editor.commands.setCollapsibleListItemsExpandState(state);
   }, [didMount]);
 
+  const direction = componentData.config?.direction || languageDir;
+
   return (
     <div
-      className={classNames(
-        styles[componentData.config?.direction || 'ltr'],
-        styles.listDimensions
-      )}
+      className={classNames(styles[direction], styles.listDimensions)}
       onMouseDown={preventDeselection}
       // onFocus={this.onFocus}
       // tabIndex="0"
