@@ -27,14 +27,13 @@ export const RicosTiptapEditor: FunctionComponent<RicosTiptapEditorProps> = ({
   editor,
   onUpdate,
   onSelectionUpdate,
-  locale,
   editorStyleClasses,
   htmlAttributes,
   onLoad,
   ...context
 }) => {
   const forceUpdate = useForceUpdate();
-  const { experiments } = useContext(RicosContext);
+  const { experiments, locale } = useContext(RicosContext);
 
   useEffect(() => {
     editor.on('update', ({ editor }) => {

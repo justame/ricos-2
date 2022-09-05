@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `ricos-editor`
+  - [#4541](https://github.com/wix/ricos/pull/4541) add missing locale prop
+
 - `image`
   - [#4570](https://github.com/wix/ricos/pull/4570) remove edit image button on mobile tiptap
 
