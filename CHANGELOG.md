@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+
+</details>
+
+## 8.72.57 (Sep 06, 2022)
+
 ## :bug: Bug Fix
 
 - `common-plugins`
@@ -25,8 +30,6 @@
   - [#4565](https://github.com/wix/ricos/pull/4565) support title button in external toolbar
 - `gallery`
   - [#4576](https://github.com/wix/ricos/pull/4576) fix safari multiple image upload tiptap
-
-</details>
 
 ## 8.72.56 (Sep 06, 2022)
 
