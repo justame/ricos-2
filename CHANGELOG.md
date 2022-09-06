@@ -17,9 +17,12 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `tiptap-extensions`
+  - [#4584](https://github.com/wix/ricos/pull/4584) fix link & anchor inline style
 
 </details>
-
 
 ## 8.72.58 (Sep 06, 2022)
 

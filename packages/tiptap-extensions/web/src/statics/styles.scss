@@ -21,6 +21,17 @@
   }
 }
 
+.link {
+  color: $ricos-link-color;
+  @include ricosTypography('link', false);
+}
+
+.linkInViewer {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 .dropcursor {
   color: $primary-text-color;
 }
