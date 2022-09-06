@@ -31,14 +31,17 @@ export const DimensionSliderButton: FC<Props> = ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const node = (toolbarItem.attributes as Record<string, any>).selectedNode;
 
-  const nodeId = node?.attrs.id;
-
   const { getEditorCommands } = useContext(EditorContext);
-  const getValue = () =>
-    getEditorCommands().getBlockComponentData(nodeId).containerData[dimension].custom;
+
+  const getComponentData = () => {
+    const nodeId = node?.attrs.id;
+    return getEditorCommands().getBlockComponentData(nodeId) || {};
+  };
+
+  const getValue = () => getComponentData().containerData?.[dimension]?.custom;
 
   const onChange = value => {
-    const componentData = getEditorCommands().getBlockComponentData(nodeId);
+    const componentData = getComponentData();
     const containerData = {
       ...componentData.containerData,
       [dimension]: {

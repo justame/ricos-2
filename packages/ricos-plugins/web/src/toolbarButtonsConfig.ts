@@ -48,15 +48,15 @@ export const toolbarButtonsConfig: IPluginToolbarButtonsConfig = ({ isMobile }) 
       dataHook: 'nodeAlignmentButton',
     },
     commands: {
-      setAlignment: ({ editorCommands, node, value }) => {
+      setAlignment: ({ editorCommands, value, attributes: { selectedNode } }) => {
         editorCommands
           .chain()
           .focus()
           .setNodeAlignment(value)
           .command(({ commands }) => {
             const shouldUpdateSize =
-              node?.attrs.containerData?.width?.size !== 'ORIGINAL' &&
-              !node?.attrs.containerData?.width?.custom;
+              selectedNode?.attrs.containerData?.width?.size !== 'ORIGINAL' &&
+              !selectedNode?.attrs.containerData?.width?.custom;
             shouldUpdateSize && commands.setNodeSize('SMALL');
 
             return true;
