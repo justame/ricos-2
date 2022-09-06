@@ -19,9 +19,9 @@ export default function ErrorToast(props: ErrorToastProps) {
   }
 
   const translationKey =
-    errorCount > 1 || typeof error.key === 'undefined'
+    errorCount > 1
       ? 'UploadFile_Error_Generic_Toast_Multiple'
-      : ErrorMessageMap[error.key];
+      : error.key && ErrorMessageMap[error.key];
   const upgradeUrl = error.args?.upgradeUrl as string;
 
   const errorMsg = translationKey ? (

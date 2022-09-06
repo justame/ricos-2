@@ -21,6 +21,8 @@
 
 - `gallery`
   - [#4580](https://github.com/wix/ricos/pull/4580) toolbar upload button accepted files fix
+- `editor`
+  - [#4583](https://github.com/wix/ricos/pull/4583) error toast unsupported error key fallbacks to error message
 
 </details>
 
