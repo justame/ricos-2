@@ -26,7 +26,7 @@ export const FloatingToolbar = ({
   children: any;
   getReferenceElement?: (selectedDomNode) => HTMLElement | null;
   zIndex?: number;
-  boundary?: HTMLElement | (() => HTMLElement);
+  boundary?: HTMLElement | (() => HTMLElement | null);
 }) => {
   const { state, view } = editor;
   const { from, to } = state.selection;

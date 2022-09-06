@@ -57,7 +57,7 @@ export interface EditorProps extends CommonProps {
   commands?: CommandDescriptor<unknown>[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onLoad?: (editor: any) => void;
-  container?: HTMLElement | (() => HTMLElement);
+  container?: HTMLElement | (() => HTMLElement | null);
 }
 
 export type OnContentChangeFunction = (content: DraftContent) => void;

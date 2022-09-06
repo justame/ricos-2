@@ -221,7 +221,7 @@ interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   experiments?: Record<string, any>;
   modalSettings?: { container: HTMLElement };
-  container?: HTMLElement | (() => HTMLElement);
+  container?: HTMLElement | (() => HTMLElement | null);
 }
 
 class EditorWrapper extends React.Component<Props> {
