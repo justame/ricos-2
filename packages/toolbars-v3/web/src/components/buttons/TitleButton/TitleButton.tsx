@@ -1,42 +1,22 @@
 import React from 'react';
-import { TitleIcon, TitleOneIcon, TitleTwoIcon } from '../../../icons';
+import type { ToolbarItemProps } from '../../../types';
 import { withToolbarContext } from 'ricos-context';
 import { ToolbarButton } from '../ToolbarButton';
 
-const titleStateMap = {
-  unstyled: {
-    icon: TitleIcon,
-    action: 'header-two',
-    active: false,
-  },
-  'header-two': {
-    icon: TitleOneIcon,
-    action: 'header-three',
-    active: true,
-  },
-  'header-three': {
-    icon: TitleTwoIcon,
-    action: 'unstyled',
-    active: true,
-  },
-};
-
-const TitleButton = ({ toolbarItem, context, dataHook }) => {
-  const { isMobile, t } = context || {};
-  const selectedHeading = toolbarItem.attributes.selectedHeading;
-  const currentTitleState = titleStateMap[selectedHeading] || titleStateMap.unstyled;
-  const onClick = () => toolbarItem.commands?.click({ heading: currentTitleState.action });
-  const isActive = currentTitleState.active;
-  const tooltip = t(toolbarItem.presentation?.tooltip);
+const TitleButton = ({ toolbarItem, context, dataHook }: ToolbarItemProps) => {
+  const { isMobile, t, getEditorCommands } = context || {};
+  const editorCommands = getEditorCommands?.();
+  const onClick = () => toolbarItem.commands?.click();
+  const tooltip = t?.(toolbarItem.presentation?.tooltip);
 
   return (
     <ToolbarButton
       isMobile={isMobile}
       disabled={toolbarItem.attributes.disabled}
-      active={isActive}
+      active={toolbarItem.attributes.active}
       tooltip={tooltip}
       onClick={onClick}
-      icon={currentTitleState.icon}
+      icon={toolbarItem.presentation?.getIcon(editorCommands)}
       dataHook={dataHook}
     />
   );

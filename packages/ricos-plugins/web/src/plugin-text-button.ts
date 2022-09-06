@@ -121,7 +121,7 @@ export class PluginTextButton implements FormattingToolbarButton {
         ...this.button.commands,
         click:
           () =>
-          ({ referenceElement, ...rest }) => {
+          ({ referenceElement, ...rest } = {}) => {
             this.services.toolbars.byType(toolbarType).publishButtonClick(this.button.id);
             return this.button.modal
               ? modals.isModalOpen(this.button.modal.id)
@@ -219,9 +219,6 @@ export class PluginTextButtons implements FormattingToolbarButtons {
     editorCommands: EditorCommands,
     isMobile: boolean
   ): Record<string, ToolbarButtonProps> {
-    //TODO: support all buttons
-    const unsupportedTextButtons = [`${Node_Type.HEADING}.title`];
-
     const toolbarType = TOOLBARS.FORMATTING;
     const toolbarConfig = getToolbarConfig(this.finalToolbarSettings, toolbarType);
 
@@ -234,14 +231,12 @@ export class PluginTextButtons implements FormattingToolbarButtons {
       buttonsType
     );
 
-    return externalToolbarItemsConfig
-      .filter(b => !unsupportedTextButtons.includes(b.getButtonId()))
-      .reduce((acc, b) => {
-        const buttonConfig = b.toExternalToolbarButtonConfig(editorCommands);
-        return {
-          ...acc,
-          [buttonConfig.name || '']: buttonConfig,
-        };
-      }, {});
+    return externalToolbarItemsConfig.reduce((acc, b) => {
+      const buttonConfig = b.toExternalToolbarButtonConfig(editorCommands);
+      return {
+        ...acc,
+        [buttonConfig.name || '']: buttonConfig,
+      };
+    }, {});
   }
 }

@@ -8,6 +8,7 @@ import type { HeadingsPluginEditorConfig } from './types';
 import { RESOLVERS_IDS } from 'wix-rich-content-toolbars-v3/libs/resolvers-ids';
 import { getCurrentHeadingIcon } from 'wix-rich-content-toolbars-modals/libs/getCurrentHeadingIcon';
 import HeadingPanelComponent from './HeadingsPanelComponent';
+import { getTitleIcon, getTitleOnClick } from './title-button-utils';
 
 const HEADINGS_MODAL_ID = `${Node_Type.HEADING}.modal`;
 
@@ -50,18 +51,19 @@ export const getTextButtons = (
       presentation: {
         dataHook: 'textBlockStyleButton_Title',
         tooltip: 'TitleButton_Tooltip',
+        getIcon: getTitleIcon,
       },
       attributes: {
         visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
         selectedHeading: RESOLVERS_IDS.GET_HEADING_IN_SELECTION,
         disabled: RESOLVERS_IDS.IS_NODE_SELECTED,
+        active: RESOLVERS_IDS.IS_HEADER_TWO_OR_THREE_SELECTED,
       },
-      command:
-        editorCommands =>
-        ({ heading }) => {
-          editorCommands.setBlockType(heading);
-          return true;
-        },
+      command: editorCommands => () => {
+        const onClick = getTitleOnClick(editorCommands);
+        onClick();
+        return true;
+      },
     },
   ];
 };

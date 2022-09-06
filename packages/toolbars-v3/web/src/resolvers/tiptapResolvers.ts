@@ -242,6 +242,18 @@ export const getHeadingInSelectionResolver = TiptapContentResolver.create(
   }
 );
 
+export const isHeaderTwoOrThreeSelected = TiptapContentResolver.create(
+  RESOLVERS_IDS.IS_HEADER_TWO_OR_THREE_SELECTED,
+  content => {
+    if (Array.isArray(content) && content.length > 0) {
+      const headingLevel = content[0].attrs?.level;
+      return headingLevel === 2 || headingLevel === 3;
+    } else {
+      return false;
+    }
+  }
+);
+
 export const isTextStylesMatchDocumentStylesResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.IS_TEXT_STYLES_MATCH_DOCUMENT_STYLES,
   (content = [], { styles, nodeService }: { styles: RicosStyles; nodeService }) => {

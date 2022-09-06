@@ -17,11 +17,17 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
 
+- `common-plugins`
+  - [#4553](https://github.com/wix/ricos/pull/4553) support individual alignment buttons in external toolbar
+- `plugin-headings`
+  - [#4565](https://github.com/wix/ricos/pull/4565) support title button in external toolbar
 
 </details>
 
 ## 8.72.56 (Sep 06, 2022)
+
 ## :bug: Bug Fix
 
 - `ricos-modals/toolbars-v3`
@@ -951,4 +957,3 @@
   - [#4021](https://github.com/wix/ricos/pull/4021) tiptap converters for single node
 - `ricos-converters`
   - [#4065](https://github.com/wix/ricos/pull/4065) added missing tiptap converters
-
