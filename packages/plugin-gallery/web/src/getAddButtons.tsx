@@ -35,7 +35,10 @@ const handleNativeFileChange =
   (editorCommands, uploadService, uploader, galleryPluginService) => (files: File[]) => {
     const nodeId = editorCommands.insertBlockWithBlankLines(GALLERY_TYPE, defaultData);
     files.forEach(file => {
-      uploadService.uploadFile(file, nodeId, uploader, GALLERY_TYPE, galleryPluginService);
+      setTimeout(
+        () => uploadService.uploadFile(file, nodeId, uploader, GALLERY_TYPE, galleryPluginService),
+        0
+      );
     });
   };
 

@@ -17,6 +17,10 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `gallery`
+  - [#4580](https://github.com/wix/ricos/pull/4580) toolbar upload button accepted files fix
 
 </details>
 
