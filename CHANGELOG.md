@@ -17,7 +17,15 @@
     Click to see more.
   </summary>
 
+
+
 </details>
+
+## 8.72.56 (Sep 06, 2022)
+## :bug: Bug Fix
+
+- `ricos-modals/toolbars-v3`
+  - [#4573](https://github.com/wix/ricos/pull/4573) fix modals outline style and refactor editLinkButton active indicator
 
 ## 8.72.55 (Sep 05, 2022)
 
@@ -36,9 +44,6 @@
   - [#4570](https://github.com/wix/ricos/pull/4570) remove edit image button on mobile tiptap
 - `collapsible-list`
   - [#4572](https://github.com/wix/ricos/pull/4572) collapsible list default direction by `languageDir` on tiptap
-  
-- `ricos-modals/toolbars-v3`
-  - [#4573](https://github.com/wix/ricos/pull/4573) fix modals outline style and refactor editLinkButton active indicator
 
 ## 8.72.53 (Sep 5, 2022)
 
