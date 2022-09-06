@@ -247,7 +247,7 @@ const convertGalleryItem = item => {
     src: { url },
     height,
     width,
-  } = item[type].media;
+  } = item[type]?.media || { src: {} };
   item.url = url;
   item.metadata = { height, width, type };
   has(item, 'title') && (item.metadata.title = item.title);

@@ -73,7 +73,9 @@ export const getToolbarButtons = (config, services, galleryPluginService): Toolb
     } else {
       uploadService.selectFiles(fileInputAccept, true, (files: File[]) =>
         files.forEach((file, currIndex) => {
-          const fileState = isValidIndex(index) ? { itemIndex: index + currIndex } : {};
+          const fileState = isValidIndex(index)
+            ? { itemIndex: index + currIndex }
+            : { itemIndex: node.attrs.items.length + currIndex };
           uploadService.uploadFile(
             file,
             node.attrs.id,

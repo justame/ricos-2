@@ -23,6 +23,8 @@
   - [#4553](https://github.com/wix/ricos/pull/4553) support individual alignment buttons in external toolbar
 - `plugin-headings`
   - [#4565](https://github.com/wix/ricos/pull/4565) support title button in external toolbar
+- `gallery`
+  - [#4576](https://github.com/wix/ricos/pull/4576) fix safari multiple image upload tiptap
 
 </details>
 
