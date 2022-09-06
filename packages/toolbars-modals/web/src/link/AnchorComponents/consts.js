@@ -10,6 +10,7 @@ import {
   ButtonIcon,
   GiphyIcon,
   FileIcon,
+  H1Icon,
   H2Icon,
   H3Icon,
   H4Icon,
@@ -39,6 +40,7 @@ export const ANCHORABLE_BLOCKS = Object.freeze({
     filter: 'LinkTo_Modal_Section_Filter_Paragraphs',
   },
   header: {
+    [`thumbnail-${HEADER_BLOCK.ONE}`]: <H1Icon />,
     [`thumbnail-${HEADER_BLOCK.TWO}`]: <H2Icon />,
     [`thumbnail-${HEADER_BLOCK.THREE}`]: <H3Icon />,
     [`thumbnail-${HEADER_BLOCK.FOUR}`]: <H4Icon />,

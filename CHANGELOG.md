@@ -21,6 +21,8 @@
 
 - `tiptap-extensions`
   - [#4584](https://github.com/wix/ricos/pull/4584) fix link & anchor inline style
+- `toolbar-modals`
+  - [#4585](https://github.com/wix/ricos/pull/4585) add heading one thumbnail in anchor panel
 
 </details>
 
