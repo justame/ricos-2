@@ -10,7 +10,6 @@ const EditLinkButton = ({ toolbarItem, context, contentQueryService, dataHook })
   const { isMobile, t, getEditorCommands, linkPanelData = {}, experiments } = context || {};
   const modalService = useContext(ModalContext) || {};
   const [referenceElement, setReferenceElement] = useState<HTMLButtonElement | null>(null);
-  const [isButtonActive, setIsButtonActive] = useState<boolean>(false);
 
   const editorCommands = getEditorCommands?.();
   const { onLinkAdd, linkSettings = {} } = linkPanelData;
@@ -44,15 +43,9 @@ const EditLinkButton = ({ toolbarItem, context, contentQueryService, dataHook })
     }
   };
 
-  modalService.onModalOpened(() => {
-    modalService.isModalOpen(id) && setIsButtonActive(true);
-  });
-  modalService.onModalClosed(() => {
-    !modalService.isModalOpen(id) && setIsButtonActive(false);
-  });
-
   const tooltip = t(toolbarItem.presentation?.tooltip);
-  const isActive = isButtonActive || toolbarItem.attributes.active;
+  const isActive = modalService.isModalOpen(id) || toolbarItem.attributes.active;
+
   return (
     <ToolbarButton
       ref={setReferenceElement}

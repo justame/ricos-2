@@ -10,4 +10,10 @@
   z-index: 999999;
   background-color: rgb(255, 255, 255);
   color: var(--ricos-settings-text-color, #000);
+  * {
+    & :focus {
+      outline: 5px auto Highlight !important;
+      outline: 5px auto -webkit-focus-ring-color !important;
+    }
+  }
 }

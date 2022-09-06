@@ -20,6 +20,12 @@
     @media only screen and (max-width: 640px) {
       padding: 0px;
     }
+    * {
+      & :focus {
+        outline: 5px auto Highlight !important;
+        outline: 5px auto -webkit-focus-ring-color !important;
+      }
+    }
   }
 
   .drawerT,
