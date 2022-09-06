@@ -39,7 +39,7 @@ class LineSpacingPanel extends Component {
   onChange = spacing => {
     const merged = { ...this.state.spacing, ...spacing };
     this.setState({ spacing: merged });
-    this.props.onChange({ data: merged });
+    // this.props.onChange({ data: merged });
   };
 
   onSave = (spacing, clickFromKeyboard) => {
