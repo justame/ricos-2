@@ -8,11 +8,13 @@ import type {
   ISelection,
   IStylesQuery,
   QueryItem,
+  TextAlignment,
 } from 'ricos-types';
 import { Selection } from './selection';
 import { EditorStateQuery } from './state';
 import { StylesQuery } from './style-query';
 import { objectIncludes } from './utils';
+import { getTextDirection } from 'ricos-content';
 
 export class EditorQuery implements IEditorQuery {
   private _selection: ISelection;
@@ -63,7 +65,7 @@ export class EditorQuery implements IEditorQuery {
   coreQuery: Record<string, (...args) => any> = {
     activeTextStyles: textStyleName => {
       const selectedNodesTextStyles = this.selection()
-        .doc.descendants(node => node.isText())
+        .doc.descendants(node => node.isTextBlock())
         .map(node => {
           return this.styles().getComputedTextStyle(node, textStyleName);
         });

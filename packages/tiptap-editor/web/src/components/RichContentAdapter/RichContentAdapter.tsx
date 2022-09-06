@@ -482,32 +482,8 @@ export class RichContentAdapter implements TiptapAdapter {
       anchorableBlocks: [],
       pluginsIncluded: [],
     }),
-    getTextAlignment: (): TextAlignment => {
-      const {
-        state: {
-          doc,
-          selection: { from, to },
-        },
-      } = this.tiptapEditor;
-
-      const textStyles: string[] = [];
-      doc.nodesBetween(from, to, node => {
-        const textAlignment = node.attrs?.textStyle?.textAlignment;
-        if (textAlignment) {
-          textStyles.push(textAlignment);
-        }
-      });
-      let currentTextStyle = 'auto';
-      if (textStyles[0]) {
-        currentTextStyle = textStyles[0].toLowerCase();
-      }
-      if (currentTextStyle === 'auto') {
-        const selectedFirstNodeText = doc.nodeAt(from - 1)?.textContent;
-        const selectedFirstNodeDirection = getTextDirection(selectedFirstNodeText);
-        currentTextStyle = selectedFirstNodeDirection === 'rtl' ? 'right' : 'left';
-      }
-      return currentTextStyle as TextAlignment;
-    },
+    getTextAlignment: (): TextAlignment =>
+      this.services.content.resolve(resolversById[RESOLVERS_IDS.GET_ALIGNMENT_IN_SELECTION]),
     isBlockTypeSelected: () => false,
     isUndoStackEmpty: () =>
       this.services.content.resolve(resolversById[RESOLVERS_IDS.IS_UNDO_STACK_EMPTY]),

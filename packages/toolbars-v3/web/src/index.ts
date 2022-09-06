@@ -25,6 +25,10 @@ import {
   isUndoStackEmptyResolver,
   isRedoStackEmptyResolver,
   isNodeSelected,
+  isTextAlignLeft,
+  isTextAlignCenter,
+  isTextAlignRight,
+  isTextAlignJustify,
 } from './resolvers/tiptapResolvers';
 
 export const resolversById = {
@@ -53,6 +57,10 @@ export const resolversById = {
   [RESOLVERS_IDS.IS_UNDO_STACK_EMPTY]: isUndoStackEmptyResolver,
   [RESOLVERS_IDS.IS_REDO_STACK_EMPTY]: isRedoStackEmptyResolver,
   [RESOLVERS_IDS.IS_NODE_SELECTED]: isNodeSelected,
+  [RESOLVERS_IDS.IS_TEXT_ALIGN_LEFT]: isTextAlignLeft,
+  [RESOLVERS_IDS.IS_TEXT_ALIGN_CENTER]: isTextAlignCenter,
+  [RESOLVERS_IDS.IS_TEXT_ALIGN_RIGHT]: isTextAlignRight,
+  [RESOLVERS_IDS.IS_TEXT_ALIGN_JUSTIFY]: isTextAlignJustify,
 };
 
 export { tiptapStaticToolbarConfig } from './toolbarItemConfig/tiptapToolbarItemConfig';

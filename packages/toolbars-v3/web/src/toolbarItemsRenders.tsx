@@ -71,7 +71,7 @@ export const toolbarItemsRenders = {
   separator: () => {
     return <ToolbarButtonSeparator />;
   },
-  ALIGNMENT: toolbarItem => {
+  'TextAlignment.ALIGNMENT': toolbarItem => {
     return <AlignmentButton toolbarItem={toolbarItem} />;
   },
   [`${Node_Type.HEADING}.title`]: toolbarItem => {

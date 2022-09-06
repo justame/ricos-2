@@ -780,6 +780,10 @@ export const config: RichContentEditorProps['config'] = {
         const desktopButtons = [
           FORMATTING_BUTTONS.HEADINGS,
           '|',
+          FORMATTING_BUTTONS.ALIGN_LEFT,
+          FORMATTING_BUTTONS.ALIGN_CENTER,
+          FORMATTING_BUTTONS.ALIGN_RIGHT,
+          FORMATTING_BUTTONS.ALIGN_JUSTIFY,
           FORMATTING_BUTTONS.BOLD,
           FORMATTING_BUTTONS.ITALIC,
           FORMATTING_BUTTONS.UNDERLINE,

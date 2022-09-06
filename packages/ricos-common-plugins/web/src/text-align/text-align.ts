@@ -3,6 +3,7 @@ import { RESOLVERS_IDS } from 'wix-rich-content-toolbars-v3/libs/resolvers-ids';
 import { getCurrentTextAlignmentIcon } from 'wix-rich-content-toolbars-modals/libs/getCurrentTextAlignmentIcon';
 import { textAlign } from './extension';
 import AlignmentPanelComponent from './AlignmentPanelComponent';
+import { AlignTextCenterIcon, AlignJustifyIcon, AlignLeftIcon, AlignRightIcon } from './icons';
 
 const FORMATTING_ALIGNMENT_MODAL_ID = 'TextAlignment.modal';
 
@@ -58,7 +59,7 @@ export const pluginTextAlignment: TiptapEditorPlugin = {
   ],
   textButtons: [
     {
-      id: 'ALIGNMENT',
+      id: 'TextAlignment.ALIGNMENT',
       type: 'modal',
       presentation: {
         dataHook: 'textDropDownButton_Alignment',
@@ -73,6 +74,78 @@ export const pluginTextAlignment: TiptapEditorPlugin = {
       modal: {
         id: FORMATTING_ALIGNMENT_MODAL_ID,
         Component: AlignmentPanelComponent,
+      },
+    },
+    {
+      id: 'TextAlignment.LEFT',
+      type: 'toggle',
+      presentation: {
+        dataHook: 'textAlignmentButton_left',
+        tooltip: 'AlignTextLeftButton_Tooltip',
+        icon: AlignLeftIcon,
+      },
+      attributes: {
+        visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
+        active: RESOLVERS_IDS.IS_TEXT_ALIGN_LEFT,
+        disabled: RESOLVERS_IDS.IS_NODE_SELECTED,
+      },
+      command: (editorCommands: EditorCommands) => () => {
+        editorCommands.setTextAlignment('left');
+        return true;
+      },
+    },
+    {
+      id: 'TextAlignment.CENTER',
+      type: 'toggle',
+      presentation: {
+        dataHook: 'textAlignmentButton_center',
+        tooltip: 'AlignTextCenterButton_Tooltip',
+        icon: AlignTextCenterIcon,
+      },
+      attributes: {
+        visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
+        active: RESOLVERS_IDS.IS_TEXT_ALIGN_CENTER,
+        disabled: RESOLVERS_IDS.IS_NODE_SELECTED,
+      },
+      command: (editorCommands: EditorCommands) => () => {
+        editorCommands.setTextAlignment('center');
+        return true;
+      },
+    },
+    {
+      id: 'TextAlignment.RIGHT',
+      type: 'toggle',
+      presentation: {
+        dataHook: 'textAlignmentButton_right',
+        tooltip: 'AlignTextRightButton_Tooltip',
+        icon: AlignRightIcon,
+      },
+      attributes: {
+        visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
+        active: RESOLVERS_IDS.IS_TEXT_ALIGN_RIGHT,
+        disabled: RESOLVERS_IDS.IS_NODE_SELECTED,
+      },
+      command: (editorCommands: EditorCommands) => () => {
+        editorCommands.setTextAlignment('right');
+        return true;
+      },
+    },
+    {
+      id: 'TextAlignment.JUSTIFY',
+      type: 'toggle',
+      presentation: {
+        dataHook: 'textAlignmentButton_justify',
+        tooltip: 'AlignTextJustifyButton_Tooltip',
+        icon: AlignJustifyIcon,
+      },
+      attributes: {
+        visible: RESOLVERS_IDS.ALWAYS_VISIBLE,
+        active: RESOLVERS_IDS.IS_TEXT_ALIGN_JUSTIFY,
+        disabled: RESOLVERS_IDS.IS_NODE_SELECTED,
+      },
+      command: (editorCommands: EditorCommands) => () => {
+        editorCommands.setTextAlignment('justify');
+        return true;
       },
     },
   ],

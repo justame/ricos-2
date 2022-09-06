@@ -20,7 +20,6 @@ const cleanTitleIfNeeded = (
 // maps FORMATTING_BUTTONS to Node_Type/Decoration_Type with some modifications
 const toSchemaBasedId = (formattingButtonId: string): string => {
   const compatibleIds = [
-    'ALIGNMENT',
     'LINE_SPACING',
     'UNDO',
     'REDO',
@@ -36,6 +35,11 @@ const toSchemaBasedId = (formattingButtonId: string): string => {
     Node_Type.BLOCKQUOTE,
   ];
   const specificMapping = {
+    ALIGNMENT: 'TextAlignment.ALIGNMENT',
+    ALIGN_LEFT: 'TextAlignment.LEFT',
+    ALIGN_CENTER: 'TextAlignment.CENTER',
+    ALIGN_RIGHT: 'TextAlignment.RIGHT',
+    JUSTIFY: 'TextAlignment.JUSTIFY',
     TITLE: `${Node_Type.HEADING}.title`,
     HEADINGS: `${Node_Type.HEADING}.dropdown`,
     UNORDERED_LIST: Node_Type.BULLETED_LIST,
