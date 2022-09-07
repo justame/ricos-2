@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+
+</details>
+
+
+## 8.72.59 (Sep 07, 2022)
 ## :bug: Bug Fix
 
 - `tiptap-extensions`
@@ -25,8 +30,6 @@
   - [#4585](https://github.com/wix/ricos/pull/4585) add heading one thumbnail in anchor panel
 - `image gallery file-upload`
   - [#4590](https://github.com/wix/ricos/pull/4590) deep copy files before uploading (safari multiple upload fix)
-
-</details>
 
 ## 8.72.58 (Sep 06, 2022)
 
