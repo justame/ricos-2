@@ -73,17 +73,19 @@ export const getToolbarButtons = (config, services, galleryPluginService): Toolb
     } else {
       uploadService.selectFiles(accept, true, (files: File[]) =>
         files.forEach((file, currIndex) => {
-          const fileState = isValidIndex(index)
-            ? { itemIndex: index + currIndex }
-            : { itemIndex: node.attrs.items.length + currIndex };
-          uploadService.uploadFile(
-            new File([file], file.name, { type: file.type }),
-            node.attrs.id,
-            new Uploader(config.handleFileUpload),
-            GALLERY_TYPE,
-            galleryPluginService,
-            fileState
-          );
+          setTimeout(() => {
+            const fileState = isValidIndex(index)
+              ? { itemIndex: index + currIndex }
+              : { itemIndex: node.attrs.items.length + currIndex };
+            uploadService.uploadFile(
+              new File([file], file.name, { type: file.type }),
+              node.attrs.id,
+              new Uploader(config.handleFileUpload),
+              GALLERY_TYPE,
+              galleryPluginService,
+              fileState
+            );
+          }, 0);
         })
       );
     }

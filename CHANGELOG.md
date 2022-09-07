@@ -21,6 +21,8 @@
 
 - `tiptap-extensions`
   - [#4587](https://github.com/wix/ricos/pull/4587) anchor - add offset when scrolling to anchor
+- `gallery`
+  - [#4593](https://github.com/wix/ricos/pull/4593) add timeout between uploads
 
 </details>
 
