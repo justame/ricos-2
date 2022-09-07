@@ -23,6 +23,8 @@
   - [#4584](https://github.com/wix/ricos/pull/4584) fix link & anchor inline style
 - `toolbar-modals`
   - [#4585](https://github.com/wix/ricos/pull/4585) add heading one thumbnail in anchor panel
+- `image gallery file-upload`
+  - [#4590](https://github.com/wix/ricos/pull/4590) deep copy files before uploading (safari multiple upload fix)
 
 </details>
 

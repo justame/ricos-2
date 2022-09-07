@@ -34,7 +34,13 @@ const handleNativeFileChange = (editorCommands, uploadService, uploader) => (fil
       const nodeId = editorCommands.insertBlockWithBlankLines(IMAGE_TYPE, RICOS_DEFAULTS, {
         updateSelection: files.length === index + 1,
       });
-      uploadService.uploadFile(file, nodeId, uploader, IMAGE_TYPE, imagePluginService);
+      uploadService.uploadFile(
+        new File([file], file.name, { type: file.type }),
+        nodeId,
+        uploader,
+        IMAGE_TYPE,
+        imagePluginService
+      );
     });
   });
 };

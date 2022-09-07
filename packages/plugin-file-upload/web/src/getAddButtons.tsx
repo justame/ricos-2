@@ -40,7 +40,13 @@ const handleNativeFileChange =
           {},
           { updateSelection: files.length === index + 1 }
         );
-        uploadService.uploadFile(file, nodeId, uploader, FILE_UPLOAD_TYPE, filePluginService);
+        uploadService.uploadFile(
+          new File([file], file.name, { type: file.type }),
+          nodeId,
+          uploader,
+          FILE_UPLOAD_TYPE,
+          filePluginService
+        );
       });
     });
   };

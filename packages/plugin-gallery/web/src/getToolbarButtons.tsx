@@ -76,17 +76,13 @@ export const getToolbarButtons = (config, services, galleryPluginService): Toolb
           const fileState = isValidIndex(index)
             ? { itemIndex: index + currIndex }
             : { itemIndex: node.attrs.items.length + currIndex };
-          setTimeout(
-            () =>
-              uploadService.uploadFile(
-                file,
-                node.attrs.id,
-                new Uploader(config.handleFileUpload),
-                GALLERY_TYPE,
-                galleryPluginService,
-                fileState
-              ),
-            0
+          uploadService.uploadFile(
+            new File([file], file.name, { type: file.type }),
+            node.attrs.id,
+            new Uploader(config.handleFileUpload),
+            GALLERY_TYPE,
+            galleryPluginService,
+            fileState
           );
         })
       );
