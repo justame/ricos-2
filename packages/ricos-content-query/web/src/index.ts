@@ -1,5 +1,5 @@
-export { EditorQuery } from './editor-query';
-
+import { editorQueryCreator } from './editor-query/editor-query-creator';
+export { editorQueryCreator };
 export { ContentQueryProvider } from './ContentQueryProvider';
 export { ContentQueryContext } from './ContentQueryContext';
 export { withContentQueryContext } from './withContentQueryContext';

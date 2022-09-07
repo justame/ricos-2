@@ -4,7 +4,7 @@ import type { Node } from 'prosemirror-model';
 import type { RicosEditorProps } from 'ricos-common';
 import { StreamReader, UpdateService, UploadService } from 'ricos-common';
 import { commonPluginConfig, commonPlugins } from 'ricos-common-plugins';
-import { EditorQuery } from 'ricos-content-query';
+import { editorQueryCreator } from 'ricos-content-query';
 import type { GeneralContext } from 'ricos-context';
 import { nodeConverter as nodeService } from 'ricos-converters';
 import { RicosEvents } from 'ricos-events';
@@ -21,6 +21,7 @@ import type {
   Orchestrator,
   RicosServices,
   TranslationFunction,
+  IEditorQuery,
 } from 'ricos-types';
 import { getLangDir, isSSR } from 'wix-rich-content-common';
 import { Content, RicosToolbars } from 'wix-rich-content-toolbars-v3';
@@ -57,7 +58,7 @@ export class RicosOrchestrator implements Orchestrator {
 
   private readonly editor: RicosEditor;
 
-  private readonly editorQuery: EditorQuery;
+  private readonly editorQuery: IEditorQuery;
 
   private readonly context: Omit<GeneralContext, 'portal'>;
 
@@ -101,7 +102,7 @@ export class RicosOrchestrator implements Orchestrator {
 
     this.pluginsEvents = new PluginsEvents();
 
-    const getEditorQuery = (): EditorQuery => {
+    const getEditorQuery = (): IEditorQuery => {
       return this.editorQuery;
     };
 
@@ -150,7 +151,7 @@ export class RicosOrchestrator implements Orchestrator {
 
     this.updateService.setEditorCommands(this.editor.getEditorCommands());
 
-    this.editorQuery = new EditorQuery(this.editor.adapter.tiptapEditor, this.styles);
+    this.editorQuery = editorQueryCreator(this.editor.adapter.tiptapEditor, this.styles);
 
     this.zIndexService = new ZIndexService(!!editorProps.isMobile);
 

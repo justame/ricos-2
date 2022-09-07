@@ -31,7 +31,7 @@ export const isTextContainsBoldResolver = TiptapContentResolver.create(
   (content, { getEditorQuery }: { styles: RicosStyles; nodeService; getEditorQuery: any }) => {
     const editorQuery: IEditorQuery = getEditorQuery();
 
-    const decorations = editorQuery.coreQuery.activeDecorationsByType(Decoration_Type.BOLD);
+    const decorations = editorQuery.query.activeDecorationsByType(Decoration_Type.BOLD);
     return decorations.length > 0 && decorations.every(item => item?.fontWeightValue === 700);
   }
 );
@@ -165,7 +165,7 @@ export const getAlignmentInSelectionResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.GET_ALIGNMENT_IN_SELECTION,
   (_content, { getEditorQuery }, editor) => {
     const editorQuery: IEditorQuery = getEditorQuery();
-    const activeTextStyles = editorQuery.coreQuery.activeTextStyles('textAlignment');
+    const activeTextStyles = editorQuery.query.activeTextStyles('textAlignment');
     if (editor && activeTextStyles.length > 0 && uniq(activeTextStyles).length === 1) {
       return getTextAlignment(activeTextStyles[0], editor);
     }
@@ -177,7 +177,7 @@ export const isTextAlignLeft = TiptapContentResolver.create(
   RESOLVERS_IDS.IS_TEXT_ALIGN_LEFT,
   (_content, { getEditorQuery }, editor) => {
     const editorQuery: IEditorQuery = getEditorQuery();
-    const activeTextStyles = editorQuery.coreQuery.activeTextStyles('textAlignment');
+    const activeTextStyles = editorQuery.query.activeTextStyles('textAlignment');
     if (editor && activeTextStyles.length > 0 && uniq(activeTextStyles).length === 1) {
       return getTextAlignment(activeTextStyles[0], editor) === 'left';
     }
@@ -189,7 +189,7 @@ export const isTextAlignCenter = TiptapContentResolver.create(
   RESOLVERS_IDS.IS_TEXT_ALIGN_CENTER,
   (_content, { getEditorQuery }, editor) => {
     const editorQuery: IEditorQuery = getEditorQuery();
-    const activeTextStyles = editorQuery.coreQuery.activeTextStyles('textAlignment');
+    const activeTextStyles = editorQuery.query.activeTextStyles('textAlignment');
     if (editor && activeTextStyles.length > 0 && uniq(activeTextStyles).length === 1) {
       return getTextAlignment(activeTextStyles[0], editor) === 'center';
     }
@@ -201,7 +201,7 @@ export const isTextAlignRight = TiptapContentResolver.create(
   RESOLVERS_IDS.IS_TEXT_ALIGN_RIGHT,
   (_content, { getEditorQuery }, editor) => {
     const editorQuery: IEditorQuery = getEditorQuery();
-    const activeTextStyles = editorQuery.coreQuery.activeTextStyles('textAlignment');
+    const activeTextStyles = editorQuery.query.activeTextStyles('textAlignment');
     if (editor && activeTextStyles.length > 0 && uniq(activeTextStyles).length === 1) {
       return getTextAlignment(activeTextStyles[0], editor) === 'right';
     }
@@ -213,7 +213,7 @@ export const isTextAlignJustify = TiptapContentResolver.create(
   RESOLVERS_IDS.IS_TEXT_ALIGN_JUSTIFY,
   (_content, { getEditorQuery }, editor) => {
     const editorQuery: IEditorQuery = getEditorQuery();
-    const activeTextStyles = editorQuery.coreQuery.activeTextStyles('textAlignment');
+    const activeTextStyles = editorQuery.query.activeTextStyles('textAlignment');
     if (editor && activeTextStyles.length > 0 && uniq(activeTextStyles).length === 1) {
       return getTextAlignment(activeTextStyles[0], editor) === 'justify';
     }
@@ -307,7 +307,7 @@ export const getLineSpacingInSelectionResolver = TiptapContentResolver.create(
   RESOLVERS_IDS.GET_LINE_SPACING_IN_SELECTION,
   (content, { getEditorQuery }: { styles: RicosStyles; nodeService; getEditorQuery: any }) => {
     const editorQuery: IEditorQuery = getEditorQuery();
-    const activeTextStyles = editorQuery.coreQuery.activeTextStyles('lineHeight');
+    const activeTextStyles = editorQuery.query.activeTextStyles('lineHeight');
 
     if (
       activeTextStyles.length > 0 &&

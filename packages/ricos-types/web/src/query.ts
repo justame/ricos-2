@@ -1,16 +1,13 @@
 import type { Node, Decoration, Decoration_Type, TextStyle } from 'ricos-schema';
 // import type { Node as ProseNode } from 'prosemirror-model';
 
-export type QueryItem = (
-  editorQuery: IEditorQuery,
-  selection: ISelection,
-  stylesQuery: IStylesQuery
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-) => any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type QueryItem = (...args) => any;
+export type QueryItemCreator = ({ editorQuery }: { editorQuery: IEditorQuery }) => QueryItem;
+// eslint-disable-next-line @typescript-eslint/ban-types
+export type QueryItems = {};
 
 export interface IQuery {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  core: Record<string, (...args) => any>;
   query: Record<string, QueryItem>;
   addQuery: (name: string, query: QueryItem) => void;
 }
@@ -46,8 +43,6 @@ export interface IEditorQuery {
   selection(): ISelection;
   state(): IEditorStateQuery;
   styles(): IStylesQuery;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  coreQuery: Record<string, (...args) => any>;
   query: Record<string, QueryItem>;
   addQuery: (name: string, query: QueryItem) => void;
 }

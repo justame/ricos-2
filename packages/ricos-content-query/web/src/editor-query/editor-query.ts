@@ -9,6 +9,7 @@ import type {
   IStylesQuery,
   QueryItem,
   TextAlignment,
+  QueryItemCreator,
 } from 'ricos-types';
 import { Selection } from './selection';
 import { EditorStateQuery } from './state';
@@ -54,48 +55,10 @@ export class EditorQuery implements IEditorQuery {
 
   query: Record<string, QueryItem> = {};
 
-  addQuery = (name: string, query: QueryItem) => {
+  addQuery = (name: string, query: QueryItemCreator) => {
     if (this.query[name]) {
       throw `Query ${name} already exists`;
     }
-    this.query[name] = query;
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  coreQuery: Record<string, (...args) => any> = {
-    activeTextStyles: textStyleName => {
-      const selectedNodesTextStyles = this.selection()
-        .doc.descendants(node => node.isTextBlock())
-        .map(node => {
-          return this.styles().getComputedTextStyle(node, textStyleName);
-        });
-
-      const activeTextStyles = selectedNodesTextStyles.filter(textStyle => !!textStyle);
-
-      return activeTextStyles;
-    },
-
-    activeDecorationsByType: (decorationType: Decoration_Type, attrs?: Record<string, unknown>) => {
-      const selectedNodesDecorations = this.selection()
-        .doc.descendants(node => node.isText())
-        .map(node => {
-          return this.styles().getComputedDecoration(node, decorationType);
-        });
-
-      const allDecorations = [
-        ...this.state().storedDecorations(),
-        ...selectedNodesDecorations,
-        ...this.selection().collapsedDecorations,
-      ];
-
-      const activeDecorations = allDecorations
-        .filter(decoration => !!decoration)
-        .filter(decoration => decoration?.type === decorationType)
-        .filter(decoration => {
-          return objectIncludes(decoration as Decoration, attrs || {}, { strict: false });
-        });
-
-      return activeDecorations;
-    },
+    this.query[name] = query({ editorQuery: this });
   };
 }
