@@ -23,6 +23,8 @@
   - [#4587](https://github.com/wix/ricos/pull/4587) anchor - add offset when scrolling to anchor
 - `gallery`
   - [#4593](https://github.com/wix/ricos/pull/4593) add timeout between uploads
+- `ricos-content-query`
+  - [#4586](https://github.com/wix/ricos/pull/4586) fix getAnchorableNodesQuery duplicate nodes (blockquote + paragraph)
 
 </details>
 

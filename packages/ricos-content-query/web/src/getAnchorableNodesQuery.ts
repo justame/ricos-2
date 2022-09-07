@@ -1,4 +1,5 @@
-import type { extract } from 'ricos-content/libs/extract';
+import { extract } from 'ricos-content/libs/extract';
+import { modify } from 'ricos-content/libs/modify';
 import { Node_Type } from 'ricos-schema';
 import type { Node } from 'ricos-schema';
 import { and } from 'ricos-content';
@@ -47,6 +48,19 @@ const isSelectedNode =
     return selectedNodeId === id;
   };
 
+const handleBlockquoteTextData = (nodes: Node[]) => {
+  return modify({ nodes })
+    .filter(node => node.type === Node_Type.BLOCKQUOTE)
+    .set(node => {
+      const nodes = node.nodes;
+      nodes[0].textData = node.nodes[0].nodes[0].textData;
+      return {
+        ...node,
+        nodes,
+      };
+    }).nodes;
+};
+
 export const getAnchorableNodesQuery = (
   contentExtractor: ReturnType<typeof extract>,
   selectedNodeId
@@ -55,5 +69,16 @@ export const getAnchorableNodesQuery = (
     .filter(and([isAnchorableNode, not(isEmptyTextNodes), not(isSelectedNode(selectedNodeId))]))
     .get();
 
-  return anchorableNodes;
+  const paragraphIdsToCleanup = extract(anchorableNodes)
+    .filter(node => anchorableNodes.some(n => node.id === n.nodes[0]?.id))
+    .map(node => node.id)
+    .get();
+
+  const anchorableNodesWithoutDuplications = anchorableNodes.filter(
+    node => !(paragraphIdsToCleanup.includes(node.id) && node.type === Node_Type.PARAGRAPH)
+  );
+
+  const finalAnchorableNodes = handleBlockquoteTextData(anchorableNodesWithoutDuplications);
+
+  return finalAnchorableNodes;
 };
