@@ -5,6 +5,8 @@ import styles from '../statics/styles.scss';
 import { cleanAndSetSelection, getSelectedMarkRangeByTypeNames } from './utils';
 import { Decoration_Type } from 'ricos-schema';
 
+const SCROLL_OFFSET = 50;
+
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
     anchor: {
@@ -23,6 +25,15 @@ declare module '@tiptap/core' {
     };
   }
 }
+
+const scrollIntoViewWithOffset = (element: HTMLElement, offset: number) => {
+  const { paddingTop, marginTop } = element.style;
+  element.style.marginTop = `-${offset}px`;
+  element.style.paddingTop = `${offset}px`;
+  element.scrollIntoView({ behavior: 'smooth' });
+  element.style.marginTop = marginTop;
+  element.style.paddingTop = paddingTop;
+};
 
 export const anchor: RicosExtension = {
   type: 'mark' as const,
@@ -119,7 +130,7 @@ export const anchor: RicosExtension = {
               }
 
               if (targetDom) {
-                targetDom.scrollIntoView({ behavior: 'smooth' });
+                scrollIntoViewWithOffset(targetDom, SCROLL_OFFSET);
                 return true;
               } else {
                 return false;

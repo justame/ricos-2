@@ -17,11 +17,15 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `tiptap-extensions`
+  - [#4587](https://github.com/wix/ricos/pull/4587) anchor - add offset when scrolling to anchor
 
 </details>
 
-
 ## 8.72.59 (Sep 07, 2022)
+
 ## :bug: Bug Fix
 
 - `tiptap-extensions`
