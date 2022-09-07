@@ -2,6 +2,7 @@ import { findTable } from 'prosemirror-utils';
 import { TableMap } from 'prosemirror-tables';
 import { Decoration } from 'prosemirror-view';
 import styles from './addRowCol.scss';
+import { addSvg } from './svgs';
 
 export const addRowColDecorations = (state, editor) => {
   const parentTable = findTable(state.selection);
@@ -10,6 +11,7 @@ export const addRowColDecorations = (state, editor) => {
   const map = TableMap.get(parentTable.node);
 
   const addRowDiv = document.createElement('div');
+  addRowDiv.innerHTML = addSvg;
   addRowDiv.classList.add(styles.tableAddRow);
   addRowDiv.addEventListener('mousedown', e => {
     e.stopPropagation();
@@ -20,6 +22,8 @@ export const addRowColDecorations = (state, editor) => {
   const rowDecoration = Decoration.widget(parentStart, addRowDiv);
 
   const addColDiv = document.createElement('div');
+  addColDiv.innerHTML = addSvg;
+
   addColDiv.classList.add(styles.tableAddCol);
   addColDiv.addEventListener('mousedown', e => {
     e.stopPropagation();

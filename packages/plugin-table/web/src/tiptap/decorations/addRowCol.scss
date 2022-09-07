@@ -6,8 +6,10 @@
   background-color: rgba($primary-text-color-tuple, 0.1);
   display: inline-block;
   box-sizing: border-box;
-  cursor: pointer;
   position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover:not(.disabled) {
     color: $settings-action-color;

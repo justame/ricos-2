@@ -4,23 +4,54 @@
 .tableController,
 .colController,
 .rowController {
-  background-color: rgba($primary-text-color-tuple, 0.1);
   display: inline-block;
   box-sizing: border-box;
-  cursor: pointer;
   position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &.selected {
     background-color: $settings-action-color;
+    color: var(--ricos-background-color, #fff);
     border: 1px solid $settings-action-color;
   }
 }
 
+.tableController {
+  background-color: rgba($primary-text-color-tuple, 0.4);
+  cursor: pointer;
+}
+
 .colController,
 .rowController {
-  &:hover:not(.selected) {
+  background-color: rgba($primary-text-color-tuple, 0.1);
+  &:hover:not(.selected):not(.allCellsSelected) {
     color: $settings-action-color;
     background-color: rgba($settings-action-color-tuple, 0.2);
+  }
+
+  &.selected {
+    background-color: $settings-action-color;
+    color: var(--ricos-background-color, #fff);
+    border: 1px solid $settings-action-color;
+    svg {
+      visibility: visible;
+    }
+  }
+  &.allCellsSelected {
+    background-color: $settings-action-color;
+    opacity: 0.4;
+  }
+  &:hover:not(.allCellsSelected) {
+    svg {
+      visibility: visible;
+    }
+  }
+
+  svg {
+    visibility: hidden;
+    cursor: grab;
   }
 }
 
@@ -35,6 +66,9 @@
   &.last {
     border-right: 1px solid rgba($primary-text-color-tuple, 0.15);
     width: calc(100% + 2px);
+  }
+  svg {
+    transform: rotate(90deg);
   }
 }
 

@@ -4,6 +4,7 @@ import { isColumnSelected, isRowSelected, isTableSelected } from '../utilities/i
 import { TableMap, CellSelection } from 'prosemirror-tables';
 import { Decoration } from 'prosemirror-view';
 import styles from './controllers.scss';
+import { dragAndDropSvg, selectTableSvg } from './svgs';
 
 export const controllerDecorations = (newState, editor) => {
   const decorations: Decoration[] = [];
@@ -12,16 +13,20 @@ export const controllerDecorations = (newState, editor) => {
   if (!parentTable) return [];
   const parentStart = parentTable.start;
 
+  const isAllCellsSelected = isTableSelected(selection);
+
   const tableMap = TableMap.get(parentTable.node);
   for (let i = 0; i < tableMap.width; i += 1) {
     const div = document.createElement('div');
     div.classList.add(styles.colController);
+    div.innerHTML = dragAndDropSvg;
     div.addEventListener('mousedown', e => handleColControllerClick(i, e, editor, tableMap));
 
     const resizerDiv = document.createElement('div');
     resizerDiv.classList.add(styles.colResize);
 
-    if (isColumnSelected(i)(selection)) div.classList.add(styles.selected);
+    if (isAllCellsSelected) div.classList.add(styles.allCellsSelected);
+    else if (isColumnSelected(i)(selection)) div.classList.add(styles.selected);
     if (i === tableMap.width - 1) div.classList.add(styles.last);
     decorations.push(Decoration.widget(parentStart + tableMap.map[i] + 1, div));
     decorations.push(Decoration.widget(parentStart + tableMap.map[i] + 1, resizerDiv));
@@ -30,12 +35,14 @@ export const controllerDecorations = (newState, editor) => {
   for (let i = 0; i < tableMap.height; i += 1) {
     const div = document.createElement('div');
     div.classList.add(styles.rowController);
+    div.innerHTML = dragAndDropSvg;
     div.addEventListener('mousedown', e => handleRowControllerClick(i, e, editor, tableMap));
 
     const resizerDiv = document.createElement('div');
     resizerDiv.classList.add(styles.rowResize);
 
-    if (isRowSelected(i)(selection)) div.classList.add(styles.selected);
+    if (isAllCellsSelected) div.classList.add(styles.allCellsSelected);
+    else if (isRowSelected(i)(selection)) div.classList.add(styles.selected);
     if (i === tableMap.height - 1) div.classList.add(styles.last);
     decorations.push(Decoration.widget(parentStart + tableMap.map[i * tableMap.width] + 1, div));
     decorations.push(
@@ -45,8 +52,9 @@ export const controllerDecorations = (newState, editor) => {
 
   const div = document.createElement('div');
   div.classList.add(styles.tableController);
+  div.innerHTML = selectTableSvg;
   div.addEventListener('mousedown', e => handleSelectTableClick(e, editor));
-  if (isTableSelected(selection)) div.classList.add(styles.selected);
+  if (isAllCellsSelected) div.classList.add(styles.selected);
 
   decorations.push(Decoration.widget(parentStart + tableMap.map[0] + 1, div));
 
