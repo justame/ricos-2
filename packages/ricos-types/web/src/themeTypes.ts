@@ -133,6 +133,9 @@ export interface RicosSettingsStyles {
   hover?: {
     color?: CSSProperties['color'];
   };
+  modals?: {
+    baseZIndex: number;
+  };
 }
 export interface RicosOneAppStyles {
   text?: {

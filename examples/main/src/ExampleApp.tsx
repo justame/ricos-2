@@ -11,13 +11,11 @@ import {
   disableBrowserBackButton,
 } from './utils';
 import { SectionSettings, OnVisibilityChanged } from './types';
-import { DraftContent, ToolbarType } from 'wix-rich-content-common';
+import { DraftContent, RicosTheme, ToolbarType } from 'wix-rich-content-common';
 import ContentStateEditorType from './Components/ContentStateEditor';
-import { ensureDraftContent } from 'ricos-content/libs/ensureDraftContent';
-import { themeStrategy } from 'ricos-common';
 import { FONTS, EXPERIMENTS, ricosPalettes } from '../../storybook/src/shared/resources';
 import { mockFetchUrlPreviewData } from '../../storybook/src/shared/utils/linkPreviewUtil';
-import { config as initialPluginConfig, addPluginMenuConfig } from '../shared/editor/EditorPlugins';
+// import { addPluginMenuConfig } from '../shared/editor/EditorPlugins';
 
 const ContentStateEditor = React.lazy(() => import('./Components/ContentStateEditor'));
 const EditorSettings = React.lazy(() => import('./Components/EditorSettings'));
@@ -280,7 +278,13 @@ class ExampleApp extends PureComponent<ExampleAppProps, ExampleAppState> {
   getActiveFont = () => this.state.activeFont;
 
   getThemeObj = (activeFont, activePalette) => {
-    const themeObj: any = {};
+    const themeObj: RicosTheme = {
+      settingsStyles: {
+        modals: {
+          baseZIndex: 1000,
+        },
+      },
+    };
     activeFont !== undefined && (themeObj.customStyles = FONTS[activeFont]);
     activePalette !== undefined && (themeObj.palette = ricosPalettes[activePalette]);
     return themeObj;

@@ -153,7 +153,10 @@ export class RicosOrchestrator implements Orchestrator {
 
     this.editorQuery = editorQueryCreator(this.editor.adapter.tiptapEditor, this.styles);
 
-    this.zIndexService = new ZIndexService(!!editorProps.isMobile);
+    this.zIndexService = new ZIndexService(
+      !!editorProps.isMobile,
+      editorProps.theme?.settingsStyles?.modals?.baseZIndex
+    );
 
     if (!isSSR()) {
       //@ts-ignore

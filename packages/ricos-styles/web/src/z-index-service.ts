@@ -1,4 +1,5 @@
 import type { IZindexLayer, IZindexLayers, IZIndexService } from 'ricos-types';
+import { isUndefined } from 'lodash';
 
 const BASE_ZINDEX = {
   mobile: 100000, // due forum mobile dialog zindex
@@ -7,9 +8,9 @@ const BASE_ZINDEX = {
 export class ZIndexService implements IZIndexService {
   zindexLayers: IZindexLayers;
 
-  constructor(isMobile: boolean) {
+  constructor(isMobile: boolean, baseZIndex?: number) {
     this.zindexLayers = this.getBaseZIndexLayers(
-      isMobile ? BASE_ZINDEX.mobile : BASE_ZINDEX.desktop
+      isUndefined(baseZIndex) ? (isMobile ? BASE_ZINDEX.mobile : BASE_ZINDEX.desktop) : baseZIndex
     );
   }
 
