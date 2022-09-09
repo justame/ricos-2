@@ -17,6 +17,10 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.72.60 (Sep 07, 2022)
+
 ## :bug: Bug Fix
 
 - `tiptap-extensions`
@@ -26,7 +30,10 @@
 - `ricos-content-query`
   - [#4586](https://github.com/wix/ricos/pull/4586) fix getAnchorableNodesQuery duplicate nodes (blockquote + paragraph)
 
-</details>
+## :nail_care: Polish
+
+- `tiptap-editor`
+  - [#4589](https://github.com/wix/ricos/pull/4589) support setting modals zIndex by theme API
 
 ## 8.72.59 (Sep 07, 2022)
 
