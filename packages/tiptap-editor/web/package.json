@@ -38,7 +38,7 @@
   "dependencies": {
     "@tiptap/core": "2.0.0-beta.148",
     "@tiptap/react": "2.0.0-beta.98",
-    "prosemirror-dev-tools": "^3.0.0",
+    "prosemirror-dev-tools": "kepta/prosemirror-dev-tools",
     "ricos-content": "8.72.60",
     "ricos-context": "8.72.60",
     "ricos-converters": "8.72.60",
