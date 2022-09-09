@@ -83,6 +83,9 @@ export class FullRicosEditor extends React.Component<Props, State> {
       () => this.inputRef.current as HTMLInputElement
     );
 
+    //@ts-ignore
+    window.ricosEditor = this.orchestrator.getServices().editor;
+
     this.forceUpdate();
   }
 

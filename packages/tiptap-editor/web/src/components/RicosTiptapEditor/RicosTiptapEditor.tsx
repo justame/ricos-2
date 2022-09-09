@@ -57,7 +57,7 @@ export const RicosTiptapEditor: FunctionComponent<RicosTiptapEditorProps> = ({
     editor.on('transaction', forceUpdate);
     if (!isSSR()) {
       //@ts-ignore
-      window.ricosEditor = editor;
+      window.tiptapEditor = editor;
     }
     onLoad && editor.on('create', onLoad);
   }, []);
