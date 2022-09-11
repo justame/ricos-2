@@ -19,6 +19,20 @@
 
 </details>
 
+## 8.72.62 (Sep 11, 2022)
+
+## :house: Internal
+
+- `ricos-editor`
+  - [#4595](https://github.com/wix/ricos/pull/4595) `rceNext` prop
+
+## :bug: Bug Fix
+
+- `html`
+  - [#4604](https://github.com/wix/ricos/pull/4604) change from html code to html url
+- `collapsible-list`
+  - [#4605](https://github.com/wix/ricos/pull/4605) drag & drop handler
+
 ## 8.72.61 (Sep 11, 2022)
 
 ## :bug: Bug Fix
