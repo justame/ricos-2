@@ -43,7 +43,10 @@ const getImageSrc = (
 };
 
 class WixImage extends React.Component<
-  ImageViewerProps & { styles: Record<string, string> },
+  ImageViewerProps & {
+    styles: Record<string, string>;
+    accessibilityProps: { role?: string; tabIndex?: number };
+  },
   { dimensions: { width; height } }
 > {
   _id: string;
@@ -220,6 +223,7 @@ class WixImage extends React.Component<
       styles,
       isMobile,
       seoMode,
+      accessibilityProps,
     } = this.props;
 
     if (isSSR() || /debug/i.test(window?.location?.search)) {
@@ -253,8 +257,6 @@ class WixImage extends React.Component<
 
     setComponentUrl?.(imageSrc);
 
-    const accesibilityProps = !this.hasLink() && { role: 'button', tabIndex: 0 };
-
     /* eslint-disable jsx-a11y/no-static-element-interactions */
 
     const isEditor = getInPluginEditingMode;
@@ -283,7 +285,7 @@ class WixImage extends React.Component<
         className={styles.imageContainer}
         onContextMenu={this.handleContextMenu}
         onKeyDown={this.onKeyDown}
-        {...accesibilityProps}
+        {...accessibilityProps}
       >
         <div
           className={itemClassName}

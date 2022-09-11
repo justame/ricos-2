@@ -27,7 +27,10 @@ interface ImageViewerState {
 }
 
 class RicosImage extends React.Component<
-  ImageViewerProps & { styles: Record<string, string> },
+  ImageViewerProps & {
+    styles: Record<string, string>;
+    accessibilityProps: { role?: string; tabIndex?: number };
+  },
   ImageViewerState
 > {
   preloadRef: RefObject<HTMLImageElement>;
@@ -394,7 +397,15 @@ class RicosImage extends React.Component<
 
   // eslint-disable-next-line complexity
   render() {
-    const { componentData, className, settings, setComponentUrl, seoMode, styles } = this.props;
+    const {
+      componentData,
+      className,
+      settings,
+      setComponentUrl,
+      seoMode,
+      styles,
+      accessibilityProps,
+    } = this.props;
     const { fallbackImageSrc, ssrDone } = this.state;
     const data = componentData || DEFAULTS;
     let { metadata } = componentData;
@@ -418,7 +429,6 @@ class RicosImage extends React.Component<
 
     const shouldRenderPreloadImage = !seoMode && imageSrc && !isGif;
     const shouldRenderImage = (imageSrc && (seoMode || ssrDone)) || isGif;
-    const accesibilityProps = !this.hasLink() && { role: 'button', tabIndex: 0 };
     const onlyHiRes = seoMode || isGif;
     /* eslint-disable jsx-a11y/no-static-element-interactions */
     return (
@@ -428,7 +438,7 @@ class RicosImage extends React.Component<
         ref={this.handleRef}
         onContextMenu={this.handleContextMenu}
         onKeyDown={this.onKeyDown}
-        {...accesibilityProps}
+        {...accessibilityProps}
       >
         <div
           className={itemClassName}
