@@ -19,6 +19,19 @@
 
 </details>
 
+## 8.72.61 (Sep 11, 2022)
+
+## :bug: Bug Fix
+
+- `image`
+  - [#4599](https://github.com/wix/ricos/pull/4599) fix accessibility prop for non-interactive image
+- `button`
+  - [#4598](https://github.com/wix/ricos/pull/4598) fix text alignment for mobile
+- `button`
+  - [#4600](https://github.com/wix/ricos/pull/4600) fix letters cut off
+- `tiptap-button`
+  - [#4600](https://github.com/wix/ricos/pull/4600) fix editor crash when press enter inside button settings
+
 ## 8.72.60 (Sep 07, 2022)
 
 ## :bug: Bug Fix
