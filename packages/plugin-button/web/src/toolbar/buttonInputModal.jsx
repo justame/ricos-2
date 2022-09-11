@@ -126,7 +126,7 @@ export default class ButtonInputModal extends Component {
 
   handleKeyPress = e => {
     if (e.charCode === KEYS_CHARCODE.ENTER) {
-      this.modalsWithEditorCommands ? this.onSave() : this.onConfirm();
+      this.modalsWithEditorCommands ? this.props.onSave() : this.onConfirm();
     }
     if (e.charCode === KEYS_CHARCODE.ESCAPE) {
       this.onCancel();
