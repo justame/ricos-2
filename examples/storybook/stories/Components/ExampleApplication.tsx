@@ -19,6 +19,7 @@ const ExampleApplication: FunctionComponent<{
   editorProps?: Record<string, any>;
   experiments?: AvailableExperiments;
   modalSettings?: { container: HTMLElement };
+  rceNext?: boolean;
 }> = ({
   initialState,
   theme,
@@ -26,6 +27,7 @@ const ExampleApplication: FunctionComponent<{
   editorProps = {},
   experiments = {},
   modalSettings,
+  rceNext = false,
 }) => {
   const [content, setContent] = useState(initialState);
   const showEditor = useMemo(() => display === 'Both' || display === 'Editor', [display]);
@@ -40,6 +42,7 @@ const ExampleApplication: FunctionComponent<{
             onChange={setContent}
             experiments={experiments}
             modalSettings={modalSettings}
+            rceNext={rceNext}
             {...editorProps}
           />
         </RichContentEditorBox>

@@ -9,11 +9,7 @@ export default () => {
       anchorTarget: '_blank',
       relValue: 'nofollow',
     },
-    experiments: {
-      tiptapEditor: {
-        enabled: true,
-      },
-    },
+    rceNext: true,
   };
   return (
     <Page title="Example App">

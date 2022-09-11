@@ -42,7 +42,7 @@ export default () => {
             isMobile={isMobile}
             plugins={plugins}
             modalSettings={modalSettings}
-            experiments={{ tiptapEditor: { enabled: isTiptap } }}
+            rceNext={isTiptap}
           />
           <ActionButton
             text={'getContentPromise()'}

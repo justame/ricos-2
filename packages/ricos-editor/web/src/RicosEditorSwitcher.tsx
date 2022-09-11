@@ -33,26 +33,43 @@ const renderMobileDevTools = () => {
 
 const RicosEditorSwitcher = React.forwardRef<
   RicosEditorRef,
-  RicosEditorProps & { debugMode?: DebugMode[] }
+  RicosEditorProps & { debugMode?: DebugMode[]; rceNext?: boolean }
 >((props, ref) => {
-  const useTiptap = !!props.experiments?.tiptapEditor?.enabled;
+  const { rceNext, ...ricosProps } = props;
+  const useTiptap = rceNext || !!props.experiments?.tiptapEditor?.enabled;
   if ((props.debugMode?.includes('mobile') || props.debugMode?.includes('all')) && props.isMobile) {
     renderMobileDevTools();
   }
 
   if (useTiptap) {
+    const experiments = {
+      ...props.experiments,
+      tiptapEditor: {
+        enabled: true,
+        value: 'true',
+        namespace: 'ricos',
+      },
+    };
     return isSSR() ? (
       <div />
     ) : (
       <Suspense fallback={<div />}>
         <LocaleResourceProviderLazy locale={props.locale}>
           {(locale: RicosEditorProps['locale']) => (t: TranslationFunction) =>
-            <FullRicosEditorLazy {...props} locale={locale} t={t} ref={ref} />}
+            (
+              <FullRicosEditorLazy
+                {...ricosProps}
+                experiments={experiments}
+                locale={locale}
+                t={t}
+                ref={ref}
+              />
+            )}
         </LocaleResourceProviderLazy>
       </Suspense>
     );
   } else {
-    return <RicosEditorWithRef {...props} ref={ref as React.ForwardedRef<RicosEditor>} />;
+    return <RicosEditorWithRef {...ricosProps} ref={ref as React.ForwardedRef<RicosEditor>} />;
   }
 });
 

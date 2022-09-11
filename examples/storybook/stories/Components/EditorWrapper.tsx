@@ -222,6 +222,7 @@ interface Props {
   experiments?: Record<string, any>;
   modalSettings?: { container: HTMLElement };
   container?: HTMLElement | (() => HTMLElement | null);
+  rceNext?: boolean;
 }
 
 class EditorWrapper extends React.Component<Props> {
@@ -253,6 +254,7 @@ class EditorWrapper extends React.Component<Props> {
       experiments,
       modalSettings,
       container,
+      rceNext,
     } = this.props;
 
     return (
@@ -270,15 +272,13 @@ class EditorWrapper extends React.Component<Props> {
           onChange={(...args) => {
             onChange?.(...args, this.editor);
           }}
-          experiments={{
-            tiptapEditor: { enabled: true },
-            ...experiments,
-          }}
+          experiments={experiments}
           _rcProps={rcProps}
           onAtomicBlockFocus={d => console.log('onAtomicBlockFocus', d)} // eslint-disable-line
           commands={commands}
           modalSettings={modalSettings}
           container={container}
+          rceNext={rceNext}
         >
           <RichContentEditor
             onFocus={onFocus}

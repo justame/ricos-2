@@ -56,7 +56,7 @@ export default () => {
           <ExampleApplication
             initialState={exapmleState}
             theme={{ customStyles }}
-            experiments={{ tiptapEditor: { enabled: isTiptap } }}
+            rceNext={isTiptap}
           />
         </div>
         <Section title="Content State">

@@ -116,7 +116,7 @@ const ThemeSelector = () => {
             palette: { ...palette, fallbackColor },
             customStyles: FONTS[fontPage],
           })}
-          experiments={{ tiptapEditor: { enabled: isTiptap } }}
+          rceNext={isTiptap}
           modalSettings={
             useExternalModalsContainer
               ? {

@@ -52,7 +52,7 @@ export default () => {
             </div>
           </div>
           <RicosEditor
-            experiments={{ tiptapEditor: { enabled: true } }}
+            rceNext
             plugins={[pluginMentions(mentionConfig)]}
             ref={ref => ref && !editorRef && setEditorRef(ref)}
             toolbarSettings={{

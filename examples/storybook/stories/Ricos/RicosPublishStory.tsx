@@ -44,7 +44,7 @@ const RicosPublishStory: FunctionComponent<EditorEventsProps> = ({ editorEvents 
         <ToggleTiptapButton isTiptap={isTiptap} setIsTiptap={setIsTiptap} />
         <RichContentEditorBox>
           <RicosEditor
-            experiments={{ tiptapEditor: { enabled: isTiptap } }}
+            rceNext={isTiptap}
             isMobile={isMobile}
             plugins={plugins}
             modalSettings={modalSettings}
