@@ -28,7 +28,8 @@ export const EditHtmlButton: FC<Props> = ({ toolbarItem, dataHook }) => {
   }; //TODO: use convertor
 
   const updateData = data => {
-    const htmlData = data.srcType === 'html' ? { html: data.src } : { url: data.src };
+    const htmlData =
+      data.srcType === 'html' ? { html: data.src, url: null } : { url: data.src, html: null };
     toolbarItem.commands?.click({ htmlData });
   };
 
