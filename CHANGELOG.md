@@ -17,12 +17,14 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.72.63 (Sep 12, 2022)
+
 ## :bug: Bug Fix
 
 - `table`
   - [#4603](https://github.com/wix/ricos/pull/4603) add colorPicker modal
-
-</details>
 
 ## 8.72.62 (Sep 11, 2022)
 
