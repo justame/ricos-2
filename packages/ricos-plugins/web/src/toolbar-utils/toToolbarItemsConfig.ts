@@ -3,6 +3,7 @@ import { Decoration_Type, Node_Type } from 'ricos-types';
 import { isiOS } from './isiOS';
 import type { PluginTextButton } from '../plugin-text-button';
 import toConstantCase from 'to-constant-case';
+import { FORMATTING_BUTTONS } from 'wix-rich-content-editor-common';
 
 const cleanTitleIfNeeded = (
   tiptapToolbarItemsConfig: IToolbarItemConfigTiptap[]
@@ -79,13 +80,13 @@ function getButtonsListFromConfig(
   return buttons;
 }
 
-function mapButtonsFromConfig(formattingConfigButtonId: string) {
+function mapButtonsFromConfig(configButtonId: string) {
   let buttonName = '';
 
-  if (formattingConfigButtonId === '|') {
+  if (configButtonId === '|') {
     buttonName = 'separator';
   } else {
-    buttonName = toConstantCase(formattingConfigButtonId);
+    buttonName = toConstantCase(configButtonId);
   }
   return buttonName;
 }
@@ -117,6 +118,13 @@ export function toTiptapToolbarItemsConfig(
   return finalTiptapToolbarItemsConfig;
 }
 
+function handleDeprecatedButtons(configButtonId: string | { name: string }) {
+  if (typeof configButtonId === 'string') return configButtonId;
+  if (configButtonId.name === 'Alignment') {
+    return FORMATTING_BUTTONS.ALIGNMENT;
+  }
+}
+
 export function toExternalToolbarItemsConfig(
   toolbarConfig: ToolbarSettingsFunctions | undefined,
   pluginTextButtons: PluginTextButton[],
@@ -130,7 +138,7 @@ export function toExternalToolbarItemsConfig(
 
   const buttonsListFromConfig = getButtonsListFromConfig(toolbarConfig, buttonsType);
 
-  const buttonsList = buttonsListFromConfig.map(mapButtonsFromConfig);
+  const buttonsList = buttonsListFromConfig.map(handleDeprecatedButtons).map(mapButtonsFromConfig);
 
   const externalToolbarItemsConfig: PluginTextButton[] = [];
   buttonsList.map(toSchemaBasedId).forEach(button => {
