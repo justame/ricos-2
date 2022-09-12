@@ -51,7 +51,7 @@ function maybeSetSelection(state, dispatch, selection) {
 function arrow(axis, dir) {
   return ({ editor: { state, view } }) => {
     const sel = state.selection;
-    if (isCellSelection(sel)) {
+    if (sel.$anchorCell) {
       const $head = nextCell(sel.$headCell, axis, dir);
 
       if ($head) {
@@ -92,7 +92,7 @@ function shiftArrow(axis, dir) {
 
 function maybeToggleEditMode({ editor }) {
   const sel = editor.state.selection;
-  if (isCellSelection(sel)) {
+  if (sel.$anchorCell) {
     if (sel.ranges.length === 1) {
       editor.commands.setEditCell();
     }
