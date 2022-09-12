@@ -12,3 +12,5 @@ export interface TablePluginEditorConfig extends EditorPluginConfig {
 export interface TablePluginViewerConfig extends ViewerPluginConfig {
   [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
+
+export type bordersType = 'outsideBorders' | 'borders';

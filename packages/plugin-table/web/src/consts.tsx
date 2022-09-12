@@ -1,5 +1,6 @@
 import type { ModalStyles } from 'wix-rich-content-common';
 import { Node_Type } from 'wix-rich-content-common';
+import type { bordersType } from './types';
 
 const commonDesktopModalStyles: React.CSSProperties = {
   width: '362px',
@@ -148,3 +149,10 @@ export const TABLE_COMMANDS_KEYS = {
   SELECT_ROWS: 'selectRow',
   SELECT_COLUMNS: 'selectColumn',
 };
+
+export const TABLE_COLOR_PICKER = 'table-colorPicker';
+
+export const BORDER_TYPES: {
+  borders: bordersType;
+  outsideBorders: bordersType;
+} = { borders: 'borders', outsideBorders: 'outsideBorders' };

@@ -68,7 +68,7 @@ export const tableCell = {
       },
 
       renderHTML({ node, HTMLAttributes }) {
-        const { borderTop, borderBottom, borderRight, borderLeft } = node.attrs.borderColors || {};
+        const { top, bottom, right, left } = node.attrs.borderColors || {};
         return [
           'td',
           HTMLAttributes,
@@ -77,28 +77,28 @@ export const tableCell = {
             'div',
             {
               class: styles.cellBorderT,
-              style: `background: ${borderTop};`,
+              style: `background: ${top};`,
             },
           ],
           [
             'div',
             {
               class: styles.cellBorderB,
-              style: `background: ${borderBottom};`,
+              style: `background: ${bottom};`,
             },
           ],
           [
             'div',
             {
               class: styles.cellBorderL,
-              style: `background: ${borderLeft};`,
+              style: `background: ${left};`,
             },
           ],
           [
             'div',
             {
               class: styles.cellBorderR,
-              style: `background: ${borderRight};`,
+              style: `background: ${right};`,
             },
           ],
         ];

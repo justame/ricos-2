@@ -1,11 +1,13 @@
 import React from 'react';
 import { KEYS_CHARCODE } from 'wix-rich-content-editor-common';
 import { ListItemSelect, DropdownModal } from 'wix-rich-content-toolbars-ui';
+import { BORDER_TYPES } from '../../consts';
 import { BorderIcon, BorderOutsideIcon } from '../../icons';
+import type { bordersType } from '../../types';
 
 type Props = {
   getSelectedStyle: () => string;
-  onClick: (data: { borders?: string; outsideBorders?: string }) => void;
+  onClick: (type: bordersType) => void;
 };
 
 const BorderPanel: React.FC<Props> = ({ onClick }) => {
@@ -21,18 +23,18 @@ const BorderPanel: React.FC<Props> = ({ onClick }) => {
       key={'border'}
       dataHook={'border-color-around'}
       prefix={<BorderOutsideIcon />}
-      onClick={() => onClick({ outsideBorders: 'green' })}
+      onClick={() => onClick(BORDER_TYPES.outsideBorders)}
       onKeyDown={e => {
-        onKeyDown(e, 'red');
+        onKeyDown(e, BORDER_TYPES.outsideBorders);
       }}
     />,
     <ListItemSelect
       key={'outsideBorder'}
       dataHook={'border-color-all'}
       prefix={<BorderIcon />}
-      onClick={() => onClick({ borders: 'red' })}
+      onClick={() => onClick(BORDER_TYPES.borders)}
       onKeyDown={e => {
-        onKeyDown(e, 'red');
+        onKeyDown(e, BORDER_TYPES.borders);
       }}
     />,
   ];

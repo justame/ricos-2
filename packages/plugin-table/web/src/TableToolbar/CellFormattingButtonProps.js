@@ -11,7 +11,7 @@ import {
   ColumnHeader,
 } from '../icons';
 
-const DEFAULT_PALETTE_BG = Object.freeze([
+export const DEFAULT_PALETTE_BG = Object.freeze([
   '#ff0000',
   '#ffffff',
   '#303030',
@@ -19,7 +19,7 @@ const DEFAULT_PALETTE_BG = Object.freeze([
   '#bfad80',
   '#dddddd',
 ]);
-const DEFAULT_PALETTE_BORDERS = Object.freeze([
+export const DEFAULT_PALETTE_BORDERS = Object.freeze([
   '#ff0000',
   '#ffffff',
   '#303030',

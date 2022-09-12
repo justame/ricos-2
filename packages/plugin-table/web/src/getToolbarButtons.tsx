@@ -1,11 +1,15 @@
 import React from 'react';
 import type { ToolbarButton } from 'ricos-types';
-import { PLUGIN_TOOLBAR_BUTTON_ID } from 'wix-rich-content-editor-common';
+import {
+  decorateComponentWithProps,
+  PLUGIN_TOOLBAR_BUTTON_ID,
+} from 'wix-rich-content-editor-common';
 import {
   TABLE_BUTTONS,
   TABLE_BUTTONS_DATA_HOOKS,
   TABLE_BUTTONS_MODALS_ID,
   CATEGORY,
+  TABLE_COLOR_PICKER,
 } from './consts';
 import {
   FormattingButton,
@@ -19,6 +23,8 @@ import { BorderPanel, ContextPanel, VerticalAlignmentPanel } from './toolbar/mod
 import { isColumnSelected, isRowSelected, isTableSelected } from './tiptap/utilities/is-selected';
 import { TIPTAP_TABLE_CELL_TYPE, TIPTAP_TABLE_TYPE } from 'wix-rich-content-common';
 import { getRowsAndColsInSelection } from './tiptap/utilities/getRowsAndColsInSelection';
+import { TableColorPicker } from './modals/TableColorPicker';
+import { DEFAULT_PALETTE_BG } from './TableToolbar/CellFormattingButtonProps';
 
 export const getToolbarButtons = (config, services): ToolbarButton[] => {
   return [
@@ -54,6 +60,13 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
       command: ({ backgroundColor, editorCommands }) => {
         editorCommands.chain().focus().setCellAttribute('cellStyle', { backgroundColor }).run();
       },
+      attributes: {
+        cellBackgroundColor: getCellBackgroundColorResolver,
+      },
+      modal: {
+        id: TABLE_COLOR_PICKER,
+        Component: decorateComponentWithProps(TableColorPicker, { palette: DEFAULT_PALETTE_BG }),
+      },
       renderer: toolbarItem => <BackgroundColorButton toolbarItem={toolbarItem} />,
     },
     {
@@ -66,6 +79,10 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
         borders
           ? editorCommands.chain().focus().setCellBorderColor(borders).run()
           : editorCommands.chain().focus().setOutsiderCellsBorderColor(outsideBorders).run();
+      },
+      attributes: {
+        cellBorderColor: getCellBorderColorResolver,
+        selectedCategory: getSelectionCategoryResolver,
       },
       modal: {
         id: TABLE_BUTTONS_MODALS_ID.BORDER,
@@ -174,6 +191,30 @@ const getCellAlignmentResolver = {
     if (Array.isArray(content) && content.length > 0) {
       return content.find(node => node.type.name === TIPTAP_TABLE_CELL_TYPE)?.attrs?.cellStyle
         ?.verticalAlignment;
+    } else {
+      return false;
+    }
+  },
+};
+
+const getCellBackgroundColorResolver = {
+  id: 'cellBackgroundColorResolver',
+  resolve: content => {
+    if (Array.isArray(content) && content.length > 0) {
+      return content.find(node => node.type.name === TIPTAP_TABLE_CELL_TYPE)?.attrs?.cellStyle
+        ?.backgroundColor;
+    } else {
+      return false;
+    }
+  },
+};
+
+const getCellBorderColorResolver = {
+  id: 'cellBorderColorResolver',
+  resolve: content => {
+    if (Array.isArray(content) && content.length > 0) {
+      return content.find(node => node.type.name === TIPTAP_TABLE_CELL_TYPE)?.attrs?.borderColors
+        ?.top;
     } else {
       return false;
     }

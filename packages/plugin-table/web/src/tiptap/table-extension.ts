@@ -398,10 +398,10 @@ export const tableExtension = {
               chain()
                 .focus()
                 .setCellAttribute('borderColors', {
-                  borderTop: color,
-                  borderRight: color,
-                  borderBottom: color,
-                  borderLeft: color,
+                  top: color,
+                  right: color,
+                  bottom: color,
+                  left: color,
                 })
                 .run();
             },
@@ -420,15 +420,15 @@ export const tableExtension = {
                   );
 
                 const borders: {
-                  borderTop?: string;
-                  borderBottom?: string;
-                  borderLeft?: string;
-                  borderRight?: string;
+                  top?: string;
+                  bottom?: string;
+                  left?: string;
+                  right?: string;
                 } = {};
-                !isNeighborInSelection('top') && (borders.borderTop = color);
-                !isNeighborInSelection('bottom') && (borders.borderBottom = color);
-                !isNeighborInSelection('left') && (borders.borderLeft = color);
-                !isNeighborInSelection('right') && (borders.borderRight = color);
+                !isNeighborInSelection('top') && (borders.top = color);
+                !isNeighborInSelection('bottom') && (borders.bottom = color);
+                !isNeighborInSelection('left') && (borders.left = color);
+                !isNeighborInSelection('right') && (borders.right = color);
 
                 tr.setNodeMarkup(pos, null, {
                   ...node.attrs,
