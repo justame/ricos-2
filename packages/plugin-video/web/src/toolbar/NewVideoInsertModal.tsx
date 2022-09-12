@@ -51,7 +51,8 @@ const VideoInsertModal = props => {
       buttonName: MEDIA_POPOVERS_BUTTONS_NAMES_BI.embed,
     });
     if (url && ReactPlayer.canPlay(url)) {
-      const { componentData, helpers, onConfirm, onReplace } = props;
+      const { componentData, helpers, onConfirm, onReplace, updateVideoMetadata, experiments } =
+        props;
       if (onConfirm) {
         onConfirm({ ...componentData, src: url, isCustomVideo: false });
       } else {
@@ -59,7 +60,10 @@ const VideoInsertModal = props => {
       }
 
       if (helpers && helpers.onVideoSelected) {
-        helpers.onVideoSelected(url, data => onReplace({ metadata: { ...data } }));
+        const isTiptap = experiments.tiptapEditor.enabled;
+        helpers.onVideoSelected(url, data =>
+          isTiptap ? updateVideoMetadata(data) : onReplace({ metadata: { ...data } })
+        );
       }
 
       closeModal?.();

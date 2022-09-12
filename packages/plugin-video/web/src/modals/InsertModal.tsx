@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import type { FC } from 'react';
 import { VIDEO_TYPE } from '../types';
 import VideoInsertModal from '../toolbar/NewVideoInsertModal';
@@ -20,6 +20,7 @@ interface Props {
   getVideoUrl: (src) => string;
   handleFileSelection: (updateEntity) => void;
   handleFileUpload: (files, updateEntity) => void;
+  onVideoSelected: (url: string, updateEntity: (metadata: Record<string, unknown>) => void) => void;
 }
 
 const InsertModal: FC<Props> = ({
@@ -29,13 +30,15 @@ const InsertModal: FC<Props> = ({
   handleFileSelection,
   handleFileUpload,
   enableCustomUploadOnMobile,
+  onVideoSelected,
 }) => {
-  const { theme, t, isMobile, languageDir } = useContext(RicosContext);
+  const { theme, t, isMobile, languageDir, experiments } = useContext(RicosContext);
   const { getEditorCommands } = useContext(EditorContext);
   const modalService = useContext(ModalContext) || {};
   const pluginsEvents = useContext(PluginsEventsContext);
-
   const { uploadService, updateService } = useContext(UploadContext);
+
+  const [newNodeId, setNewNodeId] = useState(generateId());
   const closeModal = () => {
     modalService.closeModal(modalId);
   };
@@ -53,7 +56,7 @@ const InsertModal: FC<Props> = ({
     if (nodeId) {
       onReplace(video);
     } else {
-      const id = generateId();
+      const id = newNodeId;
       const data = convertBlockDataToRicos(VIDEO_TYPE, video);
       const insertVideo = () =>
         getEditorCommands().insertBlockWithBlankLines(VIDEO_TYPE, { ...data, id });
@@ -62,9 +65,20 @@ const InsertModal: FC<Props> = ({
     }
   };
 
+  const updateVideoMetadata = metadata => {
+    getEditorCommands().updateBlock?.(newNodeId, VIDEO_TYPE, {
+      thumbnail: {
+        src: { url: metadata.thumbnail_url },
+        width: metadata.thumbnail_width,
+        height: metadata.thumbnail_height,
+      },
+    });
+  };
+
   const pluginEvents = {
     onPluginsPopOverTabSwitch: data => pluginsEvents.publishPluginPopoverTabSwitch(data),
     onPluginsPopOverClick: data => pluginsEvents.publishPluginPopoverClick(data),
+    onVideoSelected,
   };
 
   return (
@@ -84,6 +98,8 @@ const InsertModal: FC<Props> = ({
       handleFileUpload={handleFileUpload}
       enableCustomUploadOnMobile={enableCustomUploadOnMobile}
       blockKey={nodeId}
+      updateVideoMetadata={updateVideoMetadata}
+      experiments={experiments}
     />
   );
 };

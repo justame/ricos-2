@@ -20,6 +20,7 @@ export const getAddButtons = (config, services): AddButton[] => {
     handleFileSelection,
     handleFileUpload,
     disableDownload,
+    onVideoSelected,
   } = config || {};
 
   const modalBaseProps = {
@@ -27,6 +28,7 @@ export const getAddButtons = (config, services): AddButton[] => {
     getVideoUrl,
     handleFileSelection,
     handleFileUpload,
+    onVideoSelected,
   };
 
   const buttonsMap: Record<string, AddButton> = {

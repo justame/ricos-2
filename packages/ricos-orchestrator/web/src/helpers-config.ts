@@ -1,5 +1,5 @@
 import type { RicosEditorProps } from 'ricos-common';
-import { GALLERY_TYPE, IMAGE_TYPE, LINK_PREVIEW_TYPE, POLL_TYPE } from 'ricos-content';
+import { GALLERY_TYPE, IMAGE_TYPE, LINK_PREVIEW_TYPE, POLL_TYPE, VIDEO_TYPE } from 'ricos-content';
 
 // TODO: move these configs to proper plugins
 export const getHelpersConfig = (props: RicosEditorProps) => ({
@@ -16,5 +16,8 @@ export const getHelpersConfig = (props: RicosEditorProps) => ({
   },
   [LINK_PREVIEW_TYPE]: {
     linkPanelSettings: props.linkPanelSettings,
+  },
+  [VIDEO_TYPE]: {
+    onVideoSelected: props._rcProps?.helpers?.onVideoSelected,
   },
 });
