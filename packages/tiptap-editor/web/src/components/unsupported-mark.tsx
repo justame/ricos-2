@@ -2,6 +2,9 @@ import type { MarkConfig } from '@tiptap/core';
 import type { Decoration_Type } from 'ricos-schema';
 import type { RicosMarkExtension } from 'ricos-types';
 
+/**
+ * Creates RicosExtension for unsupported mark, dynamically
+ */
 export const getUnsupportedMarkConfig = ({
   unsupportedMarkType,
   ...attrs

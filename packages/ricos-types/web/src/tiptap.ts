@@ -209,4 +209,5 @@ export interface TiptapAdapter {
   getDraftContent: () => DraftContent;
   getDocumentStyle: () => DocumentStyle;
   isContentChanged: () => boolean;
+  setDraftContent: (content: DraftContent) => void;
 }

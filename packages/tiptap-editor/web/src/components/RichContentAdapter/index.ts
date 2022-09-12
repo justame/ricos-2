@@ -1,1 +1,0 @@
-export { RichContentAdapter } from './RichContentAdapter';

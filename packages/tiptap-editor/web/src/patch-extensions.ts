@@ -7,6 +7,7 @@ import type { RicosMarkExtension, RicosNodeExtension } from 'ricos-types';
 import { getUnsupportedNodeConfig } from 'wix-rich-content-plugin-unsupported-blocks';
 import { extract } from 'wix-tiptap-extensions';
 import { getUnsupportedMarkConfig } from './components/unsupported-mark';
+import { contentDefaults } from './content-defaults';
 import type { Extensions } from './models/Extensions';
 
 export type ContentTypes = {
@@ -14,14 +15,23 @@ export type ContentTypes = {
   nodes: string[];
 };
 
+/**
+ * Abstracts 2 records merge (the first overrides the second)
+ */
 const attributeMerger: M.Monoid<Record<string, unknown>> = {
   concat: (first, second) => ({ ...second, ...first }),
   empty: {},
 };
 
+/**
+ * Abstracts multiple records merge
+ */
 const concatAttributes = (attrs: Record<string, unknown>[]): Record<string, unknown> =>
   M.concatAll(attributeMerger)(attrs);
 
+/**
+ * Gets all node names from given Extensions
+ */
 export const extractNodeNames = (extensions: Extensions): ContentTypes['nodes'] => [
   ...extensions
     .getReactNodeExtensions()
@@ -33,12 +43,20 @@ export const extractNodeNames = (extensions: Extensions): ContentTypes['nodes'] 
     .map(({ name }) => name),
 ];
 
+/**
+ * Gets all mark names from given Extensions
+ */
 export const extractMarkNames = (extensions: Extensions): ContentTypes['marks'] =>
   extensions
     .getMarkExtensions()
     .asArray()
     .map(({ name }) => name);
 
+/**
+ * Constructs ContentTypes from given Extensions
+ *
+ * @returns { ContentTypes } node/mark types
+ */
 export const toContentTypes = (extensions: Extensions): ContentTypes => ({
   marks: extractMarkNames(extensions),
   nodes: extractNodeNames(extensions),
@@ -54,6 +72,9 @@ const toExtensions =
     marks: transform.marks(contentTypes.marks),
   });
 
+/**
+ * Gets mark names that exist in content but not in schema
+ */
 export const extractUnsupportedMarks =
   (content: JSONContent) =>
   (supportedMarks: ContentTypes['marks']): ContentTypes['marks'] =>
@@ -71,7 +92,10 @@ export const extractUnsupportedMarks =
       A.difference(S.Eq)(supportedMarks)
     );
 
-const extractUnsupportedMarkAttributes =
+/**
+ * Merges attributes of given mark type instances found in content
+ */
+const extractMarkAttributes =
   (content: JSONContent) =>
   (markType: string): Record<string, unknown> =>
     pipe(
@@ -88,6 +112,9 @@ const extractUnsupportedMarkAttributes =
       concatAttributes
     );
 
+/**
+ * Gets node names that exist in content but not in schema
+ */
 export const extractUnsupportedNodes =
   (content: JSONContent) =>
   (supportedNodes: ContentTypes['nodes']): ContentTypes['nodes'] =>
@@ -99,7 +126,10 @@ export const extractUnsupportedNodes =
       A.difference(S.Eq)(supportedNodes)
     );
 
-const extractUnsupportedNodeAttributes =
+/**
+ * Merges attributes of given node type instances found in content
+ */
+const extractNodeAttributes =
   (content: JSONContent) =>
   (nodeType: string): Record<string, unknown> =>
     pipe(
@@ -115,24 +145,38 @@ const extractUnsupportedNodeAttributes =
       concatAttributes
     );
 
+const completeContent = (userContent: JSONContent): JSONContent => ({
+  ...userContent,
+  content: [...contentDefaults, ...(userContent.content ?? [])],
+});
+
 const mergeExtensions =
   (extensions: Extensions) =>
   ({ nodes, marks }: { nodes: RicosNodeExtension[]; marks: RicosMarkExtension[] }): Extensions =>
     extensions.concat([...nodes, ...marks]);
 
-export const patchExtensions = (content: JSONContent, extensions: Extensions): Extensions =>
-  pipe(
+/**
+ * Patches prosemirror schema to prevent exception thrown on unsupported node/mark types by prosemirror editor
+ *
+ * @param {JSONContent} content
+ * @param {Extensions} extensions
+ * @returns  {Extensions} patched extensions
+ */
+export const patchExtensions = (content: JSONContent, extensions: Extensions): Extensions => {
+  const fullContent = completeContent(content);
+  return pipe(
     extensions,
     toContentTypes,
     toExtensions({
       nodes: flow(
-        extractUnsupportedNodes(content),
-        A.map(flow(extractUnsupportedNodeAttributes(content), getUnsupportedNodeConfig))
+        extractUnsupportedNodes(fullContent),
+        A.map(flow(extractNodeAttributes(fullContent), getUnsupportedNodeConfig))
       ),
       marks: flow(
-        extractUnsupportedMarks(content),
-        A.map(flow(extractUnsupportedMarkAttributes(content), getUnsupportedMarkConfig))
+        extractUnsupportedMarks(fullContent),
+        A.map(flow(extractMarkAttributes(fullContent), getUnsupportedMarkConfig))
       ),
     }),
     mergeExtensions(extensions)
   );
+};

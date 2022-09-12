@@ -3,7 +3,7 @@ import type { RicosEditorProps } from 'ricos-common';
 import { draftToTiptap } from 'ricos-converters';
 import type { ExtensionProps, RicosServices } from 'ricos-types';
 import { getEmptyDraftContent } from 'wix-rich-content-editor-common';
-import { RichContentAdapter } from './components/RichContentAdapter/RichContentAdapter';
+import { RichContentAdapter } from './components/RichContentAdapter';
 import { applyDevTools } from './components/RicosTiptapEditor/apply-dev-tools';
 import { coreConfigs } from './components/RicosTiptapEditor/core-configs';
 import { Extensions } from './models/Extensions';

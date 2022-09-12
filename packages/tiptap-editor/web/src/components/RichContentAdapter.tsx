@@ -3,9 +3,8 @@ import type { Editor, JSONContent } from '@tiptap/react';
 import { capitalize } from 'lodash';
 import type { Fragment, Node as ProseMirrorNode } from 'prosemirror-model';
 import type { RicosEditorProps } from 'ricos-common';
-import type { RichTextNode } from 'ricos-content';
+import type { DraftContent, RichTextNode } from 'ricos-content';
 import {
-  RICOS_LINE_SPACING_TYPE,
   BLOCKQUOTE,
   BULLET_LIST_TYPE,
   CODE_BLOCK_TYPE,
@@ -13,18 +12,18 @@ import {
   HEADER_BLOCK,
   NUMBERED_LIST_TYPE,
   RICOS_INDENT_TYPE,
+  RICOS_LINE_SPACING_TYPE,
   UNSTYLED,
-  getTextDirection,
 } from 'ricos-content';
-import { tiptapToDraft, fromTiptapNode } from 'ricos-converters';
-import { Decoration_Type, Node_Type } from 'ricos-schema';
+import { draftToTiptap, fromTiptapNode, tiptapToDraft } from 'ricos-converters';
 import type { Node } from 'ricos-schema';
+import { Decoration_Type, Node_Type } from 'ricos-schema';
 import type {
-  TiptapAdapter,
-  EditorContextType,
-  Pubsub,
   ColorType,
   EditorCommands,
+  EditorContextType,
+  Pubsub,
+  TiptapAdapter,
 } from 'ricos-types';
 import { ToolbarType } from 'ricos-types';
 import type { RicosCustomStyles, TextAlignment } from 'wix-rich-content-common';
@@ -32,19 +31,20 @@ import {
   defaultFontSizes,
   defaultMobileFontSizes,
   DOC_STYLE_TYPES,
-  RICOS_LINK_TYPE,
   RICOS_ANCHOR_TYPE,
+  RICOS_FONT_SIZE_TYPE,
+  RICOS_LINK_TYPE,
   RICOS_MENTION_TYPE,
   RICOS_TEXT_COLOR_TYPE,
   RICOS_TEXT_HIGHLIGHT_TYPE,
-  RICOS_FONT_SIZE_TYPE,
 } from 'wix-rich-content-common';
-import { TO_TIPTAP_TYPE } from '../../consts';
-import { findNodeById } from '../../helpers';
-import { convertInlineStylesToCSS } from '../../helpers/convertInlineStylesToCss';
-import type { TiptapAdapterServices } from '../../initializeTiptapAdapter';
 import { resolversById } from 'wix-rich-content-toolbars-v3';
 import { RESOLVERS_IDS } from 'wix-rich-content-toolbars-v3/libs/resolvers-ids';
+import { TO_TIPTAP_TYPE } from '../consts';
+import { findNodeById } from '../helpers';
+import { convertInlineStylesToCSS } from '../helpers/convertInlineStylesToCss';
+import type { TiptapAdapterServices } from '../initializeTiptapAdapter';
+import { isSchemaCompatibleContent } from './is-schema-compatible-content';
 
 export class RichContentAdapter implements TiptapAdapter {
   private readonly initialContent: Fragment;
@@ -90,6 +90,16 @@ export class RichContentAdapter implements TiptapAdapter {
 
   getDraftContent = () =>
     tiptapToDraft(this.tiptapEditor.getJSON() as JSONContent, this.shouldRevealConverterErrors);
+
+  setDraftContent = (content: DraftContent) => {
+    const jsonContent = draftToTiptap(content);
+    if (isSchemaCompatibleContent(jsonContent, this.tiptapEditor.schema)) {
+      this.tiptapEditor.commands.setContent(jsonContent);
+      console.debug('New content applied', jsonContent); // eslint-disable-line no-console
+    } else {
+      console.warn('New content is not compatible with current schema, ignoring it');
+    }
+  };
 
   getDocumentStyle = () => this.tiptapEditor?.getJSON()?.attrs?.documentStyle || {};
 

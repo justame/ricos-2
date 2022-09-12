@@ -1,4 +1,5 @@
 import type { JSONContent } from '@tiptap/core';
+import { isEqual } from 'lodash';
 import type { ForwardedRef } from 'react';
 import React, { forwardRef } from 'react';
 import type { RicosEditorProps } from 'ricos-common';
@@ -60,6 +61,15 @@ class RicosEditor extends React.Component<Props, RicosEditorState> implements Ri
       editorCss,
     });
     this.tiptapAdapter = props.editor.adapter;
+  }
+
+  componentWillReceiveProps(newProps: Props) {
+    if (
+      newProps.injectedContent &&
+      !isEqual(this.props.injectedContent, newProps.injectedContent)
+    ) {
+      this.tiptapAdapter.setDraftContent(newProps.injectedContent);
+    }
   }
 
   focus: RicosEditorRef['focus'] = () => {

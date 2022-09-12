@@ -9,7 +9,7 @@ const getDefaultValue = (value: unknown) =>
     [v => typeof v === 'string', () => ''],
     [v => typeof v === 'boolean', () => false],
     [v => Array.isArray(v), () => []],
-    [v => isObject(v), v => toGlobalAttributes(v as Record<string, unknown>)],
+    [v => isObject(v), () => null],
   ]);
 
 const toGlobalAttributes = (attrs: Record<string, unknown>): Record<string, unknown> =>
@@ -21,6 +21,9 @@ const toGlobalAttributes = (attrs: Record<string, unknown>): Record<string, unkn
     {}
   );
 
+/**
+ * Creates RicosExtension for unsupported node, dynamically
+ */
 export const getUnsupportedNodeConfig = ({ unsupportedNodeType, ...attrs }): RicosNodeExtension => {
   return {
     type: 'node' as const,
