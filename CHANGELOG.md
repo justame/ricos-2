@@ -25,6 +25,8 @@
 
 - `ricos-plugins`
   - [#4592](https://github.com/wix/ricos/pull/4592) external insert plugins toolbar support toolbar settings
+- `ricos schema ricos content`
+  - [#4475](https://github.com/wix/ricos/pull/4475) add `source: 'HTML | ADSENSE` property to html schema
 
 ## 8.72.64 (Sep 13, 2022)
 

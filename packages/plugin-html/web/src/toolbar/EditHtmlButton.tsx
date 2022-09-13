@@ -4,6 +4,7 @@ import { RicosContext, ModalContext } from 'ricos-context';
 import type { IToolbarItem } from 'ricos-types';
 import { Node_Type } from 'ricos-types';
 import { ToggleButton, EditIcon } from 'wix-rich-content-toolbars-ui';
+import { HTMLData_Source } from 'ricos-schema';
 
 type Props = {
   toolbarItem: IToolbarItem;
@@ -23,7 +24,7 @@ export const EditHtmlButton: FC<Props> = ({ toolbarItem, dataHook }) => {
     srcType: node?.attrs?.html ? 'html' : 'url',
     src: node?.attrs?.html || node?.attrs?.url,
     config: {
-      isAdsense: node?.attrs?.isAdsense,
+      isAdsense: node?.attrs?.source === HTMLData_Source.ADSENSE,
     },
   }; //TODO: use convertor
 

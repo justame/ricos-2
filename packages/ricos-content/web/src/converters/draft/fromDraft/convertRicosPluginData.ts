@@ -34,7 +34,7 @@ import type {
   GalleryData,
   FileData,
 } from 'ricos-schema';
-import { PluginContainerData_Width_Type, ButtonData_Type } from 'ricos-schema';
+import { PluginContainerData_Width_Type, ButtonData_Type, HTMLData_Source } from 'ricos-schema';
 import { TO_RICOS_DATA } from './consts';
 import type {
   AudioComponentData,
@@ -492,7 +492,7 @@ const convertButtonData = (
 
 const convertHTMLData = data => {
   const { src, srcType, config } = data;
-  config.isAdsense && (data.isAdsense = config.isAdsense);
+  config.isAdsense && (data.source = HTMLData_Source.ADSENSE);
   data[srcType] = src;
 };
 

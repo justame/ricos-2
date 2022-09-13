@@ -18,7 +18,7 @@ import type {
   Struct,
   AudioData,
 } from 'ricos-schema';
-import { Node_Type, Decoration_Type, ButtonData_Type } from 'ricos-schema';
+import { Node_Type, Decoration_Type, ButtonData_Type, HTMLData_Source } from 'ricos-schema';
 import { cloneDeep, has, merge } from 'lodash';
 import toCamelCase from 'to-camel-case';
 import type { DraftGalleryStyles } from '../consts';
@@ -516,12 +516,12 @@ const convertButtonData = (data: Partial<ButtonData> & { button }) => {
 };
 
 const convertHTMLData = data => {
-  const { html, url, config = {}, isAdsense } = data;
+  const { html, url, config = {}, source } = data;
   const srcType = html ? 'html' : 'url';
   data.srcType = srcType;
   data.src = html || url;
-  isAdsense && (data.config.isAdsense = isAdsense);
-  isAdsense && delete data.isAdsense;
+  source === HTMLData_Source.ADSENSE && (data.config.isAdsense = true);
+  delete data.source;
   delete data[srcType];
   config.size && delete data.config.size;
 };

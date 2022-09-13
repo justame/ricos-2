@@ -6,6 +6,7 @@ import { INSERT_PLUGIN_BUTTONS, TOOLBARS } from 'wix-rich-content-editor-common'
 import { htmlButtonsTypes } from './defaults';
 import { AdsenseIcon, InsertPluginIcon } from './icons';
 import { HTML_TYPE } from './types';
+import { HTMLData_Source } from 'ricos-schema';
 
 export const getAddButtons = (config, _services): AddButton[] => {
   const { exposeButtons = [htmlButtonsTypes.html], siteDomain } = config || {};
@@ -39,7 +40,7 @@ export const getAddButtons = (config, _services): AddButton[] => {
       command: editorCommands => {
         editorCommands.insertBlockWithBlankLines(HTML_TYPE, {
           ...htmlDataDefaults,
-          isAdsense: true,
+          source: HTMLData_Source.ADSENSE,
         });
         return true;
       },
