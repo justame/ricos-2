@@ -1,10 +1,10 @@
 import type { GetToolbarSettings } from 'ricos-types';
 import { ToolbarType, DisplayMode } from 'ricos-types';
 
-export function getDefaultFormattingToolbarSettings(
+export function getDefaultToolbarSettings(
   toolbarSettingsProps: Parameters<GetToolbarSettings>[0]
 ): ReturnType<GetToolbarSettings> {
-  const { textButtons } = toolbarSettingsProps;
+  const { textButtons, pluginButtonNames } = toolbarSettingsProps;
 
   const defaultOffset = {
     desktop: { x: 0, y: 0 },
@@ -31,6 +31,23 @@ export function getDefaultFormattingToolbarSettings(
   };
 
   return [
+    {
+      name: ToolbarType.INSERT_PLUGIN,
+      shouldCreate: () => ({
+        desktop: false,
+        mobile: {
+          android: false,
+          ios: false,
+        },
+      }),
+      getButtons: () => ({
+        desktop: pluginButtonNames,
+        mobile: {
+          ios: pluginButtonNames,
+          android: pluginButtonNames,
+        },
+      }),
+    },
     {
       name: ToolbarType.FORMATTING,
       shouldCreate: () => ({

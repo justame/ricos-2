@@ -1,15 +1,17 @@
 import type { TextButtons, ToolbarSettingsFunctions, ToolbarSettings } from 'ricos-types';
 import { desktopTextButtonList, mobileTextButtonList } from './defaultTextFormattingButtons';
-import { getDefaultFormattingToolbarSettings } from './getDefaultFormattingToolbarSettings';
+import { getDefaultToolbarSettings } from './getDefaultToolbarSettings';
 import { mergeToolbarSettings } from './mergeToolbarSettings';
+import { INSERT_PLUGIN_BUTTONS } from 'wix-rich-content-editor-common';
 
 export function initToolbarSettings(toolbarSettings: ToolbarSettings): ToolbarSettingsFunctions[] {
   const textButtons: TextButtons = {
     mobile: mobileTextButtonList,
     desktop: desktopTextButtonList,
   };
+  const pluginButtonNames = Object.values(INSERT_PLUGIN_BUTTONS);
   if (toolbarSettings?.getToolbarSettings) {
-    const defaultSettings = getDefaultFormattingToolbarSettings({ textButtons });
+    const defaultSettings = getDefaultToolbarSettings({ textButtons, pluginButtonNames });
     const customSettings = toolbarSettings.getToolbarSettings({
       textButtons,
     });
@@ -18,6 +20,6 @@ export function initToolbarSettings(toolbarSettings: ToolbarSettings): ToolbarSe
 
     return finalToolbarSettings;
   } else {
-    return getDefaultFormattingToolbarSettings({ textButtons });
+    return getDefaultToolbarSettings({ textButtons });
   }
 }

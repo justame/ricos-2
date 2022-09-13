@@ -77,7 +77,7 @@ export class EditorPlugins implements RicosEditorPlugins {
   getAddButtons() {
     //maybe use filter class func
     const addButtons = this.plugins.flatMap(plugin => plugin.getAddButtons() || []);
-    return new RicosPluginAddButtons(addButtons, this.services);
+    return new RicosPluginAddButtons(addButtons, this.services, this.toolbarSettings);
   }
 
   getVisibleToolbar(selection) {

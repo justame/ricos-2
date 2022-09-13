@@ -48,6 +48,8 @@ export interface PluginAddButton {
   register: () => void;
 
   unregister: () => void;
+
+  getButtonId: () => string;
 }
 
 export interface PluginAddButtons {
@@ -66,6 +68,7 @@ export interface PluginAddButtons {
   toToolbarButtonsConfig: () => IToolbarItemConfigTiptap[];
 
   toExternalToolbarButtonsConfigs(
-    editorCommands: EditorCommands
+    editorCommands: EditorCommands,
+    isMobile: boolean
   ): Record<string, ToolbarButtonProps>;
 }

@@ -1,9 +1,14 @@
-import type { IToolbarItemConfigTiptap, ToolbarSettingsFunctions, ToolbarType } from 'ricos-types';
+import type {
+  IToolbarItemConfigTiptap,
+  ToolbarSettingsFunctions,
+  ToolbarType,
+  PluginAddButton,
+} from 'ricos-types';
 import { Decoration_Type, Node_Type } from 'ricos-types';
 import { isiOS } from './isiOS';
 import type { PluginTextButton } from '../plugin-text-button';
 import toConstantCase from 'to-constant-case';
-import { FORMATTING_BUTTONS } from 'wix-rich-content-editor-common';
+import { FORMATTING_BUTTONS, INSERT_PLUGIN_BUTTONS } from 'wix-rich-content-editor-common';
 
 const cleanTitleIfNeeded = (
   tiptapToolbarItemsConfig: IToolbarItemConfigTiptap[]
@@ -143,6 +148,71 @@ export function toExternalToolbarItemsConfig(
   const externalToolbarItemsConfig: PluginTextButton[] = [];
   buttonsList.map(toSchemaBasedId).forEach(button => {
     const buttonConfig = pluginTextButtons.find(b => b.getButtonId() === button);
+    if (buttonConfig) {
+      externalToolbarItemsConfig.push(buttonConfig);
+    }
+  });
+
+  return externalToolbarItemsConfig;
+}
+
+// maps INSERT_PLUGIN_BUTTONS to Node_Type/Decoration_Type with some modifications
+const fromConfigToSchemaBasedId = (insertButtonId: string): string => {
+  const specificMapping = {
+    [INSERT_PLUGIN_BUTTONS.IMAGE]: Node_Type.IMAGE,
+    [INSERT_PLUGIN_BUTTONS.GALLERY]: Node_Type.GALLERY,
+    [INSERT_PLUGIN_BUTTONS.POLLS]: Node_Type.POLL,
+    [INSERT_PLUGIN_BUTTONS.DIVIDER]: Node_Type.DIVIDER,
+    [INSERT_PLUGIN_BUTTONS.HTML]: `${Node_Type.HTML}.html`,
+    [INSERT_PLUGIN_BUTTONS.VIDEO]: `${Node_Type.VIDEO}.video`,
+    [INSERT_PLUGIN_BUTTONS.INSTAGRAM]: `${Node_Type.LINK_PREVIEW}.instagram`,
+    [INSERT_PLUGIN_BUTTONS.YOUTUBE]: `${Node_Type.VIDEO}.youTube`,
+    [INSERT_PLUGIN_BUTTONS.TIKTOK]: `${Node_Type.LINK_PREVIEW}.tiktok`,
+    [INSERT_PLUGIN_BUTTONS.TWITTER]: `${Node_Type.LINK_PREVIEW}.twitter`,
+    [INSERT_PLUGIN_BUTTONS.PINTEREST]: `${Node_Type.LINK_PREVIEW}.pinterest`,
+    [INSERT_PLUGIN_BUTTONS.FACEBOOK]: `${Node_Type.LINK_PREVIEW}.facebook`,
+    [INSERT_PLUGIN_BUTTONS.STORES]: `${Node_Type.APP_EMBED}.product`,
+    [INSERT_PLUGIN_BUTTONS.EVENTS]: `${Node_Type.APP_EMBED}.event`,
+    [INSERT_PLUGIN_BUTTONS.BOOKINGS]: `${Node_Type.APP_EMBED}.booking`,
+    [INSERT_PLUGIN_BUTTONS.BUTTON]: Node_Type.BUTTON,
+    [INSERT_PLUGIN_BUTTONS.CODE_BLOCK]: Node_Type.CODE_BLOCK,
+    [INSERT_PLUGIN_BUTTONS.SOUND_CLOUD]: `${Node_Type.AUDIO}.soundCloud`,
+    [INSERT_PLUGIN_BUTTONS.GIF]: Node_Type.GIF,
+    [INSERT_PLUGIN_BUTTONS.MAP]: Node_Type.MAP,
+    [INSERT_PLUGIN_BUTTONS.FILE]: Node_Type.FILE,
+    [INSERT_PLUGIN_BUTTONS.EMOJI]: 'wix-draft-plugin-emoji',
+    [INSERT_PLUGIN_BUTTONS.UNDO]: 'UNDO',
+    [INSERT_PLUGIN_BUTTONS.REDO]: 'REDO',
+    [INSERT_PLUGIN_BUTTONS.TABLE]: Node_Type.TABLE,
+    [INSERT_PLUGIN_BUTTONS.COLLAPSIBLE_LIST]: Node_Type.COLLAPSIBLE_LIST,
+    [INSERT_PLUGIN_BUTTONS.ADSENSE]: `${Node_Type.HTML}.adsense`,
+    [INSERT_PLUGIN_BUTTONS.AUDIO]: `${Node_Type.AUDIO}.audio`,
+    [INSERT_PLUGIN_BUTTONS.SPOTIFY]: `${Node_Type.AUDIO}.spotify`,
+  };
+
+  const id = specificMapping[insertButtonId];
+  if (!id) {
+    console.error(`toSchemaBasedId: unknown insertButtonId: ${insertButtonId}`);
+  }
+  return id;
+};
+
+export function toExternalInsertPluginToolbarItemsConfig(
+  toolbarConfig: ToolbarSettingsFunctions | undefined,
+  pluginInsertButtons: PluginAddButton[],
+  toolbarType: ToolbarType,
+  buttonsType: 'desktop' | 'mobile'
+) {
+  if (!toolbarConfig) {
+    console.error(`${toolbarType} doesn't exists`);
+    return [];
+  }
+
+  const buttonsListFromConfig = getButtonsListFromConfig(toolbarConfig, buttonsType);
+
+  const externalToolbarItemsConfig: PluginAddButton[] = [];
+  buttonsListFromConfig.map(fromConfigToSchemaBasedId).forEach(button => {
+    const buttonConfig = pluginInsertButtons.find(b => b.getButtonId() === button);
     if (buttonConfig) {
       externalToolbarItemsConfig.push(buttonConfig);
     }

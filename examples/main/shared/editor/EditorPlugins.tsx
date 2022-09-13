@@ -114,7 +114,11 @@ import {
   customBackgroundStyleFn,
 } from '../../src/text-color-style-fn';
 // import { MyCustomIcon, SizeSmallRightIcon, TOOLBARS } from 'wix-rich-content-editor-common';
-import { FORMATTING_BUTTONS, TOOLBARS } from 'wix-rich-content-editor-common';
+import {
+  FORMATTING_BUTTONS,
+  TOOLBARS,
+  INSERT_PLUGIN_BUTTONS,
+} from 'wix-rich-content-editor-common';
 // import InlineToolbarDecoration from './Components/InlineToolbarDecoration';
 // import StaticToolbarDecoration from './Components/StaticToolbarDecoration';
 // import SideToolbarDecoration from './Components/SideToolbarDecoration';
@@ -772,6 +776,42 @@ export const config: RichContentEditorProps['config'] = {
     {
       name: TOOLBARS.INSERT_PLUGIN,
       shouldCreate: () => ({ desktop: true }),
+      getButtons: () => {
+        const desktopButtons = [
+          INSERT_PLUGIN_BUTTONS.POLLS,
+          INSERT_PLUGIN_BUTTONS.IMAGE,
+          INSERT_PLUGIN_BUTTONS.GALLERY,
+          INSERT_PLUGIN_BUTTONS.INSTAGRAM,
+          INSERT_PLUGIN_BUTTONS.TWITTER,
+          INSERT_PLUGIN_BUTTONS.TIKTOK,
+          INSERT_PLUGIN_BUTTONS.VIDEO,
+          INSERT_PLUGIN_BUTTONS.YOUTUBE,
+          INSERT_PLUGIN_BUTTONS.AUDIO,
+          INSERT_PLUGIN_BUTTONS.SOUND_CLOUD,
+          INSERT_PLUGIN_BUTTONS.SPOTIFY,
+          INSERT_PLUGIN_BUTTONS.HTML,
+          INSERT_PLUGIN_BUTTONS.ADSENSE,
+          INSERT_PLUGIN_BUTTONS.DIVIDER,
+          INSERT_PLUGIN_BUTTONS.CODE_BLOCK,
+          INSERT_PLUGIN_BUTTONS.GIF,
+          INSERT_PLUGIN_BUTTONS.FILE,
+          INSERT_PLUGIN_BUTTONS.BUTTON,
+          INSERT_PLUGIN_BUTTONS.EMOJI,
+          INSERT_PLUGIN_BUTTONS.STORES,
+          INSERT_PLUGIN_BUTTONS.EVENTS,
+          INSERT_PLUGIN_BUTTONS.BOOKINGS,
+          INSERT_PLUGIN_BUTTONS.COLLAPSIBLE_LIST,
+          INSERT_PLUGIN_BUTTONS.TABLE,
+        ];
+
+        const mobileButtons = [INSERT_PLUGIN_BUTTONS.BUTTON, INSERT_PLUGIN_BUTTONS.VIDEO];
+        return {
+          desktop: desktopButtons,
+          mobile: {
+            android: mobileButtons,
+          },
+        };
+      },
     },
     {
       name: TOOLBARS.FORMATTING,

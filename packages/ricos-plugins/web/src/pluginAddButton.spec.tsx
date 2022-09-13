@@ -5,7 +5,9 @@ import { RicosPluginAddButton, PluginAddButtonCollisionError } from './pluginAdd
 import { alwaysVisibleResolver } from 'wix-rich-content-toolbars-v3';
 import type { PluginServices } from './editorPlugins';
 import { RicosPluginAddButtons } from './plugin-add-buttons';
+import type { ToolbarSettings } from 'ricos-common';
 
+const toolbarSettings: ToolbarSettings = {};
 const services = {
   t: jest.fn(),
 } as unknown as PluginServices;
@@ -131,7 +133,7 @@ describe('Add button', () => {
 
 describe('Add buttons', () => {
   it('should register/unregister plugin add button', () => {
-    const registered = new RicosPluginAddButtons([], {} as any);
+    const registered = new RicosPluginAddButtons([], {} as any, toolbarSettings);
     registered.register(instagram);
     expect(registered.asArray().length).toEqual(1);
     registered.unregister(instagram);
@@ -139,7 +141,7 @@ describe('Add buttons', () => {
   });
 
   it('should validate there is no duplication while register plugin add button', () => {
-    const registered = new RicosPluginAddButtons([], {} as any);
+    const registered = new RicosPluginAddButtons([], {} as any, toolbarSettings);
     registered.register(instagram);
     try {
       registered.register(instagram);
@@ -149,7 +151,7 @@ describe('Add buttons', () => {
   });
 
   it('should filter buttons by group', () => {
-    const registered = new RicosPluginAddButtons([], {} as any);
+    const registered = new RicosPluginAddButtons([], {} as any, toolbarSettings);
     registered.register(instagram);
     registered.register(tiktok);
     registered.register(divider);

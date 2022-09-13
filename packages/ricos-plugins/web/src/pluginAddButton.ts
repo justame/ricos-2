@@ -70,6 +70,10 @@ export class RicosPluginAddButton implements PluginAddButton {
     }
   }
 
+  getButtonId() {
+    return this.button.id;
+  }
+
   getModal() {
     return this.button.modal;
   }

@@ -17,6 +17,7 @@ export interface FormattingToolbarButton {
     toolbarType: ToolbarType
   ): IToolbarItemConfigTiptap;
   toExternalToolbarButtonConfig(editorCommands: EditorCommands): ToolbarButtonProps;
+  getButtonId: () => string;
 }
 
 /**

@@ -10,10 +10,15 @@ import type {
   PluginMenuItem,
   ToolbarButtonProps,
   ToolbarType,
+  ToolbarSettings,
 } from 'ricos-types';
 import { AddPluginMenu } from 'wix-rich-content-toolbars-ui';
 import type { PluginServices } from './editorPlugins';
 import { RicosPluginAddButton, PluginAddButtonCollisionError } from './pluginAddButton';
+import { initToolbarSettings } from './toolbar-utils/initToolbarSettings';
+import { getToolbarConfig } from './toolbar-utils/getToolbarConfig';
+import { TOOLBARS } from 'wix-rich-content-editor-common';
+import { toExternalInsertPluginToolbarItemsConfig } from './toolbar-utils/toToolbarItemsConfig';
 
 // TODO: copied from toolbars-ui, should be moved to ricos-types?
 const PLUGIN_MENU_MODAL_ID = 'pluginMenu';
@@ -23,9 +28,16 @@ export class RicosPluginAddButtons implements PluginAddButtons {
 
   services: PluginServices;
 
-  constructor(buttons: PluginAddButton[] = [], services: PluginServices) {
+  toolbarSettings: ToolbarSettings;
+
+  constructor(
+    buttons: PluginAddButton[] = [],
+    services: PluginServices,
+    toolbarSettings: ToolbarSettings
+  ) {
     this.buttons = buttons;
     this.services = services;
+    this.toolbarSettings = toolbarSettings;
   }
 
   private hasDuplicate(candidate: PluginAddButton) {
@@ -39,14 +51,16 @@ export class RicosPluginAddButtons implements PluginAddButtons {
   byGroup(group: MenuGroups) {
     return new RicosPluginAddButtons(
       this.buttons.filter(button => button.getGroup() === group),
-      this.services
+      this.services,
+      this.toolbarSettings
     );
   }
 
   byToolbar(toolbar: ToolbarType) {
     return new RicosPluginAddButtons(
       this.buttons.filter(button => button.getToolbars().includes(toolbar)),
-      this.services
+      this.services,
+      this.toolbarSettings
     );
   }
 
@@ -103,9 +117,22 @@ export class RicosPluginAddButtons implements PluginAddButtons {
   }
 
   toExternalToolbarButtonsConfigs(
-    editorCommands: EditorCommands
+    editorCommands: EditorCommands,
+    isMobile: boolean
   ): Record<string, ToolbarButtonProps> {
-    return this.buttons.reduce((acc, b) => {
+    const toolbarType = TOOLBARS.INSERT_PLUGIN;
+    const finalToolbarSettings = initToolbarSettings(this.toolbarSettings);
+    const toolbarConfig = getToolbarConfig(finalToolbarSettings, toolbarType);
+    const buttonsType = isMobile ? 'mobile' : 'desktop';
+
+    const externalToolbarItemsConfig = toExternalInsertPluginToolbarItemsConfig(
+      toolbarConfig,
+      this.buttons,
+      toolbarType,
+      buttonsType
+    );
+
+    return externalToolbarItemsConfig.reduce((acc, b) => {
       const buttonConfig = b.toExternalToolbarButtonConfig(editorCommands);
       return {
         ...acc,
