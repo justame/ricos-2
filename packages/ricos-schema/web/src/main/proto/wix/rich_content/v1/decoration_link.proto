@@ -5,5 +5,5 @@ package wix.rich_content.v1;
 import "wix/rich_content/v1/common.proto";
 
 message LinkData {
-  Link link = 1;
+  Link link = 1; // Link data container
 }

@@ -3,9 +3,9 @@ syntax = "proto3";
 package wix.rich_content.v1;
 
 message OrderedListData {
-    int32 indentation = 1;
+    int32 indentation = 1; // Indent level
 }
 
 message BulletedListData {
-    int32 indentation = 1;
+    int32 indentation = 1; // Indent level
 }

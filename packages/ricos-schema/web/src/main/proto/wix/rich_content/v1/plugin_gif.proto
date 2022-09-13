@@ -6,15 +6,15 @@ import "wix/rich_content/v1/common.proto";
 import "google/protobuf/wrappers.proto";
 
 message GIFData {
-    PluginContainerData container_data = 1;
-    GIF original = 2; // original gif
-    GIF downsized = 3; // downsized gif
-    int32 height = 4;
-    int32 width = 5;
+    PluginContainerData container_data = 1; // GIF Container data
+    GIF original = 2; // original GIF
+    GIF downsized = 3; // downsized GIF
+    int32 height = 4; // GIF height (in pixels)
+    int32 width = 5; // GIF width (in pixels)
 }
 
 message GIF {
-    google.protobuf.StringValue gif = 1 [(wix.api.format) = WEB_URL];
-    google.protobuf.StringValue mp4 = 2 [(wix.api.format) = WEB_URL];
-    google.protobuf.StringValue still = 3 [(wix.api.format) = WEB_URL];
+    google.protobuf.StringValue gif = 1 [(wix.api.format) = WEB_URL]; // GIF format URL
+    google.protobuf.StringValue mp4 = 2 [(wix.api.format) = WEB_URL]; // MP4 format URL
+    google.protobuf.StringValue still = 3 [(wix.api.format) = WEB_URL]; // Thumbnail URL
 }

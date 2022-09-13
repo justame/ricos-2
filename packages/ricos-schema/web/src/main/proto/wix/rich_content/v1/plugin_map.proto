@@ -6,33 +6,27 @@ import "wix/rich_content/v1/common.proto";
 import "google/protobuf/wrappers.proto";
 
 message MapData {
-  PluginContainerData container_data = 1;
-  MapSettings mapSettings = 2;
+  PluginContainerData container_data = 1; // Map container data
+  MapSettings mapSettings = 2; // Map settigns
 }
 
 enum MapType {
-  ROADMAP = 0;
-  SATELITE = 1;
-  HYBRID = 2;
-  TERRAIN = 3;
+  ROADMAP = 0; // Roadmap map type
+  SATELITE = 1; // Satelite map type
+  HYBRID = 2; // Hybrid map type
+  TERRAIN = 3; // Terrain map type
 }
 
 message MapSettings {
-  google.protobuf.StringValue address = 1 [(.wix.api.pii) = true];
-  google.protobuf.BoolValue draggable = 2;
-  // Visibilty of marker
-  google.protobuf.BoolValue marker = 3;
-  // Visibilty of street view control
-  google.protobuf.BoolValue streetViewControl = 4;
-  // Visibilty of zoom control
-  google.protobuf.BoolValue zoomControl = 5;
-  // latitude
-  google.protobuf.DoubleValue lat = 6;
-  // longitude
-  google.protobuf.DoubleValue lng = 7;
-  google.protobuf.StringValue locationName = 8;
-  // Visibilty of view mode control
-  google.protobuf.BoolValue viewModeControl = 9;
-  google.protobuf.Int32Value initialZoom = 10;
-  MapType mapType = 11;
+  google.protobuf.StringValue address = 1 [(.wix.api.pii) = true]; // exact address 
+  google.protobuf.BoolValue draggable = 2;  // Map Draggable option toggle
+  google.protobuf.BoolValue marker = 3; // Visibilty of marker  
+  google.protobuf.BoolValue streetViewControl = 4; // Visibilty of street view control  
+  google.protobuf.BoolValue zoomControl = 5; // Visibilty of zoom control  
+  google.protobuf.DoubleValue lat = 6; // Location latitude
+  google.protobuf.DoubleValue lng = 7; // Location longitude
+  google.protobuf.StringValue locationName = 8; // Location name  
+  google.protobuf.BoolValue viewModeControl = 9; // Visibilty of view mode control
+  google.protobuf.Int32Value initialZoom = 10; // Initial zoom value
+  MapType mapType = 11; // Map type
 }

@@ -5,5 +5,5 @@ package wix.rich_content.v1;
 import "wix/rich_content/v1/common.proto";
 
 message CodeBlockData {
-    TextStyle text_style = 1;
+    TextStyle text_style = 1; // Code block text style
 }

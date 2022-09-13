@@ -9,81 +9,81 @@ import "google/protobuf/wrappers.proto";
 message GalleryOptions {
   message Layout {
     enum Type {
-      COLLAGE = 0;
-      MASONRY = 1;
-      GRID = 2;
-      THUMBNAIL = 3;
-      SLIDER = 4;
-      SLIDESHOW = 5;
-      PANORAMA = 6;
-      COLUMN = 7;
-      MAGIC = 8;
-      FULLSIZE = 9;
+      COLLAGE = 0; // Collage type
+      MASONRY = 1; // Masonry type
+      GRID = 2; // Grid type
+      THUMBNAIL = 3; // Thumbnail type
+      SLIDER = 4; // Slider type
+      SLIDESHOW = 5; // Slideshow type
+      PANORAMA = 6; // Panorama type
+      COLUMN = 7; // Column type
+      MAGIC = 8; // Magic type
+      FULLSIZE = 9; // Fullsize images type
     }
   
     enum Orientation {
-      ROWS = 0;
-      COLUMNS = 1;
+      ROWS = 0; // Rows Orientation
+      COLUMNS = 1; // Columns Orientation
     }
   
-    Type type = 1;
-    google.protobuf.BoolValue horizontal_scroll = 2;
-    Orientation orientation = 3;
-    google.protobuf.Int32Value number_of_columns = 4;
-    google.protobuf.Int32Value mobile_number_of_columns = 5;
+    Type type = 1; // Gallry layout type
+    google.protobuf.BoolValue horizontal_scroll = 2; // horizontal scroll option toggle
+    Orientation orientation = 3; // Gallery's orientation
+    google.protobuf.Int32Value number_of_columns = 4; // Gallery's columns count
+    google.protobuf.Int32Value mobile_number_of_columns = 5; // Gallery's mobile columns count
   }
   
   message ItemStyle {
     enum Crop {
-      FILL = 0;
-      FIT = 1;
+      FILL = 0; // Crop to fill
+      FIT = 1; // Crop to fit
     }
-    google.protobuf.Int32Value target_size = 1;
-    google.protobuf.DoubleValue ratio = 2;
-    Crop crop = 3;
-    google.protobuf.Int32Value spacing = 4;
+    google.protobuf.Int32Value target_size = 1; // Desirable dimension for each item in pixels (behvaior changes according to gallery type)
+    google.protobuf.DoubleValue ratio = 2; // Item ratio
+    Crop crop = 3; // Crop setting
+    google.protobuf.Int32Value spacing = 4; // Spaces between images in pixels
   }
   
   message Thumbnails {
     enum Alignment {
-      TOP = 0;
-      RIGHT = 1;
-      BOTTOM = 2;
-      LEFT = 3;
-      NONE = 4;
+      TOP = 0; // Top alignment
+      RIGHT = 1; // Right alignment
+      BOTTOM = 2; // Bottom alignment
+      LEFT = 3; // Left alignment
+      NONE = 4; // No thumbnail
     }
-    Alignment placement = 1;
-    google.protobuf.Int32Value spacing = 2;
+    Alignment placement = 1; // Thumbnail Alignment
+    google.protobuf.Int32Value spacing = 2; // Thumbnail spacing
   }
 
-  Layout layout = 1;
-  ItemStyle item = 2;
-  Thumbnails thumbnails = 3;
+  Layout layout = 1; // Gallery's layout
+  ItemStyle item = 2; // Gallery's item style
+  Thumbnails thumbnails = 3; // Thumbnail attributes
 }
 
 message GalleryData {
   message Item {
     message Video {
-      Media media = 1;
-      Media thumbnail = 2;
+      Media media = 1; // Video data
+      Media thumbnail = 2;  // Video Thumbnail data
     }
 
     message Image {
-      Media media = 1;
-      Link link = 2;
+      Media media = 1; // Image Data
+      Link link = 2; // Image link data 
     }
 
     oneof data {
-      Image image = 1;
-      Video video = 2;
+      Image image = 1; // Image Item
+      Video video = 2; // Video Item
     }
-    google.protobuf.StringValue title = 3;
-    google.protobuf.StringValue altText = 4;
+    google.protobuf.StringValue title = 3; // Item's title
+    google.protobuf.StringValue altText = 4; // item's alternative text for SEO 
   }
 
-  PluginContainerData container_data = 1;
-  repeated Item items = 2;
-  GalleryOptions options = 3;
-  google.protobuf.BoolValue disable_expand = 4;
-  google.protobuf.BoolValue disable_download = 5;
+  PluginContainerData container_data = 1; // Gallery container data
+  repeated Item items = 2; // Gallery's item list
+  GalleryOptions options = 3; // Gallery Options
+  google.protobuf.BoolValue disable_expand = 4; // Disable full screen expand on click toggle
+  google.protobuf.BoolValue disable_download = 5; // Disable download gallery's items option toggle
 }

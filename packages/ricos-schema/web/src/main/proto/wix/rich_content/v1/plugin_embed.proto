@@ -6,7 +6,7 @@ import "wix/rich_content/v1/common.proto";
 import "google/protobuf/wrappers.proto";
 
 message EmbedData {
-    PluginContainerData container_data = 1;
-    Oembed oembed = 2;
-    google.protobuf.StringValue src = 3; 
+    PluginContainerData container_data = 1; // Embed Container data
+    Oembed oembed = 2; // Oembed attributes as defined in https://oembed.com/
+    google.protobuf.StringValue src = 3;  // Origin asset source
 }

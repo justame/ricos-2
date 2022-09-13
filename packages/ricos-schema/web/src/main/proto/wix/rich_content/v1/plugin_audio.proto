@@ -6,11 +6,11 @@ import "wix/rich_content/v1/common.proto";
 import "google/protobuf/wrappers.proto";
 
 message AudioData {
-  PluginContainerData container_data = 1;
-  Media audio = 2;
-  google.protobuf.BoolValue disable_download = 3;
-  Media cover_image = 4;
-  google.protobuf.StringValue name = 5;
-  google.protobuf.StringValue author_name = 6;
-  google.protobuf.StringValue html = 7;
+  PluginContainerData container_data = 1; // Audio container
+  Media audio = 2; // Audio media
+  google.protobuf.BoolValue disable_download = 3; // Download disable toggle
+  Media cover_image = 4; // Audio cover image
+  google.protobuf.StringValue name = 5; // Audio track name
+  google.protobuf.StringValue author_name = 6; // Audio author name
+  google.protobuf.StringValue html = 7; // Audio embed code (if exists)
 }

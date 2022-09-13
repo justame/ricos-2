@@ -6,11 +6,11 @@ import "wix/rich_content/v1/common.proto";
 import "google/protobuf/wrappers.proto";
 
 message ImageData {
-    PluginContainerData container_data = 1;
-    Media image = 2;
-    Link link = 3;
-    google.protobuf.BoolValue disable_expand = 4;
-    google.protobuf.StringValue alt_text = 5;
-    google.protobuf.StringValue caption = 6;
-    google.protobuf.BoolValue disable_download = 7;
+    PluginContainerData container_data = 1; // Image container data
+    Media image = 2; // Image asset
+    Link link = 3; // Link to something else
+    google.protobuf.BoolValue disable_expand = 4; // Disable expand to full screen on click toggle
+    google.protobuf.StringValue alt_text = 5; // Alternative text for SEO
+    google.protobuf.StringValue caption = 6; // Visual textual caption for image
+    google.protobuf.BoolValue disable_download = 7; // Disable download option toggle
 }

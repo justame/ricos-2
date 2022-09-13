@@ -8,22 +8,22 @@ import "google/protobuf/wrappers.proto";
 message FileData {
   message PDFSettings {
     enum ViewMode {
-      NONE = 0;
-      FULL = 1;
-      MINI = 2;
+      NONE = 0; // No PDF view
+      FULL = 1; // Full PDF view
+      MINI = 2; // Mini PDF view
     }
 
-    ViewMode view_mode = 1;
-    google.protobuf.BoolValue disable_download = 2;
-    google.protobuf.BoolValue disable_print = 3;
+    ViewMode view_mode = 1; // PDF view mode
+    google.protobuf.BoolValue disable_download = 2; // PDF download toggle
+    google.protobuf.BoolValue disable_print = 3; // PDF print option toggle
   }
 
-  PluginContainerData container_data = 1;
-  FileSource src = 2;
-  google.protobuf.StringValue name = 3;
-  google.protobuf.StringValue type = 4;
-  google.protobuf.Int32Value size = 5;
-  PDFSettings pdf_settings = 6;
-  google.protobuf.StringValue mime_type = 7;
-  google.protobuf.StringValue path = 8;
+  PluginContainerData container_data = 1; // File container data
+  FileSource src = 2; // File Source
+  google.protobuf.StringValue name = 3; // File name
+  google.protobuf.StringValue type = 4; // File type
+  google.protobuf.Int32Value size = 5; // File size (in KB)
+  PDFSettings pdf_settings = 6; // PDF settings (when applicable)
+  google.protobuf.StringValue mime_type = 7; // File mime type
+  google.protobuf.StringValue path = 8; // File path
 }

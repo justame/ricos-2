@@ -7,16 +7,16 @@ import "google/protobuf/wrappers.proto";
 
 message CollapsibleListData {
     enum InitialExpandedItems {
-        FIRST = 0;
-        ALL = 1;
-        NONE = 2;
+        FIRST = 0; // First item will be expended initally 
+        ALL = 1; // All items will expended initally
+        NONE = 2; // All items collapsed initally
     }
     enum Direction {
-        LTR = 0;
-        RTL = 1;
+        LTR = 0; // Left-to-right
+        RTL = 1; // Right-to-left
     }
-    PluginContainerData container_data = 1;
-    google.protobuf.BoolValue expand_only_one = 2;
-    InitialExpandedItems initial_expanded_items = 3;
-    Direction direction = 4;
+    PluginContainerData container_data = 1; // Collapsible List container data
+    google.protobuf.BoolValue expand_only_one = 2; // Allows to expand single item simultaneously
+    InitialExpandedItems initial_expanded_items = 3; // Initial Items state
+    Direction direction = 4; // Collapsible List direction
 }

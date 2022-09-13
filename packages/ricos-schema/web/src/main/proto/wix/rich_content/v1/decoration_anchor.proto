@@ -3,5 +3,5 @@ syntax = "proto3";
 package wix.rich_content.v1;
 
 message AnchorData {
-    string anchor = 1;
+    string anchor = 1; // Target node's ID
 }

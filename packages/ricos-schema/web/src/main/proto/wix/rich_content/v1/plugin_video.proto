@@ -6,10 +6,10 @@ import "wix/rich_content/v1/common.proto";
 import "google/protobuf/wrappers.proto";
 
 message VideoData {
-  PluginContainerData container_data = 1;
-  Media video = 2;
-  Media thumbnail = 3;
-  google.protobuf.BoolValue disable_download = 4;
-  google.protobuf.StringValue title = 5;
+  PluginContainerData container_data = 1; // Video's container data
+  Media video = 2; // Video asset itself
+  Media thumbnail = 3; // Video's thumbnail data
+  google.protobuf.BoolValue disable_download = 4; // Disable option option toggle
+  google.protobuf.StringValue title = 5; // Video's title
 }
 

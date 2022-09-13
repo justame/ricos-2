@@ -5,6 +5,6 @@ package wix.rich_content.v1;
 import "google/protobuf/wrappers.proto";
 
 message ColorData {
-    google.protobuf.StringValue background = 1;
-    google.protobuf.StringValue foreground = 2;
+    google.protobuf.StringValue background = 1; // hexadecimal background color
+    google.protobuf.StringValue foreground = 2; // hexadecimal text color
 }

@@ -6,26 +6,26 @@ import "wix/rich_content/v1/common.proto";
 
 message DividerData {
     enum LineStyle {
-        SINGLE = 0;
-        DOUBLE = 1;
-        DASHED = 2;
-        DOTTED = 3;
+        SINGLE = 0; // Single Line
+        DOUBLE = 1; // Double Line
+        DASHED = 2; // Dashed Line
+        DOTTED = 3; // Dotted Line
     }
 
     enum Width {
-        LARGE = 0;
-        MEDIUM = 1;
-        SMALL = 2;
+        LARGE = 0; // Large line
+        MEDIUM = 1; // Medium line
+        SMALL = 2; // Small line
     }
 
     enum Alignment {
-        CENTER = 0;
-        LEFT = 1;
-        RIGHT = 2;
+        CENTER = 0; // Center alignment
+        LEFT = 1; // Left alignment
+        RIGHT = 2; // Right alignment
     }
 
-    PluginContainerData container_data = 1;
-    LineStyle line_style = 2;
-    Width width = 3;
-    Alignment alignment = 4;
+    PluginContainerData container_data = 1; // Divider Container data
+    LineStyle line_style = 2; // Divider line style
+    Width width = 3; // Divider width
+    Alignment alignment = 4; // Divider alignment
 }

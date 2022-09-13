@@ -8,104 +8,103 @@ import "google/protobuf/wrappers.proto";
 message PollData {
   message Poll {
     message Option {
-      google.protobuf.StringValue id = 1;
-      google.protobuf.StringValue title = 2;
-      Media image = 3;
+      google.protobuf.StringValue id = 1; // Option's ID
+      google.protobuf.StringValue title = 2; // Option's title
+      Media image = 3; // Option's specific image data
     }
 
     message Settings {
       message Permissions {
         enum ViewRole {
-          CREATOR = 0;
-          VOTERS = 1;
-          EVERYONE = 2;
+          CREATOR = 0; // Only Poll creator can view the results
+          VOTERS = 1; // Anyone who voted can see the results
+          EVERYONE = 2; // Anyone can see the results, even if one didn't vote
         }
 
         enum VoteRole {
-          SITE_MEMBERS = 0;
-          ALL = 1;
+          SITE_MEMBERS = 0; // Logged in member
+          ALL = 1; // Anyone
         }
 
-        ViewRole view = 1;
-        VoteRole vote = 2;
-        google.protobuf.BoolValue allow_multiple_votes = 3;
+        ViewRole view = 1; // Configure who can view the results
+        VoteRole vote = 2; // Configute who can vote
+        google.protobuf.BoolValue allow_multiple_votes = 3; // Multiple votes are allowed 
       }
       
-      Permissions permissions = 1;
-      google.protobuf.BoolValue show_voters = 2;
-      google.protobuf.BoolValue show_votes_count = 3;
-      
+      Permissions permissions = 1; // Permission configuration
+      google.protobuf.BoolValue show_voters = 2; // Display voters (according to permissions)
+      google.protobuf.BoolValue show_votes_count = 3; // Display voters count      
     }
 
-    google.protobuf.StringValue id = 1;
-    google.protobuf.StringValue title = 2;
-    google.protobuf.StringValue creator_id = 3;
-    Media image = 4;
-    repeated Option options = 5;
-    Settings settings = 6;
+    google.protobuf.StringValue id = 1; // Poll's ID
+    google.protobuf.StringValue title = 2; // Poll's title
+    google.protobuf.StringValue creator_id = 3; // Poll's creator id
+    Media image = 4; // Poll's main image data
+    repeated Option options = 5; // Voting options data
+    Settings settings = 6; // Poll's settings
   }
 
   message Layout {
     message PollLayout {
       enum Type {
-        LIST = 0;
-        GRID = 1;
+        LIST = 0; // List
+        GRID = 1; // Grid
       }
 
       enum Direction {
-        LTR = 0;
-        RTL = 1;
+        LTR = 0; // Left-to-right
+        RTL = 1; // Right-to-left
       }
 
-      Type type = 1;
-      Direction direction = 2;
-      google.protobuf.BoolValue enable_image = 3;
+      Type type = 1; // Poll type
+      Direction direction = 2; // Poll direction 
+      google.protobuf.BoolValue enable_image = 3; // Display poll's main image
     }
     
     message OptionLayout {
-      google.protobuf.BoolValue enable_image = 1;
+      google.protobuf.BoolValue enable_image = 1; // Display option's specific image
     }
     
-    PollLayout poll = 1;
-    OptionLayout options = 2;
+    PollLayout poll = 1; // Poll's layout
+    OptionLayout options = 2; // Voting Options layout
   }
 
   message Design {
     message PollDesign {
       message Background {
         enum Type {
-          COLOR = 0;
-          IMAGE = 1;
-          GRADIENT = 2;
+          COLOR = 0; // Color background type
+          IMAGE = 1; // Image background type
+          GRADIENT = 2; // Gradiant background type
         }
 
         message Gradient {
-          google.protobuf.Int32Value angle = 1;
-          google.protobuf.StringValue start_color = 2 [(wix.api.format) = COLOR_HEX];
-          google.protobuf.StringValue last_color = 3 [(wix.api.format) = COLOR_HEX];
+          google.protobuf.Int32Value angle = 1; // Gradient angle (degree)
+          google.protobuf.StringValue start_color = 2 [(wix.api.format) = COLOR_HEX]; // Gradient start color (hex)
+          google.protobuf.StringValue last_color = 3 [(wix.api.format) = COLOR_HEX]; // Gradient end color (hex)
         }
 
-        Type type = 1;
+        Type type = 1; // Background type
         oneof background {
-          google.protobuf.StringValue color = 2 [(wix.api.format) = COLOR_HEX];
-          Media image = 3;
-          Gradient gradient = 4;
+          google.protobuf.StringValue color = 2 [(wix.api.format) = COLOR_HEX]; //Color background (hex)
+          Media image = 3; // Image background data
+          Gradient gradient = 4; // Gradiant background data
         }
       }
-      Background background = 1;
-      google.protobuf.Int32Value border_radius = 2;
+      Background background = 1; // Poll's background
+      google.protobuf.Int32Value border_radius = 2; // Poll's border radius (pixels)
     }
     
     message OptionDesign {
-      google.protobuf.Int32Value border_radius = 1;
+      google.protobuf.Int32Value border_radius = 1; // Poll option's border radius (pixels)
     }
     
-    PollDesign poll = 1;
-    OptionDesign options = 2;
+    PollDesign poll = 1; // Poll's design
+    OptionDesign options = 2; // Voting Options' design
   }
 
-  PluginContainerData container_data = 1;
-  Poll poll = 2;
-  Layout layout = 3;
-  Design design = 4;
+  PluginContainerData container_data = 1; // Poll Container data
+  Poll poll = 2; // Poll data
+  Layout layout = 3; // Poll layout
+  Design design = 4; // Poll design
 }

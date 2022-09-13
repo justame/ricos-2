@@ -8,15 +8,15 @@ import "google/protobuf/wrappers.proto";
 message TableData {
 
   message Dimensions {
-    repeated int32 colsWidthRatio = 1;
-    repeated int32 rowsHeight = 2;
-    repeated int32 colsMinWidth = 3;
+    repeated int32 colsWidthRatio = 1; // Each entry in this array represent the relative width of the column in relation to the other columns
+    repeated int32 rowsHeight = 2; // Each entry in this array represent the respective row height in pixels
+    repeated int32 colsMinWidth = 3; // Each entry in this array represent the respective column minimum width in pixels
   }
 
-  PluginContainerData container_data = 1;
-  Dimensions dimensions = 2;
-  google.protobuf.BoolValue header = 3; // Deprecated - Changed to rowHeader and columnHeader
-  google.protobuf.BoolValue row_header = 4;
-  google.protobuf.BoolValue column_header = 5;
+  PluginContainerData container_data = 1; // Table's container data
+  Dimensions dimensions = 2; // Table's dimensions
+  google.protobuf.BoolValue header = 3 [deprecated = true]; // Changed to rowHeader and columnHeader
+  google.protobuf.BoolValue row_header = 4; // Table's first row is header 
+  google.protobuf.BoolValue column_header = 5; // Table's first column is header
 }
 

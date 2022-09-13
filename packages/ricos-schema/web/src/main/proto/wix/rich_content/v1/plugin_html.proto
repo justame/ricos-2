@@ -6,16 +6,18 @@ import "wix/rich_content/v1/common.proto";
 import "google/protobuf/wrappers.proto";
 
 message HTMLData {
+
   enum Source {
-    HTML = 0;
+    HTML = 0; 
     ADSENSE = 1;
   }
 
-  PluginContainerData container_data = 1;
+  PluginContainerData container_data = 1; // HTML component container data
   oneof data {
-    string url = 2;
-    string html = 3;
-    google.protobuf.BoolValue is_adsense = 4 [deprecated = true]; // use source instead
+    string url = 2; // URL of HTML code
+    string html = 3; // The actual HTML code 
+    google.protobuf.BoolValue is_adsense = 4 [deprecated=true]; // use source instead
   }
-  optional Source source = 5;
+
+  optional Source source = 5; // The HTML code source
 }

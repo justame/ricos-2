@@ -7,21 +7,21 @@ import "google/protobuf/wrappers.proto";
 message TableCellData {
 
   enum VerticalAlignment {
-    TOP = 0;
-    MIDDLE = 1;
-    BOTTOM = 2;
+    TOP = 0; // Top alignment
+    MIDDLE = 1; // Middle alignment
+    BOTTOM = 2; // Bottom alignment
 }
   message CellStyle {
-    VerticalAlignment vertical_alignment = 1;
-    google.protobuf.StringValue background_color = 2 [(wix.api.format) = COLOR_HEX];
+    VerticalAlignment vertical_alignment = 1; // Cell vertical alignment
+    google.protobuf.StringValue background_color = 2 [(wix.api.format) = COLOR_HEX]; // Cell background color (hex)
   }
   message BorderColors {
-    google.protobuf.StringValue left = 1 [(wix.api.format) = COLOR_HEX];
-    google.protobuf.StringValue right = 2 [(wix.api.format) = COLOR_HEX];
-    google.protobuf.StringValue top = 3 [(wix.api.format) = COLOR_HEX];
-    google.protobuf.StringValue bottom = 4 [(wix.api.format) = COLOR_HEX];
+    google.protobuf.StringValue left = 1 [(wix.api.format) = COLOR_HEX]; // Left border color (hex)
+    google.protobuf.StringValue right = 2 [(wix.api.format) = COLOR_HEX]; // Right border color (hex)
+    google.protobuf.StringValue top = 3 [(wix.api.format) = COLOR_HEX]; // Top border color (hex)
+    google.protobuf.StringValue bottom = 4 [(wix.api.format) = COLOR_HEX]; // Bottom border color (hex)
   }
-  CellStyle cell_style = 1;
-  BorderColors border_colors = 2;
+  CellStyle cell_style = 1; // Table Cell style
+  BorderColors border_colors = 2; // Table border colors
 }
 

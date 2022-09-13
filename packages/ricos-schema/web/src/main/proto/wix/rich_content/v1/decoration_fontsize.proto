@@ -9,6 +9,6 @@ message FontSizeData {
         PX = 0;
         EM = 1;
     }
-    fontType unit = 1;
-    google.protobuf.Int32Value value = 2;
+    fontType unit = 1; // Font size units
+    google.protobuf.Int32Value value = 2; // Font size value
 }

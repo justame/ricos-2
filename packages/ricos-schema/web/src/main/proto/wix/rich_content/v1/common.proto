@@ -6,71 +6,71 @@ import "google/protobuf/wrappers.proto";
 
 message TextStyle {
     enum TextAlignment {
-        AUTO = 0;
-        LEFT = 1;
-        RIGHT = 2;
-        CENTER = 3;
-        JUSTIFY = 4;
+        AUTO = 0; // browser default, eqivalent to `initial`
+        LEFT = 1; // Left Align
+        RIGHT = 2; // Right Align
+        CENTER = 3; // Center Align
+        JUSTIFY = 4; // Text is spaced to line up its left and right edges to the left and right edges of the line box, except for the last line
     }
 
-    TextAlignment text_alignment = 1;
-    google.protobuf.StringValue line_height = 2; // CSS value
+    TextAlignment text_alignment = 1; // Text Alignment
+    google.protobuf.StringValue line_height = 2; // CSS LineHeight value (unitless ratio) 
 }
 
 message Link {
     message Rel {
         google.protobuf.BoolValue nofollow = 1; // Indicates to search engine crawlers that the link should not be followed
-        google.protobuf.BoolValue sponsored = 2; // Paid links
-        google.protobuf.BoolValue ugc = 3; // UoU generated link
+        google.protobuf.BoolValue sponsored = 2; // Indicates to search engine crawlers that the link is specifically the result of paid placement; e.g., sponsored placements, advertorials, paid links, and similar.
+        google.protobuf.BoolValue ugc = 3; // The ugc attribute should be used to identify links which are created by users (e.g., author links in a comment form), which therefore aren’t necessarily trusted or endorsed by the page’s author.
     }
     enum Target {
-        SELF = 0;
-        BLANK = 1;
-        PARENT = 2;
-        TOP = 3;
+        SELF = 0; // Opens the linked document in the same frame as it was clicked (this is default)
+        BLANK = 1; // Opens the linked document in a new window or tab
+        PARENT = 2; // Opens the linked document in the parent frame
+        TOP = 3; // Opens the linked document in the full body of the window
     }
 
     oneof data {
-        string url = 1;
-        string anchor = 2; // Key of linked node in document
+        string url = 1; // Absolute URL
+        string anchor = 2; // the target node's id in the document
     }
-    Target target = 3;
-    Rel rel = 4;
+    Target target = 3; // HTML <a> target Attribute value
+    Rel rel = 4; // HTML <a> rel attirbute - specifies the relationship between the current document and the linked document.
     google.protobuf.StringValue custom_data = 5; // Serialized object, used for custom/external link panel
 }
 
 message PluginContainerData {
     message Spoiler {
-        google.protobuf.BoolValue enabled = 1;
-        google.protobuf.StringValue description = 2;
-        google.protobuf.StringValue button_text = 3;
+        google.protobuf.BoolValue enabled = 1; // indicates whether spoiler is enabled on this plugin
+        google.protobuf.StringValue description = 2; // Description displayed on top of the spoiler cover
+        google.protobuf.StringValue button_text = 3; // "Reveal the spoiler" button text
     }
     message Width {
         enum Type {
-            CONTENT = 0;
-            SMALL = 1;
-            ORIGINAL = 2;
-            FULL_WIDTH = 3;
+            CONTENT = 0; // Width will match the content width
+            SMALL = 1;  // Small Width
+            ORIGINAL = 2; // Width will match the original asset width 
+            FULL_WIDTH = 3; // coast-to-coast display
         }
         oneof data {
-            Type size = 1;
-            google.protobuf.StringValue custom = 2;
+            Type size = 1; // Predefined width
+            google.protobuf.StringValue custom = 2; // custom width in pixels
         }
     }
     message Height {
-        google.protobuf.StringValue custom = 1;
+        google.protobuf.StringValue custom = 1; // Custom height in pixels
     }
     enum Alignment {
-        CENTER = 0;
-        LEFT = 1;
-        RIGHT = 2;
+        CENTER = 0; // Center Alignment
+        LEFT = 1; // Left Alignment
+        RIGHT = 2; // Right Alignment
     }
 
-    Width width = 1;
-    Alignment alignment = 2;
-    Spoiler spoiler = 3;
-    Height height = 4;
-    google.protobuf.BoolValue text_wrap = 5; 
+    Width width = 1; // Plugin Width
+    Alignment alignment = 2; // Plugin Alignment
+    Spoiler spoiler = 3; // Plugin  Spoiler Settings
+    Height height = 4; // Plugin Height
+    google.protobuf.BoolValue text_wrap = 5; // Indicates whether text should wrap around this plugin (in case it's not full width)
 }
 
 message FileSource {
@@ -79,30 +79,31 @@ message FileSource {
         google.protobuf.StringValue custom = 2 [deprecated = true]; // Custom ID
         google.protobuf.StringValue id = 3; // ID that will be resolved to a URL by a resolver function
     }
-    google.protobuf.BoolValue private = 4;
+    google.protobuf.BoolValue private = 4; // indicates whather the file source is public/private
 }
 
 message Media {
     FileSource src = 1;
-    google.protobuf.Int32Value width = 2;
-    google.protobuf.Int32Value height = 3;
-    google.protobuf.DoubleValue duration = 4;
+    google.protobuf.Int32Value width = 2; // Media width in pixels 
+    google.protobuf.Int32Value height = 3; // Media height in pixels
+    google.protobuf.DoubleValue duration = 4; // Duration in seconds (relevant to audio/video)
 }
 
 message Oembed {
-    google.protobuf.StringValue type = 1;
-    google.protobuf.Int32Value width = 2;
-    google.protobuf.Int32Value height = 3;
-    google.protobuf.StringValue title = 4;
-    google.protobuf.StringValue url = 5;
-    google.protobuf.StringValue html = 6;
-    google.protobuf.StringValue author_name = 7;
-    google.protobuf.StringValue author_url = 8;
-    google.protobuf.StringValue provider_name = 9;
-    google.protobuf.StringValue provider_url = 10;
-    google.protobuf.StringValue thumbnail_url = 11;
-    google.protobuf.StringValue thumbnail_width = 12;
-    google.protobuf.StringValue thumbnail_height = 13;
-    google.protobuf.StringValue video_url = 14;
-    google.protobuf.StringValue version = 15;
+    google.protobuf.StringValue type = 1; // The resource type
+    google.protobuf.Int32Value width = 2; // The width in pixels of the asset specified in the url parameter.
+    google.protobuf.Int32Value height = 3; // The height in pixels of the asset specified in the url parameter.
+    google.protobuf.StringValue title = 4; // A text title, describing the resource.
+    google.protobuf.StringValue url = 5; // The URL to retrieve embedding information for.
+    google.protobuf.StringValue html = 6; // The HTML required to embed a video player. The HTML should have no padding or margins. 
+    google.protobuf.StringValue author_name = 7; // The name of the author/owner of the resource.
+    google.protobuf.StringValue author_url = 8; // A URL for the author/owner of the resource.
+    google.protobuf.StringValue provider_name = 9; // The name of the resource provider.
+    google.protobuf.StringValue provider_url = 10; // The url of the resource provider.
+    google.protobuf.StringValue thumbnail_url = 11; // A URL to a thumbnail image representing the resource. The thumbnail must respect any maxwidth and maxheight parameters. If this parameter is present, thumbnail_width and thumbnail_height must also be present.
+    google.protobuf.StringValue thumbnail_width = 12; // The width of the optional thumbnail. If this parameter is present, thumbnail_url and thumbnail_height must also be present.
+    google.protobuf.StringValue thumbnail_height = 13; // The height of the optional thumbnail. If this parameter is present, thumbnail_url and thumbnail_width must also be present.
+    google.protobuf.StringValue video_url = 14; // The URL to retrieve embedding video.
+    google.protobuf.StringValue version = 15; // The oEmbed version number. This must be 1.0.
+
 }

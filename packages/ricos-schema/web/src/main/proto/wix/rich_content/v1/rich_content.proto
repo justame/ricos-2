@@ -48,14 +48,14 @@ message RichContent {
         fqdn: "wix.ricos.v1.rich_content",
         segment: PUBLIC
     };
-    repeated Node nodes = 1; // List of nodes
-    Metadata metadata = 2;
-    DocumentStyle document_style = 3;
+    repeated Node nodes = 1; // Rich Content nodes
+    Metadata metadata = 2; // Content metadata 
+    DocumentStyle document_style = 3; // Styling document
 }
 
 message Node {
     enum Type {
-        PARAGRAPH = 0;
+        PARAGRAPH = 0; 
         TEXT = 1;
         HEADING = 2;
         BULLETED_LIST = 3;
@@ -87,43 +87,43 @@ message Node {
         AUDIO = 29;
     }
 
-    Type type = 1; // Node type
+    Type type = 1; 
     string id = 2; // Node unique identifier
     repeated Node nodes = 3; // List of child nodes
-    NodeStyle style = 4;
+    NodeStyle style = 4; // Node Style
     oneof data {
-        ButtonData button_data = 5;
-        CodeBlockData code_block_data = 6;
-        DividerData divider_data = 7;
-        FileData file_data = 8;
-        GalleryData gallery_data = 9;
-        GIFData gif_data = 10;
-        HeadingData heading_data = 11;
-        HTMLData html_data = 12;
-        ImageData image_data = 13;
-        LinkPreviewData link_preview_data = 14;
-        MapData map_data = 15;
-        ParagraphData paragraph_data = 16;
-        PollData poll_data = 17;
-        TextData text_data = 18;
-        AppEmbedData app_embed_data = 19;
-        VideoData video_data = 20;
-        EmbedData embed_data = 21;
-        CollapsibleListData collapsible_list_data = 22;
-        TableData table_data = 23;
-        TableCellData table_cell_data = 24;
-        Struct externalData = 25;
-        AudioData audio_data = 26;
-        OrderedListData ordered_list_data = 27;
-        BulletedListData bulleted_list_data = 28;
-        BlockquoteData blockquote_data = 29;
+        ButtonData button_data = 5; // Represents button element 
+        CodeBlockData code_block_data = 6; // Represents code block element
+        DividerData divider_data = 7; // Represents divider element 
+        FileData file_data = 8; // Represents file element 
+        GalleryData gallery_data = 9; // Represents gallery element 
+        GIFData gif_data = 10; // Represents gif element 
+        HeadingData heading_data = 11; // Represents heading element 
+        HTMLData html_data = 12; // Represents embedded HTML element 
+        ImageData image_data = 13; // Represents image element 
+        LinkPreviewData link_preview_data = 14; // Represents link preview element 
+        MapData map_data = 15; // Represents map element 
+        ParagraphData paragraph_data = 16; // Represents paragraph element 
+        PollData poll_data = 17; // Represents poll element 
+        TextData text_data = 18; // Represents text element 
+        AppEmbedData app_embed_data = 19; // Represents app embed element 
+        VideoData video_data = 20; // Represents video element 
+        EmbedData embed_data = 21; // Represents oembed element 
+        CollapsibleListData collapsible_list_data = 22; // Represents collapsible list element 
+        TableData table_data = 23; // Represents table element 
+        TableCellData table_cell_data = 24; // Represents table cell element 
+        Struct externalData = 25; // Represents custon external element 
+        AudioData audio_data = 26; // Represents audio element 
+        OrderedListData ordered_list_data = 27; // Represents ordered list element 
+        BulletedListData bulleted_list_data = 28; // Represents bulleted list element 
+        BlockquoteData blockquote_data = 29; // Represents blockquote element 
     }
 }
 
 message NodeStyle {
-    google.protobuf.StringValue padding_top = 1;
-    google.protobuf.StringValue padding_bottom = 2;
-    google.protobuf.StringValue background_color = 3;
+    google.protobuf.StringValue padding_top = 1; // Padding top value (in pixels)
+    google.protobuf.StringValue padding_bottom = 2; // padding bottom value (in pixels)
+    google.protobuf.StringValue background_color = 3; // background color (in hex)
 }
 
 message TextData {
@@ -148,39 +148,39 @@ message Decoration {
 
     Type type = 1; // Decoration type
     oneof data {
-        AnchorData anchor_data = 2;
-        ColorData color_data = 3;
-        LinkData link_data = 4;
-        MentionData mention_data = 5;
-        FontSizeData font_size_data = 6;
-        google.protobuf.Int32Value font_weight_value = 7;
-        google.protobuf.BoolValue italic_data = 8;
-        google.protobuf.BoolValue underline_data = 9;
+        AnchorData anchor_data = 2; // Link to section attributes
+        ColorData color_data = 3; // Text Color attributes
+        LinkData link_data = 4; // External Link attributes
+        MentionData mention_data = 5; // Mention person attributes
+        FontSizeData font_size_data = 6; // Font size attributes
+        google.protobuf.Int32Value font_weight_value = 7; // Font weight attributes
+        google.protobuf.BoolValue italic_data = 8; // Italic decoration attributes
+        google.protobuf.BoolValue underline_data = 9; // Underline decoration attributes
     }
 }
 
 message Metadata {
     uint32 version = 1 [(wix.api.min) = 1]; // Schema version
     google.protobuf.Timestamp created_timestamp = 2 [(wix.api.readOnly) = true]; // Time content was created
-    google.protobuf.Timestamp updated_timestamp = 3; // Time of latest edit
-    google.protobuf.StringValue id = 4;
+    google.protobuf.Timestamp updated_timestamp = 3; // Time of content updated
+    google.protobuf.StringValue id = 4; // Content's unique identifier
 }
 
 message TextNodeStyle {
-    repeated Decoration decorations = 1;
-    NodeStyle node_style = 2;
-    google.protobuf.StringValue line_height = 3;
+    repeated Decoration decorations = 1; // List of decorations
+    NodeStyle node_style = 2; // Text node style
+    google.protobuf.StringValue line_height = 3; // Text node line height
 
 }
 
 message DocumentStyle {
-    TextNodeStyle header_one = 1;
-    TextNodeStyle header_two = 2;
-    TextNodeStyle header_three = 3;
-    TextNodeStyle header_four = 4;
-    TextNodeStyle header_five = 5;
-    TextNodeStyle header_six = 6;
-    TextNodeStyle paragraph = 7;
-    TextNodeStyle blockquote = 8;
-    TextNodeStyle code_block = 9;
+    TextNodeStyle header_one = 1; // H1 style
+    TextNodeStyle header_two = 2; // H2 style
+    TextNodeStyle header_three = 3; // H3 style
+    TextNodeStyle header_four = 4; // H4 style
+    TextNodeStyle header_five = 5; // H5 style
+    TextNodeStyle header_six = 6; // H6 style
+    TextNodeStyle paragraph = 7; // Paragraph style
+    TextNodeStyle blockquote = 8; // Blockquote style
+    TextNodeStyle code_block = 9; // Code block style
 } 

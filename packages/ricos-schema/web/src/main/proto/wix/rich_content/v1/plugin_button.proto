@@ -8,28 +8,28 @@ import "google/protobuf/wrappers.proto";
 message ButtonData {
     message Styles {
         message Colors {
-            google.protobuf.StringValue text = 1; // hex color
-            google.protobuf.StringValue border = 2; // hex color
-            google.protobuf.StringValue background = 3; // hex color
+            google.protobuf.StringValue text = 1; // text hexadecimal color
+            google.protobuf.StringValue border = 2; // border hexadecimal color
+            google.protobuf.StringValue background = 3; // background hexadecimal color
         }
 
         message Border {
-            google.protobuf.Int32Value width = 1; // number of pixels
-            google.protobuf.Int32Value radius = 2; // number of pixels
+            google.protobuf.Int32Value width = 1; // Border width in pixels
+            google.protobuf.Int32Value radius = 2; // Border radius in pixels
         }
-        Border border = 1;
-        Colors colors = 2;
+        Border border = 1; // Button's border attributes
+        Colors colors = 2; // Button's color attributes
     }
 
     enum Type {
-        LINK = 0;
-        ACTION = 1;
+        LINK = 0; // Regular link button
+        ACTION = 1; // Triggers custom action that is defined in plugin configuration by the consumer
     }
 
-    PluginContainerData container_data = 1;
-    Type type = 2;
-    Styles styles = 3;
-    google.protobuf.StringValue text = 4;
-    Link link = 5;
+    PluginContainerData container_data = 1; // Button container data
+    Type type = 2; // Button type
+    Styles styles = 3; // Button Styles
+    google.protobuf.StringValue text = 4; // Button display text
+    Link link = 5; // Button link attribute
 }
 

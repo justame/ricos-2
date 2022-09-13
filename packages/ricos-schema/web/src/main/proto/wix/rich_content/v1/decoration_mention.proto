@@ -5,7 +5,7 @@ package wix.rich_content.v1;
 import "google/protobuf/wrappers.proto";
 
 message MentionData {
-    string name = 1;
-    string slug = 2;
-    google.protobuf.StringValue id = 3;
+    string name = 1; // Mentioned person name
+    string slug = 2; // Mention peron link 
+    google.protobuf.StringValue id = 3; // Mentioned person ID
 }
