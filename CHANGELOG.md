@@ -19,6 +19,13 @@
 
 </details>
 
+## 8.72.64 (Sep 13, 2022)
+
+## :house: Internal
+
+- `ricos-editor`
+  - [#4613](https://github.com/wix/ricos/pull/4613) `injectedContent` support in tiptap
+
 ## 8.72.63 (Sep 12, 2022)
 
 ## :bug: Bug Fix

@@ -1,6 +1,6 @@
 {
   "name": "ricos-converters",
-  "version": "8.72.63",
+  "version": "8.72.64",
   "author": {
     "name": "Alex Greenstein",
     "email": "alexgr@wix.com"
@@ -35,11 +35,11 @@
   },
   "dependencies": {
     "fp-ts": "^2.11.0",
-    "ricos-content": "8.72.63",
-    "ricos-schema": "8.72.63",
-    "ricos-types": "8.72.63",
+    "ricos-content": "8.72.64",
+    "ricos-schema": "8.72.64",
+    "ricos-types": "8.72.64",
     "to-camel-case": "1.0.0",
-    "wix-rich-content-common": "8.72.63"
+    "wix-rich-content-common": "8.72.64"
   },
   "unpkg": true,
   "publishConfig": {
