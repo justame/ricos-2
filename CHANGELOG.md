@@ -17,12 +17,14 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.72.65 (Sep 13, 2022)
+
 ## :bug: Bug Fix
 
 - `ricos-plugins`
   - [#4592](https://github.com/wix/ricos/pull/4592) external insert plugins toolbar support toolbar settings
-
-</details>
 
 ## 8.72.64 (Sep 13, 2022)
 
