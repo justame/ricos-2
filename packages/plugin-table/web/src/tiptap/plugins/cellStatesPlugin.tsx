@@ -24,9 +24,7 @@ export const cellStatesPlugin = (Plugin, PluginKey, editor) => {
             selectCell,
           };
         } else if (editCell) {
-          const editDecorations = cellEditingDecorations(editCell);
           return {
-            decorations: DecorationSet.create(newState.doc, editDecorations),
             editCell,
           };
         }
@@ -57,7 +55,10 @@ export const cellStatesPlugin = (Plugin, PluginKey, editor) => {
 
       decorations(state) {
         const tablePluginState = state && key.getState(state);
-        return tablePluginState.decorations;
+        if (tablePluginState.editCell) {
+          const editDecorations = cellEditingDecorations(tablePluginState.editCell);
+          return DecorationSet.create(state.doc, editDecorations);
+        }
       },
     },
   });
