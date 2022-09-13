@@ -15,7 +15,7 @@ message HTMLData {
   oneof data {
     string url = 2;
     string html = 3;
+    google.protobuf.BoolValue is_adsense = 4 [deprecated = true]; // use source instead
   }
-  google.protobuf.BoolValue is_adsense = 4 [deprecated = true]; // use source instead
   optional Source source = 5;
 }

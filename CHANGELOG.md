@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `ricos schema`
+  - [#4617](https://github.com/wix/ricos/pull/4617) fix `isAdsense` deprecation in `htmlData`
+
 </details>
 
 ## 8.72.65 (Sep 13, 2022)
