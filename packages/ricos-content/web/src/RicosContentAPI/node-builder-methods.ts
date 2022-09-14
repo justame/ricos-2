@@ -27,6 +27,7 @@ import {
   PollData_Layout_PollLayout_Type,
   PollData_Layout_PollLayout_Direction,
   PollData_Design_PollDesign_Background_Type,
+  HTMLData_Source,
 } from 'ricos-schema';
 import { dataByNodeType } from '../converters/nodeUtils';
 import type { BuilderFunctionsMetadata, ListItemData } from '../types/contentApi';
@@ -109,6 +110,7 @@ export const DEFAULT_HTML_DATA: HTMLData = {
   containerData: DEFAULT_CONTAINER_DATA,
   html: '<div/>',
   url: undefined,
+  source: HTMLData_Source.HTML,
 };
 
 export const DEFAULT_POLL_DATA: PollData = {

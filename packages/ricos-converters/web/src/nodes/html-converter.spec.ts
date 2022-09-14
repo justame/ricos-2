@@ -3,6 +3,7 @@ import {
   Node_Type,
   PluginContainerData_Alignment,
   PluginContainerData_Width_Type,
+  HTMLData_Source,
 } from 'ricos-schema';
 import { ricosNodeVisitor, tiptapNodeVisitor } from '../tiptap-converters';
 import { htmlConverter } from './html-converter';
@@ -26,6 +27,7 @@ describe('Html converter', () => {
       url: 'https://twitter.com/WixEng/status/1348206215336259584?ref_src=twsrc%5Etfw',
       html: `<blockquote class='twitter-tweet'><p lang='en' dir='ltr'>How we cut cost on 55% of our storage without deleting a single file? We understood that NOT all files should be treated equally. <br><br>Here’s the full story:<a href='https://t.co/zC3d0uBkEA'>https://t.co/zC3d0uBkEA</a> <a href='https://t.co/j8ND7GfOEg'>pic.twitter.com/j8ND7GfOEg</a></p>&mdash; Wix Engineering (@WixEng) <a href='https://twitter.com/WixEng/status/1348206215336259584?ref_src=twsrc%5Etfw'>January 10, 2021</a></blockquote> <script async src='https://platform.twitter.com/widgets.js' charset='utf-8'></script>`,
       id: '10',
+      source: 'HTML',
     },
   };
 
@@ -47,6 +49,7 @@ describe('Html converter', () => {
       },
       url: 'https://twitter.com/WixEng/status/1348206215336259584?ref_src=twsrc%5Etfw',
       html: `<blockquote class='twitter-tweet'><p lang='en' dir='ltr'>How we cut cost on 55% of our storage without deleting a single file? We understood that NOT all files should be treated equally. <br><br>Here’s the full story:<a href='https://t.co/zC3d0uBkEA'>https://t.co/zC3d0uBkEA</a> <a href='https://t.co/j8ND7GfOEg'>pic.twitter.com/j8ND7GfOEg</a></p>&mdash; Wix Engineering (@WixEng) <a href='https://twitter.com/WixEng/status/1348206215336259584?ref_src=twsrc%5Etfw'>January 10, 2021</a></blockquote> <script async src='https://platform.twitter.com/widgets.js' charset='utf-8'></script>`,
+      source: HTMLData_Source.HTML,
     },
   };
   /* eslint-enable max-len */
