@@ -437,6 +437,18 @@ export const tableExtension = {
               });
               dispatch(tr);
             },
+          reorderRows:
+            (from, to) =>
+            ({ state, dispatch, tr }) => {
+              // eslint-disable-next-line no-console
+              console.log('***** should drag rows from', from, 'to', to);
+            },
+          reorderColumns:
+            (from, to) =>
+            ({ state, dispatch, tr }) => {
+              // eslint-disable-next-line no-console
+              console.log('***** should drag columns from', from, 'to', to);
+            },
         };
       },
 

@@ -6,13 +6,28 @@ export const addRowColPlugin = (Plugin, PluginKey, editor) => {
   const key = new PluginKey('table-add-row-col');
   return new Plugin({
     key,
+    state: {
+      init: () => {
+        return {};
+      },
+      apply(tr, prev, oldState, newState) {
+        const parentTable = findTable(newState.selection);
+        if (!parentTable) {
+          return {};
+        }
+        if (findTable(oldState.selection) && parentTable) {
+          return prev;
+        }
+        const decorations = DecorationSet.create(
+          newState.doc,
+          addRowColDecorations(newState, editor)
+        );
+        return { decorations };
+      },
+    },
     props: {
       decorations(state) {
-        const selectedTable = findTable(state.selection);
-        if (selectedTable) {
-          const decorations = addRowColDecorations(state, editor);
-          return decorations && DecorationSet.create(state.doc, decorations);
-        }
+        return key.getState(state).decorations;
       },
     },
   });

@@ -1,4 +1,5 @@
 export { addRowColDecorations } from './addRowColDecorations';
-export { controllerDecorations } from './controllerDecorations';
-export { dragDecorations } from './dragDecorations';
+export { tableControllerDecorations } from './tableControllerDecorations';
+export { rowControllerDecorations } from './rowControllerDecoration';
+export { columnControllerDecoration } from './columnControllerDecoration';
 export { cellEditingDecorations } from './cellEditingDecorations';

@@ -6,7 +6,7 @@ import { addSvg } from './svgs';
 
 export const addRowColDecorations = (state, editor) => {
   const parentTable = findTable(state.selection);
-  if (!parentTable) return null;
+  if (!parentTable) return [];
   const parentStart = parentTable.start;
   const map = TableMap.get(parentTable.node);
 
