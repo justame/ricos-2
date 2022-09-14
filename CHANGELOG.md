@@ -21,6 +21,8 @@
 
 - `ricos schema`
   - [#4617](https://github.com/wix/ricos/pull/4617) fix `isAdsense` deprecation in `htmlData`
+- `link`
+  - [#4616](https://github.com/wix/ricos/pull/4616) add support to `ANCHOR` type to avoid normaliztion in viewer
 
 </details>
 

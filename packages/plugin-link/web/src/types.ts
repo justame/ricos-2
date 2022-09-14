@@ -2,6 +2,7 @@ import type { EditorPluginConfig, ViewerPluginConfig } from 'wix-rich-content-co
 
 export const EXTERNAL_LINK_TYPE = 'wix-draft-plugin-external-link';
 export const LINK_TYPE = 'LINK';
+export const ANCHOR_TYPE = 'ANCHOR';
 export const CUSTOM_LINK_TYPE = 'ricos-plugin-custom-link';
 
 export interface LinkPluginEditorConfig extends EditorPluginConfig {

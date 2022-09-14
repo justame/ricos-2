@@ -146,21 +146,18 @@ const normalizeEntityMap = (
     if (newEntity?.data?.config && !newEntity?.data?.config?.textWrap) {
       newEntity.data.config.textWrap = WRAP;
     }
-    convertAnchorToLinkToUndoOneAppFix(newEntity);
+    convertImageAnchorToLink(newEntity);
     return newEntity;
   });
 };
 
-const isTextAnchor = (entity: RicosEntity) => entity.type === 'ANCHOR';
 const isImageAnchor = (entity: RicosEntity) =>
   entity.type === 'wix-draft-plugin-image' &&
   !!entity.data?.config?.anchor &&
   !entity.data?.config?.link;
 
-const convertAnchorToLinkToUndoOneAppFix = (newEntity: RicosEntity) => {
-  if (isTextAnchor(newEntity)) {
-    newEntity.type = 'LINK';
-  } else if (isImageAnchor(newEntity)) {
+const convertImageAnchorToLink = (newEntity: RicosEntity) => {
+  if (isImageAnchor(newEntity)) {
     const { anchor, ...rest } = newEntity.data.config;
     newEntity.data = {
       ...newEntity.data,
