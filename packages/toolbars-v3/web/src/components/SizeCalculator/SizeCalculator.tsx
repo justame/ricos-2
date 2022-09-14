@@ -12,7 +12,7 @@ type SizeCalculatorProps = {
   children: (result: SizeResult) => unknown;
 };
 
-const MORE_BUTTON_WIDTH = 30;
+const MORE_BUTTON_WIDTH = 80;
 const GAP_BETWEEN_BUTTONS = 4;
 
 const Overflow = ({
