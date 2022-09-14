@@ -2,10 +2,8 @@ import React, { useContext, useRef, useEffect, useState } from 'react';
 import styles from './styles/floating-add-plugin-menu.scss';
 import EditorSelectionToPosition from './EditorSelectionToPosition';
 import PlusButton from './PlusButton';
-import { PLUGIN_MENU_MODAL_ID } from 'wix-rich-content-toolbars-ui';
-import { PLUGIN_MENU_HORIZONTAL_MODAL_ID } from './consts';
+import { PLUGIN_MENU_MODAL_ID, PLUGIN_MENU_HORIZONTAL_MODAL_ID } from 'ricos-types';
 import { RicosContext, EditorContext, ModalContext } from 'ricos-context';
-import AddPluginMenuHorizontal from './AddPluginMenuHorizontal';
 import type { AddPluginMenuConfig, Helpers, Layout, Placement } from 'wix-rich-content-common';
 import type { ModalService } from 'ricos-types';
 
@@ -34,14 +32,6 @@ const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig, plugins }
     modalService.onModalClosed(() => {
       setIsModalOpen(modalService.isModalOpen(MODAL_ID));
     });
-    isHorizontalMenu &&
-      !modalService.getModal(PLUGIN_MENU_HORIZONTAL_MODAL_ID) &&
-      modalService.register({
-        id: PLUGIN_MENU_HORIZONTAL_MODAL_ID,
-        Component: props => (
-          <AddPluginMenuHorizontal referenceElement={buttonRef} plugins={plugins} {...props} />
-        ),
-      });
   }, []);
 
   const calcButtonPosition = (position: DOMRect): { top: string } => {

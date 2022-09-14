@@ -12,8 +12,8 @@ import type {
   ToolbarButtonProps,
   ToolbarType,
 } from 'ricos-types';
+import { PLUGIN_MENU_MODAL_ID } from 'ricos-types';
 import { TOOLBARS } from 'wix-rich-content-editor-common';
-import { PLUGIN_MENU_MODAL_ID } from 'wix-rich-content-toolbars-ui';
 import { alwaysVisibleResolver } from 'wix-rich-content-toolbars-v3';
 import type { PluginServices } from './editorPlugins';
 

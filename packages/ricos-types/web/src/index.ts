@@ -42,3 +42,4 @@ export * from './pluginsEventsTypes';
 export * from './toolbar';
 export * from './query';
 export * from './z-index-layers';
+export * from './pluginMenuTypes';

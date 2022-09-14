@@ -12,16 +12,15 @@ import type {
   ToolbarType,
   ToolbarSettings,
 } from 'ricos-types';
+import { PLUGIN_MENU_MODAL_ID, PLUGIN_MENU_HORIZONTAL_MODAL_ID } from 'ricos-types';
 import { AddPluginMenu } from 'wix-rich-content-toolbars-ui';
+import { AddPluginMenuHorizontal } from 'wix-rich-content-toolbars-v3';
 import type { PluginServices } from './editorPlugins';
 import { RicosPluginAddButton, PluginAddButtonCollisionError } from './pluginAddButton';
 import { initToolbarSettings } from './toolbar-utils/initToolbarSettings';
 import { getToolbarConfig } from './toolbar-utils/getToolbarConfig';
 import { TOOLBARS } from 'wix-rich-content-editor-common';
 import { toExternalInsertPluginToolbarItemsConfig } from './toolbar-utils/toToolbarItemsConfig';
-
-// TODO: copied from toolbars-ui, should be moved to ricos-types?
-const PLUGIN_MENU_MODAL_ID = 'pluginMenu';
 
 export class RicosPluginAddButtons implements PluginAddButtons {
   buttons: PluginAddButton[] = [];
@@ -109,6 +108,10 @@ export class RicosPluginAddButtons implements PluginAddButtons {
       Component: props => (
         <AddPluginMenu addButtons={this} addPluginMenuConfig={config} {...props} />
       ),
+    });
+    this.services.modals?.register({
+      id: PLUGIN_MENU_HORIZONTAL_MODAL_ID,
+      Component: props => <AddPluginMenuHorizontal buttons={this} {...props} />,
     });
   }
 

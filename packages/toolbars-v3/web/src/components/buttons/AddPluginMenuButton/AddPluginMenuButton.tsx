@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 import styles from './AddPluginMenuButton.scss';
 import { ModalContext } from 'ricos-context';
-import { PLUGIN_MENU_MODAL_ID } from 'wix-rich-content-toolbars-ui';
+import { PLUGIN_MENU_MODAL_ID } from 'ricos-types';
 import type { ModalService } from 'ricos-types';
 
 const AddPluginMenuButton = ({ toolbarItem }) => {

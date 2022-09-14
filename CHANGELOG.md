@@ -19,6 +19,8 @@
 
 ## :bug: Bug Fix
 
+- `ricos-plugins toolbars-v3`
+  - [#4621](https://github.com/wix/ricos/pull/4621) register horizontal plugin menu from `ricos-plugins`
 - `ricos schema`
   - [#4617](https://github.com/wix/ricos/pull/4617) fix `isAdsense` deprecation in `htmlData`
 - `link`
