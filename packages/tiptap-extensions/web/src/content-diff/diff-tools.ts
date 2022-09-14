@@ -59,17 +59,19 @@ export const getContentChange = (
   return new ContentChange(oldSlice, newSlice);
 };
 
-export const isParagraphReplacement = (paragraphChanges: ContentDiff[]) =>
-  paragraphChanges.length === 2 &&
-  paragraphChanges[0].change === 'delete' &&
-  paragraphChanges[1].change === 'insert' &&
-  paragraphChanges[0].data?.id === paragraphChanges[1].data?.id;
+export const isNodeReplacement = (changes: ContentDiff[]) =>
+  changes.length === 2 &&
+  changes[0].change === 'delete' &&
+  changes[1].change === 'insert' &&
+  changes[0].type === changes[1].type &&
+  changes[0].data?.id === changes[1].data?.id;
 
 export const reportGenericDiff = (
   diffs: ContentDiff[],
   onPluginAdded: (pluginId: string, params: Record<string, unknown>) => boolean,
   onPluginDeleted: (pluginId: string) => boolean
 ) =>
+  !isNodeReplacement(diffs) &&
   diffs
     .filter(not(hasIgnoredType))
     .filter(diff => diff.type !== Decoration_Type.LINK && diff.type !== Decoration_Type.ANCHOR)
@@ -99,30 +101,36 @@ export const reportTextStyleDiff = (
   onPluginAdded: (pluginId: string, params: Record<string, unknown>) => boolean,
   onPluginDeleted: (pluginId: string) => boolean
 ) => {
-  const paragraphChanges = diffs.filter(diff => diff.type === Node_Type.PARAGRAPH);
-  if (isParagraphReplacement(paragraphChanges)) {
+  const textContainerChanges = diffs.filter(
+    diff =>
+      diff.type === Node_Type.PARAGRAPH ||
+      diff.type === Node_Type.HEADING ||
+      diff.type === Node_Type.BLOCKQUOTE ||
+      diff.type === Node_Type.CODE_BLOCK
+  );
+  if (isNodeReplacement(textContainerChanges)) {
     if (
-      (paragraphChanges[0].data?.textStyle as TextStyle).textAlignment !==
-      (paragraphChanges[1].data?.textStyle as TextStyle).textAlignment
+      (textContainerChanges[0].data?.textStyle as TextStyle).textAlignment !==
+      (textContainerChanges[1].data?.textStyle as TextStyle).textAlignment
     ) {
       if (
-        (paragraphChanges[1].data?.textStyle as TextStyle).textAlignment !==
+        (textContainerChanges[1].data?.textStyle as TextStyle).textAlignment !==
         TextStyle_TextAlignment.AUTO
       ) {
         onPluginAdded('textAlignment', {
-          textAlignment: (paragraphChanges[1].data?.textStyle as TextStyle).textAlignment,
+          textAlignment: (textContainerChanges[1].data?.textStyle as TextStyle).textAlignment,
         });
       } else {
         onPluginDeleted('textAlignment');
       }
     }
     if (
-      (paragraphChanges[0].data?.textStyle as TextStyle).lineHeight !==
-      (paragraphChanges[1].data?.textStyle as TextStyle).lineHeight
+      (textContainerChanges[0].data?.textStyle as TextStyle).lineHeight !==
+      (textContainerChanges[1].data?.textStyle as TextStyle).lineHeight
     ) {
-      if ((paragraphChanges[1].data?.textStyle as TextStyle).lineHeight) {
+      if ((textContainerChanges[1].data?.textStyle as TextStyle).lineHeight) {
         onPluginAdded('lineHeight', {
-          lineHeight: (paragraphChanges[1].data?.textStyle as TextStyle).lineHeight,
+          lineHeight: (textContainerChanges[1].data?.textStyle as TextStyle).lineHeight,
         });
       } else {
         onPluginDeleted('lineHeight');

@@ -1,18 +1,17 @@
 import type { RicosEditorProps } from 'ricos-common';
 import {
+  ACTION_BUTTON_TYPE,
   ANCHOR_TYPE,
   APP_EMBED_TYPE,
   AUDIO_TYPE,
   CODE_BLOCK_TYPE,
   COLLAPSIBLE_LIST_TYPE,
   DIVIDER_TYPE,
-  EMBED_TYPE,
   EXTERNAL,
   FILE_UPLOAD_TYPE,
   GALLERY_TYPE,
   GIPHY_TYPE,
   HEADINGS_DROPDOWN_TYPE,
-  HEADINGS_TYPE,
   HTML_TYPE,
   IMAGE_TYPE,
   INDENT_TYPE,
@@ -30,7 +29,7 @@ import {
   VIDEO_TYPE,
 } from 'ricos-content';
 import type { RicosEvents } from 'ricos-events';
-import type { BICallbacks, TopicDescriptor, EventData, ToolbarType } from 'ricos-types';
+import type { BICallbacks, EventData, ToolbarType, TopicDescriptor } from 'ricos-types';
 import { Decoration_Type, Node_Type } from 'ricos-types';
 import { TOOLBARS } from 'wix-rich-content-editor-common';
 
@@ -79,10 +78,12 @@ const toDraftId = (id: string) =>
     [Node_Type.BLOCKQUOTE]: 'Blockquote',
     [Node_Type.BULLETED_LIST]: 'unordered-list-item',
     [Node_Type.BUTTON]: LINK_BUTTON_TYPE,
+    LINK_BUTTON: LINK_BUTTON_TYPE,
+    ACTION_BUTTON: ACTION_BUTTON_TYPE,
     [Node_Type.CODE_BLOCK]: CODE_BLOCK_TYPE,
     [Node_Type.COLLAPSIBLE_LIST]: COLLAPSIBLE_LIST_TYPE,
     [Node_Type.DIVIDER]: DIVIDER_TYPE,
-    [Node_Type.EMBED]: EMBED_TYPE,
+    [Node_Type.EMBED]: LINK_PREVIEW_TYPE,
     [Node_Type.EXTERNAL]: EXTERNAL,
     [Node_Type.FILE]: FILE_UPLOAD_TYPE,
     [Node_Type.GALLERY]: GALLERY_TYPE,
