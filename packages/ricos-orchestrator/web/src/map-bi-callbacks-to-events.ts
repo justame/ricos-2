@@ -59,6 +59,8 @@ const getBiCallbackToSubscribe =
 
 const toPluginId = (id: string) => id.split('.')[0] ?? id;
 
+const toButtonId = (id: string) => id.split('.')[1] ?? id;
+
 const toDraftId = (id: string) =>
   ({
     INDENT: INDENT_TYPE,
@@ -162,6 +164,7 @@ export function mapBiCallbacksToSubscriptions(editorProps: RicosEditorProps, eve
       { version, contentId, buttonName: toDraftId(toPluginId(buttonId)), type: toolbarType },
     ]
   );
+
   subscribeCallback('ricos.modals.functionality.modalOpened', 'onPluginModalOpened', ({ id }) => [
     {
       version,
@@ -235,7 +238,7 @@ export function mapBiCallbacksToSubscriptions(editorProps: RicosEditorProps, eve
     ({ pluginId, buttonName, value, nodeId, type }) => [
       {
         pluginId: toDraftId(toPluginId(pluginId)),
-        buttonName,
+        buttonName: toButtonId(buttonName),
         value,
         pluginUniqueId: nodeId,
         type,

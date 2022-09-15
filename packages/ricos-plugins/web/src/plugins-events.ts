@@ -41,10 +41,10 @@ export class PluginsEvents implements IPluginsEvents {
 
   topicsToPublish = TOPICS;
 
-  publishPluginAddSuccess({ pluginId }) {
+  publishPluginAddSuccess({ pluginId, params }) {
     return this.publishers
       .byTopic('ricos.plugins.functionality.pluginAddSuccess')
-      .publish({ pluginId });
+      .publish({ pluginId, params });
   }
 
   publishPluginAdd({ pluginId, entryPoint }) {
