@@ -1,19 +1,14 @@
 /* eslint-disable fp/no-loops */
 import type { Editor } from '@tiptap/core';
-import type { ContentNodeWithPos } from 'prosemirror-utils';
-
-export function getDragPreviewElement(editor: Editor, tableStartPos: number): HTMLElement {
-  const dom = editor.view.domAtPos(tableStartPos);
-  return dom.node.childNodes[dom.offset] as HTMLElement;
-}
+import type { Node as ProsemirrorNode } from 'prosemirror-model';
 
 export function updateRowDragPreview(
-  parentTable: ContentNodeWithPos,
+  tableNode: ProsemirrorNode,
   dragPreview: HTMLElement,
   top: number,
   rowDraggedIndex: number
 ) {
-  const rowsHeight = parentTable.node.attrs.dimensions.rowsHeight;
+  const rowsHeight = tableNode.attrs.dimensions.rowsHeight;
   const previewHeight = rowsHeight[rowDraggedIndex];
   dragPreview.style.width = '100%';
   dragPreview.style.height = `${previewHeight}px`;
@@ -68,13 +63,4 @@ export function calculateColumnDropIndex(
     }
   });
   return dropIndex;
-}
-
-export function getTableColumnWidth(editor: Editor, tableStartPos: number): number[] {
-  const dom = editor.view.domAtPos(tableStartPos);
-  return dom.node?.parentElement
-    ? Array.from(dom.node.parentElement.children[0].children)?.map(
-        (node: HTMLElement) => node.offsetWidth
-      )
-    : [];
 }

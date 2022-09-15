@@ -1,7 +1,7 @@
 import { handlePaste, handleMouseDown } from './input';
 import { drawCellSelection, normalizeSelection } from './cellselection';
 import { fixTables } from 'prosemirror-tables';
-import { isCellSelection } from 'prosemirror-utils';
+import { isCellSelection } from '../utilities/is-selection-type';
 
 // :: () → Plugin
 //

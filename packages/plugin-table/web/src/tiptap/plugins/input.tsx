@@ -16,7 +16,7 @@ import {
 } from 'prosemirror-tables';
 import { pastedCells, clipCells, insertCells } from '../utilities/copypaste'; //CAN TAKE FROM RPOSE!!
 import { Transform } from 'prosemirror-transform';
-import { isCellSelection } from 'prosemirror-utils';
+import { isCellSelection } from '../utilities/is-selection-type';
 
 export function handlePaste(view, _, slice) {
   if (!isInTable(view.state)) return false;

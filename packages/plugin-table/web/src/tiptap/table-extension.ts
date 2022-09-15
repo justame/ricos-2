@@ -5,14 +5,13 @@ import { getExtensionField, callOrReturn } from '@tiptap/core';
 import { TextSelection, Selection } from 'prosemirror-state';
 import {
   addRowColPlugin,
-  controllerPlugin,
+  handlersPlugin,
   columnResizingPlugin,
   rowResizingPlugin,
   tableEditingPlugin,
   TableView,
 } from './plugins';
 import { createTable } from './utilities/createTable';
-import { getCellNeighbors } from './utilities/getCellNeighbors';
 import { keyboardShortcuts } from './utilities/keyboardShortcuts';
 import {
   addColumnAt,
@@ -42,11 +41,9 @@ import {
   CellSelection,
   selectedRect,
   cellAround,
-  TableMap,
 } from 'prosemirror-tables';
 import { TRANSACTION_META_KEYS } from './consts';
-import { getRowsAndColsInSelection } from './utilities/getRowsAndColsInSelection';
-import { getTotalWidthInSelection } from './utilities/getTotalWidthInSelection';
+import { TableQuery } from './TableQuery';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -95,7 +92,7 @@ export const tableExtension = {
 
       addProseMirrorPlugins() {
         return [
-          controllerPlugin(Plugin, PluginKey, this.editor),
+          handlersPlugin(Plugin, PluginKey, this.editor),
           addRowColPlugin(Plugin, PluginKey, this.editor),
           columnResizingPlugin(Plugin, PluginKey),
           rowResizingPlugin(Plugin, PluginKey, this.editor),
@@ -333,48 +330,51 @@ export const tableExtension = {
           distributeRows:
             () =>
             ({ tr, dispatch, state }) => {
-              const rect = selectedRect(state);
-              const { rows } = getRowsAndColsInSelection(state);
-              const table = rect.table;
-              const totalHeight = [...table.attrs.dimensions.rowsHeight]
-                .splice(rows[0], rows[rows.length - 1])
-                .reduce((curr, acc) => curr + acc, 0);
-              const newHeight = totalHeight / rows.length;
-              const rowsHeight = table.attrs.dimensions.rowsHeight.map((height, index) =>
-                index >= rows[0] && index <= rows[rows.length - 1] ? newHeight : height
-              );
-              table.content.forEach((node, pos, index) => {
-                rows.includes(index) &&
-                  tr.setNodeMarkup(pos + rect.tableStart, undefined, {
-                    ...node.attrs,
-                    height: newHeight,
-                  });
-              });
-              tr.setNodeMarkup(rect.tableStart - 1, undefined, {
-                ...table.attrs,
-                dimensions: { ...table.attrs.dimensions, rowsHeight },
-              });
-              dispatch(tr);
+              const table = TableQuery.of(state.selection);
+              if (table) {
+                const rows = table.getRowsIndexesInSelection();
+                const tableAttrs = table.getNode().attrs;
+                const totalHeight = [...tableAttrs.dimensions.rowsHeight]
+                  .splice(rows[0], rows[rows.length - 1])
+                  .reduce((curr, acc) => curr + acc, 0);
+                const newHeight = totalHeight / rows.length;
+                const rowsHeight = tableAttrs.dimensions.rowsHeight.map((height, index) =>
+                  index >= rows[0] && index <= rows[rows.length - 1] ? newHeight : height
+                );
+                table.getNode().content.forEach((node, pos, index) => {
+                  rows.includes(index) &&
+                    tr.setNodeMarkup(pos + table.getStartPos(), undefined, {
+                      ...node.attrs,
+                      height: newHeight,
+                    });
+                });
+                tr.setNodeMarkup(table.getStartPos() - 1, undefined, {
+                  ...tableAttrs,
+                  dimensions: { ...tableAttrs.dimensions, rowsHeight },
+                });
+                dispatch(tr);
+              }
             },
           distributeColumns:
             () =>
             ({ tr, dispatch, state, view }) => {
-              const rect = selectedRect(state);
-              const { cols } = getRowsAndColsInSelection(state);
-              const totalWidth = getTotalWidthInSelection(view);
-              const rowNum = rect.map.height;
-              const colNum = rect.map.width;
-              const rowsIndexes = Array(rowNum).fill(0);
-              rowsIndexes.forEach((_, row) =>
-                cols.forEach(col => {
-                  const mapIndex = row * colNum + col;
-                  tr.setNodeMarkup(rect.tableStart + rect.map.map[mapIndex], null, {
-                    colwidth: [totalWidth / cols.length],
-                  });
-                })
-              );
+              const table = TableQuery.of(state.selection);
+              if (table) {
+                const cols = table.getColsIndexesInSelection();
+                const totalWidth = table.getDomWidthInSelection(view);
+                const rowsIndexes = Array(table.getHeight()).fill(0);
+                const map = table.getMap();
+                rowsIndexes.forEach((_, row) =>
+                  cols.forEach(col => {
+                    const mapIndex = row * table.getWidth() + col;
+                    tr.setNodeMarkup(table.getStartPos() + map[mapIndex], null, {
+                      colwidth: [totalWidth / cols.length],
+                    });
+                  })
+                );
 
-              dispatch(tr);
+                dispatch(tr);
+              }
             },
           setEditCell:
             () =>
@@ -411,34 +411,36 @@ export const tableExtension = {
           setOutsiderCellsBorderColor:
             color =>
             ({ state, dispatch, tr }) => {
-              const map = TableMap.get(state.selection.$headCell.node(-1));
-              const start = state.selection.$anchorCell.start(-1);
+              const table = TableQuery.of(state.selection);
+              if (table) {
+                const start = table.getStartPos();
 
-              state.selection.forEachCell((node, pos) => {
-                const cellNeighbors = getCellNeighbors(map, start, pos);
-                const isNeighborInSelection = neighbor =>
-                  cellNeighbors[neighbor] &&
-                  state.selection.ranges.find(
-                    sel => sel.$from.pos - start - 1 === cellNeighbors[neighbor]
-                  );
+                state.selection.forEachCell((node, pos) => {
+                  const cellNeighbors = table.getCellNeighbors(pos);
+                  const isNeighborInSelection = neighbor =>
+                    cellNeighbors[neighbor] &&
+                    state.selection.ranges.find(
+                      sel => sel.$from.pos - start - 1 === cellNeighbors[neighbor]
+                    );
 
-                const borders: {
-                  top?: string;
-                  bottom?: string;
-                  left?: string;
-                  right?: string;
-                } = {};
-                !isNeighborInSelection('top') && (borders.top = color);
-                !isNeighborInSelection('bottom') && (borders.bottom = color);
-                !isNeighborInSelection('left') && (borders.left = color);
-                !isNeighborInSelection('right') && (borders.right = color);
+                  const borders: {
+                    top?: string;
+                    bottom?: string;
+                    left?: string;
+                    right?: string;
+                  } = {};
+                  !isNeighborInSelection('top') && (borders.top = color);
+                  !isNeighborInSelection('bottom') && (borders.bottom = color);
+                  !isNeighborInSelection('left') && (borders.left = color);
+                  !isNeighborInSelection('right') && (borders.right = color);
 
-                tr.setNodeMarkup(pos, null, {
-                  ...node.attrs,
-                  borderColors: { ...node.attrs.borderColors, ...borders },
+                  tr.setNodeMarkup(pos, null, {
+                    ...node.attrs,
+                    borderColors: { ...node.attrs.borderColors, ...borders },
+                  });
                 });
-              });
-              dispatch(tr);
+                dispatch(tr);
+              }
             },
           reorderRows:
             (from, to) =>

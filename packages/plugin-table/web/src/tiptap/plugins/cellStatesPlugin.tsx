@@ -1,7 +1,7 @@
 import { cellEditingDecorations } from '../decorations';
 import { DecorationSet } from 'prosemirror-view';
 import { cellAround, isInTable } from 'prosemirror-tables';
-import { isCellSelection } from 'prosemirror-utils';
+import { isCellSelection } from '../utilities/is-selection-type';
 import { TRANSACTION_META_KEYS } from '../consts';
 
 export const cellStatesPlugin = (Plugin, PluginKey, editor) => {

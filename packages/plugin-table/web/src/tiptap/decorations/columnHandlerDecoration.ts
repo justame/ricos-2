@@ -1,49 +1,44 @@
 /* eslint-disable fp/no-loops */
 import { getCellsInColumn } from 'prosemirror-utils';
-import { isColumnSelected, isTableSelected } from '../utilities/is-selected';
-import { TableMap, CellSelection } from 'prosemirror-tables';
+import { CellSelection } from 'prosemirror-tables';
 import { Decoration } from 'prosemirror-view';
 import styles from './controllers.scss';
 import { dragAndDropSvg } from './svgs';
-import {
-  getDragPreviewElement,
-  updateColumnDragPreview,
-  calculateColumnDropIndex,
-  getTableColumnWidth,
-} from '../plugins/dragPreviewUtils';
+import { updateColumnDragPreview, calculateColumnDropIndex } from '../plugins/dragPreviewUtils';
+import { TableQuery } from '../TableQuery';
 
-export const columnControllerDecoration = (newState, editor, parentTable) => {
+export const columnHandlerDecoration = (state, editor) => {
   const decorations: Decoration[] = [];
-  const { selection } = newState;
-  const parentStart = parentTable.start;
+  const { selection } = state;
+  const table = TableQuery.of(selection);
 
-  const isAllCellsSelected = isTableSelected(selection);
+  const isAllCellsSelected = table.isTableSelected();
 
-  const tableMap = TableMap.get(parentTable.node);
+  const tableMap = table.map;
   for (let i = 0; i < tableMap.width; i += 1) {
     const div = document.createElement('div');
     div.classList.add(styles.colController);
     div.innerHTML = dragAndDropSvg;
-    div.onmousedown = e => handleColControllerMouseDown(i, e, editor, tableMap, parentTable);
+    div.addEventListener('mousedown', e => handleColControllerMouseDown(i, e, editor, table));
 
     const resizerDiv = document.createElement('div');
     resizerDiv.classList.add(styles.colResize);
 
     if (isAllCellsSelected) {
       div.classList.add(styles.allCellsSelected);
-    } else if (isColumnSelected(i)(selection)) {
+    } else if (table.isColumnSelected(i)) {
       div.classList.add(styles.selected);
     }
     if (i === tableMap.width - 1) {
       div.classList.add(styles.last);
     }
-    decorations.push(Decoration.widget(parentStart + tableMap.map[i] + 1, div));
-    decorations.push(Decoration.widget(parentStart + tableMap.map[i] + 1, resizerDiv));
+    decorations.push(Decoration.widget(table.getStartPos() + tableMap.map[i] + 1, div));
+    decorations.push(Decoration.widget(table.getStartPos() + tableMap.map[i] + 1, resizerDiv));
   }
   return decorations;
 };
 
-function handleColControllerMouseDown(i, event, editor, map, parentTable) {
+function handleColControllerMouseDown(i: number, event: MouseEvent, editor, table: TableQuery) {
   event.stopPropagation();
   event.preventDefault();
   const { selection, doc, tr } = editor.state;
@@ -55,17 +50,18 @@ function handleColControllerMouseDown(i, event, editor, map, parentTable) {
     if (!$head) {
       return;
     }
-    const $anchor = doc.resolve(getCellsInColumn(i)(selection)?.[map.height - 1].pos);
+    const $anchor = doc.resolve(getCellsInColumn(i)(selection)?.[table.getHeight() - 1].pos);
     const colsSelection = new CellSelection($anchor, $head);
     if (!selection.eq(colsSelection)) {
       editor.view.dispatch(tr.setSelection(colsSelection));
     }
   } else editor.commands.selectColumnAtIndex(i);
 
-  const dom = editor.view.domAtPos(parentTable.start);
+  const startPos = table.getStartPos();
+  const dom = editor.view.domAtPos(startPos);
 
-  const dragPreview = getDragPreviewElement(editor, parentTable.start);
-  const colsWidth = getTableColumnWidth(editor, parentTable.start);
+  const dragPreview = table.getDragPreviewElement(editor.view);
+  const colsWidth = table.getColumnWidth(editor.view);
   const startLeft = colsWidth.slice(0, i).reduce((curr, width) => curr + width, 0);
   const startX = event.clientX;
   const totalWidth = dom.node.offsetWidth;
@@ -82,7 +78,7 @@ function handleColControllerMouseDown(i, event, editor, map, parentTable) {
   }
 
   function finish() {
-    dragPreview.style.height = '0px';
+    dragPreview && (dragPreview.style.height = '0px');
     editor.commands.reorderColumns({ start: i, end: i }, dropIndex);
     window.removeEventListener('mouseup', finish);
     window.removeEventListener('mousemove', move);

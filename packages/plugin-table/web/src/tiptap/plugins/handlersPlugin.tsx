@@ -1,13 +1,14 @@
 import { findTable } from 'prosemirror-utils';
 import {
-  rowControllerDecorations,
-  columnControllerDecoration,
-  tableControllerDecorations,
+  rowHandlerDecoration,
+  columnHandlerDecoration,
+  tableHandlerDecoration,
+  dragPreviewDecoration,
 } from '../decorations';
 import { DecorationSet } from 'prosemirror-view';
 
-export const controllerPlugin = (Plugin, PluginKey, editor) => {
-  const key = new PluginKey('cell-states');
+export const handlersPlugin = (Plugin, PluginKey, editor) => {
+  const key = new PluginKey('table-handlers-plugin');
   return new Plugin({
     key,
     state: {
@@ -23,9 +24,10 @@ export const controllerPlugin = (Plugin, PluginKey, editor) => {
           return prev;
         }
         const decorations = DecorationSet.create(newState.doc, [
-          ...tableControllerDecorations(newState, editor, parentTable),
-          ...columnControllerDecoration(newState, editor, parentTable),
-          ...rowControllerDecorations(newState, editor, parentTable),
+          ...dragPreviewDecoration(newState),
+          ...tableHandlerDecoration(newState, editor),
+          ...columnHandlerDecoration(newState, editor),
+          ...rowHandlerDecoration(newState, editor),
         ]);
         return { selection: newState.selection, decorations };
       },

@@ -6,8 +6,9 @@ import {
   deleteColumn,
   cellAround,
 } from 'prosemirror-tables';
-import { findParentNodeOfType, isCellSelection, findTable } from 'prosemirror-utils';
-import { TIPTAP_TABLE_TYPE, TIPTAP_TABLE_CELL_TYPE } from 'wix-rich-content-common';
+import { findParentNodeOfType } from 'prosemirror-utils';
+import { isCellSelection } from './is-selection-type';
+import { TableQuery } from '../TableQuery';
 
 export const keyboardShortcuts = {
   Enter: maybeToggleEditMode,
@@ -51,7 +52,7 @@ function maybeSetSelection(state, dispatch, selection) {
 function arrow(axis, dir) {
   return ({ editor: { state, view } }) => {
     const sel = state.selection;
-    if (sel.$anchorCell) {
+    if (isCellSelection(sel)) {
       const $head = nextCell(sel.$headCell, axis, dir);
 
       if ($head) {
@@ -92,7 +93,7 @@ function shiftArrow(axis, dir) {
 
 function maybeToggleEditMode({ editor }) {
   const sel = editor.state.selection;
-  if (sel.$anchorCell) {
+  if (isCellSelection(sel)) {
     if (sel.ranges.length === 1) {
       editor.commands.setEditCell();
     }
@@ -172,22 +173,8 @@ function handleDelete({ editor }) {
   if (!isCellSelection(selection)) {
     return false;
   }
-
-  let cellCount = 0;
-  const table = findTable(selection);
-
-  table?.node.descendants(node => {
-    if (node.type.name === TIPTAP_TABLE_TYPE) {
-      return false;
-    }
-
-    if ([TIPTAP_TABLE_CELL_TYPE, 'tableHeader'].includes(node.type.name)) {
-      cellCount += 1;
-    }
-  });
-
-  const allCellsSelected = cellCount === selection.ranges.length;
-
+  const table = TableQuery.of(selection);
+  const allCellsSelected = table.isTableSelected();
   allCellsSelected ? editor.commands.deleteTable() : editor.commands.clearCell();
 
   return true;

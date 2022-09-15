@@ -1,5 +1,5 @@
 import { findTable } from 'prosemirror-utils';
-import { addRowColDecorations } from '../decorations';
+import { addColDecoration, addRowDecoration } from '../decorations';
 import { DecorationSet } from 'prosemirror-view';
 
 export const addRowColPlugin = (Plugin, PluginKey, editor) => {
@@ -11,17 +11,19 @@ export const addRowColPlugin = (Plugin, PluginKey, editor) => {
         return {};
       },
       apply(tr, prev, oldState, newState) {
-        const parentTable = findTable(newState.selection);
-        if (!parentTable) {
+        const newParentTable = findTable(newState.selection);
+        const oldParentTable = findTable(oldState.selection);
+
+        if (!newParentTable) {
           return {};
         }
-        if (findTable(oldState.selection) && parentTable) {
+        if (oldParentTable?.start === newParentTable.start) {
           return prev;
         }
-        const decorations = DecorationSet.create(
-          newState.doc,
-          addRowColDecorations(newState, editor)
-        );
+        const decorations = DecorationSet.create(newState.doc, [
+          addRowDecoration(newState, editor),
+          addColDecoration(newState, editor),
+        ]);
         return { decorations };
       },
     },

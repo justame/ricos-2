@@ -20,11 +20,11 @@ import {
   VerticalAlignmentButton,
 } from './toolbar/buttons';
 import { BorderPanel, ContextPanel, VerticalAlignmentPanel } from './toolbar/modals';
-import { isColumnSelected, isRowSelected, isTableSelected } from './tiptap/utilities/is-selected';
-import { TIPTAP_TABLE_CELL_TYPE, TIPTAP_TABLE_TYPE } from 'wix-rich-content-common';
-import { getRowsAndColsInSelection } from './tiptap/utilities/getRowsAndColsInSelection';
+import { TIPTAP_TABLE_CELL_TYPE } from 'wix-rich-content-common';
 import { TableColorPicker } from './modals/TableColorPicker';
 import { DEFAULT_PALETTE_BG } from './TableToolbar/CellFormattingButtonProps';
+import { findTable } from 'prosemirror-utils';
+import { TableQuery } from './tiptap/TableQuery';
 
 export const getToolbarButtons = (config, services): ToolbarButton[] => {
   return [
@@ -155,8 +155,9 @@ export const getToolbarButtons = (config, services): ToolbarButton[] => {
 const isFirstColumnSelectedResolver = {
   id: 'isFirstColumnSelectedResolver',
   resolve: (_, __, editor) => {
-    if (isColumnSelected(0)(editor.state.selection)) {
-      return true;
+    if (findTable(editor.state.selection)) {
+      const table = TableQuery.of(editor.state.selection);
+      return table.isColumnSelected(0);
     } else {
       return false;
     }
@@ -166,8 +167,9 @@ const isFirstColumnSelectedResolver = {
 const isFirstRowSelectedResolver = {
   id: 'isFirstRowSelectedResolver',
   resolve: (_, __, editor) => {
-    if (isRowSelected(0)(editor.state.selection)) {
-      return true;
+    if (findTable(editor.state.selection)) {
+      const table = TableQuery.of(editor.state.selection);
+      return table.isRowSelected(0);
     } else {
       return false;
     }
@@ -177,8 +179,9 @@ const isFirstRowSelectedResolver = {
 const isFirstColumnOrRowSelectedResolver = {
   id: 'isFirstColumnSelectedResolver',
   resolve: (_, __, editor) => {
-    if (isRowSelected(0)(editor.state.selection) || isColumnSelected(0)(editor.state.selection)) {
-      return true;
+    if (findTable(editor.state.selection)) {
+      const table = TableQuery.of(editor.state.selection);
+      return table.isRowSelected(0) || table.isColumnSelected(0);
     } else {
       return false;
     }
@@ -224,10 +227,9 @@ const getCellBorderColorResolver = {
 const selectedNodeResolver = {
   id: 'selectedNode',
   resolve: (_, __, editor) => {
-    const { selection } = editor.state;
-    const node = selection?.$anchor?.path?.find(node => node?.type?.name === TIPTAP_TABLE_TYPE);
-    if (node && isTableSelected(selection)) {
-      return node;
+    if (findTable(editor.state.selection)) {
+      const table = TableQuery.of(editor.state.selection);
+      return table.getNode();
     } else {
       return undefined;
     }
@@ -237,8 +239,12 @@ const selectedNodeResolver = {
 const isTableSelectedResolver = {
   id: 'isTableSelected',
   resolve: (_, __, editor) => {
-    const { selection } = editor.state;
-    return isTableSelected(selection);
+    if (findTable(editor.state.selection)) {
+      const table = TableQuery.of(editor.state.selection);
+      return table.isTableSelected;
+    } else {
+      return false;
+    }
   },
 };
 
@@ -246,13 +252,13 @@ const getSelectionCategoryResolver = {
   id: 'getSelectedCategory',
   resolve: (_, __, editor) => {
     const { selection } = editor.state;
-    if (selection.$headCell) {
+    if (findTable(selection)) {
+      const table = TableQuery.of(selection);
       const isColSelected = selection.isColSelection?.();
       const isRowSelected = selection.isRowSelection?.();
-      const isEntireTableSelected = isTableSelected(selection);
-      const { rows, cols } = getRowsAndColsInSelection(editor.state);
-      const isMultipleRowsSelected = rows.length > 1;
-      const isMultipleColsSelected = cols.length > 1;
+      const isEntireTableSelected = table.isTableSelected();
+      const isMultipleRowsSelected = table.getRowsIndexesInSelection().length > 1;
+      const isMultipleColsSelected = table.getColsIndexesInSelection().length > 1;
 
       return (
         (isEntireTableSelected && CATEGORY.ENTIRE_TABLE) ||
