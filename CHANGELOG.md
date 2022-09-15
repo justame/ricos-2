@@ -17,6 +17,10 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.72.66 (Sep 15, 2022)
+
 ## :bug: Bug Fix
 
 - `ricos-plugins toolbars-v3`
@@ -27,8 +31,6 @@
   - [#4616](https://github.com/wix/ricos/pull/4616) add support to `ANCHOR` type to avoid normaliztion in viewer
 - `ricos-editor`
   - [#4629](https://github.com/wix/ricos/pull/4629) move `rceNext` to `RicosEditorProps`
-
-</details>
 
 ## 8.72.65 (Sep 13, 2022)
 
