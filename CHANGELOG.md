@@ -16,6 +16,11 @@
     Changes that have landed in master but are not yet released.
     Click to see more.
   </summary>
+  
+## :bug: Bug Fix
+
+- `ricos-content-query/toolbars-v3`
+  - [#4621](https://github.com/wix/ricos/pull/4621) add isSingleRootTextBlock & isMultipleSelection queries and show addPluginMenu plus button based on the selection
 
 ## :bug: Bug Fix
 

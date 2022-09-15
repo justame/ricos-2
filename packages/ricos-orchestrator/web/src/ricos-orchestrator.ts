@@ -223,6 +223,7 @@ export class RicosOrchestrator implements Orchestrator {
       pluginsEvents: this.pluginsEvents,
       context: this.context,
       zIndexService: this.zIndexService,
+      editorQuery: this.editorQuery,
     };
   }
 

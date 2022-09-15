@@ -43,6 +43,7 @@ export const convertToolbarContext = ({
   toolbarSettings,
   cssOverride,
   getEditorCommands,
+  editorQuery = {},
 }) => {
   const { useStaticTextToolbar } = toolbarSettings || {};
   const textToolbarType = isMobile
@@ -84,6 +85,7 @@ export const convertToolbarContext = ({
     toolbarSettings,
     locale,
     getEditorCommands,
+    editorQuery,
   };
   return toolbarsContextData;
 };

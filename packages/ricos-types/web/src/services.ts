@@ -9,6 +9,7 @@ import type { IRicosToolbars } from './ricos-toolbars';
 import type { GeneralContext } from './context';
 import type { IPluginsEvents } from './pluginsEventsTypes';
 import type { IZIndexService } from './z-index-layers';
+import type { IEditorQuery } from './query';
 
 export type RicosServices = {
   styles: AmbientStyles;
@@ -25,4 +26,5 @@ export type RicosServices = {
   pluginsEvents: IPluginsEvents;
   context: Omit<GeneralContext, 'portal'>;
   zIndexService: IZIndexService;
+  editorQuery: IEditorQuery;
 };
