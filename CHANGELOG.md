@@ -23,6 +23,8 @@
   - [#4623](https://github.com/wix/ricos/pull/4623) render plugin menu inside collapsible list body
 - `toolbars-v3`
   - [#4631](https://github.com/wix/ricos/pull/4631) support sideToolbar onClick config
+- `html`
+  - [#4632](https://github.com/wix/ricos/pull/4632) fix adsense modal
 
 </details>
 

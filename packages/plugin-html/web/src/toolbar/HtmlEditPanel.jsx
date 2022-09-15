@@ -88,6 +88,34 @@ class HtmlEditPanel extends Component {
       theme,
     };
 
+    const textInput =
+      srcType === SRC_TYPE_HTML || config?.isAdsense ? (
+        <div className={styles.htmlEditPanel_textArea}>
+          <InputWithLabel
+            name={SRC_TYPE_HTML}
+            value={this.state[SRC_TYPE_HTML]}
+            placeholder={
+              config?.isAdsense
+                ? t('HtmlEditPanel_HtmlInput_AdSense_Placeholder')
+                : t('HtmlEditPanel_HtmlInput_Placeholder')
+            }
+            isTextArea
+            isFullHeight
+            dataHook="htmlEditPanel_htmlInput"
+            {...inputBaseProps}
+          />
+        </div>
+      ) : (
+        <TextInput
+          name={SRC_TYPE_URL}
+          value={this.state[SRC_TYPE_URL]}
+          data-hook="htmlEditPanel_htmlInput"
+          error={submitted ? t(this.getError()) : null}
+          placeholder={t('HtmlEditPanel_UrlInput_Placeholder')}
+          {...inputBaseProps}
+        />
+      );
+
     return (
       <div className={styles.htmlEditPanel}>
         {config?.isAdsense ? (
@@ -114,36 +142,7 @@ class HtmlEditPanel extends Component {
           />
         )}
 
-        <div className={styles.htmlEditPanel_input}>
-          {srcType === SRC_TYPE_HTML && (
-            <div className={styles.htmlEditPanel_textArea}>
-              <InputWithLabel
-                name={SRC_TYPE_HTML}
-                value={this.state[SRC_TYPE_HTML]}
-                placeholder={
-                  config?.isAdsense
-                    ? t('HtmlEditPanel_HtmlInput_AdSense_Placeholder')
-                    : t('HtmlEditPanel_HtmlInput_Placeholder')
-                }
-                isTextArea
-                isFullHeight
-                dataHook="htmlEditPanel_htmlInput"
-                {...inputBaseProps}
-              />
-            </div>
-          )}
-
-          {srcType === SRC_TYPE_URL && (
-            <TextInput
-              name={SRC_TYPE_URL}
-              value={this.state[SRC_TYPE_URL]}
-              data-hook="htmlEditPanel_htmlInput"
-              error={submitted ? t(this.getError()) : null}
-              placeholder={t('HtmlEditPanel_UrlInput_Placeholder')}
-              {...inputBaseProps}
-            />
-          )}
-        </div>
+        <div className={styles.htmlEditPanel_input}>{textInput}</div>
 
         <div className={styles.htmlEditPanel_buttons}>
           <button
