@@ -1,6 +1,6 @@
 import type { HtmlNode } from 'ricos-content';
 import type { HTMLData } from 'ricos-schema';
-import { Node_Type } from 'ricos-schema';
+import { Node_Type, HTMLData_Source } from 'ricos-schema';
 import type { TiptapNodeConverter, TiptapNode } from '../types';
 
 export const htmlConverter: TiptapNodeConverter = {
@@ -26,7 +26,7 @@ export const htmlConverter: TiptapNodeConverter = {
         nodes: [],
         htmlData: {
           ...(data as HTMLData),
-          source: node.attrs?.source || 'HTML',
+          source: node.attrs?.source || HTMLData_Source.HTML,
         },
       };
     },
