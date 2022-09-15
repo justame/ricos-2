@@ -33,7 +33,7 @@ const renderMobileDevTools = () => {
 
 const RicosEditorSwitcher = React.forwardRef<
   RicosEditorRef,
-  RicosEditorProps & { debugMode?: DebugMode[]; rceNext?: boolean }
+  RicosEditorProps & { debugMode?: DebugMode[] }
 >((props, ref) => {
   const { rceNext, ...ricosProps } = props;
   const useTiptap = rceNext || !!props.experiments?.tiptapEditor?.enabled;

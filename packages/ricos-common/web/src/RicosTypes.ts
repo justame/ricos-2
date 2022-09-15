@@ -23,6 +23,7 @@ export interface RicosProps extends CommonProps {
 
 export interface RicosEditorProps extends RicosProps, EditorProps {
   draftEditorSettings?: DraftEditorSettings;
+  rceNext?: boolean;
 }
 
 // TODO: move Viewer public types to ricos-types
