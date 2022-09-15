@@ -4,15 +4,15 @@ import EditorSelectionToPosition from './EditorSelectionToPosition';
 import PlusButton from './PlusButton';
 import { PLUGIN_MENU_MODAL_ID, PLUGIN_MENU_HORIZONTAL_MODAL_ID } from 'ricos-types';
 import { RicosContext, EditorContext, ModalContext } from 'ricos-context';
-import type { AddPluginMenuConfig, Helpers, Layout, Placement } from 'wix-rich-content-common';
+import type { AddPluginMenuConfig, Layout, Placement } from 'wix-rich-content-common';
 import type { ModalService } from 'ricos-types';
 
 interface Props {
   addPluginMenuConfig?: AddPluginMenuConfig;
-  helpers?: Helpers;
+  onClick?: () => void;
 }
 
-const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig }) => {
+const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig, onClick }) => {
   const floatingMenuWrapperRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const modalService: ModalService = useContext(ModalContext) || {};
@@ -56,6 +56,8 @@ const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig }) => {
     setIsModalOpen(isModalOpen);
   };
 
+  const onPlusButtonClick = () => (onClick ? onClick() : toggleAddPluginMenu());
+
   return !isMobile ? (
     <div
       dir={languageDir}
@@ -66,7 +68,7 @@ const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig }) => {
       <EditorSelectionToPosition editor={tiptapEditor}>
         {position => (
           <PlusButton
-            onClick={toggleAddPluginMenu}
+            onClick={onPlusButtonClick}
             position={calcButtonPosition(position)}
             ref={buttonRef}
             rotate={isModalOpen}
