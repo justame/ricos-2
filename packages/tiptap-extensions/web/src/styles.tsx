@@ -2,7 +2,13 @@ import classNames from 'classnames';
 import { camelCase, upperFirst } from 'lodash';
 import type { CSSProperties } from 'react';
 import React from 'react';
-import type { ExtensionProps, RicosExtension, RicosExtensionConfig } from 'ricos-types';
+import type {
+  ExtensionProps,
+  GeneralContext,
+  RicosExtension,
+  RicosExtensionConfig,
+  RicosServices,
+} from 'ricos-types';
 import type { RichContentTheme } from 'wix-rich-content-common';
 import generalRTLIgnoredStyles from 'wix-rich-content-common/dist/statics/styles/general.rtlignore.scss';
 import generalStyles from 'wix-rich-content-editor-common/dist/statics/styles/general.scss';
@@ -66,43 +72,44 @@ const originalSizeMapper = {
   [Node_Type.GIF]: componentData => componentData.width,
 };
 
-const getStylesHOC = (isTextWrap: boolean) => Component => {
-  const Styles = props => {
-    const { context, componentData, node, editor } = props;
-    const nodeId = node.attrs.id;
-    const { isMobile, theme } = context;
-    const { selection } = editor.state;
-    let isFocused = false;
-    editor.state.doc.nodesBetween(selection.from, selection.to, node => {
-      node.attrs.id === nodeId && (isFocused = true);
-    });
-    const componentStyles = getComponentStyles({
-      componentData,
-      theme,
-      isFocused,
-      isMobile,
-      isTextWrap,
-    });
+const getStylesHOC =
+  (isTextWrap: boolean, context: Omit<GeneralContext, 'portal'>) => Component => {
+    const Styles = props => {
+      const { componentData, node, editor } = props;
+      const nodeId = node.attrs.id;
+      const { isMobile, theme } = context;
+      const { selection } = editor.state;
+      let isFocused = false;
+      editor.state.doc.nodesBetween(selection.from, selection.to, node => {
+        node.attrs.id === nodeId && (isFocused = true);
+      });
+      const componentStyles = getComponentStyles({
+        componentData,
+        theme,
+        isFocused,
+        isMobile,
+        isTextWrap,
+      });
 
-    const customWidth = componentData?.containerData?.width?.custom;
-    const originalWidth =
-      componentData?.containerData?.width?.size === 'ORIGINAL' &&
-      originalSizeMapper[node.type.name]?.(componentData);
-    const width = customWidth || originalWidth;
-    const style: CSSProperties = {
-      width: width && `${width}px`,
+      const customWidth = componentData?.containerData?.width?.custom;
+      const originalWidth =
+        componentData?.containerData?.width?.size === 'ORIGINAL' &&
+        originalSizeMapper[node.type.name]?.(componentData);
+      const width = customWidth || originalWidth;
+      const style: CSSProperties = {
+        width: width && `${width}px`,
+      };
+
+      return (
+        <div className={Object.values(componentStyles).join(' ')} style={style}>
+          <Component {...props} />
+        </div>
+      );
     };
+    Styles.displayName = 'StylesHoc';
 
-    return (
-      <div className={Object.values(componentStyles).join(' ')} style={style}>
-        <Component {...props} />
-      </div>
-    );
+    return Styles;
   };
-  Styles.displayName = 'StylesHoc';
-
-  return Styles;
-};
 
 export const styles: RicosExtension = {
   type: 'extension' as const,
@@ -111,7 +118,9 @@ export const styles: RicosExtension = {
   reconfigure: (
     config: RicosExtensionConfig,
     extensions: RicosExtension[],
-    ricosProps: ExtensionProps
+    ricosProps: ExtensionProps,
+    _settings: Record<string, unknown>,
+    services: RicosServices
   ) => ({
     ...config,
     addNodeHoc() {
@@ -120,7 +129,7 @@ export const styles: RicosExtension = {
           .filter(extension => !extension.groups.includes('custom-styles'))
           .map(({ name }) => name),
         priority: 100,
-        nodeHoc: getStylesHOC(ricosProps.isTextWrap ?? true),
+        nodeHoc: getStylesHOC(ricosProps.isTextWrap ?? true, services.context),
       };
     },
   }),
