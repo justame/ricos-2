@@ -10,11 +10,9 @@ import type { ModalService } from 'ricos-types';
 interface Props {
   addPluginMenuConfig?: AddPluginMenuConfig;
   helpers?: Helpers;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  plugins: any;
 }
 
-const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig, plugins }) => {
+const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig }) => {
   const floatingMenuWrapperRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const modalService: ModalService = useContext(ModalContext) || {};

@@ -17,6 +17,11 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `collapsible-list`
+  - [#4623](https://github.com/wix/ricos/pull/4623) render plugin menu inside collapsible list body
+
 </details>
 
 ## 8.72.66 (Sep 15, 2022)

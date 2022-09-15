@@ -355,7 +355,6 @@ class RicosToolbars extends React.Component<
   renderFloatingPluginMenu = (finaltoolbarSettings: ToolbarSettingsFunctions[]) => {
     const {
       ricosContext: { isMobile },
-      plugins,
       topToolbarsRef,
     } = this.props;
     const toolbarType = TOOLBARS.SIDE;
@@ -365,10 +364,7 @@ class RicosToolbars extends React.Component<
 
     if (!isMobile && topToolbarsRef.current && shouldCreate) {
       return ReactDOM.createPortal(
-        <FloatingAddPluginMenu
-          addPluginMenuConfig={toolbarConfig?.addPluginMenuConfig}
-          plugins={plugins}
-        />,
+        <FloatingAddPluginMenu addPluginMenuConfig={toolbarConfig?.addPluginMenuConfig} />,
         topToolbarsRef.current
       );
     }
@@ -417,6 +413,7 @@ class RicosToolbars extends React.Component<
     if (!finalToolbarSettings) {
       return null;
     }
+
     return (
       <div onKeyDown={this.onKeyDown}>
         {this.renderStaticToolbar(finalToolbarSettings)}

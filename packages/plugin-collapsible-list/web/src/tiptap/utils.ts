@@ -1,4 +1,4 @@
-import { TIPTAP_COLLAPSIBLE_LIST_TYPE } from 'ricos-content';
+import { TIPTAP_COLLAPSIBLE_LIST_TYPE, TIPTAP_COLLAPSIBLE_ITEM_BODY_TYPE } from 'ricos-content';
 
 //TODO: import this function from '@tiptap/core'
 export function findParentNodeClosestToPos($pos, predicate) {
@@ -20,6 +20,13 @@ export function isInCollapsibleList(editor) {
   return findParentNodeClosestToPos(
     editor.state.selection.$from,
     node => node.type.name === TIPTAP_COLLAPSIBLE_LIST_TYPE
+  );
+}
+
+export function isInCollapsibleListBody(editor, nodeId) {
+  return !!findParentNodeClosestToPos(
+    editor.state.selection.$to,
+    node => node.type.name === TIPTAP_COLLAPSIBLE_ITEM_BODY_TYPE && node.attrs.id === nodeId
   );
 }
 

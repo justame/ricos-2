@@ -8,10 +8,16 @@ import collapsibleListItemStyles from '../../statics/styles/collapsible-list-pai
 import ExpandCollapseButton from '../components/ExpandCollapseButton';
 import { DndIcon } from '../icons';
 import { TIPTAP_COLLAPSIBLE_ITEM_TYPE } from 'ricos-content';
-import { findParentNodeClosestToPos, isInCollapsibleList, findContainerNode } from './utils';
+import {
+  findParentNodeClosestToPos,
+  isInCollapsibleList,
+  findContainerNode,
+  isInCollapsibleListBody,
+} from './utils';
 import { RicosContext } from 'ricos-context';
 import classNames from 'classnames';
 import { collapsibleStateManagerPlugin, COLLAPSIBLE_EXPAND_STATE } from '../consts';
+import { FloatingAddPluginMenu } from 'wix-rich-content-toolbars-v3';
 
 const isInContainer = (parentNode, itemId) => {
   return parentNode.content.content.some(node => node.attrs.id === itemId);
@@ -21,6 +27,11 @@ const TO_RICOS_OPTIONS = {
   [COLLAPSIBLE_EXPAND_STATE.FIRST]: 'FIRST',
   [COLLAPSIBLE_EXPAND_STATE.EXPANDED]: 'ALL',
   [COLLAPSIBLE_EXPAND_STATE.COLLAPSED]: 'NONE',
+};
+
+const preventFocusJumpToFirstNode = event => {
+  event.preventDefault();
+  event.stopPropagation();
 };
 
 export const CollapsibleList: React.FC<PluginProps> = ({
@@ -170,6 +181,7 @@ export const CollapsibleListItemBody: React.FC<PluginProps> = ({
   NodeViewContent,
   editor,
   getPos,
+  node,
 }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const $pos = editor.view.state.doc.resolve((getPos as any)());
@@ -178,9 +190,23 @@ export const CollapsibleListItemBody: React.FC<PluginProps> = ({
     $pos,
     node => node.type.name === TIPTAP_COLLAPSIBLE_ITEM_TYPE
   )?.node?.attrs?.isExpanded;
+
+  const isSelected = isInCollapsibleListBody(editor, node.attrs.id);
+
   return isShown ? (
-    <div className={collapsibleListItemStyles.titleContainer}>
-      <NodeViewContent contenteditable="true" className={collapsibleListItemStyles.innerEditor} />
-    </div>
+    <>
+      {isSelected && (
+        <div
+          onClick={preventFocusJumpToFirstNode}
+          onMouseDown={preventFocusJumpToFirstNode}
+          onKeyDown={preventFocusJumpToFirstNode}
+        >
+          <FloatingAddPluginMenu />
+        </div>
+      )}
+      <div className={collapsibleListItemStyles.titleContainer}>
+        <NodeViewContent contenteditable="true" className={collapsibleListItemStyles.innerEditor} />
+      </div>
+    </>
   ) : null;
 };
