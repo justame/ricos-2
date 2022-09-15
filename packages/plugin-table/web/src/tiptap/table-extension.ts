@@ -45,7 +45,6 @@ import {
   TableMap,
 } from 'prosemirror-tables';
 import { TRANSACTION_META_KEYS } from './consts';
-import { setCellAttr } from './utilities/commands';
 import { getRowsAndColsInSelection } from './utilities/getRowsAndColsInSelection';
 import { getTotalWidthInSelection } from './utilities/getTotalWidthInSelection';
 
@@ -225,8 +224,12 @@ export const tableExtension = {
             },
           setCellAttribute:
             (name, value) =>
-            ({ state, dispatch }) => {
-              return setCellAttr(name, value)(state, dispatch);
+            ({ state, dispatch, tr }) => {
+              state.selection.forEachCell?.((node, pos) => {
+                if (node.attrs[name] !== value)
+                  tr.setNodeMarkup(pos, null, { ...node.attrs, [name]: value });
+              });
+              dispatch(tr);
             },
           toggleTableAttribute:
             name =>
