@@ -1,11 +1,10 @@
-import type { EditorCommands, KeyboardShortcut, TiptapEditorPlugin } from 'ricos-types';
+import type { EditorCommands, KeyboardShortcut } from 'ricos-types';
 import { Node_Type } from 'ricos-types';
 import type { EditorPluginCreator } from 'wix-rich-content-common';
 import { HEADER_BLOCK } from 'wix-rich-content-common';
 import { createHeadingsPlugin } from './createHeadingsPlugin';
 import { DEFAULTS } from './defaults';
 import { ModalsMap } from './modals';
-import { tiptapExtensions } from './tiptap';
 import type { HeadingsPluginEditorConfig } from './types';
 import { HEADINGS_DROPDOWN_TYPE } from './types';
 import { getTextButtons } from './getTextButtons';
@@ -39,7 +38,6 @@ export const pluginHeadings: EditorPluginCreator<HeadingsPluginEditorConfig> = c
     createPlugin: createHeadingsPlugin,
     ModalsMap,
     shortcuts: [1, 2, 3, 4, 5, 6].map(getShortcut),
-    tiptapExtensions,
     textButtons: getTextButtons(config),
-  } as TiptapEditorPlugin;
+  };
 };

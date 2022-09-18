@@ -11,6 +11,7 @@ import { pluginResizable } from './resizable/resizable';
 import { pluginTextAlignment } from './text-align/text-align';
 import { pluginUnderline } from './underline/underline';
 import { pluginUndoRedo } from './undo-redo/undo-redo';
+import { pluginTitle } from './title/title';
 
 import { AllSelection } from 'prosemirror-state';
 import { INDENT_TYPE } from 'ricos-content';
@@ -31,6 +32,7 @@ export const commonPlugins = [
   pluginResizable,
   pluginDraggable,
   pluginUndoRedo,
+  pluginTitle,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ] as EditorPlugin<Record<string, any>>[];
 

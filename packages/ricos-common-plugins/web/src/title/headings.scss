@@ -1,0 +1,33 @@
+@import '~wix-rich-content-common/dist/statics/styles/palette';
+@import '~wix-rich-content-common/dist/statics/styles/mixins';
+@import '~wix-rich-content-common/dist/statics/styles/consts';
+@import '~wix-rich-content-common/dist/statics/styles/fonts';
+
+.elementSpacing {
+  margin: 0;
+
+  @include phone {
+    margin: 0;
+  }
+}
+
+.headerOne,
+.headerTwo,
+.headerThree,
+.headerFour,
+.headerFive,
+.headerSix {
+  composes: elementSpacing;
+  font: inherit;
+}
+
+@each $headerName in $headerNames {
+  $i: index($headerNames, $headerName);
+  .header#{$headerName} {
+    @include ricosTypography('h#{$i}', false);
+    color: var(--ricos-custom-h#{$i}-color, $primary-text-color);
+    @at-root #{'& > span'} {
+      background-color: var(--ricos-custom-h#{$i}-background-color, unset);
+    }
+  }
+}
