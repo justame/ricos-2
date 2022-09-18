@@ -16,22 +16,24 @@
     Changes that have landed in master but are not yet released.
     Click to see more.
   </summary>
-  
+
+
+</details>
+
+## 8.72.67 (Sep 18, 2022)
+
 ## :bug: Bug Fix
 
 - `ricos-content-query/toolbars-v3`
   - [#4621](https://github.com/wix/ricos/pull/4621) add isSingleRootTextBlock & isMultipleSelection queries and show addPluginMenu plus button based on the selection
-
-## :bug: Bug Fix
-
 - `collapsible-list`
   - [#4623](https://github.com/wix/ricos/pull/4623) render plugin menu inside collapsible list body
 - `toolbars-v3`
   - [#4631](https://github.com/wix/ricos/pull/4631) support sideToolbar onClick config
 - `html`
   - [#4632](https://github.com/wix/ricos/pull/4632) fix adsense modal
-
-</details>
+- `common-plugins/plugin-headings`
+  - [#4636](https://github.com/wix/ricos/pull/4636) move title button from plugin headings to common plugins
 
 ## 8.72.66 (Sep 15, 2022)
 
