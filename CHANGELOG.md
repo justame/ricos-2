@@ -17,6 +17,10 @@
     Click to see more.
   </summary>
 
+## :bug: Bug Fix
+
+- `ui-components`
+  - [#4638](https://github.com/wix/ricos/pull/4638) open url input modals trigger scroll to top
 
 </details>
 

@@ -35,7 +35,7 @@ const NewUrlInputModal = props => {
   useEffect(() => {
     const input = InputRef.current as HTMLInputElement;
     input.setSelectionRange(0, input.value.length);
-    input.focus();
+    setTimeout(() => input.focus(), 0); // setTimeout is needed for popper to place the modal first
   }, []);
 
   const onUrlChange = url => {

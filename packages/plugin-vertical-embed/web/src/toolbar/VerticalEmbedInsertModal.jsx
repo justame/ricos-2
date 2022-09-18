@@ -46,7 +46,9 @@ export default class VerticalEmbedInsertModal extends Component {
     }
   }
 
-  useNewModal = this.props.experiments?.newVideoVerticalAndSocialModals?.enabled;
+  useNewModal =
+    this.props.experiments?.tiptapEditor?.enabled ||
+    this.props.experiments?.newVideoVerticalAndSocialModals?.enabled;
 
   onInputChange = (inputString = '') => {
     this.verticalApi.search(inputString).then(items => {
