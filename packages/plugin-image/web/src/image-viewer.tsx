@@ -17,7 +17,7 @@ const ImageViewer: FunctionComponent<ImageViewerProps> = props => {
 
   const context = useContext(GlobalContext);
   const experiments = props.experiments || context.experiments;
-  const useWixImage = experiments?.useWixImage?.enabled;
+  const wixImage = experiments?.wixImage?.enabled;
   const mergedStyles = mergeStyles({ styles, theme: props.theme });
 
   const hasLink = () => props.componentData?.config?.link?.url;
@@ -25,7 +25,7 @@ const ImageViewer: FunctionComponent<ImageViewerProps> = props => {
 
   const accessibilityProps = hasLink() || hasExpandMode() ? { role: 'button', tabIndex: 0 } : {};
 
-  const Comp = useWixImage ? WixImage : RicosImage;
+  const Comp = wixImage ? WixImage : RicosImage;
 
   return <Comp {...props} styles={mergedStyles} accessibilityProps={accessibilityProps} />;
 };
