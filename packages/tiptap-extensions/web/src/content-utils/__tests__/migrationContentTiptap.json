@@ -2200,18 +2200,22 @@
         {
           "type": "TABLE_ROW",
           "attrs": {
-            "id": "107"
+            "id": "107",
+            "height": 47
           },
           "content": [
             {
-              "type": "TABLE_CELL",
+              "type": "TABLE_HEADER_CELL",
               "attrs": {
                 "cellStyle": {
                   "verticalAlignment": "TOP",
                   "backgroundColor": "#FF0000"
                 },
                 "borderColors": {},
-                "id": "108"
+                "id": "108",
+                "colwidth": [
+                  10
+                ]
               },
               "content": [
                 {
@@ -2237,7 +2241,7 @@
               ]
             },
             {
-              "type": "TABLE_CELL",
+              "type": "TABLE_HEADER_CELL",
               "attrs": {
                 "cellStyle": {
                   "verticalAlignment": "TOP"
@@ -2248,7 +2252,10 @@
                   "top": "#3A54B4",
                   "bottom": "#3A54B4"
                 },
-                "id": "110"
+                "id": "110",
+                "colwidth": [
+                  10
+                ]
               },
               "content": [
                 {
@@ -2285,17 +2292,21 @@
         {
           "type": "TABLE_ROW",
           "attrs": {
-            "id": "112"
+            "id": "112",
+            "height": 47
           },
           "content": [
             {
-              "type": "TABLE_CELL",
+              "type": "TABLE_HEADER_CELL",
               "attrs": {
                 "cellStyle": {
                   "verticalAlignment": "TOP"
                 },
                 "borderColors": {},
-                "id": "113"
+                "id": "113",
+                "colwidth": [
+                  10
+                ]
               },
               "content": [
                 {
@@ -2337,7 +2348,10 @@
                   "verticalAlignment": "TOP"
                 },
                 "borderColors": {},
-                "id": "115"
+                "id": "115",
+                "colwidth": [
+                  10
+                ]
               },
               "content": [
                 {

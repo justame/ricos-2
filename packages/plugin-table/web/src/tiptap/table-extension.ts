@@ -338,19 +338,12 @@ export const tableExtension = {
                   .splice(rows[0], rows[rows.length - 1])
                   .reduce((curr, acc) => curr + acc, 0);
                 const newHeight = totalHeight / rows.length;
-                const rowsHeight = tableAttrs.dimensions.rowsHeight.map((height, index) =>
-                  index >= rows[0] && index <= rows[rows.length - 1] ? newHeight : height
-                );
                 table.getNode().content.forEach((node, pos, index) => {
                   rows.includes(index) &&
                     tr.setNodeMarkup(pos + table.getStartPos(), undefined, {
                       ...node.attrs,
                       height: newHeight,
                     });
-                });
-                tr.setNodeMarkup(table.getStartPos() - 1, undefined, {
-                  ...tableAttrs,
-                  dimensions: { ...tableAttrs.dimensions, rowsHeight },
                 });
                 dispatch(tr);
               }

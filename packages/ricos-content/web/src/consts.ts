@@ -145,6 +145,7 @@ export const TIPTAP_CODE_BLOCK_TYPE = Node_Type.CODE_BLOCK;
 export const TIPTAP_TABLE_TYPE = Node_Type.TABLE;
 export const TIPTAP_TABLE_ROW_TYPE = Node_Type.TABLE_ROW;
 export const TIPTAP_TABLE_CELL_TYPE = Node_Type.TABLE_CELL;
+export const TIPTAP_TABLE_HEADER_CELL_TYPE = 'TABLE_HEADER_CELL';
 
 export const RICOS_NODE_TYPE_TO_DATA_FIELD = {
   [Node_Type.BUTTON]: 'buttonData',

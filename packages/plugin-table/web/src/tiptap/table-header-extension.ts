@@ -1,4 +1,5 @@
 import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-types';
+import { TIPTAP_TABLE_HEADER_CELL_TYPE } from 'ricos-content';
 
 export const tableHeaderExtension = {
   type: 'node' as const,
@@ -12,7 +13,7 @@ export const tableHeaderExtension = {
     ...config,
     addOptions: () => settings,
   }),
-  name: 'tableHeader',
+  name: TIPTAP_TABLE_HEADER_CELL_TYPE,
   createExtensionConfig() {
     return {
       name: this.name,

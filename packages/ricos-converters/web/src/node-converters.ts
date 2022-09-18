@@ -13,7 +13,11 @@ import { headingConverter } from './nodes/heading-converter';
 import { imageConverter } from './nodes/image-converter';
 import { listItemConverter } from './nodes/list-converters';
 import { paragraphConverter } from './nodes/paragraph-converter';
-import { tableRowConverter } from './nodes/table-converters';
+import {
+  tableRowConverter,
+  tableConverter,
+  tableHeaderCellConverter,
+} from './nodes/table-converters';
 import { textConverter } from './nodes/text-converter';
 import { codeBlockConverter } from './nodes/code-block-converter';
 import { audioConverter } from './nodes/audio-converter';
@@ -76,7 +80,9 @@ export const nodeConverters = [
   collapsibleItemConverter,
   collapsibleItemTitleConverter,
   collapsibleItemBodyConverter,
+  tableConverter,
   tableRowConverter,
+  tableHeaderCellConverter,
   codeBlockConverter,
   audioConverter,
   embedConverter,

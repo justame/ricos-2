@@ -43,6 +43,7 @@ describe('JSONContent extract', () => {
       Node_Type.COLLAPSIBLE_ITEM_BODY,
       Node_Type.TABLE,
       Node_Type.TABLE_ROW,
+      'TABLE_HEADER_CELL',
       Node_Type.TABLE_CELL,
       Node_Type.AUDIO,
     ];

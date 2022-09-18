@@ -103,7 +103,6 @@ function handleMouseDown(view, event, key) {
     const pluginState = key.getState(view.state);
     if (pluginState.dragging) {
       updateColumnWidth(view, pluginState.activeHandle, draggedWidth(pluginState.dragging, event));
-      updateColumnWidthRatio(view);
       view.dispatch(view.state.tr.setMeta(key, { setDragging: null }));
     }
   }
@@ -118,25 +117,6 @@ function handleMouseDown(view, event, key) {
   window.addEventListener('mousemove', move);
   event.preventDefault();
   return true;
-}
-
-function updateColumnWidthRatio(view) {
-  const table = findTable(view.state.selection);
-  if (table) {
-    const dom = view.domAtPos(table.pos);
-    const tableNode = dom.node.childNodes[dom.offset].firstChild;
-    const colsgroup = tableNode.firstChild;
-    const colsWidthRatio = getColsWidthRatio(tableNode, colsgroup);
-    view.dispatch(
-      view.state.tr.setNodeMarkup(table.pos, null, {
-        ...table.node.attrs,
-        dimensions: {
-          ...table.node.attrs.dimensions,
-          colsWidthRatio,
-        },
-      })
-    );
-  }
 }
 
 function currentColWidth(view, cellPos, { colspan, colwidth }) {

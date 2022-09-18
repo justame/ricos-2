@@ -1,4 +1,8 @@
-import { TIPTAP_TABLE_ROW_TYPE, TIPTAP_TABLE_CELL_TYPE } from 'ricos-content';
+import {
+  TIPTAP_TABLE_ROW_TYPE,
+  TIPTAP_TABLE_CELL_TYPE,
+  TIPTAP_TABLE_HEADER_CELL_TYPE,
+} from 'ricos-content';
 import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-types';
 
 export const tableRowExtension = {
@@ -18,7 +22,7 @@ export const tableRowExtension = {
     return {
       name: this.name,
       tableRole: 'row',
-      content: `(${TIPTAP_TABLE_CELL_TYPE} | tableHeader)*`, //`(tableCell | tableHeader)*`,
+      content: `(${TIPTAP_TABLE_CELL_TYPE} | ${TIPTAP_TABLE_HEADER_CELL_TYPE})*`,
       addAttributes: () => ({
         height: {
           default: 47,
