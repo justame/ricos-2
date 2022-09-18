@@ -17,12 +17,19 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 8.72.68 (Sep 18, 2022)
+
 ## :bug: Bug Fix
 
 - `ui-components`
   - [#4638](https://github.com/wix/ricos/pull/4638) open url input modals trigger scroll to top
 
-</details>
+## :house: Internal
+
+- `image`
+  - [#4639](https://github.com/wix/ricos/pull/4639) new wix image experiment
 
 ## 8.72.67 (Sep 18, 2022)
 
