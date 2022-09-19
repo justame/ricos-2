@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 import WixImage from './wixImage';
-import RicosImage from './ricosImage';
-import { validate, GlobalContext, mergeStyles } from 'wix-rich-content-common';
+import { validate, mergeStyles } from 'wix-rich-content-common';
 import pluginImageSchema from 'wix-rich-content-common/dist/statics/schemas/plugin-image.schema.json';
 import styles from '../statics/styles/image-viewer.rtlignore.scss';
 
@@ -15,9 +14,6 @@ const ImageViewer: FunctionComponent<ImageViewerProps> = props => {
     validate(props.componentData, pluginImageSchema);
   }, [props.componentData]);
 
-  const context = useContext(GlobalContext);
-  const experiments = props.experiments || context.experiments;
-  const wixImage = experiments?.wixImage?.enabled;
   const mergedStyles = mergeStyles({ styles, theme: props.theme });
 
   const hasLink = () => props.componentData?.config?.link?.url;
@@ -25,9 +21,7 @@ const ImageViewer: FunctionComponent<ImageViewerProps> = props => {
 
   const accessibilityProps = hasLink() || hasExpandMode() ? { role: 'button', tabIndex: 0 } : {};
 
-  const Comp = wixImage ? WixImage : RicosImage;
-
-  return <Comp {...props} styles={mergedStyles} accessibilityProps={accessibilityProps} />;
+  return <WixImage {...props} styles={mergedStyles} accessibilityProps={accessibilityProps} />;
 };
 
 export default ImageViewer;
