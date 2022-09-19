@@ -11,8 +11,6 @@ const getResizedImageUrl = (
   requiredWidth,
   requiredHeight,
   sharpParams,
-  faces,
-  allowWatermark,
   focalPoint
 ) => {
   // assign default parameters
@@ -95,40 +93,22 @@ const getResizedImageUrl = (
   );
 };
 
-export const fullscreenResizeMediaUrl = (
-  item,
-  originalUrl,
-  resizeMethod,
-  requiredWidth,
-  requiredHeight,
-  sharpParams,
-  faces = false,
-  allowWatermark = false,
-  focalPoint
-) =>
-  resizeMediaUrl(
-    item,
-    originalUrl,
-    resizeMethod,
-    requiredWidth * 2,
-    requiredHeight * 2,
-    sharpParams,
-    faces,
-    allowWatermark,
-    focalPoint
-  );
+export const fullscreenResizeMediaUrl = params =>
+  resizeMediaUrl({
+    ...params,
+    requiredWidth: params.requiredWidth * 2,
+    requiredHeight: params.requiredHeight * 2,
+  });
 
-export const resizeMediaUrl = (
+export const resizeMediaUrl = ({
   item,
   originalUrl,
   resizeMethod,
   requiredWidth,
   requiredHeight,
   sharpParams,
-  faces = false,
-  allowWatermark = false,
-  focalPoint
-) => {
+  focalPoint,
+}) => {
   // assign default parameters
   originalUrl = originalUrl || '';
   sharpParams = sharpParams || {};
@@ -153,8 +133,6 @@ export const resizeMediaUrl = (
       requiredWidth,
       requiredHeight,
       sharpParams,
-      faces,
-      allowWatermark,
       focalPoint
     );
   }

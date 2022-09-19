@@ -203,9 +203,9 @@ export default class InnerFullscreen extends Component {
             <ProGallery
               domId="ricos-fullscreen"
               items={this.items}
-              currentIdx={this.currentIdx}
+              activeIndex={this.currentIdx}
               eventsListener={this.handleGalleryEvents}
-              resizeMediaUrl={fullscreenResizeMediaUrl}
+              createMediaUrl={fullscreenResizeMediaUrl}
               container={size}
               options={{
                 galleryLayout: 5,

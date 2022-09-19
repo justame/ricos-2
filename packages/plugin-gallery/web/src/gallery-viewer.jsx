@@ -294,9 +294,10 @@ class GalleryViewer extends React.Component {
             settings={gallerySettings}
             scrollingElement={scrollingElement}
             eventsListener={this.handleGalleryEvents}
-            resizeMediaUrl={resizeMediaUrl}
+            createMediaUrl={resizeMediaUrl}
             viewMode={viewMode}
             customHoverRenderer={this.hoverElement}
+            totalItemsCount={items.length}
           />
         ) : null}
       </div>

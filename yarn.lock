@@ -11860,7 +11860,7 @@ eventemitter3@^3.1.0, eventemitter3@^3.1.2:
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-3.1.2.tgz#2d3d48f9c346698fce83a85d7d664e98535df6e7"
   integrity sha512-tvtQIeLVHjDkJYnzf2dgVMxfuSGJeM/7UCG17TT4EumTfNtF+0nebF/4zWOIkCreAbtNqhGEboB6BWrwqNaw4Q==
 
-eventemitter3@^4.0.0, eventemitter3@^4.0.3, eventemitter3@^4.0.4:
+eventemitter3@^4.0.0, eventemitter3@^4.0.4:
   version "4.0.7"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
   integrity sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==
@@ -13612,13 +13612,10 @@ hls.js@^0.12.4:
     eventemitter3 "3.1.0"
     url-toolkit "^2.1.6"
 
-hls.js@^0.14.12:
-  version "0.14.17"
-  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-0.14.17.tgz#0127cff2ec2f994a54eb955fe669ef6153a8e317"
-  integrity sha512-25A7+m6qqp6UVkuzUQ//VVh2EEOPYlOBg32ypr34bcPO7liBMOkKFvbjbCBfiPAOTA/7BSx1Dujft3Th57WyFg==
-  dependencies:
-    eventemitter3 "^4.0.3"
-    url-toolkit "^2.1.6"
+hls.js@^1.1.5:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-1.2.1.tgz#09b0207c60fcb3340a88e8d3d1523799fe5fbedf"
+  integrity sha512-+m/5+ikSpmQQvb6FmVWZUZfzvTJMn/QVfiCGP1Oq9WW4RKrAvxlExkhhbcVGgGqLNPFk1kdFkVQur//wKu3JVw==
 
 hmac-drbg@^1.0.1:
   version "1.0.1"
@@ -19250,28 +19247,37 @@ private@^0.1.6:
   resolved "https://registry.yarnpkg.com/private/-/private-0.1.8.tgz#2381edb3689f7a53d653190060fcf822d2f368ff"
   integrity sha512-VvivMrbvd2nKkiG38qjULzlc+4Vx4wm/whI9pQD35YrARNnhxeiRktSOhSukRLFNlzg6Br/cJPet5J/u19r/mg==
 
-pro-gallery-lib@3.1.37:
-  version "3.1.37"
-  resolved "https://registry.yarnpkg.com/pro-gallery-lib/-/pro-gallery-lib-3.1.37.tgz#82b19e61e4e33294c089bd77346d7478b2ba9ea8"
-  integrity sha512-pNJxzOSg90JQ08J8+uPwM/HMoM78BTffAUtr4Cd0hIbCen/JKfCwlDmcGIpS1/FElgLLVIYAOJpodtBuM4WWEg==
+pro-gallery-blueprints@4.1.4:
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/pro-gallery-blueprints/-/pro-gallery-blueprints-4.1.4.tgz#8d6a118176ffc903c0288cf6cf1e578c156dde09"
+  integrity sha512-6shMKELej8fNm47M5udy/Uw3cF2yMPbA6rsXsq5TRw//ZK4d4qPNFNE9AcV/5G/jGzaN3nJwSfVkwuIExDgDew==
   dependencies:
-    pro-layouts "3.1.37"
+    pro-gallery-lib "4.1.4"
+    pro-layouts "4.1.4"
 
-pro-gallery@3.1.38:
-  version "3.1.38"
-  resolved "https://registry.yarnpkg.com/pro-gallery/-/pro-gallery-3.1.38.tgz#8bd4f9485a7cfd62b36f3000ab036d3bbc009f76"
-  integrity sha512-z1tKRoOHXfg6Z4TwbVu2umrlyaSYeLr+w0Xl8Pxxwi7MwPr0JKpXbZaqc31GFtXcF3PII22G86KXeWFPlUl+Jg==
+pro-gallery-lib@4.1.4:
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/pro-gallery-lib/-/pro-gallery-lib-4.1.4.tgz#2505b1a0d1d6d42cf5a5e3f607ef1ef71218601b"
+  integrity sha512-H9GczI6oQfqF94FROktIgxU+/B/6BDKOKmjwSWv1UYq9WWi1dljsI0qDqdO/eHW65rpMVQkhyU+DBcbcxXu0rw==
+
+pro-gallery@4.1.4:
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/pro-gallery/-/pro-gallery-4.1.4.tgz#06853c3e5c64e3828725080b1a6561002b8614a5"
+  integrity sha512-d8S24qle7hoSn7uGmff653PA5OUTBUna+edlgC4yPkbHQII7auokVNoOXau4UI4EYXXQDGBerA21IO4i0/oxbA==
   dependencies:
     "@vimeo/player" "2.8.2"
-    hls.js "^0.14.12"
-    pro-gallery-lib "3.1.37"
-    pro-layouts "3.1.37"
+    hls.js "^1.1.5"
+    pro-gallery-blueprints "4.1.4"
+    pro-gallery-lib "4.1.4"
+    pro-layouts "4.1.4"
     react-player "^2.6.2"
 
-pro-layouts@3.1.37:
-  version "3.1.37"
-  resolved "https://registry.yarnpkg.com/pro-layouts/-/pro-layouts-3.1.37.tgz#27c47f2fd8bde2b434311b2a898f54d294551bf7"
-  integrity sha512-VOnnqjKRsObyXEAUGYAZF/VyxuNWzym7kiSQX8tyOy5qrNO6Vx9SHfqHKuJ82kFbZ3CnVbMXv7UpHWOXRXRGRw==
+pro-layouts@4.1.4:
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/pro-layouts/-/pro-layouts-4.1.4.tgz#8512b2ae7758252a844db82f447c15b4fd366b0d"
+  integrity sha512-SkleiUdpISDOWLC0xQTlBSWXphkrv9yD1s34vFYHAm9+W/iI7s81aL8jsx9+1Tw64t150AV4JDS7V7X+RnOhAQ==
+  dependencies:
+    pro-gallery-lib "4.1.4"
 
 process-nextick-args@~1.0.6:
   version "1.0.7"

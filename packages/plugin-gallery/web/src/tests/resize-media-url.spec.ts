@@ -12,7 +12,6 @@ const createRequest = ({
   maxWidth,
   maxHeight,
   sharpParams,
-  faces = [1],
   url = imgUrl,
   resizeMethod = 'fit',
 }) => ({
@@ -26,8 +25,6 @@ const createRequest = ({
   requiredWidth,
   requiredHeight,
   sharpParams,
-  faces,
-  allowWatermark: false,
   focalPoint: undefined,
 });
 const largeImage =
@@ -49,7 +46,7 @@ describe('resizeMediaUrl', () => {
           quality: 90,
         },
       });
-      const output = resizeMediaUrl(...Object.values(request));
+      const output = resizeMediaUrl(request);
       expect(output).toBe(largeImage);
     });
     it('Medium Image', () => {
@@ -63,7 +60,7 @@ describe('resizeMediaUrl', () => {
           blur: 30,
         },
       });
-      const output = resizeMediaUrl(...Object.values(request));
+      const output = resizeMediaUrl(request);
       expect(output).toBe(mediumImage);
     });
     it('Small Image (gallery display)', () => {
@@ -75,11 +72,10 @@ describe('resizeMediaUrl', () => {
         sharpParams: {
           quality: 90,
         },
-        faces: [0.5, 0.5],
         url: smallerImgUrl,
         resizeMethod: 'fill',
       });
-      const output = resizeMediaUrl(...Object.values(request));
+      const output = resizeMediaUrl(request);
       expect(output).toBe(smallImage);
     });
   });
@@ -96,7 +92,7 @@ describe('resizeMediaUrl', () => {
         resizeMethod: 'video',
         url: videoUrl,
       });
-      const output = resizeMediaUrl(...Object.values(request));
+      const output = resizeMediaUrl(request);
       expect(output).toBe(getAbsoluteUrl(videoUrl, 'video'));
     });
   });

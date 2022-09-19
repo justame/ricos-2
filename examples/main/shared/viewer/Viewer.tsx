@@ -52,7 +52,7 @@ export default class Viewer extends PureComponent<ExampleViewerProps, ExampleVie
   getConfig = props => {
     const { scrollingElementFn } = props;
     const additionalConfig = {
-      [GALLERY_TYPE]: { scrollingElement: scrollingElementFn },
+      [GALLERY_TYPE]: { scrollingElement: scrollingElementFn() },
     };
     return Plugins.getConfig(additionalConfig);
   };
