@@ -17,12 +17,15 @@
     Click to see more.
   </summary>
 
+
+</details>
+
+## 9.1.0 (Sep 19, 2022)
+
 ## :rocket: New Feature
 
 - `theme/tiptap-editor`
   - [#4642](https://github.com/wix/ricos/pull/4642) add editor custom style support (min/max hight)
-
-</details>
 
 ## 9.0.0 (Sep 19, 2022)
 
