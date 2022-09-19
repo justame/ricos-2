@@ -47,6 +47,8 @@ $ricos-code-block-font-size: var(--ricos-custom-code-block-font-size, 16px);
 $ricos-code-block-line-height: var(--ricos-custom-code-block-line-height, 26px);
 $ricos-code-block-padding: var(--ricos-custom-code-block-padding, 2px 25px);
 $ricos-code-block-margin: var(--ricos-custom-code-block-margin, 15px 18px);
+$ricos-custom-editor-min-height: var(--ricos-custom-editor-min-height, '100%');
+$ricos-custom-editor-max-height: var(--ricos-custom-editor-max-height, '100%');
 
 // Settings Styles (panels & editor elements only)
 $settings-buttons-border-radius: var(--ricos-settings-buttons-border-radius, 0px);

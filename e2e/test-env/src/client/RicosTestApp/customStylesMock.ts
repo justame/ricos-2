@@ -21,6 +21,7 @@ export const customStylesMock: RicosCustomStyles = {
   link: mockTextualStyles,
   hashtag: mockTextualStyles,
   footerToolbar: { marginTop: '120px' },
+  editor: { minHeight: '200px', maxHeight: '200px' },
   button: { color: 'purple' },
   mention: {
     backgroundColor: 'lightcyan',
