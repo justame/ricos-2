@@ -3,7 +3,7 @@ import styles from './styles/floating-add-plugin-menu.scss';
 import EditorSelectionToPosition from './EditorSelectionToPosition';
 import PlusButton from './PlusButton';
 import { PLUGIN_MENU_MODAL_ID, PLUGIN_MENU_HORIZONTAL_MODAL_ID } from 'ricos-types';
-import { RicosContext, EditorContext, ModalContext, ToolbarContext } from 'ricos-context';
+import { RicosContext, EditorContext, ModalContext } from 'ricos-context';
 import type { AddPluginMenuConfig, Layout, Placement } from 'wix-rich-content-common';
 import type { ModalService } from 'ricos-types';
 
@@ -17,7 +17,6 @@ const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig, onClick }
   const buttonRef = useRef<HTMLButtonElement>(null);
   const modalService: ModalService = useContext(ModalContext) || {};
   const { languageDir, isMobile } = useContext(RicosContext) || {};
-  const { editorQuery } = useContext(ToolbarContext) || {};
   const { adapter } = useContext(EditorContext);
   const tiptapEditor = adapter.tiptapEditor;
   const isHorizontalMenu =
@@ -26,11 +25,6 @@ const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig, onClick }
   const placement: Placement = languageDir === 'ltr' ? 'right-start' : 'left-start';
   const MODAL_ID = isHorizontalMenu ? PLUGIN_MENU_HORIZONTAL_MODAL_ID : PLUGIN_MENU_MODAL_ID;
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const shouldShowPlusButton = () => {
-    const { isMultipleSelection, isSingleRootTextBlock } = editorQuery.query;
-    return isMultipleSelection() || isSingleRootTextBlock();
-  };
 
   useEffect(() => {
     modalService.onModalClosed(() => {
@@ -72,16 +66,14 @@ const FloatingAddPluginMenu: React.FC<Props> = ({ addPluginMenuConfig, onClick }
       data-hook={'floatingAddPluginMenu'}
     >
       <EditorSelectionToPosition editor={tiptapEditor}>
-        {position =>
-          shouldShowPlusButton() && (
-            <PlusButton
-              onClick={onPlusButtonClick}
-              position={calcButtonPosition(position)}
-              ref={buttonRef}
-              rotate={isModalOpen}
-            />
-          )
-        }
+        {position => (
+          <PlusButton
+            onClick={onPlusButtonClick}
+            position={calcButtonPosition(position)}
+            ref={buttonRef}
+            rotate={isModalOpen}
+          />
+        )}
       </EditorSelectionToPosition>
     </div>
   ) : null;

@@ -130,7 +130,7 @@ export class FullRicosEditor extends React.Component<Props, State> {
       toolbarSettings,
     } = this.props;
     const helpers = this.props._rcProps?.helpers;
-    const { plugins, editor, editorQuery } = this.orchestrator.getServices();
+    const { plugins, editor } = this.orchestrator.getServices();
 
     const toolbarContext = convertToolbarContext({
       isMobile,
@@ -145,7 +145,6 @@ export class FullRicosEditor extends React.Component<Props, State> {
       cssOverride,
       contentId: '',
       getEditorCommands: editor.getEditorCommands,
-      editorQuery,
     });
     return toolbarContext as unknown as ToolbarContextType;
   }
@@ -199,6 +198,7 @@ export class FullRicosEditor extends React.Component<Props, State> {
       toolbars,
       pluginsEvents,
       zIndexService,
+      editorQuery,
     } = this.orchestrator.getServices();
 
     const languageDir = getLangDir(locale);
@@ -268,6 +268,7 @@ export class FullRicosEditor extends React.Component<Props, State> {
                                               content={toolbarContent}
                                               toolbarSettings={toolbarSettings}
                                               plugins={plugins}
+                                              editorQuery={editorQuery}
                                               modalService={modals}
                                               topToolbarsRef={this.topToolbarsRef}
                                               bottomToolbarsRef={this.bottomToolbarsRef}

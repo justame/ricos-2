@@ -10,7 +10,6 @@ import type {
   RicosPortal,
   AddLinkData,
   IRicosToolbars,
-  IEditorQuery,
 } from 'ricos-types';
 import type { LinkSettings, ToolbarSettings, RicosCssOverride } from 'ricos-common';
 import { RicosContext } from './RicosContext';
@@ -53,7 +52,6 @@ export type ToolbarContextType = {
     TEXT_HIGHLIGHT: Record<string, any>;
   };
   defaultLineSpacing: { 'line-height'?: string; 'padding-top'?: string; 'padding-bottom'?: string };
-  editorQuery: IEditorQuery;
 };
 
 export const ToolbarContext = React.createContext<ToolbarContextType>({
@@ -74,7 +72,6 @@ export const ToolbarContext = React.createContext<ToolbarContextType>({
   toolbars: null as unknown as IRicosToolbars,
   colorPickerData: {} as unknown as ToolbarContextType['colorPickerData'],
   defaultLineSpacing: {},
-  editorQuery: null as unknown as IEditorQuery,
 });
 
 export const withToolbarContext = WrappedComponent => {

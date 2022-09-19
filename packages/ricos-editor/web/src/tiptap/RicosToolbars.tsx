@@ -36,6 +36,7 @@ import type {
   IToolbarItemConfigTiptap,
   IRicosEditor,
   ModalService,
+  IEditorQuery,
 } from 'ricos-types';
 
 type RicosToolbarProps = {
@@ -45,6 +46,7 @@ type RicosToolbarProps = {
   modalService: ModalService;
   topToolbarsRef: React.RefObject<HTMLDivElement>;
   bottomToolbarsRef: React.RefObject<HTMLDivElement>;
+  editorQuery: IEditorQuery;
 };
 
 type RicosToolbarState = {
@@ -356,13 +358,16 @@ class RicosToolbars extends React.Component<
     const {
       ricosContext: { isMobile },
       topToolbarsRef,
+      editorQuery,
     } = this.props;
     const toolbarType = TOOLBARS.SIDE;
     const toolbarConfig = this.getToolbarConfig(finaltoolbarSettings, toolbarType);
 
     const shouldCreate = this.getShouldCreate(isMobile, toolbarConfig?.shouldCreate);
+    const { isMultipleSelection, isSingleRootTextBlock } = editorQuery.query;
+    const shouldShowPlusButton = isMultipleSelection() || isSingleRootTextBlock();
 
-    if (!isMobile && topToolbarsRef.current && shouldCreate) {
+    if (!isMobile && topToolbarsRef.current && shouldCreate && shouldShowPlusButton) {
       return ReactDOM.createPortal(
         <FloatingAddPluginMenu
           addPluginMenuConfig={toolbarConfig?.addPluginMenuConfig}
