@@ -68,6 +68,7 @@ module.exports = {
     Features: ['ricos/theming', 'ricos/preview', 'ricos/keyboard_shortcuts'],
     'Known Issues': ['ricos/adsense', 'ricos/mobile_support', 'ricos/media_handling'],
     'Migration Guides': [
+      'ricos/migrations/v8-to-v9',
       'ricos/migrations/v7-to-v8',
       'ricos/migrations/v6-to-v7',
       'ricos/migrations/migrating-from-rich-content',
