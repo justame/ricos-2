@@ -1,6 +1,7 @@
 import { mergeAttributes } from '@tiptap/core';
 import { Decoration_Type } from 'ricos-schema';
 import type { DOMOutputSpec, RicosExtension } from 'ricos-types';
+import { Plugin, PluginKey } from 'prosemirror-state';
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -32,6 +33,32 @@ export const underline: RicosExtension = {
         return {
           HTMLAttributes: {},
         };
+      },
+
+      addProseMirrorPlugins() {
+        return [
+          new Plugin({
+            key: new PluginKey('link-underline'),
+            priority: 2,
+            appendTransaction: (transactions, _oldState, newState) => {
+              let from, to;
+              transactions.forEach(t => {
+                if (t.getMeta('autoLink')) {
+                  const steps = t.steps;
+                  const autoLinkStep = steps?.[steps.length - 1]?.toJSON() || {};
+                  from = autoLinkStep.from;
+                  to = autoLinkStep.to;
+                  return;
+                }
+              });
+              if (!!from && !!to) {
+                return newState.tr
+                  .addMark(from, to, this.type.create())
+                  .removeStoredMark(this.type);
+              }
+            },
+          }),
+        ];
       },
 
       parseHTML() {

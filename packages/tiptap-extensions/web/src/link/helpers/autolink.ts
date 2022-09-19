@@ -4,7 +4,6 @@ import {
   combineTransactionSteps,
   getChangedRanges,
 } from '@tiptap/core';
-import type { Transaction } from 'prosemirror-state';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import type { MarkType } from 'prosemirror-model';
 import { find, test } from 'linkifyjs';
@@ -98,6 +97,7 @@ export function autolink(options: AutolinkOptions): Plugin {
                   link: options.defaultLink.setUrl(link.href).toLink(),
                 })
               );
+              tr.setMeta('autoLink', true);
             });
         });
       });
