@@ -1,6 +1,6 @@
 import { TIPTAP_TABLE_TYPE, TIPTAP_TABLE_ROW_TYPE } from 'ricos-content';
 import tableDataDefaults from 'ricos-schema/dist/statics/table.defaults.json';
-import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-types';
+import type { ExtensionProps, NodeConfig, RicosExtension, RicosServices } from 'ricos-types';
 import { getExtensionField, callOrReturn } from '@tiptap/core';
 import { TextSelection, Selection } from 'prosemirror-state';
 import {

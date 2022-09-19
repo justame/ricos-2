@@ -7,3 +7,4 @@ export { addRowDecoration } from './addRowDecoration';
 export { dragPreviewDecoration } from './dragPreviewDecoration';
 export { columnResizeDecoration } from './columnResizeDecoration';
 export { rowResizeDecoration } from './rowResizeDecoration';
+export { pluginMenuDecoration } from './pluginMenuDecoration';

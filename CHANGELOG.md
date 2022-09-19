@@ -17,6 +17,10 @@
     Click to see more.
   </summary>
 
+## :house: Internal
+
+- `table`
+  - [#4633](https://github.com/wix/ricos/pull/4633) table plugin menu tiptap
 
 </details>
 

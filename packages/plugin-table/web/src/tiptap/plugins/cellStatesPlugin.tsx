@@ -1,10 +1,10 @@
-import { cellEditingDecorations } from '../decorations';
+import { cellEditingDecorations, pluginMenuDecoration } from '../decorations';
 import { DecorationSet } from 'prosemirror-view';
 import { cellAround, isInTable } from 'prosemirror-tables';
 import { isCellSelection } from '../utilities/is-selection-type';
 import { TRANSACTION_META_KEYS } from '../consts';
 
-export const cellStatesPlugin = (Plugin, PluginKey, editor) => {
+export const cellStatesPlugin = (Plugin, PluginKey, editor, services) => {
   const key = new PluginKey('cell-states');
   return new Plugin({
     key,
@@ -57,7 +57,12 @@ export const cellStatesPlugin = (Plugin, PluginKey, editor) => {
         const tablePluginState = state && key.getState(state);
         if (tablePluginState.editCell) {
           const editDecorations = cellEditingDecorations(tablePluginState.editCell);
-          return DecorationSet.create(state.doc, editDecorations);
+          const pluginAddMenuDecoration = pluginMenuDecoration(
+            tablePluginState.editCell,
+            editor,
+            services
+          );
+          return DecorationSet.create(state.doc, [...editDecorations, pluginAddMenuDecoration]);
         }
       },
     },

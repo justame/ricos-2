@@ -1,6 +1,6 @@
 import { TIPTAP_TABLE_CELL_TYPE } from 'ricos-content';
 import tableCellDataDefaults from 'ricos-schema/dist/statics/table_cell.defaults.json';
-import type { ExtensionProps, NodeConfig, RicosExtension } from 'ricos-types';
+import type { ExtensionProps, NodeConfig, RicosExtension, RicosServices } from 'ricos-types';
 import { cellStatesPlugin } from './plugins';
 import styles from './plugins/table.scss';
 
@@ -11,10 +11,14 @@ export const tableCell = {
     config: NodeConfig,
     _extensions: RicosExtension[],
     _props: ExtensionProps,
-    settings: Record<string, unknown>
+    settings: Record<string, unknown>,
+    services: RicosServices
   ) => ({
     ...config,
-    addOptions: () => settings,
+    addOptions: () => ({
+      services,
+      ...settings,
+    }),
   }),
   name: TIPTAP_TABLE_CELL_TYPE,
   createExtensionConfig({ Plugin, PluginKey }) {
@@ -104,7 +108,7 @@ export const tableCell = {
         ];
       },
       addProseMirrorPlugins() {
-        return [cellStatesPlugin(Plugin, PluginKey, this.editor)];
+        return [cellStatesPlugin(Plugin, PluginKey, this.editor, this.options.services)];
       },
     };
   },
