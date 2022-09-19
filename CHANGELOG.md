@@ -22,6 +22,10 @@
 - `table`
   - [#4633](https://github.com/wix/ricos/pull/4633) table plugin menu tiptap
 
+- `audio`
+  - [#4646](https://github.com/wix/ricos/pull/4646) add disableDownload config for oneApp
+
+
 </details>
 
 ## 9.1.0 (Sep 19, 2022)

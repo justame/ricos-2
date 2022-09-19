@@ -59,6 +59,7 @@ const AudioViewer: FC<Props> = ({
           disabled={disabled}
           isLoading={isLoading}
           saveDurationToData={saveDurationToData}
+          isDownloadDisabled={settings?.disableDownload}
         />
       ) : (
         <AudioEmbedViewer

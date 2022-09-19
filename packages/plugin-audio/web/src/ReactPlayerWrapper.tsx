@@ -43,6 +43,7 @@ interface Props {
   isLoading?: boolean;
   helpers?: Helpers;
   saveDurationToData: (duration) => void;
+  isDownloadDisabled?: boolean;
 }
 
 const ReactPlayerWrapper: React.FC<Props> = ({
@@ -58,6 +59,7 @@ const ReactPlayerWrapper: React.FC<Props> = ({
   theme,
   isLoading,
   saveDurationToData,
+  isDownloadDisabled,
 }) => {
   const [URL, setURL] = useState(url);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -77,6 +79,7 @@ const ReactPlayerWrapper: React.FC<Props> = ({
   const reactPlayerRef = useRef<ReactPlayer>(null);
   const customPlayerRef = useRef<HTMLDivElement>(null);
   const onDownload = () => downloadFile(URL, name || 'untitled');
+  const showMobileDownloadIcon = isMobile && hasDetails && !disableDownload && !isDownloadDisabled;
   const playBackMenuData = playbackRates.map(({ text, rate }) => ({
     text,
     onClick: () => {
@@ -224,7 +227,7 @@ const ReactPlayerWrapper: React.FC<Props> = ({
           )}
           <div className={styles.track_wrapper}>
             {hasDetails && <AudioDetails authorName={authorName} title={name} />}
-            {isMobile && hasDetails && !disableDownload && (
+            {showMobileDownloadIcon && (
               <DownloadIcon className={styles.audio_download_icon} onClick={onDownload} />
             )}
             <div className={styles.trackContainer}>
