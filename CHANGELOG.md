@@ -19,6 +19,20 @@
 
 </details>
 
+## 9.0.0 (Sep 19, 2022)
+
+## :boom: Breaking Change
+
+- `pro-gallery`
+  - [#4041](https://github.com/wix/ricos/pull/4041) upgrade to pro gallery v4
+- `image`
+  - [#4643](https://github.com/wix/ricos/pull/4643) use wix image by default & cleanup of custom ricos image for lighter bundle
+
+## :bug: Bug Fix
+
+- `link`
+  - [#4637](https://github.com/wix/ricos/pull/4637) fix: add underline after auto link
+
 ## 8.72.68 (Sep 18, 2022)
 
 ## :bug: Bug Fix
