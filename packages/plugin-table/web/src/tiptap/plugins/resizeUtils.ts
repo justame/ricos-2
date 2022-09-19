@@ -45,9 +45,13 @@ export function updateColumns(node, colgroup, table, cellMinWidth, overrideCol?,
       totalWidth += hasWidth || cellMinWidth;
       if (!hasWidth) fixedWidth = false;
       if (!nextDOM) {
-        colgroup.appendChild(document.createElement('col')).style.width = cssWidth;
+        const col = document.createElement('col');
+        col.style.width = cssWidth;
+        colgroup.appendChild(col);
       } else {
-        if (nextDOM.style.width !== cssWidth) nextDOM.style.width = cssWidth;
+        if (nextDOM.style.width !== cssWidth) {
+          nextDOM.style.width = cssWidth;
+        }
         nextDOM = nextDOM.nextSibling;
       }
     }

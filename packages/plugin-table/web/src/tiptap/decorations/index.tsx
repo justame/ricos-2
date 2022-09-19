@@ -5,3 +5,5 @@ export { columnHandlerDecoration } from './columnHandlerDecoration';
 export { cellEditingDecorations } from './cellEditingDecorations';
 export { addRowDecoration } from './addRowDecoration';
 export { dragPreviewDecoration } from './dragPreviewDecoration';
+export { columnResizeDecoration } from './columnResizeDecoration';
+export { rowResizeDecoration } from './rowResizeDecoration';

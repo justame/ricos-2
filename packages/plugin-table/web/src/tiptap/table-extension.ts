@@ -94,7 +94,7 @@ export const tableExtension = {
         return [
           handlersPlugin(Plugin, PluginKey, this.editor),
           addRowColPlugin(Plugin, PluginKey, this.editor),
-          columnResizingPlugin(Plugin, PluginKey),
+          columnResizingPlugin(Plugin, PluginKey, this.editor),
           rowResizingPlugin(Plugin, PluginKey, this.editor),
           tableEditingPlugin(Plugin, PluginKey, this.editor),
         ];

@@ -21,9 +21,6 @@ export const columnHandlerDecoration = (state, editor) => {
     div.innerHTML = dragAndDropSvg;
     div.addEventListener('mousedown', e => handleColControllerMouseDown(i, e, editor, table));
 
-    const resizerDiv = document.createElement('div');
-    resizerDiv.classList.add(styles.colResize);
-
     if (isAllCellsSelected) {
       div.classList.add(styles.allCellsSelected);
     } else if (table.isColumnSelected(i)) {
@@ -33,7 +30,6 @@ export const columnHandlerDecoration = (state, editor) => {
       div.classList.add(styles.last);
     }
     decorations.push(Decoration.widget(table.getStartPos() + tableMap.map[i] + 1, div));
-    decorations.push(Decoration.widget(table.getStartPos() + tableMap.map[i] + 1, resizerDiv));
   }
   return decorations;
 };
