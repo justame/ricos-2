@@ -239,10 +239,11 @@ function addStylesImport() {
       if (isExistEditorStyles) {
         writeCjsAndEsContent(packageJson.main, packageJson.module, editorExtractedStylePath);
       }
+
       if (isExistViewerStyles) {
         writeCjsAndEsContent(
-          'dist/module.viewer.cjs.js',
-          'dist/module.viewer.js',
+          'dist/' + process.env.DYNAMIC_IMPORT ? 'cjs/viewer.js' : 'module.viewer.cjs.js',
+          'dist/' + process.env.DYNAMIC_IMPORT ? 'es/viewer.js' : 'module.viewer.js',
           viewerExtractedStylePath
         );
         if (existsSync(`${loadableViewerPath}/es`)) {

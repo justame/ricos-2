@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useContext, useState, useEffect } from 'react';
+import React, { Suspense, useContext, useState, useEffect } from 'react';
 import type { PluginProps } from 'ricos-types';
 import NewPairButton from '../components/NewPairButton';
 import { mergeStyles } from 'wix-rich-content-common';
@@ -17,7 +17,7 @@ import {
 import { RicosContext } from 'ricos-context';
 import classNames from 'classnames';
 import { collapsibleStateManagerPlugin, COLLAPSIBLE_EXPAND_STATE } from '../consts';
-import { FloatingAddPluginMenu } from 'wix-rich-content-toolbars-v3';
+const FloatingAddPluginMenu = React.lazy(() => import('./lazy-FloatingAddPluginMenu'));
 
 const isInContainer = (parentNode, itemId) => {
   return parentNode.content.content.some(node => node.attrs.id === itemId);
@@ -196,13 +196,15 @@ export const CollapsibleListItemBody: React.FC<PluginProps> = ({
   return isShown ? (
     <>
       {isSelected && (
-        <div
-          onClick={preventFocusJumpToFirstNode}
-          onMouseDown={preventFocusJumpToFirstNode}
-          onKeyDown={preventFocusJumpToFirstNode}
-        >
-          <FloatingAddPluginMenu />
-        </div>
+        <Suspense fallback={<div />}>
+          <div
+            onClick={preventFocusJumpToFirstNode}
+            onMouseDown={preventFocusJumpToFirstNode}
+            onKeyDown={preventFocusJumpToFirstNode}
+          >
+            <FloatingAddPluginMenu />
+          </div>
+        </Suspense>
       )}
       <div className={collapsibleListItemStyles.titleContainer}>
         <NodeViewContent contenteditable="true" className={collapsibleListItemStyles.innerEditor} />

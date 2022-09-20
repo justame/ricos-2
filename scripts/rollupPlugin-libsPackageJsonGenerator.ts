@@ -7,7 +7,26 @@ function writePackageJson(packagePath: string, filePath: string) {
     "main": "${filePath}.cjs.js",
     "module": "${filePath}.js",
     "types": "${filePath}.d.ts"
-}`,
+    }`,
+    err => {
+      if (err) {
+        // eslint-disable-next-line no-console
+        console.log(err);
+      }
+    }
+  );
+}
+
+function writeDynamicModuleViewerPackageJson() {
+  const fs = require('fs');
+  fs.mkdirSync('viewer', { recursive: true });
+  fs.writeFile(
+    'viewer/package.json',
+    `{
+      "main": "../dist/cjs/viewer.js",
+      "module": "../dist/es/viewer.js",
+      "types": "../dist/src/viewer.d.ts"
+  }`,
     err => {
       if (err) {
         // eslint-disable-next-line no-console
@@ -18,10 +37,7 @@ function writePackageJson(packagePath: string, filePath: string) {
 }
 
 function removeExtension(fileName: string) {
-  return fileName
-    .split('.')
-    .slice(0, -1)
-    .join('.');
+  return fileName.split('.').slice(0, -1).join('.');
 }
 
 export default function createLibsPackageJsons() {
@@ -37,7 +53,9 @@ export default function createLibsPackageJsons() {
         });
       }
       if (fs.existsSync('src/viewer.ts')) {
-        writePackageJson('viewer', '../dist/module.viewer');
+        process.env.DYNAMIC_IMPORT
+          ? writeDynamicModuleViewerPackageJson()
+          : writePackageJson('viewer', '../dist/module.viewer');
       }
     },
   };
