@@ -1,6 +1,6 @@
 {
   "name": "ricos-shortcuts",
-  "version": "9.1.2",
+  "version": "9.1.3",
   "author": {
     "name": "Alex Greenstein",
     "email": "alexgr@wix.com"
@@ -35,8 +35,8 @@
   },
   "dependencies": {
     "react-hotkeys": "^2.0.0",
-    "ricos-context": "9.1.2",
-    "ricos-types": "9.1.2"
+    "ricos-context": "9.1.3",
+    "ricos-types": "9.1.3"
   },
   "unpkg": true,
   "publishConfig": {
