@@ -2,4 +2,4 @@
     "main": "../../dist/lib/FormattingGroupButton.cjs.js",
     "module": "../../dist/lib/FormattingGroupButton.js",
     "types": "../../dist/lib/FormattingGroupButton.d.ts"
-}
+    }

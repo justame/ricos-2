@@ -2,4 +2,4 @@
     "main": "../../dist/lib/getCurrentTextAlignmentIcon.cjs.js",
     "module": "../../dist/lib/getCurrentTextAlignmentIcon.js",
     "types": "../../dist/lib/getCurrentTextAlignmentIcon.d.ts"
-}
+    }

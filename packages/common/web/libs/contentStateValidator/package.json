@@ -2,4 +2,4 @@
     "main": "../../dist/lib/contentStateValidator.cjs.js",
     "module": "../../dist/lib/contentStateValidator.js",
     "types": "../../dist/lib/contentStateValidator.d.ts"
-}
+    }

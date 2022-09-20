@@ -2,4 +2,4 @@
     "main": "../../dist/lib/getImagesData.cjs.js",
     "module": "../../dist/lib/getImagesData.js",
     "types": "../../dist/lib/getImagesData.d.ts"
-}
+    }

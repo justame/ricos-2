@@ -2,4 +2,4 @@
     "main": "../../dist/lib/ErrorMessageMap.cjs.js",
     "module": "../../dist/lib/ErrorMessageMap.js",
     "types": "../../dist/lib/ErrorMessageMap.d.ts"
-}
+    }

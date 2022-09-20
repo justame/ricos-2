@@ -2,4 +2,4 @@
     "main": "../../dist/lib/contentAnalytics.cjs.js",
     "module": "../../dist/lib/contentAnalytics.js",
     "types": "../../dist/lib/contentAnalytics.d.ts"
-}
+    }

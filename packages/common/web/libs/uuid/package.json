@@ -2,4 +2,4 @@
     "main": "../../dist/lib/uuid.cjs.js",
     "module": "../../dist/lib/uuid.js",
     "types": "../../dist/lib/uuid.d.ts"
-}
+    }

@@ -2,4 +2,4 @@
     "main": "../../dist/lib/resolvers-ids.cjs.js",
     "module": "../../dist/lib/resolvers-ids.js",
     "types": "../../dist/lib/resolvers-ids.d.ts"
-}
+    }

@@ -2,4 +2,4 @@
     "main": "../../dist/lib/resize-media-url.cjs.js",
     "module": "../../dist/lib/resize-media-url.js",
     "types": "../../dist/lib/resize-media-url.d.ts"
-}
+    }

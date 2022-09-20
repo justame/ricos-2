@@ -2,4 +2,4 @@
     "main": "../../dist/lib/Tooltip.cjs.js",
     "module": "../../dist/lib/Tooltip.js",
     "types": "../../dist/lib/Tooltip.d.ts"
-}
+    }

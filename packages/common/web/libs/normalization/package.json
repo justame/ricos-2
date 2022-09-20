@@ -2,4 +2,4 @@
     "main": "../../dist/lib/normalization.cjs.js",
     "module": "../../dist/lib/normalization.js",
     "types": "../../dist/lib/normalization.d.ts"
-}
+    }

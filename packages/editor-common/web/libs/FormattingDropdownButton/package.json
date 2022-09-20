@@ -2,4 +2,4 @@
     "main": "../../dist/lib/FormattingDropdownButton.cjs.js",
     "module": "../../dist/lib/FormattingDropdownButton.js",
     "types": "../../dist/lib/FormattingDropdownButton.d.ts"
-}
+    }

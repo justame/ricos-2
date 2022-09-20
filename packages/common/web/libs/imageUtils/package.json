@@ -2,4 +2,4 @@
     "main": "../../dist/lib/imageUtils.cjs.js",
     "module": "../../dist/lib/imageUtils.js",
     "types": "../../dist/lib/imageUtils.d.ts"
-}
+    }
