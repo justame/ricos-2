@@ -1,6 +1,6 @@
 {
   "name": "wix-rich-content-plugin-undo-redo",
-  "version": "9.1.0",
+  "version": "9.1.1",
   "author": {
     "name": "Bar Boaron",
     "email": "barb@wix.com"
@@ -35,11 +35,11 @@
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx,d.ts}'"
   },
   "dependencies": {
-    "ricos-types": "9.1.0",
-    "wix-rich-content-common": "9.1.0",
-    "wix-rich-content-editor-common": "9.1.0",
-    "wix-rich-content-plugin-commons": "9.1.0",
-    "wix-rich-content-toolbars-v3": "9.1.0"
+    "ricos-types": "9.1.1",
+    "wix-rich-content-common": "9.1.1",
+    "wix-rich-content-editor-common": "9.1.1",
+    "wix-rich-content-plugin-commons": "9.1.1",
+    "wix-rich-content-toolbars-v3": "9.1.1"
   },
   "unpkg": true,
   "publishConfig": {

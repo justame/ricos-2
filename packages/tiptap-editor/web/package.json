@@ -1,6 +1,6 @@
 {
   "name": "wix-tiptap-editor",
-  "version": "9.1.0",
+  "version": "9.1.1",
   "author": {
     "name": "Yaron Nachshon",
     "email": "yaronn@wix.com"
@@ -39,18 +39,18 @@
     "@tiptap/core": "2.0.0-beta.148",
     "@tiptap/react": "2.0.0-beta.98",
     "prosemirror-dev-tools": "kepta/prosemirror-dev-tools",
-    "ricos-content": "9.1.0",
-    "ricos-context": "9.1.0",
-    "ricos-converters": "9.1.0",
-    "ricos-plugins": "9.1.0",
-    "ricos-schema": "9.1.0",
-    "ricos-types": "9.1.0",
+    "ricos-content": "9.1.1",
+    "ricos-context": "9.1.1",
+    "ricos-converters": "9.1.1",
+    "ricos-plugins": "9.1.1",
+    "ricos-schema": "9.1.1",
+    "ricos-types": "9.1.1",
     "to-constant-case": "1.0.0",
     "uuid": "^3.4.0",
-    "wix-rich-content-common": "9.1.0",
-    "wix-rich-content-editor-common": "9.1.0",
-    "wix-rich-content-toolbars-v3": "9.1.0",
-    "wix-tiptap-extensions": "9.1.0"
+    "wix-rich-content-common": "9.1.1",
+    "wix-rich-content-editor-common": "9.1.1",
+    "wix-rich-content-toolbars-v3": "9.1.1",
+    "wix-tiptap-extensions": "9.1.1"
   },
   "peerDependencies": {
     "classnames": "^2.0.0"

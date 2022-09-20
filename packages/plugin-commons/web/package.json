@@ -1,6 +1,6 @@
 {
   "name": "wix-rich-content-plugin-commons",
-  "version": "9.1.0",
+  "version": "9.1.1",
   "author": {
     "name": "Alex Greenstein",
     "email": "alexgr@wix.com"
@@ -36,9 +36,9 @@
   "dependencies": {
     "react-colorful": "^4.4.3",
     "react-measure": "~2.3.0",
-    "wix-rich-content-common": "9.1.0",
-    "wix-rich-content-editor-common": "9.1.0",
-    "wix-rich-content-ui-components": "9.1.0"
+    "wix-rich-content-common": "9.1.1",
+    "wix-rich-content-editor-common": "9.1.1",
+    "wix-rich-content-ui-components": "9.1.1"
   },
   "unpkg": true,
   "publishConfig": {

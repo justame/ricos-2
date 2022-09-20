@@ -17,14 +17,22 @@
     Click to see more.
   </summary>
 
+</details>
+
+## 9.1.1 (Sep 20, 2022)
+
 ## :house: Internal
 
+- `collapsilbe-list`
+
+  - [#4650](https://github.com/wix/ricos/pull/4650) bundle size fix
+
 - `table`
+
   - [#4633](https://github.com/wix/ricos/pull/4633) table plugin menu tiptap
 
 - `audio`
   - [#4646](https://github.com/wix/ricos/pull/4646) add disableDownload config for oneApp
-
 
 </details>
 

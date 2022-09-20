@@ -1,6 +1,6 @@
 {
   "name": "ricos-types",
-  "version": "9.1.0",
+  "version": "9.1.1",
   "author": {
     "name": "Oded Soffrin",
     "email": "odeds@wix.com"
@@ -33,8 +33,8 @@
     "test": "echo 'no tests for types only package'"
   },
   "dependencies": {
-    "ricos-content": "9.1.0",
-    "ricos-schema": "9.1.0"
+    "ricos-content": "9.1.1",
+    "ricos-schema": "9.1.1"
   },
   "unpkg": true,
   "publishConfig": {

@@ -1,6 +1,6 @@
 {
   "name": "wix-rich-content-link-preview-popover",
-  "version": "9.1.0",
+  "version": "9.1.1",
   "author": {
     "name": "Or Leib",
     "email": "orlei@wix.com"
@@ -43,7 +43,7 @@
     "react-dom": "^16.13.1"
   },
   "dependencies": {
-    "wix-rich-content-common": "9.1.0"
+    "wix-rich-content-common": "9.1.1"
   },
   "unpkg": true,
   "publishConfig": {

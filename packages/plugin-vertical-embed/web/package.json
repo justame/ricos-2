@@ -1,6 +1,6 @@
 {
   "name": "wix-rich-content-plugin-vertical-embed",
-  "version": "9.1.0",
+  "version": "9.1.1",
   "author": {
     "name": "Tomas Kirklys",
     "email": "tomaski@wix.com"
@@ -37,12 +37,12 @@
     "test": "jest --verbose"
   },
   "dependencies": {
-    "ricos-context": "9.1.0",
-    "ricos-types": "9.1.0",
-    "wix-rich-content-common": "9.1.0",
-    "wix-rich-content-editor-common": "9.1.0",
-    "wix-rich-content-plugin-commons": "9.1.0",
-    "wix-rich-content-ui-components": "9.1.0"
+    "ricos-context": "9.1.1",
+    "ricos-types": "9.1.1",
+    "wix-rich-content-common": "9.1.1",
+    "wix-rich-content-editor-common": "9.1.1",
+    "wix-rich-content-plugin-commons": "9.1.1",
+    "wix-rich-content-ui-components": "9.1.1"
   },
   "jest": {
     "globals": {
