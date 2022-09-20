@@ -19,7 +19,7 @@
 
 </details>
 
-## 9.1.1 (Sep 20, 2022)
+## 9.1.2 (Sep 20, 2022)
 
 ## :house: Internal
 
