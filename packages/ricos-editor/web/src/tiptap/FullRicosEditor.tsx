@@ -71,6 +71,7 @@ export class FullRicosEditor extends React.Component<Props, State> {
     this.errorNotifier = React.createRef();
     this.inputRef = React.createRef();
     this.orchestrator = new RicosOrchestrator(props, props.t);
+    console.log('FullRicosEditor constructor', this.orchestrator);
   }
 
   static getDerivedStateFromError(error: string) {
