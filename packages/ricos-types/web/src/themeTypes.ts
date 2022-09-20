@@ -75,10 +75,6 @@ export interface CustomMentionStyle {
 export interface CustomFooterToolbarStyle {
   marginTop?: CSSProperties['marginTop'];
 }
-export interface CustomEditorStyle {
-  minHeight?: CSSProperties['minHeight'];
-  maxHeight?: CSSProperties['maxHeight'];
-}
 
 export interface RicosCustomStyles {
   h1?: CustomTextualStyle;
@@ -95,7 +91,6 @@ export interface RicosCustomStyles {
   codeBlock?: CustomCodeBlockStyle;
   mention?: CustomMentionStyle;
   footerToolbar?: CustomFooterToolbarStyle;
-  editor?: CustomEditorStyle;
 }
 
 export interface RicosSettingsStyles {

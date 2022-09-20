@@ -33,7 +33,6 @@ const customCodeBlockStyle = ['margin', 'padding', 'fontSize', 'lineHeight'];
 const customMentionStyle = ['color', 'backgroundColor'];
 const customFooterToolbarStyle = ['marginTop'];
 const customButtonStyle = ['color'];
-const customEditorStyle = ['minHeight', 'maxHeight'];
 
 const elementsStyles: CustomStyles = {
   quote: customQuoteStyle,
@@ -50,7 +49,6 @@ const elementsStyles: CustomStyles = {
   p: customTextualStyle,
   link: customTextualStyle,
   hashtag: customTextualStyle,
-  editor: customEditorStyle,
 };
 
 const propertyList = (element: keyof typeof elementsStyles) =>

@@ -29,9 +29,7 @@
 }
 
 .ricosTiptapEditor {
-  min-height: var(--ricos-custom-editor-min-height, '100%');
-  max-height: var(--ricos-custom-editor-max-height, '100%');
-  overflow-y: scroll;
+  height: 100%;
   display: flex;
   flex-direction: column;
   flex: 1;
