@@ -1,6 +1,6 @@
 {
   "name": "wix-rich-content-plugin-table",
-  "version": "9.1.1",
+  "version": "9.1.2",
   "author": {
     "name": "undefined",
     "email": "noamt@wix.com"
@@ -40,15 +40,15 @@
     "@tiptap/core": "2.0.0-beta.148",
     "prosemirror-tables": "1.2.5",
     "prosemirror-utils": "0.9.6",
-    "ricos-context": "9.1.1",
-    "ricos-types": "9.1.1",
+    "ricos-context": "9.1.2",
+    "ricos-types": "9.1.2",
     "wix-react-datasheet": "1.5.7",
-    "wix-rich-content-common": "9.1.1",
-    "wix-rich-content-editor-common": "9.1.1",
-    "wix-rich-content-plugin-commons": "9.1.1",
-    "wix-rich-content-toolbars": "9.1.1",
-    "wix-rich-content-toolbars-ui": "9.1.1",
-    "wix-rich-content-ui-components": "9.1.1"
+    "wix-rich-content-common": "9.1.2",
+    "wix-rich-content-editor-common": "9.1.2",
+    "wix-rich-content-plugin-commons": "9.1.2",
+    "wix-rich-content-toolbars": "9.1.2",
+    "wix-rich-content-toolbars-ui": "9.1.2",
+    "wix-rich-content-ui-components": "9.1.2"
   },
   "peerDependencies": {
     "lodash": "^4.0.0"

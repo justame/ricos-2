@@ -1,6 +1,6 @@
 {
   "name": "wix-rich-content-plugin-giphy",
-  "version": "9.1.1",
+  "version": "9.1.2",
   "author": {
     "name": "Nabeel Zanabeet",
     "email": "nabeelz@wix.com"
@@ -40,14 +40,14 @@
     "react-custom-scrollbars": "^4.2.1",
     "react-infinite-scroller": "^1.2.4",
     "react-md-spinner": "~1.0.0",
-    "ricos-content": "9.1.1",
-    "ricos-context": "9.1.1",
-    "ricos-types": "9.1.1",
-    "wix-rich-content-common": "9.1.1",
-    "wix-rich-content-editor-common": "9.1.1",
-    "wix-rich-content-plugin-commons": "9.1.1",
-    "wix-rich-content-toolbars-ui": "9.1.1",
-    "wix-rich-content-ui-components": "9.1.1"
+    "ricos-content": "9.1.2",
+    "ricos-context": "9.1.2",
+    "ricos-types": "9.1.2",
+    "wix-rich-content-common": "9.1.2",
+    "wix-rich-content-editor-common": "9.1.2",
+    "wix-rich-content-plugin-commons": "9.1.2",
+    "wix-rich-content-toolbars-ui": "9.1.2",
+    "wix-rich-content-ui-components": "9.1.2"
   },
   "unpkg": true,
   "publishConfig": {

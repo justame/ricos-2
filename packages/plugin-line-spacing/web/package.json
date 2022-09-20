@@ -1,6 +1,6 @@
 {
   "name": "wix-rich-content-plugin-line-spacing",
-  "version": "9.1.1",
+  "version": "9.1.2",
   "author": {
     "name": "Shaul Goral",
     "email": "shaulg@wix.com"
@@ -35,11 +35,11 @@
   },
   "dependencies": {
     "react-modal": "~3.4.1",
-    "ricos-context": "9.1.1",
-    "wix-rich-content-common": "9.1.1",
-    "wix-rich-content-editor-common": "9.1.1",
-    "wix-rich-content-plugin-commons": "9.1.1",
-    "wix-rich-content-toolbars-v3": "9.1.1"
+    "ricos-context": "9.1.2",
+    "wix-rich-content-common": "9.1.2",
+    "wix-rich-content-editor-common": "9.1.2",
+    "wix-rich-content-plugin-commons": "9.1.2",
+    "wix-rich-content-toolbars-v3": "9.1.2"
   },
   "unpkg": true,
   "publishConfig": {
