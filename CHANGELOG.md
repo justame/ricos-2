@@ -19,6 +19,13 @@
 
 </details>
 
+## 9.1.3 (Sep 20, 2022)
+
+## :bug: Bug Fix
+
+- `viewer`
+  - [4654](https://github.com/wix/ricos/pull/4654) hotfix: plugins' viewer css
+
 ## 9.1.2 (Sep 20, 2022)
 
 ## :house: Internal
