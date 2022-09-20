@@ -242,8 +242,8 @@ function addStylesImport() {
 
       if (isExistViewerStyles) {
         writeCjsAndEsContent(
-          'dist/' + process.env.DYNAMIC_IMPORT ? 'cjs/viewer.js' : 'module.viewer.cjs.js',
-          'dist/' + process.env.DYNAMIC_IMPORT ? 'es/viewer.js' : 'module.viewer.js',
+          process.env.DYNAMIC_IMPORT ? 'dist/cjs/viewer.js' : 'dist/module.viewer.cjs.js',
+          process.env.DYNAMIC_IMPORT ? 'dist/es/viewer.js' : 'dist/module.viewer.js',
           viewerExtractedStylePath
         );
         if (existsSync(`${loadableViewerPath}/es`)) {
